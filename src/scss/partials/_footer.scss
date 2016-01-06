@@ -1,0 +1,42 @@
+.footer {
+  background-color: $brand-c;
+  color: #fff;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  text-align: center;
+
+  &__header {
+    margin-top: 0;
+
+    @include mq($from: btnhack) {
+      display: inline-block;
+    }
+  }
+
+  &__copy {
+    margin-bottom: 0;
+  }
+
+  &__social-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-align: center;
+
+    @include mq($from: btnhack) {
+      display: inline-block;
+    }
+  }
+
+  &__social-item {
+    margin: 0 5px;
+    padding: 0;
+    display: inline-block;
+  }
+
+  &__icon {
+    height: 37px;
+    width: 34px;
+    vertical-align: middle;
+  }
+}

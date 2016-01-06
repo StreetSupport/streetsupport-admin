@@ -1,0 +1,57 @@
+.header {
+  @include cf();
+  height: 50px;
+  background-color: $brand-a;
+
+  &__title {
+    margin: 8px $site-gutter 0 $site-gutter;
+    padding: 0;
+    display: inline-block;
+    color: #fff;
+
+    a {
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+
+    .icon {
+      width: 33px;
+      height: 35px;
+      margin-right: 5px;
+    }
+
+    .text {
+      display: inline-block;
+      vertical-align: top;
+      line-height: 35px;
+    }
+
+    .beta {
+      margin-left: 10px;
+      display: inline;
+      vertical-align: top;
+      line-height: 35px;
+      background-color: $brand-h;
+      padding: 4px 8px;
+      font-size: 14px;
+      font-weight: $font-headline-weight;
+    }
+  }
+
+  &__btn {
+    float: right;
+    height: 50px;
+    color: #fff;
+    background-color: $brand-b;
+    padding: 0 15px 0 15px;
+    width: auto;
+    margin: 0;
+
+    .icon {
+      height: 20px;
+      width: 20px;
+      vertical-align: middle;
+    }
+  }
+}

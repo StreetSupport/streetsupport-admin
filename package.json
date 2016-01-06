@@ -1,0 +1,68 @@
+{
+  "name": "streetsupport",
+  "description": "Street Support Network is a Manchester collective of support groups, charities and kind-hearted folk. We’ve joined forces to make it easier to find help, and give help, to homeless people in Manchester.",
+  "version": "0.1.1",
+  "author": "StreetSupport <streetsupport@objectivesfirst.com>",
+  "private": true,
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/StreetSupport/streetsupport-web.git"
+  },
+  "bugs": {
+    "url": "https://github.com/StreetSupport/streetsupport-web/issues"
+  },
+  "engines": {
+    "node": ">= 5"
+  },
+  "devDependencies": {
+    "autoprefixer": "^6.1.2",
+    "babel-core": "^6.2.1",
+    "babel-eslint": "^4.1.5",
+    "babel-loader": "^6.2.0",
+    "babel-preset-es2015": "^6.1.18",
+    "browser-sync": "^2.10.0",
+    "critical": "^0.6.0",
+    "css-mqpacker": "^4.0.0",
+    "cssnano": "^3.3.2",
+    "del": "^2.1.0",
+    "eyeglass": "^0.7.1",
+    "glob": "^6.0.1",
+    "gulp": "^3.9.0",
+    "gulp-debug": "^2.1.2",
+    "gulp-htmlmin": "^1.2.0",
+    "gulp-if": "^2.0.0",
+    "gulp-imagemin": "^2.4.0",
+    "gulp-plumber": "^1.0.1",
+    "gulp-postcss": "^6.0.1",
+    "gulp-sass": "^2.1.0",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-util": "^3.0.7",
+    "gulp-watch": "^4.3.5",
+    "gulpicon": "^0.1.2",
+    "handlebars": "^4.0.5",
+    "handlebars-layouts": "^3.1.3",
+    "imagemin-pngquant": "^4.2.0",
+    "metalsmith": "^2.1.0",
+    "metalsmith-in-place": "^1.3.2",
+    "metalsmith-rename": "^1.0.0",
+    "path": "^0.12.7",
+    "postcss-pxtorem": "^3.1.0",
+    "postcss-reporter": "^1.3.0",
+    "require-dir": "^0.3.0",
+    "run-sequence": "^1.1.5",
+    "sass-mq": "^3.2.5",
+    "standard-loader": "^2.0.0",
+    "stylelint": "^2.3.4",
+    "susy": "^2.2.6",
+    "webpack": "^1.12.6",
+    "yargs": "^3.30.0"
+  },
+  "dependencies": {
+    "fastclick": "^1.0.6",
+    "hogan.js": "^3.0.2",
+    "lodash": "^3.10.1",
+    "q": "^1.4.1",
+    "spin.js": "^2.3.2"
+  }
+}

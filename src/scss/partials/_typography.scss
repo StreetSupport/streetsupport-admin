@@ -1,0 +1,93 @@
+body {
+  font-family: $font-primary;
+  font-weight: $font-primary-weight;
+}
+
+.h1,
+.h2,
+.h3 {
+  font-family: $font-headline;
+  font-weight: $font-headline-weight;
+}
+
+.h1 {
+  font-size: 36px;
+  line-height: 1.25;
+  margin-top: 0;  
+
+  /*
+  @include mq($from: m) {
+    font-size: 45px;
+  }
+  */
+}
+
+.h2 {
+  font-size: 25px;
+  line-height: 1.25;
+
+  /*
+  @include mq($from: m) {
+    font-size: 30px;
+  }
+  */
+}
+
+.h3 {
+  font-size: 16px;
+  line-height: 1.25;
+
+  /*
+  @include mq($from: m) {
+    font-size: 22px;
+  }
+  */
+}
+
+p {
+  line-height: 1.25;
+}
+
+ul {
+  line-height: 1.25;
+
+  li {
+    margin-bottom: 5px;
+  }
+}
+
+ol {
+  line-height: 1.25;
+
+  li {
+    margin-bottom: 5px;
+  }
+}
+
+dl {
+  line-height: 1.25;
+
+  dt {
+    margin-bottom: 5px;
+  }
+
+  dd {
+    margin-bottom: 10px;
+  }
+}
+
+strong {
+  font-weight: $font-headline-weight;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
