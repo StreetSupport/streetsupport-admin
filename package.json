@@ -1,16 +1,16 @@
 {
-  "name": "streetsupport",
-  "description": "Street Support Network is a Manchester collective of support groups, charities and kind-hearted folk. We’ve joined forces to make it easier to find help, and give help, to homeless people in Manchester.",
+  "name": "streetsupport admin",
+  "description": "Administration tool for streetsupport.net",
   "version": "0.1.1",
   "author": "StreetSupport <streetsupport@objectivesfirst.com>",
   "private": true,
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/StreetSupport/streetsupport-web.git"
+    "url": "https://github.com/StreetSupport/streetsupport-admin.git"
   },
   "bugs": {
-    "url": "https://github.com/StreetSupport/streetsupport-web/issues"
+    "url": "https://github.com/StreetSupport/streetsupport-admin/issues"
   },
   "engines": {
     "node": ">= 5"

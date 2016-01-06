@@ -3,11 +3,11 @@
 # Define variables depending on the branch
 if [[ $TRAVIS_BRANCH == 'master' ]]
   then
-    REPO="github.com/StreetSupport/streetsupport.net-beta.git"
-    DOMAIN="beta.streetsupport.net"
+    REPO="github.com/StreetSupport/admin.streetsupport.net-beta.git"
+    DOMAIN="service.streetsupport.net"
   else
-    REPO="github.com/StreetSupport/streetsupport.net-dev.git"
-    DOMAIN="dev.streetsupport.net"
+    REPO="github.com/StreetSupport/admin.streetsupport.net-dev.git"
+    DOMAIN="dev-service.streetsupport.net"
 fi
 
 # Get the commit details

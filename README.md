@@ -4,15 +4,15 @@ The Frontend codebase for streetsupport.net.
 
 ## Build Status
 
-* Beta (master) - [![Build Status](https://travis-ci.org/StreetSupport/streetsupport-web.svg?branch=master)](https://travis-ci.org/StreetSupport/streetsupport-web)
-* Dev (develop) - [![Build Status](https://travis-ci.org/StreetSupport/streetsupport-web.svg?branch=develop)](https://travis-ci.org/StreetSupport/streetsupport-web)
+* Beta (master) - [![Build Status](https://travis-ci.org/StreetSupport/streetsupport-admin.svg?branch=master)](https://travis-ci.org/StreetSupport/streetsupport-admin)
+* Dev (develop) - [![Build Status](https://travis-ci.org/StreetSupport/streetsupport-admin.svg?branch=develop)](https://travis-ci.org/StreetSupport/streetsupport-admin)
 
 ## Domains
 
 Please work in the develop branch first and only merge to master when ready and tested. Travis CI automatically builds on each commit to develop and master.
 
-* The master branch automatically builds to: [http://beta.streetsupport.net](http://beta.streetsupport.net).
-* The develop branch automatically builds to: [http://dev.streetsupport.net](http://dev.streetsupport.net).
+* The master branch automatically builds to: [http://service.streetsupport.net](http://service.streetsupport.net).
+* The develop branch automatically builds to: [http://dev-service.streetsupport.net](http://dev-service.streetsupport.net).
 
 ## Install
 
