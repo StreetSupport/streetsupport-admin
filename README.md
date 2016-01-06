@@ -1,6 +1,6 @@
-# StreetSupport Website
+# StreetSupport Admin
 
-The Frontend codebase for streetsupport.net.
+The Frontend codebase for service.streetsupport.net.
 
 ## Build Status
 
