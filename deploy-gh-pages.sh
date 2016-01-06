@@ -30,9 +30,9 @@ cd _dist
 echo "creating cname file"
 
 # Create CNAME file and populate with domain depending on branch
-cat > CNAME << EOF
-$DOMAIN
-EOF
+#cat > CNAME << EOF
+#$DOMAIN
+#EOF
 
 echo "pushing to repo"
 
