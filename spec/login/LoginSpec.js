@@ -1,6 +1,6 @@
 var sinon = require('sinon'),
-    api = require('../../src/js/get-api-data'),
-    cookies = require('browser-cookies')
+api = require('../../src/js/get-api-data'),
+cookies = require('browser-cookies')
 
 describe('Login', function () {
   var Login = require('../../src/js/models/Login')
@@ -24,23 +24,22 @@ describe('Login', function () {
 
     beforeEach(function () {
       function fakeResolved(value) {
-          return {
-              then: function(callback) {
-                callback()
-                return {
-                  'statusCode': 201,
-                  'data': {
-                    'sessionToken': 'sessionToken'
-                  }
-                }
+        return {
+          then: function(callback) {
+            callback({
+              'statusCode': 201,
+              'data': {
+                'sessionToken': 'returnedSessionToken'
               }
+            })
           }
+        }
       }
 
       sinon.stub(api, 'postData').returns(fakeResolved())
 
       mockCookies = sinon.mock(cookies)
-      mockCookies.expects('set').once()
+      mockCookies.expects('set').once().withArgs('session-token', 'returnedSessionToken')
 
       login.username = 'username'
       login.password = 'password'

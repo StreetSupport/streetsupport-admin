@@ -11,7 +11,7 @@ LoginModel.prototype.submit = function () {
     'username': this.username,
     'password': this.password
   }).then(function (result) {
-    cookies.set('session-token', null)
+    cookies.set('session-token', result.data.sessionToken)
   })
 }
 
