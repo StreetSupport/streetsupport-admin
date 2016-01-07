@@ -53,8 +53,8 @@ describe('Login', function () {
         return {
           then: function(callback) {
             callback({
-              'statusCode': 201,
-              'data': {
+              'status': 201,
+              'response': {
                 'sessionToken': 'returnedSessionToken'
               }
             })
@@ -85,8 +85,8 @@ describe('Login', function () {
       mockCookies.verify()
     })
 
-    it('should send username to api', function() {
-      var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoints.createSessionUrl, {
+    it('should send credentials to api', function() {
+      var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoints.createSession, {
         'username': 'username',
         'password': 'password'
       }).calledOnce
@@ -100,7 +100,7 @@ describe('Login', function () {
     })
   })
 
-  describe('Submit ', function() {
+  describe('Submit invalid credentials', function() {
     var mockCookies,
         stubbedApi,
         stubbedBrowser
@@ -110,9 +110,8 @@ describe('Login', function () {
         return {
           then: function(callback) {
             callback({
-              'status': 'errpr',
-              'statusCode': 401,
-              'message': 'returned error message'
+              'status': 401,
+              'responseText': 'returned error message'
             })
           }
         }

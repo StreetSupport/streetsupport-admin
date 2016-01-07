@@ -12,15 +12,16 @@ function LoginModel () {
 
 LoginModel.prototype.submit = function () {
   var self = this
-  ajax.postJson(endpoints.createSessionUrl, {
+  ajax.postJson(endpoints.createSession, {
     'username': self.username,
     'password': self.password
-  }).then(function (result) {
-    if(result.statusCode === 201) {
-      cookies.set('session-token', result.data.sessionToken)
+  })
+  .then(function (result) {
+    if (result.status === 201) {
+      cookies.set('session-token', result.response.sessionToken)
       browser.redirect(adminUrls.dashboard)
-    }else {
-      self.message = result.message
+    } else {
+      self.message = result.responseText
     }
   })
 }
