@@ -62,6 +62,7 @@
     "yargs": "^3.30.0"
   },
   "dependencies": {
+    "basic-ajax": "^1.2.8",
     "browser-cookies": "^1.0.8",
     "fastclick": "^1.0.6",
     "hogan.js": "^3.0.2",
