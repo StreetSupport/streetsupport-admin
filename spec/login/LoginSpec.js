@@ -3,7 +3,7 @@ var sinon =     require('sinon'),
     endpoints = require('../../src/js/api-endpoints'),
     adminurls = require('../../src/js/admin-urls'),
     browser =   require('../../src/js/browser'),
-    cookies =   require('browser-cookies')
+    cookies = require('../../src/js/cookies')
 
 describe('Login', function () {
   var Login = require('../../src/js/models/Login')
@@ -22,28 +22,6 @@ describe('Login', function () {
   })
 
   describe('Submit', function() {
-    beforeEach(function () {
-
-      stubbedApi = sinon.stub(ajax, 'postJson')
-      stubbedApi.returns(fakeResolved())
-      stubbedBrowser = sinon.stub(browser, 'redirect')
-
-      mockCookies = sinon.mock(cookies)
-      mockCookies.expects('set').once().withArgs('session-token', 'returnedSessionToken')
-
-      login.username = 'username'
-      login.password = 'password'
-
-      login.submit()
-    })
-
-    afterEach(function () {
-      ajax.postJson.restore()
-      mockCookies.restore()
-    })
-  })
-
-  describe('Submit happy path', function() {
     var mockCookies,
         stubbedApi,
         stubbedBrowser
@@ -51,10 +29,10 @@ describe('Login', function () {
     beforeEach(function () {
       function fakeResolved(value) {
         return {
-          then: function(callback) {
-            callback({
+          then: function(success, error) {
+            success({
               'status': 201,
-              'response': {
+              'json': {
                 'sessionToken': 'returnedSessionToken'
               }
             })
@@ -101,15 +79,14 @@ describe('Login', function () {
   })
 
   describe('Submit invalid credentials', function() {
-    var mockCookies,
-        stubbedApi,
+    var stubbedApi,
         stubbedBrowser
 
     beforeEach(function () {
       function fakeResolved(value) {
         return {
-          then: function(callback) {
-            callback({
+          then: function(success, error) {
+            error({
               'status': 401,
               'responseText': 'returned error message'
             })
@@ -121,9 +98,6 @@ describe('Login', function () {
       stubbedApi.returns(fakeResolved())
       stubbedBrowser = sinon.stub(browser, 'redirect')
 
-      mockCookies = sinon.mock(cookies)
-      mockCookies.expects('set').once().withArgs('session-token', 'returnedSessionToken')
-
       login.username = 'username'
       login.password = 'password'
 
@@ -133,7 +107,6 @@ describe('Login', function () {
     afterEach(function () {
       ajax.postJson.restore()
       browser.redirect.restore()
-      mockCookies.restore()
     })
 
     it('should set message to returned message', function() {
