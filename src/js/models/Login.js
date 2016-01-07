@@ -1,7 +1,18 @@
+var api = require('../get-api-data')
+var cookies = require('browser-cookies')
+
 function LoginModel () {
-  this.username = 'vincey'
-  this.password = 'wangers'
-  this.message = 'hello world'
+  this.username = ''
+  this.password = ''
+}
+
+LoginModel.prototype.submit = function () {
+  api.postData('', {
+    'username': this.username,
+    'password': this.password
+  }).then(function (result) {
+    cookies.set('session-token', null)
+  })
 }
 
 module.exports = LoginModel

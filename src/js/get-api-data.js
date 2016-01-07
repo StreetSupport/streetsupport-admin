@@ -33,6 +33,12 @@ var getApiData = function (url) {
   return deferred.promise
 }
 
+var postApiData = function (url, payload) {
+  var deferred = Q.defer()
+  deferred.resolve({})
+}
+
 module.exports = {
-  data: getApiData
+  getData: getApiData,
+  postData: postApiData
 }
