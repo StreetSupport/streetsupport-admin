@@ -1,4 +1,6 @@
 var api = require('../get-api-data')
+var endpoints = require('../api-endpoints')
+var browser = require('../browser')
 var cookies = require('browser-cookies')
 
 function LoginModel () {
@@ -7,11 +9,12 @@ function LoginModel () {
 }
 
 LoginModel.prototype.submit = function () {
-  api.postData('', {
+  api.postData(endpoints.createSessionUrl, {
     'username': this.username,
     'password': this.password
   }).then(function (result) {
     cookies.set('session-token', result.data.sessionToken)
+    browser.redirect('/dashboard')
   })
 }
 

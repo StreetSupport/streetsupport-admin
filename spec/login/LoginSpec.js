@@ -1,6 +1,8 @@
-var sinon = require('sinon'),
-api = require('../../src/js/get-api-data'),
-cookies = require('browser-cookies')
+var sinon =     require('sinon'),
+    api =       require('../../src/js/get-api-data'),
+    endpoints = require('../../src/js/api-endpoints'),
+    browser =   require('../../src/js/browser'),
+    cookies =   require('browser-cookies')
 
 describe('Login', function () {
   var Login = require('../../src/js/models/Login')
@@ -19,8 +21,32 @@ describe('Login', function () {
     expect(login.password).toEqual('')
   })
 
+  describe('Submit', function() {
+    beforeEach(function () {
+
+      stubbedApi = sinon.stub(api, 'postData')
+      stubbedApi.returns(fakeResolved())
+      stubbedBrowser = sinon.stub(browser, 'redirect')
+
+      mockCookies = sinon.mock(cookies)
+      mockCookies.expects('set').once().withArgs('session-token', 'returnedSessionToken')
+
+      login.username = 'username'
+      login.password = 'password'
+
+      login.submit()
+    })
+
+    afterEach(function () {
+      api.postData.restore()
+      mockCookies.restore()
+    })
+  })
+
   describe('Submit happy path', function() {
-    var mockCookies
+    var mockCookies,
+        stubbedApi,
+        stubbedBrowser
 
     beforeEach(function () {
       function fakeResolved(value) {
@@ -36,7 +62,9 @@ describe('Login', function () {
         }
       }
 
-      sinon.stub(api, 'postData').returns(fakeResolved())
+      stubbedApi = sinon.stub(api, 'postData')
+      stubbedApi.returns(fakeResolved())
+      stubbedBrowser = sinon.stub(browser, 'redirect')
 
       mockCookies = sinon.mock(cookies)
       mockCookies.expects('set').once().withArgs('session-token', 'returnedSessionToken')
@@ -49,11 +77,26 @@ describe('Login', function () {
 
     afterEach(function () {
       api.postData.restore()
+      browser.redirect.restore()
       mockCookies.restore()
     })
 
     it('should save session token to cookie', function() {
       mockCookies.verify()
+    })
+
+    it('should send username to api', function() {
+      var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoints.createSessionUrl, {
+        'username': 'username',
+        'password': 'password'
+      }).calledOnce
+
+      expect(apiCalledWithExpectedArgs).toBeTruthy()
+    })
+
+    it('should redirect browser to dashboard', function() {
+      var browserRedirectedWithExpectedUrl = stubbedBrowser.withArgs('/dashboard').calledOnce
+      expect(browserRedirectedWithExpectedUrl).toBeTruthy()
     })
   })
 })
