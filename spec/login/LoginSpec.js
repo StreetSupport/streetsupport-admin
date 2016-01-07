@@ -1,21 +1,14 @@
 var sinon = require('sinon'),
-    sinonPromise = require('sinon-promise'),
-    proxyquire = require('proxyquire'),
     api = require('../../src/js/get-api-data'),
     cookies = require('browser-cookies')
 
-
-
 describe('Login', function () {
-  var Login = proxyquire('../../src/js/models/Login', {
-    'q': sinonPromise.Q
-  })
+  var Login = require('../../src/js/models/Login')
   var login
 
 
   beforeEach(function () {
     login = new Login()
-    sinonPromise(sinon)
   })
 
   it('should set username as empty', function () {
@@ -64,5 +57,4 @@ describe('Login', function () {
       mockCookies.verify()
     })
   })
-
 })
