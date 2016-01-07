@@ -7,15 +7,21 @@ var cookies = require('browser-cookies')
 function LoginModel () {
   this.username = ''
   this.password = ''
+  this.message = ''
 }
 
 LoginModel.prototype.submit = function () {
+  var self = this
   api.postData(endpoints.createSessionUrl, {
-    'username': this.username,
-    'password': this.password
+    'username': self.username,
+    'password': self.password
   }).then(function (result) {
-    cookies.set('session-token', result.data.sessionToken)
-    browser.redirect(adminUrls.dashboard)
+    if(result.statusCode === 201) {
+      cookies.set('session-token', result.data.sessionToken)
+      browser.redirect(adminUrls.dashboard)
+    }else {
+      self.message = result.message
+    }
   })
 }
 

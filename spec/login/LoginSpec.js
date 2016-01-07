@@ -100,4 +100,50 @@ describe('Login', function () {
       expect(browserRedirectedWithExpectedUrl).toBeTruthy()
     })
   })
+
+  describe('Submit ', function() {
+    var mockCookies,
+        stubbedApi,
+        stubbedBrowser
+
+    beforeEach(function () {
+      function fakeResolved(value) {
+        return {
+          then: function(callback) {
+            callback({
+              'statusCode': 401,
+              'message': 'returned error message'
+            })
+          }
+        }
+      }
+
+      stubbedApi = sinon.stub(api, 'postData')
+      stubbedApi.returns(fakeResolved())
+      stubbedBrowser = sinon.stub(browser, 'redirect')
+
+      mockCookies = sinon.mock(cookies)
+      mockCookies.expects('set').once().withArgs('session-token', 'returnedSessionToken')
+
+      login.username = 'username'
+      login.password = 'password'
+
+      login.submit()
+    })
+
+    afterEach(function () {
+      api.postData.restore()
+      browser.redirect.restore()
+      mockCookies.restore()
+    })
+
+    it('should set message to returned message', function() {
+      expect(login.message).toEqual('returned error message')
+    })
+
+    it('should not redirect browser to dashboard', function() {
+      var browserRedirectedWithExpectedUrl = stubbedBrowser.withArgs(adminurls.dashboard).called
+      expect(browserRedirectedWithExpectedUrl).toBeFalsy()
+    })
+  })
 })
