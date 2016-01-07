@@ -15,6 +15,7 @@ if (argv.production) {
 
 module.exports = {
   entry: {
+    generic: __dirname + '/../../src/js/page-generic',
   },
   output: {
     path: path.join(__dirname, '/../../_dist/assets/js/'),
