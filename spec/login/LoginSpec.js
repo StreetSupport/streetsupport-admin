@@ -47,8 +47,8 @@ describe('Login', function () {
       mockCookies = sinon.mock(cookies)
       mockCookies.expects('set').once().withArgs('session-token', 'returnedSessionToken')
 
-      login.username = 'username'
-      login.password = 'password'
+      login.username('username')
+      login.password('password')
 
       login.submit()
     })
@@ -100,8 +100,8 @@ describe('Login', function () {
       stubbedApi.returns(fakeResolved())
       stubbedBrowser = sinon.stub(browser, 'redirect')
 
-      login.username = 'username'
-      login.password = 'password'
+      login.username('username')
+      login.password('password')
 
       login.submit()
     })

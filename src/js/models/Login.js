@@ -14,8 +14,8 @@ function LoginModel () {
 LoginModel.prototype.submit = function () {
   var self = this
   ajax.postJson(endpoints.createSession, {
-    'username': self.username,
-    'password': self.password
+    'username': self.username(),
+    'password': self.password()
   })
   .then(function (result) {
     cookies.set('session-token', result.json.sessionToken)
