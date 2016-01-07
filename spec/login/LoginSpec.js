@@ -14,11 +14,11 @@ describe('Login', function () {
   })
 
   it('should set username as empty', function () {
-    expect(login.username).toEqual('')
+    expect(login.username()).toEqual('')
   })
 
   it('should set password as empty', function () {
-    expect(login.password).toEqual('')
+    expect(login.password()).toEqual('')
   })
 
   describe('Submit', function() {
@@ -88,8 +88,10 @@ describe('Login', function () {
           then: function(success, error) {
             error({
               'status': 401,
-              'responseText': 'returned error message'
-            })
+              'response': JSON.stringify({
+                'message': 'returned error message'
+              })
+           })
           }
         }
       }
@@ -110,7 +112,7 @@ describe('Login', function () {
     })
 
     it('should set message to returned message', function() {
-      expect(login.message).toEqual('returned error message')
+      expect(login.message()).toEqual('returned error message')
     })
 
     it('should not redirect browser to dashboard', function() {

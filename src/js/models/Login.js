@@ -3,11 +3,12 @@ var endpoints = require('../api-endpoints')
 var adminUrls = require('../admin-urls')
 var browser = require('../browser')
 var cookies = require('../cookies')
+var ko = require('knockout')
 
 function LoginModel () {
-  this.username = ''
-  this.password = ''
-  this.message = ''
+  this.username = ko.observable('')
+  this.password = ko.observable('')
+  this.message = ko.observable('')
 }
 
 LoginModel.prototype.submit = function () {
@@ -17,14 +18,11 @@ LoginModel.prototype.submit = function () {
     'password': self.password
   })
   .then(function (result) {
-    if (result.status === 201) {
-      cookies.set('session-token', result.json.sessionToken)
-      browser.redirect(adminUrls.dashboard)
-    } else {
-      self.message = result.responseText
-    }
+    cookies.set('session-token', result.json.sessionToken)
+    browser.redirect(adminUrls.dashboard)
   }, function(error) {
-      self.message = error.responseText
+    var response = JSON.parse(error.response)
+    self.message(response.message)
   })
 }
 
