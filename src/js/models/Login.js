@@ -1,5 +1,6 @@
 var api = require('../get-api-data')
 var endpoints = require('../api-endpoints')
+var adminUrls = require('../admin-urls')
 var browser = require('../browser')
 var cookies = require('browser-cookies')
 
@@ -14,7 +15,7 @@ LoginModel.prototype.submit = function () {
     'password': this.password
   }).then(function (result) {
     cookies.set('session-token', result.data.sessionToken)
-    browser.redirect('/dashboard')
+    browser.redirect(adminUrls.dashboard)
   })
 }
 

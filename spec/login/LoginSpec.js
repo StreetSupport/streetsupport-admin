@@ -1,6 +1,7 @@
 var sinon =     require('sinon'),
     api =       require('../../src/js/get-api-data'),
     endpoints = require('../../src/js/api-endpoints'),
+    adminurls = require('../../src/js/admin-urls'),
     browser =   require('../../src/js/browser'),
     cookies =   require('browser-cookies')
 
@@ -95,7 +96,7 @@ describe('Login', function () {
     })
 
     it('should redirect browser to dashboard', function() {
-      var browserRedirectedWithExpectedUrl = stubbedBrowser.withArgs('/dashboard').calledOnce
+      var browserRedirectedWithExpectedUrl = stubbedBrowser.withArgs(adminurls.dashboard).calledOnce
       expect(browserRedirectedWithExpectedUrl).toBeTruthy()
     })
   })

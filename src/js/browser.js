@@ -1,4 +1,4 @@
-var redirect = function(url) {
+var redirect = function (url) {
   window.location = url
 }
 
