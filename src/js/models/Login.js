@@ -1,4 +1,4 @@
-var api = require('../get-api-data')
+var ajax = require('basic-ajax')
 var endpoints = require('../api-endpoints')
 var adminUrls = require('../admin-urls')
 var browser = require('../browser')
@@ -12,7 +12,7 @@ function LoginModel () {
 
 LoginModel.prototype.submit = function () {
   var self = this
-  api.postData(endpoints.createSessionUrl, {
+  ajax.postJson(endpoints.createSessionUrl, {
     'username': self.username,
     'password': self.password
   }).then(function (result) {

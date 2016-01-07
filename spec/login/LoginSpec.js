@@ -1,5 +1,5 @@
 var sinon =     require('sinon'),
-    api =       require('../../src/js/get-api-data'),
+    ajax =      require('basic-ajax'),
     endpoints = require('../../src/js/api-endpoints'),
     adminurls = require('../../src/js/admin-urls'),
     browser =   require('../../src/js/browser'),
@@ -8,7 +8,6 @@ var sinon =     require('sinon'),
 describe('Login', function () {
   var Login = require('../../src/js/models/Login')
   var login
-
 
   beforeEach(function () {
     login = new Login()
@@ -25,7 +24,7 @@ describe('Login', function () {
   describe('Submit', function() {
     beforeEach(function () {
 
-      stubbedApi = sinon.stub(api, 'postData')
+      stubbedApi = sinon.stub(ajax, 'postJson')
       stubbedApi.returns(fakeResolved())
       stubbedBrowser = sinon.stub(browser, 'redirect')
 
@@ -39,7 +38,7 @@ describe('Login', function () {
     })
 
     afterEach(function () {
-      api.postData.restore()
+      ajax.postJson.restore()
       mockCookies.restore()
     })
   })
@@ -63,7 +62,7 @@ describe('Login', function () {
         }
       }
 
-      stubbedApi = sinon.stub(api, 'postData')
+      stubbedApi = sinon.stub(ajax, 'postJson')
       stubbedApi.returns(fakeResolved())
       stubbedBrowser = sinon.stub(browser, 'redirect')
 
@@ -77,7 +76,7 @@ describe('Login', function () {
     })
 
     afterEach(function () {
-      api.postData.restore()
+      ajax.postJson.restore()
       browser.redirect.restore()
       mockCookies.restore()
     })
@@ -111,6 +110,7 @@ describe('Login', function () {
         return {
           then: function(callback) {
             callback({
+              'status': 'errpr',
               'statusCode': 401,
               'message': 'returned error message'
             })
@@ -118,7 +118,7 @@ describe('Login', function () {
         }
       }
 
-      stubbedApi = sinon.stub(api, 'postData')
+      stubbedApi = sinon.stub(ajax, 'postJson')
       stubbedApi.returns(fakeResolved())
       stubbedBrowser = sinon.stub(browser, 'redirect')
 
@@ -132,7 +132,7 @@ describe('Login', function () {
     })
 
     afterEach(function () {
-      api.postData.restore()
+      ajax.postJson.restore()
       browser.redirect.restore()
       mockCookies.restore()
     })
