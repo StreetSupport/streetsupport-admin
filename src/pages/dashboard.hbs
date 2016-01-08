@@ -1,7 +1,7 @@
 ---
 title: Dashboard - Street Support Admin
 description: Street Support - Making it easier to help homeless people in Manchester
-jsName: generic
+jsName: dashboard
 pageName: dashboard
 ---
 
@@ -11,6 +11,9 @@ pageName: dashboard
       <div class="container block__inner">
       <div class="block__content">
         <h1>Dashboard</h1>
+        <ul data-bind="foreach: serviceProviders">
+          <li data-bind="text: key"></li>
+        </ul>
       </div>
       </div>
     </div>

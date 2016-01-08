@@ -1,4 +1,3 @@
-// Page modules
 var FastClick = require('fastclick')
 var nav = require('./../nav.js')
 

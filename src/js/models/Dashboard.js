@@ -4,6 +4,9 @@ var ko = require('knockout')
 
 function DashboardModel () {
   this.serviceProviders = ko.observableArray()
+  this.message = ko.observable('hello world')
+
+  this.init()
 }
 
 DashboardModel.prototype.init = function () {

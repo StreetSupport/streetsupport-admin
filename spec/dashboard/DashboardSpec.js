@@ -11,8 +11,6 @@ describe('Dashboard', function () {
       stubbedApi
 
   beforeEach(function () {
-    dashboard = new Dashboard()
-
     function fakeResolved(value) {
       return {
         then: function(success, error) {
@@ -43,7 +41,7 @@ describe('Dashboard', function () {
     stubbedApi = sinon.stub(ajax, 'getJson')
     stubbedApi.returns(fakeResolved())
 
-    dashboard.init()
+    dashboard = new Dashboard()
   })
 
   afterEach(function () {
@@ -57,5 +55,6 @@ describe('Dashboard', function () {
 
   it('should populate service provider collection', function() {
     expect(dashboard.serviceProviders().length).toEqual(3)
+    expect(dashboard.serviceProviders()[1].key).toEqual('booth-centre')
   })
 })
