@@ -25,8 +25,7 @@ DashboardModel.prototype.init = function () {
 }
 
 DashboardModel.prototype.toggleVerified = function (serviceProvider) {
-  ajax.postJson(endpoints.serviceProviderVerifications, {
-    'key': serviceProvider.key,
+  ajax.postJson(endpoints.serviceProviderVerifications + '/' + serviceProvider.key + '/update', {
     'isVerified': !serviceProvider.isVerified
   })
 }

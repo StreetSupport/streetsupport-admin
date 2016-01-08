@@ -85,12 +85,16 @@ describe('VerifiedServiceProviders', function () {
     })
 
     it('should send service provider key and inverse of current isVerified to api', function() {
-      var apiCalledWithExpectedArgs = stubbedPostApi.withArgs(endpoints.serviceProviderVerifications, {
-        'key': 'albert-kennedy-trust',
+      var endpoint = endpoints.serviceProviderVerifications + '/albert-kennedy-trust/update'
+      var apiCalledWithExpectedArgs = stubbedPostApi.withArgs(endpoint, {
         'isVerified': false
       }).calledOnce
 
       expect(apiCalledWithExpectedArgs).toBeTruthy()
+    })
+
+    it('should invert isVerified', function() {
+      expect(dashboard.serviceProviders()[0].isVerified).toBeFalsy()
     })
   })
 })
