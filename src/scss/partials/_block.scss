@@ -7,17 +7,17 @@
     @include mq($from: m) {
       @include span(10 of $column-large);
 
-      // Center align on homepage
-      .page-home & {
-        @include push(1 of $column-large);
-      }
-
-      // Full width on find help only
-      .page-findhelp & {
+      // Full width
+      .page-login &,
+      .page-dashboard & {
         width: 100%;
         margin-left: auto;
         margin-right: auto;
         float: none;
+      }
+
+      .page-dashboard & {
+        text-align: left
       }
     }
 
