@@ -13,7 +13,15 @@ pageName: dashboard
         <h1>Dashboard</h1>
         <ul data-bind="foreach: serviceProviders">
           <li>
-            <a data-bind="attr: { 'href': url, 'title': name }, text: name"></a>
+            <dl>
+              <dt><a data-bind="attr: { 'href': url, 'title': name }, text: name"></a></dt>
+              <dd data-bind="text: verifiedLabel"></dd>
+              <dd>
+              <button class="btn btn--brand-d">
+                <span data-bind="text: toggleVerificationButtonLabel" class="btn__text"></span>
+              </button>
+              </dd>
+            </dl>
           </li>
         </ul>
       </div>

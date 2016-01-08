@@ -32,7 +32,11 @@ function mapServiceProviders(data) {
       return {
         'key': sp.key,
         'name': sp.name,
-        'url': adminUrls.serviceProviders + '?key=' + sp.key
+        'url': adminUrls.serviceProviders + '?key=' + sp.key,
+        'verifiedLabel': sp.isVerified ? 'verified' : 'under review',
+        'toggleVerificationButtonLabel': sp.isVerified ? 'un-verify' : 'verify',
+        'publishedLabel': sp.isPublished ? 'published' : 'disabled',
+        'togglePublishButtonLabel': sp.isPublished ? 'disable' : 'publish'
       }
     })
     .value()
