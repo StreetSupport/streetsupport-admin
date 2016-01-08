@@ -9,5 +9,5 @@ var getServiceProvidersUrl = '/v2/service-providers'
 
 module.exports = {
   createSession: domainRoot + createSessionUrl,
-  getServiceProviders: domainRoot + getServiceProvidersUrl,
+  getServiceProviders: domainRoot + getServiceProvidersUrl
 }

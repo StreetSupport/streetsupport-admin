@@ -1,6 +1,6 @@
 var htmlfe = '.html'
 
-var s = function(page) {
+var s = function (page) {
   return page + htmlfe
 }
 

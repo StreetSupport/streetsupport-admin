@@ -7,8 +7,8 @@ cookies =   require('../../src/js/cookies')
 
 describe('Dashboard', function () {
   var Dashboard = require('../../src/js/models/Dashboard'),
-  dashboard,
-  stubbedApi
+      dashboard,
+      stubbedApi
 
   beforeEach(function () {
     dashboard = new Dashboard()
@@ -18,8 +18,23 @@ describe('Dashboard', function () {
         then: function(success, error) {
           success({
             'status': 200,
-            'json': {
-            }
+            'json': [
+              {
+                "key": "albert-kennedy-trust",
+                "name": "Albert Kennedy Trust",
+                "isVerified": false
+              },
+              {
+                "key": "booth-centre",
+                "name": "Booth Centre",
+                "isVerified": false
+              },
+              {
+                "key": "coffee4craig",
+                "name": "Coffee4Craig",
+                "isVerified": false
+              }
+            ]
           })
         }
       }
@@ -38,5 +53,9 @@ describe('Dashboard', function () {
   it('should retrieve service providers from api', function() {
     var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoints.getServiceProviders).calledOnce
     expect(apiCalledWithExpectedArgs).toBeTruthy()
+  })
+
+  it('should populate service provider collection', function() {
+    expect(dashboard.serviceProviders().length).toEqual(3)
   })
 })
