@@ -63,7 +63,21 @@ describe('Login', function () {
       mockCookies.verify()
     })
 
+    it('should notify user it is authenticating', function() {
+      expect(login.message()).toEqual('Loading, please wait')
+    })
+
     it('should send credentials to api', function() {
+      var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoints.createSession, {
+        'username': 'username',
+        'password': 'password'
+      }).calledOnce
+
+      expect(apiCalledWithExpectedArgs).toBeTruthy()
+    })
+
+    it('should not be able to send credentials after submitting', function() {
+      login.submit()
       var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoints.createSession, {
         'username': 'username',
         'password': 'password'
@@ -118,6 +132,16 @@ describe('Login', function () {
     it('should not redirect browser to dashboard', function() {
       var browserRedirectedWithExpectedUrl = stubbedBrowser.withArgs(adminurls.dashboard).called
       expect(browserRedirectedWithExpectedUrl).toBeFalsy()
+    })
+
+    it('should be able to send credentials again', function() {
+      login.submit()
+      var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoints.createSession, {
+        'username': 'username',
+        'password': 'password'
+      }).calledTwice
+
+      expect(apiCalledWithExpectedArgs).toBeTruthy()
     })
   })
 })
