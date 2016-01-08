@@ -8,6 +8,8 @@ function DashboardModel () {
 
 DashboardModel.prototype.init = function () {
   var self = this
+
+  ajax.getJson(endpoints.getServiceProviders)
   // if (!self.isSubmitting) {
   //   self.isSubmitting = true
   //   self.message('Loading, please wait')

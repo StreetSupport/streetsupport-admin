@@ -5,7 +5,9 @@ var live = 'http://api.streetsupport.net' // eslint-disable-line
 var domainRoot = staging
 
 var createSessionUrl = '/v1/sessions/create'
+var getServiceProvidersUrl = '/v2/service-providers'
 
 module.exports = {
-  createSession: domainRoot + createSessionUrl
+  createSession: domainRoot + createSessionUrl,
+  getServiceProviders: domainRoot + getServiceProvidersUrl,
 }
