@@ -11,14 +11,20 @@ pageName: dashboard
       <div class="container block__inner">
       <div class="block__content">
         <h1>Dashboard</h1>
-        <ul data-bind="foreach: serviceProviders">
-          <li>
+        <ul data-bind="foreach: serviceProviders" class="stacked-list">
+          <li class="stacked-list__item">
             <dl>
-              <dt><a data-bind="attr: { 'href': url, 'title': name }, text: name"></a></dt>
-              <dd data-bind="text: verifiedLabel"></dd>
-              <dd>
+              <dt class="stacked-list__element--header"><a data-bind="attr: { 'href': url, 'title': name }, text: name"></a></dt>
+              <dd data-bind="text: verifiedLabel" class="stacked-list__element"></dd>
+              <dd data-bind="text: publishedLabel" class="stacked-list__element"></dd>
+              <dd class="stacked-list__element--button">
+                <button class="btn btn--brand-d">
+                  <span data-bind="text: toggleVerificationButtonLabel" class="btn__text"></span>
+                </button>
+              </dd>
+              <dd class="stacked-list__element--button">
               <button class="btn btn--brand-d">
-                <span data-bind="text: toggleVerificationButtonLabel" class="btn__text"></span>
+                <span data-bind="text: togglePublishButtonLabel" class="btn__text"></span>
               </button>
               </dd>
             </dl>

@@ -1,0 +1,22 @@
+.stacked-list {
+  @include cf();
+  padding: 0;
+  list-style-type: none;
+  margin: 0 auto;
+
+  &__item {
+    @include cf();
+  }
+
+  &__element {
+    float:left;
+    &--header {
+      float:left;
+      @include span(6 of $column-large);
+    }
+    &--button {
+      float:left;
+      .btn { margin-top: -15px }
+    }
+  }
+}
