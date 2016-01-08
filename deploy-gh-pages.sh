@@ -21,6 +21,9 @@ git config --global user.name "Travis CI"
 rm -rf _dist
 mkdir _dist
 
+# Run tests
+jasmine
+
 # Run gulp
 gulp deploy --debug --production
 
