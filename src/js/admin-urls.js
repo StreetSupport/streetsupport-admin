@@ -6,5 +6,6 @@ var s = function (page) {
 
 module.exports = {
   login: '/',
-  dashboard: s('dashboard')
+  dashboard: s('dashboard'),
+  serviceProviders: s('service-providers')
 }

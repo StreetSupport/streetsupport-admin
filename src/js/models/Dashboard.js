@@ -1,5 +1,6 @@
 var ajax = require('basic-ajax')
 var endpoints = require('../api-endpoints')
+var adminUrls = require('../admin-urls')
 var ko = require('knockout')
 var _ = require('lodash')
 
@@ -23,7 +24,7 @@ DashboardModel.prototype.init = function () {
           return {
             'key': sp.key,
             'name': sp.name,
-            'url': 'service-providers.html?key=' + sp.key,
+            'url': adminUrls.serviceProviders + '?key=' + sp.key,
           }
         })
         .value()
