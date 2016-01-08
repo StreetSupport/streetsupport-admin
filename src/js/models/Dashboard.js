@@ -1,6 +1,7 @@
 var ajax = require('basic-ajax')
 var endpoints = require('../api-endpoints')
 var ko = require('knockout')
+var _ = require('lodash')
 
 function DashboardModel () {
   this.serviceProviders = ko.observableArray()
@@ -15,7 +16,18 @@ DashboardModel.prototype.init = function () {
   ajax
     .getJson(endpoints.getServiceProviders)
     .then(function (result) {
-      self.serviceProviders(result.json)
+      var serviceProviders = _
+        .chain(result.json)
+        .sortBy('key')
+        .map(function(sp) {
+          return {
+            'key': sp.key,
+            'name': sp.name,
+            'url': 'service-providers.html?key=' + sp.key,
+          }
+        })
+        .value()
+      self.serviceProviders(serviceProviders)
     },
     function (error) {
 

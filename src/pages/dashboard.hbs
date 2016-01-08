@@ -12,7 +12,9 @@ pageName: dashboard
       <div class="block__content">
         <h1>Dashboard</h1>
         <ul data-bind="foreach: serviceProviders">
-          <li data-bind="text: key"></li>
+          <li>
+            <a data-bind="attr: { 'href': url, 'title': name }, text: name"></a>
+          </li>
         </ul>
       </div>
       </div>

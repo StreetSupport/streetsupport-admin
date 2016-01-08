@@ -23,13 +23,13 @@ describe('Dashboard', function () {
                 "isVerified": false
               },
               {
-                "key": "booth-centre",
-                "name": "Booth Centre",
+                "key": "coffee4craig",
+                "name": "Coffee4Craig",
                 "isVerified": false
               },
               {
-                "key": "coffee4craig",
-                "name": "Coffee4Craig",
+                "key": "booth-centre",
+                "name": "Booth Centre",
                 "isVerified": false
               }
             ]
@@ -55,6 +55,15 @@ describe('Dashboard', function () {
 
   it('should populate service provider collection', function() {
     expect(dashboard.serviceProviders().length).toEqual(3)
+  })
+
+  it('should sort service provider by name', function() {
+    expect(dashboard.serviceProviders()[0].key).toEqual('albert-kennedy-trust')
     expect(dashboard.serviceProviders()[1].key).toEqual('booth-centre')
+    expect(dashboard.serviceProviders()[2].key).toEqual('coffee4craig')
+  })
+
+  it('should set service provider url', function() {
+    expect(dashboard.serviceProviders()[0].url).toEqual('service-providers.html?key=albert-kennedy-trust')
   })
 })
