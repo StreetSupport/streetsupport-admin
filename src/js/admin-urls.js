@@ -1,4 +1,10 @@
+var htmlfe = '.html'
+
+var s = function(page) {
+  return page + htmlfe
+}
+
 module.exports = {
   login: '/',
-  dashboard: 'dashboard'
+  dashboard: s('dashboard')
 }

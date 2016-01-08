@@ -14,7 +14,7 @@ function LoginModel () {
 
 LoginModel.prototype.submit = function () {
   var self = this
-  if(!self.isSubmitting) {
+  if (!self.isSubmitting) {
     self.isSubmitting = true
     self.message('Loading, please wait')
     ajax.postJson(endpoints.createSession, {
@@ -24,7 +24,7 @@ LoginModel.prototype.submit = function () {
     .then(function (result) {
       cookies.set('session-token', result.json.sessionToken)
       browser.redirect(adminUrls.dashboard)
-    }, function(error) {
+    }, function (error) {
       var response = JSON.parse(error.response)
       self.message(response.message)
       self.isSubmitting = false
