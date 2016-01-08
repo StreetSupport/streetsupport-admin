@@ -17,22 +17,25 @@ DashboardModel.prototype.init = function () {
   ajax
     .getJson(endpoints.getServiceProviders)
     .then(function (result) {
-      var serviceProviders = _
-        .chain(result.json)
-        .sortBy('key')
-        .map(function(sp) {
-          return {
-            'key': sp.key,
-            'name': sp.name,
-            'url': adminUrls.serviceProviders + '?key=' + sp.key,
-          }
-        })
-        .value()
-      self.serviceProviders(serviceProviders)
+      self.serviceProviders(mapServiceProviders(result.json))
     },
     function (error) {
 
     })
+}
+
+function mapServiceProviders(data) {
+  return _
+    .chain(data)
+    .sortBy('key')
+    .map(function (sp) {
+      return {
+        'key': sp.key,
+        'name': sp.name,
+        'url': adminUrls.serviceProviders + '?key=' + sp.key
+      }
+    })
+    .value()
 }
 
 module.exports = DashboardModel
