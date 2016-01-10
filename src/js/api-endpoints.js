@@ -8,10 +8,12 @@ function p (url) {
 
 var createSessionUrl = '/v1/sessions/create'
 var getServiceProvidersUrl = '/v2/service-providers'
-var serviceProviderVerificationsUrl = '/v1/service-provider-verifications'
+var serviceProviderVerificationsUrl = '/v1/verified-service-providers'
+var serviceProviderPublishedUrl = '/v1/published-service-providers'
 
 module.exports = {
   createSession: p(createSessionUrl),
   getServiceProviders: p(getServiceProvidersUrl),
-  serviceProviderVerifications: p(serviceProviderVerificationsUrl)
+  serviceProviderVerifications: p(serviceProviderVerificationsUrl),
+  serviceProviderPublished: p(serviceProviderPublishedUrl)
 }

@@ -85,7 +85,7 @@ describe('VerifiedServiceProviders', function () {
       cookies.get.restore()
     })
 
-    it('should send service provider key and inverse of current isVerified to api', function() {
+    it('should send inverse of current isVerified to api', function() {
       var endpoint = endpoints.serviceProviderVerifications + '/albert-kennedy-trust/update'
       var payload = JSON.stringify({
         'IsVerified': false
@@ -103,12 +103,12 @@ describe('VerifiedServiceProviders', function () {
       expect(dashboard.serviceProviders()[0].isVerified()).toBeFalsy()
     })
 
-  it('should set verified labels', function() {
-    expect(dashboard.serviceProviders()[0].verifiedLabel()).toEqual('under review')
-  })
+    it('should set verified labels', function() {
+      expect(dashboard.serviceProviders()[0].verifiedLabel()).toEqual('under review')
+    })
 
-  it('should set toggle verification button labels', function() {
-    expect(dashboard.serviceProviders()[0].toggleVerificationButtonLabel()).toEqual('verify')
-  })
+    it('should set toggle verification button labels', function() {
+      expect(dashboard.serviceProviders()[0].toggleVerificationButtonLabel()).toEqual('verify')
+    })
   })
 })

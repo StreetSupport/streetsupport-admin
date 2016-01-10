@@ -10,10 +10,11 @@ function ServiceProvider (sp) {
   this.name = sp.name
   this.url = adminUrls.serviceProviders + '?key=' + sp.key
   this.isVerified = ko.observable(sp.isVerified)
+  this.isPublished = ko.observable(sp.isPublished)
   this.verifiedLabel = ko.computed(function () { return this.isVerified() ? 'verified' : 'under review' }, this)
   this.toggleVerificationButtonLabel = ko.computed(function () { return this.isVerified() ? 'un-verify' : 'verify' }, this)
-  this.publishedLabel = ko.observable(sp.isPublished ? 'published' : 'disabled')
-  this.togglePublishButtonLabel = ko.observable(sp.isPublished ? 'disable' : 'publish')
+  this.publishedLabel = ko.computed(function () { return this.isPublished() ? 'published' : 'disabled' }, this)
+  this.togglePublishButtonLabel = ko.computed(function () { return this.isPublished() ? 'disable' : 'publish' }, this)
 }
 
 function DashboardModel () {
@@ -59,11 +60,29 @@ function DashboardModel () {
     })
   }
 
+  self.togglePublished = function (serviceProvider, event) {
+    ajax.put(endpoints.serviceProviderPublished + '/' + serviceProvider.key + '/update',
+      {
+        'content-type': 'application/json',
+        'session-token': cookies.get('session-token')
+      },
+      JSON.stringify({
+        'IsPublished': !serviceProvider.isPublished()
+      })
+    )
+    .then(function(result) {
+      self.updateServiceProvider(serviceProvider)
+    }, function (error) {
+      alert('oops, there was a problem! ' + JSON.parse(error))
+    })
+  }
+
   self.updateServiceProvider = function (serviceProvider) {
     var updatedSPs = _.map(self.serviceProviders(), function (sp) {
       if (sp.key !== serviceProvider.key) return sp
 
       sp.isVerified(!serviceProvider.isVerified())
+      sp.isPublished(!serviceProvider.isPublished())
 
       return sp
     })
