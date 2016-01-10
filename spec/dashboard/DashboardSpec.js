@@ -8,7 +8,8 @@ cookies =   require('../../src/js/cookies')
 describe('Dashboard', function () {
   var Dashboard = require('../../src/js/models/Dashboard'),
       dashboard,
-      stubbedApi
+      stubbedApi,
+      stubbedCookies
 
   beforeEach(function () {
     function fakeResolved(value) {
@@ -38,19 +39,29 @@ describe('Dashboard', function () {
       }
     }
 
-    stubbedApi = sinon.stub(ajax, 'getJson')
+    stubbedApi = sinon.stub(ajax, 'get')
     stubbedApi.returns(fakeResolved())
+
+    stubbedCookies = sinon.stub(cookies, 'get').returns('stored-session-token')
 
     dashboard = new Dashboard()
   })
 
   afterEach(function () {
-    ajax.getJson.restore()
+    ajax.get.restore()
+    cookies.get.restore()
   })
 
-  it('should retrieve service providers from api', function() {
-    var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoints.getServiceProviders).calledOnce
-    expect(apiCalledWithExpectedArgs).toBeTruthy()
+  it('should retrieve service providers from api with session token', function() {
+      var endpoint = endpoints.getServiceProviders
+      var headers = {
+        'content-type': 'application/json',
+        'session-token': 'stored-session-token'
+      }
+      var payload = JSON.stringify({
+        'IsPublished': false
+      })
+      var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, headers, payload).calledOnce
   })
 
   it('should populate service provider collection', function() {

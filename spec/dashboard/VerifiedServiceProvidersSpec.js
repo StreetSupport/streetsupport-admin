@@ -34,14 +34,17 @@ describe('VerifiedServiceProviders', function () {
       }
     }
 
-    stubbedApi = sinon.stub(ajax, 'getJson')
+    stubbedApi = sinon.stub(ajax, 'get')
     stubbedApi.returns(fakeResolved())
+
+    stubbedCookies = sinon.stub(cookies, 'get').returns('stored-session-token')
 
     dashboard = new Dashboard()
   })
 
   afterEach(function () {
-    ajax.getJson.restore()
+    ajax.get.restore()
+    cookies.get.restore()
   })
 
   it('should set verified labels', function() {
@@ -75,14 +78,11 @@ describe('VerifiedServiceProviders', function () {
       stubbedPutApi = sinon.stub(ajax, 'put')
       stubbedPutApi.returns(fakePostResolved())
 
-      stubbedCookies = sinon.stub(cookies, 'get').returns('stored-session-token')
-
       dashboard.toggleVerified(dashboard.serviceProviders()[0])
     })
 
     afterEach(function () {
       ajax.put.restore()
-      cookies.get.restore()
     })
 
     it('should send inverse of current isVerified to api', function() {

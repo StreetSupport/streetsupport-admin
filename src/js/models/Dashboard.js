@@ -24,7 +24,12 @@ function DashboardModel () {
 
   self.init = function () {
     ajax
-    .getJson(endpoints.getServiceProviders)
+    .get(endpoints.getServiceProviders,
+      {
+        'content-type': 'application/json',
+        'session-token': cookies.get('session-token')
+      },
+      {})
     .then(function (result) {
       self.serviceProviders(self.mapServiceProviders(result.json))
     },

@@ -7,7 +7,7 @@ function p (url) {
 }
 
 var createSessionUrl = '/v1/sessions/create'
-var getServiceProvidersUrl = '/v2/service-providers'
+var getServiceProvidersUrl = '/v1/all-service-providers'
 var serviceProviderVerificationsUrl = '/v1/verified-service-providers'
 var serviceProviderPublishedUrl = '/v1/published-service-providers'
 
