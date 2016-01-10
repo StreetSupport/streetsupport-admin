@@ -44,15 +44,15 @@ describe('VerifiedServiceProviders', function () {
   })
 
   it('should set published labels', function() {
-    expect(dashboard.serviceProviders()[0].publishedLabel).toEqual('published')
+    expect(dashboard.serviceProviders()[0].publishedLabel()).toEqual('published')
   })
 
   it('should set un-published labels', function() {
-    expect(dashboard.serviceProviders()[1].publishedLabel).toEqual('disabled')
+    expect(dashboard.serviceProviders()[1].publishedLabel()).toEqual('disabled')
   })
 
   it('should set toggle publish button labels', function() {
-    expect(dashboard.serviceProviders()[0].togglePublishButtonLabel).toEqual('disable')
-    expect(dashboard.serviceProviders()[1].togglePublishButtonLabel).toEqual('publish')
+    expect(dashboard.serviceProviders()[0].togglePublishButtonLabel()).toEqual('disable')
+    expect(dashboard.serviceProviders()[1].togglePublishButtonLabel()).toEqual('publish')
   })
 })

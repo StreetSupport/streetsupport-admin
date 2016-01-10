@@ -1,12 +1,14 @@
 var cookies = require('cookie-cutter')
 
 var set = function (key, value) {
-  console.log(cookies)
-  console.log(key)
-  console.log(value)
   cookies.set(key, value)
 }
 
+var get = function (key) {
+  return cookies.get(key)
+}
+
 module.exports = {
-  'set': set
+  'set': set,
+  'get': get
 }

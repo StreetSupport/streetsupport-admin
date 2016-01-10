@@ -1,5 +1,6 @@
 var sinon = require('sinon'),
 ajax =      require('basic-ajax'),
+ko   =      require('knockout'),
 endpoints = require('../../src/js/api-endpoints'),
 adminurls = require('../../src/js/admin-urls'),
 browser =   require('../../src/js/browser'),
@@ -44,20 +45,20 @@ describe('VerifiedServiceProviders', function () {
   })
 
   it('should set verified labels', function() {
-    expect(dashboard.serviceProviders()[0].verifiedLabel).toEqual('verified')
+    expect(dashboard.serviceProviders()[0].verifiedLabel()).toEqual('verified')
   })
 
   it('should set un-verified labels', function() {
-    expect(dashboard.serviceProviders()[1].verifiedLabel).toEqual('under review')
+    expect(dashboard.serviceProviders()[1].verifiedLabel()).toEqual('under review')
   })
 
   it('should set toggle verification button labels', function() {
-    expect(dashboard.serviceProviders()[0].toggleVerificationButtonLabel).toEqual('un-verify')
-    expect(dashboard.serviceProviders()[1].toggleVerificationButtonLabel).toEqual('verify')
+    expect(dashboard.serviceProviders()[0].toggleVerificationButtonLabel()).toEqual('un-verify')
+    expect(dashboard.serviceProviders()[1].toggleVerificationButtonLabel()).toEqual('verify')
   })
 
   describe('Toggle Verified status', function() {
-    var stubbedPostApi
+    var stubbedPutApi
 
     beforeEach(function () {
       function fakePostResolved(value) {
@@ -71,30 +72,43 @@ describe('VerifiedServiceProviders', function () {
         }
       }
 
-      stubbedPostApi = sinon.stub(ajax, 'postJson')
-      stubbedPostApi.returns(fakePostResolved())
+      stubbedPutApi = sinon.stub(ajax, 'put')
+      stubbedPutApi.returns(fakePostResolved())
 
-      dashboard.toggleVerified({
-        'key': 'albert-kennedy-trust',
-        'isVerified': true
-      })
+      stubbedCookies = sinon.stub(cookies, 'get').returns('stored-session-token')
+
+      dashboard.toggleVerified(dashboard.serviceProviders()[0])
     })
 
     afterEach(function () {
-      ajax.postJson.restore()
+      ajax.put.restore()
+      cookies.get.restore()
     })
 
     it('should send service provider key and inverse of current isVerified to api', function() {
       var endpoint = endpoints.serviceProviderVerifications + '/albert-kennedy-trust/update'
-      var apiCalledWithExpectedArgs = stubbedPostApi.withArgs(endpoint, {
-        'isVerified': false
-      }).calledOnce
+      var payload = JSON.stringify({
+        'IsVerified': false
+      })
+      var headers = {
+        'content-type': 'application/json',
+        'session-token': 'stored-session-token'
+      }
+      var apiCalledWithExpectedArgs = stubbedPutApi.withArgs(endpoint, headers, payload).calledOnce
 
       expect(apiCalledWithExpectedArgs).toBeTruthy()
     })
 
     it('should invert isVerified', function() {
-      expect(dashboard.serviceProviders()[0].isVerified).toBeFalsy()
+      expect(dashboard.serviceProviders()[0].isVerified()).toBeFalsy()
     })
+
+  it('should set verified labels', function() {
+    expect(dashboard.serviceProviders()[0].verifiedLabel()).toEqual('under review')
+  })
+
+  it('should set toggle verification button labels', function() {
+    expect(dashboard.serviceProviders()[0].toggleVerificationButtonLabel()).toEqual('verify')
+  })
   })
 })
