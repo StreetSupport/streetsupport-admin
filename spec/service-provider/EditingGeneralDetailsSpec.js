@@ -62,8 +62,10 @@ describe('Edit Service Provider General Details', function () {
 
       stubbedPutApi = sinon.stub(ajax, 'put').returns(fakeResolved())
 
+      model = new Model()
       model.serviceProvider().description('new description')
 
+      model.editGeneralDetails()
       model.saveGeneralDetails()
     })
 
@@ -88,96 +90,6 @@ describe('Edit Service Provider General Details', function () {
       expect(model.isEditingGeneralDetails()).toBeFalsy()
     })
   })
-
-  describe('Invalid submission', function() {
-    var stubbedPutApi
-
-    beforeEach(function () {
-      function fakeResolved(value) {
-        return {
-          then: function(success, error) {
-            error({
-              'status': 400,
-              'response': JSON.stringify({
-                'messages': ['returned error message 1', 'returned error message 2']
-              })
-            })
-          }
-        }
-      }
-
-      stubbedPutApi = sinon.stub(ajax, 'put').returns(fakeResolved())
-
-      model.serviceProvider().description('new description')
-
-      model.saveGeneralDetails()
-    })
-
-    afterEach(function () {
-      ajax.put.restore()
-    })
-
-    it('should set message as joined error messages', function () {
-      expect(model.message()).toEqual('returned error message 1<br />returned error message 2')
-    })
-
-    it('should keep isEditingGeneralDetails as true', function () {
-      expect(model.isEditingGeneralDetails()).toBeTruthy()
-    })
-
-    it('should return description to its initial value', function () {
-      expect(model.serviceProvider().description()).toEqual('initial description')
-    })
-  })
-
-  describe('Successful Save, then Attempt to Save Invalid', function() {
-    var stubbedPutApi
-
-    beforeEach(function () {
-      function successfulResolved(value) {
-        return {
-          then: function(success, error) {
-            success({
-              'status': 200,
-              'json': {}
-            })
-          }
-        }
-      }
-      function erroredResolved(value) {
-        return {
-          then: function(success, error) {
-            error({
-              'status': 400,
-              'response': JSON.stringify({
-                'messages': ['returned error message 1', 'returned error message 2']
-              })
-            })
-          }
-        }
-      }
-
-      stubbedPutApi = sinon.stub(ajax, 'put')
-      stubbedPutApi.onCall(0).returns(successfulResolved())
-      stubbedPutApi.onCall(1).returns(erroredResolved())
-
-      model.editGeneralDetails()
-      model.serviceProvider().description('first save description')
-      model.saveGeneralDetails()
-
-      model.editGeneralDetails()
-      model.serviceProvider().description('second invalid description')
-      model.saveGeneralDetails()
-    })
-
-    afterEach(function () {
-      ajax.put.restore()
-    })
-
-    it('should return description to its last successfully saved value', function () {
-      expect(model.serviceProvider().description()).toEqual('first save description')
-    })
-  })
 })
 
 function coffee4Craig() {
@@ -186,7 +98,7 @@ function coffee4Craig() {
     "name": "Coffee 4 Craig",
     "isVerified": false,
     "isPublished": true,
-    "description": "initial description",
+    "description": "Coffee4Craig is a not-for-profit organisation set up to support, work with and be an all accepting approach to homelessness. ",
     "establishedDate": "0001-01-03T00:00:00.0000000Z",
     "areaServiced": "Manchester & South Wales",
     "email": "risha@coffee4craig.com",
