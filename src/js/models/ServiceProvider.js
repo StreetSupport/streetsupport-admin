@@ -22,8 +22,10 @@ function ServiceProvider (data) {
 
 function ServiceProviderDetails () {
   var self = this
+  self.initialServiceProvider = ko.observable()
   self.serviceProvider = ko.observable()
   self.isEditingGeneralDetails = ko.observable(false)
+  self.message = ko.observable('')
 
   self.formatAddress = function (address) {
     return _.chain(['street', 'street1', 'street2', 'street3', 'city', 'postcode'])
@@ -54,6 +56,7 @@ function ServiceProviderDetails () {
         })
 
         self.serviceProvider(new ServiceProvider(sp))
+        self.initialServiceProvider(new ServiceProvider(sp))
       },
       function (error) {
         browser.redirect(adminUrls.notFound)
@@ -81,10 +84,21 @@ function ServiceProviderDetails () {
           })
         ).then(function(result) {
           self.isEditingGeneralDetails(false)
+          self.updateInitialState()
         }, function(error) {
-
+          var response = JSON.parse(error.response)
+          self.message(response.messages.join('<br />'))
+          self.restoreViewModel()
         })
     }
+  }
+
+  self.restoreViewModel = function () {
+    self.serviceProvider().description(self.initialServiceProvider().description())
+  }
+
+  self.updateInitialState = function () {
+    self.initialServiceProvider().description(self.serviceProvider().description())
   }
 
   self.init()

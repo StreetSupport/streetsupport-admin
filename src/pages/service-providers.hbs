@@ -9,67 +9,70 @@ pageName: serviceProvider
   {{#content "main"}}
     <div class="block block--cta">
       <div class="container block__inner">
-        <div class="block__content form" data-bind="with: serviceProvider">
-          <h1 data-bind="text: name"></h1>
-          <section>
-            <h2>General Details</h2>
-            <!-- ko ifnot: $parent.isEditingGeneralDetails -->
-            <button data-bind="click: $parent.editGeneralDetails">edit</button>
-            <!-- /ko -->
-            <!-- ko if: $parent.isEditingGeneralDetails -->
-            <button data-bind="click: $parent.cancelEditGeneralDetails">cancel</button>
-            <button data-bind="click: $parent.saveGeneralDetails">save</button>
-            <!-- /ko -->
-            <dl class="key-value-pair">
-              <dt class="key-value-pair__key">Description</dt>
-              <dd class="key-value-pair__value">
-                <!-- ko ifnot: $parent.isEditingGeneralDetails -->
-                <span data-bind="text: description"></span>
-                <!-- /ko -->
-                <!-- ko if: $parent.isEditingGeneralDetails -->
-                <textarea data-bind="textInput: description"></textarea>
-                <!-- /ko -->
-              </dd>
-            </dl>
-          </section>
-          <section>
-            <h2>Contact Information</h2>
-            <dl class="key-value-pair">
-              <dt class="key-value-pair__key">Telephone</dt>
-              <dd data-bind="text: telephone" class="key-value-pair__value"></dd>
-              <dt class="key-value-pair__key">Email</dt>
-              <dd data-bind="text: email" class="key-value-pair__value"></dd>
-              <dt class="key-value-pair__key">Website</dt>
-              <dd data-bind="text: website" class="key-value-pair__value"></dd>
-              <dt class="key-value-pair__key">Facebook</dt>
-              <dd data-bind="text: facebook" class="key-value-pair__value"></dd>
-              <dt class="key-value-pair__key">Twitter</dt>
-              <dd data-bind="text: twitter" class="key-value-pair__value"></dd>
-            </dl>
-          </section>
-          <section>
-            <h2>Addresses</h2>
-            <div data-bind="foreach: addresses">
-              <div>
-                <address data-bind="text: formatted"></address>
+        <div class="block__content form">
+          <p data-bind="text: message"></p>
+          <div data-bind="with: serviceProvider">
+            <h1 data-bind="text: name"></h1>
+            <section>
+              <h2>General Details</h2>
+              <!-- ko ifnot: $parent.isEditingGeneralDetails -->
+              <button data-bind="click: $parent.editGeneralDetails">edit</button>
+              <!-- /ko -->
+              <!-- ko if: $parent.isEditingGeneralDetails -->
+              <button data-bind="click: $parent.cancelEditGeneralDetails">cancel</button>
+              <button data-bind="click: $parent.saveGeneralDetails">save</button>
+              <!-- /ko -->
+              <dl class="key-value-pair">
+                <dt class="key-value-pair__key">Description</dt>
+                <dd class="key-value-pair__value">
+                  <!-- ko ifnot: $parent.isEditingGeneralDetails -->
+                  <span data-bind="text: description"></span>
+                  <!-- /ko -->
+                  <!-- ko if: $parent.isEditingGeneralDetails -->
+                  <textarea data-bind="textInput: description"></textarea>
+                  <!-- /ko -->
+                </dd>
+              </dl>
+            </section>
+            <section>
+              <h2>Contact Information</h2>
+              <dl class="key-value-pair">
+                <dt class="key-value-pair__key">Telephone</dt>
+                <dd data-bind="text: telephone" class="key-value-pair__value"></dd>
+                <dt class="key-value-pair__key">Email</dt>
+                <dd data-bind="text: email" class="key-value-pair__value"></dd>
+                <dt class="key-value-pair__key">Website</dt>
+                <dd data-bind="text: website" class="key-value-pair__value"></dd>
+                <dt class="key-value-pair__key">Facebook</dt>
+                <dd data-bind="text: facebook" class="key-value-pair__value"></dd>
+                <dt class="key-value-pair__key">Twitter</dt>
+                <dd data-bind="text: twitter" class="key-value-pair__value"></dd>
+              </dl>
+            </section>
+            <section>
+              <h2>Addresses</h2>
+              <div data-bind="foreach: addresses">
+                <div>
+                  <address data-bind="text: formatted"></address>
+                  <dl data-bind="foreach: openingTimes" class="key-value-pair">
+                    <dt data-bind="text: day" class="key-value-pair__key"></dt>
+                    <dd><span data-bind="text: startTime"></span> - <span data-bind="text: endTime"></span></dd>
+                  </ol>
+                </div>
+              </div>
+            </section>
+            <section>
+              <h2>Services</h2>
+              <div data-bind="foreach: providedServices">
+                <h3 data-bind="text: name"></h3>
+                <p data-bind="text: info"></p>
                 <dl data-bind="foreach: openingTimes" class="key-value-pair">
                   <dt data-bind="text: day" class="key-value-pair__key"></dt>
                   <dd><span data-bind="text: startTime"></span> - <span data-bind="text: endTime"></span></dd>
                 </ol>
               </div>
-            </div>
-          </section>
-          <section>
-            <h2>Services</h2>
-            <div data-bind="foreach: providedServices">
-              <h3 data-bind="text: name"></h3>
-              <p data-bind="text: info"></p>
-              <dl data-bind="foreach: openingTimes" class="key-value-pair">
-                <dt data-bind="text: day" class="key-value-pair__key"></dt>
-                <dd><span data-bind="text: startTime"></span> - <span data-bind="text: endTime"></span></dd>
-              </ol>
-            </div>
-          </section>
+            </section>
+          </div>
         </div>
       </div>
     </div>
