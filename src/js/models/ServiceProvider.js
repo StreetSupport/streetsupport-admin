@@ -11,7 +11,13 @@ function ServiceProvider (data) {
   this.key = ko.observable(data.key)
   this.name = ko.observable(data.name)
   this.description = ko.observable(data.description)
+  this.telephone = ko.observable(data.telephone)
+  this.email = ko.observable(data.email)
+  this.website = ko.observable(data.website)
+  this.facebook = ko.observable(data.facebook)
+  this.twitter = ko.observable(data.twitter)
   this.addresses = data.addresses
+  this.providedServices = data.providedServices
 }
 
 function ServiceProviderDetails () {
