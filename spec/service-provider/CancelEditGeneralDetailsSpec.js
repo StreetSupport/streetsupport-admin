@@ -20,7 +20,7 @@ describe('Cancel Edit Service Provider General Details', function () {
         then: function(success, error) {
           success({
             'status': 200,
-            'json': {}
+            'json': coffee4Craig()
           })
         }
       }
@@ -32,6 +32,8 @@ describe('Cancel Edit Service Provider General Details', function () {
 
     model = new Model()
     model.editGeneralDetails()
+
+    model.serviceProvider().description('some new description')
 
     model.cancelEditGeneralDetails()
   })
@@ -45,4 +47,393 @@ describe('Cancel Edit Service Provider General Details', function () {
   it('should reset isEditingGeneralDetails to false', function() {
     expect(model.isEditingGeneralDetails()).toBeFalsy()
   })
+
+  it('should restore description to its previous value', function() {
+    expect(model.serviceProvider().description()).toEqual('initial description')
+  })
 })
+
+function coffee4Craig() {
+  return {
+    "key": "coffee4craig",
+    "name": "Coffee 4 Craig",
+    "isVerified": false,
+    "isPublished": true,
+    "description": "initial description",
+    "establishedDate": "0001-01-03T00:00:00.0000000Z",
+    "areaServiced": "Manchester & South Wales",
+    "email": "risha@coffee4craig.com",
+    "telephone": "07973955003",
+    "website": "http://www.coffee4craig.com/",
+    "facebook": "https://www.facebook.com/Coffee4Craig/?fref=ts",
+    "twitter": "@Coffee4Craig",
+    "addresses": [
+    {
+      "street": "7-11 Lancaster Rd",
+      "street1": null,
+      "street2": null,
+      "street3": null,
+      "city": "Salford",
+      "postcode": "M6 8AQ"
+    },
+    {
+      "street": "Manchester Picadilly",
+      "street1": null,
+      "street2": null,
+      "street3": null,
+      "city": null,
+      "postcode": "M1 1AF"
+    }
+    ],
+    "providedServices": [
+    {
+      "name": "Meals",
+      "info": "Static Soup kitchen & Walking soup run Piccadilly & Mancester City Centre. Medic and advice on site.",
+      "openingTimes": [
+      {
+        "startTime": "15:00",
+        "endTime": "18:00",
+        "day": "Sunday",
+        "description": null
+      },
+      {
+        "startTime": "19:00",
+        "endTime": "21:00",
+        "day": "Monday",
+        "description": null
+      },
+      {
+        "startTime": "19:00",
+        "endTime": "21:00",
+        "day": "Tuesday",
+        "description": null
+      }
+      ],
+      "address": {
+        "street": "Manchester Picadilly",
+        "street1": null,
+        "street2": null,
+        "street3": null,
+        "city": null,
+        "postcode": "M1 1AF"
+      },
+      "tags": null
+    },
+    {
+      "name": "Clothes",
+      "info": null,
+      "openingTimes": [
+      {
+        "startTime": "10:00",
+        "endTime": "15:00",
+        "day": "Monday",
+        "description": null
+      },
+      {
+        "startTime": "10:00",
+        "endTime": "15:00",
+        "day": "Tuesday",
+        "description": null
+      },
+      {
+        "startTime": "10:00",
+        "endTime": "15:00",
+        "day": "Wednesday",
+        "description": null
+      },
+      {
+        "startTime": "10:00",
+        "endTime": "15:00",
+        "day": "Thursday",
+        "description": null
+      },
+      {
+        "startTime": "10:00",
+        "endTime": "15:00",
+        "day": "Friday",
+        "description": null
+      }
+      ],
+      "address": {
+        "street": "7-11 Lancaster Rd",
+        "street1": null,
+        "street2": null,
+        "street3": null,
+        "city": "Salford",
+        "postcode": "M6 8AQ"
+      },
+      "tags": null
+    },
+    {
+      "name": "Sleeping Bags",
+      "info": null,
+      "openingTimes": [
+      {
+        "startTime": "10:00",
+        "endTime": "15:00",
+        "day": "Monday",
+        "description": null
+      },
+      {
+        "startTime": "10:00",
+        "endTime": "15:00",
+        "day": "Tuesday",
+        "description": null
+      },
+      {
+        "startTime": "10:00",
+        "endTime": "15:00",
+        "day": "Wednesday",
+        "description": null
+      },
+      {
+        "startTime": "10:00",
+        "endTime": "15:00",
+        "day": "Thursday",
+        "description": null
+      },
+      {
+        "startTime": "10:00",
+        "endTime": "15:00",
+        "day": "Friday",
+        "description": null
+      }
+      ],
+      "address": {
+        "street": "7-11 Lancaster Rd",
+        "street1": null,
+        "street2": null,
+        "street3": null,
+        "city": "Salford",
+        "postcode": "M6 8AQ"
+      },
+      "tags": null
+    },
+    {
+      "name": "Tents",
+      "info": null,
+      "openingTimes": [
+      {
+        "startTime": "10:00",
+        "endTime": "15:00",
+        "day": "Monday",
+        "description": null
+      },
+      {
+        "startTime": "10:00",
+        "endTime": "15:00",
+        "day": "Tuesday",
+        "description": null
+      },
+      {
+        "startTime": "10:00",
+        "endTime": "15:00",
+        "day": "Wednesday",
+        "description": null
+      },
+      {
+        "startTime": "10:00",
+        "endTime": "15:00",
+        "day": "Thursday",
+        "description": null
+      },
+      {
+        "startTime": "10:00",
+        "endTime": "15:00",
+        "day": "Friday",
+        "description": null
+      }
+      ],
+      "address": {
+        "street": "7-11 Lancaster Rd",
+        "street1": null,
+        "street2": null,
+        "street3": null,
+        "city": "Salford",
+        "postcode": "M6 8AQ"
+      },
+      "tags": null
+    },
+    {
+      "name": "Rucksacks",
+      "info": null,
+      "openingTimes": [
+      {
+        "startTime": "10:00",
+        "endTime": "15:00",
+        "day": "Monday",
+        "description": null
+      },
+      {
+        "startTime": "10:00",
+        "endTime": "15:00",
+        "day": "Tuesday",
+        "description": null
+      },
+      {
+        "startTime": "10:00",
+        "endTime": "15:00",
+        "day": "Wednesday",
+        "description": null
+      },
+      {
+        "startTime": "10:00",
+        "endTime": "15:00",
+        "day": "Thursday",
+        "description": null
+      },
+      {
+        "startTime": "10:00",
+        "endTime": "15:00",
+        "day": "Friday",
+        "description": null
+      }
+      ],
+      "address": {
+        "street": "7-11 Lancaster Rd",
+        "street1": null,
+        "street2": null,
+        "street3": null,
+        "city": "Salford",
+        "postcode": "M6 8AQ"
+      },
+      "tags": null
+    },
+    {
+      "name": "Socks & pants",
+      "info": null,
+      "openingTimes": [
+      {
+        "startTime": "10:00",
+        "endTime": "15:00",
+        "day": "Monday",
+        "description": null
+      },
+      {
+        "startTime": "10:00",
+        "endTime": "15:00",
+        "day": "Tuesday",
+        "description": null
+      },
+      {
+        "startTime": "10:00",
+        "endTime": "15:00",
+        "day": "Wednesday",
+        "description": null
+      },
+      {
+        "startTime": "10:00",
+        "endTime": "15:00",
+        "day": "Thursday",
+        "description": null
+      },
+      {
+        "startTime": "10:00",
+        "endTime": "15:00",
+        "day": "Friday",
+        "description": null
+      }
+      ],
+      "address": {
+        "street": "7-11 Lancaster Rd",
+        "street1": null,
+        "street2": null,
+        "street3": null,
+        "city": "Salford",
+        "postcode": "M6 8AQ"
+      },
+      "tags": null
+    },
+    {
+      "name": "Gloves & Scarves",
+      "info": null,
+      "openingTimes": [
+      {
+        "startTime": "10:00",
+        "endTime": "15:00",
+        "day": "Monday",
+        "description": null
+      },
+      {
+        "startTime": "10:00",
+        "endTime": "15:00",
+        "day": "Tuesday",
+        "description": null
+      },
+      {
+        "startTime": "10:00",
+        "endTime": "15:00",
+        "day": "Wednesday",
+        "description": null
+      },
+      {
+        "startTime": "10:00",
+        "endTime": "15:00",
+        "day": "Thursday",
+        "description": null
+      },
+      {
+        "startTime": "10:00",
+        "endTime": "15:00",
+        "day": "Friday",
+        "description": null
+      }
+      ],
+      "address": {
+        "street": "7-11 Lancaster Rd",
+        "street1": null,
+        "street2": null,
+        "street3": null,
+        "city": "Salford",
+        "postcode": "M6 8AQ"
+      },
+      "tags": null
+    },
+    {
+      "name": "Dentist",
+      "info": "With the great support of a local dentist we are able to offer this service please contact Fie on 07543 590330 for info and details.",
+      "openingTimes": [
+      {
+        "startTime": "10:00",
+        "endTime": "15:00",
+        "day": "Monday",
+        "description": null
+      },
+      {
+        "startTime": "10:00",
+        "endTime": "15:00",
+        "day": "Tuesday",
+        "description": null
+      },
+      {
+        "startTime": "10:00",
+        "endTime": "15:00",
+        "day": "Wednesday",
+        "description": null
+      },
+      {
+        "startTime": "10:00",
+        "endTime": "15:00",
+        "day": "Thursday",
+        "description": null
+      },
+      {
+        "startTime": "10:00",
+        "endTime": "15:00",
+        "day": "Friday",
+        "description": null
+      }
+      ],
+      "address": {
+        "street": "7-11 Lancaster Rd",
+        "street1": null,
+        "street2": null,
+        "street3": null,
+        "city": "Salford",
+        "postcode": "M6 8AQ"
+      },
+      "tags": null
+    }
+    ]
+  }
+}

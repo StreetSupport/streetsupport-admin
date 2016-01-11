@@ -69,6 +69,7 @@ function ServiceProviderDetails () {
 
   self.cancelEditGeneralDetails = function() {
     self.isEditingGeneralDetails(false)
+    self.restoreViewModel()
   }
 
   self.saveGeneralDetails = function() {
@@ -84,21 +85,15 @@ function ServiceProviderDetails () {
           })
         ).then(function(result) {
           self.isEditingGeneralDetails(false)
-          self.updateInitialState()
         }, function(error) {
           var response = JSON.parse(error.response)
           self.message(response.messages.join('<br />'))
-          self.restoreViewModel()
         })
     }
   }
 
   self.restoreViewModel = function () {
     self.serviceProvider().description(self.initialServiceProvider().description())
-  }
-
-  self.updateInitialState = function () {
-    self.initialServiceProvider().description(self.serviceProvider().description())
   }
 
   self.init()
