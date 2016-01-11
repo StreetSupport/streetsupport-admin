@@ -41,8 +41,8 @@ describe('Dashboard', function () {
     browser.redirect.restore()
   })
 
-  it('should redirect browser to dashboard', function() {
-    var browserRedirectedWithExpectedUrl = stubbedBrowser.withArgs(adminurls.dashboard).calledOnce
+  it('should redirect browser to 404', function() {
+    var browserRedirectedWithExpectedUrl = stubbedBrowser.withArgs(adminurls.notFound).calledOnce
     expect(browserRedirectedWithExpectedUrl).toBeTruthy()
   })
 })

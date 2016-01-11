@@ -4,6 +4,7 @@ var adminUrls = require('../admin-urls')
 var cookies = require('../cookies')
 var browser = require('../browser')
 var getUrlParameter = require('../get-url-parameter')
+var adminUrls = require('../admin-urls')
 var ko = require('knockout')
 var _ = require('lodash')
 
@@ -19,8 +20,8 @@ function ServiceProvider () {
     },
     {})
   .then(function (result) {
-    if(result.status === 200) self.serviceProvider = result.json
-    if(result.status === 404) browser.redirect(adminUrls.dashboard)
+    if (result.status === 200) self.serviceProvider = result.json
+    if (result.status === 404) browser.redirect(adminUrls.notFound)
   },
   function (error) {
     alert('oops, there was a problem! ' + JSON.parse(error))
