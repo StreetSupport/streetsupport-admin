@@ -32,8 +32,6 @@ function LoginModel () {
       })
     }
   }
-
-
 }
 
 module.exports = LoginModel

@@ -58,11 +58,15 @@ function DashboardModel () {
         'IsVerified': !serviceProvider.isVerified()
       })
     )
-    .then(function(result) {
-      self.updateServiceProviderVerification(serviceProvider)
+    .then(function (result) {
+      self.updateServiceProviderVerification(serviceProvider, self.invertVerification)
     }, function (error) {
       alert('oops, there was a problem! ' + JSON.parse(error))
     })
+  }
+
+  self.invertVerification = function (oldSP, newSP) {
+    oldSP.isVerified(!newSP.isVerified())
   }
 
   self.togglePublished = function (serviceProvider, event) {
@@ -75,30 +79,22 @@ function DashboardModel () {
         'IsPublished': !serviceProvider.isPublished()
       })
     )
-    .then(function(result) {
-      self.updateServiceProviderPublishedState(serviceProvider)
+    .then(function (result) {
+      self.updateServiceProviderVerification(serviceProvider, self.invertPublished)
     }, function (error) {
       alert('oops, there was a problem! ' + JSON.parse(error))
     })
   }
 
-  self.updateServiceProviderVerification = function (serviceProvider) {
-    var updatedSPs = _.map(self.serviceProviders(), function (sp) {
-      if (sp.key !== serviceProvider.key) return sp
-
-      sp.isVerified(!serviceProvider.isVerified())
-
-      return sp
-    })
-
-    self.serviceProviders(updatedSPs)
+  self.invertPublished = function (oldSP, newSP) {
+    oldSP.isPublished(!newSP.isPublished())
   }
 
-  self.updateServiceProviderPublishedState = function (serviceProvider) {
+  self.updateServiceProviderVerification = function (serviceProvider, invert) {
     var updatedSPs = _.map(self.serviceProviders(), function (sp) {
       if (sp.key !== serviceProvider.key) return sp
 
-      sp.isPublished(!serviceProvider.isPublished())
+      invert(sp, serviceProvider)
 
       return sp
     })
