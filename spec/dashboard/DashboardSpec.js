@@ -19,19 +19,19 @@ describe('Dashboard', function () {
             'status': 200,
             'json': [
               {
-                "key": "albert-kennedy-trust",
-                "name": "Albert Kennedy Trust",
-                "isVerified": false,
+                'key': 'albert-kennedy-trust',
+                'name': 'Albert Kennedy Trust',
+                'isVerified': false,
               },
               {
-                "key": "coffee4craig",
-                "name": "Coffee4Craig",
-                "isVerified": false
+                'key': 'coffee4craig',
+                'name': 'Coffee4Craig',
+                'isVerified': false
               },
               {
-                "key": "booth-centre",
-                "name": "Booth Centre",
-                "isVerified": false
+                'key': 'booth-centre',
+                'name': 'Booth Centre',
+                'isVerified': false
               }
             ]
           })
