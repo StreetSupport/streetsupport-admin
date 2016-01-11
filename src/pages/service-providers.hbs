@@ -16,11 +16,11 @@ pageName: serviceProvider
             <section>
               <h2>General Details</h2>
               <!-- ko ifnot: $parent.isEditingGeneralDetails -->
-              <button data-bind="click: $parent.editGeneralDetails">edit</button>
+              <button data-bind="click: $parent.editGeneralDetails" class="btn btn--brand-d"><span class="btn__text">edit</span></button>
               <!-- /ko -->
               <!-- ko if: $parent.isEditingGeneralDetails -->
-              <button data-bind="click: $parent.cancelEditGeneralDetails">cancel</button>
-              <button data-bind="click: $parent.saveGeneralDetails">save</button>
+              <button data-bind="click: $parent.cancelEditGeneralDetails" class="btn btn--brand-e"><span class="btn__text">cancel</span></button>
+              <button data-bind="click: $parent.saveGeneralDetails" class="btn btn--brand-g"><span class="btn__text">save</span></button>
               <!-- /ko -->
               <dl class="key-value-pair">
                 <dt class="key-value-pair__key">Description</dt>
