@@ -12,16 +12,28 @@ pageName: serviceProvider
         <div class="block__content" data-bind="with: serviceProvider">
           <h1 data-bind="text: name"></h1>
           <section>
-            <h2>General</h2>
+            <h2>General Details</h2>
+            <!-- ko ifnot: $parent.isEditingGeneralDetails -->
+            <button data-bind="click: $parent.editGeneralDetails">edit</button>
+            <!-- /ko -->
+            <!-- ko if: $parent.isEditingGeneralDetails -->
+            <button data-bind="click: $parent.cancelEditGeneralDetails">cancel</button>
+            <button>save</button>
+            <!-- /ko -->
             <dl class="key-value-pair">
               <dt class="key-value-pair__key">Description</dt>
-              <dd data-bind="text: description" class="key-value-pair__value"></dd>
-              <dt class="key-value-pair__key">Area Serviced</dt>
-              <dd data-bind="text: areaServiced" class="key-value-pair__value"></dd>
+              <dd class="key-value-pair__value">
+                <!-- ko ifnot: $parent.isEditingGeneralDetails -->
+                <span data-bind="text: description"></span>
+                <!-- /ko -->
+                <!-- ko if: $parent.isEditingGeneralDetails -->
+                <textarea data-bind="text: description"></textarea>
+                <!-- /ko -->
+              </dd>
             </dl>
           </section>
           <section>
-            <h2>Contact</h2>
+            <h2>Contact Information</h2>
             <dl class="key-value-pair">
               <dt class="key-value-pair__key">Telephone</dt>
               <dd data-bind="text: telephone" class="key-value-pair__value"></dd>

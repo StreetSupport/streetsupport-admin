@@ -7,7 +7,7 @@ var sinon = require('sinon'),
     getUrlParameter = require('../../src/js/get-url-parameter')
 
 
-describe('Service Provider not found', function () {
+describe('Cancel Edit Service Provider General Details', function () {
   var Model = require('../../src/js/models/ServiceProvider'),
   model,
   stubbedApi,
@@ -18,8 +18,8 @@ describe('Service Provider not found', function () {
     function fakeResolved(value) {
       return {
         then: function(success, error) {
-          error({
-            'status': 404,
+          success({
+            'status': 200,
             'json': {}
           })
         }
@@ -29,20 +29,20 @@ describe('Service Provider not found', function () {
     stubbedApi = sinon.stub(ajax, 'get').returns(fakeResolved())
     stubbedCookies = sinon.stub(cookies, 'get').returns('stored-session-token')
     stubbedUrlParams = sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
-    stubbedBrowser = sinon.stub(browser, 'redirect')
 
     model = new Model()
+    model.editGeneralDetails()
+
+    model.cancelEditGeneralDetails()
   })
 
   afterEach(function () {
     ajax.get.restore()
     cookies.get.restore()
     getUrlParameter.parameter.restore()
-    browser.redirect.restore()
   })
 
-  it('should redirect browser to 404', function() {
-    var browserRedirectedWithExpectedUrl = stubbedBrowser.withArgs(adminurls.notFound).calledOnce
-    expect(browserRedirectedWithExpectedUrl).toBeTruthy()
+  it('should reset isEditingGeneralDetails to false', function() {
+    expect(model.isEditingGeneralDetails).toBeFalsy()
   })
 })

@@ -7,7 +7,7 @@ var sinon = require('sinon'),
     getUrlParameter = require('../../src/js/get-url-parameter')
 
 
-describe('Show Service Provider', function () {
+describe('Edit Service Provider General Details', function () {
   var Model = require('../../src/js/models/ServiceProvider'),
   model,
   stubbedApi,
@@ -31,6 +31,8 @@ describe('Show Service Provider', function () {
     stubbedUrlParams = sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
 
     model = new Model()
+
+    model.editGeneralDetails()
   })
 
   afterEach(function () {
@@ -39,23 +41,8 @@ describe('Show Service Provider', function () {
     getUrlParameter.parameter.restore()
   })
 
-  it('should retrieve service provider from api with session token', function() {
-      var endpoint = endpoints.getServiceProviders + '/show/coffee4craig'
-      var headers = {
-        'content-type': 'application/json',
-        'session-token': 'stored-session-token'
-      }
-      var payload = {}
-      var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, headers, payload).calledOnce
-      expect(apiCalledWithExpectedArgs).toBeTruthy()
-  })
-
-  it('should set service provider', function() {
-    expect(model.serviceProvider().key).toEqual('coffee4craig')
-  })
-
-  it('should format addresses', function() {
-    expect(model.serviceProvider().addresses[0].formatted).toEqual('7-11 Lancaster Rd, Salford, M6 8AQ')
+  it('should set isEditingGeneralDetails to true', function() {
+    expect(model.isEditingGeneralDetails).toBeTruthy()
   })
 })
 
