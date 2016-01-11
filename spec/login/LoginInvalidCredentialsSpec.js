@@ -19,7 +19,7 @@ describe('Submit invalid credentials', function() {
           error({
             'status': 401,
             'response': JSON.stringify({
-              'message': 'returned error message'
+              'messages': ['returned error message']
             })
           })
         }

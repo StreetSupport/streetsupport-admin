@@ -27,7 +27,7 @@ function LoginModel () {
         browser.redirect(adminUrls.dashboard)
       }, function (error) {
         var response = JSON.parse(error.response)
-        self.message(response.message)
+        self.message(response.messages.join('<br />'))
         self.isSubmitting = false
       })
     }

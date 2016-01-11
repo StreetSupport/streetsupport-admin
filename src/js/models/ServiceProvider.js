@@ -69,16 +69,22 @@ function ServiceProviderDetails () {
   }
 
   self.saveGeneralDetails = function() {
-    ajax
-      .put(endpoints.serviceProviderDetails + '/' + getUrlParameter.parameter('key') + '/update',
-        {
-          'content-type': 'application/json',
-          'session-token': cookies.get('session-token')
-        },
-        JSON.stringify({
-          'description': self.serviceProvider().description
+    if (self.isEditingGeneralDetails()) {
+      ajax
+        .put(endpoints.serviceProviderDetails + '/' + getUrlParameter.parameter('key') + '/update',
+          {
+            'content-type': 'application/json',
+            'session-token': cookies.get('session-token')
+          },
+          JSON.stringify({
+            'Description': self.serviceProvider().description()
+          })
+        ).then(function(result) {
+          self.isEditingGeneralDetails(false)
+        }, function(error) {
+
         })
-      )
+    }
   }
 
   self.init()

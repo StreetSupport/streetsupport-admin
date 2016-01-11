@@ -18,7 +18,7 @@ pageName: serviceProvider
             <!-- /ko -->
             <!-- ko if: $parent.isEditingGeneralDetails -->
             <button data-bind="click: $parent.cancelEditGeneralDetails">cancel</button>
-            <button>save</button>
+            <button data-bind="click: $parent.saveGeneralDetails">save</button>
             <!-- /ko -->
             <dl class="key-value-pair">
               <dt class="key-value-pair__key">Description</dt>
@@ -27,7 +27,7 @@ pageName: serviceProvider
                 <span data-bind="text: description"></span>
                 <!-- /ko -->
                 <!-- ko if: $parent.isEditingGeneralDetails -->
-                <textarea data-bind="text: description"></textarea>
+                <textarea data-bind="textInput: description"></textarea>
                 <!-- /ko -->
               </dd>
             </dl>

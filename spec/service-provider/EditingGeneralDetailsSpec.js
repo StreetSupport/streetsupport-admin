@@ -63,8 +63,9 @@ describe('Edit Service Provider General Details', function () {
       stubbedPutApi = sinon.stub(ajax, 'put').returns(fakeResolved())
 
       model = new Model()
-      model.serviceProvider().description = 'new description'
+      model.serviceProvider().description('new description')
 
+      model.editGeneralDetails()
       model.saveGeneralDetails()
     })
 
@@ -79,10 +80,14 @@ describe('Edit Service Provider General Details', function () {
           'session-token': 'stored-session-token'
         }
         var payload = JSON.stringify({
-          'description': 'new description'
+          'Description': 'new description'
         })
         var apiCalledWithExpectedArgs = stubbedPutApi.withArgs(endpoint, headers, payload).calledOnce
         expect(apiCalledWithExpectedArgs).toBeTruthy()
+    })
+
+    it('should set isEditingGeneralDetails to false', function () {
+      expect(model.isEditingGeneralDetails()).toBeFalsy()
     })
   })
 })
