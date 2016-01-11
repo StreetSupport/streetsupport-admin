@@ -67,6 +67,12 @@ gulp.task('watch', function(callback) {
   gulp.watch(config.paths.tests + '**/*.js', ['test'])
 })
 
+// Watch task - just tests
+gulp.task('devWatch', function(callback) {
+  gulp.watch(config.paths.js + '**/*.js', ['test'])
+  gulp.watch(config.paths.tests + '**/*.js', ['test'])
+})
+
 // Build website with development assets and run server with live reloading
 gulp.task('default', function(callback) {
   runSequence(
@@ -75,6 +81,15 @@ gulp.task('default', function(callback) {
     'assets',
     'browsersync',
     'watch',
+    callback
+  )
+})
+
+// run tests
+gulp.task('dev', function(callback) {
+  runSequence(
+    'test',
+    'devWatch',
     callback
   )
 })

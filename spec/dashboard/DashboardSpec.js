@@ -58,10 +58,9 @@ describe('Dashboard', function () {
         'content-type': 'application/json',
         'session-token': 'stored-session-token'
       }
-      var payload = JSON.stringify({
-        'IsPublished': false
-      })
+      var payload = {}
       var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, headers, payload).calledOnce
+      expect(apiCalledWithExpectedArgs).toBeTruthy()
   })
 
   it('should populate service provider collection', function() {
