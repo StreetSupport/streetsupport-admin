@@ -4,13 +4,24 @@ var adminUrls = require('../admin-urls')
 var cookies = require('../cookies')
 var browser = require('../browser')
 var getUrlParameter = require('../get-url-parameter')
-var adminUrls = require('../admin-urls')
 var ko = require('knockout')
 var _ = require('lodash')
 
 function ServiceProvider () {
   var self = this
-  self.serviceProvider = {}
+  self.serviceProvider = ko.observable()
+
+  self.formatAddress = function (address) {
+    return _.chain(Object.keys(address))
+        .filter(function (key) {
+          return address[key] !== null
+        })
+        .map(function (key) {
+          return address[key]
+        })
+        .value()
+        .join(', ')
+  }
 
   ajax
   .get(endpoints.getServiceProviders + '/show/' + getUrlParameter.parameter('key'),
@@ -20,11 +31,17 @@ function ServiceProvider () {
     },
     {})
   .then(function (result) {
-    if (result.status === 200) self.serviceProvider = result.json
-    if (result.status === 404) browser.redirect(adminUrls.notFound)
+    var sp = result.json
+
+    sp.addresses = _.map(sp.addresses, function(address) {
+      address.formatted = self.formatAddress(address)
+      return address
+    })
+
+    self.serviceProvider(sp)
   },
   function (error) {
-    alert('oops, there was a problem! ' + JSON.parse(error))
+    browser.redirect(adminUrls.notFound)
   })
 }
 

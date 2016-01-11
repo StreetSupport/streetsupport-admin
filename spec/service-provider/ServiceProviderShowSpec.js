@@ -51,7 +51,11 @@ describe('Dashboard', function () {
   })
 
   it('should set service provider', function() {
-    expect(model.serviceProvider.key).toEqual('coffee4craig')
+    expect(model.serviceProvider().key).toEqual('coffee4craig')
+  })
+
+  it('should format addresses', function() {
+    expect(model.serviceProvider().addresses[0].formatted).toEqual('7-11 Lancaster Rd, Salford, M6 8AQ')
   })
 })
 

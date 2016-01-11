@@ -18,7 +18,7 @@ describe('Dashboard', function () {
     function fakeResolved(value) {
       return {
         then: function(success, error) {
-          success({
+          error({
             'status': 404,
             'json': {}
           })

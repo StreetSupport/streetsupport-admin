@@ -74,6 +74,6 @@ describe('Dashboard', function () {
   })
 
   it('should set service provider url', function() {
-    expect(dashboard.serviceProviders()[0].url).toEqual('service-providers.html?key=albert-kennedy-trust')
+    expect(dashboard.serviceProviders()[0].url).toEqual(adminurls.serviceProviders + '?key=albert-kennedy-trust')
   })
 })

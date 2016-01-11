@@ -1,0 +1,57 @@
+---
+title: Dashboard - Street Support Admin
+description: Street Support - Making it easier to help homeless people in Manchester
+jsName: serviceProvider
+pageName: serviceProvider
+---
+
+{{#extend "_default"}}
+  {{#content "main"}}
+    <div class="block block--cta">
+      <div class="container block__inner">
+        <div class="block__content" data-bind="with: serviceProvider">
+          <h1 data-bind="text: name"></h1>
+          <section>
+            <h2>General</h2>
+            <dl>
+              <dt>Description</dt>
+              <dd data-bind="text: description"></dd>
+              <dt>Area Serviced</dt>
+              <dd data-bind="text: areaServiced"></dd>
+            </dl>
+          </section>
+          <section>
+            <h2>Contact</h2>
+            <dl>
+              <dt>Telephone</dt>
+              <dd data-bind="text: telephone"></dd>
+              <dt>Email</dt>
+              <dd data-bind="text: email"></dd>
+              <dt>Website</dt>
+              <dd data-bind="text: website"></dd>
+              <dt>Facebook</dt>
+              <dd data-bind="text: facebook"></dd>
+              <dt>Twitter</dt>
+              <dd data-bind="text: twitter"></dd>
+            </dl>
+          </section>
+          <section>
+            <h2>Addresses</h2>
+            <div data-bind="foreach: addresses">
+              <address>
+                <span data-bind="text: stree"t></span><br />
+                <span data-bind="text: street1"></span><br />
+                <span data-bind="text: street2"></span><br />
+                <span data-bind="text: street3"></span><br />
+                <span data-bind="text: city"></span><br />
+                <span data-bind="text: postcode"></span><br />
+              </address>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  {{/content}}
+
+  {{#content "gutter"}}{{/content}}
+{{/extend}}
