@@ -70,7 +70,7 @@ function ServiceProviderDetails () {
 
   self.saveGeneralDetails = function() {
     ajax
-      .put(endpoints.getServiceProviders,
+      .put(endpoints.serviceProviderDetails + '/' + getUrlParameter.parameter('key') + '/update',
         {
           'content-type': 'application/json',
           'session-token': cookies.get('session-token')
