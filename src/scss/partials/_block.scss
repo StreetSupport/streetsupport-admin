@@ -9,14 +9,16 @@
 
       // Full width
       .page-login &,
-      .page-dashboard & {
+      .page-dashboard &,
+      .page-serviceProvider & {
         width: 100%;
         margin-left: auto;
         margin-right: auto;
         float: none;
       }
 
-      .page-dashboard & {
+      .page-dashboard &,
+      .page-serviceProvider & {
         text-align: left
       }
     }

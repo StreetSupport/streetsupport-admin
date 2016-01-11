@@ -1,0 +1,16 @@
+.key-value-pair {
+  @include cf();
+
+  & > * { text-align: left }
+
+  &__key {
+    @include mq($from: l) {
+      @include span(2 of $column-large);
+    }
+  }
+  &__value {
+    @include mq($from: l) {
+      @include span(10 of $column-large);
+    }
+  }
+}
