@@ -51,7 +51,7 @@ describe('Show Service Provider', function () {
   })
 
   it('should set service provider', function() {
-    expect(model.serviceProvider().key).toEqual('coffee4craig')
+    expect(model.serviceProvider().key()).toEqual('coffee4craig')
   })
 
   it('should format addresses', function() {

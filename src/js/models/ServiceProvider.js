@@ -7,7 +7,14 @@ var getUrlParameter = require('../get-url-parameter')
 var ko = require('knockout')
 var _ = require('lodash')
 
-function ServiceProvider () {
+function ServiceProvider (data) {
+  this.key = ko.observable(data.key)
+  this.name = ko.observable(data.name)
+  this.description = ko.observable(data.description)
+  this.addresses = data.addresses
+}
+
+function ServiceProviderDetails () {
   var self = this
   self.serviceProvider = ko.observable()
   self.isEditingGeneralDetails = ko.observable(false)
@@ -26,25 +33,25 @@ function ServiceProvider () {
 
   self.init = function() {
     ajax
-    .get(endpoints.getServiceProviders + '/show/' + getUrlParameter.parameter('key'),
-      {
-        'content-type': 'application/json',
-        'session-token': cookies.get('session-token')
+      .get(endpoints.getServiceProviders + '/show/' + getUrlParameter.parameter('key'),
+        {
+          'content-type': 'application/json',
+          'session-token': cookies.get('session-token')
+        },
+        {})
+      .then(function (result) {
+        var sp = result.json
+
+        sp.addresses = _.map(sp.addresses, function(address) {
+          address.formatted = self.formatAddress(address)
+          return address
+        })
+
+        self.serviceProvider(new ServiceProvider(sp))
       },
-      {})
-    .then(function (result) {
-      var sp = result.json
-
-      sp.addresses = _.map(sp.addresses, function(address) {
-        address.formatted = self.formatAddress(address)
-        return address
+      function (error) {
+        browser.redirect(adminUrls.notFound)
       })
-
-      self.serviceProvider(sp)
-    },
-    function (error) {
-      browser.redirect(adminUrls.notFound)
-    })
   }
 
   self.editGeneralDetails = function() {
@@ -55,7 +62,20 @@ function ServiceProvider () {
     self.isEditingGeneralDetails(false)
   }
 
+  self.saveGeneralDetails = function() {
+    ajax
+      .put(endpoints.getServiceProviders,
+        {
+          'content-type': 'application/json',
+          'session-token': cookies.get('session-token')
+        },
+        JSON.stringify({
+          'description': self.serviceProvider().description
+        })
+      )
+  }
+
   self.init()
 }
 
-module.exports = ServiceProvider
+module.exports = ServiceProviderDetails

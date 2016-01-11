@@ -43,6 +43,6 @@ describe('Cancel Edit Service Provider General Details', function () {
   })
 
   it('should reset isEditingGeneralDetails to false', function() {
-    expect(model.isEditingGeneralDetails).toBeFalsy()
+    expect(model.isEditingGeneralDetails()).toBeFalsy()
   })
 })

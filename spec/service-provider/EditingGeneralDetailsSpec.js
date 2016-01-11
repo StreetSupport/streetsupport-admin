@@ -44,6 +44,47 @@ describe('Edit Service Provider General Details', function () {
   it('should set isEditingGeneralDetails to true', function() {
     expect(model.isEditingGeneralDetails).toBeTruthy()
   })
+
+  describe('Save', function() {
+    var stubbedPutApi
+
+    beforeEach(function () {
+      function fakeResolved(value) {
+        return {
+          then: function(success, error) {
+            success({
+              'status': 200,
+              'json': {}
+            })
+          }
+        }
+      }
+
+      stubbedPutApi = sinon.stub(ajax, 'put').returns(fakeResolved())
+
+      model = new Model()
+      model.serviceProvider().description = 'new description'
+
+      model.saveGeneralDetails()
+    })
+
+    afterEach(function () {
+      ajax.put.restore()
+    })
+
+    it('should put service provider general details to api with session token', function () {
+        var endpoint = endpoints.getServiceProviders
+        var headers = {
+          'content-type': 'application/json',
+          'session-token': 'stored-session-token'
+        }
+        var payload = JSON.stringify({
+          'description': 'new description'
+        })
+        var apiCalledWithExpectedArgs = stubbedPutApi.withArgs(endpoint, headers, payload).calledOnce
+        expect(apiCalledWithExpectedArgs).toBeTruthy()
+    })
+  })
 })
 
 function coffee4Craig() {
