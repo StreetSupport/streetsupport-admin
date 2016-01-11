@@ -59,7 +59,7 @@ function DashboardModel () {
       })
     )
     .then(function (result) {
-      self.updateServiceProviderVerification(serviceProvider, self.invertVerification)
+      self.updateServiceProvider(serviceProvider, self.invertVerification)
     }, function (error) {
       alert('oops, there was a problem! ' + JSON.parse(error))
     })
@@ -80,7 +80,7 @@ function DashboardModel () {
       })
     )
     .then(function (result) {
-      self.updateServiceProviderVerification(serviceProvider, self.invertPublished)
+      self.updateServiceProvider(serviceProvider, self.invertPublished)
     }, function (error) {
       alert('oops, there was a problem! ' + JSON.parse(error))
     })
@@ -90,7 +90,7 @@ function DashboardModel () {
     oldSP.isPublished(!newSP.isPublished())
   }
 
-  self.updateServiceProviderVerification = function (serviceProvider, invert) {
+  self.updateServiceProvider = function (serviceProvider, invert) {
     var updatedSPs = _.map(self.serviceProviders(), function (sp) {
       if (sp.key !== serviceProvider.key) return sp
 
