@@ -5,17 +5,17 @@ adminurls = require('../../src/js/admin-urls'),
 browser =   require('../../src/js/browser'),
 cookies =   require('../../src/js/cookies')
 
-describe('Submit invalid credentials', function() {
+describe ('Submit invalid credentials', function () {
   var Login = require('../../src/js/models/Login')
   var login
   var stubbedApi,
       stubbedBrowser
 
-  beforeEach(function () {
+  beforeEach (function () {
     login = new Login()
     function fakeResolved(value) {
       return {
-        then: function(success, error) {
+        then: function (success, error) {
           error({
             'status': 401,
             'response': JSON.stringify({
@@ -33,25 +33,25 @@ describe('Submit invalid credentials', function() {
     login.username('username')
     login.password('password')
 
-    login.submit()
+    login.submit ()
   })
 
-  afterEach(function () {
+  afterEach (function () {
     ajax.postJson.restore()
     browser.redirect.restore()
   })
 
-  it('should set message to returned message', function() {
+  it ('should set message to returned message', function () {
     expect(login.message()).toEqual('returned error message')
   })
 
-  it('should not redirect browser to dashboard', function() {
+  it ('should not redirect browser to dashboard', function () {
     var browserRedirectedWithExpectedUrl = stubbedBrowser.withArgs(adminurls.dashboard).called
     expect(browserRedirectedWithExpectedUrl).toBeFalsy()
   })
 
-  it('should be able to send credentials again', function() {
-    login.submit()
+  it ('should be able to send credentials again', function () {
+    login.submit ()
     var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoints.createSession, {
       'username': 'username',
       'password': 'password'

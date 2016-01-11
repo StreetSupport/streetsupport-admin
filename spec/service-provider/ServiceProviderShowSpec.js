@@ -7,17 +7,17 @@ var sinon = require('sinon'),
     getUrlParameter = require('../../src/js/get-url-parameter')
 
 
-describe('Show Service Provider', function () {
+describe ('Show Service Provider', function () {
   var Model = require('../../src/js/models/ServiceProvider'),
   model,
   stubbedApi,
   stubbedCookies,
   stubbedUrlParams
 
-  beforeEach(function () {
+  beforeEach (function () {
     function fakeResolved(value) {
       return {
-        then: function(success, error) {
+        then: function (success, error) {
           success({
             'status': 200,
             'json': coffee4Craig()
@@ -33,13 +33,13 @@ describe('Show Service Provider', function () {
     model = new Model()
   })
 
-  afterEach(function () {
+  afterEach (function () {
     ajax.get.restore()
     cookies.get.restore()
     getUrlParameter.parameter.restore()
   })
 
-  it('should retrieve service provider from api with session token', function() {
+  it ('should retrieve service provider from api with session token', function () {
       var endpoint = endpoints.getServiceProviders + '/show/coffee4craig'
       var headers = {
         'content-type': 'application/json',
@@ -50,11 +50,11 @@ describe('Show Service Provider', function () {
       expect(apiCalledWithExpectedArgs).toBeTruthy()
   })
 
-  it('should set service provider', function() {
+  it ('should set service provider', function () {
     expect(model.serviceProvider().key()).toEqual('coffee4craig')
   })
 
-  it('should format addresses', function() {
+  it ('should format addresses', function () {
     expect(model.serviceProvider().addresses[0].formatted).toEqual('7-11 Lancaster Rd, Salford, M6 8AQ')
   })
 })

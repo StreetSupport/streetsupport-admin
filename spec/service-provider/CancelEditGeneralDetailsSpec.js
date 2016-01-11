@@ -7,17 +7,17 @@ var sinon = require('sinon'),
     getUrlParameter = require('../../src/js/get-url-parameter')
 
 
-describe('Cancel Edit Service Provider General Details', function () {
+describe ('Cancel Edit Service Provider General Details', function () {
   var Model = require('../../src/js/models/ServiceProvider'),
   model,
   stubbedApi,
   stubbedCookies,
   stubbedUrlParams
 
-  beforeEach(function () {
+  beforeEach (function () {
     function fakeResolved(value) {
       return {
-        then: function(success, error) {
+        then: function (success, error) {
           success({
             'status': 200,
             'json': coffee4Craig()
@@ -38,17 +38,17 @@ describe('Cancel Edit Service Provider General Details', function () {
     model.cancelEditGeneralDetails()
   })
 
-  afterEach(function () {
+  afterEach (function () {
     ajax.get.restore()
     cookies.get.restore()
     getUrlParameter.parameter.restore()
   })
 
-  it('should reset isEditingGeneralDetails to false', function() {
+  it ('should reset isEditingGeneralDetails to false', function () {
     expect(model.isEditingGeneralDetails()).toBeFalsy()
   })
 
-  it('should restore description to its previous value', function() {
+  it ('should restore description to its previous value', function () {
     expect(model.serviceProvider().description()).toEqual('initial description')
   })
 })

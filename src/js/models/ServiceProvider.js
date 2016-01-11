@@ -39,18 +39,17 @@ function ServiceProviderDetails () {
         .join(', ')
   }
 
-  self.init = function() {
-    ajax
-      .get(endpoints.getServiceProviders + '/show/' + getUrlParameter.parameter('key'),
-        {
-          'content-type': 'application/json',
-          'session-token': cookies.get('session-token')
-        },
-        {})
+  self.init = function () {
+    ajax.get(endpoints.getServiceProviders + '/show/' + getUrlParameter.parameter('key'),
+      {
+        'content-type': 'application/json',
+        'session-token': cookies.get('session-token')
+      },
+      {})
       .then(function (result) {
         var sp = result.json
 
-        sp.addresses = _.map(sp.addresses, function(address) {
+        sp.addresses = _.map(sp.addresses, function (address) {
           address.formatted = self.formatAddress(address)
           return address
         })
@@ -63,29 +62,28 @@ function ServiceProviderDetails () {
       })
   }
 
-  self.editGeneralDetails = function() {
+  self.editGeneralDetails = function () {
     self.isEditingGeneralDetails(true)
   }
 
-  self.cancelEditGeneralDetails = function() {
+  self.cancelEditGeneralDetails = function () {
     self.isEditingGeneralDetails(false)
     self.restoreViewModel()
   }
 
-  self.saveGeneralDetails = function() {
+  self.saveGeneralDetails = function () {
     if (self.isEditingGeneralDetails()) {
-      ajax
-        .put(endpoints.serviceProviderDetails + '/' + getUrlParameter.parameter('key') + '/update',
-          {
-            'content-type': 'application/json',
-            'session-token': cookies.get('session-token')
-          },
-          JSON.stringify({
-            'Description': self.serviceProvider().description()
-          })
-        ).then(function(result) {
+      ajax.put(endpoints.serviceProviderDetails + '/' + getUrlParameter.parameter('key') + '/update',
+        {
+          'content-type': 'application/json',
+          'session-token': cookies.get('session-token')
+        },
+        JSON.stringify({
+          'Description': self.serviceProvider().description()
+        })
+        ).then(function (result) {
           self.isEditingGeneralDetails(false)
-        }, function(error) {
+        }, function (error) {
           var response = JSON.parse(error.response)
           self.message(response.messages.join('<br />'))
         })
