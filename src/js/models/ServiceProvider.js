@@ -12,7 +12,7 @@ function ServiceProvider () {
   self.serviceProvider = ko.observable()
 
   self.formatAddress = function (address) {
-    return _.chain(Object.keys(address))
+    return _.chain(['street', 'street1', 'street2', 'street3', 'city', 'postcode'])
         .filter(function (key) {
           return address[key] !== null
         })
