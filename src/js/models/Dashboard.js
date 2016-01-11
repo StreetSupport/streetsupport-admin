@@ -59,7 +59,7 @@ function DashboardModel () {
       })
     )
     .then(function(result) {
-      self.updateServiceProvider(serviceProvider)
+      self.updateServiceProviderVerification(serviceProvider)
     }, function (error) {
       alert('oops, there was a problem! ' + JSON.parse(error))
     })
@@ -76,17 +76,28 @@ function DashboardModel () {
       })
     )
     .then(function(result) {
-      self.updateServiceProvider(serviceProvider)
+      self.updateServiceProviderPublishedState(serviceProvider)
     }, function (error) {
       alert('oops, there was a problem! ' + JSON.parse(error))
     })
   }
 
-  self.updateServiceProvider = function (serviceProvider) {
+  self.updateServiceProviderVerification = function (serviceProvider) {
     var updatedSPs = _.map(self.serviceProviders(), function (sp) {
       if (sp.key !== serviceProvider.key) return sp
 
       sp.isVerified(!serviceProvider.isVerified())
+
+      return sp
+    })
+
+    self.serviceProviders(updatedSPs)
+  }
+
+  self.updateServiceProviderPublishedState = function (serviceProvider) {
+    var updatedSPs = _.map(self.serviceProviders(), function (sp) {
+      if (sp.key !== serviceProvider.key) return sp
+
       sp.isPublished(!serviceProvider.isPublished())
 
       return sp

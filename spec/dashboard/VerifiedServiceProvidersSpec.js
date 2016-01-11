@@ -21,7 +21,8 @@ describe('VerifiedServiceProviders', function () {
               {
                 'key': 'albert-kennedy-trust',
                 'name': 'Albert Kennedy Trust',
-                'isVerified': true
+                'isVerified': true,
+                'isPublished': false
               },
               {
                 'key': 'coffee4craig',
@@ -101,6 +102,10 @@ describe('VerifiedServiceProviders', function () {
 
     it('should invert isVerified', function() {
       expect(dashboard.serviceProviders()[0].isVerified()).toBeFalsy()
+    })
+
+    it('should not change isPublished', function() {
+      expect(dashboard.serviceProviders()[0].isPublished()).toBeFalsy()
     })
 
     it('should set verified labels', function() {

@@ -21,7 +21,7 @@ describe('Dashboard', function () {
               {
                 "key": "albert-kennedy-trust",
                 "name": "Albert Kennedy Trust",
-                "isVerified": false
+                "isVerified": false,
               },
               {
                 "key": "coffee4craig",
