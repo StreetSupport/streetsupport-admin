@@ -36,6 +36,13 @@ pageName: serviceProvider
             </section>
             <section>
               <h2>Contact Information</h2>
+              <!-- ko ifnot: $parent.isEditingContactDetails -->
+              <button data-bind="click: $parent.editContactDetails" class="btn btn--brand-d"><span class="btn__text">edit</span></button>
+              <!-- /ko -->
+              <!-- ko if: $parent.isEditingContactDetails -->
+              <button data-bind="click: $parent.cancelEditContactDetails" class="btn btn--brand-e"><span class="btn__text">cancel</span></button>
+              <button data-bind="click: $parent.saveContactDetails" class="btn btn--brand-g"><span class="btn__text">save</span></button>
+              <!-- /ko -->
               <dl class="key-value-pair">
                 <dt class="key-value-pair__key">Telephone</dt>
                 <dd data-bind="text: telephone" class="key-value-pair__value"></dd>

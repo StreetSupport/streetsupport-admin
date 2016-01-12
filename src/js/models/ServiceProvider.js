@@ -25,6 +25,7 @@ function ServiceProviderDetails () {
   self.initialServiceProvider = ko.observable()
   self.serviceProvider = ko.observable()
   self.isEditingGeneralDetails = ko.observable(false)
+  self.isEditingContactDetails = ko.observable(false)
   self.message = ko.observable('')
 
   self.formatAddress = function (address) {
@@ -71,6 +72,15 @@ function ServiceProviderDetails () {
     self.restoreViewModel()
   }
 
+  self.editContactDetails = function () {
+    self.isEditingContactDetails(true)
+  }
+
+  self.cancelEditContactDetails = function () {
+    self.isEditingContactDetails(false)
+    self.restoreViewModel()
+  }
+
   self.saveGeneralDetails = function () {
     if (self.isEditingGeneralDetails()) {
       ajax.put(endpoints.serviceProviderDetails + '/' + getUrlParameter.parameter('key') + '/update',
@@ -90,8 +100,37 @@ function ServiceProviderDetails () {
     }
   }
 
+  self.saveContactDetails = function () {
+    if (self.isEditingContactDetails()) {
+      ajax.put(endpoints.serviceProviderContactDetails + '/' + getUrlParameter.parameter('key') + '/update',
+        {
+          'content-type': 'application/json',
+          'session-token': cookies.get('session-token')
+        },
+        JSON.stringify({
+          'Telephone': self.serviceProvider().telephone(),
+          'Email': self.serviceProvider().email(),
+          'Website': self.serviceProvider().website(),
+          'Facebook': self.serviceProvider().facebook(),
+          'Twitter': self.serviceProvider().twitter(),
+        })
+        ).then(function (result) {
+          self.isEditingContactDetails(false)
+        }, function (error) {
+          var response = JSON.parse(error.response)
+          self.message(response.messages.join('<br />'))
+        })
+    }
+  }
+
   self.restoreViewModel = function () {
     self.serviceProvider().description(self.initialServiceProvider().description())
+
+    self.serviceProvider().telephone(self.initialServiceProvider().telephone())
+    self.serviceProvider().email(self.initialServiceProvider().email())
+    self.serviceProvider().website(self.initialServiceProvider().website())
+    self.serviceProvider().facebook(self.initialServiceProvider().facebook())
+    self.serviceProvider().twitter(self.initialServiceProvider().twitter())
   }
 
   self.init()
