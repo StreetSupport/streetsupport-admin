@@ -93,6 +93,7 @@ pageName: serviceProvider
             </section>
             <section>
               <h2>Addresses</h2>
+              <a data-bind="attr: { 'href': amendAddressesUrl }" title="edit addresses">Edit Addresses</a>
               <div data-bind="foreach: addresses">
                 <div>
                   <address data-bind="text: formatted"></address>

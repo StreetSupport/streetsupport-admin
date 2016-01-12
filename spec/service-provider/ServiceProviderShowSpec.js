@@ -6,7 +6,6 @@ var sinon = require('sinon'),
     cookies =   require('../../src/js/cookies'),
     getUrlParameter = require('../../src/js/get-url-parameter')
 
-
 describe ('Show Service Provider', function () {
   var Model = require('../../src/js/models/ServiceProvider'),
   model,
@@ -40,14 +39,14 @@ describe ('Show Service Provider', function () {
   })
 
   it ('should retrieve service provider from api with session token', function () {
-      var endpoint = endpoints.getServiceProviders + '/show/coffee4craig'
-      var headers = {
-        'content-type': 'application/json',
-        'session-token': 'stored-session-token'
-      }
-      var payload = {}
-      var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, headers, payload).calledOnce
-      expect(apiCalledWithExpectedArgs).toBeTruthy()
+    var endpoint = endpoints.getServiceProviders + '/show/coffee4craig'
+    var headers = {
+      'content-type': 'application/json',
+      'session-token': 'stored-session-token'
+    }
+    var payload = {}
+    var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, headers, payload).calledOnce
+    expect(apiCalledWithExpectedArgs).toBeTruthy()
   })
 
   it ('should set service provider', function () {
@@ -56,6 +55,10 @@ describe ('Show Service Provider', function () {
 
   it ('should format addresses', function () {
     expect(model.serviceProvider().addresses[0].formatted).toEqual('7-11 Lancaster Rd, Salford, M6 8AQ')
+  })
+
+  it ('should set link to manage addresses', function () {
+    expect(model.serviceProvider().amendAddressesUrl).toEqual('service-provider-addresses.html?key=coffee4craig')
   })
 })
 

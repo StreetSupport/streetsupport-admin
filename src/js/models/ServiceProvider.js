@@ -18,6 +18,7 @@ function ServiceProvider (data) {
   this.twitter = ko.observable(data.twitter)
   this.addresses = data.addresses
   this.providedServices = data.providedServices
+  this.amendAddressesUrl = adminUrls.serviceProviderAddresses + '?key=' + data.key
 }
 
 function ServiceProviderDetails () {

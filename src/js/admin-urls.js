@@ -8,5 +8,6 @@ module.exports = {
   login: '/',
   dashboard: s('dashboard'),
   serviceProviders: s('service-providers'),
-  notFound: s('404')
+  notFound: s('404'),
+  serviceProviderAddresses: s('service-provider-addresses')
 }
