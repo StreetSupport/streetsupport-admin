@@ -15,6 +15,7 @@ pageName: serviceProviderAddresses
             <h2>Addresses</h2>
             <div data-bind="foreach: addresses">
               <article>
+                <h3 data-bind="text: street1"></h3>
                 <dl class="key-value-pair">
                   <dt class="key-value-pair__key">Street Line 1</dt>
                   <dd data-bind="text: street1" class="key-value-pair__value"></dd>
@@ -29,7 +30,7 @@ pageName: serviceProviderAddresses
                   <dt class="key-value-pair__key">Postcode</dt>
                   <dd data-bind="text: postcode" class="key-value-pair__value"></dd>
                 </dl>
-                <h3>Opening Times</h3>
+                <h4>Opening Times</h4>
                 <dl data-bind="foreach: openingTimes" class="key-value-pair">
                   <dt data-bind="text: day" class="key-value-pair__key"></dt>
                   <dd><span data-bind="text: startTime"></span> - <span data-bind="text: endTime"></span></dd>
