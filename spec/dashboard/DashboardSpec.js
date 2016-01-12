@@ -12,7 +12,7 @@ describe ('Dashboard', function () {
       stubbedCookies
 
   beforeEach (function () {
-    function fakeResolved(value) {
+    function fakeResolved (value) {
       return {
         then: function (success, error) {
           success({
@@ -40,7 +40,7 @@ describe ('Dashboard', function () {
     }
 
     stubbedApi = sinon.stub(ajax, 'get')
-    stubbedApi.returns(fakeResolved())
+    stubbedApi.returns(fakeResolved ())
 
     stubbedCookies = sinon.stub(cookies, 'get').returns('stored-session-token')
 

@@ -27,7 +27,7 @@ describe ('Login', function () {
         stubbedBrowser
 
     beforeEach (function () {
-      function fakeResolved(value) {
+      function fakeResolved (value) {
         return {
           then: function (success, error) {
             success({
@@ -41,7 +41,7 @@ describe ('Login', function () {
       }
 
       stubbedApi = sinon.stub(ajax, 'postJson')
-      stubbedApi.returns(fakeResolved())
+      stubbedApi.returns(fakeResolved ())
       stubbedBrowser = sinon.stub(browser, 'redirect')
 
       mockCookies = sinon.mock(cookies)

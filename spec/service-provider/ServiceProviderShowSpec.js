@@ -14,7 +14,7 @@ describe ('Show Service Provider', function () {
   stubbedUrlParams
 
   beforeEach (function () {
-    function fakeResolved(value) {
+    function fakeResolved (value) {
       return {
         then: function (success, error) {
           success({
@@ -25,7 +25,7 @@ describe ('Show Service Provider', function () {
       }
     }
 
-    stubbedApi = sinon.stub(ajax, 'get').returns(fakeResolved())
+    stubbedApi = sinon.stub(ajax, 'get').returns(fakeResolved ())
     stubbedCookies = sinon.stub(cookies, 'get').returns('stored-session-token')
     stubbedUrlParams = sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
 

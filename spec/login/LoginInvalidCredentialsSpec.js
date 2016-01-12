@@ -13,7 +13,7 @@ describe ('Submit invalid credentials', function () {
 
   beforeEach (function () {
     login = new Login()
-    function fakeResolved(value) {
+    function fakeResolved (value) {
       return {
         then: function (success, error) {
           error({
@@ -27,7 +27,7 @@ describe ('Submit invalid credentials', function () {
     }
 
     stubbedApi = sinon.stub(ajax, 'postJson')
-    stubbedApi.returns(fakeResolved())
+    stubbedApi.returns(fakeResolved ())
     stubbedBrowser = sinon.stub(browser, 'redirect')
 
     login.username('username')
