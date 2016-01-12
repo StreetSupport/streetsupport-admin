@@ -113,7 +113,7 @@ function ServiceProviderDetails () {
           'Email': self.serviceProvider().email(),
           'Website': self.serviceProvider().website(),
           'Facebook': self.serviceProvider().facebook(),
-          'Twitter': self.serviceProvider().twitter(),
+          'Twitter': self.serviceProvider().twitter()
         })
         ).then(function (result) {
           self.isEditingContactDetails(false)

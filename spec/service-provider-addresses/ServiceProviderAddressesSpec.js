@@ -51,33 +51,37 @@ describe ('Service Provider Addresses', function () {
 })
 
 function addresses () {
-  return [{
-    'street': '5 Oak Street',
-    'street1': null,
-    'street2': null,
-    'street3': null,
-    'city': 'Manchester',
-    'postcode': 'M4 5JD',
-    'openingTimes': [{
-      'startTime': '10:00',
-      'endTime': '16:30',
-      'day': 'Monday'
-    }, {
-      'startTime': '10:00',
-      'endTime': '16:30',
-      'day': 'Tuesday'
-    }, {
-      'startTime': '10:00',
-      'endTime': '16:30',
-      'day': 'Wednesday'
-    }, {
-      'startTime': '10:00',
-      'endTime': '16:30',
-      'day': 'Thursday'
-    }, {
-      'startTime': '10:00',
-      'endTime': '16:30',
-      'day': 'Friday'
+  return {
+    'key': 'coffee4craig',
+    'name': 'Coffee 4 Craig',
+    'addresses': [{
+      'street': '5 Oak Street',
+      'street1': null,
+      'street2': null,
+      'street3': null,
+      'city': 'Manchester',
+      'postcode': 'M4 5JD',
+      'openingTimes': [{
+        'startTime': '10:00',
+        'endTime': '16:30',
+        'day': 'Monday'
+      }, {
+        'startTime': '10:00',
+        'endTime': '16:30',
+        'day': 'Tuesday'
+      }, {
+        'startTime': '10:00',
+        'endTime': '16:30',
+        'day': 'Wednesday'
+      }, {
+        'startTime': '10:00',
+        'endTime': '16:30',
+        'day': 'Thursday'
+      }, {
+        'startTime': '10:00',
+        'endTime': '16:30',
+        'day': 'Friday'
+      }]
     }]
-  }]
+  }
 }

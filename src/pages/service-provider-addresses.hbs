@@ -1,0 +1,23 @@
+---
+title: Service Provider Addresses - Street Support Admin
+description: Street Support - Making it easier to help homeless people in Manchester
+jsName: serviceProviderAddresses
+pageName: serviceProviderAddresses
+---
+
+{{#extend "_default"}}
+  {{#content "main"}}
+    <div class="block block--cta">
+      <div class="container block__inner">
+        <div class="block__content form">
+          <p data-bind="text: message"></p>
+          <div data-bind="with: serviceProvider">
+            <h1 data-bind="text: name"></h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  {{/content}}
+
+  {{#content "gutter"}}{{/content}}
+{{/extend}}
