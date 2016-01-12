@@ -72,15 +72,6 @@ function ServiceProviderDetails () {
     self.restoreViewModel()
   }
 
-  self.editContactDetails = function () {
-    self.isEditingContactDetails(true)
-  }
-
-  self.cancelEditContactDetails = function () {
-    self.isEditingContactDetails(false)
-    self.restoreViewModel()
-  }
-
   self.saveGeneralDetails = function () {
     if (self.isEditingGeneralDetails()) {
       ajax.put(endpoints.serviceProviderDetails + '/' + getUrlParameter.parameter('key') + '/update',
@@ -98,6 +89,15 @@ function ServiceProviderDetails () {
           self.message(response.messages.join('<br />'))
         })
     }
+  }
+
+  self.editContactDetails = function () {
+    self.isEditingContactDetails(true)
+  }
+
+  self.cancelEditContactDetails = function () {
+    self.isEditingContactDetails(false)
+    self.restoreViewModel()
   }
 
   self.saveContactDetails = function () {

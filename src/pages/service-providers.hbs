@@ -45,15 +45,50 @@ pageName: serviceProvider
               <!-- /ko -->
               <dl class="key-value-pair">
                 <dt class="key-value-pair__key">Telephone</dt>
-                <dd data-bind="text: telephone" class="key-value-pair__value"></dd>
+                <dd class="key-value-pair__value">
+                  <!-- ko ifnot: $parent.isEditingContactDetails -->
+                  <span data-bind="text: telephone"></span>
+                  <!-- /ko -->
+                  <!-- ko if: $parent.isEditingContactDetails -->
+                  <input type="text" data-bind="textInput: telephone" />
+                  <!-- /ko -->
+                </dd>
                 <dt class="key-value-pair__key">Email</dt>
-                <dd data-bind="text: email" class="key-value-pair__value"></dd>
+                <dd class="key-value-pair__value">
+                  <!-- ko ifnot: $parent.isEditingContactDetails -->
+                  <span data-bind="text: email"></span>
+                  <!-- /ko -->
+                  <!-- ko if: $parent.isEditingContactDetails -->
+                  <input type="text" data-bind="textInput: email" />
+                  <!-- /ko -->
+                </dd>
                 <dt class="key-value-pair__key">Website</dt>
-                <dd data-bind="text: website" class="key-value-pair__value"></dd>
+                <dd class="key-value-pair__value">
+                  <!-- ko ifnot: $parent.isEditingContactDetails -->
+                  <span data-bind="text: website"></span>
+                  <!-- /ko -->
+                  <!-- ko if: $parent.isEditingContactDetails -->
+                  <input type="text" data-bind="textInput: website" />
+                  <!-- /ko -->
+                </dd>
                 <dt class="key-value-pair__key">Facebook</dt>
-                <dd data-bind="text: facebook" class="key-value-pair__value"></dd>
+                <dd class="key-value-pair__value">
+                  <!-- ko ifnot: $parent.isEditingContactDetails -->
+                  <span data-bind="text: facebook"></span>
+                  <!-- /ko -->
+                  <!-- ko if: $parent.isEditingContactDetails -->
+                  <input type="text" data-bind="textInput: facebook" />
+                  <!-- /ko -->
+                </dd>
                 <dt class="key-value-pair__key">Twitter</dt>
-                <dd data-bind="text: twitter" class="key-value-pair__value"></dd>
+                <dd class="key-value-pair__value">
+                  <!-- ko ifnot: $parent.isEditingContactDetails -->
+                  <span data-bind="text: twitter"></span>
+                  <!-- /ko -->
+                  <!-- ko if: $parent.isEditingContactDetails -->
+                  <input type="text" data-bind="textInput: twitter" />
+                  <!-- /ko -->
+                </dd>
               </dl>
             </section>
             <section>
