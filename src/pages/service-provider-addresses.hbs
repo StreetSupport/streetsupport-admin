@@ -12,6 +12,30 @@ pageName: serviceProviderAddresses
         <div class="block__content form">
           <div data-bind="with: serviceProvider">
             <h1 data-bind="text: name"></h1>
+            <h2>Addresses</h2>
+            <div data-bind="foreach: addresses">
+              <article>
+                <dl class="key-value-pair">
+                  <dt class="key-value-pair__key">Street Line 1</dt>
+                  <dd data-bind="text: street1" class="key-value-pair__value"></dd>
+                  <dt class="key-value-pair__key">Street Line 2</dt>
+                  <dd data-bind="text: street2" class="key-value-pair__value"></dd>
+                  <dt class="key-value-pair__key">Street Line 3</dt>
+                  <dd data-bind="text: street3" class="key-value-pair__value"></dd>
+                  <dt class="key-value-pair__key">Street Line 4</dt>
+                  <dd data-bind="text: street4" class="key-value-pair__value"></dd>
+                  <dt class="key-value-pair__key">City</dt>
+                  <dd data-bind="text: city" class="key-value-pair__value"></dd>
+                  <dt class="key-value-pair__key">Postcode</dt>
+                  <dd data-bind="text: postcode" class="key-value-pair__value"></dd>
+                </dl>
+                <h3>Opening Times</h3>
+                <dl data-bind="foreach: openingTimes" class="key-value-pair">
+                  <dt data-bind="text: day" class="key-value-pair__key"></dt>
+                  <dd><span data-bind="text: startTime"></span> - <span data-bind="text: endTime"></span></dd>
+                </dl>
+              </article>
+            </div>
           </div>
         </div>
       </div>

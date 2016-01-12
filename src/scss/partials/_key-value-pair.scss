@@ -7,6 +7,7 @@
     @include mq($from: l) {
       @include span(2 of $column-large);
     }
+    clear: left;
   }
   &__value {
     @include mq($from: l) {
