@@ -52,6 +52,11 @@ describe('Address Editing', function () {
       stubbedUrlParams = sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
 
       model.street1('new street1')
+      model.street2('new street2')
+      model.street3('new street3')
+      model.street4('new street4')
+      model.city('new city')
+      model.postcode('new postcode')
 
       model.save()
     })
@@ -69,7 +74,12 @@ describe('Address Editing', function () {
           'session-token': 'stored-session-token'
         }
         var payload = JSON.stringify({
-          'Street': 'new street1'
+          'Street': 'new street1',
+          'Street1': 'new street2',
+          'Street2': 'new street3',
+          'Street3': 'new street4',
+          'City': 'new city',
+          'Postcode': 'new postcode',
         })
         var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, headers, payload).calledOnce
         expect(apiCalledWithExpectedArgs).toBeTruthy()

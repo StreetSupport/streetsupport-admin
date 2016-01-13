@@ -44,7 +44,12 @@ function Address (data) {
         'session-token': cookies.get('session-token')
       },
       JSON.stringify({
-        'Street': self.street1()
+        'Street': self.street1(),
+        'Street1': self.street2(),
+        'Street2': self.street3(),
+        'Street3': self.street4(),
+        'City': self.city(),
+        'Postcode': self.postcode()
       })
       ).then(function (result) {
         self.isEditing(false)
