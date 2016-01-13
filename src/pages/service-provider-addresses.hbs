@@ -83,7 +83,14 @@ pageName: serviceProviderAddresses
                 <h4>Opening Times</h4>
                 <dl data-bind="foreach: openingTimes" class="key-value-pair">
                   <dt data-bind="text: day" class="key-value-pair__key"></dt>
-                  <dd><span data-bind="text: startTime"></span> - <span data-bind="text: endTime"></span></dd>
+                  <dd class="key-value-pair__value">
+                    <!-- ko ifnot: $parent.isEditing -->
+                    <span data-bind="text: startTime"></span> - <span data-bind="text: endTime"></span>
+                    <!-- /ko -->
+                    <!-- ko if: $parent.isEditing -->
+                    <input data-bind="textInput: startTime" type="text" /> - <input data-bind="textInput: endTime" type="text" />
+                    <!-- /ko -->
+                  </dd>
                 </dl>
               </article>
             </div>

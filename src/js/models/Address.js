@@ -6,9 +6,10 @@ var getUrlParameter = require('../get-url-parameter')
 var cookies = require('../cookies')
 
 function OpeningTime (data) {
-  this.day = data.day
-  this.startTime = data.startTime
-  this.endTime = data.endTime
+  var self = this
+  self.day = ko.observable(data.day)
+  self.startTime = ko.observable(data.startTime)
+  self.endTime = ko.observable(data.endTime)
 }
 
 function Address (data) {
@@ -29,6 +30,10 @@ function Address (data) {
   self.city = ko.observable(data.city)
   self.postcode = ko.observable(data.postcode)
 
+  self.savedOpeningTimes = ko.observableArray(_.map(data.openingTimes, function (time) {
+    return new OpeningTime(time)
+  }))
+
   self.openingTimes = ko.observableArray(_.map(data.openingTimes, function (time) {
     return new OpeningTime(time)
   }))
@@ -41,14 +46,7 @@ function Address (data) {
   }
 
   self.cancel = function () {
-    self.isEditing(false)
-
-    self.street1(self.savedStreet1())
-    self.street2(self.savedStreet2())
-    self.street3(self.savedStreet3())
-    self.street4(self.savedStreet4())
-    self.city(self.savedCity())
-    self.postcode(self.savedPostcode())
+    self.restoreFields()
   }
 
   self.save = function () {
@@ -67,17 +65,36 @@ function Address (data) {
       })
       ).then(function (result) {
         self.isEditing(false)
-
-        self.savedStreet1(self.street1())
-        self.savedStreet2(self.street2())
-        self.savedStreet3(self.street3())
-        self.savedStreet4(self.street4())
-        self.savedCity(self.city())
-        self.savedPostcode(self.postcode())
+        self.setFields()
       }, function (error) {
         var response = JSON.parse(error.response)
         self.message(response.messages.join('<br />'))
       })
+  }
+
+  self.restoreFields = function () {
+    self.isEditing(false)
+    self.street1(self.savedStreet1())
+    self.street2(self.savedStreet2())
+    self.street3(self.savedStreet3())
+    self.street4(self.savedStreet4())
+    self.city(self.savedCity())
+    self.postcode(self.savedPostcode())
+
+    for(var i = 0; i < self.openingTimes().length; i++) {
+      self.openingTimes()[i].day(self.savedOpeningTimes()[i].day())
+      self.openingTimes()[i].startTime(self.savedOpeningTimes()[i].startTime())
+      self.openingTimes()[i].endTime(self.savedOpeningTimes()[i].endTime())
+    }
+  }
+
+  self.setFields = function () {
+    self.savedStreet1(self.street1())
+    self.savedStreet2(self.street2())
+    self.savedStreet3(self.street3())
+    self.savedStreet4(self.street4())
+    self.savedCity(self.city())
+    self.savedPostcode(self.postcode())
   }
 }
 

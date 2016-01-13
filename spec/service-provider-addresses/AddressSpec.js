@@ -23,6 +23,7 @@ describe('Address Editing', function () {
   describe('Cancel', function () {
     beforeEach (function () {
       model.street1('new street1')
+      model.openingTimes()[1].startTime('23:00')
       model.cancel()
     })
 
@@ -32,6 +33,7 @@ describe('Address Editing', function () {
 
     it('should set reset fields', function () {
       expect(model.street1()).toEqual('5 Oak Street')
+      expect(model.openingTimes()[1].startTime()).toEqual('10:00')
     })
   })
 
