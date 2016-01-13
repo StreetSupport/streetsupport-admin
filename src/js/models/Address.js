@@ -109,11 +109,15 @@ function Address (data) {
     self.city(self.savedCity())
     self.postcode(self.savedPostcode())
 
-    for(var i = 0; i < self.savedOpeningTimes().length; i++) {
-      self.openingTimes()[i].day(self.savedOpeningTimes()[i].day())
-      self.openingTimes()[i].startTime(self.savedOpeningTimes()[i].startTime())
-      self.openingTimes()[i].endTime(self.savedOpeningTimes()[i].endTime())
-    }
+    var restoredOpeningTimes = _.map(self.savedOpeningTimes(), function(ot) {
+      return new OpeningTime({
+        'day': ot.day(),
+        'startTime': ot.startTime(),
+        'endTime': ot.endTime(),
+      })
+    })
+
+    self.openingTimes(restoredOpeningTimes)
   }
 
   self.setFields = function () {
