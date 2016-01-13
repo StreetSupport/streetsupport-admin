@@ -24,22 +24,59 @@ pageName: serviceProviderAddresses
                 <!-- /ko -->
                 <dl class="key-value-pair">
                   <dt class="key-value-pair__key">Street Line 1</dt>
-                  <!-- ko ifnot: isEditing -->
-                  <dd data-bind="text: street1" class="key-value-pair__value"></dd>
-                  <!-- /ko -->
-                  <!-- ko if: isEditing -->
-                  <input data-bind="textInput: street1" type="text" />
-                  <!-- /ko -->
+                  <dd class="key-value-pair__value">
+                    <!-- ko ifnot: isEditing -->
+                    <span data-bind="text: street1"></span>
+                    <!-- /ko -->
+                    <!-- ko if: isEditing -->
+                    <input data-bind="textInput: street1" type="text" />
+                    <!-- /ko -->
+                  </dd>
                   <dt class="key-value-pair__key">Street Line 2</dt>
-                  <dd data-bind="text: street2" class="key-value-pair__value"></dd>
+                  <dd class="key-value-pair__value">
+                    <!-- ko ifnot: isEditing -->
+                    <span data-bind="text: street2"></span>
+                    <!-- /ko -->
+                    <!-- ko if: isEditing -->
+                    <input data-bind="textInput: street2" type="text" />
+                    <!-- /ko -->
+                  </dd>
                   <dt class="key-value-pair__key">Street Line 3</dt>
-                  <dd data-bind="text: street3" class="key-value-pair__value"></dd>
+                  <dd class="key-value-pair__value">
+                    <!-- ko ifnot: isEditing -->
+                    <span data-bind="text: street3"></span>
+                    <!-- /ko -->
+                    <!-- ko if: isEditing -->
+                    <input data-bind="textInput: street3" type="text" />
+                    <!-- /ko -->
+                  </dd>
                   <dt class="key-value-pair__key">Street Line 4</dt>
-                  <dd data-bind="text: street4" class="key-value-pair__value"></dd>
+                  <dd class="key-value-pair__value">
+                    <!-- ko ifnot: isEditing -->
+                    <span data-bind="text: street4"></span>
+                    <!-- /ko -->
+                    <!-- ko if: isEditing -->
+                    <input data-bind="textInput: street4" type="text" />
+                    <!-- /ko -->
+                  </dd>
                   <dt class="key-value-pair__key">City</dt>
-                  <dd data-bind="text: city" class="key-value-pair__value"></dd>
+                  <dd class="key-value-pair__value">
+                    <!-- ko ifnot: isEditing -->
+                    <span data-bind="text: city"></span>
+                    <!-- /ko -->
+                    <!-- ko if: isEditing -->
+                    <input data-bind="textInput: city" type="text" />
+                    <!-- /ko -->
+                  </dd>
                   <dt class="key-value-pair__key">Postcode</dt>
-                  <dd data-bind="text: postcode" class="key-value-pair__value"></dd>
+                  <dd class="key-value-pair__value">
+                    <!-- ko ifnot: isEditing -->
+                    <span data-bind="text: postcode"></span>
+                    <!-- /ko -->
+                    <!-- ko if: isEditing -->
+                    <input data-bind="textInput: postcode" type="text" />
+                    <!-- /ko -->
+                  </dd>
                 </dl>
                 <h4>Opening Times</h4>
                 <dl data-bind="foreach: openingTimes" class="key-value-pair">
