@@ -16,6 +16,7 @@ pageName: serviceProviderAddresses
             <div data-bind="foreach: addresses">
               <article>
                 <h3 data-bind="text: street1"></h3>
+                <button data-bind="click: editAddress">edit</button>
                 <dl class="key-value-pair">
                   <dt class="key-value-pair__key">Street Line 1</dt>
                   <dd data-bind="text: street1" class="key-value-pair__value"></dd>

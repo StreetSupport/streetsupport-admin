@@ -6,7 +6,7 @@ var sinon = require('sinon'),
     cookies =   require('../../src/js/cookies'),
     getUrlParameter = require('../../src/js/get-url-parameter')
 
-describe ('Service Provider Addresses', function () {
+describe ('Address', function () {
   var Model = require('../../src/js/models/ServiceProviderAddresses'),
   model,
   stubbedApi,
