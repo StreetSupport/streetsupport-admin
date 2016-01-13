@@ -81,8 +81,21 @@ pageName: serviceProviderAddresses
                   </dd>
                 </dl>
                 <h4>Opening Times</h4>
+                <!-- ko if: isEditing -->
+                <button data-bind="click: newOpeningTime" class="btn btn--brand-d"><span class="btn__text">new</span></button>
+                <!-- /ko -->
                 <dl data-bind="foreach: openingTimes" class="key-value-pair">
-                  <dt data-bind="text: day" class="key-value-pair__key"></dt>
+                  <dt class="key-value-pair__key">
+                    <!-- ko ifnot: $parent.isEditing -->
+                    <span data-bind="text: day"></span>
+                    <!-- /ko -->
+                    <!-- ko if: $parent.isEditing -->
+                    <select data-bind="options: days,
+                       optionsText: $data,
+                       value: day,
+                       optionsCaption: '-- please select --'"></select>
+                    <!-- /ko -->
+                  </dt>
                   <dd class="key-value-pair__value">
                     <!-- ko ifnot: $parent.isEditing -->
                     <span data-bind="text: startTime"></span> - <span data-bind="text: endTime"></span>
@@ -91,6 +104,11 @@ pageName: serviceProviderAddresses
                     <input data-bind="textInput: startTime" type="text" /> - <input data-bind="textInput: endTime" type="text" />
                     <!-- /ko -->
                   </dd>
+                    <!-- ko if: $parent.isEditing -->
+                  <dd class="key-value-pair__value">
+                    <button data-bind="click: $parent.removeOpeningTime" class="btn btn--brand-g"><span class="btn__text">remove</span></button>
+                  </dd>
+                    <!-- /ko -->
                 </dl>
               </article>
             </div>

@@ -7,6 +7,7 @@ var cookies = require('../cookies')
 
 function OpeningTime (data) {
   var self = this
+  self.days = ko.observableArray(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'])
   self.day = ko.observable(data.day)
   self.startTime = ko.observable(data.startTime)
   self.endTime = ko.observable(data.endTime)
@@ -49,6 +50,26 @@ function Address (data) {
     self.restoreFields()
   }
 
+  self.newOpeningTime = function () {
+    var openingTimes = self.openingTimes()
+    openingTimes.push(new OpeningTime({
+      'day': '',
+      'startTime': '',
+      'endTime': ''
+    }))
+    self.openingTimes(openingTimes)
+  }
+
+  self.removeOpeningTime = function (openingTimeToRemove) {
+    var remaining = _.filter(self.openingTimes(), function(o) {
+      return o.day() !== openingTimeToRemove.day()
+          || o.startTime() !== openingTimeToRemove.startTime()
+          || o.endTime() !== openingTimeToRemove.endTime()
+    })
+
+    self.openingTimes(remaining)
+  }
+
   self.save = function () {
     ajax.put(endpoints.serviceProviderAddresses + '/' + getUrlParameter.parameter('key') + '/update/' + self.key,
       {
@@ -88,7 +109,7 @@ function Address (data) {
     self.city(self.savedCity())
     self.postcode(self.savedPostcode())
 
-    for(var i = 0; i < self.openingTimes().length; i++) {
+    for(var i = 0; i < self.savedOpeningTimes().length; i++) {
       self.openingTimes()[i].day(self.savedOpeningTimes()[i].day())
       self.openingTimes()[i].startTime(self.savedOpeningTimes()[i].startTime())
       self.openingTimes()[i].endTime(self.savedOpeningTimes()[i].endTime())
