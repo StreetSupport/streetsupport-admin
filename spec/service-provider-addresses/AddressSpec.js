@@ -78,6 +78,12 @@ describe('Address Editing', function () {
       model.street4('new street4')
       model.city('new city')
       model.postcode('new postcode')
+      model.openingTimes()[0].startTime('12:00')
+      model.openingTimes()[0].endTime('16:30')
+      model.openingTimes()[0].day('Monday')
+      model.openingTimes()[1].startTime('12:00')
+      model.openingTimes()[1].endTime('15:30')
+      model.openingTimes()[1].day('Tuesday')
 
       model.save()
     })
@@ -103,12 +109,12 @@ describe('Address Editing', function () {
           'Postcode': 'new postcode',
           'OpeningTimes': [
             {
-              'startTime': '10:00',
+              'startTime': '12:00',
               'endTime': '16:30',
               'day': 'Monday'
             }, {
-              'startTime': '10:00',
-              'endTime': '16:30',
+              'startTime': '12:00',
+              'endTime': '15:30',
               'day': 'Tuesday'
             }
           ]
