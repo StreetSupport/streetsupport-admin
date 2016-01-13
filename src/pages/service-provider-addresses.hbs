@@ -18,11 +18,11 @@ pageName: serviceProviderAddresses
               <article>
                 <h3 data-bind="text: street1"></h3>
                 <!-- ko ifnot: isEditing -->
-                <button data-bind="click: edit">edit</button>
+                <button data-bind="click: edit" class="btn btn--brand-d"><span class="btn__text">edit</span></button>
                 <!-- /ko -->
                 <!-- ko if: isEditing -->
-                <button data-bind="click: cancel">cancel</button>
-                <button data-bind="click: save">save</button>
+                <button data-bind="click: cancel" class="btn btn--brand-e"><span class="btn__text">cancel</span></button>
+                <button data-bind="click: save" class="btn btn--brand-g"><span class="btn__text">save</span></button>
                 <!-- /ko -->
                 <dl class="key-value-pair">
                   <dt class="key-value-pair__key">Street Line 1</dt>
