@@ -16,10 +16,20 @@ pageName: serviceProviderAddresses
             <div data-bind="foreach: addresses">
               <article>
                 <h3 data-bind="text: street1"></h3>
-                <button data-bind="click: editAddress">edit</button>
+                <!-- ko ifnot: isEditing -->
+                <button data-bind="click: edit">edit</button>
+                <!-- /ko -->
+                <!-- ko if: isEditing -->
+                <button data-bind="click: cancel">cancel</button>
+                <!-- /ko -->
                 <dl class="key-value-pair">
                   <dt class="key-value-pair__key">Street Line 1</dt>
+                  <!-- ko ifnot: isEditing -->
                   <dd data-bind="text: street1" class="key-value-pair__value"></dd>
+                  <!-- /ko -->
+                  <!-- ko if: isEditing -->
+                  <input data-bind="textInput: street1" type="text" />
+                  <!-- /ko -->
                   <dt class="key-value-pair__key">Street Line 2</dt>
                   <dd data-bind="text: street2" class="key-value-pair__value"></dd>
                   <dt class="key-value-pair__key">Street Line 3</dt>

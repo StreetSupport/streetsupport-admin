@@ -6,8 +6,8 @@ var sinon = require('sinon'),
     cookies =   require('../../src/js/cookies'),
     getUrlParameter = require('../../src/js/get-url-parameter')
 
-describe ('Address', function () {
-  var Model = require('../../src/js/models/ServiceProviderAddresses'),
+describe ('Address Editing', function () {
+  var Model = require('../../src/js/models/Address'),
   model,
   stubbedApi,
   stubbedCookies,
@@ -29,7 +29,9 @@ describe ('Address', function () {
     stubbedCookies = sinon.stub(cookies, 'get').returns('stored-session-token')
     stubbedUrlParams = sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
 
-    model = new Model()
+    model = new Model(getAddressData())
+
+    model.edit()
   })
 
   afterEach (function () {
@@ -38,51 +40,50 @@ describe ('Address', function () {
     getUrlParameter.parameter.restore()
   })
 
-  it ('should retrieve service provider from api with session token', function () {
-    var endpoint = endpoints.serviceProviderAddresses + '/show/coffee4craig'
-    var headers = {
-      'content-type': 'application/json',
-      'session-token': 'stored-session-token'
-    }
-    var payload = {}
-    var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, headers, payload).calledOnce
-    expect(apiCalledWithExpectedArgs).toBeTruthy()
+  it ('should set isEditing to true', function () {
+    expect(model.isEditing).toBeTruthy()
+  })
+
+  describe('Cancel', function () {
+    beforeEach (function () {
+      model.cancel()
+    })
+
+    it('should set isEditing to false', function () {
+      expect(model.isEditing()).toBeFalsy()
+    })
   })
 })
 
-function addresses () {
+function getAddressData() {
   return {
-    'key': 'coffee4craig',
-    'name': 'Coffee 4 Craig',
-    'addresses': [{
-      'key': 1,
-      'street': '5 Oak Street',
-      'street1': null,
-      'street2': null,
-      'street3': null,
-      'city': 'Manchester',
-      'postcode': 'M4 5JD',
-      'openingTimes': [{
-        'startTime': '10:00',
-        'endTime': '16:30',
-        'day': 'Monday'
-      }, {
-        'startTime': '10:00',
-        'endTime': '16:30',
-        'day': 'Tuesday'
-      }, {
-        'startTime': '10:00',
-        'endTime': '16:30',
-        'day': 'Wednesday'
-      }, {
-        'startTime': '10:00',
-        'endTime': '16:30',
-        'day': 'Thursday'
-      }, {
-        'startTime': '10:00',
-        'endTime': '16:30',
-        'day': 'Friday'
-      }]
+    'key': 1,
+    'street': '5 Oak Street',
+    'street1': null,
+    'street2': null,
+    'street3': null,
+    'city': 'Manchester',
+    'postcode': 'M4 5JD',
+    'openingTimes': [{
+      'startTime': '10:00',
+      'endTime': '16:30',
+      'day': 'Monday'
+    }, {
+      'startTime': '10:00',
+      'endTime': '16:30',
+      'day': 'Tuesday'
+    }, {
+      'startTime': '10:00',
+      'endTime': '16:30',
+      'day': 'Wednesday'
+    }, {
+      'startTime': '10:00',
+      'endTime': '16:30',
+      'day': 'Thursday'
+    }, {
+      'startTime': '10:00',
+      'endTime': '16:30',
+      'day': 'Friday'
     }]
   }
 }

@@ -22,9 +22,14 @@ function Address (data) {
     return new OpeningTime(time)
   }))
 
-  self.editAddress = function () {
-    console.log('edit address')
-    console.log(self)
+  self.isEditing = ko.observable(false)
+
+  self.edit = function () {
+    self.isEditing(true)
+  }
+
+  self.cancel = function () {
+    self.isEditing(false)
   }
 }
 
