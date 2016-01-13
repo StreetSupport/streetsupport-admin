@@ -101,6 +101,17 @@ describe('Address Editing', function () {
           'Street3': 'new street4',
           'City': 'new city',
           'Postcode': 'new postcode',
+          'OpeningTimes': [
+            {
+              'startTime': '10:00',
+              'endTime': '16:30',
+              'day': 'Monday'
+            }, {
+              'startTime': '10:00',
+              'endTime': '16:30',
+              'day': 'Tuesday'
+            }
+          ]
         })
         var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, headers, payload).calledOnce
         expect(apiCalledWithExpectedArgs).toBeTruthy()
@@ -188,18 +199,6 @@ function getAddressData() {
       'startTime': '10:00',
       'endTime': '16:30',
       'day': 'Tuesday'
-    }, {
-      'startTime': '10:00',
-      'endTime': '16:30',
-      'day': 'Wednesday'
-    }, {
-      'startTime': '10:00',
-      'endTime': '16:30',
-      'day': 'Thursday'
-    }, {
-      'startTime': '10:00',
-      'endTime': '16:30',
-      'day': 'Friday'
     }]
   }
 }

@@ -61,7 +61,14 @@ function Address (data) {
         'Street2': self.street3(),
         'Street3': self.street4(),
         'City': self.city(),
-        'Postcode': self.postcode()
+        'Postcode': self.postcode(),
+        'OpeningTimes': _.map(self.openingTimes(), function(openingTime) {
+          return {
+            'startTime': openingTime.startTime(),
+            'endTime': openingTime.endTime(),
+            'day': openingTime.day()
+          }
+        })
       })
       ).then(function (result) {
         self.isEditing(false)
