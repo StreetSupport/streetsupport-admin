@@ -14,6 +14,7 @@ pageName: serviceProviderAddresses
             <h1 data-bind="text: name"></h1>
             <h2>Addresses</h2>
             <div data-bind="foreach: addresses">
+              <p data-bind="text: message"></p>
               <article>
                 <h3 data-bind="text: street1"></h3>
                 <!-- ko ifnot: isEditing -->

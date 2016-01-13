@@ -15,6 +15,13 @@ function Address (data) {
   var self = this
 
   self.key = data.key
+  self.savedStreet1 = ko.observable(data.street)
+  self.savedStreet2 = ko.observable(data.street1)
+  self.savedStreet3 = ko.observable(data.street2)
+  self.savedStreet4 = ko.observable(data.street3)
+  self.savedCity = ko.observable(data.city)
+  self.savedPostcode = ko.observable(data.postcode)
+
   self.street1 = ko.observable(data.street)
   self.street2 = ko.observable(data.street1)
   self.street3 = ko.observable(data.street2)
@@ -35,6 +42,13 @@ function Address (data) {
 
   self.cancel = function () {
     self.isEditing(false)
+
+    self.street1(self.savedStreet1())
+    self.street2(self.savedStreet2())
+    self.street3(self.savedStreet3())
+    self.street4(self.savedStreet4())
+    self.city(self.savedCity())
+    self.postcode(self.savedPostcode())
   }
 
   self.save = function () {
@@ -53,6 +67,13 @@ function Address (data) {
       })
       ).then(function (result) {
         self.isEditing(false)
+
+        self.savedStreet1(self.street1())
+        self.savedStreet2(self.street2())
+        self.savedStreet3(self.street3())
+        self.savedStreet4(self.street4())
+        self.savedCity(self.city())
+        self.savedPostcode(self.postcode())
       }, function (error) {
         var response = JSON.parse(error.response)
         self.message(response.messages.join('<br />'))

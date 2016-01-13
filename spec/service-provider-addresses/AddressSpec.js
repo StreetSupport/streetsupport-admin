@@ -22,11 +22,16 @@ describe('Address Editing', function () {
 
   describe('Cancel', function () {
     beforeEach (function () {
+      model.street1('new street1')
       model.cancel()
     })
 
     it('should set isEditing to false', function () {
       expect(model.isEditing()).toBeFalsy()
+    })
+
+    it('should set reset fields', function () {
+      expect(model.street1()).toEqual('5 Oak Street')
     })
   })
 
@@ -87,6 +92,22 @@ describe('Address Editing', function () {
 
     it('should set isEditing to false', function() {
       expect(model.isEditing()).toBeFalsy()
+    })
+
+    describe('Edit again and Cancel', function () {
+      beforeEach (function () {
+        model.edit()
+        model.street1('another new street1')
+        model.cancel()
+      })
+
+      it('should set isEditing to false', function () {
+        expect(model.isEditing()).toBeFalsy()
+      })
+
+      it('should set reset fields', function () {
+        expect(model.street1()).toEqual('new street1')
+      })
     })
   })
 
