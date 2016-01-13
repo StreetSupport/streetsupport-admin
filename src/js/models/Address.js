@@ -1,5 +1,9 @@
 var ko = require('knockout')
 var _ = require('lodash')
+var ajax = require('basic-ajax')
+var endpoints = require('../api-endpoints')
+var getUrlParameter = require('../get-url-parameter')
+var cookies = require('../cookies')
 
 function OpeningTime (data) {
   this.day = data.day
@@ -30,6 +34,23 @@ function Address (data) {
 
   self.cancel = function () {
     self.isEditing(false)
+  }
+
+  self.save = function () {
+    ajax.put(endpoints.serviceProviderAddresses + '/' + getUrlParameter.parameter('key') + '/update/' + self.key,
+      {
+        'content-type': 'application/json',
+        'session-token': cookies.get('session-token')
+      },
+      JSON.stringify({
+        'Street': self.street1()
+      })
+      ).then(function (result) {
+        //self.isEditingGeneralDetails(false)
+      }, function (error) {
+        // var response = JSON.parse(error.response)
+        // self.message(response.messages.join('<br />'))
+      })
   }
 }
 

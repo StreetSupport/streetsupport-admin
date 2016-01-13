@@ -8,36 +8,12 @@ var sinon = require('sinon'),
 
 describe ('Address Editing', function () {
   var Model = require('../../src/js/models/Address'),
-  model,
-  stubbedApi,
-  stubbedCookies,
-  stubbedUrlParams
+  model
 
   beforeEach (function () {
-    function fakeResolved (value) {
-      return {
-        then: function (success, error) {
-          success({
-            'status': 200,
-            'json': addresses()
-          })
-        }
-      }
-    }
-
-    stubbedApi = sinon.stub(ajax, 'get').returns(fakeResolved ())
-    stubbedCookies = sinon.stub(cookies, 'get').returns('stored-session-token')
-    stubbedUrlParams = sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
-
     model = new Model(getAddressData())
 
     model.edit()
-  })
-
-  afterEach (function () {
-    ajax.get.restore()
-    cookies.get.restore()
-    getUrlParameter.parameter.restore()
   })
 
   it ('should set isEditing to true', function () {
@@ -51,6 +27,52 @@ describe ('Address Editing', function () {
 
     it('should set isEditing to false', function () {
       expect(model.isEditing()).toBeFalsy()
+    })
+  })
+
+  describe('Save', function () {
+    var stubbedApi,
+        stubbedCookies,
+        stubbedUrlParams
+
+    beforeEach(function () {
+      function fakeResolved(value) {
+        return {
+          then: function (success, error) {
+            success({
+              'status': 200,
+              'json': getAddressData()
+            })
+          }
+        }
+      }
+
+      stubbedApi = sinon.stub(ajax, 'put').returns(fakeResolved ())
+      stubbedCookies = sinon.stub(cookies, 'get').returns('stored-session-token')
+      stubbedUrlParams = sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
+
+      model.street1('new street1')
+
+      model.save()
+    })
+
+    afterEach (function () {
+      ajax.put.restore()
+      cookies.get.restore()
+      getUrlParameter.parameter.restore()
+    })
+
+    it ('should put address details to api with session token', function () {
+        var endpoint = endpoints.serviceProviderAddresses + '/coffee4craig/update/1'
+        var headers = {
+          'content-type': 'application/json',
+          'session-token': 'stored-session-token'
+        }
+        var payload = JSON.stringify({
+          'Street': 'new street1'
+        })
+        var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, headers, payload).calledOnce
+        expect(apiCalledWithExpectedArgs).toBeTruthy()
     })
   })
 })
