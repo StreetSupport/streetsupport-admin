@@ -27,6 +27,7 @@ function Address (data) {
   }))
 
   self.isEditing = ko.observable(false)
+  self.message = ko.observable()
 
   self.edit = function () {
     self.isEditing(true)
@@ -46,10 +47,10 @@ function Address (data) {
         'Street': self.street1()
       })
       ).then(function (result) {
-        //self.isEditingGeneralDetails(false)
+        self.isEditing(false)
       }, function (error) {
-        // var response = JSON.parse(error.response)
-        // self.message(response.messages.join('<br />'))
+        var response = JSON.parse(error.response)
+        self.message(response.messages.join('<br />'))
       })
   }
 }
