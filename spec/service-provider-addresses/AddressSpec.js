@@ -23,7 +23,14 @@ describe('Address Editing', function () {
   describe('Cancel', function () {
     beforeEach (function () {
       model.street1('new street1')
-      model.openingTimes()[1].startTime('23:00')
+      model.street2('new street2')
+      model.street3('new street3')
+      model.street4('new street4')
+      model.city('new city')
+      model.postcode('new postcode')
+      model.openingTimes()[1].startTime('20:00')
+      model.openingTimes()[1].endTime('22:00')
+      model.openingTimes()[1].day('Wednesday')
       model.cancel()
     })
 
@@ -33,7 +40,14 @@ describe('Address Editing', function () {
 
     it('should set reset fields', function () {
       expect(model.street1()).toEqual('5 Oak Street')
+      expect(model.street2()).toEqual(null)
+      expect(model.street3()).toEqual(null)
+      expect(model.street4()).toEqual(null)
+      expect(model.city()).toEqual('Manchester')
+      expect(model.postcode()).toEqual('M4 5JD')
       expect(model.openingTimes()[1].startTime()).toEqual('10:00')
+      expect(model.openingTimes()[1].endTime()).toEqual('16:30')
+      expect(model.openingTimes()[1].day()).toEqual('Tuesday')
     })
   })
 
