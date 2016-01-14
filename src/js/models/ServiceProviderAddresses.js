@@ -7,7 +7,7 @@ var Address = require('./Address')
 var getUrlParameter = require('../get-url-parameter')
 var ko = require('knockout')
 var _ = require('lodash')
-var guid = require('guid')
+var guid = require('node-uuid')
 
 function ServiceProvider (data) {
   var self = this
@@ -19,10 +19,13 @@ function ServiceProvider (data) {
   }))
 
   self.addAddress = function () {
+
+    var tempKey = guid.v4()
+
     var addresses = self.addresses()
     var newAddress = new Address({
       'openingTimes': [],
-      'tempKey': guid.create()
+      'tempKey': tempKey
     })
     newAddress.addListener(self)
     newAddress.edit()
@@ -36,7 +39,7 @@ function ServiceProvider (data) {
 
       if(isNew) return true
 
-      var isNotTheAddressWeAreLookingFor = address.tempKey().value !== cancelledAddress.tempKey().value
+      var isNotTheAddressWeAreLookingFor = address.tempKey() !== cancelledAddress.tempKey()
 
       return isNotTheAddressWeAreLookingFor
     })
