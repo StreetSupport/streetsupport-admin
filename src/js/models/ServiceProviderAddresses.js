@@ -36,9 +36,9 @@ function ServiceProvider (data) {
 
       if(isNew) return true
 
-      var isNotTheAddressWereLookingFor = address.tempKey().value !== cancelledAddress.tempKey().value
+      var isNotTheAddressWeAreLookingFor = address.tempKey().value !== cancelledAddress.tempKey().value
 
-      return isNotTheAddressWereLookingFor
+      return isNotTheAddressWeAreLookingFor
     })
     self.addresses(remainingAddresses)
   }

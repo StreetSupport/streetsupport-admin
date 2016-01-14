@@ -16,7 +16,7 @@ function OpeningTime (data) {
 function Address (data) {
   var self = this
 
-  self.key = data.key
+  self.key = ko.observable(data.key)
   self.savedStreet1 = ko.observable(data.street)
   self.savedStreet2 = ko.observable(data.street1)
   self.savedStreet3 = ko.observable(data.street2)
@@ -76,26 +76,43 @@ function Address (data) {
   }
 
   self.save = function () {
-    ajax.put(endpoints.serviceProviderAddresses + '/' + getUrlParameter.parameter('key') + '/update/' + self.key,
-      {
-        'content-type': 'application/json',
-        'session-token': cookies.get('session-token')
-      },
-      JSON.stringify({
-        'Street': self.street1(),
-        'Street1': self.street2(),
-        'Street2': self.street3(),
-        'Street3': self.street4(),
-        'City': self.city(),
-        'Postcode': self.postcode(),
-        'OpeningTimes': _.map(self.openingTimes(), function(openingTime) {
-          return {
-            'startTime': openingTime.startTime(),
-            'endTime': openingTime.endTime(),
-            'day': openingTime.day()
-          }
+    var endpoint
+    var headers = {
+      'content-type': 'application/json',
+      'session-token': cookies.get('session-token')
+    }
+    var model = JSON.stringify({
+          'Street': self.street1(),
+          'Street1': self.street2(),
+          'Street2': self.street3(),
+          'Street3': self.street4(),
+          'City': self.city(),
+          'Postcode': self.postcode(),
+          'OpeningTimes': _.map(self.openingTimes(), function(openingTime) {
+            return {
+              'startTime': openingTime.startTime(),
+              'endTime': openingTime.endTime(),
+              'day': openingTime.day()
+            }
+          })
         })
+
+    if (self.tempKey() !== undefined) {
+      ajax.post(endpoints.serviceProviderAddresses + '/' + getUrlParameter.parameter('key') + '/create',
+        headers,
+        model
+      ).then(function (result) {
+        self.isEditing(false)
+        self.key(result.json.key)
+        self.setFields()
+      }, function (error) {
+        var response = JSON.parse(error.response)
+        self.message(response.messages.join('<br />'))
       })
+    } else {
+      ajax.put(endpoints.serviceProviderAddresses + '/' + getUrlParameter.parameter('key') + '/update/' + self.key(),
+        headers,
+        model
       ).then(function (result) {
         self.isEditing(false)
         self.setFields()
@@ -103,6 +120,7 @@ function Address (data) {
         var response = JSON.parse(error.response)
         self.message(response.messages.join('<br />'))
       })
+    }
   }
 
   self.restoreFields = function () {
