@@ -63,14 +63,15 @@ describe ('Service Provider Addresses', function () {
     })
   })
 
-  describe('Add new Address then cancel it', function() {
+  describe('Add two new Addresses then cancel first', function() {
     beforeEach(function () {
+      model.serviceProvider().addAddress()
       model.serviceProvider().addAddress()
       model.serviceProvider().addresses()[1].cancel()
     })
 
     it('should remove it from the collection', function () {
-      expect(model.serviceProvider().addresses().length).toEqual(1)
+      expect(model.serviceProvider().addresses().length).toEqual(2)
     })
   })
 })

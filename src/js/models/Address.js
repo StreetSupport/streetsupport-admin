@@ -39,6 +39,7 @@ function Address (data) {
     return new OpeningTime(time)
   }))
 
+  self.tempKey = ko.observable(data.tempKey)
   self.isEditing = ko.observable(false)
   self.message = ko.observable()
   self.listeners = ko.observableArray()

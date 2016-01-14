@@ -66,6 +66,7 @@
     "basic-ajax": "^1.2.8",
     "cookie-cutter": "^0.1.1",
     "fastclick": "^1.0.6",
+    "guid": "0.0.12",
     "hogan.js": "^3.0.2",
     "knockout": "^3.4.0",
     "lodash": "^3.10.1",
