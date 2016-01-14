@@ -34,6 +34,14 @@ function ServiceProviderAddresses () {
       })
   }
 
+  self.addAddress = function () {
+    var addresses = self.serviceProvider().addresses()
+    addresses.push(new Address({
+      'openingTimes': []
+    }))
+    self.serviceProvider().addresses(addresses)
+  }
+
   self.init()
 }
 

@@ -48,6 +48,16 @@ describe ('Service Provider Addresses', function () {
     var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, headers, payload).calledOnce
     expect(apiCalledWithExpectedArgs).toBeTruthy()
   })
+
+  describe('Add new Address', function() {
+    beforeEach(function () {
+      model.addAddress()
+    })
+
+    it('should add an empty address to the view model', function () {
+      expect(model.serviceProvider().addresses().length).toEqual(2)
+    })
+  })
 })
 
 function addresses () {
