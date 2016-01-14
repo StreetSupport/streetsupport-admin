@@ -41,6 +41,7 @@ function Address (data) {
 
   self.isEditing = ko.observable(false)
   self.message = ko.observable()
+  self.listeners = ko.observableArray()
 
   self.edit = function () {
     self.isEditing(true)
@@ -48,6 +49,9 @@ function Address (data) {
 
   self.cancel = function () {
     self.restoreFields()
+    _.forEach(self.listeners(), function(listener) {
+      listener.cancelAddress(self)
+    })
   }
 
   self.newOpeningTime = function () {
@@ -127,6 +131,10 @@ function Address (data) {
     self.savedStreet4(self.street4())
     self.savedCity(self.city())
     self.savedPostcode(self.postcode())
+  }
+
+  self.addListener = function (listener) {
+    self.listeners().push(listener)
   }
 }
 

@@ -51,11 +51,26 @@ describe ('Service Provider Addresses', function () {
 
   describe('Add new Address', function() {
     beforeEach(function () {
-      model.addAddress()
+      model.serviceProvider().addAddress()
     })
 
     it('should add an empty address to the view model', function () {
       expect(model.serviceProvider().addresses().length).toEqual(2)
+    })
+
+    it('should set the new address in edit mode', function () {
+      expect(model.serviceProvider().addresses()[1].isEditing()).toBeTruthy()
+    })
+  })
+
+  describe('Add new Address then cancel it', function() {
+    beforeEach(function () {
+      model.serviceProvider().addAddress()
+      model.serviceProvider().addresses()[1].cancel()
+    })
+
+    it('should remove it from the collection', function () {
+      expect(model.serviceProvider().addresses().length).toEqual(1)
     })
   })
 })

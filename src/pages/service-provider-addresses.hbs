@@ -13,6 +13,7 @@ pageName: serviceProviderAddresses
           <div data-bind="with: serviceProvider">
             <h1 data-bind="text: name"></h1>
             <h2>Addresses</h2>
+            <button data-bind="click: addAddress" class="btn btn--brand-d"><span class="btn__text">add address</span></button>
             <div data-bind="foreach: addresses">
               <p data-bind="text: message"></p>
               <article>

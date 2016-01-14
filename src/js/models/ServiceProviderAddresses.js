@@ -9,11 +9,31 @@ var ko = require('knockout')
 var _ = require('lodash')
 
 function ServiceProvider (data) {
-  this.key = ko.observable(data.key)
-  this.name = ko.observable(data.name)
-  this.addresses = ko.observableArray(_.map(data.addresses, function (address) {
+  var self = this
+
+  self.key = ko.observable(data.key)
+  self.name = ko.observable(data.name)
+  self.addresses = ko.observableArray(_.map(data.addresses, function (address) {
     return new Address(address)
   }))
+
+  self.addAddress = function () {
+    var addresses = self.addresses()
+    var newAddress = new Address({
+      'openingTimes': []
+    })
+    newAddress.addListener(self)
+    newAddress.edit()
+    addresses.push(newAddress)
+    self.addresses(addresses)
+  }
+
+  self.cancelAddress = function (cancelledAddress) {
+    var remainingAddresses = _.filter(self.addresses(), function (address) {
+      return address.key !== undefined
+    })
+    self.addresses(remainingAddresses)
+  }
 }
 
 function ServiceProviderAddresses () {
@@ -32,14 +52,6 @@ function ServiceProviderAddresses () {
       },
       function (error) {
       })
-  }
-
-  self.addAddress = function () {
-    var addresses = self.serviceProvider().addresses()
-    addresses.push(new Address({
-      'openingTimes': []
-    }))
-    self.serviceProvider().addresses(addresses)
   }
 
   self.init()
