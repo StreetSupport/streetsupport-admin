@@ -17,7 +17,6 @@ function ServiceProvider (data) {
   self.addresses = ko.observableArray(_.map(data.addresses, function (address) {
     return new Address(address)
   }))
-  console.log(data.services)
   self.services = ko.observableArray(_.map(data.providedServices, function (service) {
     return new Service(service)
   }))
