@@ -4,14 +4,7 @@ var ajax = require('basic-ajax')
 var Endpoints = require('../endpoint-builder')
 var getUrlParameter = require('../get-url-parameter')
 var cookies = require('../cookies')
-
-function OpeningTime (data) {
-  var self = this
-  self.days = ko.observableArray(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'])
-  self.day = ko.observable(data.day)
-  self.startTime = ko.observable(data.startTime)
-  self.endTime = ko.observable(data.endTime)
-}
+var OpeningTime = require('./OpeningTime')
 
 function Address (data) {
   var self = this
