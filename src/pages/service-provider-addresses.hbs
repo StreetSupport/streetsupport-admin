@@ -13,17 +13,18 @@ pageName: serviceProviderAddresses
           <div data-bind="with: serviceProvider">
             <h1 data-bind="text: name"></h1>
             <h2>Addresses</h2>
-            <button data-bind="click: addAddress" class="btn btn--brand-d"><span class="btn__text">add address</span></button>
+            <button data-bind="click: addAddress" class="btn btn--info"><span class="btn__text">add address</span></button>
             <div data-bind="foreach: addresses">
               <p data-bind="text: message"></p>
               <article>
                 <h3 data-bind="text: street1"></h3>
                 <!-- ko ifnot: isEditing -->
-                <button data-bind="click: edit" class="btn btn--brand-d"><span class="btn__text">edit</span></button>
+                <button data-bind="click: edit" class="btn btn--info"><span class="btn__text">edit</span></button>
+                <button data-bind="click: deleteAddress" class="btn btn--warning"><span class="btn__text">delete</span></button>
                 <!-- /ko -->
                 <!-- ko if: isEditing -->
-                <button data-bind="click: cancel" class="btn btn--brand-e"><span class="btn__text">cancel</span></button>
-                <button data-bind="click: save" class="btn btn--brand-g"><span class="btn__text">save</span></button>
+                <button data-bind="click: cancel" class="btn btn--indifferent"><span class="btn__text">cancel</span></button>
+                <button data-bind="click: save" class="btn btn--primary"><span class="btn__text">save</span></button>
                 <!-- /ko -->
                 <dl class="key-value-pair">
                   <dt class="key-value-pair__key">Street Line 1</dt>
@@ -83,7 +84,7 @@ pageName: serviceProviderAddresses
                 </dl>
                 <h4>Opening Times</h4>
                 <!-- ko if: isEditing -->
-                <button data-bind="click: newOpeningTime" class="btn btn--brand-d"><span class="btn__text">new</span></button>
+                <button data-bind="click: newOpeningTime" class="btn btn--info"><span class="btn__text">new</span></button>
                 <!-- /ko -->
                 <dl data-bind="foreach: openingTimes" class="key-value-pair">
                   <dt class="key-value-pair__key">
@@ -107,7 +108,7 @@ pageName: serviceProviderAddresses
                   </dd>
                     <!-- ko if: $parent.isEditing -->
                   <dd class="key-value-pair__value">
-                    <button data-bind="click: $parent.removeOpeningTime" class="btn btn--brand-g"><span class="btn__text">remove</span></button>
+                    <button data-bind="click: $parent.removeOpeningTime" class="btn btn--warning"><span class="btn__text">remove</span></button>
                   </dd>
                     <!-- /ko -->
                 </dl>

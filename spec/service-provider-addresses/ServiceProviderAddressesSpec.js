@@ -90,7 +90,7 @@ describe ('Service Provider Addresses', function () {
 
       stubbedDeleteApi = sinon.stub(ajax, 'delete').returns(fakeResolved ())
 
-      model.serviceProvider().addresses()[0].delete()
+      model.serviceProvider().addresses()[0].deleteAddress()
     })
 
     afterEach(function () {

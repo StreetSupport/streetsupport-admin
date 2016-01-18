@@ -56,6 +56,22 @@ function Address (data) {
     })
   }
 
+  self.deleteAddress = function () {
+    var endpoint = self.endpoints.serviceProviders(getUrlParameter.parameter('key')).addresses(self.key()).build()
+    var headers = {
+      'content-type': 'application/json',
+      'session-token': cookies.get('session-token')
+    }
+    ajax.delete(endpoint, headers, JSON.stringify({}))
+    .then(function (result) {
+    _.forEach(self.listeners(), function(listener) {
+      listener.deleteAddress(self)
+    })
+    },function (error) {
+
+    })
+  }
+
   self.newOpeningTime = function () {
     var openingTimes = self.openingTimes()
     openingTimes.push(new OpeningTime({
@@ -122,22 +138,6 @@ function Address (data) {
         self.message(response.messages.join('<br />'))
       })
     }
-  }
-
-  self.delete = function () {
-    var endpoint = self.endpoints.serviceProviders(getUrlParameter.parameter('key')).addresses(self.key()).build()
-    var headers = {
-      'content-type': 'application/json',
-      'session-token': cookies.get('session-token')
-    }
-    ajax.delete(endpoint, headers, JSON.stringify({}))
-    .then(function (result) {
-    _.forEach(self.listeners(), function(listener) {
-      listener.deleteAddress(self)
-    })
-    },function (error) {
-
-    })
   }
 
   self.restoreFields = function () {
