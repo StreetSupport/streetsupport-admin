@@ -1,5 +1,5 @@
 var ajax = require('basic-ajax')
-var endpoints = require('../api-endpoints')
+var Endpoints = require('../endpoint-builder')
 var adminUrls = require('../admin-urls')
 var cookies = require('../cookies')
 var browser = require('../browser')
@@ -28,6 +28,7 @@ function ServiceProviderDetails () {
   self.isEditingGeneralDetails = ko.observable(false)
   self.isEditingContactDetails = ko.observable(false)
   self.message = ko.observable('')
+  self.endpoints = new Endpoints()
 
   self.formatAddress = function (address) {
     return _.chain(['street', 'street1', 'street2', 'street3', 'city', 'postcode'])
@@ -42,7 +43,7 @@ function ServiceProviderDetails () {
   }
 
   self.init = function () {
-    ajax.get(endpoints.getServiceProviders + '/' + getUrlParameter.parameter('key'),
+    ajax.get(self.endpoints.serviceProviders(getUrlParameter.parameter('key')).build(),
       {
         'content-type': 'application/json',
         'session-token': cookies.get('session-token')
@@ -75,7 +76,7 @@ function ServiceProviderDetails () {
 
   self.saveGeneralDetails = function () {
     if (self.isEditingGeneralDetails()) {
-      ajax.put(endpoints.getServiceProviders + '/' + getUrlParameter.parameter('key') + '/general-information',
+      ajax.put(self.endpoints.serviceProviders(getUrlParameter.parameter('key')).generalInformation().build(),
         {
           'content-type': 'application/json',
           'session-token': cookies.get('session-token')
@@ -103,7 +104,7 @@ function ServiceProviderDetails () {
 
   self.saveContactDetails = function () {
     if (self.isEditingContactDetails()) {
-      ajax.put(endpoints.getServiceProviders + '/' + getUrlParameter.parameter('key') + '/contact-details',
+      ajax.put(self.endpoints.serviceProviders(getUrlParameter.parameter('key')).contactDetails().build(),
         {
           'content-type': 'application/json',
           'session-token': cookies.get('session-token')

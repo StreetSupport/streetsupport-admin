@@ -51,6 +51,26 @@ describe ('Endpoint Builder', function () {
     })
   })
 
+  describe('get specific service provider contact details', function () {
+    beforeEach(function () {
+      result = stu.serviceProviders('provider-a').contactDetails().build()
+    })
+
+    it('should build endpoint uri', function () {
+      expect(result.endsWith('/v1/all-service-providers/provider-a/contact-details')).toBeTruthy(result)
+    })
+  })
+
+  describe('get specific service provider general information', function () {
+    beforeEach(function () {
+      result = stu.serviceProviders('provider-a').generalInformation().build()
+    })
+
+    it('should build endpoint uri', function () {
+      expect(result.endsWith('/v1/all-service-providers/provider-a/general-information')).toBeTruthy(result)
+    })
+  })
+
   describe('get specific service provider addresses', function () {
     beforeEach(function () {
       result = stu.serviceProviders('provider-a').addresses().build()

@@ -1,5 +1,5 @@
 var ajax = require('basic-ajax')
-var endpoints = require('../api-endpoints')
+var Endpoints = require('../endpoint-builder')
 var adminUrls = require('../admin-urls')
 var cookies = require('../cookies')
 var Address = require('./Address')
@@ -49,9 +49,10 @@ function ServiceProvider (data) {
 function ServiceProviderAddresses () {
   var self = this
   self.serviceProvider = ko.observable()
+  self.endpoints = new Endpoints()
 
   self.init = function () {
-    ajax.get(endpoints.getServiceProviders + '/' + getUrlParameter.parameter('key') + "/addresses",
+    ajax.get(self.endpoints.serviceProviders(getUrlParameter.parameter('key')).addresses().build(),
       {
         'content-type': 'application/json',
         'session-token': cookies.get('session-token')

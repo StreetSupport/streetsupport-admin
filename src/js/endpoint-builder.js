@@ -25,6 +25,16 @@ function EndpointBuilder() {
     return self
   }
 
+  self.generalInformation = function () {
+    self.childResource = 'general-information'
+    return self
+  }
+
+  self.contactDetails = function () {
+    self.childResource = 'contact-details'
+    return self
+  }
+
   self.build = function () {
     var uri = self.baseResource
     if(self.baseResourceId !== undefined) {
