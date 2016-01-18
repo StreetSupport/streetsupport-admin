@@ -125,48 +125,48 @@ describe('Service Editing', function() {
     })
   })
 
-  // describe('Save Fail', function() {
-  //   var stubbedApi,
-  //     stubbedCookies,
-  //     stubbedUrlParams
+  describe('Save Fail', function() {
+    var stubbedApi,
+      stubbedCookies,
+      stubbedUrlParams
 
-  //   beforeEach(function() {
-  //     function fakeResolved(value) {
-  //       return {
-  //         then: function(success, error) {
-  //           error({
-  //             'status': 400,
-  //             'response': JSON.stringify({
-  //               'messages': ['returned error message 1', 'returned error message 2']
-  //             })
-  //           })
-  //         }
-  //       }
-  //     }
+    beforeEach(function() {
+      function fakeResolved(value) {
+        return {
+          then: function(success, error) {
+            error({
+              'status': 400,
+              'response': JSON.stringify({
+                'messages': ['returned error message 1', 'returned error message 2']
+              })
+            })
+          }
+        }
+      }
 
-  //     stubbedApi = sinon.stub(ajax, 'put').returns(fakeResolved())
-  //     stubbedCookies = sinon.stub(cookies, 'get').returns('stored-session-token')
-  //     stubbedUrlParams = sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
+      stubbedApi = sinon.stub(ajax, 'put').returns(fakeResolved())
+      stubbedCookies = sinon.stub(cookies, 'get').returns('stored-session-token')
+      stubbedUrlParams = sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
 
-  //     model.street1('new street1')
+      model.info('new info')
 
-  //     model.save()
-  //   })
+      model.save()
+    })
 
-  //   afterEach(function() {
-  //     ajax.put.restore()
-  //     cookies.get.restore()
-  //     getUrlParameter.parameter.restore()
-  //   })
+    afterEach(function() {
+      ajax.put.restore()
+      cookies.get.restore()
+      getUrlParameter.parameter.restore()
+    })
 
-  //   it('should set message as joined error messages', function() {
-  //     expect(model.message()).toEqual('returned error message 1<br />returned error message 2')
-  //   })
+    it('should set message as joined error messages', function() {
+      expect(model.message()).toEqual('returned error message 1<br />returned error message 2')
+    })
 
-  //   it('should keep isEditing as true', function() {
-  //     expect(model.isEditing()).toBeTruthy()
-  //   })
-  // })
+    it('should keep isEditing as true', function() {
+      expect(model.isEditing()).toBeTruthy()
+    })
+  })
 })
 
 function getData() {
