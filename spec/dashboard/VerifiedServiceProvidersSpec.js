@@ -87,7 +87,7 @@ describe ('VerifiedServiceProviders', function () {
     })
 
     it ('should send inverse of current isVerified to api', function () {
-      var endpoint = endpoints.serviceProviderVerifications + '/albert-kennedy-trust/update'
+      var endpoint = endpoints.getServiceProviders + '/albert-kennedy-trust/is-verified'
       var payload = JSON.stringify({
         'IsVerified': false
       })

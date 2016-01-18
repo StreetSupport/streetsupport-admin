@@ -51,7 +51,7 @@ function ServiceProviderAddresses () {
   self.serviceProvider = ko.observable()
 
   self.init = function () {
-    ajax.get(endpoints.serviceProviderAddresses + '/show/' + getUrlParameter.parameter('key'),
+    ajax.get(endpoints.getServiceProviders + '/' + getUrlParameter.parameter('key') + "/addresses",
       {
         'content-type': 'application/json',
         'session-token': cookies.get('session-token')

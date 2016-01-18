@@ -49,7 +49,7 @@ function DashboardModel () {
   }
 
   self.toggleVerified = function (serviceProvider, event) {
-    ajax.put(endpoints.serviceProviderVerifications + '/' + serviceProvider.key + '/update',
+    ajax.put(endpoints.getServiceProviders + '/' + serviceProvider.key + '/is-verified',
       {
         'content-type': 'application/json',
         'session-token': cookies.get('session-token')
@@ -70,7 +70,7 @@ function DashboardModel () {
   }
 
   self.togglePublished = function (serviceProvider, event) {
-    ajax.put(endpoints.serviceProviderPublished + '/' + serviceProvider.key + '/update',
+    ajax.put(endpoints.getServiceProviders + '/' + serviceProvider.key + '/is-published',
       {
         'content-type': 'application/json',
         'session-token': cookies.get('session-token')

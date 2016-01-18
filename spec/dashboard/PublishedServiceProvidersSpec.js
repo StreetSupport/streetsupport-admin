@@ -85,7 +85,7 @@ describe ('VerifiedServiceProviders', function () {
     })
 
     it ('should send inverse of current isPublished to api', function () {
-      var endpoint = endpoints.serviceProviderPublished + '/albert-kennedy-trust/update'
+      var endpoint = endpoints.getServiceProviders + '/albert-kennedy-trust/is-published'
       var headers = {
         'content-type': 'application/json',
         'session-token': 'stored-session-token'

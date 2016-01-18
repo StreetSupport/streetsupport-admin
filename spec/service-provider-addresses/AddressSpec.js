@@ -95,7 +95,7 @@ describe('Address Editing', function () {
     })
 
     it('should put address details to api with session token', function () {
-        var endpoint = endpoints.serviceProviderAddresses + '/coffee4craig/update/1'
+        var endpoint = endpoints.getServiceProviders + '/coffee4craig/addresses/1'
         var headers = {
           'content-type': 'application/json',
           'session-token': 'stored-session-token'

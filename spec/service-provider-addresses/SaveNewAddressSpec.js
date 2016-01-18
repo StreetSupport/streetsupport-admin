@@ -65,7 +65,7 @@ describe('Save new Address', function () {
     })
 
     it('should post address details to api create endpoint with session token', function () {
-      var endpoint = endpoints.serviceProviderAddresses + '/coffee4craig/create'
+      var endpoint = endpoints.getServiceProviders + '/coffee4craig/addresses'
       var headers = {
         'content-type': 'application/json',
         'session-token': 'stored-session-token'

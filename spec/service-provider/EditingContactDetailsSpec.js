@@ -75,7 +75,7 @@ describe ('Edit Service Provider Contact Information', function () {
     })
 
     it ('should put service provider contact details to api with session token', function () {
-        var endpoint = endpoints.serviceProviderContactDetails + '/coffee4craig/update'
+        var endpoint = endpoints.getServiceProviders + '/coffee4craig/contact-details'
         var headers = {
           'content-type': 'application/json',
           'session-token': 'stored-session-token'

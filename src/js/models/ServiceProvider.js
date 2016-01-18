@@ -75,7 +75,7 @@ function ServiceProviderDetails () {
 
   self.saveGeneralDetails = function () {
     if (self.isEditingGeneralDetails()) {
-      ajax.put(endpoints.serviceProviderDetails + '/' + getUrlParameter.parameter('key') + '/update',
+      ajax.put(endpoints.getServiceProviders + '/' + getUrlParameter.parameter('key') + '/general-information',
         {
           'content-type': 'application/json',
           'session-token': cookies.get('session-token')
@@ -103,7 +103,7 @@ function ServiceProviderDetails () {
 
   self.saveContactDetails = function () {
     if (self.isEditingContactDetails()) {
-      ajax.put(endpoints.serviceProviderContactDetails + '/' + getUrlParameter.parameter('key') + '/update',
+      ajax.put(endpoints.getServiceProviders + '/' + getUrlParameter.parameter('key') + '/contact-details',
         {
           'content-type': 'application/json',
           'session-token': cookies.get('session-token')

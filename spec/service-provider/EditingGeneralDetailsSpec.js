@@ -72,7 +72,7 @@ describe ('Edit Service Provider General Details', function () {
     })
 
     it ('should put service provider general details to api with session token', function () {
-        var endpoint = endpoints.serviceProviderDetails + '/coffee4craig/update'
+        var endpoint = endpoints.getServiceProviders + '/coffee4craig/general-information'
         var headers = {
           'content-type': 'application/json',
           'session-token': 'stored-session-token'

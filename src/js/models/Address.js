@@ -98,7 +98,7 @@ function Address (data) {
         })
 
     if (self.tempKey() !== undefined) {
-      ajax.post(endpoints.serviceProviderAddresses + '/' + getUrlParameter.parameter('key') + '/create',
+      ajax.post(endpoints.getServiceProviders + '/' + getUrlParameter.parameter('key') + '/addresses',
         headers,
         model
       ).then(function (result) {
@@ -110,7 +110,7 @@ function Address (data) {
         self.message(response.messages.join('<br />'))
       })
     } else {
-      ajax.put(endpoints.serviceProviderAddresses + '/' + getUrlParameter.parameter('key') + '/update/' + self.key(),
+      ajax.put(endpoints.getServiceProviders + '/' + getUrlParameter.parameter('key') + '/addresses/' + self.key(),
         headers,
         model
       ).then(function (result) {
