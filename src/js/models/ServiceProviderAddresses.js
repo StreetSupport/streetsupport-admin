@@ -36,7 +36,7 @@ function ServiceProvider (data) {
     var remainingAddresses = _.filter(self.addresses(), function (address) {
       var isNew = address.tempKey() === undefined
 
-      if(isNew) return true
+      if (isNew) return true
 
       var isNotTheAddressWeAreLookingFor = address.tempKey() !== cancelledAddress.tempKey()
 

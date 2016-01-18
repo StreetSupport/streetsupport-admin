@@ -1,7 +1,7 @@
 var ko = require('knockout')
 var _ = require('lodash')
 var ajax = require('basic-ajax')
-var endpoints = require('../api-endpoints')
+var Endpoints = require('../endpoint-builder')
 var getUrlParameter = require('../get-url-parameter')
 var cookies = require('../cookies')
 
@@ -15,6 +15,7 @@ function OpeningTime (data) {
 
 function Address (data) {
   var self = this
+  self.endpoints = new Endpoints()
 
   self.key = ko.observable(data.key)
   self.savedStreet1 = ko.observable(data.street)
@@ -98,7 +99,7 @@ function Address (data) {
         })
 
     if (self.tempKey() !== undefined) {
-      ajax.post(endpoints.getServiceProviders + '/' + getUrlParameter.parameter('key') + '/addresses',
+      ajax.post(self.endpoints.serviceProviders(getUrlParameter.parameter('key')).addresses().build(),
         headers,
         model
       ).then(function (result) {
@@ -110,7 +111,7 @@ function Address (data) {
         self.message(response.messages.join('<br />'))
       })
     } else {
-      ajax.put(endpoints.getServiceProviders + '/' + getUrlParameter.parameter('key') + '/addresses/' + self.key(),
+      ajax.put(self.endpoints.serviceProviders(getUrlParameter.parameter('key')).addresses(self.key()).build(),
         headers,
         model
       ).then(function (result) {
