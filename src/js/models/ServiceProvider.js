@@ -19,6 +19,7 @@ function ServiceProvider (data) {
   this.addresses = data.addresses
   this.providedServices = data.providedServices
   this.amendAddressesUrl = adminUrls.serviceProviderAddresses + '?key=' + data.key
+  this.amendServicesUrl = adminUrls.serviceProviderServices + '?key=' + data.key
 }
 
 function ServiceProviderDetails () {

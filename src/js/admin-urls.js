@@ -9,5 +9,6 @@ module.exports = {
   dashboard: s('dashboard'),
   serviceProviders: s('service-providers'),
   notFound: s('404'),
-  serviceProviderAddresses: s('service-provider-addresses')
+  serviceProviderAddresses: s('service-provider-addresses'),
+  serviceProviderServices: s('service-provider-services')
 }

@@ -11,7 +11,8 @@
       .page-login &,
       .page-dashboard &,
       .page-serviceProvider &,
-      .page-serviceProviderAddresses & {
+      .page-serviceProviderAddresses &,
+      .page-serviceProviderServices & {
         width: 100%;
         margin-left: auto;
         margin-right: auto;
@@ -20,7 +21,8 @@
 
       .page-dashboard &,
       .page-serviceProvider &,
-      .page-serviceProviderAddresses & {
+      .page-serviceProviderAddresses &,
+      .page-serviceProviderServices & {
         text-align: left
       }
     }
