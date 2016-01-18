@@ -55,11 +55,11 @@ describe ('Service Provider Addresses', function () {
     })
 
     it('should add an empty address to the view model', function () {
-      expect(model.serviceProvider().addresses().length).toEqual(2)
+      expect(model.serviceProvider().addresses().length).toEqual(3)
     })
 
     it('should set the new address in edit mode', function () {
-      expect(model.serviceProvider().addresses()[1].isEditing()).toBeTruthy()
+      expect(model.serviceProvider().addresses()[2].isEditing()).toBeTruthy()
     })
   })
 
@@ -67,11 +67,39 @@ describe ('Service Provider Addresses', function () {
     beforeEach(function () {
       model.serviceProvider().addAddress()
       model.serviceProvider().addAddress()
-      model.serviceProvider().addresses()[1].cancel()
+      model.serviceProvider().addresses()[2].cancel()
     })
 
     it('should remove it from the collection', function () {
-      expect(model.serviceProvider().addresses().length).toEqual(2)
+      expect(model.serviceProvider().addresses().length).toEqual(3)
+    })
+  })
+
+  describe('Delete Address', function() {
+    beforeEach(function () {
+
+      function fakeResolved(value) {
+        return {
+          then: function (success, error) {
+            success({
+              'status': 200
+            })
+          }
+        }
+      }
+
+      stubbedDeleteApi = sinon.stub(ajax, 'delete').returns(fakeResolved ())
+
+      model.serviceProvider().addresses()[0].delete()
+    })
+
+    afterEach(function () {
+      ajax.delete.restore()
+    })
+
+    it('should remove the address from the collection', function () {
+      expect(model.serviceProvider().addresses().length).toEqual(1)
+      expect(model.serviceProvider().addresses()[0].key()).toEqual(2)
     })
   })
 })
@@ -82,6 +110,36 @@ function addresses () {
     'name': 'Coffee 4 Craig',
     'addresses': [{
       'key': 1,
+      'street': '5 Oak Street',
+      'street1': null,
+      'street2': null,
+      'street3': null,
+      'city': 'Manchester',
+      'postcode': 'M4 5JD',
+      'openingTimes': [{
+        'startTime': '10:00',
+        'endTime': '16:30',
+        'day': 'Monday'
+      }, {
+        'startTime': '10:00',
+        'endTime': '16:30',
+        'day': 'Tuesday'
+      }, {
+        'startTime': '10:00',
+        'endTime': '16:30',
+        'day': 'Wednesday'
+      }, {
+        'startTime': '10:00',
+        'endTime': '16:30',
+        'day': 'Thursday'
+      }, {
+        'startTime': '10:00',
+        'endTime': '16:30',
+        'day': 'Friday'
+      }]
+    },
+    {
+      'key': 2,
       'street': '5 Oak Street',
       'street1': null,
       'street2': null,

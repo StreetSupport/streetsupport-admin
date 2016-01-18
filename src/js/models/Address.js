@@ -83,20 +83,20 @@ function Address (data) {
       'session-token': cookies.get('session-token')
     }
     var model = JSON.stringify({
-          'Street': self.street1(),
-          'Street1': self.street2(),
-          'Street2': self.street3(),
-          'Street3': self.street4(),
-          'City': self.city(),
-          'Postcode': self.postcode(),
-          'OpeningTimes': _.map(self.openingTimes(), function(openingTime) {
-            return {
-              'startTime': openingTime.startTime(),
-              'endTime': openingTime.endTime(),
-              'day': openingTime.day()
-            }
-          })
-        })
+      'Street': self.street1(),
+      'Street1': self.street2(),
+      'Street2': self.street3(),
+      'Street3': self.street4(),
+      'City': self.city(),
+      'Postcode': self.postcode(),
+      'OpeningTimes': _.map(self.openingTimes(), function(openingTime) {
+        return {
+          'startTime': openingTime.startTime(),
+          'endTime': openingTime.endTime(),
+          'day': openingTime.day()
+        }
+      })
+    })
 
     if (self.tempKey() !== undefined) {
       ajax.post(self.endpoints.serviceProviders(getUrlParameter.parameter('key')).addresses().build(),
@@ -122,6 +122,22 @@ function Address (data) {
         self.message(response.messages.join('<br />'))
       })
     }
+  }
+
+  self.delete = function () {
+    var endpoint = self.endpoints.serviceProviders(getUrlParameter.parameter('key')).addresses(self.key()).build()
+    var headers = {
+      'content-type': 'application/json',
+      'session-token': cookies.get('session-token')
+    }
+    ajax.delete(endpoint, headers, JSON.stringify({}))
+    .then(function (result) {
+    _.forEach(self.listeners(), function(listener) {
+      listener.deleteAddress(self)
+    })
+    },function (error) {
+
+    })
   }
 
   self.restoreFields = function () {
