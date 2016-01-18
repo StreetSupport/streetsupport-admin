@@ -39,7 +39,7 @@ describe ('Show Service Provider', function () {
   })
 
   it ('should retrieve service provider from api with session token', function () {
-    var endpoint = endpoints.getServiceProviders + '/show/coffee4craig'
+    var endpoint = endpoints.getServiceProviders + '/coffee4craig'
     var headers = {
       'content-type': 'application/json',
       'session-token': 'stored-session-token'

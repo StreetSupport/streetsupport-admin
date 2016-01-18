@@ -42,7 +42,7 @@ function ServiceProviderDetails () {
   }
 
   self.init = function () {
-    ajax.get(endpoints.getServiceProviders + '/show/' + getUrlParameter.parameter('key'),
+    ajax.get(endpoints.getServiceProviders + '/' + getUrlParameter.parameter('key'),
       {
         'content-type': 'application/json',
         'session-token': cookies.get('session-token')
