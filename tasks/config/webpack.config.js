@@ -20,6 +20,7 @@ module.exports = {
     dashboard: __dirname + '/../../src/js/pages/page-dashboard',
     serviceProvider: __dirname + '/../../src/js/pages/page-service-provider',
     serviceProviderAddresses: __dirname + '/../../src/js/pages/page-service-provider-addresses',
+    serviceProviderServices: __dirname + '/../../src/js/pages/page-service-provider-services'
   },
   output: {
     path: path.join(__dirname, '/../../_dist/assets/js/'),

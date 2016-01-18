@@ -16,11 +16,11 @@ pageName: serviceProvider
             <section>
               <h2>General Details</h2>
               <!-- ko ifnot: $parent.isEditingGeneralDetails -->
-              <button data-bind="click: $parent.editGeneralDetails" class="btn btn--brand-d"><span class="btn__text">edit</span></button>
+              <button data-bind="click: $parent.editGeneralDetails" class="btn btn--info"><span class="btn__text">edit</span></button>
               <!-- /ko -->
               <!-- ko if: $parent.isEditingGeneralDetails -->
-              <button data-bind="click: $parent.cancelEditGeneralDetails" class="btn btn--brand-e"><span class="btn__text">cancel</span></button>
-              <button data-bind="click: $parent.saveGeneralDetails" class="btn btn--brand-c"><span class="btn__text">save</span></button>
+              <button data-bind="click: $parent.cancelEditGeneralDetails" class="btn btn--indifferent"><span class="btn__text">cancel</span></button>
+              <button data-bind="click: $parent.saveGeneralDetails" class="btn btn--brand-primary"><span class="btn__text">save</span></button>
               <!-- /ko -->
               <dl class="key-value-pair">
                 <dt class="key-value-pair__key">Description</dt>
@@ -37,11 +37,11 @@ pageName: serviceProvider
             <section>
               <h2>Contact Information</h2>
               <!-- ko ifnot: $parent.isEditingContactDetails -->
-              <button data-bind="click: $parent.editContactDetails" class="btn btn--brand-d"><span class="btn__text">edit</span></button>
+              <button data-bind="click: $parent.editContactDetails" class="btn btn--info"><span class="btn__text">edit</span></button>
               <!-- /ko -->
               <!-- ko if: $parent.isEditingContactDetails -->
-              <button data-bind="click: $parent.cancelEditContactDetails" class="btn btn--brand-e"><span class="btn__text">cancel</span></button>
-              <button data-bind="click: $parent.saveContactDetails" class="btn btn--brand-g"><span class="btn__text">save</span></button>
+              <button data-bind="click: $parent.cancelEditContactDetails" class="btn btn--indifferent"><span class="btn__text">cancel</span></button>
+              <button data-bind="click: $parent.saveContactDetails" class="btn btn--primary"><span class="btn__text">save</span></button>
               <!-- /ko -->
               <dl class="key-value-pair">
                 <dt class="key-value-pair__key">Telephone</dt>
@@ -94,7 +94,7 @@ pageName: serviceProvider
             <section>
               <h2>Addresses</h2>
               <a data-bind="attr: { 'href': amendAddressesUrl }" title="edit addresses">Edit Addresses</a>
-              <div data-bind="foreach: addresses">
+              {{!-- <div data-bind="foreach: addresses">
                 <article>
                   <address data-bind="text: formatted"></address>
                   <dl data-bind="foreach: openingTimes" class="key-value-pair">
@@ -102,10 +102,11 @@ pageName: serviceProvider
                     <dd><span data-bind="text: startTime"></span> - <span data-bind="text: endTime"></span></dd>
                   </ol>
                 </article>
-              </div>
+              </div> --}}
             </section>
             <section>
               <h2>Services</h2>
+              <a data-bind="attr: { 'href': amendAddressesUrl }" title="edit services">Edit Services</a>
               <div data-bind="foreach: providedServices">
                 <h3 data-bind="text: name"></h3>
                 <p data-bind="text: info"></p>
