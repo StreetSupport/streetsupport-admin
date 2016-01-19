@@ -9,7 +9,7 @@
     "img": "src/img/",
     "js": "src/js/",
     "svgicon": "_dist",
-    "pages": "src/pages",
+    "pages": "src/templates",
     "partials": "src/partials",
     "tests": "spec/"
   },

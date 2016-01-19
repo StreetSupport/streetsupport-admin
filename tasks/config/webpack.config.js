@@ -13,14 +13,16 @@ if (argv.production) {
   plugins.push(new webpack.optimize.UglifyJsPlugin());
 }
 
+var templateDir = '/../../src/js/pages/page-'
+
 module.exports = {
   entry: {
-    generic: __dirname + '/../../src/js/pages/page-generic',
-    login: __dirname + '/../../src/js/pages/page-login',
-    dashboard: __dirname + '/../../src/js/pages/page-dashboard',
-    serviceProvider: __dirname + '/../../src/js/pages/page-service-provider',
-    serviceProviderAddresses: __dirname + '/../../src/js/pages/page-service-provider-addresses',
-    serviceProviderServices: __dirname + '/../../src/js/pages/page-service-provider-services'
+    generic: __dirname + templateDir + 'generic',
+    login: __dirname + templateDir + 'login',
+    dashboard: __dirname + templateDir + 'dashboard',
+    serviceProvider: __dirname + templateDir + 'service-provider',
+    serviceProviderAddresses: __dirname + templateDir + 'service-provider-addresses',
+    serviceProviderServices: __dirname + templateDir + 'service-provider-services'
   },
   output: {
     path: path.join(__dirname, '/../../_dist/assets/js/'),
