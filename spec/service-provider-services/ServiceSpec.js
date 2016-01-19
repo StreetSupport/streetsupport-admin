@@ -72,6 +72,12 @@ describe('Service Editing', function() {
       model.openingTimes()[1].startTime('20:00')
       model.openingTimes()[1].endTime('22:00')
       model.openingTimes()[1].day('Wednesday')
+      model.address.street1('new street 1')
+      model.address.street2('new street 2')
+      model.address.street3('new street 3')
+      model.address.street4('new street 4')
+      model.address.city('new city')
+      model.address.postcode('new postcode')
 
       model.save()
     })
@@ -90,7 +96,7 @@ describe('Service Editing', function() {
       }
       var payload = JSON.stringify({
         'Info': 'new info',
-        'Tags': 'new tags, tag 2',
+        'Tags': ['new tags', 'tag 2'],
         'OpeningTimes': [{
           'StartTime': '09:00',
           'EndTime': '10:00',
@@ -100,7 +106,15 @@ describe('Service Editing', function() {
           'StartTime': '20:00',
           'EndTime': '22:00',
           'Day': 'Wednesday'
-        }]
+        }],
+        'Address': {
+          'Street1': 'new street 1',
+          'Street2': 'new street 2' ,
+          'Street3': 'new street 3' ,
+          'Street4': 'new street 4' ,
+          'City': 'new city',
+          'Postcode': 'new postcode'
+        }
       })
 
       var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, headers, payload).calledOnce

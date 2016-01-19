@@ -81,14 +81,22 @@ function Service(data) {
     }
     var model = JSON.stringify({
       'Info': self.info(),
-      'Tags': self.tags(),
+      'Tags': self.tags().split(','),
       'OpeningTimes': self.openingTimes().map(openingTime => {
         return {
           'StartTime': openingTime.startTime(),
           'EndTime': openingTime.endTime(),
           'Day': openingTime.day()
         }
-      })
+      }),
+      'Address': {
+        'Street1': self.address.street1(),
+        'Street2': self.address.street2(),
+        'Street3': self.address.street3(),
+        'Street4': self.address.street4(),
+        'City': self.address.city(),
+        'Postcode': self.address.postcode(),
+      }
     })
 
     ajax.put(endpoint,
