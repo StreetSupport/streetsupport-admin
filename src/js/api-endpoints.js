@@ -3,7 +3,7 @@ var staging = 'http://streetsupport-api-staging.apphb.com' // eslint-disable-lin
 var live = 'http://api.streetsupport.net' // eslint-disable-line
 
 function p (addr) {
-  return dev + addr
+  return staging + addr
 }
 
 var createSession = '/v1/sessions/create'
