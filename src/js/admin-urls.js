@@ -10,5 +10,6 @@ module.exports = {
   serviceProviders: s('service-providers'),
   notFound: s('404'),
   serviceProviderAddresses: s('service-provider-addresses'),
-  serviceProviderServices: s('service-provider-services')
+  serviceProviderServices: s('service-provider-services'),
+  addServiceProviderService: s('add-service-provider-service')
 }

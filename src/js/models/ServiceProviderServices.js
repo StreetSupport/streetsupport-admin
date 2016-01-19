@@ -23,33 +23,6 @@ function ServiceProvider (data) {
     return newbie
   }))
 
-  // self.addAddress = function () {
-  //   var tempKey = guid.v4()
-
-  //   var addresses = self.addresses()
-  //   var newAddress = new Address({
-  //     'openingTimes': [],
-  //     'tempKey': tempKey
-  //   })
-  //   newAddress.addListener(self)
-  //   newAddress.edit()
-  //   addresses.push(newAddress)
-  //   self.addresses(addresses)
-  // }
-
-  // self.cancelAddress = function (cancelledAddress) {
-  //   var remainingAddresses = _.filter(self.addresses(), function (address) {
-  //     var isNew = address.tempKey() === undefined
-
-  //     if (isNew) return true
-
-  //     var isNotTheAddressWeAreLookingFor = address.tempKey() !== cancelledAddress.tempKey()
-
-  //     return isNotTheAddressWeAreLookingFor
-  //   })
-  //   self.addresses(remainingAddresses)
-  // }
-
   self.deleteService = function (deletedService) {
     var remainingServices = _.filter(self.services(), function (service) {
       return service.id() !== deletedService.id()
@@ -62,6 +35,7 @@ function ServiceProviderServices () {
   var self = this
   self.serviceProvider = ko.observable()
   self.endpoints = new Endpoints()
+  self.addServiceLink = adminUrls.addServiceProviderService + '?key=' + getUrlParameter.parameter('key')
 
   self.init = function () {
     var endpoint = self.endpoints.serviceProviders(getUrlParameter.parameter('key')).build()

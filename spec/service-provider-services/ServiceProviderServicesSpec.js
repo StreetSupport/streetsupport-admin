@@ -38,6 +38,10 @@ describe('Service Provider Services', function() {
     getUrlParameter.parameter.restore()
   })
 
+  it('should set link to add new service to this provider', function() {
+    expect(model.addServiceLink).toEqual(adminurls.addServiceProviderService + '?key=coffee4craig')
+  })
+
   it('should retrieve service provider from api with session token', function() {
     var endpoint = endpoints.getServiceProviders + '/coffee4craig'
     var headers = {

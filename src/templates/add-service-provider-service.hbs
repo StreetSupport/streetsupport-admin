@@ -1,0 +1,102 @@
+---
+title: Add Service Provider Address - Street Support Admin
+description: Street Support - Making it easier to help homeless people in Manchester
+jsName: addServiceProviderService
+pageName: addServiceProviderService
+---
+
+{{#extend "_default"}}
+  {{#content "main"}}
+    <div class="block block--cta">
+      <div class="container block__inner">
+        <div class="block__content form">
+          <form class="form">
+            <fieldset>
+              <legend>Add Service</legend>
+              <ol>
+                <li>
+                  <label>Category</label>
+                  <select data-bind="options: categories,
+                     optionsText: function(item) {
+                      return item.name
+                     },
+                     value: category,
+                     optionsCaption: '-- please select --',
+                     event: { change: setAvailableSubCategories }"></select>
+                </li>
+                <li data-bind="foreach: subCategories">
+                  <article>
+                    <label data-bind="text: name"></label>
+                    <input type="checkbox" data-bind="checked: isSelected" />
+                  </article>
+                </li>
+                <li>
+                  <label>Choose Existing Address</label>
+                  <select data-bind="options: addresses,
+                     optionsText: function(item) {
+                      return item.street1() + ' - ' + item.postcode()
+                     },
+                     value: preselectedAddress,
+                     optionsCaption: '-- please select --',
+                     event: { change: prefillAddress }"></select>
+                </li>
+              </ol>
+            </fieldset>
+            <div data-bind="with: address" />
+            <fieldset>
+              <legend>Address</legend>
+              <ol>
+                <li>
+                  <label>Street 1</label>
+                  <input data-bind="textInput: street1" type="text" />
+                </li>
+                <li>
+                  <label>Street 2</label>
+                  <input data-bind="textInput: street2" type="text" />
+                </li>
+                <li>
+                  <label>Street 3</label>
+                  <input data-bind="textInput: street3" type="text" />
+                </li>
+                <li>
+                  <label>Street 4</label>
+                  <input data-bind="textInput: street4" type="text" />
+                </li>
+                <li>
+                  <label>City</label>
+                  <input data-bind="textInput: city" type="text" />
+                </li>
+                <li>
+                  <label>Postcode</label>
+                  <input data-bind="textInput: postcode" type="text" />
+                </li>
+              </ol>
+            </fieldset>
+            <fieldset>
+              <legend>Opening Times</legend>
+                    <button data-bind="click: newOpeningTime" class="btn btn--info"><span class="btn__text">add opening time</span></button>
+                <dl data-bind="foreach: openingTimes" class="key-value-pair">
+                  <dt class="key-value-pair__key">
+                    <select data-bind="options: days,
+                       optionsText: $data,
+                       value: day,
+                       optionsCaption: '-- please select --'"></select>
+                  </dt>
+                  <dd class="key-value-pair__value">
+                    <input data-bind="textInput: startTime" type="text" /> - <input data-bind="textInput: endTime" type="text" />
+                  </dd>
+                  <dd class="key-value-pair__value">
+                    <button data-bind="click: $parent.removeOpeningTime" class="btn btn--warning"><span class="btn__text">remove</span></button>
+                  </dd>
+                </dl>
+            </fieldset>
+            </div>
+              <button data-bind="click: save" class="btn btn--primary"><span class="btn__text">save</span></button>
+            </form>
+        </div>
+      </div>
+    </div>
+  {{/content}}
+
+  {{#content "gutter"}}{{/content}}
+{{/extend}}
