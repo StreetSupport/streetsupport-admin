@@ -27,6 +27,7 @@ describe('Service Editing', function() {
       model.openingTimes()[1].startTime('20:00')
       model.openingTimes()[1].endTime('22:00')
       model.openingTimes()[1].day('Wednesday')
+      model.address.street1('new street 1')
       model.cancelEdit()
     })
 
@@ -41,6 +42,7 @@ describe('Service Editing', function() {
       expect(model.openingTimes()[1].startTime()).toEqual('09:00')
       expect(model.openingTimes()[1].endTime()).toEqual('10:00')
       expect(model.openingTimes()[1].day()).toEqual('Tuesday')
+      expect(model.address.street1()).toEqual('Booth Centre')
     })
   })
 

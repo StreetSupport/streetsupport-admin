@@ -5,6 +5,7 @@ var Endpoints = require('../endpoint-builder')
 var getUrlParameter = require('../get-url-parameter')
 var cookies = require('../cookies')
 var OpeningTime = require('./OpeningTime')
+var Address = require('./Address')
 
 function Service(data) {
   var self = this
@@ -14,11 +15,13 @@ function Service(data) {
   self.info = ko.observable(data.info)
   self.tags = ko.observable(data.tags)
   self.openingTimes = ko.observableArray(data.openingTimes.map(ot => new OpeningTime(ot)))
+  self.address = new Address(data.address)
 
   self.savedName = ko.observable(data.name)
   self.savedInfo = ko.observable(data.info)
   self.savedTags = ko.observable(data.tags)
   self.savedOpeningTimes = ko.observableArray(data.openingTimes.map(ot => new OpeningTime(ot)))
+  self.savedAddress = new Address(data.address)
 
   self.isEditing = ko.observable(false)
   self.message = ko.observable()
@@ -44,8 +47,9 @@ function Service(data) {
         'endTime': ot.endTime(),
       })
     })
-
     self.openingTimes(restoredOpeningTimes)
+
+    self.address.cancel()
   }
 
   self.newOpeningTime = function () {
