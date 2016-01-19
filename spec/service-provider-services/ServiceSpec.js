@@ -66,7 +66,7 @@ describe('Service Editing', function() {
       stubbedUrlParams = sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
 
       model.info('new info')
-      model.tags('new tags')
+      model.tags('new tags, tag 2')
       model.openingTimes()[1].startTime('20:00')
       model.openingTimes()[1].endTime('22:00')
       model.openingTimes()[1].day('Wednesday')
@@ -88,18 +88,19 @@ describe('Service Editing', function() {
       }
       var payload = JSON.stringify({
         'Info': 'new info',
-        'Tags': 'new tags',
+        'Tags': 'new tags, tag 2',
         'OpeningTimes': [{
-          'startTime': '09:00',
-          'endTime': '10:00',
-          'day': 'Monday'
+          'StartTime': '09:00',
+          'EndTime': '10:00',
+          'Day': 'Monday'
         },
         {
-          'startTime': '20:00',
-          'endTime': '22:00',
-          'day': 'Wednesday'
+          'StartTime': '20:00',
+          'EndTime': '22:00',
+          'Day': 'Wednesday'
         }]
       })
+
       var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, headers, payload).calledOnce
       expect(apiCalledWithExpectedArgs).toBeTruthy()
     })

@@ -51,10 +51,10 @@ pageName: serviceProviderServices
                 <!-- /ko -->
                 <dl data-bind="foreach: openingTimes" class="key-value-pair">
                   <dt class="key-value-pair__key">
-                    <!-- ko ifnot: isEditing -->
+                    <!-- ko ifnot: $parent.isEditing -->
                     <span data-bind="text: day"></span>
                     <!-- /ko -->
-                    <!-- ko if: isEditing -->
+                    <!-- ko if: $parent.isEditing -->
                     <select data-bind="options: days,
                        optionsText: $data,
                        value: day,
@@ -62,14 +62,14 @@ pageName: serviceProviderServices
                     <!-- /ko -->
                   </dt>
                   <dd class="key-value-pair__value">
-                    <!-- ko ifnot: isEditing -->
+                    <!-- ko ifnot: $parent.isEditing -->
                     <span data-bind="text: startTime"></span> - <span data-bind="text: endTime"></span>
                     <!-- /ko -->
-                    <!-- ko if: isEditing -->
+                    <!-- ko if: $parent.isEditing -->
                     <input data-bind="textInput: startTime" type="text" /> - <input data-bind="textInput: endTime" type="text" />
                     <!-- /ko -->
                   </dd>
-                    <!-- ko if: isEditing -->
+                    <!-- ko if: $parent.isEditing -->
                   <dd class="key-value-pair__value">
                     <button data-bind="click: $parent.removeOpeningTime" class="btn btn--warning"><span class="btn__text">remove</span></button>
                   </dd>

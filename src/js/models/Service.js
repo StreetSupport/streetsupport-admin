@@ -48,6 +48,27 @@ function Service(data) {
     self.openingTimes(restoredOpeningTimes)
   }
 
+  self.newOpeningTime = function () {
+    var openingTimes = self.openingTimes()
+    openingTimes.push(new OpeningTime({
+      'day': '',
+      'startTime': '',
+      'endTime': ''
+    }))
+    self.openingTimes(openingTimes)
+  }
+
+  self.removeOpeningTime = function (openingTimeToRemove) {
+    var remaining = _.filter(self.openingTimes(), function(o) {
+      return o.day() !== openingTimeToRemove.day()
+          || o.startTime() !== openingTimeToRemove.startTime()
+          || o.endTime() !== openingTimeToRemove.endTime()
+    })
+
+    self.openingTimes(remaining)
+  }
+
+
   self.save = function () {
     var endpoint = self.endpoints.serviceProviders(getUrlParameter.parameter('key')).services(self.id()).build()
     var headers = {
@@ -59,9 +80,9 @@ function Service(data) {
       'Tags': self.tags(),
       'OpeningTimes': self.openingTimes().map(openingTime => {
         return {
-          'startTime': openingTime.startTime(),
-          'endTime': openingTime.endTime(),
-          'day': openingTime.day()
+          'StartTime': openingTime.startTime(),
+          'EndTime': openingTime.endTime(),
+          'Day': openingTime.day()
         }
       })
     })
