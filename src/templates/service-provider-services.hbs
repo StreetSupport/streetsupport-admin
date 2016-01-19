@@ -20,6 +20,7 @@ pageName: serviceProviderServices
                 <h3 data-bind="text: name"></h3>
                 <!-- ko ifnot: isEditing -->
                 <button data-bind="click: edit" class="btn btn--info"><span class="btn__text">edit</span></button>
+                <button data-bind="click: deleteService" class="btn btn--warning"><span class="btn__text">delete</span></button>
                 <!-- /ko -->
                 <!-- ko if: isEditing -->
                 <button data-bind="click: cancelEdit" class="btn btn--indifferent"><span class="btn__text">cancel</span></button>
