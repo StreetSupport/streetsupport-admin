@@ -9,7 +9,6 @@ var Address = require('./Address')
 
 function Service(data) {
   var self = this
-
   self.id = ko.observable(data.key)
   self.name = data.name
   self.info = ko.observable(data.info)
@@ -26,6 +25,7 @@ function Service(data) {
   self.isEditing = ko.observable(false)
   self.message = ko.observable()
   self.endpoints = new Endpoints()
+  self.listeners = ko.observableArray()
 
   self.edit = function () {
     self.isEditing(true)
@@ -108,6 +108,26 @@ function Service(data) {
       var response = JSON.parse(error.response)
       self.message(response.messages.join('<br />'))
     })
+  }
+
+  self.deleteService = function () {
+    var endpoint = self.endpoints.serviceProviders(getUrlParameter.parameter('key')).services(self.id()).build()
+    var headers = {
+      'content-type': 'application/json',
+      'session-token': cookies.get('session-token')
+    }
+    ajax.delete(endpoint, headers, JSON.stringify({}))
+    .then(function (result) {
+    _.forEach(self.listeners(), function(listener) {
+      listener.deleteService(self)
+    })
+    },function (error) {
+
+    })
+  }
+
+  self.addListener = function (listener) {
+    self.listeners().push(listener)
   }
 }
 

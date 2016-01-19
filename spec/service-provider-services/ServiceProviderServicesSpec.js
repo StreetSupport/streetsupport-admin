@@ -48,6 +48,32 @@ describe('Service Provider Services', function() {
     var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, headers, payload).calledOnce
     expect(apiCalledWithExpectedArgs).toBeTruthy()
   })
+
+  describe('Delete Service', function() {
+    beforeEach(function () {
+
+      function fakeResolved(value) {
+        return {
+          then: function (success, error) {
+            success({
+              'status': 200
+            })
+          }
+        }
+      }
+      stubbedDeleteApi = sinon.stub(ajax, 'delete').returns(fakeResolved ())
+      model.serviceProvider().services()[0].deleteService()
+    })
+
+    afterEach(function () {
+      ajax.delete.restore()
+    })
+
+    it('should remove the service from the collection', function () {
+      expect(model.serviceProvider().services().length).toEqual(1)
+      expect(model.serviceProvider().services()[0].id()).toEqual(2)
+    })
+  })
 })
 
 function coffee4Craig() {
@@ -79,7 +105,8 @@ function coffee4Craig() {
       "city": null,
       "postcode": "M1 1AF"
     }],
-    "services": [{
+    "providedServices": [{
+      "key": 1,
       "name": "Meals",
       "info": "Breakfast",
       "openingTimes": [{
@@ -115,6 +142,7 @@ function coffee4Craig() {
       },
       "tags": null
     }, {
+      "key": 2,
       "name": "Meals",
       "info": "Lunch",
       "openingTimes": [{

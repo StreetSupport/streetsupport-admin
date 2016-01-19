@@ -18,7 +18,9 @@ function ServiceProvider (data) {
     return new Address(address)
   }))
   self.services = ko.observableArray(_.map(data.providedServices, function (service) {
-    return new Service(service)
+    var newbie = new Service(service)
+    newbie.addListener(self)
+    return newbie
   }))
 
   // self.addAddress = function () {
@@ -48,12 +50,12 @@ function ServiceProvider (data) {
   //   self.addresses(remainingAddresses)
   // }
 
-  // self.deleteAddress = function (deleteAddress) {
-  //   var remainingAddresses = _.filter(self.addresses(), function (address) {
-  //     return address.key() !== deleteAddress.key()
-  //   })
-  //   self.addresses(remainingAddresses)
-  // }
+  self.deleteService = function (deletedService) {
+    var remainingServices = _.filter(self.services(), function (service) {
+      return service.id() !== deletedService.id()
+    })
+    self.services(remainingServices)
+  }
 }
 
 function ServiceProviderServices () {
