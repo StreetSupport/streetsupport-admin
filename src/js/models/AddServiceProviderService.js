@@ -1,5 +1,6 @@
 var ko = require('knockout')
 var Address = require('./Address')
+var OpeningTime = require('./OpeningTime')
 
 function SubCat(key, name) {
   var self = this
@@ -26,7 +27,21 @@ function AddServiceProviderService() {
   self.address = ko.observable(new Address({}))
 
   self.prefillAddress = function(a, b) {
-    self.address(self.preselectedAddress())
+    var address = new Address({
+      key: self.preselectedAddress().key(),
+      street: self.preselectedAddress().street1(),
+      street1: self.preselectedAddress().street2(),
+      street2: self.preselectedAddress().street3(),
+      street3: self.preselectedAddress().street4(),
+      city: self.preselectedAddress().city(),
+      postcode: self.preselectedAddress().postcode()
+    })
+    address.openingTimes(self.preselectedAddress().openingTimes().map(ot => new OpeningTime({
+        day: ot.day(),
+        startTime: ot.startTime(),
+        endTime: ot.endTime()
+      })))
+    self.address(address)
   }
 
   self.save = function() {

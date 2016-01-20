@@ -94,7 +94,7 @@ pageName: serviceProvider
             <section>
               <h2>Addresses</h2>
               <a data-bind="attr: { 'href': amendAddressesUrl }" title="edit addresses">Edit Addresses</a>
-              {{!-- <div data-bind="foreach: addresses">
+              <div data-bind="foreach: addresses">
                 <article>
                   <address data-bind="text: formatted"></address>
                   <dl data-bind="foreach: openingTimes" class="key-value-pair">
@@ -102,7 +102,7 @@ pageName: serviceProvider
                     <dd><span data-bind="text: startTime"></span> - <span data-bind="text: endTime"></span></dd>
                   </ol>
                 </article>
-              </div> --}}
+              </div>
             </section>
             <section>
               <h2>Services</h2>
