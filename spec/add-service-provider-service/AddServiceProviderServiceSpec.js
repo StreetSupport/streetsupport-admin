@@ -109,6 +109,18 @@ describe('Save new Service', function () {
     it('should set subCategories', function () {
       expect(model.subCategories().length).toEqual(7)
     })
+
+    it('should map subCategory key', function () {
+      expect(model.subCategories()[0].key).toEqual('emergency')
+    })
+
+    it('should map subCategory name', function () {
+      expect(model.subCategories()[0].name).toEqual('Emergency')
+    })
+
+    it('should set subCategory isSelected to false', function () {
+      expect(model.subCategories()[0].isSelected()).toBeFalsy()
+    })
   })
 })
 
