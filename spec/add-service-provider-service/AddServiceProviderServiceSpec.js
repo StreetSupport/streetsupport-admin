@@ -211,16 +211,16 @@ describe('Save new Service', function () {
       var payload = JSON.stringify({
         'Info': 'new info',
         'Tags': ['tag a', 'tag b'],
-        // 'OpeningTimes': [{
-        //   'StartTime': '10:00',
-        //   'EndTime': '16:30',
-        //   'Day': 'Monday'
-        // },
-        // {
-        //   'StartTime': '10:00',
-        //   'EndTime': '16:30',
-        //   'Day': 'Tuesday'
-        // }],
+        'OpeningTimes': [{
+          'StartTime': '10:00',
+          'EndTime': '16:30',
+          'Day': 'Monday'
+        },
+        {
+          'StartTime': '10:00',
+          'EndTime': '16:30',
+          'Day': 'Tuesday'
+        }],
         'Address': {
           'Street1': '5 Oak Street',
           'Street2': 'street 2' ,

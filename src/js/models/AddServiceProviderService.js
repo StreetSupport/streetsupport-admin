@@ -63,13 +63,13 @@ function AddServiceProviderService () {
     var payload = JSON.stringify({
         'Info': self.info(),
         'Tags': tags,
-        // 'OpeningTimes': self.openingTimes().map(openingTime => {
-        //   return {
-        //     'StartTime': openingTime.startTime(),
-        //     'EndTime': openingTime.endTime(),
-        //     'Day': openingTime.day()
-        //   }
-        // }),
+        'OpeningTimes': self.address().openingTimes().map(openingTime => {
+          return {
+            'StartTime': openingTime.startTime(),
+            'EndTime': openingTime.endTime(),
+            'Day': openingTime.day()
+          }
+        }),
         'Address': {
           'Street1': self.address().street1(),
           'Street2': self.address().street2(),
