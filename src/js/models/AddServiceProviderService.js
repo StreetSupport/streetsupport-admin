@@ -16,6 +16,9 @@ function SubCat (key, name) {
 function AddServiceProviderService () {
   var self = this
 
+  self.info = ko.observable()
+  self.tags = ko.observable()
+
   self.categories = ko.observableArray()
   self.category = ko.observable()
   self.subCategories = ko.observableArray()
@@ -54,7 +57,7 @@ function AddServiceProviderService () {
       'session-token': cookies.get('session-token')
     }
     var payload = JSON.stringify({
-        'Info': 'new info',
+        'Info': self.info(),
         // 'Tags': ['new tags', 'tag 2'],
         // 'OpeningTimes': [{
         //   'StartTime': '09:00',
@@ -75,10 +78,6 @@ function AddServiceProviderService () {
         //   'Postcode': 'new postcode'
         // }
       })
-
-    console.log(endpoint)
-    console.log(headers)
-    console.log(payload)
 
     ajax.post(endpoint, headers, payload)
     .then(function (result) {

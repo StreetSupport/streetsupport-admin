@@ -190,6 +190,8 @@ describe('Save new Service', function () {
       model.subCategories()[1].isSelected(true)
       model.subCategories()[3].isSelected(true)
 
+      model.info('new info')
+
       model.save()
     })
 
@@ -225,10 +227,6 @@ describe('Save new Service', function () {
         //   'Postcode': 'new postcode'
         // }
       })
-
-    console.log(endpoint)
-    console.log(headers)
-    console.log(payload)
 
       var apiCalledWithExpectedArgs = stubbedPostApi.withArgs(endpoint, headers, payload).calledOnce
       expect(apiCalledWithExpectedArgs).toBeTruthy()
