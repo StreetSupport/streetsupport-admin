@@ -145,12 +145,24 @@ describe('Save new Service', function () {
       expect(model.address().street4()).toEqual('street 4')
     })
 
-    it('should set address street 4', function () {
+    it('should set address city', function () {
       expect(model.address().city()).toEqual('Manchester')
     })
 
-    it('should set address street 4', function () {
+    it('should set address postcode', function () {
       expect(model.address().postcode()).toEqual('M4 5JD')
+    })
+
+    it('should set opening time start time', function () {
+      expect(model.address().openingTimes()[0].startTime()).toEqual('10:00')
+    })
+
+    it('should set opening time end time', function () {
+      expect(model.address().openingTimes()[0].endTime()).toEqual('16:30')
+    })
+
+    it('should set opening time day', function () {
+      expect(model.address().openingTimes()[0].day()).toEqual('Monday')
     })
   })
 })
