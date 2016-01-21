@@ -79,9 +79,12 @@ function Service(data) {
       'content-type': 'application/json',
       'session-token': cookies.get('session-token')
     }
+    var tags = []
+    if(self.tags().length > 0) tags = self.tags().split(',').map(t => t.trim())
+
     var model = JSON.stringify({
       'Info': self.info(),
-      'Tags': self.tags().split(',').map(t => t.trim()),
+      'Tags': tags,
       'OpeningTimes': self.openingTimes().map(openingTime => {
         return {
           'StartTime': openingTime.startTime(),

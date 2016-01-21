@@ -88,7 +88,7 @@ describe('Service Editing', function() {
       getUrlParameter.parameter.restore()
     })
 
-    it('should put service details to api with session token', function() {
+    it('should put service details with new to api with session token', function() {
       var endpoint = endpoints.getServiceProviders + '/coffee4craig/services/569d2b468705432268b65c75'
       var headers = {
         'content-type': 'application/json',
@@ -139,6 +139,72 @@ describe('Service Editing', function() {
       it('should set reset fields', function() {
         expect(model.info()).toEqual('Breakfast')
       })
+    })
+  })
+
+  describe('Save with empty tags', function() {
+    var stubbedApi,
+      stubbedCookies,
+      stubbedUrlParams
+
+    beforeEach(function() {
+      function fakeResolved(value) {
+        return {
+          then: function(success, error) {
+            success({
+              'status': 200,
+              'json': getData()
+            })
+          }
+        }
+      }
+
+      stubbedApi = sinon.stub(ajax, 'put').returns(fakeResolved())
+      stubbedCookies = sinon.stub(cookies, 'get').returns('stored-session-token')
+      stubbedUrlParams = sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
+
+      model.tags('')
+
+      model.save()
+    })
+
+    afterEach(function() {
+      ajax.put.restore()
+      cookies.get.restore()
+      getUrlParameter.parameter.restore()
+    })
+
+    it('should put service details with new to api with session token', function() {
+      var endpoint = endpoints.getServiceProviders + '/coffee4craig/services/569d2b468705432268b65c75'
+      var headers = {
+        'content-type': 'application/json',
+        'session-token': 'stored-session-token'
+      }
+      var payload = JSON.stringify({
+        'Info': 'Breakfast',
+        'Tags': [],
+        'OpeningTimes': [{
+          'StartTime': '09:00',
+          'EndTime': '10:00',
+          'Day': 'Monday'
+        },
+        {
+          'StartTime': '09:00',
+          'EndTime': '10:00',
+          'Day': 'Tuesday'
+        }],
+        'Address': {
+          'Street1': 'Booth Centre',
+          'Street2': null,
+          'Street3': 'Edward Holt House' ,
+          'Street4': 'Pimblett Street' ,
+          'City': 'Manchester',
+          'Postcode': 'M3 1FU'
+        }
+      })
+
+      var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, headers, payload).calledOnce
+      expect(apiCalledWithExpectedArgs).toBeTruthy()
     })
   })
 
