@@ -8,8 +8,10 @@ function p (addr) {
 
 var createSession = '/v1/sessions/create'
 var getServiceProviders = '/v1/all-service-providers'
+var getServiceCategories = '/v2/service-categories'
 
 module.exports = {
   createSession: p(createSession),
-  getServiceProviders: p(getServiceProviders)
+  getServiceProviders: p(getServiceProviders),
+  getServiceCategories: p(getServiceCategories)
 }

@@ -1,10 +1,10 @@
-var Endpoints = require('./api-endpoints')
+var endpoints = require('./api-endpoints')
 
-function EndpointBuilder() {
+function EndpointBuilder () {
   var self = this
 
   self.serviceProviders = function (providerId) {
-    self.baseResource = Endpoints.getServiceProviders
+    self.baseResource = endpoints.getServiceProviders
     self.baseResourceId = providerId
     return self
   }
@@ -41,15 +41,20 @@ function EndpointBuilder() {
     return self
   }
 
+  self.categories = function () {
+    self.baseResource = endpoints.getServiceCategories
+    return self
+  }
+
   self.build = function () {
     var uri = self.baseResource
-    if(self.baseResourceId !== undefined) {
+    if (self.baseResourceId !== undefined) {
       uri += '/' + self.baseResourceId
     }
-    if(self.childResource !== undefined) {
+    if (self.childResource !== undefined) {
       uri += '/' + self.childResource
 
-      if(self.childResourceId !== undefined) {
+      if (self.childResourceId !== undefined) {
         uri += '/' + self.childResourceId
       }
     }

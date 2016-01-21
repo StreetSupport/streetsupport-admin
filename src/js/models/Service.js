@@ -7,7 +7,7 @@ var cookies = require('../cookies')
 var OpeningTime = require('./OpeningTime')
 var Address = require('./Address')
 
-function Service(data) {
+function Service (data) {
   var self = this
   self.id = ko.observable(data.key)
   self.name = data.name
@@ -40,11 +40,11 @@ function Service(data) {
     self.info(self.savedInfo())
     self.tags(self.savedTags())
 
-    var restoredOpeningTimes = _.map(self.savedOpeningTimes(), function(ot) {
+    var restoredOpeningTimes = _.map(self.savedOpeningTimes(), function (ot) {
       return new OpeningTime({
         'day': ot.day(),
         'startTime': ot.startTime(),
-        'endTime': ot.endTime(),
+        'endTime': ot.endTime()
       })
     })
     self.openingTimes(restoredOpeningTimes)
@@ -63,7 +63,7 @@ function Service(data) {
   }
 
   self.removeOpeningTime = function (openingTimeToRemove) {
-    var remaining = _.filter(self.openingTimes(), function(o) {
+    var remaining = _.filter(self.openingTimes(), function (o) {
       return o.day() !== openingTimeToRemove.day()
           || o.startTime() !== openingTimeToRemove.startTime()
           || o.endTime() !== openingTimeToRemove.endTime()
@@ -72,7 +72,6 @@ function Service(data) {
     self.openingTimes(remaining)
   }
 
-
   self.save = function () {
     var endpoint = self.endpoints.serviceProviders(getUrlParameter.parameter('key')).services(self.id()).build()
     var headers = {
@@ -80,7 +79,7 @@ function Service(data) {
       'session-token': cookies.get('session-token')
     }
     var tags = []
-    if(self.tags().length > 0) tags = self.tags().split(',').map(t => t.trim())
+    if (self.tags().length > 0) tags = self.tags().split(',').map(t => t.trim())
 
     var model = JSON.stringify({
       'Info': self.info(),
@@ -98,7 +97,7 @@ function Service(data) {
         'Street3': self.address.street3(),
         'Street4': self.address.street4(),
         'City': self.address.city(),
-        'Postcode': self.address.postcode(),
+        'Postcode': self.address.postcode()
       }
     })
 
@@ -121,10 +120,10 @@ function Service(data) {
     }
     ajax.delete(endpoint, headers, JSON.stringify({}))
     .then(function (result) {
-    _.forEach(self.listeners(), function(listener) {
-      listener.deleteService(self)
-    })
-    },function (error) {
+      _.forEach(self.listeners(), function (listener) {
+        listener.deleteService(self)
+      })
+    }, function (error) {
 
     })
   }

@@ -44,7 +44,7 @@ function Address (data) {
 
   self.cancel = function () {
     self.restoreFields()
-    _.forEach(self.listeners(), function(listener) {
+    _.forEach(self.listeners(), function (listener) {
       listener.cancelAddress(self)
     })
   }
@@ -57,10 +57,10 @@ function Address (data) {
     }
     ajax.delete(endpoint, headers, JSON.stringify({}))
     .then(function (result) {
-    _.forEach(self.listeners(), function(listener) {
-      listener.deleteAddress(self)
-    })
-    },function (error) {
+      _.forEach(self.listeners(), function (listener) {
+        listener.deleteAddress(self)
+      })
+    }, function (error) {
 
     })
   }
@@ -76,7 +76,7 @@ function Address (data) {
   }
 
   self.removeOpeningTime = function (openingTimeToRemove) {
-    var remaining = _.filter(self.openingTimes(), function(o) {
+    var remaining = _.filter(self.openingTimes(), function (o) {
       return o.day() !== openingTimeToRemove.day()
           || o.startTime() !== openingTimeToRemove.startTime()
           || o.endTime() !== openingTimeToRemove.endTime()
@@ -86,7 +86,6 @@ function Address (data) {
   }
 
   self.save = function () {
-    var endpoint
     var headers = {
       'content-type': 'application/json',
       'session-token': cookies.get('session-token')
@@ -98,7 +97,7 @@ function Address (data) {
       'Street3': self.street4(),
       'City': self.city(),
       'Postcode': self.postcode(),
-      'OpeningTimes': _.map(self.openingTimes(), function(openingTime) {
+      'OpeningTimes': _.map(self.openingTimes(), function (openingTime) {
         return {
           'startTime': openingTime.startTime(),
           'endTime': openingTime.endTime(),
@@ -142,11 +141,11 @@ function Address (data) {
     self.city(self.savedCity())
     self.postcode(self.savedPostcode())
 
-    var restoredOpeningTimes = _.map(self.savedOpeningTimes(), function(ot) {
+    var restoredOpeningTimes = _.map(self.savedOpeningTimes(), function (ot) {
       return new OpeningTime({
         'day': ot.day(),
         'startTime': ot.startTime(),
-        'endTime': ot.endTime(),
+        'endTime': ot.endTime()
       })
     })
 

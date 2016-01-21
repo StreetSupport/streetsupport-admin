@@ -7,7 +7,6 @@ var Service = require('./Service')
 var getUrlParameter = require('../get-url-parameter')
 var ko = require('knockout')
 var _ = require('lodash')
-var guid = require('node-uuid')
 
 function ServiceProvider (data) {
   var self = this
