@@ -122,6 +122,37 @@ describe('Save new Service', function () {
       expect(model.subCategories()[0].isSelected()).toBeFalsy()
     })
   })
+
+  describe('select existing address', function () {
+    beforeEach(function () {
+      model.preselectedAddress(model.addresses()[0])
+      model.prefillAddress()
+    })
+
+    it('should set address street 1', function () {
+      expect(model.address().street1()).toEqual('5 Oak Street')
+    })
+
+    it('should set address street 2', function () {
+      expect(model.address().street2()).toEqual('street 2')
+    })
+
+    it('should set address street 3', function () {
+      expect(model.address().street3()).toEqual('street 3')
+    })
+
+    it('should set address street 4', function () {
+      expect(model.address().street4()).toEqual('street 4')
+    })
+
+    it('should set address street 4', function () {
+      expect(model.address().city()).toEqual('Manchester')
+    })
+
+    it('should set address street 4', function () {
+      expect(model.address().postcode()).toEqual('M4 5JD')
+    })
+  })
 })
 
 function categories() {
@@ -187,9 +218,9 @@ function addresses() {
     'addresses': [{
       'key': 1,
       'street': '5 Oak Street',
-      'street1': null,
-      'street2': null,
-      'street3': null,
+      'street1': 'street 2',
+      'street2': 'street 3',
+      'street3': 'street 4',
       'city': 'Manchester',
       'postcode': 'M4 5JD',
       'openingTimes': [{
