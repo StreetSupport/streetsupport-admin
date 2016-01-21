@@ -56,32 +56,32 @@ function AddServiceProviderService () {
       'content-type': 'application/json',
       'session-token': cookies.get('session-token')
     }
+
+    var tags = []
+    if (self.tags().length > 0) tags = self.tags().split(',').map(t => t.trim())
+
     var payload = JSON.stringify({
         'Info': self.info(),
-        // 'Tags': ['new tags', 'tag 2'],
-        // 'OpeningTimes': [{
-        //   'StartTime': '09:00',
-        //   'EndTime': '10:00',
-        //   'Day': 'Monday'
-        // },
-        // {
-        //   'StartTime': '20:00',
-        //   'EndTime': '22:00',
-        //   'Day': 'Wednesday'
-        // }],
+        'Tags': tags,
+        // 'OpeningTimes': self.openingTimes().map(openingTime => {
+        //   return {
+        //     'StartTime': openingTime.startTime(),
+        //     'EndTime': openingTime.endTime(),
+        //     'Day': openingTime.day()
+        //   }
+        // }),
         // 'Address': {
-        //   'Street1': 'new street 1',
-        //   'Street2': 'new street 2' ,
-        //   'Street3': 'new street 3' ,
-        //   'Street4': 'new street 4' ,
-        //   'City': 'new city',
-        //   'Postcode': 'new postcode'
+        //   'Street1': self.address.street1(),
+        //   'Street2': self.address.street2(),
+        //   'Street3': self.address.street3(),
+        //   'Street4': self.address.street4(),
+        //   'City': self.address.city(),
+        //   'Postcode': self.address.postcode()
         // }
       })
 
     ajax.post(endpoint, headers, payload)
     .then(function (result) {
-      console.log(result)
     }, function (error) {
 
     })

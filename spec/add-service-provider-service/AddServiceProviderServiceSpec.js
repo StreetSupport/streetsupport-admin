@@ -191,6 +191,7 @@ describe('Save new Service', function () {
       model.subCategories()[3].isSelected(true)
 
       model.info('new info')
+      model.tags('tag a, tag b')
 
       model.save()
     })
@@ -207,7 +208,7 @@ describe('Save new Service', function () {
       }
       var payload = JSON.stringify({
         'Info': 'new info',
-        // 'Tags': ['new tags', 'tag 2'],
+        'Tags': ['tag a', 'tag b'],
         // 'OpeningTimes': [{
         //   'StartTime': '09:00',
         //   'EndTime': '10:00',
