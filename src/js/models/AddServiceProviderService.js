@@ -76,6 +76,7 @@ function AddServiceProviderService () {
     var serviceProviderEndpoint = new Endpoints().serviceProviders(getUrlParameter.parameter('key')).build()
     ajax.get(serviceProviderEndpoint, headers, {})
     .then(function (result) {
+      self.addresses(result.json.addresses)
     }, function (error) {
 
     })

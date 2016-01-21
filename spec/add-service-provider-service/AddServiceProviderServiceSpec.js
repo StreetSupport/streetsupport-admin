@@ -88,6 +88,10 @@ describe('Save new Service', function () {
     expect(model.categories().length).toEqual(2)
   })
 
+  it('should populate addresses', function () {
+    expect(model.addresses().length).toEqual(2)
+  })
+
 //   describe('Save', function () {
 //     var stubbedApi,
 //         stubbedCookies,
