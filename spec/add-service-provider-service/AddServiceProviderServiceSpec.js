@@ -38,9 +38,9 @@ describe('Save new Service', function () {
     stubbedApi = sinon.stub(ajax, 'get')
 
     var headers = {
-        'content-type': 'application/json',
-        'session-token': 'stored-session-token'
-      }
+      'content-type': 'application/json',
+      'session-token': 'stored-session-token'
+    }
 
     stubbedApi.withArgs(endpoints.getServiceCategories,
       headers,
@@ -163,6 +163,70 @@ describe('Save new Service', function () {
 
     it('should set opening time day', function () {
       expect(model.address().openingTimes()[0].day()).toEqual('Monday')
+    })
+  })
+
+  describe('save', function () {
+    function savePromise (value) {
+      return {
+        then: function (success, error) {
+          success({
+            'status': 200,
+            'json': 'wang'
+          })
+        }
+      }
+    }
+    var headers = {
+      'content-type': 'application/json',
+      'session-token': 'stored-session-token'
+    }
+    beforeEach(function () {
+      var stubbedApi = sinon.stub(ajax, 'post').returns(savePromise())
+
+      model.category(model.categories()[0])
+      model.setAvailableSubCategories()
+      model.subCategories()[1].isSelected(true)
+      model.subCategories()[3].isSelected(true)
+
+      model.save()
+    })
+
+    afterEach(function () {
+      ajax.post.restore()
+    })
+
+    it('should post service details with new to api with session token', function() {
+      var endpoint = endpoints.getServiceProviders + '/coffee4craig/services'
+      var headers = {
+        'content-type': 'application/json',
+        'session-token': 'stored-session-token'
+      }
+      var payload = JSON.stringify({
+        // 'Info': 'new info',
+        // 'Tags': ['new tags', 'tag 2'],
+        // 'OpeningTimes': [{
+        //   'StartTime': '09:00',
+        //   'EndTime': '10:00',
+        //   'Day': 'Monday'
+        // },
+        // {
+        //   'StartTime': '20:00',
+        //   'EndTime': '22:00',
+        //   'Day': 'Wednesday'
+        // }],
+        // 'Address': {
+        //   'Street1': 'new street 1',
+        //   'Street2': 'new street 2' ,
+        //   'Street3': 'new street 3' ,
+        //   'Street4': 'new street 4' ,
+        //   'City': 'new city',
+        //   'Postcode': 'new postcode'
+        // }
+      })
+
+      var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, headers, {}).calledOnce
+      expect(apiCalledWithExpectedArgs).toBeTruthy()
     })
   })
 })

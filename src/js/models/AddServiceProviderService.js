@@ -48,23 +48,19 @@ function AddServiceProviderService () {
   }
 
   self.save = function () {
-    console.log('save!')
-    console.log(self.category().name)
-    console.log(self.address().street1())
-    console.log(self.address().street2())
-    console.log(self.address().street3())
-    console.log(self.address().street4())
-    console.log(self.address().city())
-    console.log(self.address().postcode())
+    var endpoint = new Endpoints().serviceProviders(getUrlParameter.parameter('key')).services().build()
+    var headers = {
+      'content-type': 'application/json',
+      'session-token': cookies.get('session-token')
+    }
+    var payload = {
+    }
 
-    self.address().openingTimes().forEach(ot => {
-      console.log(ot.day() + ': ' + ot.startTime() + ' - ' + ot.endTime())
-    })
+    ajax.post(endpoint, headers, {})
+    .then(function (result) {
+      console.log(result)
+    }, function (error) {
 
-    self.subCategories().forEach(sc => {
-      if (sc.isSelected()) {
-        console.log(sc.name)
-      }
     })
   }
 
