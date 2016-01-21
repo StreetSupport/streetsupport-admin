@@ -29,7 +29,7 @@ function AddServiceProviderService () {
     self.subCategories(self.category().subCategories.map(sc => new SubCat(sc.key, sc.name)))
   }
 
-  self.prefillAddress = function (a, b) {
+  self.prefillAddress = function () {
     var address = new Address({
       key: self.preselectedAddress().key(),
       street: self.preselectedAddress().street1(),
