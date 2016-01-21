@@ -167,6 +167,7 @@ describe('Save new Service', function () {
   })
 
   describe('save', function () {
+    var stubbedPostApi
     function savePromise (value) {
       return {
         then: function (success, error) {
@@ -182,7 +183,7 @@ describe('Save new Service', function () {
       'session-token': 'stored-session-token'
     }
     beforeEach(function () {
-      var stubbedApi = sinon.stub(ajax, 'post').returns(savePromise())
+      stubbedPostApi = sinon.stub(ajax, 'post').returns(savePromise())
 
       model.category(model.categories()[0])
       model.setAvailableSubCategories()
@@ -203,7 +204,7 @@ describe('Save new Service', function () {
         'session-token': 'stored-session-token'
       }
       var payload = JSON.stringify({
-        // 'Info': 'new info',
+        'Info': 'new info',
         // 'Tags': ['new tags', 'tag 2'],
         // 'OpeningTimes': [{
         //   'StartTime': '09:00',
@@ -225,7 +226,11 @@ describe('Save new Service', function () {
         // }
       })
 
-      var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, headers, {}).calledOnce
+    console.log(endpoint)
+    console.log(headers)
+    console.log(payload)
+
+      var apiCalledWithExpectedArgs = stubbedPostApi.withArgs(endpoint, headers, payload).calledOnce
       expect(apiCalledWithExpectedArgs).toBeTruthy()
     })
   })

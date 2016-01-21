@@ -53,10 +53,34 @@ function AddServiceProviderService () {
       'content-type': 'application/json',
       'session-token': cookies.get('session-token')
     }
-    var payload = {
-    }
+    var payload = JSON.stringify({
+        'Info': 'new info',
+        // 'Tags': ['new tags', 'tag 2'],
+        // 'OpeningTimes': [{
+        //   'StartTime': '09:00',
+        //   'EndTime': '10:00',
+        //   'Day': 'Monday'
+        // },
+        // {
+        //   'StartTime': '20:00',
+        //   'EndTime': '22:00',
+        //   'Day': 'Wednesday'
+        // }],
+        // 'Address': {
+        //   'Street1': 'new street 1',
+        //   'Street2': 'new street 2' ,
+        //   'Street3': 'new street 3' ,
+        //   'Street4': 'new street 4' ,
+        //   'City': 'new city',
+        //   'Postcode': 'new postcode'
+        // }
+      })
 
-    ajax.post(endpoint, headers, {})
+    console.log(endpoint)
+    console.log(headers)
+    console.log(payload)
+
+    ajax.post(endpoint, headers, payload)
     .then(function (result) {
       console.log(result)
     }, function (error) {
