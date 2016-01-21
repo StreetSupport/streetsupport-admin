@@ -6,6 +6,7 @@ var getUrlParameter = require('../get-url-parameter')
 var cookies = require('../cookies')
 var ajax = require('basic-ajax')
 var browser = require('../browser')
+var adminUrls = require('../admin-urls')
 
 function SubCat (key, name) {
   var self = this
@@ -18,7 +19,7 @@ function AddServiceProviderService () {
   var self = this
 
   self.info = ko.observable()
-  self.tags = ko.observable()
+  self.targetAudience = ko.observable('')
 
   self.categories = ko.observableArray()
   self.category = ko.observable()
@@ -59,7 +60,7 @@ function AddServiceProviderService () {
     }
 
     var tags = []
-    if (self.tags().length > 0) tags = self.tags().split(',').map(t => t.trim())
+    if (self.targetAudience().length > 0) tags = self.targetAudience().split(',').map(t => t.trim())
 
     var payload = JSON.stringify({
       'Info': self.info(),
@@ -75,19 +76,17 @@ function AddServiceProviderService () {
           'Day': openingTime.day()
         }
       }),
-      'Address': {
-        'Street1': self.address().street1(),
-        'Street2': self.address().street2(),
-        'Street3': self.address().street3(),
-        'Street4': self.address().street4(),
-        'City': self.address().city(),
-        'Postcode': self.address().postcode()
-      }
+      'Street1': self.address().street1(),
+      'Street2': self.address().street2(),
+      'Street3': self.address().street3(),
+      'Street4': self.address().street4(),
+      'City': self.address().city(),
+      'Postcode': self.address().postcode()
     })
 
     ajax.post(endpoint, headers, payload)
     .then(function (result) {
-      browser.redirect(new Endpoints().serviceProviders(getUrlParameter.parameter('key')).services().build())
+      browser.redirect(adminUrls.serviceProviderServices + '?key=' + getUrlParameter.parameter('key'))
     }, function (error) {
 
     })

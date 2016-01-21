@@ -5,6 +5,7 @@ var endPointBuilder = require('../../src/js/endpoint-builder')
 var cookies =         require('../../src/js/cookies')
 var getUrlParameter = require('../../src/js/get-url-parameter')
 var browser =         require('../../src/js/browser')
+var adminUrls =       require('../../src/js/admin-urls')
 
 describe('Save new Service', function () {
   var Model = require('../../src/js/models/AddServiceProviderService'),
@@ -194,7 +195,7 @@ describe('Save new Service', function () {
       model.subCategories()[3].isSelected(true)
 
       model.info('new info')
-      model.tags('tag a, tag b')
+      model.targetAudience('tag a, tag b')
       model.preselectedAddress(model.addresses()[0])
       model.prefillAddress()
 
@@ -227,14 +228,12 @@ describe('Save new Service', function () {
           'EndTime': '16:30',
           'Day': 'Tuesday'
         }],
-        'Address': {
-          'Street1': '5 Oak Street',
-          'Street2': 'street 2' ,
-          'Street3': 'street 3' ,
-          'Street4': 'street 4' ,
-          'City': 'Manchester',
-          'Postcode': 'M4 5JD'
-        }
+        'Street1': '5 Oak Street',
+        'Street2': 'street 2' ,
+        'Street3': 'street 3' ,
+        'Street4': 'street 4' ,
+        'City': 'Manchester',
+        'Postcode': 'M4 5JD'
       })
 
       var apiCalledWithExpectedArgs = stubbedPostApi.withArgs(endpoint, headers, payload).calledOnce
@@ -242,8 +241,8 @@ describe('Save new Service', function () {
     })
 
     it('should redirect to services list', function () {
-      var endpoint = endpoints.getServiceProviders + '/coffee4craig/services'
-      expect(browserSpy.withArgs(endpoint).calledOnce).toBeTruthy()
+      var redirect = adminUrls.serviceProviderServices + '?key=coffee4craig'
+      expect(browserSpy.withArgs(redirect).calledOnce).toBeTruthy()
     })
   })
 })

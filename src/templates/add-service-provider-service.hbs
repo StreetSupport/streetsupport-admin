@@ -42,6 +42,19 @@ pageName: addServiceProviderService
                 </li>
               </ol>
             </fieldset>
+            <fieldset>
+              <legend>Service Details</legend>
+              <ol>
+                <li>
+                  <label>Description</label>
+                  <input data-bind="textInput: info" type="text" />
+                </li>
+                <li>
+                  <label>Target Audience</label>
+                  <input data-bind="textInput: targetAudience" type="text" />
+                </li>
+              </ol>
+            </fieldset>
             <div data-bind="with: address" />
             <fieldset>
               <legend>Address</legend>
