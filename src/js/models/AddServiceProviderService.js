@@ -5,6 +5,7 @@ var Endpoints = require('../endpoint-builder')
 var getUrlParameter = require('../get-url-parameter')
 var cookies = require('../cookies')
 var ajax = require('basic-ajax')
+var browser = require('../browser')
 
 function SubCat (key, name) {
   var self = this
@@ -82,6 +83,7 @@ function AddServiceProviderService () {
 
     ajax.post(endpoint, headers, payload)
     .then(function (result) {
+      browser.redirect(new Endpoints().serviceProviders(getUrlParameter.parameter('key')).services().build())
     }, function (error) {
 
     })

@@ -4,6 +4,7 @@ var endpoints =       require('../../src/js/api-endpoints')
 var endPointBuilder = require('../../src/js/endpoint-builder')
 var cookies =         require('../../src/js/cookies')
 var getUrlParameter = require('../../src/js/get-url-parameter')
+var browser =         require('../../src/js/browser')
 
 describe('Save new Service', function () {
   var Model = require('../../src/js/models/AddServiceProviderService'),
@@ -167,7 +168,8 @@ describe('Save new Service', function () {
   })
 
   describe('save', function () {
-    var stubbedPostApi
+    var stubbedPostApi,
+        browserSpy
     function savePromise (value) {
       return {
         then: function (success, error) {
@@ -184,6 +186,7 @@ describe('Save new Service', function () {
     }
     beforeEach(function () {
       stubbedPostApi = sinon.stub(ajax, 'post').returns(savePromise())
+      browserSpy = sinon.stub(browser, 'redirect')
 
       model.category(model.categories()[0])
       model.setAvailableSubCategories()
@@ -200,6 +203,7 @@ describe('Save new Service', function () {
 
     afterEach(function () {
       ajax.post.restore()
+      browser.redirect.restore()
     })
 
     it('should post service details with new to api with session token', function() {
@@ -233,6 +237,11 @@ describe('Save new Service', function () {
 
       var apiCalledWithExpectedArgs = stubbedPostApi.withArgs(endpoint, headers, payload).calledOnce
       expect(apiCalledWithExpectedArgs).toBeTruthy()
+    })
+
+    it('should redirect to services list', function () {
+      var endpoint = endpoints.getServiceProviders + '/coffee4craig/services'
+      expect(browserSpy.withArgs(endpoint).calledOnce).toBeTruthy()
     })
   })
 })
