@@ -70,14 +70,14 @@ function AddServiceProviderService () {
         //     'Day': openingTime.day()
         //   }
         // }),
-        // 'Address': {
-        //   'Street1': self.address.street1(),
-        //   'Street2': self.address.street2(),
-        //   'Street3': self.address.street3(),
-        //   'Street4': self.address.street4(),
-        //   'City': self.address.city(),
-        //   'Postcode': self.address.postcode()
-        // }
+        'Address': {
+          'Street1': self.address().street1(),
+          'Street2': self.address().street2(),
+          'Street3': self.address().street3(),
+          'Street4': self.address().street4(),
+          'City': self.address().city(),
+          'Postcode': self.address().postcode()
+        }
       })
 
     ajax.post(endpoint, headers, payload)

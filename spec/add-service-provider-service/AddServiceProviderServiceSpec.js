@@ -192,6 +192,8 @@ describe('Save new Service', function () {
 
       model.info('new info')
       model.tags('tag a, tag b')
+      model.preselectedAddress(model.addresses()[0])
+      model.prefillAddress()
 
       model.save()
     })
@@ -210,23 +212,23 @@ describe('Save new Service', function () {
         'Info': 'new info',
         'Tags': ['tag a', 'tag b'],
         // 'OpeningTimes': [{
-        //   'StartTime': '09:00',
-        //   'EndTime': '10:00',
+        //   'StartTime': '10:00',
+        //   'EndTime': '16:30',
         //   'Day': 'Monday'
         // },
         // {
-        //   'StartTime': '20:00',
-        //   'EndTime': '22:00',
-        //   'Day': 'Wednesday'
+        //   'StartTime': '10:00',
+        //   'EndTime': '16:30',
+        //   'Day': 'Tuesday'
         // }],
-        // 'Address': {
-        //   'Street1': 'new street 1',
-        //   'Street2': 'new street 2' ,
-        //   'Street3': 'new street 3' ,
-        //   'Street4': 'new street 4' ,
-        //   'City': 'new city',
-        //   'Postcode': 'new postcode'
-        // }
+        'Address': {
+          'Street1': '5 Oak Street',
+          'Street2': 'street 2' ,
+          'Street3': 'street 3' ,
+          'Street4': 'street 4' ,
+          'City': 'Manchester',
+          'Postcode': 'M4 5JD'
+        }
       })
 
       var apiCalledWithExpectedArgs = stubbedPostApi.withArgs(endpoint, headers, payload).calledOnce
@@ -311,18 +313,6 @@ function addresses() {
         'startTime': '10:00',
         'endTime': '16:30',
         'day': 'Tuesday'
-      }, {
-        'startTime': '10:00',
-        'endTime': '16:30',
-        'day': 'Wednesday'
-      }, {
-        'startTime': '10:00',
-        'endTime': '16:30',
-        'day': 'Thursday'
-      }, {
-        'startTime': '10:00',
-        'endTime': '16:30',
-        'day': 'Friday'
       }]
     }, {
       'key': 2,
