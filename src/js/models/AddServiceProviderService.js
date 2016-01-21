@@ -62,24 +62,28 @@ function AddServiceProviderService () {
     if (self.tags().length > 0) tags = self.tags().split(',').map(t => t.trim())
 
     var payload = JSON.stringify({
-        'Info': self.info(),
-        'Tags': tags,
-        'OpeningTimes': self.address().openingTimes().map(openingTime => {
-          return {
-            'StartTime': openingTime.startTime(),
-            'EndTime': openingTime.endTime(),
-            'Day': openingTime.day()
-          }
-        }),
-        'Address': {
-          'Street1': self.address().street1(),
-          'Street2': self.address().street2(),
-          'Street3': self.address().street3(),
-          'Street4': self.address().street4(),
-          'City': self.address().city(),
-          'Postcode': self.address().postcode()
+      'Info': self.info(),
+      'Tags': tags,
+      'Category': self.category().key,
+      'SubCategories': self.subCategories()
+        .filter(sc => sc.isSelected() === true)
+        .map(sc => sc.key),
+      'OpeningTimes': self.address().openingTimes().map(openingTime => {
+        return {
+          'StartTime': openingTime.startTime(),
+          'EndTime': openingTime.endTime(),
+          'Day': openingTime.day()
         }
-      })
+      }),
+      'Address': {
+        'Street1': self.address().street1(),
+        'Street2': self.address().street2(),
+        'Street3': self.address().street3(),
+        'Street4': self.address().street4(),
+        'City': self.address().city(),
+        'Postcode': self.address().postcode()
+      }
+    })
 
     ajax.post(endpoint, headers, payload)
     .then(function (result) {

@@ -215,6 +215,8 @@ describe('Save new Service', function () {
       var payload = JSON.stringify({
         'Info': 'new info',
         'Tags': ['tag a', 'tag b'],
+        'Category': 'accom',
+        'SubCategories': ['hostel', 'rented'],
         'OpeningTimes': [{
           'StartTime': '10:00',
           'EndTime': '16:30',
