@@ -54,6 +54,7 @@ function Address (data) {
   }
   self.formatted = self.formatAddress(data)
 
+  self.addAddressUrl = adminUrls.serviceProviderAddressesAdd + '?providerId=' + self.serviceProviderId
   self.editAddressUrl = adminUrls.serviceProviderAddressesEdit + '?providerId=' + self.serviceProviderId + '&addressId=' + self.key()
 
   self.edit = function () {
