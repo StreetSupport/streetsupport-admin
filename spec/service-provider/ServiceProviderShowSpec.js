@@ -53,24 +53,20 @@ describe ('Show Service Provider', function () {
     expect(model.serviceProvider().key()).toEqual('coffee4craig')
   })
 
-  it ('should format addresses', function () {
-    expect(model.serviceProvider().addresses[0].formatted).toEqual('7-11 Lancaster Rd, Salford, M6 8AQ')
-  })
-
   it ('should set link to edit each address', function () {
-    expect(model.serviceProvider().addresses[0].editAddressUrl).toEqual('edit-service-provider-address.html?key=1234')
+    expect(model.serviceProvider().addresses[0].editAddressUrl).toEqual('edit-service-provider-address.html?providerId=coffee4craig&addressId=1234')
   })
 
   it ('should set link to add an address', function () {
-    expect(model.serviceProvider().addAddressUrl).toEqual('add-service-provider-address.html?key=coffee4craig')
+    expect(model.serviceProvider().addAddressUrl).toEqual('add-service-provider-address.html?providerId=coffee4craig')
   })
 
   it ('should set link to delete an address', function () {
-    expect(model.serviceProvider().addresses[0].deleteAddressUrl).toEqual('delete-service-provider-address.html?key=1234')
+    expect(model.serviceProvider().addresses[0].deleteAddressUrl).toEqual('delete-service-provider-address.html?providerId=coffee4craig&addressId=1234')
   })
 
   it ('should set link to manage services', function () {
-    expect(model.serviceProvider().amendServicesUrl).toEqual('service-provider-services.html?key=coffee4craig')
+    expect(model.serviceProvider().amendServicesUrl).toEqual('service-provider-services.html?providerId=coffee4craig')
   })
 })
 

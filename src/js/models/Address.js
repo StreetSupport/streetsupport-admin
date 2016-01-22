@@ -38,6 +38,19 @@ function Address (data) {
   self.message = ko.observable()
   self.listeners = ko.observableArray()
 
+  // self.formatAddress = function (address) {
+  //   return _.chain(['street', 'street1', 'street2', 'street3', 'city', 'postcode'])
+  //     .filter(function (key) {
+  //       return address[key] !== null
+  //     })
+  //     .map(function (key) {
+  //       return address[key]
+  //     })
+  //     .value()
+  //     .join(', ')
+  // }
+  // self.formatted = self.formatAddress(data)
+
   self.edit = function () {
     self.isEditing(true)
   }
@@ -107,7 +120,7 @@ function Address (data) {
     })
 
     if (self.tempKey() !== undefined) {
-      ajax.post(self.endpoints.serviceProviders(getUrlParameter.parameter('key')).addresses().build(),
+      ajax.post(self.endpoints.serviceProviders(getUrlParameter.parameter('providerId')).addresses().build(),
         headers,
         model
       ).then(function (result) {
@@ -119,7 +132,7 @@ function Address (data) {
         self.message(response.messages.join('<br />'))
       })
     } else {
-      ajax.put(self.endpoints.serviceProviders(getUrlParameter.parameter('key')).addresses(self.key()).build(),
+      ajax.put(self.endpoints.serviceProviders(getUrlParameter.parameter('providerId')).addresses(self.key()).build(),
         headers,
         model
       ).then(function (result) {

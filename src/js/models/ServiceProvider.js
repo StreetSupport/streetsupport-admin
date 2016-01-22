@@ -18,9 +18,9 @@ function ServiceProvider (data) {
   this.twitter = ko.observable(data.twitter)
   this.addresses = data.addresses
   this.providedServices = data.providedServices
-  this.addAddressUrl = adminUrls.serviceProviderAddressesAdd + '?key=' + data.key
+  this.addAddressUrl = adminUrls.serviceProviderAddressesAdd + '?providerId=' + data.key
   this.amendAddressesUrl = adminUrls.serviceProviderAddresses + '?key=' + data.key
-  this.amendServicesUrl = adminUrls.serviceProviderServices + '?key=' + data.key
+  this.amendServicesUrl = adminUrls.serviceProviderServices + '?providerId=' + data.key
 }
 
 function ServiceProviderDetails () {
@@ -45,7 +45,8 @@ function ServiceProviderDetails () {
   }
 
   self.init = function () {
-    ajax.get(self.endpoints.serviceProviders(getUrlParameter.parameter('key')).build(),
+    var providerId = getUrlParameter.parameter('key')
+    ajax.get(self.endpoints.serviceProviders(providerId).build(),
       {
         'content-type': 'application/json',
         'session-token': cookies.get('session-token')
@@ -56,8 +57,8 @@ function ServiceProviderDetails () {
 
         sp.addresses = _.map(sp.addresses, function (address) {
           address.formatted = self.formatAddress(address)
-          address.editAddressUrl = adminUrls.serviceProviderAddressesEdit + '?key=' + address.key
-          address.deleteAddressUrl = adminUrls.serviceProviderAddressesDelete + '?key=' + address.key
+          address.editAddressUrl = adminUrls.serviceProviderAddressesEdit + '?providerId=' + providerId + '&addressId=' + address.key
+          address.deleteAddressUrl = adminUrls.serviceProviderAddressesDelete + '?providerId=' + providerId + '&addressId=' + address.key
           return address
         })
 
