@@ -56,6 +56,7 @@ function Address (data) {
 
   self.addAddressUrl = adminUrls.serviceProviderAddressesAdd + '?providerId=' + self.serviceProviderId
   self.editAddressUrl = adminUrls.serviceProviderAddressesEdit + '?providerId=' + self.serviceProviderId + '&addressId=' + self.key()
+  self.deleteAddressUrl = adminUrls.serviceProviderAddressesDelete + '?providerId=' + self.serviceProviderId + '&addressId=' + self.key()
 
   self.edit = function () {
     self.isEditing(true)
