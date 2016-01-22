@@ -18,6 +18,7 @@ function ServiceProvider (data) {
   this.twitter = ko.observable(data.twitter)
   this.addresses = data.addresses
   this.providedServices = data.providedServices
+  this.addAddressUrl = adminUrls.serviceProviderAddressesAdd + '?key=' + data.key
   this.amendAddressesUrl = adminUrls.serviceProviderAddresses + '?key=' + data.key
   this.amendServicesUrl = adminUrls.serviceProviderServices + '?key=' + data.key
 }
@@ -55,6 +56,8 @@ function ServiceProviderDetails () {
 
         sp.addresses = _.map(sp.addresses, function (address) {
           address.formatted = self.formatAddress(address)
+          address.editAddressUrl = adminUrls.serviceProviderAddressesEdit + '?key=' + address.key
+          address.deleteAddressUrl = adminUrls.serviceProviderAddressesDelete + '?key=' + address.key
           return address
         })
 

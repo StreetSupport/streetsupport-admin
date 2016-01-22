@@ -93,14 +93,10 @@ pageName: serviceProvider
             </section>
             <section>
               <h2>Addresses</h2>
-              <a data-bind="attr: { 'href': amendAddressesUrl }" title="edit addresses">Edit Addresses</a>
+              <a data-bind="attr: { 'href': addAddressUrl }" title="add address">Add Address</a>
               <div data-bind="foreach: addresses">
                 <article>
-                  <address data-bind="text: formatted"></address>
-                  <dl data-bind="foreach: openingTimes" class="key-value-pair">
-                    <dt data-bind="text: day" class="key-value-pair__key"></dt>
-                    <dd><span data-bind="text: startTime"></span> - <span data-bind="text: endTime"></span></dd>
-                  </ol>
+                  <address data-bind="text: formatted"></address> <a data-bind="attr: { 'href': editAddressUrl }" title="edit address">Edit Address</a> <a data-bind="attr: { 'href': deleteAddressUrl }" title="delete address">Delete Address</a>
                 </article>
               </div>
             </section>
