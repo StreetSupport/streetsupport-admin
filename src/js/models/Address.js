@@ -5,10 +5,13 @@ var Endpoints = require('../endpoint-builder')
 var getUrlParameter = require('../get-url-parameter')
 var cookies = require('../cookies')
 var OpeningTime = require('./OpeningTime')
+var adminUrls = require('../admin-urls')
 
 function Address (data) {
   var self = this
   self.endpoints = new Endpoints()
+
+  self.serviceProviderId = data.serviceProviderId
 
   self.key = ko.observable(data.key)
   self.savedStreet1 = ko.observable(data.street)
@@ -50,6 +53,8 @@ function Address (data) {
       .join(', ')
   }
   self.formatted = self.formatAddress(data)
+
+  self.editAddressUrl = adminUrls.serviceProviderAddressesEdit + '?providerId=' + self.serviceProviderId + '&addressId=' + self.key()
 
   self.edit = function () {
     self.isEditing(true)

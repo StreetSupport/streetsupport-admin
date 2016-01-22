@@ -18,9 +18,9 @@ describe('Address', function() {
     expect(model.formatted).toEqual('5 Oak Street, Manchester, M4 5JD')
   })
 
-  // it('should set link to edit each address', function() {
-  //   expect(model.editAddressUrl).toEqual('edit-service-provider-address.html?providerId=coffee4craig&addressId=1234')
-  // })
+  it('should set link to edit each address', function() {
+    expect(model.editAddressUrl).toEqual('edit-service-provider-address.html?providerId=coffee4craig&addressId=1234')
+  })
 
   // it('should set link to add an address', function() {
   //   expect(model.addAddressUrl).toEqual('add-service-provider-address.html?providerId=coffee4craig')
@@ -210,6 +210,7 @@ describe('Address', function() {
 
 function getAddressData() {
   return {
+    'serviceProviderId': 'coffee4craig',
     'key': 1234,
     'street': '5 Oak Street',
     'street1': null,
