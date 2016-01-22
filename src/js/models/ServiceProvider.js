@@ -8,22 +8,34 @@ var Address = require('./Address')
 var ko = require('knockout')
 
 function ServiceProvider (data) {
-  this.key = ko.observable(data.key)
-  this.name = ko.observable(data.name)
-  this.description = ko.observable(data.description)
-  this.telephone = ko.observable(data.telephone)
-  this.email = ko.observable(data.email)
-  this.website = ko.observable(data.website)
-  this.facebook = ko.observable(data.facebook)
-  this.twitter = ko.observable(data.twitter)
+  var self = this
+
+  self.key = ko.observable(data.key)
+  self.name = ko.observable(data.name)
+  self.description = ko.observable(data.description)
+  self.telephone = ko.observable(data.telephone)
+  self.email = ko.observable(data.email)
+  self.website = ko.observable(data.website)
+  self.facebook = ko.observable(data.facebook)
+  self.twitter = ko.observable(data.twitter)
   data.addresses.forEach(a => {
     a.serviceProviderId = data.key
   })
-  this.addresses = ko.observableArray(data.addresses.map(a => new Address(a)))
-  this.providedServices = data.providedServices
-  this.addAddressUrl = adminUrls.serviceProviderAddressesAdd + '?providerId=' + data.key
-  this.amendAddressesUrl = adminUrls.serviceProviderAddresses + '?key=' + data.key
-  this.amendServicesUrl = adminUrls.serviceProviderServices + '?providerId=' + data.key
+  self.addresses = ko.observableArray(data.addresses.map(a => new Address(a)))
+  self.addresses().forEach(a => {
+    a.addListener(this)
+  })
+  self.providedServices = data.providedServices
+  self.addAddressUrl = adminUrls.serviceProviderAddressesAdd + '?providerId=' + data.key
+  self.amendAddressesUrl = adminUrls.serviceProviderAddresses + '?key=' + data.key
+  self.amendServicesUrl = adminUrls.serviceProviderServices + '?providerId=' + data.key
+
+  self.deleteAddress = function(deletedAddress) {
+    var remainingAddresses = self.addresses().filter(address => {
+      return address.key() !== deletedAddress.key()
+    })
+    self.addresses(remainingAddresses)
+  }
 }
 
 function ServiceProviderDetails () {
