@@ -6,7 +6,6 @@ var browser = require('../browser')
 var getUrlParameter = require('../get-url-parameter')
 var Address = require('./Address')
 var ko = require('knockout')
-var _ = require('lodash')
 
 function ServiceProvider (data) {
   this.key = ko.observable(data.key)

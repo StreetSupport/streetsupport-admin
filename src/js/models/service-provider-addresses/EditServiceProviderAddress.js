@@ -1,7 +1,5 @@
 var ajax = require('basic-ajax')
 var ko = require('knockout')
-var _ = require('lodash')
-var guid = require('node-uuid')
 var Endpoints = require('../../endpoint-builder')
 var cookies = require('../../cookies')
 var Address = require('../Address')

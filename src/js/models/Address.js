@@ -44,7 +44,7 @@ function Address (data) {
   self.formatAddress = function (address) {
     return _.chain(['street', 'street1', 'street2', 'street3', 'city', 'postcode'])
       .filter(function (key) {
-        if(address[key] === undefined || address[key] === null) return false
+        if (address[key] === undefined || address[key] === null) return false
         return address[key].length > 0
       })
       .map(function (key) {
@@ -127,7 +127,7 @@ function Address (data) {
       })
     })
 
-    if (self.tempKey() !== undefined) {
+    if (self.tempKey() !== undefined || self.key() === undefined) {
       ajax.post(self.endpoints.serviceProviders(getUrlParameter.parameter('providerId')).addresses().build(),
         headers,
         model
