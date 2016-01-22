@@ -6,9 +6,11 @@ var getUrlParameter = require('../get-url-parameter')
 var cookies = require('../cookies')
 var OpeningTime = require('./OpeningTime')
 var Address = require('./Address')
+var adminUrls = require('../admin-urls')
 
 function Service (data) {
   var self = this
+  self.serviceProviderId = data.serviceProviderId
   self.id = ko.observable(data.key)
   self.name = data.name
   self.info = ko.observable(data.info)
@@ -26,6 +28,8 @@ function Service (data) {
   self.message = ko.observable()
   self.endpoints = new Endpoints()
   self.listeners = ko.observableArray()
+
+  self.editServiceUrl = adminUrls.serviceProviderServicesEdit + '?providerId=' + self.serviceProviderId + '&serviceId=569d2b468705432268b65c75'
 
   self.edit = function () {
     self.isEditing(true)

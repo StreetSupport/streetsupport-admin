@@ -53,7 +53,7 @@ describe('Save new Service', function () {
       {}).returns(providerPromise())
 
     stubbedCookies = sinon.stub(cookies, 'get').returns('stored-session-token')
-    stubbedUrlParams = sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
+    stubbedUrlParams = sinon.stub(getUrlParameter, 'parameter').withArgs('providerId').returns('coffee4craig')
 
     model = new Model()
   })
@@ -241,7 +241,7 @@ describe('Save new Service', function () {
     })
 
     it('should redirect to services list', function () {
-      var redirect = adminUrls.serviceProviderServices + '?key=coffee4craig'
+      var redirect = adminUrls.serviceProviders + '?key=coffee4craig'
       expect(browserSpy.withArgs(redirect).calledOnce).toBeTruthy()
     })
   })

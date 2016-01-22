@@ -61,6 +61,10 @@ describe ('Show Service Provider', function () {
     expect(model.serviceProvider().addresses()[0].serviceProviderId).toEqual('coffee4craig')
   })
 
+  it ('should set services\' service provider id', function () {
+    expect(model.serviceProvider().newServices()[0].serviceProviderId).toEqual('coffee4craig')
+  })
+
   it ('should set link to add address', function () {
     expect(model.serviceProvider().addAddressUrl).toEqual('add-service-provider-address.html?providerId=coffee4craig')
   })
@@ -103,6 +107,31 @@ function coffee4Craig() {
       "city": null,
       "postcode": "M1 1AF"
     }
-    ]
+    ],
+    "providedServices": [{
+      'key': '569d2b468705432268b65c75',
+      'name': 'Meals',
+      'info': 'Breakfast',
+      'openingTimes': [{
+        'startTime': '09:00',
+        'endTime': '10:00',
+        'day': 'Monday'
+      }, {
+        'startTime': '09:00',
+        'endTime': '10:00',
+        'day': 'Tuesday'
+      }],
+      'address': {
+        'key': '7a6ff0f3-5b04-4bd9-b088-954e473358f5',
+        'street': 'Booth Centre',
+        'street1': null,
+        'street2': 'Edward Holt House',
+        'street3': 'Pimblett Street',
+        'city': 'Manchester',
+        'postcode': 'M3 1FU',
+        'openingTimes': null
+      },
+      'tags': 'some tags'
+    }]
   }
 }

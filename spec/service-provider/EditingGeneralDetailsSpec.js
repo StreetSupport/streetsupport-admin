@@ -132,6 +132,7 @@ function coffee4Craig() {
     "key": "coffee4craig",
     "name": "Coffee 4 Craig",
     "description": "initial description",
-    "addresses": []
+    "addresses": [],
+    "providedServices": []
   }
 }

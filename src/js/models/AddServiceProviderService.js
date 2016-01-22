@@ -53,7 +53,7 @@ function AddServiceProviderService () {
   }
 
   self.save = function () {
-    var endpoint = new Endpoints().serviceProviders(getUrlParameter.parameter('key')).services().build()
+    var endpoint = new Endpoints().serviceProviders(getUrlParameter.parameter('providerId')).services().build()
     var headers = {
       'content-type': 'application/json',
       'session-token': cookies.get('session-token')
@@ -86,7 +86,7 @@ function AddServiceProviderService () {
 
     ajax.post(endpoint, headers, payload)
     .then(function (result) {
-      browser.redirect(adminUrls.serviceProviderServices + '?key=' + getUrlParameter.parameter('key'))
+      browser.redirect(adminUrls.serviceProviders + '?key=' + getUrlParameter.parameter('providerId'))
     }, function (error) {
 
     })
@@ -97,7 +97,7 @@ function AddServiceProviderService () {
       'content-type': 'application/json',
       'session-token': cookies.get('session-token')
     }
-    var serviceProviderEndpoint = new Endpoints().serviceProviders(getUrlParameter.parameter('key')).build()
+    var serviceProviderEndpoint = new Endpoints().serviceProviders(getUrlParameter.parameter('providerId')).build()
     ajax.get(serviceProviderEndpoint, headers, {})
     .then(function (result) {
       self.addresses(result.json.addresses.map(a => new Address(a)))

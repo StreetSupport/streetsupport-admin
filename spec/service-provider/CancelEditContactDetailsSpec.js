@@ -70,6 +70,7 @@ function coffee4Craig() {
     "website": "initial website",
     "facebook": "initial facebook",
     "twitter": "initial twitter",
-    "addresses": []
+    "addresses": [],
+    "providedServices": []
   }
 }

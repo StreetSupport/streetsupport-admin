@@ -5,6 +5,7 @@ var cookies = require('../cookies')
 var browser = require('../browser')
 var getUrlParameter = require('../get-url-parameter')
 var Address = require('./Address')
+var Service = require('./Service')
 var ko = require('knockout')
 
 function ServiceProvider (data) {
@@ -25,7 +26,12 @@ function ServiceProvider (data) {
   self.addresses().forEach(a => {
     a.addListener(this)
   })
+  data.providedServices.forEach(s => {
+    s.serviceProviderId = data.key
+  })
   self.providedServices = data.providedServices
+
+  self.newServices = ko.observable(data.providedServices.map(s => new Service(s)))
 
   self.addAddressUrl = adminUrls.serviceProviderAddressesAdd + '?providerId=' + data.key
   self.amendAddressesUrl = adminUrls.serviceProviderAddresses + '?key=' + data.key
