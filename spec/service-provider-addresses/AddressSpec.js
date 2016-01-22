@@ -14,9 +14,9 @@ describe('Address', function() {
     model = new Model(getAddressData())
   })
 
-  // it('should format addresses', function() {
-  //   expect(model.formatted).toEqual('7-11 Lancaster Rd, Salford, M6 8AQ')
-  // })
+  it('should format addresses', function() {
+    expect(model.formatted).toEqual('5 Oak Street, Manchester, M4 5JD')
+  })
 
   // it('should set link to edit each address', function() {
   //   expect(model.editAddressUrl).toEqual('edit-service-provider-address.html?providerId=coffee4craig&addressId=1234')

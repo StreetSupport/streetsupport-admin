@@ -32,18 +32,6 @@ function ServiceProviderDetails () {
   self.message = ko.observable('')
   self.endpoints = new Endpoints()
 
-  self.formatAddress = function (address) {
-    return _.chain(['street', 'street1', 'street2', 'street3', 'city', 'postcode'])
-        .filter(function (key) {
-          return address[key] !== null
-        })
-        .map(function (key) {
-          return address[key]
-        })
-        .value()
-        .join(', ')
-  }
-
   self.init = function () {
     var providerId = getUrlParameter.parameter('key')
     ajax.get(self.endpoints.serviceProviders(providerId).build(),
@@ -56,7 +44,6 @@ function ServiceProviderDetails () {
         var sp = result.json
 
         sp.addresses = _.map(sp.addresses, function (address) {
-          address.formatted = self.formatAddress(address)
           address.editAddressUrl = adminUrls.serviceProviderAddressesEdit + '?providerId=' + providerId + '&addressId=' + address.key
           address.deleteAddressUrl = adminUrls.serviceProviderAddressesDelete + '?providerId=' + providerId + '&addressId=' + address.key
           return address

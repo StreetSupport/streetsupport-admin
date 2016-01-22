@@ -38,18 +38,18 @@ function Address (data) {
   self.message = ko.observable()
   self.listeners = ko.observableArray()
 
-  // self.formatAddress = function (address) {
-  //   return _.chain(['street', 'street1', 'street2', 'street3', 'city', 'postcode'])
-  //     .filter(function (key) {
-  //       return address[key] !== null
-  //     })
-  //     .map(function (key) {
-  //       return address[key]
-  //     })
-  //     .value()
-  //     .join(', ')
-  // }
-  // self.formatted = self.formatAddress(data)
+  self.formatAddress = function (address) {
+    return _.chain(['street', 'street1', 'street2', 'street3', 'city', 'postcode'])
+      .filter(function (key) {
+        return address[key] !== null
+      })
+      .map(function (key) {
+        return address[key]
+      })
+      .value()
+      .join(', ')
+  }
+  self.formatted = self.formatAddress(data)
 
   self.edit = function () {
     self.isEditing(true)
