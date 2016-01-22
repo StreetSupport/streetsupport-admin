@@ -15,13 +15,16 @@ function Service (data) {
 
   self.name = data.name
   self.info = ko.observable(data.info)
-  self.tags = ko.observable('')
+
+  var tags = data.tags !== null ? data.tags.join(', ') : ''
+
+  self.tags = ko.observable(tags)
   self.openingTimes = ko.observableArray(data.openingTimes.map(ot => new OpeningTime(ot)))
   self.address = new Address(data.address)
 
   self.savedName = ko.observable(data.name)
   self.savedInfo = ko.observable(data.info)
-  self.savedTags = ko.observable(data.tags)
+  self.savedTags = ko.observable(tags)
   self.savedOpeningTimes = ko.observableArray(data.openingTimes.map(ot => new OpeningTime(ot)))
   self.savedAddress = new Address(data.address)
 

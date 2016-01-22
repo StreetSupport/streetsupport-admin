@@ -131,7 +131,7 @@ function coffee4Craig() {
         'postcode': 'M3 1FU',
         'openingTimes': null
       },
-      'tags': 'some tags'
+      'tags': ['some tags']
     }]
   }
 }

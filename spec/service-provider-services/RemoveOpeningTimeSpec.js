@@ -54,6 +54,6 @@ function getData() {
       'postcode': 'M3 1FU',
       'openingTimes': null
     },
-    'tags': 'some tags'
+    'tags': ['some tags']
   }
 }
