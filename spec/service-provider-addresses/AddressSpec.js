@@ -59,7 +59,7 @@ describe('Address', function() {
 
       it('should set reset fields', function() {
         expect(model.street1()).toEqual('5 Oak Street')
-        expect(model.street2()).toEqual(null)
+        expect(model.street2()).toEqual('')
         expect(model.street3()).toEqual(null)
         expect(model.street4()).toEqual(null)
         expect(model.city()).toEqual('Manchester')
@@ -213,7 +213,7 @@ function getAddressData() {
     'serviceProviderId': 'coffee4craig',
     'key': 1234,
     'street': '5 Oak Street',
-    'street1': null,
+    'street1': '',
     'street2': null,
     'street3': null,
     'city': 'Manchester',

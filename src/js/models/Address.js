@@ -44,7 +44,8 @@ function Address (data) {
   self.formatAddress = function (address) {
     return _.chain(['street', 'street1', 'street2', 'street3', 'city', 'postcode'])
       .filter(function (key) {
-        return address[key] !== null
+        if(address[key] === undefined || address[key] === null) return false
+        return address[key].length > 0
       })
       .map(function (key) {
         return address[key]
