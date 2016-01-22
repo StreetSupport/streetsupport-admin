@@ -105,9 +105,9 @@ pageName: serviceProvider
             <section>
               <h2>Services</h2>
               <a data-bind="attr: { 'href': addServiceUrl }" title="edit services">Add Service</a>
-              <div data-bind="foreach: providedServices">
+              <div data-bind="foreach: newServices">
                 <h3 data-bind="text: name"></h3>
-                  <a data-bind="attr: { 'href': editServiceUrl }" title="edit address">Edit Service</a>
+                <a data-bind="attr: { 'href': editServiceUrl }" title="edit address">Edit Service</a>
               </div>
             </section>
           </div>

@@ -1,12 +1,12 @@
 var ko = require('knockout')
-var Address = require('./Address')
-var OpeningTime = require('./OpeningTime')
-var Endpoints = require('../endpoint-builder')
-var getUrlParameter = require('../get-url-parameter')
-var cookies = require('../cookies')
+var Address = require('../Address')
+var OpeningTime = require('../OpeningTime')
+var Endpoints = require('../../endpoint-builder')
+var getUrlParameter = require('../../get-url-parameter')
+var cookies = require('../../cookies')
 var ajax = require('basic-ajax')
-var browser = require('../browser')
-var adminUrls = require('../admin-urls')
+var browser = require('../../browser')
+var adminUrls = require('../../admin-urls')
 
 function SubCat (key, name) {
   var self = this

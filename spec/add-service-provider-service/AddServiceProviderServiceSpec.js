@@ -8,7 +8,7 @@ var browser =         require('../../src/js/browser')
 var adminUrls =       require('../../src/js/admin-urls')
 
 describe('Save new Service', function () {
-  var Model = require('../../src/js/models/AddServiceProviderService'),
+  var Model = require('../../src/js/models/service-provider-services/AddServiceProviderService'),
   model,
   stubbedApi,
   stubbedCookies,
