@@ -146,6 +146,7 @@ function coffee4Craig() {
     "telephone": "07973955003",
     "website": "http://www.coffee4craig.com/",
     "facebook": "https://www.facebook.com/Coffee4Craig/?fref=ts",
-    "twitter": "@Coffee4Craig"
+    "twitter": "@Coffee4Craig",
+    "addresses": []
   }
 }

@@ -53,6 +53,10 @@ describe ('Show Service Provider', function () {
     expect(model.serviceProvider().key()).toEqual('coffee4craig')
   })
 
+  it ('should set addresses', function () {
+    expect(model.serviceProvider().newAddresses().length).toEqual(2)
+  })
+
   it ('should set link to manage services', function () {
     expect(model.serviceProvider().amendServicesUrl).toEqual('service-provider-services.html?providerId=coffee4craig')
   })

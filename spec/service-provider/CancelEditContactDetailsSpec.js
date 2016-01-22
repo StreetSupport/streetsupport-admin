@@ -69,6 +69,7 @@ function coffee4Craig() {
     "telephone": "initial telephone",
     "website": "initial website",
     "facebook": "initial facebook",
-    "twitter": "initial twitter"
+    "twitter": "initial twitter",
+    "addresses": []
   }
 }

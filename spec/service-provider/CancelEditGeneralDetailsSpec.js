@@ -57,6 +57,7 @@ function coffee4Craig() {
   return {
     "key": "coffee4craig",
     "name": "Coffee 4 Craig",
-    "description": "initial description"
+    "description": "initial description",
+    "addresses": []
   }
 }

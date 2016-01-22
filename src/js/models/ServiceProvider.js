@@ -4,6 +4,7 @@ var adminUrls = require('../admin-urls')
 var cookies = require('../cookies')
 var browser = require('../browser')
 var getUrlParameter = require('../get-url-parameter')
+var Address = require('./Address')
 var ko = require('knockout')
 var _ = require('lodash')
 
@@ -17,6 +18,7 @@ function ServiceProvider (data) {
   this.facebook = ko.observable(data.facebook)
   this.twitter = ko.observable(data.twitter)
   this.addresses = data.addresses
+  this.newAddresses = ko.observableArray(data.addresses.map(a => new Address(a)))
   this.providedServices = data.providedServices
   this.addAddressUrl = adminUrls.serviceProviderAddressesAdd + '?providerId=' + data.key
   this.amendAddressesUrl = adminUrls.serviceProviderAddresses + '?key=' + data.key
