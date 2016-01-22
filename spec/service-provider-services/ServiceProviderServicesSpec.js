@@ -27,7 +27,7 @@ describe('Service Provider Services', function() {
 
     stubbedApi = sinon.stub(ajax, 'get').returns(fakeResolved())
     stubbedCookies = sinon.stub(cookies, 'get').returns('stored-session-token')
-    stubbedUrlParams = sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
+    stubbedUrlParams = sinon.stub(getUrlParameter, 'parameter').withArgs('providerId').returns('coffee4craig')
 
     model = new Model()
   })

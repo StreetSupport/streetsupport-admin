@@ -14,6 +14,7 @@ function ServiceProvider (data) {
   self.key = ko.observable(data.key)
   self.name = ko.observable(data.name)
   self.addresses = ko.observableArray(_.map(data.addresses, function (address) {
+    address.serviceProviderId = self.key
     return new Address(address)
   }))
   self.services = ko.observableArray(_.map(data.providedServices, function (service) {
@@ -34,10 +35,10 @@ function ServiceProviderServices () {
   var self = this
   self.serviceProvider = ko.observable()
   self.endpoints = new Endpoints()
-  self.addServiceLink = adminUrls.addServiceProviderService + '?key=' + getUrlParameter.parameter('key')
+  self.addServiceLink = adminUrls.addServiceProviderService + '?key=' + getUrlParameter.parameter('providerId')
 
   self.init = function () {
-    var endpoint = self.endpoints.serviceProviders(getUrlParameter.parameter('key')).build()
+    var endpoint = self.endpoints.serviceProviders(getUrlParameter.parameter('providerId')).build()
     ajax.get(endpoint,
       {
         'content-type': 'application/json',
