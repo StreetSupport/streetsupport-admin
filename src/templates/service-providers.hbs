@@ -96,7 +96,9 @@ pageName: serviceProvider
               <a data-bind="attr: { 'href': addAddressUrl }" title="add address">Add Address</a>
               <div data-bind="foreach: addresses">
                 <article>
-                  <address data-bind="text: formatted"></address> <a data-bind="attr: { 'href': editAddressUrl }" title="edit address">Edit Address</a>
+                  <address data-bind="text: formatted"></address>
+                  <a data-bind="attr: { 'href': editAddressUrl }" title="edit address">Edit Address</a>
+                  <a data-bind="click: deleteAddress" title="edit address">Delete Address</a>
                 </article>
               </div>
             </section>
