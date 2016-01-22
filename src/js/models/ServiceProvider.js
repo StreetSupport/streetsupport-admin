@@ -26,11 +26,14 @@ function ServiceProvider (data) {
   self.addresses().forEach(a => {
     a.addListener(this)
   })
+
   data.providedServices.forEach(s => {
     s.serviceProviderId = data.key
   })
-
   self.newServices = ko.observable(data.providedServices.map(s => new Service(s)))
+  self.newServices().forEach(s => {
+    s.addListener(self)
+  })
 
   self.addAddressUrl = adminUrls.serviceProviderAddressesAdd + '?providerId=' + data.key
   self.amendAddressesUrl = adminUrls.serviceProviderAddresses + '?key=' + data.key
@@ -43,6 +46,13 @@ function ServiceProvider (data) {
       return address.key() !== deletedAddress.key()
     })
     self.addresses(remainingAddresses)
+  }
+
+  self.deleteService = function(deletedService) {
+    var remainingServices = self.newServices().filter(service => {
+      return service.id() !== deletedService.id()
+    })
+    self.newServices(remainingServices)
   }
 }
 

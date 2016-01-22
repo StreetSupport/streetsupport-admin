@@ -54,6 +54,37 @@ describe('Edit individual Address', function () {
   it('should map Address', function() {
     expect(model.address().postcode()).toEqual('M4 5JD')
   })
+
+  describe('Save', function () {
+    var browserSpy,
+        stubbedPutApi
+    beforeEach(function () {
+      function fakeResolved(value) {
+          return {
+            then: function(success, error) {
+              success({
+                'status': 200,
+                'json': {}
+              })
+            }
+          }
+        }
+      browserSpy = sinon.stub(browser, 'redirect')
+      stubbedPutApi = sinon.stub(ajax, 'put').returns(fakeResolved())
+
+      model.address().save()
+    })
+
+    afterEach(function () {
+      ajax.put.restore()
+      browser.redirect.restore()
+    })
+
+    it('should redirect to service provider', function () {
+      var redirect = adminurls.serviceProviders + '?key=coffee4craig'
+      expect(browserSpy.withArgs(redirect).calledOnce).toBeTruthy()
+    })
+  })
 })
 
 

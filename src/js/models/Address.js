@@ -136,6 +136,9 @@ function Address (data) {
         self.isEditing(false)
         self.key(result.json.key)
         self.setFields()
+        _.forEach(self.listeners(), function (listener) {
+          listener.saveAddress(self)
+        })
       }, function (error) {
         var response = JSON.parse(error.response)
         self.message(response.messages.join('<br />'))
@@ -147,6 +150,9 @@ function Address (data) {
       ).then(function (result) {
         self.isEditing(false)
         self.setFields()
+        _.forEach(self.listeners(), function (listener) {
+          listener.saveAddress(self)
+        })
       }, function (error) {
         var response = JSON.parse(error.response)
         self.message(response.messages.join('<br />'))

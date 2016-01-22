@@ -4,12 +4,17 @@ var Endpoints = require('../../endpoint-builder')
 var cookies = require('../../cookies')
 var Address = require('../Address')
 var getUrlParameter = require('../../get-url-parameter')
+var browser =   require('../../browser')
+var adminUrls = require('../../admin-urls')
 
 function EditServiceProviderAddress () {
   var self = this
   self.serviceProvider = ko.observable()
   self.endpoints = new Endpoints()
-  self.address = ko.observable()
+
+  self.saveAddress = function (address) {
+    browser.redirect(adminUrls.serviceProviders + '?key=coffee4craig')
+  }
 
   self.init = function () {
     var endpoint = self.endpoints
@@ -24,7 +29,9 @@ function EditServiceProviderAddress () {
       },
       {})
       .then(function (result) {
-        self.address(new Address(result.json))
+        var address = new Address(result.json)
+        address.addListener(self)
+        self.address = ko.observable(address)
       },
       function (error) {
       })
