@@ -41,16 +41,8 @@ function ServiceProviderDetails () {
       },
       {})
       .then(function (result) {
-        var sp = result.json
-
-        sp.addresses = _.map(sp.addresses, function (address) {
-          address.editAddressUrl = adminUrls.serviceProviderAddressesEdit + '?providerId=' + providerId + '&addressId=' + address.key
-          address.deleteAddressUrl = adminUrls.serviceProviderAddressesDelete + '?providerId=' + providerId + '&addressId=' + address.key
-          return address
-        })
-
-        self.serviceProvider(new ServiceProvider(sp))
-        self.initialServiceProvider(new ServiceProvider(sp))
+        self.serviceProvider(new ServiceProvider(result.json))
+        self.initialServiceProvider(new ServiceProvider(result.json))
       },
       function (error) {
         browser.redirect(adminUrls.notFound)
