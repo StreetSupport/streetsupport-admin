@@ -12,7 +12,8 @@ describe('Edit Service', function () {
   model,
   stubbedApi,
   stubbedCookies,
-  stubbedUrlParams
+  stubbedUrlParams,
+  stubbedBrowser
 
   beforeEach(function() {
     function fakeResolved(value) {
@@ -27,7 +28,7 @@ describe('Edit Service', function () {
     }
 
     stubbedApi = sinon.stub(ajax, 'get').returns(fakeResolved())
-
+    stubbedBrowser = sinon.stub(browser, 'redirect')
     stubbedCookies = sinon.stub(cookies, 'get').returns('stored-session-token')
     stubbedUrlParams = sinon.stub(getUrlParameter, 'parameter')
     stubbedUrlParams.withArgs('providerId').returns('coffee4craig')
@@ -40,6 +41,7 @@ describe('Edit Service', function () {
     ajax.get.restore()
     cookies.get.restore()
     getUrlParameter.parameter.restore()
+    browser.redirect.restore()
   })
 
 
@@ -68,6 +70,33 @@ describe('Edit Service', function () {
 
   it('should set opening times start time on Service', function () {
     expect(model.service().openingTimes()[0].startTime()).toEqual('12:00')
+  })
+
+  describe('Save', function () {
+    beforeEach(function () {
+      function fakeResolved(value) {
+        return {
+          then: function(success, error) {
+            success({
+              'status': 200,
+              'json': serviceData()
+            })
+          }
+        }
+      }
+
+      stubbedApi = sinon.stub(ajax, 'put').returns(fakeResolved())
+
+      model.service().save()
+    })
+
+    afterEach(function () {
+      ajax.put.restore()
+    })
+
+    it('should redirect to service provider', function () {
+      expect(stubbedBrowser.withArgs(adminUrls.serviceProviders + '?key=coffee4craig').calledOnce).toBeTruthy()
+    })
   })
 })
 

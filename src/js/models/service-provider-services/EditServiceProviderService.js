@@ -37,9 +37,14 @@ function EditServiceProviderService () {
       var data = result.json
       data.serviceProviderId = getUrlParameter.parameter('providerId')
       self.service(new Service(data))
+      self.service().addListener(self)
     }, function (error) {
 
     })
+  }
+
+  self.serviceSaved = function () {
+    browser.redirect(adminUrls.serviceProviders + '?key=' + getUrlParameter.parameter('providerId'))
   }
 
   self.init()

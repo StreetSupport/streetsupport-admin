@@ -111,6 +111,9 @@ function Service (data) {
       model
     ).then(function (result) {
       self.isEditing(false)
+      self.listeners().forEach(l => {
+        l.serviceSaved(self)
+      })
     }, function (error) {
       var response = JSON.parse(error.response)
       self.message(response.messages.join('<br />'))
