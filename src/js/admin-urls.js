@@ -14,5 +14,5 @@ module.exports = {
   serviceProviderAddressesEdit: s('edit-service-provider-address'),
   serviceProviderAddressesDelete: s('delete-service-provider-address'),
   serviceProviderServices: s('service-provider-services'),
-  addServiceProviderService: s('add-service-provider-service')
+  serviceProviderServicesAdd: s('add-service-provider-service'),
 }

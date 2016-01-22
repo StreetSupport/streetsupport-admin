@@ -104,14 +104,10 @@ pageName: serviceProvider
             </section>
             <section>
               <h2>Services</h2>
-              <a data-bind="attr: { 'href': amendServicesUrl }" title="edit services">Edit Services</a>
+              <a data-bind="attr: { 'href': addServiceUrl }" title="edit services">Add Service</a>
               <div data-bind="foreach: providedServices">
                 <h3 data-bind="text: name"></h3>
-                <p data-bind="text: info"></p>
-                <dl data-bind="foreach: openingTimes" class="key-value-pair">
-                  <dt data-bind="text: day" class="key-value-pair__key"></dt>
-                  <dd><span data-bind="text: startTime"></span> - <span data-bind="text: endTime"></span></dd>
-                </ol>
+                  <a data-bind="attr: { 'href': editServiceUrl }" title="edit address">Edit Service</a>
               </div>
             </section>
           </div>

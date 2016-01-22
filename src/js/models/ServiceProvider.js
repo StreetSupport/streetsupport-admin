@@ -26,8 +26,11 @@ function ServiceProvider (data) {
     a.addListener(this)
   })
   self.providedServices = data.providedServices
+
   self.addAddressUrl = adminUrls.serviceProviderAddressesAdd + '?providerId=' + data.key
   self.amendAddressesUrl = adminUrls.serviceProviderAddresses + '?key=' + data.key
+
+  self.addServiceUrl = adminUrls.serviceProviderServicesAdd + '?providerId=' + data.key
   self.amendServicesUrl = adminUrls.serviceProviderServices + '?providerId=' + data.key
 
   self.deleteAddress = function(deletedAddress) {
