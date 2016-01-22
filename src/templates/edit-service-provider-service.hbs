@@ -10,7 +10,7 @@ pageName: editServiceProviderService
     <div class="block block--cta">
       <div class="container block__inner">
         <div class="block__content form">
-          <form class="form">
+          <form class="form" data-bind="with: service">
             <fieldset>
               <legend>Service Details</legend>
               <ol>
@@ -20,12 +20,11 @@ pageName: editServiceProviderService
                 </li>
                 <li>
                   <label>Target Audience</label>
-                  <input data-bind="textInput: targetAudience" type="text" />
+                  <input data-bind="textInput: tags" type="text" />
                 </li>
               </ol>
             </fieldset>
-            <div data-bind="with: address" />
-            <fieldset>
+            <fieldset data-bind="with: address">
               <legend>Address</legend>
               <ol>
                 <li>
@@ -72,7 +71,6 @@ pageName: editServiceProviderService
                   </dd>
                 </dl>
             </fieldset>
-            </div>
               <button data-bind="click: save" class="btn btn--primary"><span class="btn__text">save</span></button>
             </form>
         </div>

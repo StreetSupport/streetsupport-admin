@@ -29,7 +29,6 @@ function ServiceProvider (data) {
   data.providedServices.forEach(s => {
     s.serviceProviderId = data.key
   })
-  self.providedServices = data.providedServices
 
   self.newServices = ko.observable(data.providedServices.map(s => new Service(s)))
 

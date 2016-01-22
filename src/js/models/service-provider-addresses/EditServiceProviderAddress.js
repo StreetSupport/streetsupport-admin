@@ -16,6 +16,7 @@ function EditServiceProviderAddress () {
       .serviceProviders(getUrlParameter.parameter('providerId'))
       .addresses(getUrlParameter.parameter('addressId'))
       .build()
+
     ajax.get(endpoint,
       {
         'content-type': 'application/json',

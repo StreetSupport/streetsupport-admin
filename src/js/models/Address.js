@@ -13,6 +13,7 @@ function Address (data) {
 
   self.serviceProviderId = data.serviceProviderId
 
+
   self.key = ko.observable(data.key)
   self.savedStreet1 = ko.observable(data.street)
   self.savedStreet2 = ko.observable(data.street1)

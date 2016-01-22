@@ -12,9 +12,10 @@ function Service (data) {
   var self = this
   self.serviceProviderId = data.serviceProviderId
   self.id = ko.observable(data.key)
+
   self.name = data.name
   self.info = ko.observable(data.info)
-  self.tags = ko.observable(data.tags)
+  self.tags = ko.observable('')
   self.openingTimes = ko.observableArray(data.openingTimes.map(ot => new OpeningTime(ot)))
   self.address = new Address(data.address)
 
@@ -29,7 +30,7 @@ function Service (data) {
   self.endpoints = new Endpoints()
   self.listeners = ko.observableArray()
 
-  self.editServiceUrl = adminUrls.serviceProviderServicesEdit + '?providerId=' + self.serviceProviderId + '&serviceId=569d2b468705432268b65c75'
+  self.editServiceUrl = adminUrls.serviceProviderServicesEdit + '?providerId=' + data.serviceProviderId + '&serviceId=' + self.id()
 
   self.edit = function () {
     self.isEditing(true)
@@ -77,7 +78,7 @@ function Service (data) {
   }
 
   self.save = function () {
-    var endpoint = self.endpoints.serviceProviders(getUrlParameter.parameter('key')).services(self.id()).build()
+    var endpoint = self.endpoints.serviceProviders(self.serviceProviderId).services(self.id()).build()
     var headers = {
       'content-type': 'application/json',
       'session-token': cookies.get('session-token')
