@@ -17,8 +17,10 @@ function ServiceProvider (data) {
   this.website = ko.observable(data.website)
   this.facebook = ko.observable(data.facebook)
   this.twitter = ko.observable(data.twitter)
-  this.addresses = data.addresses
-  this.newAddresses = ko.observableArray(data.addresses.map(a => new Address(a)))
+  data.addresses.forEach(a => {
+    a.serviceProviderId = data.key
+  })
+  this.addresses = ko.observableArray(data.addresses.map(a => new Address(a)))
   this.providedServices = data.providedServices
   this.addAddressUrl = adminUrls.serviceProviderAddressesAdd + '?providerId=' + data.key
   this.amendAddressesUrl = adminUrls.serviceProviderAddresses + '?key=' + data.key

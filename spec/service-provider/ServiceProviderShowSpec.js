@@ -54,7 +54,11 @@ describe ('Show Service Provider', function () {
   })
 
   it ('should set addresses', function () {
-    expect(model.serviceProvider().newAddresses().length).toEqual(2)
+    expect(model.serviceProvider().addresses().length).toEqual(2)
+  })
+
+  it ('should set addresses\' service provider id', function () {
+    expect(model.serviceProvider().addresses()[0].serviceProviderId).toEqual('coffee4craig')
   })
 
   it ('should set link to manage services', function () {
