@@ -13,7 +13,7 @@ function EditServiceProviderAddress () {
   self.endpoints = new Endpoints()
 
   self.saveAddress = function (address) {
-    browser.redirect(adminUrls.serviceProviders + '?key=coffee4craig')
+    browser.redirect(adminUrls.serviceProviders + '?key=' + getUrlParameter.parameter('providerId'))
   }
 
   self.init = function () {
