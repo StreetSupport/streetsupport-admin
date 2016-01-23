@@ -9,8 +9,8 @@ var adminUrls = require('../../admin-urls')
 
 function EditServiceProviderAddress () {
   var self = this
-  self.serviceProvider = ko.observable()
   self.endpoints = new Endpoints()
+  self.address = ko.observable()
 
   self.saveAddress = function (address) {
     browser.redirect(adminUrls.serviceProviders + '?key=' + getUrlParameter.parameter('providerId'))
@@ -31,7 +31,7 @@ function EditServiceProviderAddress () {
       .then(function (result) {
         var address = new Address(result.json)
         address.addListener(self)
-        self.address = ko.observable(address)
+        self.address(address)
       },
       function (error) {
       })
