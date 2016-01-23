@@ -8,6 +8,8 @@ var OpeningTime = require('./OpeningTime')
 var Address = require('./Address')
 var adminUrls = require('../admin-urls')
 
+
+
 function Service (data) {
   var self = this
   self.serviceProviderId = data.serviceProviderId
