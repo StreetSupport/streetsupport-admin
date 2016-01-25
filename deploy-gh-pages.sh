@@ -33,6 +33,8 @@ cat > env.js << EOF
 "module exports = $APIENVIRONMENT"
 EOF
 
+cd ../../
+
 # Run gulp
 gulp deploy --debug --production
 
