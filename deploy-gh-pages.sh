@@ -30,7 +30,7 @@ jasmine
 cd src/js
 rm env.js
 cat > env.js << EOF
-"module.exports = $APIENVIRONMENT"
+module.exports = $APIENVIRONMENT
 EOF
 
 echo "env file rewritten to:"
