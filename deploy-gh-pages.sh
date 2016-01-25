@@ -36,6 +36,8 @@ EOF
 echo "env file rewritten to:"
 cat env.js
 
+cd ../../
+
 # Run gulp
 gulp deploy --debug --production
 
