@@ -21,6 +21,7 @@ module.exports = {
     login: pagesDir + 'login',
     dashboard: pagesDir + 'dashboard',
     serviceProvider: pagesDir + 'service-provider',
+    addServiceProvider: pagesDir + 'add-service-provider',
     serviceProviderAddresses: pagesDir + 'service-provider-addresses',
     addServiceProviderAddress: pagesDir + 'add-service-provider-address',
     editServiceProviderAddress: pagesDir + 'edit-service-provider-address',

@@ -5,9 +5,11 @@ if [[ $TRAVIS_BRANCH == 'master' ]]
   then
     REPO="github.com/StreetSupport/admin.streetsupport.net-beta.git"
     DOMAIN="service.streetsupport.net"
+    APIENVIRONMENT=2
   else
     REPO="github.com/StreetSupport/admin.streetsupport.net-dev.git"
     DOMAIN="dev-service.streetsupport.net"
+    APIENVIRONMENT=1
 fi
 
 # Get the commit details
@@ -23,6 +25,18 @@ mkdir _dist
 
 # Run tests
 jasmine
+
+# Set environment
+cd src/js
+rm env.js
+cat > env.js << EOF
+module.exports = $APIENVIRONMENT
+EOF
+
+echo "env file rewritten to:"
+cat env.js
+
+cd ../../
 
 # Run gulp
 gulp deploy --debug --production
