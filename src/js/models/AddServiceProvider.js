@@ -5,12 +5,16 @@ var adminUrls = require('../admin-urls')
 var cookies = require('../cookies')
 var browser = require('../browser')
 
-function CreateServiceProvider () {
+function AddServiceProvider () {
   var self = this
 
   self.endpoints = new Endpoints()
 
   self.name = ko.observable('')
+  self.errors = ko.observableArray()
+  self.hasErrors = ko.computed(function () {
+    return self.errors().length > 0
+  }, self)
 
   self.save = function () {
     var endpoint = self.endpoints.serviceProviders().build()
@@ -26,9 +30,11 @@ function CreateServiceProvider () {
       .then(function (result) {
         browser.redirect(adminUrls.dashboard)
       }, function (error) {
-
+        console.log(error)
+        self.errors(JSON.parse(error.response).messages)
+        console.log(self.hasErrors())
       })
   }
 }
 
-module.exports = CreateServiceProvider
+module.exports = AddServiceProvider
