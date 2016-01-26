@@ -21,7 +21,13 @@ function CreateServiceProvider () {
     var payload = {
       'Name': self.name()
     }
-    ajax.post(endpoint, headers, JSON.stringify(payload))
+    ajax
+      .post(endpoint, headers, JSON.stringify(payload))
+      .then(function (result) {
+        browser.redirect(adminUrls.dashboard)
+      }, function (error) {
+
+      })
   }
 }
 

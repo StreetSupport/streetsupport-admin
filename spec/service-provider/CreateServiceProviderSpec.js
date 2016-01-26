@@ -60,5 +60,8 @@ describe ('Create Service Provider', function () {
         var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, headers, payload).calledOnce
         expect(apiCalledWithExpectedArgs).toBeTruthy()
     })
+    it('should redirect to dashboard', function () {
+      expect(stubbedBrowser.withArgs(adminurls.dashboard).calledOnce).toBeTruthy()
+    })
   })
 })
