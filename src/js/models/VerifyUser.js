@@ -1,22 +1,9 @@
 var ko = require('knockout')
 var cookies = require('../cookies')
-var Endpoints = require('../endpoint-builder')
 var getUrlParameter = require('../get-url-parameter')
 var ajax = require('basic-ajax')
+var BaseViewModel = require('./BaseViewModel')
 
-function BaseViewModel () {
-  var self = this
-  self.message = ko.observable()
-  self.errors = ko.observableArray()
-  self.hasErrors = ko.computed(function () {
-    return self.errors().length > 0
-  }, self)
-  self.endpoints = new Endpoints()
-  // self.headers = function(sessionToken) {
-  //   'content-type': 'application/json',
-  //   'session-token': sessionToken
-  // }
-}
 
 function VerifyUser () {
   var self = this
@@ -25,23 +12,19 @@ function VerifyUser () {
   self.password = ko.observable()
 
   self.save = function () {
-    var endpoint = self.endpoints.unverifiedUsers().build()
+    var endpoint = self.endpointBuilder.unverifiedUsers().build()
     var payload = {
       'UserName': self.username(),
       'Password': self.password(),
       'VerificationToken': getUrlParameter.parameter('id'),
     }
-    var headers = {
-      'content-type': 'application/json',
-      'session-token': cookies.get('session-token')
-    }
     ajax
-      .post(endpoint, headers, JSON.stringify(payload))
+      .post(endpoint, self.headers(cookies.get('session-token')), JSON.stringify(payload))
       .then(function (result) {
         self.message('User verified. You can now log in.')
-        self.errors([])
+        self.clearErrors()
       }, function (error) {
-        self.errors(JSON.parse(error.response).messages)
+        self.setErrors(error)
       })
   }
 }
