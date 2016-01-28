@@ -3,6 +3,7 @@ var ajax = require('basic-ajax')
 var Endpoints = require('../endpoint-builder')
 var adminUrls = require('../admin-urls')
 var cookies = require('../cookies')
+var getUrlParameter = require('../get-url-parameter')
 
 function AddUser () {
   var self = this
@@ -24,6 +25,7 @@ function AddUser () {
     }
     var payload = {
       'Email': self.email(),
+      'ProviderId': getUrlParameter.parameter('id')
     }
     ajax
       .post(endpoint, headers, JSON.stringify(payload))

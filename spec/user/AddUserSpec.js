@@ -3,6 +3,7 @@ var sinon = require('sinon'),
     endpoints = require('../../src/js/api-endpoints'),
     adminurls = require('../../src/js/admin-urls'),
     cookies =   require('../../src/js/cookies')
+var getUrlParameter = require('../../src/js/get-url-parameter')
 
 
 describe ('Add User', function () {
@@ -35,6 +36,7 @@ describe ('Add User', function () {
 
       stubbedApi = sinon.stub(ajax, 'post').returns(fakeResolved ())
       stubbedCookies = sinon.stub(cookies, 'get').returns('stored-session-token')
+      stubbedUrlParameter = sinon.stub(getUrlParameter, 'parameter').withArgs('id').returns('coffee4craig')
 
       model.email('email')
       model.save()
@@ -43,6 +45,7 @@ describe ('Add User', function () {
     afterEach (function () {
       ajax.post.restore()
       cookies.get.restore()
+      getUrlParameter.parameter.restore()
     })
 
     it('should post service provider name to api', function () {
@@ -53,6 +56,7 @@ describe ('Add User', function () {
         }
         var payload = JSON.stringify({
           'Email': 'email',
+          'ProviderId': 'coffee4craig'
         })
         var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, headers, payload).calledOnce
         expect(apiCalledWithExpectedArgs).toBeTruthy()
@@ -65,7 +69,8 @@ describe ('Add User', function () {
 
   describe('Save fail', function () {
     var stubbedApi,
-        stubbedCookies
+        stubbedCookies,
+        stubbedUrlParameter
     beforeEach(function () {
       function fakeResolved (value) {
         return {
@@ -82,6 +87,7 @@ describe ('Add User', function () {
 
       stubbedApi = sinon.stub(ajax, 'post').returns(fakeResolved ())
       stubbedCookies = sinon.stub(cookies, 'get').returns('stored-session-token')
+      stubbedUrlParameter = sinon.stub(getUrlParameter, 'parameter').withArgs('id').returns('coffee4craig')
 
       model.email('email')
       model.save()
@@ -90,6 +96,7 @@ describe ('Add User', function () {
     afterEach (function () {
       ajax.post.restore()
       cookies.get.restore()
+      getUrlParameter.parameter.restore()
     })
 
     it('set errors in message', function () {
