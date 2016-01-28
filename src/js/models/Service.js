@@ -93,7 +93,7 @@ function Service (data) {
       'session-token': cookies.get('session-token')
     }
     var tags = []
-    if (self.tags().length > 0) tags = self.tags().split(',').map(t => t.trim())
+    if (self.tags().length > 0) tags = _.map(self.tags().split(','), function (t) { return t.trim() })
 
     var model = JSON.stringify({
       'Info': self.info(),
