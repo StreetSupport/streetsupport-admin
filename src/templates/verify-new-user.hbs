@@ -18,15 +18,23 @@ pageName: verifyNewUser
             <li data-bind="text: $data"></li>
           </ul>
           <!-- /ko -->
+          <!-- ko if not: userCreated -->
           <article>
             <dl class="key-value-pair">
-              <dt class="key-value-pair__key">Email</dt>
+              <dt class="key-value-pair__key">Username</dt>
               <dd class="key-value-pair__value">
-                <input data-bind="textInput: email" type="email" />
+                <input data-bind="textInput: username" type="text" />
+              </dd>
+            </dl>
+            <dl class="key-value-pair">
+              <dt class="key-value-pair__key">Password</dt>
+              <dd class="key-value-pair__value">
+                <input data-bind="textInput: password" type="password" />
               </dd>
             </dl>
             <button data-bind="click: save" class="btn btn--primary"><span class="btn__text">save</span></button>
           </article>
+          <!-- /ko -->
         </div>
       </div>
     </div>

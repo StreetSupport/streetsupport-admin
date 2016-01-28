@@ -49,7 +49,7 @@ describe ('Verify New User', function () {
     })
 
     it('should post service provider name to api', function () {
-        var endpoint = endpoints.unverifiedUsers
+        var endpoint = endpoints.verifiedUsers
         var headers = {
           'content-type': 'application/json',
           'session-token': 'stored-session-token'
@@ -65,6 +65,10 @@ describe ('Verify New User', function () {
 
     it('should set message', function () {
       expect(model.message()).toEqual('User verified. You can now log in.')
+    })
+
+    it('should set userCreated to true', function () {
+      expect(model.userCreated()).toBeTruthy()
     })
   })
 

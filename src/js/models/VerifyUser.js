@@ -10,9 +10,10 @@ function VerifyUser () {
 
   self.username = ko.observable()
   self.password = ko.observable()
+  self.userCreated = ko.observable(false)
 
   self.save = function () {
-    var endpoint = self.endpointBuilder.unverifiedUsers().build()
+    var endpoint = self.endpointBuilder.verifiedUsers().build()
     var payload = {
       'UserName': self.username(),
       'Password': self.password(),
@@ -23,6 +24,7 @@ function VerifyUser () {
       .then(function (result) {
         self.message('User verified. You can now log in.')
         self.clearErrors()
+        self.userCreated(true)
       }, function (error) {
         self.setErrors(error)
       })
