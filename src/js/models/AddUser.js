@@ -17,7 +17,7 @@ function AddUser () {
   }, self)
 
   self.save = function () {
-    var endpoint = self.endpoints.verifiedUsers().build()
+    var endpoint = self.endpoints.unverifiedUsers().build()
     var headers = {
       'content-type': 'application/json',
       'session-token': cookies.get('session-token')
