@@ -29,6 +29,7 @@ function AddUser () {
       .post(endpoint, headers, JSON.stringify(payload))
       .then(function (result) {
         self.message('User created.')
+        self.errors([])
       }, function (error) {
         self.errors(JSON.parse(error.response).messages)
       })

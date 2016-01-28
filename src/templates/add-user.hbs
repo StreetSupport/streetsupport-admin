@@ -11,6 +11,7 @@ pageName: addUser
       <div class="container block__inner">
         <div class="block__content form">
           <h1>Add Service Provider User</h1>
+          <p data-bind="text: message"></p>
           <!-- ko if: hasErrors -->
           <h2>There were errors in your submission:</h2>
           <ul data-bind="foreach: errors">
