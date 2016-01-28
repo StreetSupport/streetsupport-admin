@@ -120,7 +120,7 @@ function Service (data) {
       model
     ).then(function (result) {
       self.isEditing(false)
-      self.listeners().forEach(l => {
+      _.forEach(self.listeners(), function(l) {
         l.serviceSaved(self)
       })
     }, function (error) {

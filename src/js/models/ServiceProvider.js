@@ -20,19 +20,19 @@ function ServiceProvider (data) {
   self.website = ko.observable(data.website)
   self.facebook = ko.observable(data.facebook)
   self.twitter = ko.observable(data.twitter)
-  data.addresses.forEach(a => {
+  _.forEach(data.addresses, function (a) {
     a.serviceProviderId = data.key
   })
   self.addresses = ko.observableArray(_.map(data.addresses, function (a) { return new Address(a) }))
-  self.addresses().forEach(a => {
-    a.addListener(this)
+  _.forEach(self.addresses(), function(a) {
+    a.addListener(self)
   })
 
-  data.providedServices.forEach(s => {
+  _.forEach(data.providedServices, function(s) {
     s.serviceProviderId = data.key
   })
   self.newServices = ko.observable(_.map(data.providedServices, function (s) { return new Service(s) }))
-  self.newServices().forEach(s => {
+  _.forEach(self.newServices(), function(s) {
     s.addListener(self)
   })
 
