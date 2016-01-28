@@ -30,9 +30,7 @@ function AddServiceProvider () {
       .then(function (result) {
         browser.redirect(adminUrls.dashboard)
       }, function (error) {
-        console.log(error)
         self.errors(JSON.parse(error.response).messages)
-        console.log(self.hasErrors())
       })
   }
 }

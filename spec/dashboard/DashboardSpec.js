@@ -76,4 +76,8 @@ describe ('Dashboard', function () {
   it ('should set service provider url', function () {
     expect(dashboard.serviceProviders()[0].url).toEqual(adminurls.serviceProviders + '?key=albert-kennedy-trust')
   })
+
+  it ('should set create new user url', function () {
+    expect(dashboard.serviceProviders()[0].newUserUrl).toEqual(adminurls.userAdd + '?key=albert-kennedy-trust')
+  })
 })
