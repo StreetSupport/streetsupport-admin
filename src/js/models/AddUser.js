@@ -25,7 +25,7 @@ function AddUser () {
     }
     var payload = {
       'Email': self.email(),
-      'ProviderId': getUrlParameter.parameter('id')
+      'ProviderId': getUrlParameter.parameter('key')
     }
     ajax
       .post(endpoint, headers, JSON.stringify(payload))

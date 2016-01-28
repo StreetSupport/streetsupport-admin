@@ -36,7 +36,7 @@ describe ('Add User', function () {
 
       stubbedApi = sinon.stub(ajax, 'post').returns(fakeResolved ())
       stubbedCookies = sinon.stub(cookies, 'get').returns('stored-session-token')
-      stubbedUrlParameter = sinon.stub(getUrlParameter, 'parameter').withArgs('id').returns('coffee4craig')
+      stubbedUrlParameter = sinon.stub(getUrlParameter, 'parameter').withArgs('key').returns('coffee4craig')
 
       model.email('email')
       model.save()
@@ -87,7 +87,7 @@ describe ('Add User', function () {
 
       stubbedApi = sinon.stub(ajax, 'post').returns(fakeResolved ())
       stubbedCookies = sinon.stub(cookies, 'get').returns('stored-session-token')
-      stubbedUrlParameter = sinon.stub(getUrlParameter, 'parameter').withArgs('id').returns('coffee4craig')
+      stubbedUrlParameter = sinon.stub(getUrlParameter, 'parameter').withArgs('key').returns('coffee4craig')
 
       model.email('email')
       model.save()
