@@ -1,5 +1,4 @@
 var ajax = require('basic-ajax')
-var Endpoints = require('../endpoint-builder')
 var adminUrls = require('../admin-urls')
 var cookies = require('../cookies')
 var browser = require('../browser')
@@ -65,11 +64,11 @@ function ServiceProviderDetails () {
   self.isEditingGeneralDetails = ko.observable(false)
   self.isEditingContactDetails = ko.observable(false)
   self.message = ko.observable('')
-  self.endpoints = new Endpoints()
 
   self.init = function () {
     var providerId = getUrlParameter.parameter('key')
-    ajax.get(self.endpoints.serviceProviders(providerId).build(),
+
+    ajax.get(self.endpointBuilder.serviceProviders(providerId).build(),
       self.headers(cookies.get('session-token')),
       {})
       .then(function (result) {
