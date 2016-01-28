@@ -4,7 +4,6 @@ var getUrlParameter = require('../get-url-parameter')
 var ajax = require('basic-ajax')
 var BaseViewModel = require('./BaseViewModel')
 
-
 function VerifyUser () {
   var self = this
 

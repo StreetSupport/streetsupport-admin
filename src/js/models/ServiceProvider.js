@@ -8,6 +8,7 @@ var Address = require('./Address')
 var Service = require('./Service')
 var ko = require('knockout')
 var _ = require('lodash')
+var BaseViewModel = require('./BaseViewModel')
 
 function ServiceProvider (data) {
   var self = this
@@ -69,10 +70,7 @@ function ServiceProviderDetails () {
   self.init = function () {
     var providerId = getUrlParameter.parameter('key')
     ajax.get(self.endpoints.serviceProviders(providerId).build(),
-      {
-        'content-type': 'application/json',
-        'session-token': cookies.get('session-token')
-      },
+      self.headers(cookies.get('session-token')),
       {})
       .then(function (result) {
         self.serviceProvider(new ServiceProvider(result.json))
@@ -94,11 +92,8 @@ function ServiceProviderDetails () {
 
   self.saveGeneralDetails = function () {
     if (self.isEditingGeneralDetails()) {
-      ajax.put(self.endpoints.serviceProviders(getUrlParameter.parameter('key')).generalInformation().build(),
-        {
-          'content-type': 'application/json',
-          'session-token': cookies.get('session-token')
-        },
+      ajax.put(self.endpointBuilder.serviceProviders(getUrlParameter.parameter('key')).generalInformation().build(),
+        self.headers(cookies.get('session-token')),
         JSON.stringify({
           'Description': self.serviceProvider().description()
         })
@@ -122,11 +117,8 @@ function ServiceProviderDetails () {
 
   self.saveContactDetails = function () {
     if (self.isEditingContactDetails()) {
-      ajax.put(self.endpoints.serviceProviders(getUrlParameter.parameter('key')).contactDetails().build(),
-        {
-          'content-type': 'application/json',
-          'session-token': cookies.get('session-token')
-        },
+      ajax.put(self.endpointBuilder.serviceProviders(getUrlParameter.parameter('key')).contactDetails().build(),
+        self.headers(cookies.get('session-token')),
         JSON.stringify({
           'Telephone': self.serviceProvider().telephone(),
           'Email': self.serviceProvider().email(),
@@ -155,5 +147,7 @@ function ServiceProviderDetails () {
 
   self.init()
 }
+
+ServiceProviderDetails.prototype = new BaseViewModel()
 
 module.exports = ServiceProviderDetails
