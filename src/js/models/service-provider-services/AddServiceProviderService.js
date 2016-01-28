@@ -1,4 +1,5 @@
 var ko = require('knockout')
+var _ = require('lodash')
 var Address = require('../Address')
 var OpeningTime = require('../OpeningTime')
 var Endpoints = require('../../endpoint-builder')
@@ -31,7 +32,9 @@ function AddServiceProviderService () {
   self.address = ko.observable(new Address({}))
 
   self.setAvailableSubCategories = function () {
-    self.subCategories(self.category().subCategories.map(sc => new SubCat(sc.key, sc.name)))
+    self.subCategories(_.map(self.category().subCategories, function (sc) {
+      return new SubCat(sc.key, sc.name)
+    }))
   }
 
   self.prefillAddress = function () {
@@ -44,11 +47,11 @@ function AddServiceProviderService () {
       city: self.preselectedAddress().city(),
       postcode: self.preselectedAddress().postcode()
     })
-    address.openingTimes(self.preselectedAddress().openingTimes().map(ot => new OpeningTime({
+    address.openingTimes(_.map(self.preselectedAddress().openingTimes(), function (ot) { return new OpeningTime({
       day: ot.day(),
       startTime: ot.startTime(),
       endTime: ot.endTime()
-    })))
+    }) }))
     self.address(address)
   }
 
@@ -60,16 +63,16 @@ function AddServiceProviderService () {
     }
 
     var tags = []
-    if (self.targetAudience().length > 0) tags = self.targetAudience().split(',').map(t => t.trim())
+    if (self.targetAudience().length > 0) tags = _.map(self.targetAudience().split(','), function (t) { return t.trim() })
 
     var payload = JSON.stringify({
       'Info': self.info(),
       'Tags': tags,
       'Category': self.category().key,
-      'SubCategories': self.subCategories()
+      'SubCategories': _.chain(self.subCategories())
         .filter(sc => sc.isSelected() === true)
         .map(sc => sc.key),
-      'OpeningTimes': self.address().openingTimes().map(openingTime => {
+      'OpeningTimes': _.map(self.address().openingTimes(), function (openingTime) {
         return {
           'StartTime': openingTime.startTime(),
           'EndTime': openingTime.endTime(),
@@ -100,7 +103,7 @@ function AddServiceProviderService () {
     var serviceProviderEndpoint = new Endpoints().serviceProviders(getUrlParameter.parameter('providerId')).build()
     ajax.get(serviceProviderEndpoint, headers, {})
     .then(function (result) {
-      self.addresses(result.json.addresses.map(a => new Address(a)))
+      self.addresses(_.map(result.json.addresses, function(a) {return new Address(a) }))
     }, function (error) {
 
     })

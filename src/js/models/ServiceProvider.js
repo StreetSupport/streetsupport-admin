@@ -7,6 +7,7 @@ var getUrlParameter = require('../get-url-parameter')
 var Address = require('./Address')
 var Service = require('./Service')
 var ko = require('knockout')
+var _ = require('lodash')
 
 function ServiceProvider (data) {
   var self = this
@@ -22,7 +23,7 @@ function ServiceProvider (data) {
   data.addresses.forEach(a => {
     a.serviceProviderId = data.key
   })
-  self.addresses = ko.observableArray(data.addresses.map(a => new Address(a)))
+  self.addresses = ko.observableArray(_.map(data.addresses, function (a) { return new Address(a) }))
   self.addresses().forEach(a => {
     a.addListener(this)
   })
@@ -30,7 +31,7 @@ function ServiceProvider (data) {
   data.providedServices.forEach(s => {
     s.serviceProviderId = data.key
   })
-  self.newServices = ko.observable(data.providedServices.map(s => new Service(s)))
+  self.newServices = ko.observable(_.map(data.providedServices, function (s) { return new Service(s) }))
   self.newServices().forEach(s => {
     s.addListener(self)
   })
