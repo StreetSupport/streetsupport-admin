@@ -88,55 +88,8 @@ describe ('Login', function () {
       expect(apiCalledWithExpectedArgs).toBeTruthy()
     })
 
-    it ('should redirect browser to dashboard', function () {
-      var browserRedirectedWithExpectedUrl = stubbedBrowser.withArgs(adminurls.dashboard).calledOnce
-      expect(browserRedirectedWithExpectedUrl).toBeTruthy()
-    })
-  })
-
-
-  describe ('Is just Admin for Provider', function () {
-    var mockCookies,
-        stubbedApi,
-        stubbedBrowser
-
-    beforeEach (function () {
-      function fakeResolved (value) {
-        return {
-          then: function (success, error) {
-            success({
-              'status': 201,
-              'json': {
-                'sessionToken': 'returnedSessionToken',
-                'authClaims': [ 'AdminFor:coffee4craig' ]
-              }
-            })
-          }
-        }
-      }
-
-      stubbedApi = sinon.stub(ajax, 'postJson')
-      stubbedApi.returns(fakeResolved ())
-      stubbedBrowser = sinon.stub(browser, 'redirect')
-
-      mockCookies = sinon.mock(cookies)
-      mockCookies.expects('set').once().withArgs('session-token', 'returnedSessionToken')
-      mockCookies.expects('set').once().withArgs('auth-claims', [ 'AdminFor:coffee4craig' ])
-
-      login.username('username')
-      login.password('password')
-
-      login.submit ()
-    })
-
-    afterEach (function () {
-      ajax.postJson.restore()
-      browser.redirect.restore()
-      mockCookies.restore()
-    })
-
-    it ('should redirect browser to provider page', function () {
-      var browserRedirectedWithExpectedUrl = stubbedBrowser.withArgs(adminurls.serviceProviders + '?key=coffee4craig').calledOnce
+    it ('should redirect browser to index', function () {
+      var browserRedirectedWithExpectedUrl = stubbedBrowser.withArgs(adminurls.index).calledOnce
       expect(browserRedirectedWithExpectedUrl).toBeTruthy()
     })
   })

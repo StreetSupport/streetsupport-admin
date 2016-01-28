@@ -34,7 +34,7 @@ describe ('Index', function () {
     var stubbedBrowser
 
     beforeEach (function () {
-      sinon.stub(cookies, 'get').returns([ 'SuperAdmin' ])
+      sinon.stub(cookies, 'get').returns('SuperAdmin')
       stubbedBrowser = sinon.stub(browser, 'redirect')
       model = new Model()
     })
@@ -55,7 +55,7 @@ describe ('Index', function () {
     var stubbedBrowser
 
     beforeEach (function () {
-      sinon.stub(cookies, 'get').returns([ 'AdminFor:coffee4craig' ])
+      sinon.stub(cookies, 'get').returns('AdminFor:coffee4craig')
       stubbedBrowser = sinon.stub(browser, 'redirect')
       model = new Model()
     })

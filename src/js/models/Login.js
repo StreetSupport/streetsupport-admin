@@ -26,15 +26,7 @@ function LoginModel () {
       .then(function (result) {
         cookies.set('session-token', result.json.sessionToken)
         cookies.set('auth-claims', result.json.authClaims)
-
-        _.forEach(result.json.authClaims, function (claim) {
-          if (claim === 'SuperAdmin') {
-            browser.redirect(adminUrls.dashboard)
-          } else if (claim.startsWith('AdminFor:')) {
-            var provider = claim.substring('AdminFor:'.length)
-            browser.redirect(adminUrls.serviceProviders + '?key=' + provider)
-          }
-        })
+        browser.redirect(adminUrls.index)
       }, function (error) {
         self.setErrors(error)
         self.isSubmitting = false
