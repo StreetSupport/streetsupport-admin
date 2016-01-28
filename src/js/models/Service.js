@@ -98,7 +98,7 @@ function Service (data) {
     var model = JSON.stringify({
       'Info': self.info(),
       'Tags': tags,
-      'OpeningTimes': self.openingTimes().map(openingTime => {
+      'OpeningTimes': _.map(self.openingTimes(), function(openingTime) {
         return {
           'StartTime': openingTime.startTime(),
           'EndTime': openingTime.endTime(),
