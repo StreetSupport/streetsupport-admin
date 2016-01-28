@@ -5,7 +5,7 @@ var s = function (page) {
 }
 
 module.exports = {
-  login: '/',
+  login: s('login'),
   dashboard: s('dashboard'),
   serviceProviders: s('service-providers'),
   notFound: s('404'),

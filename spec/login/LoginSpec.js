@@ -23,8 +23,8 @@ describe ('Login', function () {
 
   describe ('Submit', function () {
     var mockCookies,
-        stubbedApi,
-        stubbedBrowser
+    stubbedApi,
+    stubbedBrowser
 
     beforeEach (function () {
       function fakeResolved (value) {
