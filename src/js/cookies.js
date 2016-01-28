@@ -1,11 +1,11 @@
-var cookies = require('cookie-cutter')
+var cookieCutter = require('cookie-cutter')
 
 var set = function (key, value) {
-  cookies.set(key, value)
+  cookieCutter.set(key, value)
 }
 
 var get = function (key) {
-  return cookies.get(key)
+  return cookieCutter.get(key)
 }
 
 module.exports = {

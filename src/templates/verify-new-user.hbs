@@ -1,0 +1,36 @@
+---
+title: Verify Account - Street Support Admin
+description: Street Support - Making it easier to help homeless people in Manchester
+jsName: verifyNewUser
+pageName: verifyNewUser
+---
+
+{{#extend "_default"}}
+  {{#content "main"}}
+    <div class="block block--cta">
+      <div class="container block__inner">
+        <div class="block__content form">
+          <h1>Verify Account</h1>
+          <p data-bind="text: message"></p>
+          <!-- ko if: hasErrors -->
+          <h2>There were errors in your submission:</h2>
+          <ul data-bind="foreach: errors">
+            <li data-bind="text: $data"></li>
+          </ul>
+          <!-- /ko -->
+          <article>
+            <dl class="key-value-pair">
+              <dt class="key-value-pair__key">Email</dt>
+              <dd class="key-value-pair__value">
+                <input data-bind="textInput: email" type="email" />
+              </dd>
+            </dl>
+            <button data-bind="click: save" class="btn btn--primary"><span class="btn__text">save</span></button>
+          </article>
+        </div>
+      </div>
+    </div>
+  {{/content}}
+
+  {{#content "gutter"}}{{/content}}
+{{/extend}}

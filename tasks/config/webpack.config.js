@@ -28,7 +28,8 @@ module.exports = {
     serviceProviderServices: pagesDir + 'service-provider-services',
     addServiceProviderService: pagesDir + 'add-service-provider-service',
     editServiceProviderService: pagesDir + 'edit-service-provider-service',
-    addUser: pagesDir + 'add-user'
+    addUser: pagesDir + 'add-user',
+    verifyNewUser: pagesDir + 'verify-new-user'
   },
   output: {
     path: path.join(__dirname, '/../../_dist/assets/js/'),
