@@ -21,13 +21,17 @@ function Service (data) {
   var tags = data.tags !== null ? data.tags.join(', ') : ''
 
   self.tags = ko.observable(tags)
-  self.openingTimes = ko.observableArray(data.openingTimes.map(ot => new OpeningTime(ot)))
+  self.openingTimes = ko.observableArray(_.map(data.openingTimes, function (ot) {
+    return new OpeningTime(ot)
+  }))
   self.address = new Address(data.address)
 
   self.savedName = ko.observable(data.name)
   self.savedInfo = ko.observable(data.info)
   self.savedTags = ko.observable(tags)
-  self.savedOpeningTimes = ko.observableArray(data.openingTimes.map(ot => new OpeningTime(ot)))
+  self.savedOpeningTimes = ko.observableArray(_.map(data.openingTimes, function (ot) {
+    return new OpeningTime(ot)
+  }))
   self.savedAddress = new Address(data.address)
 
   self.isEditing = ko.observable(false)
