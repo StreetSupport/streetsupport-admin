@@ -9,6 +9,18 @@ function EndpointBuilder () {
     return self
   }
 
+  self.verifiedUsers = function (userId) {
+    self.baseResource = endpoints.verifiedUsers
+    self.baseResourceId = userId
+    return self
+  }
+
+  self.unverifiedUsers = function (userId) {
+    self.baseResource = endpoints.unverifiedUsers
+    self.baseResourceId = userId
+    return self
+  }
+
   self.addresses = function (addressId) {
     self.childResource = 'addresses'
     self.childResourceId = addressId

@@ -4,8 +4,7 @@ var sinon = require('sinon'),
     endpoints = require('../../src/js/api-endpoints'),
     adminurls = require('../../src/js/admin-urls'),
     browser =   require('../../src/js/browser'),
-    cookies =   require('../../src/js/cookies'),
-    getUrlParameter = require('../../src/js/get-url-parameter')
+    cookies =   require('../../src/js/cookies')
 
 describe('Remove Opening Time', function () {
   var Model = require('../../src/js/models/Address'),

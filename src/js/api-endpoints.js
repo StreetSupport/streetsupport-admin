@@ -13,9 +13,13 @@ function p (addr) {
 var createSession = '/v1/sessions/create'
 var getServiceProviders = '/v1/all-service-providers'
 var getServiceCategories = '/v2/service-categories'
+var verifiedUsers = '/v1/verified-users'
+var unverifiedUsers = '/v1/verified-users'
 
 module.exports = {
   createSession: p(createSession),
   getServiceProviders: p(getServiceProviders),
-  getServiceCategories: p(getServiceCategories)
+  getServiceCategories: p(getServiceCategories),
+  verifiedUsers: p(verifiedUsers),
+  unverifiedUsers: p(unverifiedUsers)
 }
