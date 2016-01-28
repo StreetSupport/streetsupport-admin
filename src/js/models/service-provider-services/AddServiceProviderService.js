@@ -47,11 +47,13 @@ function AddServiceProviderService () {
       city: self.preselectedAddress().city(),
       postcode: self.preselectedAddress().postcode()
     })
-    address.openingTimes(_.map(self.preselectedAddress().openingTimes(), function (ot) { return new OpeningTime({
-      day: ot.day(),
-      startTime: ot.startTime(),
-      endTime: ot.endTime()
-    }) }))
+    address.openingTimes(_.map(self.preselectedAddress().openingTimes(), function (ot) {
+      return new OpeningTime({
+        day: ot.day(),
+        startTime: ot.startTime(),
+        endTime: ot.endTime()
+      })
+    }))
     self.address(address)
   }
 
@@ -103,7 +105,9 @@ function AddServiceProviderService () {
     var serviceProviderEndpoint = new Endpoints().serviceProviders(getUrlParameter.parameter('providerId')).build()
     ajax.get(serviceProviderEndpoint, headers, {})
     .then(function (result) {
-      self.addresses(_.map(result.json.addresses, function(a) {return new Address(a) }))
+      self.addresses(_.map(result.json.addresses, function (a) {
+        return new Address(a)
+      }))
     }, function (error) {
 
     })

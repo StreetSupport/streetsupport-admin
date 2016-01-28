@@ -17,7 +17,7 @@ pageName: addServiceProviderService
                 <li>
                   <label>Category</label>
                   <select data-bind="options: categories,
-                     optionsText: function(item) {
+                     optionsText: function (item) {
                       return item.name
                      },
                      value: category,
@@ -33,7 +33,7 @@ pageName: addServiceProviderService
                 <li>
                   <label>Choose Existing Address</label>
                   <select data-bind="options: addresses,
-                     optionsText: function(item) {
+                     optionsText: function (item) {
                       return item.street1() + ' - ' + item.postcode()
                      },
                      value: preselectedAddress,

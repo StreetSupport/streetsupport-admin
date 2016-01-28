@@ -4,13 +4,14 @@ var adminUrls = require('../admin-urls')
 var browser = require('../browser')
 var cookies = require('../cookies')
 var ko = require('knockout')
+var _ = require('lodash')
+var BaseViewModel = require('./BaseViewModel')
 
 function LoginModel () {
   var self = this
 
   self.username = ko.observable('')
   self.password = ko.observable('')
-  self.message = ko.observable('')
   self.isSubmitting = false
 
   self.submit = function () {
@@ -24,14 +25,24 @@ function LoginModel () {
       })
       .then(function (result) {
         cookies.set('session-token', result.json.sessionToken)
-        browser.redirect(adminUrls.dashboard)
+        cookies.set('auth-claims', result.json.authClaims)
+
+        _.forEach(result.json.authClaims, function (claim) {
+          if (claim === 'SuperAdmin') {
+            browser.redirect(adminUrls.dashboard)
+          } else if (claim.startsWith('AdminFor:')) {
+            var provider = claim.substring('AdminFor:'.length)
+            browser.redirect(adminUrls.serviceProviders + '?key=' + provider)
+          }
+        })
       }, function (error) {
-        var response = JSON.parse(error.response)
-        self.message(response.messages.join('<br />'))
+        self.setErrors(error)
         self.isSubmitting = false
       })
     }
   }
 }
+
+LoginModel.prototype = new BaseViewModel()
 
 module.exports = LoginModel

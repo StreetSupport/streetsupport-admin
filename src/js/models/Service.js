@@ -8,8 +8,6 @@ var OpeningTime = require('./OpeningTime')
 var Address = require('./Address')
 var adminUrls = require('../admin-urls')
 
-
-
 function Service (data) {
   var self = this
   self.serviceProviderId = data.serviceProviderId
@@ -98,7 +96,7 @@ function Service (data) {
     var model = JSON.stringify({
       'Info': self.info(),
       'Tags': tags,
-      'OpeningTimes': _.map(self.openingTimes(), function(openingTime) {
+      'OpeningTimes': _.map(self.openingTimes(), function (openingTime) {
         return {
           'StartTime': openingTime.startTime(),
           'EndTime': openingTime.endTime(),
@@ -120,7 +118,7 @@ function Service (data) {
       model
     ).then(function (result) {
       self.isEditing(false)
-      _.forEach(self.listeners(), function(l) {
+      _.forEach(self.listeners(), function (l) {
         l.serviceSaved(self)
       })
     }, function (error) {

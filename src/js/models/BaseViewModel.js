@@ -11,18 +11,18 @@ function BaseViewModel () {
 
   self.endpointBuilder = new Endpoints()
 
-  self.headers = function(sessionToken) {
+  self.headers = function (sessionToken) {
     return {
       'content-type': 'application/json',
       'session-token': sessionToken
     }
   }
 
-  self.clearErrors = function() {
+  self.clearErrors = function () {
     self.errors([])
   }
 
-  self.setErrors = function(error) {
+  self.setErrors = function (error) {
     self.errors(JSON.parse(error.response).messages)
   }
 }

@@ -42,7 +42,7 @@ describe ('Submit invalid credentials', function () {
   })
 
   it ('should set message to returned message', function () {
-    expect(login.message()).toEqual('returned error message')
+    expect(login.errors()[0]).toEqual('returned error message')
   })
 
   it ('should not redirect browser to dashboard', function () {

@@ -4,7 +4,7 @@ var Endpoints = require('../../endpoint-builder')
 var cookies = require('../../cookies')
 var Address = require('../Address')
 var getUrlParameter = require('../../get-url-parameter')
-var browser =   require('../../browser')
+var browser = require('../../browser')
 var adminUrls = require('../../admin-urls')
 
 function EditServiceProviderAddress () {

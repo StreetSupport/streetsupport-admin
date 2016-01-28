@@ -17,7 +17,7 @@ function VerifyUser () {
     var payload = {
       'UserName': self.username(),
       'Password': self.password(),
-      'VerificationToken': getUrlParameter.parameter('id'),
+      'VerificationToken': getUrlParameter.parameter('id')
     }
     ajax
       .post(endpoint, self.headers(cookies.get('session-token')), JSON.stringify(payload))
