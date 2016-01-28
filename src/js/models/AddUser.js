@@ -7,6 +7,7 @@ var BaseViewModel = require('./BaseViewModel')
 function AddUser () {
   var self = this
   self.email = ko.observable()
+  self.userCreated = ko.observable(false)
 
   self.save = function () {
     var endpoint = self.endpointBuilder.unverifiedUsers().build()
@@ -18,6 +19,7 @@ function AddUser () {
       .post(endpoint, self.headers(cookies.get('session-token')), JSON.stringify(payload))
       .then(function (result) {
         self.message('User created.')
+        self.userCreated(true)
         self.errors([])
       }, function (error) {
         self.setErrors(error)

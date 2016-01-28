@@ -11,6 +11,7 @@ pageName: addUser
       <div class="container block__inner">
         <div class="block__content form">
           <h1>Add Service Provider User</h1>
+          <a href="dashboard.html">Back to dashboard</a>
           <p data-bind="text: message"></p>
           <!-- ko if: hasErrors -->
           <h2>There were errors in your submission:</h2>
@@ -18,6 +19,7 @@ pageName: addUser
             <li data-bind="text: $data"></li>
           </ul>
           <!-- /ko -->
+          <!-- ko ifnot: userCreated -->
           <article>
             <dl class="key-value-pair">
               <dt class="key-value-pair__key">Email</dt>
@@ -27,6 +29,7 @@ pageName: addUser
             </dl>
             <button data-bind="click: save" class="btn btn--primary"><span class="btn__text">save</span></button>
           </article>
+          <!-- /ko -->
         </div>
       </div>
     </div>

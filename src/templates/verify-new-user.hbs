@@ -18,7 +18,10 @@ pageName: verifyNewUser
             <li data-bind="text: $data"></li>
           </ul>
           <!-- /ko -->
-          <!-- ko if not: userCreated -->
+          <!-- ko if: userCreated -->
+          <p><a href="login.html">Login now!</a>
+          <!-- /ko -->
+          <!-- ko ifnot: userCreated -->
           <article>
             <dl class="key-value-pair">
               <dt class="key-value-pair__key">Username</dt>
