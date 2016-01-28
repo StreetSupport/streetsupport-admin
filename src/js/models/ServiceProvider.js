@@ -43,14 +43,14 @@ function ServiceProvider (data) {
   self.amendServicesUrl = adminUrls.serviceProviderServices + '?providerId=' + data.key
 
   self.deleteAddress = function(deletedAddress) {
-    var remainingAddresses = self.addresses().filter(address => {
+    var remainingAddresses = _.filter(self.addresses(), function(address) {
       return address.key() !== deletedAddress.key()
     })
     self.addresses(remainingAddresses)
   }
 
   self.deleteService = function(deletedService) {
-    var remainingServices = self.newServices().filter(service => {
+    var remainingServices = _.filter(self.newServices(), function(service) {
       return service.id() !== deletedService.id()
     })
     self.newServices(remainingServices)
