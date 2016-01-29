@@ -12,6 +12,12 @@ pageName: addServiceProviderAddress
         <div class="block__content form">
             <article data-bind="with: address">
               <p data-bind="text: message"></p>
+              <!-- ko if: hasErrors -->
+              <h2>There were errors in your submission:</h2>
+              <ul data-bind="foreach: errors">
+                <li data-bind="text: $data"></li>
+              </ul>
+              <!-- /ko -->
               <h3 data-bind="text: street1"></h3>
               <button data-bind="click: save" class="btn btn--primary"><span class="btn__text">save</span></button>
               <dl class="key-value-pair">
