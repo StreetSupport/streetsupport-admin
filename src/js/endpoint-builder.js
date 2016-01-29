@@ -25,6 +25,11 @@ function EndpointBuilder () {
     return self
   }
 
+  self.sessions = function (sessionToken) {
+    self.updateBaseResource(endpoints.sessions, sessionToken)
+    return self
+  }
+
   self.addresses = function (addressId) {
     self.childResource = 'addresses'
     self.childResourceId = addressId

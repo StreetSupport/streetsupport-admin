@@ -5,17 +5,17 @@ var activeClass = 'is-active'
 var el = document.querySelectorAll('.js-nav-container, .js-nav-push, .js-nav-overlay, html, body')
 
 var init = function () {
-  // document.querySelector(openElement).addEventListener('click', function (e) {
-  //   open()
-  // })
+  document.querySelector(openElement).addEventListener('click', function (e) {
+    open()
+  })
 
-  // document.querySelector(closeElement).addEventListener('click', function (e) {
-  //   close()
-  // })
+  document.querySelector(closeElement).addEventListener('click', function (e) {
+    close()
+  })
 
-  // document.querySelector(overlayElement).addEventListener('click', function (e) {
-  //   close()
-  // })
+  document.querySelector(overlayElement).addEventListener('click', function (e) {
+    close()
+  })
 }
 
 var open = function () {
