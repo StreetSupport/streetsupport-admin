@@ -1,15 +1,14 @@
 var ajax = require('basic-ajax')
 var ko = require('knockout')
-var Endpoints = require('../../endpoint-builder')
 var cookies = require('../../cookies')
 var Address = require('../Address')
 var getUrlParameter = require('../../get-url-parameter')
 var browser = require('../../browser')
 var adminUrls = require('../../admin-urls')
+var BaseViewModel = require('../BaseViewModel')
 
 function EditServiceProviderAddress () {
   var self = this
-  self.endpoints = new Endpoints()
   self.address = ko.observable()
 
   self.saveAddress = function (address) {
@@ -17,16 +16,13 @@ function EditServiceProviderAddress () {
   }
 
   self.init = function () {
-    var endpoint = self.endpoints
+    var endpoint = self.endpointBuilder
       .serviceProviders(getUrlParameter.parameter('providerId'))
       .addresses(getUrlParameter.parameter('addressId'))
       .build()
 
     ajax.get(endpoint,
-      {
-        'content-type': 'application/json',
-        'session-token': cookies.get('session-token')
-      },
+      self.headers(cookies.get('session-token')),
       {})
       .then(function (result) {
         var address = new Address(result.json)
@@ -34,10 +30,13 @@ function EditServiceProviderAddress () {
         self.address(address)
       },
       function (error) {
+        self.handleError(error)
       })
   }
 
   self.init()
 }
+
+EditServiceProviderAddress.prototype = new BaseViewModel()
 
 module.exports = EditServiceProviderAddress

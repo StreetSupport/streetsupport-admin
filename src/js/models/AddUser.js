@@ -20,9 +20,9 @@ function AddUser () {
       .then(function (result) {
         self.message('User created.')
         self.userCreated(true)
-        self.errors([])
+        self.clearErrors()
       }, function (error) {
-        self.setErrors(error)
+        self.handleError(error)
       })
   }
 }

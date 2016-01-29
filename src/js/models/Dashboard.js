@@ -32,7 +32,7 @@ function DashboardModel () {
       self.serviceProviders(self.mapServiceProviders(result.json))
     },
     function (error) {
-      alert('oops, there was a problem! ' + JSON.parse(error))
+      self.handleError(error)
     })
   }
 
@@ -55,8 +55,9 @@ function DashboardModel () {
     )
     .then(function (result) {
       self.updateServiceProvider(serviceProvider, self.invertVerification)
-    }, function (error) {
-      alert('oops, there was a problem! ' + JSON.parse(error))
+    },
+    function (error) {
+      self.handleError(error)
     })
   }
 
@@ -73,8 +74,9 @@ function DashboardModel () {
     )
     .then(function (result) {
       self.updateServiceProvider(serviceProvider, self.invertPublished)
-    }, function (error) {
-      alert('oops, there was a problem! ' + JSON.parse(error))
+    },
+    function (error) {
+      self.handleError(error)
     })
   }
 

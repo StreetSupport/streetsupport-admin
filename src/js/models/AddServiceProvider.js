@@ -20,7 +20,7 @@ function AddServiceProvider () {
       .then(function (result) {
         browser.redirect(adminUrls.dashboard)
       }, function (error) {
-        self.errors(JSON.parse(error.response).messages)
+        self.handleError(error)
       })
   }
 }

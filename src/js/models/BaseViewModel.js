@@ -1,5 +1,7 @@
 var ko = require('knockout')
 var Endpoints = require('../endpoint-builder')
+var browser = require('../browser')
+var adminUrls = require('../admin-urls')
 
 function BaseViewModel () {
   var self = this
@@ -24,6 +26,15 @@ function BaseViewModel () {
 
   self.setErrors = function (error) {
     self.errors(JSON.parse(error.response).messages)
+  }
+
+  self.handleError = function (error) {
+    if (error.status === 401) {
+      browser.redirect(adminUrls.redirector)
+    } else {
+      self.message('')
+      self.setErrors(error)
+    }
   }
 }
 

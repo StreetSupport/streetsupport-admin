@@ -1,5 +1,6 @@
 var ko = require('knockout')
 var Service = require('../Service')
+var BaseViewModel = require('../BaseViewModel')
 var Endpoints = require('../../endpoint-builder')
 var getUrlParameter = require('../../get-url-parameter')
 var cookies = require('../../cookies')
@@ -13,23 +14,20 @@ function EditServiceProviderService () {
   self.service = ko.observable()
 
   self.init = function () {
-    var headers = {
-      'content-type': 'application/json',
-      'session-token': cookies.get('session-token')
-    }
-    var serviceProviderEndpoint = new Endpoints()
+    var serviceProviderEndpoint = new self.endpointBuilder
       .serviceProviders(getUrlParameter.parameter('providerId'))
       .services(getUrlParameter.parameter('serviceId'))
       .build()
 
-    ajax.get(serviceProviderEndpoint, headers, {})
+    ajax.get(serviceProviderEndpoint, self.headers(cookies.get('session-token')), {})
     .then(function (result) {
       var data = result.json
       data.serviceProviderId = getUrlParameter.parameter('providerId')
       self.service(new Service(data))
       self.service().addListener(self)
-    }, function (error) {
-
+    },
+    function (error) {
+      self.handleError(error)
     })
   }
 
@@ -39,5 +37,7 @@ function EditServiceProviderService () {
 
   self.init()
 }
+
+EditServiceProviderService.prototype = new BaseViewModel()
 
 module.exports = EditServiceProviderService

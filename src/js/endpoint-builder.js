@@ -30,6 +30,11 @@ function EndpointBuilder () {
     return self
   }
 
+  self.categories = function () {
+    self.updateBaseResource(endpoints.getServiceCategories)
+    return self
+  }
+
   self.addresses = function (addressId) {
     self.childResource = 'addresses'
     self.childResourceId = addressId
@@ -59,11 +64,6 @@ function EndpointBuilder () {
 
   self.contactDetails = function () {
     self.childResource = 'contact-details'
-    return self
-  }
-
-  self.categories = function () {
-    self.baseResource = endpoints.getServiceCategories
     return self
   }
 

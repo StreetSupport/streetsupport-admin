@@ -1,8 +1,8 @@
 var ko = require('knockout')
 var _ = require('lodash')
 var Address = require('../Address')
+var BaseViewModel = require('../BaseViewModel')
 var OpeningTime = require('../OpeningTime')
-var Endpoints = require('../../endpoint-builder')
 var getUrlParameter = require('../../get-url-parameter')
 var cookies = require('../../cookies')
 var ajax = require('basic-ajax')
@@ -58,11 +58,7 @@ function AddServiceProviderService () {
   }
 
   self.save = function () {
-    var endpoint = new Endpoints().serviceProviders(getUrlParameter.parameter('providerId')).services().build()
-    var headers = {
-      'content-type': 'application/json',
-      'session-token': cookies.get('session-token')
-    }
+    var endpoint = self.endpointBuilder.serviceProviders(getUrlParameter.parameter('providerId')).services().build()
 
     var tags = []
     if (self.targetAudience().length > 0) tags = _.map(self.targetAudience().split(','), function (t) { return t.trim() })
@@ -89,39 +85,40 @@ function AddServiceProviderService () {
       'Postcode': self.address().postcode()
     })
 
-    ajax.post(endpoint, headers, payload)
+    ajax.post(endpoint, self.headers(cookies.get('session-token')), payload)
     .then(function (result) {
       browser.redirect(adminUrls.serviceProviders + '?key=' + getUrlParameter.parameter('providerId'))
-    }, function (error) {
-
+    },
+    function (error) {
+      self.handleError(error)
     })
   }
 
   self.init = function () {
-    var headers = {
-      'content-type': 'application/json',
-      'session-token': cookies.get('session-token')
-    }
-    var serviceProviderEndpoint = new Endpoints().serviceProviders(getUrlParameter.parameter('providerId')).build()
-    ajax.get(serviceProviderEndpoint, headers, {})
+    var serviceProviderEndpoint = self.endpointBuilder.serviceProviders(getUrlParameter.parameter('providerId')).build()
+    ajax.get(serviceProviderEndpoint, self.headers(cookies.get('session-token')), {})
     .then(function (result) {
       self.addresses(_.map(result.json.addresses, function (a) {
         return new Address(a)
       }))
-    }, function (error) {
-
+    },
+    function (error) {
+      self.handleError(error)
     })
-    var categoriesEndpoint = new Endpoints().categories().build()
+    var categoriesEndpoint = self.endpointBuilder.categories().build()
 
-    ajax.get(categoriesEndpoint, headers, {})
+    ajax.get(categoriesEndpoint, self.headers(cookies.get('session-token')), {})
     .then(function (result) {
       self.categories(result.json)
-    }, function (error) {
-
+    },
+    function (error) {
+      self.handleError(error)
     })
   }
 
   self.init()
 }
+
+AddServiceProviderService.prototype = new BaseViewModel()
 
 module.exports = AddServiceProviderService

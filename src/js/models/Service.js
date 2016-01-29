@@ -6,6 +6,7 @@ var getUrlParameter = require('../get-url-parameter')
 var cookies = require('../cookies')
 var OpeningTime = require('./OpeningTime')
 var Address = require('./Address')
+var BaseViewModel = require('./BaseViewModel')
 var adminUrls = require('../admin-urls')
 
 function Service (data) {
@@ -85,11 +86,7 @@ function Service (data) {
   }
 
   self.save = function () {
-    var endpoint = self.endpoints.serviceProviders(self.serviceProviderId).services(self.id()).build()
-    var headers = {
-      'content-type': 'application/json',
-      'session-token': cookies.get('session-token')
-    }
+    var endpoint = self.endpointBuilder.serviceProviders(self.serviceProviderId).services(self.id()).build()
     var tags = []
     if (self.tags().length > 0) tags = _.map(self.tags().split(','), function (t) { return t.trim() })
 
@@ -114,7 +111,7 @@ function Service (data) {
     })
 
     ajax.put(endpoint,
-      headers,
+      self.headers(cookies.get('session-token')),
       model
     ).then(function (result) {
       self.isEditing(false)
@@ -122,24 +119,19 @@ function Service (data) {
         l.serviceSaved(self)
       })
     }, function (error) {
-      var response = JSON.parse(error.response)
-      self.message(response.messages.join('<br />'))
+      self.handleError(error)
     })
   }
 
   self.deleteService = function () {
-    var endpoint = self.endpoints.serviceProviders(getUrlParameter.parameter('key')).services(self.id()).build()
-    var headers = {
-      'content-type': 'application/json',
-      'session-token': cookies.get('session-token')
-    }
-    ajax.delete(endpoint, headers, JSON.stringify({}))
+    var endpoint = self.endpointBuilder.serviceProviders(getUrlParameter.parameter('key')).services(self.id()).build()
+    ajax.delete(endpoint, self.headers(cookies.get('session-token')), JSON.stringify({}))
     .then(function (result) {
       _.forEach(self.listeners(), function (listener) {
         listener.deleteService(self)
       })
     }, function (error) {
-
+      self.handleError(error)
     })
   }
 
@@ -147,5 +139,7 @@ function Service (data) {
     self.listeners().push(listener)
   }
 }
+
+Service.prototype = new BaseViewModel()
 
 module.exports = Service

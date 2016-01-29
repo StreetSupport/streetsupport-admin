@@ -1,10 +1,8 @@
 var ajax = require('basic-ajax')
-var endpoints = require('../api-endpoints')
 var adminUrls = require('../admin-urls')
 var browser = require('../browser')
 var cookies = require('../cookies')
 var ko = require('knockout')
-var _ = require('lodash')
 var BaseViewModel = require('./BaseViewModel')
 
 function LoginModel () {
