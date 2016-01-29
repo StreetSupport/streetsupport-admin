@@ -66,6 +66,7 @@ function ServiceProviderAddresses () {
         self.serviceProvider(new ServiceProvider(result.json))
       },
       function (error) {
+        self.handleError(error)
       })
   }
 

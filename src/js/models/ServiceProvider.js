@@ -128,8 +128,7 @@ function ServiceProviderDetails () {
         ).then(function (result) {
           self.isEditingContactDetails(false)
         }, function (error) {
-          var response = JSON.parse(error.response)
-          self.message(response.messages.join('<br />'))
+          self.handleError(error)
         })
     }
   }

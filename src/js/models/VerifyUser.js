@@ -25,7 +25,7 @@ function VerifyUser () {
         self.clearErrors()
         self.userCreated(true)
       }, function (error) {
-        self.setErrors(error)
+        self.handleError(error)
       })
   }
 }

@@ -45,6 +45,7 @@ function ServiceProviderServices () {
         self.serviceProvider(new ServiceProvider(result.json))
       },
       function (error) {
+        self.handleError(error)
       })
   }
 
