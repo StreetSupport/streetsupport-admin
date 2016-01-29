@@ -5,6 +5,7 @@ var s = function (page) {
 }
 
 module.exports = {
+  redirector: s('index'),
   login: s('login'),
   dashboard: s('dashboard'),
   serviceProviders: s('service-providers'),

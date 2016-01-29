@@ -89,7 +89,7 @@ describe ('Login', function () {
     })
 
     it ('should redirect browser to index', function () {
-      var browserRedirectedWithExpectedUrl = stubbedBrowser.withArgs(adminurls.index).calledOnce
+      var browserRedirectedWithExpectedUrl = stubbedBrowser.withArgs(adminurls.redirector).calledOnce
       expect(browserRedirectedWithExpectedUrl).toBeTruthy()
     })
   })

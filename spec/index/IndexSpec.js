@@ -65,7 +65,7 @@ describe ('Index', function () {
       browser.redirect.restore()
     })
 
-    it ('should redirect to dashboard', function () {
+    it ('should redirect to service provider page', function () {
       var browserRedirectedWithExpectedUrl = stubbedBrowser.withArgs(adminurls.serviceProviders + '?key=coffee4craig').calledOnce
       expect(browserRedirectedWithExpectedUrl).toBeTruthy()
     })

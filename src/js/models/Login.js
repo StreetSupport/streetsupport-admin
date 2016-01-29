@@ -26,7 +26,7 @@ function LoginModel () {
       .then(function (result) {
         cookies.set('session-token', result.json.sessionToken)
         cookies.set('auth-claims', result.json.authClaims)
-        browser.redirect(adminUrls.index)
+        browser.redirect(adminUrls.redirector)
       }, function (error) {
         self.setErrors(error)
         self.isSubmitting = false

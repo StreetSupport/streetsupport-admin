@@ -10,16 +10,21 @@ function Index() {
 
     console.log('AuthClaims: ' + AuthClaims)
 
+    var destination
+
     if (AuthClaims === null || AuthClaims === undefined || AuthClaims.length === 0) {
-      browser.redirect(adminUrls.login)
+      destination = adminUrls.login
     } else if (AuthClaims === 'SuperAdmin') {
-      browser.redirect(adminUrls.dashboard)
+      destination = adminUrls.dashboard
     } else {
       var adminForPrefix = 'AdminFor:'
       if(AuthClaims.startsWith(adminForPrefix)) {
-        browser.redirect(adminUrls.serviceProviders + '?key=' + AuthClaims.substring(adminForPrefix.length))
+        destination = adminUrls.serviceProviders + '?key=' + AuthClaims.substring(adminForPrefix.length)
       }
     }
+
+    console.log('destination: ' + destination)
+    browser.redirect(destination)
   }
 
   self.init()
