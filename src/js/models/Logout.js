@@ -17,6 +17,8 @@ function LogoutModel () {
     self.headers(sessionToken),
     {})
   .then(function (result) {
+    cookies.unset('session-token')
+    cookies.unset('auth-claims')
   }, function (error) {
     self.setErrors(error)
     self.isSubmitting = false

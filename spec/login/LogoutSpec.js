@@ -9,6 +9,7 @@ describe('Logout', function() {
   var Model = require('../../src/js/models/Logout')
   var model
   var stubbedCookies
+  var stubbedSetCookies
 
   beforeEach(function() {
     function fakeResolved(value) {
@@ -26,6 +27,7 @@ describe('Logout', function() {
     stubbedApi.returns(fakeResolved())
 
     stubbedCookies = sinon.stub(cookies, 'get').returns('stored-session-token')
+    stubbedUnsetCookies = sinon.stub(cookies, 'unset')
 
     model = new Model()
   })
@@ -33,6 +35,7 @@ describe('Logout', function() {
   afterEach(function() {
     ajax.delete.restore()
     cookies.get.restore()
+    cookies.unset.restore()
   })
 
   it('should send session token to api', function() {
@@ -47,5 +50,15 @@ describe('Logout', function() {
       {}).calledOnce
 
     expect(apiCalledWithExpectedArgs).toBeTruthy()
+  })
+
+  it('should unset session token', function () {
+      var cookieSetCalled = stubbedUnsetCookies.withArgs('session-token').calledOnce
+      expect(cookieSetCalled).toBeTruthy()
+  })
+
+  it('should unset auth claims', function () {
+      var cookieSetCalled = stubbedUnsetCookies.withArgs('auth-claims').calledOnce
+      expect(cookieSetCalled).toBeTruthy()
   })
 })

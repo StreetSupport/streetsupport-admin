@@ -94,7 +94,6 @@ describe ('VerifiedServiceProviders', function () {
         'IsPublished': false
       })
       var apiCalledWithExpectedArgs = stubbedPutApi.withArgs(endpoint, headers, payload).calledOnce
-
       expect(apiCalledWithExpectedArgs).toBeTruthy()
     })
 

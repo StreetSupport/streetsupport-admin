@@ -41,8 +41,12 @@ describe ('Submit invalid credentials', function () {
     browser.redirect.restore()
   })
 
-  it ('should set message to returned message', function () {
+  it ('should set error messages', function () {
     expect(login.errors()[0]).toEqual('returned error message')
+  })
+
+  it ('should clear message', function () {
+    expect(login.message()).toEqual('')
   })
 
   it ('should not redirect browser to dashboard', function () {
@@ -52,7 +56,7 @@ describe ('Submit invalid credentials', function () {
 
   it ('should be able to send credentials again', function () {
     login.submit ()
-    var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoints.createSession, {
+    var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoints.sessions + '/create', {
       'username': 'username',
       'password': 'password'
     }).calledTwice

@@ -20,6 +20,7 @@ module.exports = {
     generic: pagesDir + 'generic',
     index: pagesDir + 'index',
     login: pagesDir + 'login',
+    logout: pagesDir + 'logout',
     dashboard: pagesDir + 'dashboard',
     serviceProvider: pagesDir + 'service-provider',
     addServiceProvider: pagesDir + 'add-service-provider',

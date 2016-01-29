@@ -19,7 +19,7 @@ function LoginModel () {
     if (!self.isSubmitting) {
       self.isSubmitting = true
       self.message('Loading, please wait')
-      ajax.postJson(endpoints.createSession, {
+      ajax.postJson(self.endpointBuilder.sessions().build() + '/create', {
         'username': self.username(),
         'password': self.password()
       })
@@ -29,6 +29,7 @@ function LoginModel () {
         browser.redirect(adminUrls.redirector)
       }, function (error) {
         self.setErrors(error)
+        self.message('')
         self.isSubmitting = false
       })
     }

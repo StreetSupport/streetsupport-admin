@@ -8,7 +8,13 @@ var get = function (key) {
   return cookieCutter.get(key)
 }
 
+var unset = function (key) {
+  console.log('unsetting ' + key)
+  return cookieCutter.set(key, '', { expires: new Date(0) })
+}
+
 module.exports = {
   'set': set,
+  'unset': unset,
   'get': get
 }

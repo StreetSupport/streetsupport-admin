@@ -70,7 +70,7 @@ describe ('Login', function () {
     })
 
     it ('should send credentials to api', function () {
-      var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoints.createSession, {
+      var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoints.sessions + '/create', {
         'username': 'username',
         'password': 'password'
       }).calledOnce
@@ -80,7 +80,7 @@ describe ('Login', function () {
 
     it ('should not be able to send credentials after submitting', function () {
       login.submit ()
-      var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoints.createSession, {
+      var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoints.sessions + '/create', {
         'username': 'username',
         'password': 'password'
       }).calledOnce
