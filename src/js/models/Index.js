@@ -8,8 +8,6 @@ function Index() {
   self.init = function () {
     var AuthClaims = cookies.get('auth-claims')
 
-    console.log('AuthClaims: ' + AuthClaims)
-
     var destination
 
     if (AuthClaims === null || AuthClaims === undefined || AuthClaims.length === 0) {
@@ -23,7 +21,6 @@ function Index() {
       }
     }
 
-    console.log('destination: ' + destination)
     browser.redirect(destination)
   }
 
