@@ -77,9 +77,9 @@ function Service (data) {
 
   self.removeOpeningTime = function (openingTimeToRemove) {
     var remaining = _.filter(self.openingTimes(), function (o) {
-      return o.day() !== openingTimeToRemove.day()
-          || o.startTime() !== openingTimeToRemove.startTime()
-          || o.endTime() !== openingTimeToRemove.endTime()
+      return o.day() !== openingTimeToRemove.day() ||
+             o.startTime() !== openingTimeToRemove.startTime() ||
+             o.endTime() !== openingTimeToRemove.endTime()
     })
 
     self.openingTimes(remaining)

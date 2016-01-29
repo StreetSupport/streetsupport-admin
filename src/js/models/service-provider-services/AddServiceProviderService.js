@@ -62,36 +62,40 @@ function AddServiceProviderService () {
 
     var tags = []
     if (self.targetAudience().length > 0) tags = _.map(self.targetAudience().split(','), function (t) { return t.trim() })
+    if (self.category() === undefined) {
+      self.errors(['Please select a category.'])
+    } else {
+      var payload = JSON.stringify({
+        'Info': self.info(),
+        'Tags': tags,
+        'Category': self.category().key,
+        'SubCategories': _.chain(self.subCategories())
+          .filter(sc => sc.isSelected() === true)
+          .map(sc => sc.key),
+        'OpeningTimes': _.map(self.address().openingTimes(), function (openingTime) {
+          return {
+            'StartTime': openingTime.startTime(),
+            'EndTime': openingTime.endTime(),
+            'Day': openingTime.day()
+          }
+        }),
+        'Street1': self.address().street1(),
+        'Street2': self.address().street2(),
+        'Street3': self.address().street3(),
+        'Street4': self.address().street4(),
+        'City': self.address().city(),
+        'Postcode': self.address().postcode()
+      })
 
-    var payload = JSON.stringify({
-      'Info': self.info(),
-      'Tags': tags,
-      'Category': self.category().key,
-      'SubCategories': _.chain(self.subCategories())
-        .filter(sc => sc.isSelected() === true)
-        .map(sc => sc.key),
-      'OpeningTimes': _.map(self.address().openingTimes(), function (openingTime) {
-        return {
-          'StartTime': openingTime.startTime(),
-          'EndTime': openingTime.endTime(),
-          'Day': openingTime.day()
-        }
-      }),
-      'Street1': self.address().street1(),
-      'Street2': self.address().street2(),
-      'Street3': self.address().street3(),
-      'Street4': self.address().street4(),
-      'City': self.address().city(),
-      'Postcode': self.address().postcode()
-    })
+      ajax.post(endpoint, self.headers(cookies.get('session-token')), payload)
+      .then(function (result) {
+        browser.redirect(adminUrls.serviceProviders + '?key=' + getUrlParameter.parameter('providerId'))
+      },
+      function (error) {
+        self.handleError(error)
+      })
 
-    ajax.post(endpoint, self.headers(cookies.get('session-token')), payload)
-    .then(function (result) {
-      browser.redirect(adminUrls.serviceProviders + '?key=' + getUrlParameter.parameter('providerId'))
-    },
-    function (error) {
-      self.handleError(error)
-    })
+    }
   }
 
   self.init = function () {

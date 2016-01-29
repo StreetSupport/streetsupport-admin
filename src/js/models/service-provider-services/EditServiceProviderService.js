@@ -1,7 +1,6 @@
 var ko = require('knockout')
 var Service = require('../Service')
 var BaseViewModel = require('../BaseViewModel')
-var Endpoints = require('../../endpoint-builder')
 var getUrlParameter = require('../../get-url-parameter')
 var cookies = require('../../cookies')
 var ajax = require('basic-ajax')
@@ -14,7 +13,7 @@ function EditServiceProviderService () {
   self.service = ko.observable()
 
   self.init = function () {
-    var serviceProviderEndpoint = new self.endpointBuilder
+    var serviceProviderEndpoint = self.endpointBuilder
       .serviceProviders(getUrlParameter.parameter('providerId'))
       .services(getUrlParameter.parameter('serviceId'))
       .build()

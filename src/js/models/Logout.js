@@ -13,7 +13,7 @@ function LogoutModel () {
   .then(function (result) {
     cookies.unset('session-token')
     cookies.unset('auth-claims')
-  }, function (error) {
+  }, function () {
     self.isSubmitting = false
   })
 }

@@ -11,6 +11,13 @@ pageName: editServiceProviderService
       <div class="container block__inner">
         <div class="block__content form">
           <form class="form" data-bind="with: service">
+            <p data-bind="text: message"></p>
+            <!-- ko if: hasErrors -->
+            <h2>There were errors in your submission:</h2>
+            <ul data-bind="foreach: errors">
+              <li data-bind="text: $data"></li>
+            </ul>
+            <!-- /ko -->
             <fieldset>
               <legend>Service Details</legend>
               <ol>

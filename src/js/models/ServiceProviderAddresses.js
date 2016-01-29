@@ -1,5 +1,4 @@
 var ajax = require('basic-ajax')
-var Endpoints = require('../endpoint-builder')
 var cookies = require('../cookies')
 var Address = require('./Address')
 var getUrlParameter = require('../get-url-parameter')
