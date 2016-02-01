@@ -70,13 +70,8 @@ function AddServiceProviderService () {
         'Tags': tags,
         'Category': self.category().key,
         'SubCategories': _.chain(self.subCategories())
-          .filter(function(sc) {
-            return sc.isSelected() === true
-          })
-          .map(function(sc) {
-            return sc.key
-          })
-          .value(),
+          .filter(sc => sc.isSelected() === true)
+          .map(sc => sc.key),
         'OpeningTimes': _.map(self.address().openingTimes(), function (openingTime) {
           return {
             'StartTime': openingTime.startTime(),
