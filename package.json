@@ -16,6 +16,9 @@
     "node": ">= 5"
   },
   "devDependencies": {
+  },
+  "dependencies": {
+
     "autoprefixer": "^6.1.2",
     "babel-core": "^6.2.1",
     "babel-eslint": "^4.1.5",
@@ -60,9 +63,7 @@
     "stylelint": "^2.3.4",
     "susy": "^2.2.6",
     "webpack": "^1.12.6",
-    "yargs": "^3.30.0"
-  },
-  "dependencies": {
+    "yargs": "^3.30.0",
     "basic-ajax": "^1.2.8",
     "cookie-cutter": "^0.1.1",
     "fastclick": "^1.0.6",
