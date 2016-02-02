@@ -133,7 +133,7 @@ describe ('Index', function () {
           return {
             then: function (success, error) {
               error({
-                'status': 404
+                'status': 401
               })
             }
           }
