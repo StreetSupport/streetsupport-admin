@@ -11,22 +11,25 @@ function Index () {
 
     var adminForPrefix = 'AdminFor:'
 
+    var success = function (success) {
+      var authClaims = success.json.authClaims
+      if (authClaims[0] === 'SuperAdmin') {
+        browser.redirect(adminUrls.dashboard)
+      } else if (authClaims[0].startsWith(adminForPrefix)) {
+        var destination = adminUrls.serviceProviders + '?key=' + authClaims[0].substring(adminForPrefix.length)
+        browser.redirect(destination)
+      }
+    }
+
+    var error = function () {
+      browser.redirect(adminUrls.login)
+    }
+
     if (sessionToken === null || sessionToken === undefined) {
       browser.redirect(adminUrls.login)
     } else {
-      ajax.get(self.endpointBuilder.sessions().build, self.headers(sessionToken), {})
-        .then(function (success) {
-          var authClaims = success.json.authClaims
-          if (authClaims[0] === 'SuperAdmin') {
-            destination = adminUrls.dashboard
-            browser.redirect(destination)
-          } else if (authClaims[0].startsWith(adminForPrefix)) {
-            destination = adminUrls.serviceProviders + '?key=' + authClaims[0].substring(adminForPrefix.length)
-            browser.redirect(destination)
-          }
-        }, function (error) {
-          browser.redirect(adminUrls.login)
-        })
+      ajax.get(self.endpointBuilder.sessions().build(), self.headers(sessionToken), {})
+        .then(success, error)
     }
   }
 

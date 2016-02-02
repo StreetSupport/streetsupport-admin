@@ -70,10 +70,10 @@ function AddServiceProviderService () {
         'Tags': tags,
         'Category': self.category().key,
         'SubCategories': _.chain(self.subCategories())
-          .filter(function(sc) {
-            return  sc.isSelected() === true
+          .filter(function (sc) {
+            return sc.isSelected() === true
           })
-          .map(function(sc) {
+          .map(function (sc) {
             return sc.key
           }),
         'OpeningTimes': _.map(self.address().openingTimes(), function (openingTime) {
@@ -98,7 +98,6 @@ function AddServiceProviderService () {
       function (error) {
         self.handleError(error)
       })
-
     }
   }
 
