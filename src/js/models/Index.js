@@ -1,27 +1,38 @@
 var cookies = require('../cookies')
 var browser = require('../browser')
 var adminUrls = require('../admin-urls')
+var ajax = require('basic-ajax')
+var BaseViewModel = require('./BaseViewModel')
 
 function Index () {
   var self = this
   self.init = function () {
-    var authClaims = cookies.get('auth-claims')
+    var sessionToken = cookies.get('session-token')
 
     var adminForPrefix = 'AdminFor:'
-    var destination
 
-    if (authClaims === null || authClaims === undefined || authClaims.length === 0) {
-      destination = adminUrls.login
-    } else if (authClaims === 'SuperAdmin') {
-      destination = adminUrls.dashboard
-    } else if (authClaims.startsWith(adminForPrefix)) {
-      destination = adminUrls.serviceProviders + '?key=' + authClaims.substring(adminForPrefix.length)
+    if (sessionToken === null || sessionToken === undefined) {
+      browser.redirect(adminUrls.login)
+    } else {
+      ajax.get(self.endpointBuilder.sessions().build, self.headers(sessionToken), {})
+        .then(function (success) {
+          var authClaims = success.json.authClaims
+          if (authClaims[0] === 'SuperAdmin') {
+            destination = adminUrls.dashboard
+            browser.redirect(destination)
+          } else if (authClaims[0].startsWith(adminForPrefix)) {
+            destination = adminUrls.serviceProviders + '?key=' + authClaims[0].substring(adminForPrefix.length)
+            browser.redirect(destination)
+          }
+        }, function (error) {
+          browser.redirect(adminUrls.login)
+        })
     }
-
-    browser.redirect(destination)
   }
 
   self.init()
 }
+
+Index.prototype = new BaseViewModel()
 
 module.exports = Index
