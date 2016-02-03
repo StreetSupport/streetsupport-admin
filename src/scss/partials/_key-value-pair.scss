@@ -5,13 +5,13 @@
 
   &__key {
     @include mq($from: l) {
-      @include span(2 of $column-large);
+      @include span(4 of $column-large);
     }
     clear: left;
   }
   &__value {
     @include mq($from: l) {
-      @include span(10 of $column-large);
+      @include span(8 of $column-large);
     }
   }
 }

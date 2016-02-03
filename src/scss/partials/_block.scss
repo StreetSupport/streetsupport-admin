@@ -5,26 +5,11 @@
 
   &__inner {
     @include mq($from: m) {
-      @include span(10 of $column-large);
-
-      // Full width
-      .page-login &,
-      .page-dashboard &,
-      .page-serviceProvider &,
-      .page-serviceProviderAddresses &,
-      .page-serviceProviderServices & {
         width: 100%;
         margin-left: auto;
         margin-right: auto;
         float: none;
-      }
-
-      .page-dashboard &,
-      .page-serviceProvider &,
-      .page-serviceProviderAddresses &,
-      .page-serviceProviderServices & {
         text-align: left
-      }
     }
 
     @include mq($from: l) {
@@ -34,6 +19,10 @@
       .page-home & {
         @include push(2 of $column-large);
       }
+    }
+
+    &--header {
+      padding: 60px 0; background: $brand-a;
     }
   }
 
@@ -48,7 +37,7 @@
   }
 
   &__content {
-    p {
+      p {
       &:first-of-type {
         margin-top: 0;
       }
@@ -96,4 +85,6 @@
       color: inherit;
     }
   }
+
+
 }

@@ -7,8 +7,18 @@ pageName: addServiceProviderAddress
 
 {{#extend "_default"}}
   {{#content "main"}}
-    <div class="block block--cta">
-      <div class="container block__inner">
+    <div class="block block--highlight">
+      <div class="container">
+        <div class="block__inner">
+          <header>
+            <h1>Add Address</h1>
+          </header>   
+        </div>
+      </div>
+    </div>
+    <div class="block">
+      <div class="container">
+        <div class="block__inner">
         <div class="block__content form">
             <article data-bind="with: address">
               <p data-bind="text: message"></p>
@@ -18,8 +28,7 @@ pageName: addServiceProviderAddress
                 <li data-bind="text: $data"></li>
               </ul>
               <!-- /ko -->
-              <h3 data-bind="text: street1"></h3>
-              <button data-bind="click: save" class="btn btn--primary"><span class="btn__text">save</span></button>
+              <h3>Address Details</h3>
               <dl class="key-value-pair">
                 <dt class="key-value-pair__key">Street Line 1</dt>
                 <dd class="key-value-pair__value">
@@ -46,7 +55,7 @@ pageName: addServiceProviderAddress
                   <input data-bind="textInput: postcode" type="text" />
                 </dd>
               </dl>
-              <h4>Opening Times</h4>
+              <h3>Opening Times</h3>
               <button data-bind="click: newOpeningTime" class="btn btn--info"><span class="btn__text">new</span></button>
               <dl data-bind="foreach: openingTimes" class="key-value-pair">
                 <dt class="key-value-pair__key">
@@ -56,13 +65,15 @@ pageName: addServiceProviderAddress
                      optionsCaption: '-- please select --'"></select>
                 </dt>
                 <dd class="key-value-pair__value">
-                  <input data-bind="textInput: startTime" type="text" /> - <input data-bind="textInput: endTime" type="text" />
+                  <input data-bind="textInput: startTime" type="text" class="input--short" /> - <input data-bind="textInput: endTime" type="text" class="input--short" />
                 </dd>
                 <dd class="key-value-pair__value">
                   <button data-bind="click: $parent.removeOpeningTime" class="btn btn--warning"><span class="btn__text">remove</span></button>
                 </dd>
               </dl>
+              <button data-bind="click: save" class="btn btn--primary"><span class="btn__text">save</span></button>
             </article>
+        </div>
         </div>
       </div>
     </div>

@@ -1,25 +1,21 @@
 .form {
-  fieldset {
-    border: none;
-  }
-  legend {
-    text-align: left
-  }
-  ol {
-    list-style: none;
-  }
-  label {
-    width: 220px;
-    margin-right: 1em;
-    display: inline-block;
-    text-align: right;
-  }
-  input, textarea, select { color: black; padding: 10px; }
-
-  .page-serviceProvider & {
-    textarea {
-      width: 100%;
-      height: 10em;
+  .input,
+  input, textarea, select { 
+    color: black; padding: 10px; width: 240px; 
+    &--short {
+      width: 120px;
     }
   }
+
+  textarea {
+    width: 100%;
+    height: 10em;
+  }
+
+  .page-addServiceProvider &,
+  .page-login & {
+    width: 600px; margin: 0 auto;
+  }
+
+  h2, h3 { display: inline-block; margin-right: 1em; width: 300px; }
 }

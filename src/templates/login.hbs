@@ -7,11 +7,10 @@ pageName: login
 
 {{#extend "_default"}}
   {{#content "main"}}
-    <div class="block block--cta">
+    <div class="block">
       <div class="container block__inner">
+        <h1>Login</h1>
         <form class="form">
-          <fieldset>
-            <legend>Login</legend>
             <p data-bind="text: message"></p>
             <!-- ko if: hasErrors -->
             <h2>There were errors in your submission:</h2>
@@ -19,17 +18,14 @@ pageName: login
               <li data-bind="text: $data"></li>
             </ul>
             <!-- /ko -->
-            <ol>
-              <li>
-                <label for="username">Username</label>
-                <input data-bind="textInput: username" type="text" name="username" placeholder="Username" />
-              </li>
-              <li>
-                <label for="password">Password</label>
-                <input data-bind="textInput: password" type="password" name="password" placeholder="Password" />
-              </li>
-            </ol>
-          </fieldset>
+            <dl class="key-value-pair">
+              <dt class="key-value-pair__key">Username</dt>
+              <dd class="key-value-pair__value"><input data-bind="textInput: username" type="text" name="username" />
+              </dd>
+              <dt class="key-value-pair__key">Password</dt>
+              <dd class="key-value-pair__value"><input data-bind="textInput: password" type="password" name="password" />
+              </dd>
+            </dl>
           <button data-bind="click: submit" class="btn btn--primary">
             <span class="btn__text">Login</span>
           </button>

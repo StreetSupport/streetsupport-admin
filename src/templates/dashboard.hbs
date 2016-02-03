@@ -7,34 +7,38 @@ pageName: dashboard
 
 {{#extend "_default"}}
   {{#content "main"}}
-    <div class="block block--cta">
+    <div class="block block--highlight">
+      <div class="container">
+        <div class="block__inner">
+          <header>
+            <h1>Dashboard</h1>
+            <a href="add-service-provider.html" class="btn btn--info">
+              <span class="btn__text">Add Service Provider</span>
+            </a>
+          </header>   
+        </div>
+      </div>
+    </div>
+    <div class="block">
       <div class="container block__inner">
-      <div class="block__content">
-        <h1>Dashboard</h1>
-        <a href="add-service-provider.html">Add Service Provider</a>
-        <ul data-bind="foreach: serviceProviders" class="stacked-list">
-          <li class="stacked-list__item">
-            <dl>
-              <dt class="stacked-list__element--header"><a data-bind="attr: { 'href': url, 'title': name }, text: name"></a></dt>
-              <dd data-bind="text: verifiedLabel" class="stacked-list__element"></dd>
-              <dd data-bind="text: publishedLabel" class="stacked-list__element"></dd>
-              <dd class="stacked-list__element--button">
-                <button data-bind="click: $parent.toggleVerified" class="btn btn--info">
-                  <span data-bind="text: toggleVerificationButtonLabel" class="btn__text"></span>
-                </button>
-              </dd>
-              <dd class="stacked-list__element--button">
+      <section class="block__content" data-bind="foreach: serviceProviders" class="stacked-list">
+          <article class="stacked-list__item">
+              <header class="stacked-list__element--header">
+                <h2><a data-bind="attr: { 'href': url, 'title': name }, text: name"></a></h2>
+                <span data-bind="text: verifiedLabel"></span>
+                <span data-bind="text: publishedLabel"></span>
+              </header>
+              <button data-bind="click: $parent.toggleVerified" class="btn btn--info">
+                <span data-bind="text: toggleVerificationButtonLabel" class="btn__text"></span>
+              </button>
               <button data-bind="click: $parent.togglePublished" class="btn btn--info">
                 <span data-bind="text: togglePublishButtonLabel" class="btn__text"></span>
               </button>
-              </dd>
-              <dd class="stacked-list__element--button">
-              <a data-bind="attr: { href: newUserUrl }">New User</a>
-              </dd>
-            </dl>
-          </li>
-        </ul>
-      </div>
+              <a data-bind="attr: { href: newUserUrl }" class="btn btn--primary">
+                <span class="btn__text">New User</span>
+              </a>
+          </article>
+      </section>
       </div>
     </div>
   {{/content}}

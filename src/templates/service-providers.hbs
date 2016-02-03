@@ -7,13 +7,30 @@ pageName: serviceProvider
 
 {{#extend "_default"}}
   {{#content "main"}}
-    <div class="block block--cta">
-      <div class="container block__inner">
-        <div class="block__content form">
-          <a href="dashboard.html">Back to dashboard</a>
-          <p data-bind="text: message"></p>
-          <div data-bind="with: serviceProvider">
+    <div class="block block--highlight">
+      <div class="container">
+        <div data-bind="with: serviceProvider" class="block__inner">
+          <header>
             <h1 data-bind="text: name"></h1>
+            <a href="dashboard.html" class="btn btn--info">
+              <span class="btn__text">Back to dashboard</span>
+              </a>
+          </header>   
+        </div>
+      </div>
+    </div>
+    <div class="block">
+      <div class="container">
+      <div class="block__inner">
+        <div class="block__content form">
+          <p data-bind="text: message"></p>
+          <!-- ko if: hasErrors -->
+          <h2>There were errors in your submission:</h2>
+          <ul data-bind="foreach: errors">
+            <li data-bind="text: $data"></li>
+          </ul>
+          <!-- /ko -->
+          <div data-bind="with: serviceProvider">
             <section>
               <h2>General Details</h2>
               <!-- ko ifnot: $parent.isEditingGeneralDetails -->
@@ -38,11 +55,17 @@ pageName: serviceProvider
             <section>
               <h2>Contact Information</h2>
               <!-- ko ifnot: $parent.isEditingContactDetails -->
-              <button data-bind="click: $parent.editContactDetails" class="btn btn--info"><span class="btn__text">edit</span></button>
+              <button data-bind="click: $parent.editContactDetails" class="btn btn--info">
+                <span class="btn__text">edit</span>
+              </button>
               <!-- /ko -->
               <!-- ko if: $parent.isEditingContactDetails -->
-              <button data-bind="click: $parent.cancelEditContactDetails" class="btn btn--indifferent"><span class="btn__text">cancel</span></button>
-              <button data-bind="click: $parent.saveContactDetails" class="btn btn--primary"><span class="btn__text">save</span></button>
+              <button data-bind="click: $parent.cancelEditContactDetails" class="btn btn--indifferent">
+                <span class="btn__text">cancel</span>
+              </button>
+              <button data-bind="click: $parent.saveContactDetails" class="btn btn--primary">
+                <span class="btn__text">save</span>
+              </button>
               <!-- /ko -->
               <dl class="key-value-pair">
                 <dt class="key-value-pair__key">Telephone</dt>
@@ -93,27 +116,46 @@ pageName: serviceProvider
               </dl>
             </section>
             <section>
-              <h2>Addresses</h2>
-              <a data-bind="attr: { 'href': addAddressUrl }" title="add address">Add Address</a>
+              <header>
+                <h2>Addresses</h2>
+                <a data-bind="attr: { 'href': addAddressUrl }" title="add address" class="btn btn--primary">
+                  <span class="btn__text">Add Address</span>
+                </a>
+              </header>
               <div data-bind="foreach: addresses">
-                <article>
-                  <address data-bind="text: formatted"></address>
-                  <a data-bind="attr: { 'href': editAddressUrl }" title="edit address">Edit Address</a>
-                  <a data-bind="click: deleteAddress" title="edit address">Delete Address</a>
+                <article class="key-value-pair">
+                  <address data-bind="text: formatted" class="key-value-pair__key"></address>
+                  <div class="key-value-pair__value">
+                    <a data-bind="attr: { 'href': editAddressUrl }" title="edit address" class="btn btn--info">
+                      <span class="btn__text">Edit Address</span>
+                    </a>
+                    <a data-bind="click: deleteAddress" title="edit address" class="btn btn--warning">
+                      <span class="btn__text">Delete Address</span>
+                    </a>
+                  </div>
                 </article>
               </div>
             </section>
             <section>
               <h2>Services</h2>
-              <a data-bind="attr: { 'href': addServiceUrl }" title="edit services">Add Service</a>
+              <a data-bind="attr: { 'href': addServiceUrl }" title="edit services" class="btn btn--primary">
+                <span class="btn__text">Add Service</span>
+              </a>
               <div data-bind="foreach: newServices">
-                <h3 data-bind="text: name"></h3>
-                <a data-bind="attr: { 'href': editServiceUrl }" title="edit address">Edit Service</a>
-                  <a data-bind="click: deleteService" title="edit address">Delete Service</a>
+                <article>
+                  <h3 data-bind="text: name"></h3>
+                  <a data-bind="attr: { 'href': editServiceUrl }" title="edit address" class="btn btn--info">
+                    <span class="btn__text">Edit Service</span>
+                  </a>
+                  <a data-bind="click: deleteService" title="edit address" class="btn btn--warning">
+                    <span class="btn__text">Delete Service</span>
+                  </a>
+                </article>
               </div>
             </section>
           </div>
         </div>
+      </div>
       </div>
     </div>
   {{/content}}
