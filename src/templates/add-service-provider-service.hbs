@@ -6,117 +6,80 @@ pageName: addServiceProviderService
 ---
 
 {{#extend "_default"}}
-  {{#content "main"}}
-    <div class="block">
-      <div class="container block__inner">
-        <div class="block__content form">
-          <form class="form">
-            <p data-bind="text: message"></p>
-            <!-- ko if: hasErrors -->
-            <h2>There were errors in your submission:</h2>
-            <ul data-bind="foreach: errors">
-              <li data-bind="text: $data"></li>
+{{#content "main"}}
+<div class="block block--highlight">
+  <div class="container block__inner">
+    <header>
+      <h1>Add Service</h1>
+    </header>
+  </div>
+</div>
+<div class="block">
+  <div class="container block__inner">
+    <div class="block__content form">
+      {{> form-feedback}}
+      <article>
+        <section>
+          <h3>Category</h3>
+          <dl class="key-value-pair">
+            <dt class="key-value-pair__key">Category</dt>
+            <dd class="key-value-pair__value">
+              <select data-bind="options: categories,
+              optionsText: function (item) {
+              return item.name
+            },
+            value: category,
+            optionsCaption: '-- please select --',
+            event: { change: setAvailableSubCategories }" class="form__input"></select>
+          </dd>
+          <dt class="key-value-pair__key">Sub Categories</dt>
+          <dd class="key-value-pair__value">
+            <ul data-bind="foreach: subCategories">
+              <li>
+                <label data-bind="text: name"></label>
+                <input type="checkbox" data-bind="checked: isSelected" />
+              </li>
             </ul>
-            <!-- /ko -->
-            <fieldset>
-              <legend>Add Service</legend>
-              <ol>
-                <li>
-                  <label>Category</label>
-                  <select data-bind="options: categories,
-                     optionsText: function (item) {
-                      return item.name
-                     },
-                     value: category,
-                     optionsCaption: '-- please select --',
-                     event: { change: setAvailableSubCategories }"></select>
-                </li>
-                <li data-bind="foreach: subCategories">
-                  <article>
-                    <label data-bind="text: name"></label>
-                    <input type="checkbox" data-bind="checked: isSelected" />
-                  </article>
-                </li>
-                <li>
-                  <label>Choose Existing Address</label>
-                  <select data-bind="options: addresses,
-                     optionsText: function (item) {
-                      return item.street1() + ' - ' + item.postcode()
-                     },
-                     value: preselectedAddress,
-                     optionsCaption: '-- please select --',
-                     event: { change: prefillAddress }"></select>
-                </li>
-              </ol>
-            </fieldset>
-            <fieldset>
-              <legend>Service Details</legend>
-              <ol>
-                <li>
-                  <label>Description</label>
-                  <input data-bind="textInput: info" type="text" />
-                </li>
-                <li>
-                  <label>Target Audience</label>
-                  <input data-bind="textInput: targetAudience" type="text" />
-                </li>
-              </ol>
-            </fieldset>
-            <div data-bind="with: address" />
-            <fieldset>
-              <legend>Address</legend>
-              <ol>
-                <li>
-                  <label>Street 1</label>
-                  <input data-bind="textInput: street1" type="text" />
-                </li>
-                <li>
-                  <label>Street 2</label>
-                  <input data-bind="textInput: street2" type="text" />
-                </li>
-                <li>
-                  <label>Street 3</label>
-                  <input data-bind="textInput: street3" type="text" />
-                </li>
-                <li>
-                  <label>Street 4</label>
-                  <input data-bind="textInput: street4" type="text" />
-                </li>
-                <li>
-                  <label>City</label>
-                  <input data-bind="textInput: city" type="text" />
-                </li>
-                <li>
-                  <label>Postcode</label>
-                  <input data-bind="textInput: postcode" type="text" />
-                </li>
-              </ol>
-            </fieldset>
-            <fieldset>
-              <legend>Opening Times</legend>
-                    <button data-bind="click: newOpeningTime" class="btn btn--info"><span class="btn__text">add opening time</span></button>
-                <dl data-bind="foreach: openingTimes" class="key-value-pair">
-                  <dt class="key-value-pair__key">
-                    <select data-bind="options: days,
-                       optionsText: $data,
-                       value: day,
-                       optionsCaption: '-- please select --'"></select>
-                  </dt>
-                  <dd class="key-value-pair__value">
-                    <input data-bind="textInput: startTime" type="text" /> - <input data-bind="textInput: endTime" type="text" />
-                  </dd>
-                  <dd class="key-value-pair__value">
-                    <button data-bind="click: $parent.removeOpeningTime" class="btn btn--warning"><span class="btn__text">remove</span></button>
-                  </dd>
-                </dl>
-            </fieldset>
-            </div>
-              <button data-bind="click: save" class="btn btn--primary"><span class="btn__text">save</span></button>
-            </form>
-        </div>
-      </div>
+          </dd>
+        </section>
+        <section>
+          <h3>Service Details</h3>
+          <dl>
+            <dt class="key-value-pair__key">Description</dt>
+            <dd class="key-value-pair__value">
+              <input data-bind="textInput: info" type="text" class="form__input" />
+            </dd>
+            <dt class="key-value-pair__key">Target Audience - eg: "lgbt, under 25s"</dt>
+            <dd class="key-value-pair__value">
+              <input data-bind="textInput: targetAudience" type="text" class="form__input" />
+            </dd>
+          </dl>
+        </section>
+        <section>
+        <h3>Use Existing Address</h3>
+          <dl>
+            <dt class="key-value-pair__key">Select</dt>
+            <dd class="key-value-pair__value">
+              <select data-bind="options: addresses,
+              optionsText: function (item) {
+              return item.street1() + ' - ' + item.postcode()
+            },
+            value: preselectedAddress,
+            optionsCaption: '-- please select --',
+            event: { change: prefillAddress }" class="form__input"></select>
+          </dd>
+        </dl>
+      </section>
+      <div data-bind="with: address" />
+      {{> address}}
+      {{> opening-times}}
     </div>
-  {{/content}}
+    <button data-bind="click: save" class="btn btn--primary"><span class="btn__text">save</span></button>
+  </article>
+</div>
+</div>
+</div>
+{{/content}}
 
-  {{#content "gutter"}}{{/content}}
+{{#content "gutter"}}{{/content}}
 {{/extend}}

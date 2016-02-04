@@ -8,35 +8,28 @@ pageName: addServiceProvider
 {{#extend "_default"}}
   {{#content "main"}}
     <div class="block block--highlight">
-      <div class="container">
-        <div class="block__inner">
-          <header>
-            <h1>Add Service Provider</h1>
-          </header>   
-        </div>
+      <div class="container block__inner">
+        <header class="block__content">
+          <h1>Add Service Provider</h1>
+          <a href="dashboard.html" class="btn btn--info">
+            <span class="btn__text">Back to dashboard</span>
+          </a>
+        </header>
       </div>
     </div>
     <div class="block">
-      <div class="container">
-        <div class="block__inner">
-          <div class="block__content form">
-            <p data-bind="text: message"></p>
-            <!-- ko if: hasErrors -->
-            <h2>There were errors in your submission:</h2>
-            <ul data-bind="foreach: errors">
-              <li data-bind="text: $data"></li>
-            </ul>
-            <!-- /ko -->
-            <article>
-              <dl class="key-value-pair">
-                <dt class="key-value-pair__key">Name</dt>
-                <dd class="key-value-pair__value">
-                  <input data-bind="textInput: name" type="text" />
-                </dd>
-              </dl>
-              <button data-bind="click: save" class="btn btn--primary"><span class="btn__text">save</span></button>
-            </article>
-          </div>
+      <div class="container block__inner">
+        <div class="block__content form">
+          {{> form-feedback}}
+          <article>
+            <dl class="key-value-pair">
+              <dt class="key-value-pair__key">Name</dt>
+              <dd class="key-value-pair__value">
+                <input data-bind="textInput: name" type="text" class="form__input" />
+              </dd>
+            </dl>
+            <button data-bind="click: save" class="btn btn--primary"><span class="btn__text">save</span></button>
+          </article>
         </div>
       </div>
     </div>

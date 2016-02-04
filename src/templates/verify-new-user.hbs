@@ -7,10 +7,16 @@ pageName: verifyNewUser
 
 {{#extend "_default"}}
   {{#content "main"}}
+    <div class="block block--highlight">
+      <div class="container block__inner">
+        <header>
+        <h1>Verify Account</h1>
+        </header>
+      </div>
+    </div>
     <div class="block">
       <div class="container block__inner">
         <div class="block__content form">
-          <h1>Verify Account</h1>
           <p data-bind="text: message"></p>
           <!-- ko if: hasErrors -->
           <h2>There were errors in your submission:</h2>

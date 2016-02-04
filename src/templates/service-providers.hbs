@@ -15,21 +15,14 @@ pageName: serviceProvider
             <a href="dashboard.html" class="btn btn--info">
               <span class="btn__text">Back to dashboard</span>
               </a>
-          </header>   
+          </header>
         </div>
       </div>
     </div>
     <div class="block">
-      <div class="container">
-      <div class="block__inner">
+      <div class="container block__inner">
         <div class="block__content form">
-          <p data-bind="text: message"></p>
-          <!-- ko if: hasErrors -->
-          <h2>There were errors in your submission:</h2>
-          <ul data-bind="foreach: errors">
-            <li data-bind="text: $data"></li>
-          </ul>
-          <!-- /ko -->
+          {{> form-feedback}}
           <div data-bind="with: serviceProvider">
             <section>
               <h2>General Details</h2>
@@ -47,7 +40,7 @@ pageName: serviceProvider
                   <span data-bind="text: description"></span>
                   <!-- /ko -->
                   <!-- ko if: $parent.isEditingGeneralDetails -->
-                  <textarea data-bind="textInput: description"></textarea>
+                  <textarea data-bind="textInput: description" class="form__input form__input--textarea"></textarea>
                   <!-- /ko -->
                 </dd>
               </dl>
@@ -74,7 +67,7 @@ pageName: serviceProvider
                   <span data-bind="text: telephone"></span>
                   <!-- /ko -->
                   <!-- ko if: $parent.isEditingContactDetails -->
-                  <input type="text" data-bind="textInput: telephone" />
+                  <input type="text" data-bind="textInput: telephone" class="form__input" />
                   <!-- /ko -->
                 </dd>
                 <dt class="key-value-pair__key">Email</dt>
@@ -83,7 +76,7 @@ pageName: serviceProvider
                   <span data-bind="text: email"></span>
                   <!-- /ko -->
                   <!-- ko if: $parent.isEditingContactDetails -->
-                  <input type="text" data-bind="textInput: email" />
+                  <input type="text" data-bind="textInput: email" class="form__input" />
                   <!-- /ko -->
                 </dd>
                 <dt class="key-value-pair__key">Website</dt>
@@ -92,7 +85,7 @@ pageName: serviceProvider
                   <span data-bind="text: website"></span>
                   <!-- /ko -->
                   <!-- ko if: $parent.isEditingContactDetails -->
-                  <input type="text" data-bind="textInput: website" />
+                  <input type="text" data-bind="textInput: website" class="form__input" />
                   <!-- /ko -->
                 </dd>
                 <dt class="key-value-pair__key">Facebook</dt>
@@ -101,7 +94,7 @@ pageName: serviceProvider
                   <span data-bind="text: facebook"></span>
                   <!-- /ko -->
                   <!-- ko if: $parent.isEditingContactDetails -->
-                  <input type="text" data-bind="textInput: facebook" />
+                  <input type="text" data-bind="textInput: facebook" class="form__input" />
                   <!-- /ko -->
                 </dd>
                 <dt class="key-value-pair__key">Twitter</dt>
@@ -110,7 +103,7 @@ pageName: serviceProvider
                   <span data-bind="text: twitter"></span>
                   <!-- /ko -->
                   <!-- ko if: $parent.isEditingContactDetails -->
-                  <input type="text" data-bind="textInput: twitter" />
+                  <input type="text" data-bind="textInput: twitter" class="form__input" />
                   <!-- /ko -->
                 </dd>
               </dl>
@@ -119,7 +112,7 @@ pageName: serviceProvider
               <header>
                 <h2>Addresses</h2>
                 <a data-bind="attr: { 'href': addAddressUrl }" title="add address" class="btn btn--primary">
-                  <span class="btn__text">Add Address</span>
+                  <span class="btn__text">Add</span>
                 </a>
               </header>
               <div data-bind="foreach: addresses">
@@ -127,10 +120,10 @@ pageName: serviceProvider
                   <address data-bind="text: formatted" class="key-value-pair__key"></address>
                   <div class="key-value-pair__value">
                     <a data-bind="attr: { 'href': editAddressUrl }" title="edit address" class="btn btn--info">
-                      <span class="btn__text">Edit Address</span>
+                      <span class="btn__text">Edit</span>
                     </a>
                     <a data-bind="click: deleteAddress" title="edit address" class="btn btn--warning">
-                      <span class="btn__text">Delete Address</span>
+                      <span class="btn__text">Delete</span>
                     </a>
                   </div>
                 </article>
@@ -139,23 +132,22 @@ pageName: serviceProvider
             <section>
               <h2>Services</h2>
               <a data-bind="attr: { 'href': addServiceUrl }" title="edit services" class="btn btn--primary">
-                <span class="btn__text">Add Service</span>
+                <span class="btn__text">Add</span>
               </a>
               <div data-bind="foreach: newServices">
                 <article>
                   <h3 data-bind="text: name"></h3>
                   <a data-bind="attr: { 'href': editServiceUrl }" title="edit address" class="btn btn--info">
-                    <span class="btn__text">Edit Service</span>
+                    <span class="btn__text">Edit</span>
                   </a>
                   <a data-bind="click: deleteService" title="edit address" class="btn btn--warning">
-                    <span class="btn__text">Delete Service</span>
+                    <span class="btn__text">Delete</span>
                   </a>
                 </article>
               </div>
             </section>
           </div>
         </div>
-      </div>
       </div>
     </div>
   {{/content}}
