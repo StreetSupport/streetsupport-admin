@@ -28,6 +28,8 @@ function VerifyUser () {
         self.handleError(error)
       })
   }
+
+  self.dataLoaded()
 }
 
 VerifyUser.prototype = new BaseViewModel()

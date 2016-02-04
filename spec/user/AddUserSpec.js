@@ -2,7 +2,8 @@ var sinon = require('sinon'),
     ajax =      require('basic-ajax'),
     endpoints = require('../../src/js/api-endpoints'),
     adminurls = require('../../src/js/admin-urls'),
-    cookies =   require('../../src/js/cookies')
+    cookies =   require('../../src/js/cookies'),
+    browser =   require('../../src/js/browser')
 var getUrlParameter = require('../../src/js/get-url-parameter')
 
 
@@ -11,8 +12,12 @@ describe ('Add User', function () {
   model
 
   beforeEach (function () {
-
+    sinon.stub(browser, 'dataLoaded')
     model = new Model()
+  })
+
+  afterEach (function () {
+    browser.dataLoaded.restore()
   })
 
   it('should start with errors false', function () {

@@ -25,6 +25,7 @@ function AddUser () {
         self.handleError(error)
       })
   }
+  self.dataLoaded()
 }
 
 AddUser.prototype = new BaseViewModel()
