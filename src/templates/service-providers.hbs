@@ -8,8 +8,8 @@ pageName: serviceProvider
 {{#extend "_default"}}
   {{#content "main"}}
     <div class="block block--highlight">
-      <div class="container">
-        <div data-bind="with: serviceProvider" class="block__inner">
+      <div class="container block__inner">
+        <div data-bind="with: serviceProvider">
           <header>
             <h1 data-bind="text: name"></h1>
             <a href="dashboard.html" class="btn btn--info">
