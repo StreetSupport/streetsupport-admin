@@ -28,6 +28,7 @@ describe ('Show Service Provider', function () {
     sinon.stub(ajax, 'get').returns(fakeResolved ())
     stubbedCookies = sinon.stub(cookies, 'get').returns('stored-session-token')
     stubbedUrlParams = sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
+    sinon.stub(browser, 'dataLoaded')
 
     model = new Model()
     model.serviceProvider().newServices()[0].deleteService()
@@ -38,6 +39,7 @@ describe ('Show Service Provider', function () {
     ajax.delete.restore()
     cookies.get.restore()
     getUrlParameter.parameter.restore()
+    browser.dataLoaded.restore()
   })
 
   it ('should remove Service from collection', function () {

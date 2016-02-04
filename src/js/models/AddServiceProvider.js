@@ -23,6 +23,7 @@ function AddServiceProvider () {
         self.handleError(error)
       })
   }
+  self.dataLoaded()
 }
 
 AddServiceProvider.prototype = new BaseViewModel()

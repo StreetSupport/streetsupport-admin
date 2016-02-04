@@ -74,6 +74,7 @@ function ServiceProviderDetails () {
       .then(function (result) {
         self.serviceProvider(new ServiceProvider(result.json))
         self.initialServiceProvider(new ServiceProvider(result.json))
+        self.dataLoaded()
       },
       function () {
         browser.redirect(adminUrls.notFound)

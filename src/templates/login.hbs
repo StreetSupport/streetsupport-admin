@@ -11,13 +11,7 @@ pageName: login
       <div class="container block__inner">
         <h1>Login</h1>
         <form class="form">
-            <p data-bind="text: message"></p>
-            <!-- ko if: hasErrors -->
-            <h2>There were errors in your submission:</h2>
-            <ul data-bind="foreach: errors">
-              <li data-bind="text: $data"></li>
-            </ul>
-            <!-- /ko -->
+            {{> form-feedback}}
             <dl class="key-value-pair">
               <dt class="key-value-pair__key">Username</dt>
               <dd class="key-value-pair__value"><input data-bind="textInput: username" type="text" name="username" />

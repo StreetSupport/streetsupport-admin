@@ -28,6 +28,7 @@ function EditServiceProviderAddress () {
         var address = new Address(result.json)
         address.addListener(self)
         self.address(address)
+        self.dataLoaded()
       },
       function (error) {
         self.handleError(error)

@@ -15,7 +15,12 @@ describe('Add individual Address', function () {
   stubbedParameters
 
   beforeEach (function () {
+    sinon.stub(browser, 'dataLoaded')
     model = new Model()
+  })
+
+  afterEach(function () {
+    browser.dataLoaded.restore()
   })
 
   it('should set an empty Address', function() {

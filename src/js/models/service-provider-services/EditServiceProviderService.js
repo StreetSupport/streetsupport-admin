@@ -24,6 +24,7 @@ function EditServiceProviderService () {
       data.serviceProviderId = getUrlParameter.parameter('providerId')
       self.service(new Service(data))
       self.service().addListener(self)
+      self.dataLoaded()
     },
     function (error) {
       self.handleError(error)

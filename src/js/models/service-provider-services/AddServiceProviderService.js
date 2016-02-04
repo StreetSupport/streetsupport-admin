@@ -117,6 +117,7 @@ function AddServiceProviderService () {
     ajax.get(categoriesEndpoint, self.headers(cookies.get('session-token')), {})
     .then(function (result) {
       self.categories(result.json)
+      self.dataLoaded()
     },
     function (error) {
       self.handleError(error)
