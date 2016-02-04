@@ -30,6 +30,7 @@ function DashboardModel () {
       {})
     .then(function (result) {
       self.serviceProviders(self.mapServiceProviders(result.json))
+      self.dataLoaded()
     },
     function (error) {
       self.handleError(error)

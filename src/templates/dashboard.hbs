@@ -17,8 +17,9 @@ pageName: dashboard
         </header>
       </div>
     </div>
-    <div class="block">
+    <div class="block awaiting-data">
       <div class="container block__inner">
+      {{> form-feedback}}
       <section class="block__content" data-bind="foreach: serviceProviders" class="stacked-list">
           <article class="stacked-list__item">
               <header class="stacked-list__element--header">

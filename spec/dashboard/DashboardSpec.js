@@ -3,13 +3,15 @@ ajax =      require('basic-ajax'),
 endpoints = require('../../src/js/api-endpoints'),
 adminurls = require('../../src/js/admin-urls'),
 browser =   require('../../src/js/browser'),
-cookies =   require('../../src/js/cookies')
+cookies =   require('../../src/js/cookies'),
+browser =   require('../../src/js/browser')
 
 describe ('Dashboard', function () {
   var Dashboard = require('../../src/js/models/Dashboard'),
       dashboard,
       stubbedApi,
-      stubbedCookies
+      stubbedCookies,
+      stubbedBrowser
 
   beforeEach (function () {
     function fakeResolved (value) {
@@ -44,12 +46,15 @@ describe ('Dashboard', function () {
 
     stubbedCookies = sinon.stub(cookies, 'get').returns('stored-session-token')
 
+    stubbedBrowser = sinon.stub(browser, 'dataLoaded')
+
     dashboard = new Dashboard()
   })
 
   afterEach (function () {
     ajax.get.restore()
     cookies.get.restore()
+    browser.dataLoaded.restore()
   })
 
   it ('should retrieve service providers from api with session token', function () {
@@ -61,6 +66,10 @@ describe ('Dashboard', function () {
       var payload = {}
       var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, headers, payload).calledOnce
       expect(apiCalledWithExpectedArgs).toBeTruthy()
+  })
+
+  it ('should call dataLoaded', function () {
+      expect(stubbedBrowser.calledOnce).toBeTruthy()
   })
 
   it ('should populate service provider collection', function () {

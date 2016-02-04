@@ -2,6 +2,7 @@ var ko = require('knockout')
 var Endpoints = require('../endpoint-builder')
 var browser = require('../browser')
 var adminUrls = require('../admin-urls')
+var _ = require('lodash')
 
 function BaseViewModel () {
   var self = this
@@ -18,6 +19,10 @@ function BaseViewModel () {
       'content-type': 'application/json',
       'session-token': sessionToken
     }
+  }
+
+  self.dataLoaded = function () {
+    browser.dataLoaded()
   }
 
   self.clearErrors = function () {

@@ -38,12 +38,15 @@ describe ('VerifiedServiceProviders', function () {
 
     stubbedCookies = sinon.stub(cookies, 'get').returns('stored-session-token')
 
+    sinon.stub(browser, 'dataLoaded')
+
     dashboard = new Dashboard()
   })
 
   afterEach (function () {
     ajax.get.restore()
     cookies.get.restore()
+    browser.dataLoaded.restore()
   })
 
   it ('should set published labels', function () {
@@ -76,6 +79,7 @@ describe ('VerifiedServiceProviders', function () {
 
       stubbedPutApi = sinon.stub(ajax, 'put')
       stubbedPutApi.returns(fakePostResolved())
+
 
       dashboard.togglePublished(dashboard.serviceProviders()[0])
     })
