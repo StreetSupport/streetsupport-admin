@@ -7,7 +7,14 @@ pageName: editServiceProviderService
 
 {{#extend "_default"}}
   {{#content "main"}}
-    <div class="block">
+    <div class="block block--highlight">
+      <div class="container block__inner">
+        <header>
+          <h1>Edit Service</h1>
+        </header>
+      </div>
+    </div>
+    <div class="block awaiting-data">
       <div class="container block__inner">
         <div class="block__content form">
           <form class="form" data-bind="with: service">
