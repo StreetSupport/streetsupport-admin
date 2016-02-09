@@ -1,14 +1,13 @@
 var ajax = require('basic-ajax')
-var adminUrls = require('../admin-urls')
-var browser = require('../browser')
-var cookies = require('../cookies')
+var adminUrls = require('../../admin-urls')
+var browser = require('../../browser')
+var cookies = require('../../cookies')
 var ko = require('knockout')
-var BaseViewModel = require('./BaseViewModel')
+var BaseViewModel = require('../BaseViewModel')
 
-function LoginModel () {
+function ResetPasswordModel () {
   var self = this
 
-  self.username = ko.observable('')
   self.password = ko.observable('')
   self.isSubmitting = false
 
@@ -34,6 +33,6 @@ function LoginModel () {
   }
 }
 
-LoginModel.prototype = new BaseViewModel()
+ResetPassword.prototype = new BaseViewModel()
 
-module.exports = LoginModel
+module.exports = ResetPassword

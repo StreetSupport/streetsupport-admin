@@ -21,6 +21,7 @@ module.exports = {
     index: pagesDir + 'index',
     login: pagesDir + 'login',
     logout: pagesDir + 'logout',
+    resetPassword: pagesDir + 'reset-password',
     dashboard: pagesDir + 'dashboard',
     serviceProvider: pagesDir + 'service-provider',
     addServiceProvider: pagesDir + 'add-service-provider',
