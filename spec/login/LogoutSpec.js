@@ -6,7 +6,7 @@ var sinon = require('sinon'),
   cookies = require('../../src/js/cookies')
 
 describe('Logout', function() {
-  var Model = require('../../src/js/models/Logout')
+  var Model = require('../../src/js/models/Auth/Logout')
   var model
   var stubbedCookies
   var stubbedSetCookies

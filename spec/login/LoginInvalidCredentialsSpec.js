@@ -6,7 +6,7 @@ browser =   require('../../src/js/browser'),
 cookies =   require('../../src/js/cookies')
 
 describe ('Submit invalid credentials', function () {
-  var Login = require('../../src/js/models/Login')
+  var Login = require('../../src/js/models/Auth/Login')
   var login
   var stubbedApi,
       stubbedBrowser

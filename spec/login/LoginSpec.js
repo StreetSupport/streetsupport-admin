@@ -6,7 +6,7 @@ var sinon =     require('sinon'),
     cookies = require('../../src/js/cookies')
 
 describe ('Login', function () {
-  var Login = require('../../src/js/models/Login')
+  var Login = require('../../src/js/models/Auth/Login')
   var login
 
   beforeEach (function () {

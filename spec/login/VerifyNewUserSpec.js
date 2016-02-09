@@ -7,7 +7,7 @@ var sinon = require('sinon'),
     getUrlParameter = require('../../src/js/get-url-parameter')
 
 describe ('Verify New User', function () {
-  var Model = require('../../src/js/models/VerifyUser'),
+  var Model = require('../../src/js/models/Auth/VerifyUser'),
   model
 
   beforeEach (function () {
