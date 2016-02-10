@@ -96,5 +96,9 @@ describe('Reset Password', function() {
     it('should not set isSubmissionSuccessful to true', function () {
       expect(model.isSubmissionSuccessful()).toBeFalsy()
     })
+    
+    it('should set errors', function () {
+      expect(model.errors()[0]).toEqual('Passwords must match.')
+    })
   })
 })
