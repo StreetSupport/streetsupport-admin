@@ -15,11 +15,13 @@ var getServiceCategories = '/v2/service-categories'
 var verifiedUsers = '/v1/verified-users'
 var unverifiedUsers = '/v1/unverified-users'
 var sessions = '/v1/sessions'
+var resetPassword = '/v1/reset-password-applications'
 
 module.exports = {
   getServiceProviders: p(getServiceProviders),
   getServiceCategories: p(getServiceCategories),
   verifiedUsers: p(verifiedUsers),
   unverifiedUsers: p(unverifiedUsers),
-  sessions: p(sessions)
+  sessions: p(sessions),
+  resetPassword: p(resetPassword)
 }

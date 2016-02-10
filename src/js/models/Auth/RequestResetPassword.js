@@ -8,7 +8,8 @@ var BaseViewModel = require('../BaseViewModel')
 function ResetPasswordModel () {
   var self = this
 
-  self.password = ko.observable('')
+  self.email = ko.observable('')
+  self.isSubmissionSuccessful = ko.observable(false)
   self.isSubmitting = false
 
   self.submit = function () {
@@ -16,23 +17,23 @@ function ResetPasswordModel () {
     if (!self.isSubmitting) {
       self.isSubmitting = true
       self.message('Loading, please wait')
-      ajax.postJson(self.endpointBuilder.sessions().build() + '/create', {
-        'username': self.username(),
-        'password': self.password()
-      })
+      ajax.post(self.endpointBuilder.resetPassword().build(), 
+      self.headers(cookies.get('session-token')),
+      JSON.stringify({
+        'Email': self.email(),
+      }))
       .then(function (result) {
-        cookies.set('session-token', result.json.sessionToken)
-        cookies.set('auth-claims', result.json.authClaims)
-        browser.redirect(adminUrls.redirector)
+        self.isSubmissionSuccessful(true)
       }, function (error) {
-        self.setErrors(error)
-        self.message('')
+        self.handleError(error)
         self.isSubmitting = false
       })
     }
   }
+
+  self.dataLoaded()
 }
 
-ResetPassword.prototype = new BaseViewModel()
+ResetPasswordModel.prototype = new BaseViewModel()
 
-module.exports = ResetPassword
+module.exports = ResetPasswordModel

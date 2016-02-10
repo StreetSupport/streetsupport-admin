@@ -1,4 +1,4 @@
-  var argv                = require('yargs').argv;
+var argv                = require('yargs').argv;
 var path                = require('path');
 var webpack             = require('webpack');
 var CommonsChunkPlugin  = require(__dirname + '/../../node_modules/webpack/lib/optimize/CommonsChunkPlugin');
@@ -21,7 +21,8 @@ module.exports = {
     index: pagesDir + 'index',
     login: pagesDir + 'login',
     logout: pagesDir + 'logout',
-    resetPassword: pagesDir + 'reset-password',
+    requestResetPassword: pagesDir + 'request-reset-password',
+//    resetPassword: pagesDir + 'reset-password',
     dashboard: pagesDir + 'dashboard',
     serviceProvider: pagesDir + 'service-provider',
     addServiceProvider: pagesDir + 'add-service-provider',

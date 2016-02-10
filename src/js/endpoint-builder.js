@@ -35,6 +35,11 @@ function EndpointBuilder () {
     return self
   }
 
+  self.resetPassword = function (verificationCode) {
+    self.updateBaseResource(endpoints.resetPassword, verificationCode)
+    return self
+  }
+
   self.addresses = function (addressId) {
     self.childResource = 'addresses'
     self.childResourceId = addressId

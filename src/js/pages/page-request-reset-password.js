@@ -4,8 +4,8 @@ var nav = require('./../nav.js')
 nav.init()
 FastClick.attach(document.body)
 
-require.ensure(['knockout', '../models/ResetPassword'], function (require) {
+require.ensure(['knockout', '../models/Auth/RequestResetPassword'], function (require) {
   var ko = require('knockout')
-  var Model = require('../models/ResetPassword')
+  var Model = require('../models/Auth/RequestResetPassword')
   ko.applyBindings(new Model())
 })
