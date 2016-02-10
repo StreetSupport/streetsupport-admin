@@ -31,7 +31,7 @@ describe('Reset Password', function() {
     var stubbedApiPut
 
     beforeEach(function () {
-      function postResolved () {
+      function putResolved () {
         return {
           then: function(success, error) {
             success({
@@ -41,7 +41,7 @@ describe('Reset Password', function() {
         }
       }
 
-      stubbedApiPut = sinon.stub(ajax, 'put').returns(postResolved())
+      stubbedApiPut = sinon.stub(ajax, 'put').returns(putResolved())
       sinon.stub(cookies, 'get').withArgs('session-token').returns('storedSessionToken')
       sinon.stub(getParams, 'parameter').returns('verificationCode')
    
@@ -56,7 +56,7 @@ describe('Reset Password', function() {
       getParams.parameter.restore()
     })
 
-    it('should post password to api', function () {
+    it('should put password to api', function () {
       var endpoint = endpoints.resetPassword + '/verificationCode'
       var headers = {
         'content-type': 'application/json',
@@ -71,6 +71,30 @@ describe('Reset Password', function() {
     
     it('should set isSubmissionSuccessful to true', function () {
       expect(model.isSubmissionSuccessful()).toBeTruthy()
+    })
+  })
+
+  describe('Passwords do not match', function () {
+    var stubbedApiPut
+
+    beforeEach(function () {
+      stubbedApiPut = sinon.stub(ajax, 'put')
+
+      model.password('MyNewPassword!')
+      model.password2('NotTheSamePassword')
+      model.submit()
+    })
+
+    afterEach(function () {
+      ajax.put.restore()
+    })
+
+    it('should not put password to api', function () {
+      expect(stubbedApiPut.calledCount).toEqual(undefined)
+    })
+    
+    it('should not set isSubmissionSuccessful to true', function () {
+      expect(model.isSubmissionSuccessful()).toBeFalsy()
     })
   })
 })
