@@ -22,7 +22,7 @@ module.exports = {
     login: pagesDir + 'login',
     logout: pagesDir + 'logout',
     requestResetPassword: pagesDir + 'request-reset-password',
-//    resetPassword: pagesDir + 'reset-password',
+    resetPassword: pagesDir + 'reset-password',
     dashboard: pagesDir + 'dashboard',
     serviceProvider: pagesDir + 'service-provider',
     addServiceProvider: pagesDir + 'add-service-provider',

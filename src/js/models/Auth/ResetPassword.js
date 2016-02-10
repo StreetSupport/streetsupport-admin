@@ -1,12 +1,16 @@
 var ajax = require('basic-ajax')
+var adminUrls = require('../../admin-urls')
+var browser = require('../../browser')
 var cookies = require('../../cookies')
 var ko = require('knockout')
 var BaseViewModel = require('../BaseViewModel')
+var urlParams = require('../../get-url-parameter')
 
-function RequestResetPasswordModel () {
+function ResetPasswordModel () {
   var self = this
 
-  self.email = ko.observable('')
+  self.password = ko.observable('')
+  self.password2 = ko.observable('')
   self.isSubmissionSuccessful = ko.observable(false)
   self.isSubmitting = false
 
@@ -15,10 +19,10 @@ function RequestResetPasswordModel () {
     if (!self.isSubmitting) {
       self.isSubmitting = true
       self.message('Loading, please wait')
-      ajax.post(self.endpointBuilder.resetPassword().build(),
+      ajax.put(self.endpointBuilder.resetPassword(urlParams.parameter('id')).build(), 
       self.headers(cookies.get('session-token')),
       JSON.stringify({
-        'Email': self.email()
+        'Password': self.password(),
       }))
       .then(function (result) {
         self.isSubmissionSuccessful(true)
@@ -32,6 +36,6 @@ function RequestResetPasswordModel () {
   self.dataLoaded()
 }
 
-RequestResetPasswordModel.prototype = new BaseViewModel()
+ResetPasswordModel.prototype = new BaseViewModel()
 
-module.exports = RequestResetPasswordModel
+module.exports = ResetPasswordModel
