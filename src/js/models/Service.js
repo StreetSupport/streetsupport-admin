@@ -16,6 +16,7 @@ function Service (data) {
 
   self.name = data.name
   self.info = ko.observable(data.info)
+  self.locationDescription = ko.observable(data.locationDescription)
 
   var tags = data.tags !== null ? data.tags.join(', ') : ''
 
@@ -92,6 +93,7 @@ function Service (data) {
 
     var model = JSON.stringify({
       'Info': self.info(),
+      'LocationDescription': self.locationDescription(),
       'Tags': tags,
       'OpeningTimes': _.map(self.openingTimes(), function (openingTime) {
         return {
