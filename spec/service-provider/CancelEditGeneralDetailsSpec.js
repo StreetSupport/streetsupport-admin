@@ -35,7 +35,6 @@ describe ('Cancel Edit Service Provider General Details', function () {
     model.editGeneralDetails()
 
     model.serviceProvider().description('some new description')
-    model.serviceProvider().areaServiced('some new area serviced')
 
     model.cancelEditGeneralDetails()
   })
@@ -54,11 +53,6 @@ describe ('Cancel Edit Service Provider General Details', function () {
   it ('should restore description to its previous value', function () {
     expect(model.serviceProvider().description()).toEqual('initial description')
   })
-
-  it ('should restore area serviced to its previous value', function () {
-    expect(model.serviceProvider().areaServiced()).toEqual('initial area serviced')
-  })
-
 })
 
 function coffee4Craig() {
@@ -66,7 +60,6 @@ function coffee4Craig() {
     "key": "coffee4craig",
     "name": "Coffee 4 Craig",
     "description": "initial description",
-    "areaServiced": "initial area serviced",
     "addresses": [],
     "providedServices": []
   }
