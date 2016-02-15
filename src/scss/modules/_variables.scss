@@ -74,3 +74,7 @@ $susy: (
     image: $grid-debug
   )
 );
+
+
+// hide knockout templates whilst data loads
+.awaiting-data { display: none }

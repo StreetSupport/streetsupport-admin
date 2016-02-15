@@ -5,7 +5,8 @@ var s = function (page) {
 }
 
 module.exports = {
-  login: '/',
+  redirector: s('index'),
+  login: s('login'),
   dashboard: s('dashboard'),
   serviceProviders: s('service-providers'),
   notFound: s('404'),
@@ -16,4 +17,5 @@ module.exports = {
   serviceProviderServices: s('service-provider-services'),
   serviceProviderServicesAdd: s('add-service-provider-service'),
   serviceProviderServicesEdit: s('edit-service-provider-service'),
+  userAdd: s('add-user')
 }

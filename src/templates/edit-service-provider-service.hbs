@@ -7,70 +7,37 @@ pageName: editServiceProviderService
 
 {{#extend "_default"}}
   {{#content "main"}}
-    <div class="block block--cta">
+    <div class="block block--highlight">
+      <div class="container block__inner">
+        <header>
+          <h1>Edit Service</h1>
+        </header>
+      </div>
+    </div>
+    <div class="block awaiting-data">
       <div class="container block__inner">
         <div class="block__content form">
           <form class="form" data-bind="with: service">
-            <fieldset>
-              <legend>Service Details</legend>
-              <ol>
-                <li>
-                  <label>Description</label>
-                  <input data-bind="textInput: info" type="text" />
-                </li>
-                <li>
-                  <label>Target Audience</label>
-                  <input data-bind="textInput: tags" type="text" />
-                </li>
-              </ol>
-            </fieldset>
-            <fieldset data-bind="with: address">
-              <legend>Address</legend>
-              <ol>
-                <li>
-                  <label>Street 1</label>
-                  <input data-bind="textInput: street1" type="text" />
-                </li>
-                <li>
-                  <label>Street 2</label>
-                  <input data-bind="textInput: street2" type="text" />
-                </li>
-                <li>
-                  <label>Street 3</label>
-                  <input data-bind="textInput: street3" type="text" />
-                </li>
-                <li>
-                  <label>Street 4</label>
-                  <input data-bind="textInput: street4" type="text" />
-                </li>
-                <li>
-                  <label>City</label>
-                  <input data-bind="textInput: city" type="text" />
-                </li>
-                <li>
-                  <label>Postcode</label>
-                  <input data-bind="textInput: postcode" type="text" />
-                </li>
-              </ol>
-            </fieldset>
-            <fieldset>
-              <legend>Opening Times</legend>
-                    <button data-bind="click: newOpeningTime" class="btn btn--info"><span class="btn__text">add opening time</span></button>
-                <dl data-bind="foreach: openingTimes" class="key-value-pair">
-                  <dt class="key-value-pair__key">
-                    <select data-bind="options: days,
-                       optionsText: $data,
-                       value: day,
-                       optionsCaption: '-- please select --'"></select>
-                  </dt>
-                  <dd class="key-value-pair__value">
-                    <input data-bind="textInput: startTime" type="text" /> - <input data-bind="textInput: endTime" type="text" />
-                  </dd>
-                  <dd class="key-value-pair__value">
-                    <button data-bind="click: $parent.removeOpeningTime" class="btn btn--warning"><span class="btn__text">remove</span></button>
-                  </dd>
-                </dl>
-            </fieldset>
+            {{> form-feedback}}
+            <section>
+              <h3>Service Details</h3>
+              <dl class="key-value-pair">
+                <dt class="key-value-pair__key">Description</dt>
+                <dd class="key-value-pair__value">
+                  <textarea data-bind="textInput: info" class="form__input--textarea"></textarea>
+                </dd>
+                <dt class="key-value-pair__key">Target Audience</dt>
+                <dd class="key-value-pair__value">
+                  <input data-bind="textInput: tags" type="text" class="form__input" />
+                </dd>
+              </dl>
+              </section>
+              <section data-bind="with: address">
+                {{> address}}
+              </section>
+              <section>
+                {{> opening-times}}
+              </section>
               <button data-bind="click: save" class="btn btn--primary"><span class="btn__text">save</span></button>
             </form>
         </div>

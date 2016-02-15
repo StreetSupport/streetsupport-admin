@@ -1,5 +1,4 @@
 var ajax = require('basic-ajax')
-var Endpoints = require('../endpoint-builder')
 var adminUrls = require('../admin-urls')
 var cookies = require('../cookies')
 var Address = require('./Address')
@@ -7,6 +6,7 @@ var Service = require('./Service')
 var getUrlParameter = require('../get-url-parameter')
 var ko = require('knockout')
 var _ = require('lodash')
+var BaseViewModel = require('./BaseViewModel')
 
 function ServiceProvider (data) {
   var self = this
@@ -34,25 +34,24 @@ function ServiceProvider (data) {
 function ServiceProviderServices () {
   var self = this
   self.serviceProvider = ko.observable()
-  self.endpoints = new Endpoints()
   self.addServiceLink = adminUrls.addServiceProviderService + '?key=' + getUrlParameter.parameter('providerId')
 
   self.init = function () {
-    var endpoint = self.endpoints.serviceProviders(getUrlParameter.parameter('providerId')).build()
+    var endpoint = self.endpointBuilder.serviceProviders(getUrlParameter.parameter('providerId')).build()
     ajax.get(endpoint,
-      {
-        'content-type': 'application/json',
-        'session-token': cookies.get('session-token')
-      },
+      self.headers(cookies.get('session-token')),
       {})
       .then(function (result) {
         self.serviceProvider(new ServiceProvider(result.json))
       },
       function (error) {
+        self.handleError(error)
       })
   }
 
   self.init()
 }
+
+ServiceProviderServices.prototype = new BaseViewModel()
 
 module.exports = ServiceProviderServices

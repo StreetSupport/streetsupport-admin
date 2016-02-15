@@ -1,14 +1,15 @@
 var ajax = require('basic-ajax')
-var endpoints = require('../api-endpoints')
 var adminUrls = require('../admin-urls')
 var cookies = require('../cookies')
 var ko = require('knockout')
 var _ = require('lodash')
+var BaseViewModel = require('./BaseViewModel')
 
 function ServiceProvider (sp) {
   this.key = sp.key
   this.name = sp.name
   this.url = adminUrls.serviceProviders + '?key=' + sp.key
+  this.newUserUrl = adminUrls.userAdd + '?key=' + sp.key
   this.isVerified = ko.observable(sp.isVerified)
   this.isPublished = ko.observable(sp.isPublished)
   this.verifiedLabel = ko.computed(function () { return this.isVerified() ? 'verified' : 'under review' }, this)
@@ -24,17 +25,15 @@ function DashboardModel () {
 
   self.init = function () {
     ajax
-    .get(endpoints.getServiceProviders,
-      {
-        'content-type': 'application/json',
-        'session-token': cookies.get('session-token')
-      },
+    .get(self.endpointBuilder.serviceProviders().build(),
+      self.headers(cookies.get('session-token')),
       {})
     .then(function (result) {
       self.serviceProviders(self.mapServiceProviders(result.json))
+      self.dataLoaded()
     },
     function (error) {
-      alert('oops, there was a problem! ' + JSON.parse(error))
+      self.handleError(error)
     })
   }
 
@@ -49,19 +48,17 @@ function DashboardModel () {
   }
 
   self.toggleVerified = function (serviceProvider, event) {
-    ajax.put(endpoints.getServiceProviders + '/' + serviceProvider.key + '/is-verified',
-      {
-        'content-type': 'application/json',
-        'session-token': cookies.get('session-token')
-      },
+    ajax.put(self.endpointBuilder.serviceProviders(serviceProvider.key).build() + '/is-verified',
+      self.headers(cookies.get('session-token')),
       JSON.stringify({
         'IsVerified': !serviceProvider.isVerified()
       })
     )
     .then(function (result) {
       self.updateServiceProvider(serviceProvider, self.invertVerification)
-    }, function (error) {
-      alert('oops, there was a problem! ' + JSON.parse(error))
+    },
+    function (error) {
+      self.handleError(error)
     })
   }
 
@@ -70,19 +67,17 @@ function DashboardModel () {
   }
 
   self.togglePublished = function (serviceProvider, event) {
-    ajax.put(endpoints.getServiceProviders + '/' + serviceProvider.key + '/is-published',
-      {
-        'content-type': 'application/json',
-        'session-token': cookies.get('session-token')
-      },
+    ajax.put(self.endpointBuilder.serviceProviders(serviceProvider.key).build() + '/is-published',
+      self.headers(cookies.get('session-token')),
       JSON.stringify({
         'IsPublished': !serviceProvider.isPublished()
       })
     )
     .then(function (result) {
       self.updateServiceProvider(serviceProvider, self.invertPublished)
-    }, function (error) {
-      alert('oops, there was a problem! ' + JSON.parse(error))
+    },
+    function (error) {
+      self.handleError(error)
     })
   }
 
@@ -104,5 +99,7 @@ function DashboardModel () {
 
   self.init()
 }
+
+DashboardModel.prototype = new BaseViewModel()
 
 module.exports = DashboardModel

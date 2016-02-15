@@ -197,7 +197,8 @@ describe('Address', function() {
       })
 
       it('should set message as joined error messages', function() {
-        expect(model.message()).toEqual('returned error message 1<br />returned error message 2')
+        expect(model.errors()[0]).toEqual('returned error message 1')
+        expect(model.errors()[1]).toEqual('returned error message 2')
       })
 
       it('should keep isEditing as true', function() {

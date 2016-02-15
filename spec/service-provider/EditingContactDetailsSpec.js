@@ -28,6 +28,7 @@ describe ('Edit Service Provider Contact Information', function () {
     stubbedApi = sinon.stub(ajax, 'get').returns(fakeResolved ())
     stubbedCookies = sinon.stub(cookies, 'get').returns('stored-session-token')
     stubbedUrlParams = sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
+    sinon.stub(browser, 'dataLoaded')
 
     model = new Model()
 
@@ -38,6 +39,7 @@ describe ('Edit Service Provider Contact Information', function () {
     ajax.get.restore()
     cookies.get.restore()
     getUrlParameter.parameter.restore()
+    browser.dataLoaded.restore()
   })
 
   it ('should set isEditingContactDetails to true', function () {
@@ -129,7 +131,8 @@ describe ('Edit Service Provider Contact Information', function () {
     })
 
     it ('should set message as joined error messages', function () {
-      expect(model.message()).toEqual('returned error message 1<br />returned error message 2')
+      expect(model.errors()[0]).toEqual('returned error message 1')
+      expect(model.errors()[1]).toEqual('returned error message 2')
     })
 
     it ('should keep isEditingContactDetails as true', function () {

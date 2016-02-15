@@ -1,5 +1,4 @@
 var ajax = require('basic-ajax')
-var Endpoints = require('../endpoint-builder')
 var adminUrls = require('../admin-urls')
 var cookies = require('../cookies')
 var browser = require('../browser')
@@ -7,6 +6,8 @@ var getUrlParameter = require('../get-url-parameter')
 var Address = require('./Address')
 var Service = require('./Service')
 var ko = require('knockout')
+var _ = require('lodash')
+var BaseViewModel = require('./BaseViewModel')
 
 function ServiceProvider (data) {
   var self = this
@@ -19,19 +20,19 @@ function ServiceProvider (data) {
   self.website = ko.observable(data.website)
   self.facebook = ko.observable(data.facebook)
   self.twitter = ko.observable(data.twitter)
-  data.addresses.forEach(a => {
+  _.forEach(data.addresses, function (a) {
     a.serviceProviderId = data.key
   })
-  self.addresses = ko.observableArray(data.addresses.map(a => new Address(a)))
-  self.addresses().forEach(a => {
-    a.addListener(this)
+  self.addresses = ko.observableArray(_.map(data.addresses, function (a) { return new Address(a) }))
+  _.forEach(self.addresses(), function (a) {
+    a.addListener(self)
   })
 
-  data.providedServices.forEach(s => {
+  _.forEach(data.providedServices, function (s) {
     s.serviceProviderId = data.key
   })
-  self.newServices = ko.observable(data.providedServices.map(s => new Service(s)))
-  self.newServices().forEach(s => {
+  self.newServices = ko.observable(_.map(data.providedServices, function (s) { return new Service(s) }))
+  _.forEach(self.newServices(), function (s) {
     s.addListener(self)
   })
 
@@ -41,15 +42,15 @@ function ServiceProvider (data) {
   self.addServiceUrl = adminUrls.serviceProviderServicesAdd + '?providerId=' + data.key
   self.amendServicesUrl = adminUrls.serviceProviderServices + '?providerId=' + data.key
 
-  self.deleteAddress = function(deletedAddress) {
-    var remainingAddresses = self.addresses().filter(address => {
+  self.deleteAddress = function (deletedAddress) {
+    var remainingAddresses = _.filter(self.addresses(), function (address) {
       return address.key() !== deletedAddress.key()
     })
     self.addresses(remainingAddresses)
   }
 
-  self.deleteService = function(deletedService) {
-    var remainingServices = self.newServices().filter(service => {
+  self.deleteService = function (deletedService) {
+    var remainingServices = _.filter(self.newServices(), function (service) {
       return service.id() !== deletedService.id()
     })
     self.newServices(remainingServices)
@@ -63,21 +64,19 @@ function ServiceProviderDetails () {
   self.isEditingGeneralDetails = ko.observable(false)
   self.isEditingContactDetails = ko.observable(false)
   self.message = ko.observable('')
-  self.endpoints = new Endpoints()
 
   self.init = function () {
     var providerId = getUrlParameter.parameter('key')
-    ajax.get(self.endpoints.serviceProviders(providerId).build(),
-      {
-        'content-type': 'application/json',
-        'session-token': cookies.get('session-token')
-      },
+
+    ajax.get(self.endpointBuilder.serviceProviders(providerId).build(),
+      self.headers(cookies.get('session-token')),
       {})
       .then(function (result) {
         self.serviceProvider(new ServiceProvider(result.json))
         self.initialServiceProvider(new ServiceProvider(result.json))
+        self.dataLoaded()
       },
-      function (error) {
+      function () {
         browser.redirect(adminUrls.notFound)
       })
   }
@@ -93,11 +92,8 @@ function ServiceProviderDetails () {
 
   self.saveGeneralDetails = function () {
     if (self.isEditingGeneralDetails()) {
-      ajax.put(self.endpoints.serviceProviders(getUrlParameter.parameter('key')).generalInformation().build(),
-        {
-          'content-type': 'application/json',
-          'session-token': cookies.get('session-token')
-        },
+      ajax.put(self.endpointBuilder.serviceProviders(getUrlParameter.parameter('key')).generalInformation().build(),
+        self.headers(cookies.get('session-token')),
         JSON.stringify({
           'Description': self.serviceProvider().description()
         })
@@ -121,11 +117,8 @@ function ServiceProviderDetails () {
 
   self.saveContactDetails = function () {
     if (self.isEditingContactDetails()) {
-      ajax.put(self.endpoints.serviceProviders(getUrlParameter.parameter('key')).contactDetails().build(),
-        {
-          'content-type': 'application/json',
-          'session-token': cookies.get('session-token')
-        },
+      ajax.put(self.endpointBuilder.serviceProviders(getUrlParameter.parameter('key')).contactDetails().build(),
+        self.headers(cookies.get('session-token')),
         JSON.stringify({
           'Telephone': self.serviceProvider().telephone(),
           'Email': self.serviceProvider().email(),
@@ -136,8 +129,7 @@ function ServiceProviderDetails () {
         ).then(function (result) {
           self.isEditingContactDetails(false)
         }, function (error) {
-          var response = JSON.parse(error.response)
-          self.message(response.messages.join('<br />'))
+          self.handleError(error)
         })
     }
   }
@@ -154,5 +146,7 @@ function ServiceProviderDetails () {
 
   self.init()
 }
+
+ServiceProviderDetails.prototype = new BaseViewModel()
 
 module.exports = ServiceProviderDetails

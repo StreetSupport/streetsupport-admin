@@ -6,7 +6,7 @@ var sinon =     require('sinon'),
     cookies = require('../../src/js/cookies')
 
 describe ('Login', function () {
-  var Login = require('../../src/js/models/Login')
+  var Login = require('../../src/js/models/Auth/Login')
   var login
 
   beforeEach (function () {
@@ -23,8 +23,8 @@ describe ('Login', function () {
 
   describe ('Submit', function () {
     var mockCookies,
-        stubbedApi,
-        stubbedBrowser
+    stubbedApi,
+    stubbedBrowser
 
     beforeEach (function () {
       function fakeResolved (value) {
@@ -33,7 +33,8 @@ describe ('Login', function () {
             success({
               'status': 201,
               'json': {
-                'sessionToken': 'returnedSessionToken'
+                'sessionToken': 'returnedSessionToken',
+                'authClaims': [ 'SuperAdmin', 'claimB' ]
               }
             })
           }
@@ -46,6 +47,7 @@ describe ('Login', function () {
 
       mockCookies = sinon.mock(cookies)
       mockCookies.expects('set').once().withArgs('session-token', 'returnedSessionToken')
+      mockCookies.expects('set').once().withArgs('auth-claims', [ 'SuperAdmin', 'claimB' ])
 
       login.username('username')
       login.password('password')
@@ -68,7 +70,7 @@ describe ('Login', function () {
     })
 
     it ('should send credentials to api', function () {
-      var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoints.createSession, {
+      var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoints.sessions + '/create', {
         'username': 'username',
         'password': 'password'
       }).calledOnce
@@ -78,7 +80,7 @@ describe ('Login', function () {
 
     it ('should not be able to send credentials after submitting', function () {
       login.submit ()
-      var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoints.createSession, {
+      var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoints.sessions + '/create', {
         'username': 'username',
         'password': 'password'
       }).calledOnce
@@ -86,8 +88,8 @@ describe ('Login', function () {
       expect(apiCalledWithExpectedArgs).toBeTruthy()
     })
 
-    it ('should redirect browser to dashboard', function () {
-      var browserRedirectedWithExpectedUrl = stubbedBrowser.withArgs(adminurls.dashboard).calledOnce
+    it ('should redirect browser to index', function () {
+      var browserRedirectedWithExpectedUrl = stubbedBrowser.withArgs(adminurls.redirector).calledOnce
       expect(browserRedirectedWithExpectedUrl).toBeTruthy()
     })
   })

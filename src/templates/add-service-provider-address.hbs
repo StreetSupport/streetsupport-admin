@@ -7,56 +7,23 @@ pageName: addServiceProviderAddress
 
 {{#extend "_default"}}
   {{#content "main"}}
-    <div class="block block--cta">
+    <div class="block block--highlight">
+      <div class="container block__inner">
+          <header>
+            <h1>Add Address</h1>
+          </header>
+        </div>
+      </div>
+    </div>
+    <div class="block awaiting-data">
       <div class="container block__inner">
         <div class="block__content form">
-            <article data-bind="with: address">
-              <p data-bind="text: message"></p>
-              <h3 data-bind="text: street1"></h3>
-              <button data-bind="click: save" class="btn btn--primary"><span class="btn__text">save</span></button>
-              <dl class="key-value-pair">
-                <dt class="key-value-pair__key">Street Line 1</dt>
-                <dd class="key-value-pair__value">
-                  <input data-bind="textInput: street1" type="text" />
-                </dd>
-                <dt class="key-value-pair__key">Street Line 2</dt>
-                <dd class="key-value-pair__value">
-                  <input data-bind="textInput: street2" type="text" />
-                </dd>
-                <dt class="key-value-pair__key">Street Line 3</dt>
-                <dd class="key-value-pair__value">
-                  <input data-bind="textInput: street3" type="text" />
-                </dd>
-                <dt class="key-value-pair__key">Street Line 4</dt>
-                <dd class="key-value-pair__value">
-                  <input data-bind="textInput: street4" type="text" />
-                </dd>
-                <dt class="key-value-pair__key">City</dt>
-                <dd class="key-value-pair__value">
-                  <input data-bind="textInput: city" type="text" />
-                </dd>
-                <dt class="key-value-pair__key">Postcode</dt>
-                <dd class="key-value-pair__value">
-                  <input data-bind="textInput: postcode" type="text" />
-                </dd>
-              </dl>
-              <h4>Opening Times</h4>
-              <button data-bind="click: newOpeningTime" class="btn btn--info"><span class="btn__text">new</span></button>
-              <dl data-bind="foreach: openingTimes" class="key-value-pair">
-                <dt class="key-value-pair__key">
-                  <select data-bind="options: days,
-                     optionsText: $data,
-                     value: day,
-                     optionsCaption: '-- please select --'"></select>
-                </dt>
-                <dd class="key-value-pair__value">
-                  <input data-bind="textInput: startTime" type="text" /> - <input data-bind="textInput: endTime" type="text" />
-                </dd>
-                <dd class="key-value-pair__value">
-                  <button data-bind="click: $parent.removeOpeningTime" class="btn btn--warning"><span class="btn__text">remove</span></button>
-                </dd>
-              </dl>
-            </article>
+          <article data-bind="with: address">
+            {{> form-feedback}}
+            {{> address}}
+            {{> opening-times}}
+            <button data-bind="click: save" class="btn btn--primary"><span class="btn__text">save</span></button>
+          </article>
         </div>
       </div>
     </div>

@@ -1,11 +1,11 @@
 var ajax = require('basic-ajax')
-var Endpoints = require('../endpoint-builder')
 var cookies = require('../cookies')
 var Address = require('./Address')
 var getUrlParameter = require('../get-url-parameter')
 var ko = require('knockout')
 var _ = require('lodash')
 var guid = require('node-uuid')
+var BaseViewModel = require('./BaseViewModel')
 
 function ServiceProvider (data) {
   var self = this
@@ -56,23 +56,22 @@ function ServiceProvider (data) {
 function ServiceProviderAddresses () {
   var self = this
   self.serviceProvider = ko.observable()
-  self.endpoints = new Endpoints()
 
   self.init = function () {
-    ajax.get(self.endpoints.serviceProviders(getUrlParameter.parameter('key')).addresses().build(),
-      {
-        'content-type': 'application/json',
-        'session-token': cookies.get('session-token')
-      },
+    ajax.get(self.endpointBuilder.serviceProviders(getUrlParameter.parameter('key')).addresses().build(),
+      self.headers(cookies.get('session-token')),
       {})
       .then(function (result) {
         self.serviceProvider(new ServiceProvider(result.json))
       },
       function (error) {
+        self.handleError(error)
       })
   }
 
   self.init()
 }
+
+ServiceProviderAddresses.prototype = new BaseViewModel()
 
 module.exports = ServiceProviderAddresses

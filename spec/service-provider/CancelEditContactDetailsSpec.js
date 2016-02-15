@@ -29,6 +29,7 @@ describe ('Cancel Edit Service Provider Contact Details', function () {
     stubbedApi = sinon.stub(ajax, 'get').returns(fakeResolved ())
     stubbedCookies = sinon.stub(cookies, 'get').returns('stored-session-token')
     stubbedUrlParams = sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
+    sinon.stub(browser, 'dataLoaded')
 
     model = new Model()
     model.editContactDetails()
@@ -46,6 +47,7 @@ describe ('Cancel Edit Service Provider Contact Details', function () {
     ajax.get.restore()
     cookies.get.restore()
     getUrlParameter.parameter.restore()
+    browser.dataLoaded.restore()
   })
 
   it ('should reset isEditingContactDetails to false', function () {

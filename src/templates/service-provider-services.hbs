@@ -7,7 +7,17 @@ pageName: serviceProviderServices
 
 {{#extend "_default"}}
   {{#content "main"}}
-    <div class="block block--cta">
+    <div class="block block--highlight">
+      <div class="container block__inner">
+        <header>
+          <h1>Add Service Provider</h1>
+          <a href="dashboard.html" class="btn btn--info">
+            <span class="btn__text">Back to dashboard</span>
+          </a>
+        </header>
+      </div>
+    </div>
+    <div class="block awaiting-data">
       <div class="container block__inner">
         <div class="block__content form">
           <div data-bind="with: serviceProvider">
@@ -33,7 +43,7 @@ pageName: serviceProviderServices
                     <span data-bind="text: info"></span>
                     <!-- /ko -->
                     <!-- ko if: isEditing -->
-                    <textarea data-bind="textInput: info"></textarea>
+                    <textarea data-bind="textInput: info" class="form__input--textarea"></textarea>
                     <!-- /ko -->
                   </dd>
                   <dt class="key-value-pair__key">Target users</dt>
@@ -42,7 +52,7 @@ pageName: serviceProviderServices
                     <span data-bind="text: tags"></span>
                     <!-- /ko -->
                     <!-- ko if: isEditing -->
-                  <textarea data-bind="textInput: tags"></textarea>
+                    <textarea data-bind="textInput: tags" class="form__input--textarea"></textarea>
                     <!-- /ko -->
                   </dd>
                 </dl>

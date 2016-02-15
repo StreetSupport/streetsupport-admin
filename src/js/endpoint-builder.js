@@ -3,9 +3,40 @@ var endpoints = require('./api-endpoints')
 function EndpointBuilder () {
   var self = this
 
+  self.updateBaseResource = function (resource, resourceId) {
+    self.baseResource = resource
+    self.baseResourceId = resourceId
+    self.childResource = undefined
+    self.childResourceId = undefined
+  }
+
   self.serviceProviders = function (providerId) {
-    self.baseResource = endpoints.getServiceProviders
-    self.baseResourceId = providerId
+    self.updateBaseResource(endpoints.getServiceProviders, providerId)
+    return self
+  }
+
+  self.verifiedUsers = function (userId) {
+    self.updateBaseResource(endpoints.verifiedUsers, userId)
+    return self
+  }
+
+  self.unverifiedUsers = function (userId) {
+    self.updateBaseResource(endpoints.unverifiedUsers, userId)
+    return self
+  }
+
+  self.sessions = function (sessionToken) {
+    self.updateBaseResource(endpoints.sessions, sessionToken)
+    return self
+  }
+
+  self.categories = function () {
+    self.updateBaseResource(endpoints.getServiceCategories)
+    return self
+  }
+
+  self.resetPassword = function (verificationCode) {
+    self.updateBaseResource(endpoints.resetPassword, verificationCode)
     return self
   }
 
@@ -38,11 +69,6 @@ function EndpointBuilder () {
 
   self.contactDetails = function () {
     self.childResource = 'contact-details'
-    return self
-  }
-
-  self.categories = function () {
-    self.baseResource = endpoints.getServiceCategories
     return self
   }
 

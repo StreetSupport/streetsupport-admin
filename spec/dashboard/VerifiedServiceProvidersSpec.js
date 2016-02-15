@@ -39,6 +39,7 @@ describe ('VerifiedServiceProviders', function () {
     stubbedApi.returns(fakeResolved ())
 
     stubbedCookies = sinon.stub(cookies, 'get').returns('stored-session-token')
+    sinon.stub(browser, 'dataLoaded')
 
     dashboard = new Dashboard()
   })
@@ -46,6 +47,7 @@ describe ('VerifiedServiceProviders', function () {
   afterEach (function () {
     ajax.get.restore()
     cookies.get.restore()
+    browser.dataLoaded.restore()
   })
 
   it ('should set verified labels', function () {

@@ -1,0 +1,7 @@
+<p data-bind="text: message"></p>
+<!-- ko if: hasErrors -->
+<h2>There were errors in your submission:</h2>
+<ul data-bind="foreach: errors">
+  <li data-bind="text: $data"></li>
+</ul>
+<!-- /ko -->

@@ -5,6 +5,7 @@ var Endpoints = require('../endpoint-builder')
 var getUrlParameter = require('../get-url-parameter')
 var cookies = require('../cookies')
 var OpeningTime = require('./OpeningTime')
+var BaseViewModel = require('./BaseViewModel')
 var adminUrls = require('../admin-urls')
 
 function Address (data) {
@@ -12,7 +13,6 @@ function Address (data) {
   self.endpoints = new Endpoints()
 
   self.serviceProviderId = data.serviceProviderId
-
 
   self.key = ko.observable(data.key)
   self.savedStreet1 = ko.observable(data.street)
@@ -72,18 +72,14 @@ function Address (data) {
   }
 
   self.deleteAddress = function () {
-    var endpoint = self.endpoints.serviceProviders(getUrlParameter.parameter('key')).addresses(self.key()).build()
-    var headers = {
-      'content-type': 'application/json',
-      'session-token': cookies.get('session-token')
-    }
-    ajax.delete(endpoint, headers, JSON.stringify({}))
+    var endpoint = self.endpointBuilder.serviceProviders(getUrlParameter.parameter('key')).addresses(self.key()).build()
+    ajax.delete(endpoint, self.headers(cookies.get('session-token')), JSON.stringify({}))
     .then(function (result) {
       _.forEach(self.listeners(), function (listener) {
         listener.deleteAddress(self)
       })
     }, function (error) {
-
+      self.handleError(error)
     })
   }
 
@@ -99,19 +95,15 @@ function Address (data) {
 
   self.removeOpeningTime = function (openingTimeToRemove) {
     var remaining = _.filter(self.openingTimes(), function (o) {
-      return o.day() !== openingTimeToRemove.day()
-          || o.startTime() !== openingTimeToRemove.startTime()
-          || o.endTime() !== openingTimeToRemove.endTime()
+      return o.day() !== openingTimeToRemove.day() ||
+             o.startTime() !== openingTimeToRemove.startTime() ||
+             o.endTime() !== openingTimeToRemove.endTime()
     })
 
     self.openingTimes(remaining)
   }
 
   self.save = function () {
-    var headers = {
-      'content-type': 'application/json',
-      'session-token': cookies.get('session-token')
-    }
     var model = JSON.stringify({
       'Street': self.street1(),
       'Street1': self.street2(),
@@ -129,8 +121,8 @@ function Address (data) {
     })
 
     if (self.tempKey() !== undefined || self.key() === undefined) {
-      ajax.post(self.endpoints.serviceProviders(getUrlParameter.parameter('providerId')).addresses().build(),
-        headers,
+      ajax.post(self.endpointBuilder.serviceProviders(getUrlParameter.parameter('providerId')).addresses().build(),
+        self.headers(cookies.get('session-token')),
         model
       ).then(function (result) {
         self.isEditing(false)
@@ -140,12 +132,11 @@ function Address (data) {
           listener.saveAddress(self)
         })
       }, function (error) {
-        var response = JSON.parse(error.response)
-        self.message(response.messages.join('<br />'))
+        self.handleError(error)
       })
     } else {
-      ajax.put(self.endpoints.serviceProviders(getUrlParameter.parameter('providerId')).addresses(self.key()).build(),
-        headers,
+      ajax.put(self.endpointBuilder.serviceProviders(getUrlParameter.parameter('providerId')).addresses(self.key()).build(),
+        self.headers(cookies.get('session-token')),
         model
       ).then(function (result) {
         self.isEditing(false)
@@ -154,8 +145,7 @@ function Address (data) {
           listener.saveAddress(self)
         })
       }, function (error) {
-        var response = JSON.parse(error.response)
-        self.message(response.messages.join('<br />'))
+        self.handleError(error)
       })
     }
   }
@@ -193,5 +183,7 @@ function Address (data) {
     self.listeners().push(listener)
   }
 }
+
+Address.prototype = new BaseViewModel()
 
 module.exports = Address

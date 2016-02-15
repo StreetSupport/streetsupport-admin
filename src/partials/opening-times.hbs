@@ -1,0 +1,14 @@
+<h3>Opening Times</h3>
+<button data-bind="click: newOpeningTime" class="btn btn--info"><span class="btn__text">new</span></button>
+<dl data-bind="foreach: openingTimes" class="key-value-pair">
+  <dt class="key-value-pair__key">
+    <select data-bind="options: days,
+       optionsText: $data,
+       value: day,
+       optionsCaption: '-- please select --'" class="form__input form__input--medium"></select>
+  </dt>
+  <dd class="key-value-pair__value">
+    <input data-bind="textInput: startTime" type="text" class="form__input form__input--short" /> - <input data-bind="textInput: endTime" type="text" class="form__input form__input--short" />
+    <button data-bind="click: $parent.removeOpeningTime" class="btn btn--warning"><span class="btn__text">remove</span></button>
+  </dd>
+</dl>

@@ -55,11 +55,14 @@ describe('Save new Service', function () {
     stubbedCookies = sinon.stub(cookies, 'get').returns('stored-session-token')
     stubbedUrlParams = sinon.stub(getUrlParameter, 'parameter').withArgs('providerId').returns('coffee4craig')
 
+    sinon.stub(browser, 'dataLoaded')
+
     model = new Model()
   })
 
   afterEach(function () {
     ajax.get.restore()
+    browser.dataLoaded.restore()
     cookies.get.restore()
     getUrlParameter.parameter.restore()
   })

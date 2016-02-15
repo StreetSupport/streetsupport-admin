@@ -6,9 +6,8 @@ var getUrlParameter = require('../get-url-parameter')
 var cookies = require('../cookies')
 var OpeningTime = require('./OpeningTime')
 var Address = require('./Address')
+var BaseViewModel = require('./BaseViewModel')
 var adminUrls = require('../admin-urls')
-
-
 
 function Service (data) {
   var self = this
@@ -21,13 +20,17 @@ function Service (data) {
   var tags = data.tags !== null ? data.tags.join(', ') : ''
 
   self.tags = ko.observable(tags)
-  self.openingTimes = ko.observableArray(data.openingTimes.map(ot => new OpeningTime(ot)))
+  self.openingTimes = ko.observableArray(_.map(data.openingTimes, function (ot) {
+    return new OpeningTime(ot)
+  }))
   self.address = new Address(data.address)
 
   self.savedName = ko.observable(data.name)
   self.savedInfo = ko.observable(data.info)
   self.savedTags = ko.observable(tags)
-  self.savedOpeningTimes = ko.observableArray(data.openingTimes.map(ot => new OpeningTime(ot)))
+  self.savedOpeningTimes = ko.observableArray(_.map(data.openingTimes, function (ot) {
+    return new OpeningTime(ot)
+  }))
   self.savedAddress = new Address(data.address)
 
   self.isEditing = ko.observable(false)
@@ -74,27 +77,23 @@ function Service (data) {
 
   self.removeOpeningTime = function (openingTimeToRemove) {
     var remaining = _.filter(self.openingTimes(), function (o) {
-      return o.day() !== openingTimeToRemove.day()
-          || o.startTime() !== openingTimeToRemove.startTime()
-          || o.endTime() !== openingTimeToRemove.endTime()
+      return o.day() !== openingTimeToRemove.day() ||
+             o.startTime() !== openingTimeToRemove.startTime() ||
+             o.endTime() !== openingTimeToRemove.endTime()
     })
 
     self.openingTimes(remaining)
   }
 
   self.save = function () {
-    var endpoint = self.endpoints.serviceProviders(self.serviceProviderId).services(self.id()).build()
-    var headers = {
-      'content-type': 'application/json',
-      'session-token': cookies.get('session-token')
-    }
+    var endpoint = self.endpointBuilder.serviceProviders(self.serviceProviderId).services(self.id()).build()
     var tags = []
-    if (self.tags().length > 0) tags = self.tags().split(',').map(t => t.trim())
+    if (self.tags().length > 0) tags = _.map(self.tags().split(','), function (t) { return t.trim() })
 
     var model = JSON.stringify({
       'Info': self.info(),
       'Tags': tags,
-      'OpeningTimes': self.openingTimes().map(openingTime => {
+      'OpeningTimes': _.map(self.openingTimes(), function (openingTime) {
         return {
           'StartTime': openingTime.startTime(),
           'EndTime': openingTime.endTime(),
@@ -112,32 +111,27 @@ function Service (data) {
     })
 
     ajax.put(endpoint,
-      headers,
+      self.headers(cookies.get('session-token')),
       model
     ).then(function (result) {
       self.isEditing(false)
-      self.listeners().forEach(l => {
+      _.forEach(self.listeners(), function (l) {
         l.serviceSaved(self)
       })
     }, function (error) {
-      var response = JSON.parse(error.response)
-      self.message(response.messages.join('<br />'))
+      self.handleError(error)
     })
   }
 
   self.deleteService = function () {
-    var endpoint = self.endpoints.serviceProviders(getUrlParameter.parameter('key')).services(self.id()).build()
-    var headers = {
-      'content-type': 'application/json',
-      'session-token': cookies.get('session-token')
-    }
-    ajax.delete(endpoint, headers, JSON.stringify({}))
+    var endpoint = self.endpointBuilder.serviceProviders(getUrlParameter.parameter('key')).services(self.id()).build()
+    ajax.delete(endpoint, self.headers(cookies.get('session-token')), JSON.stringify({}))
     .then(function (result) {
       _.forEach(self.listeners(), function (listener) {
         listener.deleteService(self)
       })
     }, function (error) {
-
+      self.handleError(error)
     })
   }
 
@@ -145,5 +139,7 @@ function Service (data) {
     self.listeners().push(listener)
   }
 }
+
+Service.prototype = new BaseViewModel()
 
 module.exports = Service

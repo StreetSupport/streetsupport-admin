@@ -1,33 +1,17 @@
 ---
-title: Login - Street Support Admin
+title: Welcome - Street Support Admin
 description: Street Support - Making it easier to help homeless people in Manchester
-jsName: login
-pageName: login
+jsName: index
+pageName: index
 ---
 
 {{#extend "_default"}}
   {{#content "main"}}
-    <div class="block block--cta">
+    <div class="block block--highlight">
       <div class="container block__inner">
-        <form class="form">
-          <fieldset>
-            <legend>Login</legend>
-            <p data-bind="text: message"></p>
-            <ol>
-              <li>
-                <label for="username">Username</label>
-                <input data-bind="textInput: username" type="text" name="username" placeholder="Username" />
-              </li>
-              <li>
-                <label for="password">Password</label>
-                <input data-bind="textInput: password" type="password" name="password" placeholder="Password" />
-              </li>
-            </ol>
-          </fieldset>
-          <button data-bind="click: submit" class="btn btn--primary">
-            <span class="btn__text">Login</span>
-          </button>
-        </form>
+        <header>
+        <h1>Please wait whilst you are redirected...</h1>
+        </header>
       </div>
     </div>
   {{/content}}

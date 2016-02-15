@@ -18,7 +18,7 @@ describe('Service', function () {
   it('should set link to edit each service', function() {
     expect(model.editServiceUrl).toEqual('edit-service-provider-service.html?providerId=coffee4craig&serviceId=569d2b468705432268b65c75')
   })
-  describe('Service Editing', function() {
+  describe('Editing', function() {
     beforeEach(function() {
       model.edit()
     })
@@ -250,7 +250,8 @@ describe('Service', function () {
       })
 
       it('should set message as joined error messages', function() {
-        expect(model.message()).toEqual('returned error message 1<br />returned error message 2')
+        expect(model.errors()[0]).toEqual('returned error message 1')
+        expect(model.errors()[1]).toEqual('returned error message 2')
       })
 
       it('should keep isEditing as true', function() {

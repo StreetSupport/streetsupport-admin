@@ -7,13 +7,23 @@ pageName: serviceProvider
 
 {{#extend "_default"}}
   {{#content "main"}}
-    <div class="block block--cta">
+    <div class="block block--highlight">
+      <div class="container block__inner">
+        <div data-bind="with: serviceProvider">
+          <header>
+            <h1 data-bind="text: name"></h1>
+            <a href="dashboard.html" class="btn btn--info">
+              <span class="btn__text">Back to dashboard</span>
+              </a>
+          </header>
+        </div>
+      </div>
+    </div>
+    <div class="block awaiting-data">
       <div class="container block__inner">
         <div class="block__content form">
-          <a href="dashboard.html">Back to dashboard</a>
-          <p data-bind="text: message"></p>
+          {{> form-feedback}}
           <div data-bind="with: serviceProvider">
-            <h1 data-bind="text: name"></h1>
             <section>
               <h2>General Details</h2>
               <!-- ko ifnot: $parent.isEditingGeneralDetails -->
@@ -30,7 +40,7 @@ pageName: serviceProvider
                   <span data-bind="text: description"></span>
                   <!-- /ko -->
                   <!-- ko if: $parent.isEditingGeneralDetails -->
-                  <textarea data-bind="textInput: description"></textarea>
+                  <textarea data-bind="textInput: description" class="form__input form__input--textarea"></textarea>
                   <!-- /ko -->
                 </dd>
               </dl>
@@ -38,11 +48,17 @@ pageName: serviceProvider
             <section>
               <h2>Contact Information</h2>
               <!-- ko ifnot: $parent.isEditingContactDetails -->
-              <button data-bind="click: $parent.editContactDetails" class="btn btn--info"><span class="btn__text">edit</span></button>
+              <button data-bind="click: $parent.editContactDetails" class="btn btn--info">
+                <span class="btn__text">edit</span>
+              </button>
               <!-- /ko -->
               <!-- ko if: $parent.isEditingContactDetails -->
-              <button data-bind="click: $parent.cancelEditContactDetails" class="btn btn--indifferent"><span class="btn__text">cancel</span></button>
-              <button data-bind="click: $parent.saveContactDetails" class="btn btn--primary"><span class="btn__text">save</span></button>
+              <button data-bind="click: $parent.cancelEditContactDetails" class="btn btn--indifferent">
+                <span class="btn__text">cancel</span>
+              </button>
+              <button data-bind="click: $parent.saveContactDetails" class="btn btn--primary">
+                <span class="btn__text">save</span>
+              </button>
               <!-- /ko -->
               <dl class="key-value-pair">
                 <dt class="key-value-pair__key">Telephone</dt>
@@ -51,7 +67,7 @@ pageName: serviceProvider
                   <span data-bind="text: telephone"></span>
                   <!-- /ko -->
                   <!-- ko if: $parent.isEditingContactDetails -->
-                  <input type="text" data-bind="textInput: telephone" />
+                  <input type="text" data-bind="textInput: telephone" class="form__input" />
                   <!-- /ko -->
                 </dd>
                 <dt class="key-value-pair__key">Email</dt>
@@ -60,7 +76,7 @@ pageName: serviceProvider
                   <span data-bind="text: email"></span>
                   <!-- /ko -->
                   <!-- ko if: $parent.isEditingContactDetails -->
-                  <input type="text" data-bind="textInput: email" />
+                  <input type="text" data-bind="textInput: email" class="form__input" />
                   <!-- /ko -->
                 </dd>
                 <dt class="key-value-pair__key">Website</dt>
@@ -69,7 +85,7 @@ pageName: serviceProvider
                   <span data-bind="text: website"></span>
                   <!-- /ko -->
                   <!-- ko if: $parent.isEditingContactDetails -->
-                  <input type="text" data-bind="textInput: website" />
+                  <input type="text" data-bind="textInput: website" class="form__input" />
                   <!-- /ko -->
                 </dd>
                 <dt class="key-value-pair__key">Facebook</dt>
@@ -78,7 +94,7 @@ pageName: serviceProvider
                   <span data-bind="text: facebook"></span>
                   <!-- /ko -->
                   <!-- ko if: $parent.isEditingContactDetails -->
-                  <input type="text" data-bind="textInput: facebook" />
+                  <input type="text" data-bind="textInput: facebook" class="form__input" />
                   <!-- /ko -->
                 </dd>
                 <dt class="key-value-pair__key">Twitter</dt>
@@ -87,29 +103,47 @@ pageName: serviceProvider
                   <span data-bind="text: twitter"></span>
                   <!-- /ko -->
                   <!-- ko if: $parent.isEditingContactDetails -->
-                  <input type="text" data-bind="textInput: twitter" />
+                  <input type="text" data-bind="textInput: twitter" class="form__input" />
                   <!-- /ko -->
                 </dd>
               </dl>
             </section>
             <section>
-              <h2>Addresses</h2>
-              <a data-bind="attr: { 'href': addAddressUrl }" title="add address">Add Address</a>
+              <header>
+                <h2>Addresses</h2>
+                <a data-bind="attr: { 'href': addAddressUrl }" title="add address" class="btn btn--primary">
+                  <span class="btn__text">Add</span>
+                </a>
+              </header>
               <div data-bind="foreach: addresses">
-                <article>
-                  <address data-bind="text: formatted"></address>
-                  <a data-bind="attr: { 'href': editAddressUrl }" title="edit address">Edit Address</a>
-                  <a data-bind="click: deleteAddress" title="edit address">Delete Address</a>
+                <article class="key-value-pair">
+                  <address data-bind="text: formatted" class="key-value-pair__key"></address>
+                  <div class="key-value-pair__value">
+                    <a data-bind="attr: { 'href': editAddressUrl }" title="edit address" class="btn btn--info">
+                      <span class="btn__text">Edit</span>
+                    </a>
+                    <a data-bind="click: deleteAddress" title="edit address" class="btn btn--warning">
+                      <span class="btn__text">Delete</span>
+                    </a>
+                  </div>
                 </article>
               </div>
             </section>
             <section>
               <h2>Services</h2>
-              <a data-bind="attr: { 'href': addServiceUrl }" title="edit services">Add Service</a>
+              <a data-bind="attr: { 'href': addServiceUrl }" title="edit services" class="btn btn--primary">
+                <span class="btn__text">Add</span>
+              </a>
               <div data-bind="foreach: newServices">
-                <h3 data-bind="text: name"></h3>
-                <a data-bind="attr: { 'href': editServiceUrl }" title="edit address">Edit Service</a>
-                  <a data-bind="click: deleteService" title="edit address">Delete Service</a>
+                <article>
+                  <h3 data-bind="text: name"></h3>
+                  <a data-bind="attr: { 'href': editServiceUrl }" title="edit address" class="btn btn--info">
+                    <span class="btn__text">Edit</span>
+                  </a>
+                  <a data-bind="click: deleteService" title="edit address" class="btn btn--warning">
+                    <span class="btn__text">Delete</span>
+                  </a>
+                </article>
               </div>
             </section>
           </div>

@@ -33,6 +33,7 @@ describe('Edit Service', function () {
     stubbedUrlParams = sinon.stub(getUrlParameter, 'parameter')
     stubbedUrlParams.withArgs('providerId').returns('coffee4craig')
     stubbedUrlParams.withArgs('serviceId').returns('2')
+    sinon.stub(browser, 'dataLoaded')
 
     model = new Model()
   })
@@ -41,6 +42,7 @@ describe('Edit Service', function () {
     ajax.get.restore()
     cookies.get.restore()
     getUrlParameter.parameter.restore()
+    browser.dataLoaded.restore()
     browser.redirect.restore()
   })
 
