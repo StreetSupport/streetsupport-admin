@@ -15,6 +15,7 @@ function ServiceProvider (data) {
   self.key = ko.observable(data.key)
   self.name = ko.observable(data.name)
   self.description = ko.observable(data.description)
+  self.areaServiced = ko.observable(data.areaServiced)
   self.telephone = ko.observable(data.telephone)
   self.email = ko.observable(data.email)
   self.website = ko.observable(data.website)
@@ -95,7 +96,8 @@ function ServiceProviderDetails () {
       ajax.put(self.endpointBuilder.serviceProviders(getUrlParameter.parameter('key')).generalInformation().build(),
         self.headers(cookies.get('session-token')),
         JSON.stringify({
-          'Description': self.serviceProvider().description()
+          'Description': self.serviceProvider().description(),
+	  'AreaServiced': self.serviceProvider().areaServiced()
         })
         ).then(function (result) {
           self.isEditingGeneralDetails(false)
@@ -136,6 +138,8 @@ function ServiceProviderDetails () {
 
   self.restoreViewModel = function () {
     self.serviceProvider().description(self.initialServiceProvider().description())
+
+    self.serviceProvider().areaServiced(self.initialServiceProvider().areaServiced())
 
     self.serviceProvider().telephone(self.initialServiceProvider().telephone())
     self.serviceProvider().email(self.initialServiceProvider().email())
