@@ -43,15 +43,6 @@ pageName: serviceProvider
                   <textarea data-bind="textInput: description" class="form__input form__input--textarea"></textarea>
                   <!-- /ko -->
                 </dd>
-                <dt class="key-value-pair__key">Area Serviced</dt>
-                <dd class="key-value-pair__value">
-                  <!-- ko ifnot: $parent.isEditingGeneralDetails -->
-                  <span data-bind="text: areaServiced"></span>
-                  <!-- /ko -->
-                  <!-- ko if: $parent.isEditingGeneralDetails -->
-                  <textarea data-bind="textInput: areaServiced" class="form__input form__input--textarea"></textarea>
-                  <!-- /ko -->
-                </dd>
               </dl>
             </section>
             <section>
