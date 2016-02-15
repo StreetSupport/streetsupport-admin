@@ -1,6 +1,4 @@
 var ajax = require('basic-ajax')
-var adminUrls = require('../../admin-urls')
-var browser = require('../../browser')
 var cookies = require('../../cookies')
 var ko = require('knockout')
 var BaseViewModel = require('../BaseViewModel')
@@ -17,14 +15,13 @@ function ResetPasswordModel () {
   self.submit = function () {
     var self = this
     if (!self.isSubmitting) {
-
       if(self.password() === self.password2()) {
         self.isSubmitting = true
         self.message('Loading, please wait')
         ajax.put(self.endpointBuilder.resetPassword(urlParams.parameter('id')).build(), 
         self.headers(cookies.get('session-token')),
         JSON.stringify({
-          'Password': self.password(),
+          'Password': self.password()
         }))
         .then(function (result) {
           self.isSubmissionSuccessful(true)
