@@ -3,7 +3,7 @@
 # Define variables depending on the branch
 if [[ $TRAVIS_BRANCH == 'master' ]]
   then
-    REPO="github.com/StreetSupport/admin.streetsupport.net-beta.git"
+    REPO="github.com/StreetSupport/admin.streetsupport.net-live.git"
     DOMAIN="service.streetsupport.net"
     APIENVIRONMENT=2
   else
@@ -56,12 +56,19 @@ echo "pushing to repo"
 # Push to git by overriding previous commits
 # IMPORTANT: Supress messages so nothing appears in logs
 
-if [[ $TRAVIS_BRANCH == 'master' ]] || [[ $TRAVIS_BRANCH == 'develop' ]]
+if [[ $TRAVIS_BRANCH == 'master' ]] # live
+  then
+    git init
+    git add -A
+    git commit -m "Travis CI automatic build for $THE_COMMIT"
+    git push --force --quiet "https://${GH_TOKEN}@${REPO}" master > /dev/null 2>&1
+fi
+
+
+if [[ $TRAVIS_BRANCH == 'develop' ]] # dev
   then
     git init
     git add -A
     git commit -m "Travis CI automatic build for $THE_COMMIT"
     git push --force --quiet "https://${GH_TOKEN}@${REPO}" master:gh-pages > /dev/null 2>&1
-  else
-    echo "Not on master or develop branch so don't push the changes to GitHub Pages"
 fi

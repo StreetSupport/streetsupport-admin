@@ -198,6 +198,7 @@ describe('Save new Service', function () {
       model.subCategories()[3].isSelected(true)
 
       model.info('new info')
+      model.locationDescription('new location description')
       model.targetAudience('tag a, tag b')
       model.preselectedAddress(model.addresses()[0])
       model.prefillAddress()
@@ -218,6 +219,7 @@ describe('Save new Service', function () {
       }
       var payload = JSON.stringify({
         'Info': 'new info',
+	'LocationDescription': 'new location description',
         'Tags': ['tag a', 'tag b'],
         'Category': 'accom',
         'SubCategories': ['hostel', 'rented'],

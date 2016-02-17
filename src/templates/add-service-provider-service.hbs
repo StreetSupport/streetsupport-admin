@@ -56,7 +56,15 @@ pageName: addServiceProviderService
           </dl>
         </section>
         <section>
-        <h3>Use Existing Address</h3>
+          <h3>Location</h3>
+	  <p>Enter a location for this service, either by selecting an existing address, or entering new details. For outreach services with no fixed address, enter a description in the field below.</p>
+          <dl class="key-value-pair">
+            <dt class="key-value-pair__key">Outreach Locations Description</dt>
+            <dd class="key-value-pair__value">
+              <textarea data-bind="textInput: locationDescription" class="form__input--textarea"></textarea>
+            </dd>
+          </dl>
+          <h3>Use Existing Address</h3>
           <dl>
             <dt class="key-value-pair__key">Select</dt>
             <dd class="key-value-pair__value">

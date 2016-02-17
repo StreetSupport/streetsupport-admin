@@ -31,15 +31,24 @@ pageName: editServiceProviderService
                   <input data-bind="textInput: tags" type="text" class="form__input" />
                 </dd>
               </dl>
-              </section>
-              <section data-bind="with: address">
-                {{> address}}
-              </section>
-              <section>
-                {{> opening-times}}
-              </section>
-              <button data-bind="click: save" class="btn btn--primary"><span class="btn__text">save</span></button>
-            </form>
+            </section>
+            <section>
+              <h3>Outreach Location Description</h3>
+              <dl>
+                <dt class="key-value-pair__key">Location</dt>
+                <dd class="key-value-pair__value">
+                  <textarea data-bind="textInput: locationDescription" class="form__input--textarea"></textarea>
+                </dd>
+              </dl>
+            </section>
+            <section data-bind="with: address">
+              {{> address}}
+            </section>
+            <section>
+              {{> opening-times}}
+            </section>
+            <button data-bind="click: save" class="btn btn--primary"><span class="btn__text">save</span></button>
+          </form>
         </div>
       </div>
     </div>

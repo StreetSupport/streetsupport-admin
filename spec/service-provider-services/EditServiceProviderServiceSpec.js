@@ -66,6 +66,10 @@ describe('Edit Service', function () {
     expect(model.service().name).toEqual('Meals')
   })
 
+  it('should set location description on Service', function () {
+    expect(model.service().locationDescription()).toEqual('location description')
+  })
+
   it('should set address key on Service', function () {
     expect(model.service().address.key()).toEqual('7a6ff0f3-5b04-4bd9-b088-954e473358f5')
   })
@@ -107,6 +111,7 @@ function serviceData() {
     "key": 2,
     "name": "Meals",
     "info": "Lunch",
+    "locationDescription": "location description",
     "openingTimes": [{
       "startTime": "12:00",
       "endTime": "13:00",
