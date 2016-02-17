@@ -3,7 +3,7 @@
 # Define variables depending on the branch
 if [[ $TRAVIS_BRANCH == 'master' ]]
   then
-    REPO="github.com/StreetSupport/admin.streetsupport.net-beta.git"
+    REPO="github.com/StreetSupport/admin.streetsupport.net-live.git"
     DOMAIN="service.streetsupport.net"
     APIENVIRONMENT=2
   else
