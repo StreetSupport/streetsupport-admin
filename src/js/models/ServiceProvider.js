@@ -31,8 +31,8 @@ function ServiceProvider (data) {
   _.forEach(data.providedServices, function (s) {
     s.serviceProviderId = data.key
   })
-  self.newServices = ko.observable(_.map(data.providedServices, function (s) { return new Service(s) }))
-  _.forEach(self.newServices(), function (s) {
+  self.services = ko.observable(_.map(data.providedServices, function (s) { return new Service(s) }))
+  _.forEach(self.services(), function (s) {
     s.addListener(self)
   })
 
@@ -50,10 +50,10 @@ function ServiceProvider (data) {
   }
 
   self.deleteService = function (deletedService) {
-    var remainingServices = _.filter(self.newServices(), function (service) {
+    var remainingServices = _.filter(self.services(), function (service) {
       return service.id() !== deletedService.id()
     })
-    self.newServices(remainingServices)
+    self.services(remainingServices)
   }
 }
 
