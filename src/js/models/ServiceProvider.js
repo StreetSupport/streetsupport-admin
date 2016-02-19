@@ -42,6 +42,8 @@ function ServiceProvider (data) {
   self.addServiceUrl = adminUrls.serviceProviderServicesAdd + '?providerId=' + data.key
   self.amendServicesUrl = adminUrls.serviceProviderServices + '?providerId=' + data.key
 
+  self.addNeedUrl = adminUrls.serviceProviderNeedsAdd + '?providerId=' + data.key
+
   self.deleteAddress = function (deletedAddress) {
     var remainingAddresses = _.filter(self.addresses(), function (address) {
       return address.key() !== deletedAddress.key()

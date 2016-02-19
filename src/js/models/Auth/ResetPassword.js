@@ -15,10 +15,10 @@ function ResetPasswordModel () {
   self.submit = function () {
     var self = this
     if (!self.isSubmitting) {
-      if(self.password() === self.password2()) {
+      if (self.password() === self.password2()) {
         self.isSubmitting = true
         self.message('Loading, please wait')
-        ajax.put(self.endpointBuilder.resetPassword(urlParams.parameter('id')).build(), 
+        ajax.put(self.endpointBuilder.resetPassword(urlParams.parameter('id')).build(),
         self.headers(cookies.get('session-token')),
         JSON.stringify({
           'Password': self.password()
@@ -30,7 +30,7 @@ function ResetPasswordModel () {
           self.isSubmitting = false
         })
       } else {
-        self.errors(['Passwords must match.'])  
+        self.errors(['Passwords must match.'])
       }
     }
   }

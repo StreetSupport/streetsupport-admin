@@ -74,6 +74,10 @@ describe ('Show Service Provider', function () {
   it ('should set link to manage services', function () {
     expect(model.serviceProvider().addServiceUrl).toEqual('add-service-provider-service.html?providerId=coffee4craig')
   })
+
+  it ('should set link to manage needs', function () {
+    expect(model.serviceProvider().addNeedUrl).toEqual('add-service-provider-need.html?providerId=coffee4craig')
+  })
 })
 
 function coffee4Craig() {

@@ -17,5 +17,6 @@ module.exports = {
   serviceProviderServices: s('service-provider-services'),
   serviceProviderServicesAdd: s('add-service-provider-service'),
   serviceProviderServicesEdit: s('edit-service-provider-service'),
+  serviceProviderNeedsAdd: s('add-service-provider-need'),
   userAdd: s('add-user')
 }

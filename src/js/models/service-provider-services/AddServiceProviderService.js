@@ -68,7 +68,7 @@ function AddServiceProviderService () {
     } else {
       var payload = JSON.stringify({
         'Info': self.info(),
-	'LocationDescription': self.locationDescription(),
+        'LocationDescription': self.locationDescription(),
         'Tags': tags,
         'Category': self.category().key,
         'SubCategories': _.chain(self.subCategories())
