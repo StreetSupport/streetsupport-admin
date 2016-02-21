@@ -9,7 +9,6 @@ var get = function (key) {
 }
 
 var unset = function (key) {
-  console.log('unsetting ' + key)
   return cookieCutter.set(key, '', { expires: new Date(0) })
 }
 

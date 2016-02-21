@@ -1,5 +1,5 @@
 var ko = require('knockout')
-var Address = require('../Address')
+var Need = require('../Need')
 var BaseViewModel = require('../BaseViewModel')
 var browser = require('../../browser')
 var adminurls = require('../../admin-urls')
@@ -7,12 +7,13 @@ var getUrlParameter = require('../../get-url-parameter')
 
 function AddServiceProviderNeed () {
   var self = this
-  var address = new Address({})
-  address.addListener(self)
-  self.address = ko.observable(address)
+  var need = new Need({})
+  need.addListener(self)
+  self.need = ko.observable(need)
 
-  self.saveAddress = function (address) {
-    browser.redirect(adminurls.serviceProviders + '?key=' + getUrlParameter.parameter('providerId'))
+  self.saveNeed = function (need) {
+    var redirect = adminurls.serviceProviders + '?key=' + getUrlParameter.parameter('providerId')
+    browser.redirect(redirect)
   }
   self.dataLoaded()
 }
