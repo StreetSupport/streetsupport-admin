@@ -31,7 +31,7 @@ describe ('Show Service Provider', function () {
     sinon.stub(browser, 'dataLoaded')
 
     model = new Model()
-    model.serviceProvider().newServices()[0].deleteService()
+    model.serviceProvider().services()[0].deleteService()
   })
 
   afterEach (function () {
@@ -43,11 +43,11 @@ describe ('Show Service Provider', function () {
   })
 
   it ('should remove Service from collection', function () {
-    expect(model.serviceProvider().newServices().length).toEqual(1)
+    expect(model.serviceProvider().services().length).toEqual(1)
   })
 
   it ('should keep expected address', function () {
-    expect(model.serviceProvider().newServices()[0].id()).toEqual('5678')
+    expect(model.serviceProvider().services()[0].id()).toEqual('5678')
   })
 })
 

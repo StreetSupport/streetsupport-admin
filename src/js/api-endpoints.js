@@ -1,8 +1,8 @@
 var env = require('./env')
 
-var dev = 'http://localhost:55881' // eslint-disable-line
-var staging = 'http://streetsupport-api-staging.apphb.com' // eslint-disable-line
-var live = 'http://api.streetsupport.net' // eslint-disable-line
+var dev = 'http://localhost:55881'
+var staging = 'https://streetsupport-api-staging.apphb.com'
+var live = 'https://streetsupport-api.apphb.com'
 
 var envs = [dev, staging, live]
 

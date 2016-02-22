@@ -52,6 +52,12 @@ function EndpointBuilder () {
     return self
   }
 
+  self.needs = function (needId) {
+    self.childResource = 'needs'
+    self.childResourceId = needId
+    return self
+  }
+
   self.isVerified = function () {
     self.childResource = 'is-verified'
     return self
