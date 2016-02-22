@@ -18,4 +18,10 @@
 
   h2, h3, address { display: inline-block; margin-right: 1em; width: 300px; }
   &__label { display: inline-block; margin-right: 1em; width: 300px; }
+
+  &__checkbox-container {
+    & > *:hover { list-style:none; cursor: pointer }
+   }
+  &__checkbox { margin-right: 1em; }
+  &__checkbox-label { }
 }

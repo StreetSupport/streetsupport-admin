@@ -35,9 +35,9 @@ pageName: addServiceProviderService
           <dt class="key-value-pair__key">Sub Categories</dt>
           <dd class="key-value-pair__value">
             <ul data-bind="foreach: subCategories">
-              <li>
-                <label data-bind="text: name"></label>
-                <input type="checkbox" data-bind="checked: isSelected" />
+              <li class="form__checkbox-container">
+                <input type="checkbox" data-bind="attr: { name: name, id: name }" data-bind="checked: isSelected" class="form__checkbox" />
+                <label data-bind="text: name, attr: { for: name }" class="form__checkbox-label"></label>
               </li>
             </ul>
           </dd>
