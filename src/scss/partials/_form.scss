@@ -21,8 +21,11 @@
 
   &__checkbox-container {
     list-style:none; padding: 0;
-    & *:hover { cursor: pointer }
    }
-  &__checkbox { margin-right: 1em; }
-  &__checkbox-label { }
+  &__checkbox { margin-right: 1em;
+    &:hover { cursor: pointer }
+  }
+  &__checkbox-label {
+    &:hover { cursor: pointer }
+  }
 }
