@@ -67,6 +67,10 @@ describe ('Show Service Provider', function () {
     expect(model.serviceProvider().services()[0].serviceProviderId).toEqual('coffee4craig')
   })
 
+  it ('should set needs\' service provider id', function () {
+    expect(model.serviceProvider().needs()[0].serviceProviderId).toEqual('coffee4craig')
+  })
+
   it ('should set link to add address', function () {
     expect(model.serviceProvider().addAddressUrl).toEqual('add-service-provider-address.html?providerId=coffee4craig')
   })
@@ -138,6 +142,11 @@ function coffee4Craig() {
         'openingTimes': null
       },
       'tags': ['some tags']
+    }],
+    "needs": [{
+      "id": "56ca227f92855621e8d60318",
+      "description": "some new description.",
+      "serviceProviderId": "albert-kennedy-trust"
     }]
   }
 }

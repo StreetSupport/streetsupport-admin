@@ -5,6 +5,7 @@ var browser = require('../browser')
 var getUrlParameter = require('../get-url-parameter')
 var Address = require('./Address')
 var Service = require('./Service')
+var Need = require('./Need')
 var ko = require('knockout')
 var _ = require('lodash')
 var BaseViewModel = require('./BaseViewModel')
@@ -31,8 +32,13 @@ function ServiceProvider (data) {
   _.forEach(data.providedServices, function (s) {
     s.serviceProviderId = data.key
   })
-  self.services = ko.observable(_.map(data.providedServices, function (s) { return new Service(s) }))
+  self.services = ko.observableArray(_.map(data.providedServices, function (s) { return new Service(s) }))
   _.forEach(self.services(), function (s) {
+    s.addListener(self)
+  })
+
+  self.needs = ko.observableArray(_.map(data.needs, function (n) { return new Need(n) }))
+  _.forEach(self.needs(), function (s) {
     s.addListener(self)
   })
 
