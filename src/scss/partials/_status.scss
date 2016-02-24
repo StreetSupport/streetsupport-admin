@@ -1,0 +1,10 @@
+.status {
+  padding: 0.25em 0.5em;
+  &--true {
+    color: green;
+  }
+
+  &--false {
+    color: red;
+  }
+}

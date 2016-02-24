@@ -24,16 +24,19 @@ describe ('Dashboard', function () {
                 'key': 'albert-kennedy-trust',
                 'name': 'Albert Kennedy Trust',
                 'isVerified': false,
-              },
-              {
-                'key': 'coffee4craig',
-                'name': 'Coffee4Craig',
-                'isVerified': false
+                'isPublished': false
               },
               {
                 'key': 'booth-centre',
                 'name': 'Booth Centre',
-                'isVerified': false
+                'isVerified': true,
+                'isPublished': true
+              },
+              {
+                'key': 'coffee4craig',
+                'name': 'Coffee4Craig',
+                'isVerified': false,
+                'isPublished': true
               }
             ]
           })
@@ -88,5 +91,25 @@ describe ('Dashboard', function () {
 
   it ('should set create new user url', function () {
     expect(dashboard.serviceProviders()[0].newUserUrl).toEqual(adminurls.userAdd + '?key=albert-kennedy-trust')
+  })
+
+  it ('should have verifiedLabel equal to the providers verification status', function () {
+    expect(dashboard.serviceProviders()[0].verifiedLabel()).toEqual("under review")
+    expect(dashboard.serviceProviders()[1].verifiedLabel()).toEqual("verified")
+  })
+
+  it ('should have verifiedLabelClass based on the providers verification status', function () {
+    expect(dashboard.serviceProviders()[0].verifiedLabelClass()).toEqual("status status--false")
+    expect(dashboard.serviceProviders()[1].verifiedLabelClass()).toEqual("status status--true")
+  })
+
+  it ('should have publishedLabel equal to the providers publication status', function () {
+    expect(dashboard.serviceProviders()[0].publishedLabel()).toEqual("disabled")
+    expect(dashboard.serviceProviders()[1].publishedLabel()).toEqual("published")
+  })
+
+  it ('should have publishedLabelClass based on the providers publication status', function () {
+    expect(dashboard.serviceProviders()[0].publishedLabelClass()).toEqual("status status--false")
+    expect(dashboard.serviceProviders()[1].publishedLabelClass()).toEqual("status status--true")
   })
 })
