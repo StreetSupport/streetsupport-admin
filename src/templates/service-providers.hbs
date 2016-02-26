@@ -110,22 +110,20 @@ pageName: serviceProvider
             </section>
             <section>
               <header>
-                <h2>Addresses</h2>
-                <a data-bind="attr: { 'href': addAddressUrl }" title="add address" class="btn btn--primary">
+                <h2>Locations</h2>
+                <a data-bind="attr: { 'href': addAddressUrl }" title="add location" class="btn btn--primary">
                   <span class="btn__text">Add</span>
                 </a>
               </header>
               <div data-bind="foreach: addresses">
                 <article class="key-value-pair">
                   <address data-bind="text: formatted" class="key-value-pair__key"></address>
-                  <div class="key-value-pair__value">
-                    <a data-bind="attr: { 'href': editAddressUrl }" title="edit address" class="btn btn--info">
-                      <span class="btn__text">Edit</span>
-                    </a>
-                    <a data-bind="click: deleteAddress" title="edit address" class="btn btn--warning">
-                      <span class="btn__text">Delete</span>
-                    </a>
-                  </div>
+                  <a data-bind="attr: { 'href': editAddressUrl }" title="edit location" class="btn btn--info">
+                    <span class="btn__text">Edit</span>
+                  </a>
+                  <a data-bind="click: deleteAddress" title="delete location" class="btn btn--warning">
+                    <span class="btn__text">Delete</span>
+                  </a>
                 </article>
               </div>
             </section>

@@ -13,8 +13,10 @@ function ServiceProvider (sp) {
   this.isVerified = ko.observable(sp.isVerified)
   this.isPublished = ko.observable(sp.isPublished)
   this.verifiedLabel = ko.computed(function () { return this.isVerified() ? 'verified' : 'under review' }, this)
+  this.verifiedLabelClass = ko.computed(function () { return this.isVerified() ? 'status status--true' : 'status status--false' }, this)
   this.toggleVerificationButtonLabel = ko.computed(function () { return this.isVerified() ? 'un-verify' : 'verify' }, this)
   this.publishedLabel = ko.computed(function () { return this.isPublished() ? 'published' : 'disabled' }, this)
+  this.publishedLabelClass = ko.computed(function () { return this.isPublished() ? 'status status--true' : 'status status--false' }, this)
   this.togglePublishButtonLabel = ko.computed(function () { return this.isPublished() ? 'disable' : 'publish' }, this)
 }
 
