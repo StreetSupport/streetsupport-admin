@@ -71,4 +71,5 @@ if [[ $TRAVIS_BRANCH == 'develop' ]] # dev
     git add -A
     git commit -m "Travis CI automatic build for $THE_COMMIT"
     git push --force --quiet "https://${GH_TOKEN}@${REPO}" master:gh-pages > /dev/null 2>&1
+    echo $vincetestenvvar
 fi
