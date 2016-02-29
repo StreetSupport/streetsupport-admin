@@ -63,7 +63,7 @@ if [[ $TRAVIS_BRANCH == 'develop' ]] # dev
     git init
 
     git remote add deploy "travisdeploy@178.62.41.238:/usr/share/nginx/html/admin-staging.streetsupport.net"
-    git config user.name "Travis CI"
+    git config user.name "vincelee888"
     git config user.email "travis-deploy@streetsupport.net"
 
     git add .
