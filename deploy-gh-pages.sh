@@ -57,21 +57,11 @@ if [[ $TRAVIS_BRANCH == 'master' ]] # live
     git push --force --quiet "https://${GH_TOKEN}@${REPO}" master > /dev/null 2>&1
 fi
 
-
 if [[ $TRAVIS_BRANCH == 'develop' ]] # dev
   then
-    openssl aes-256-cbc -K $encrypted_516b0b657008_key -iv $encrypted_516b0b657008_iv -in travis-deploy-key.enc -out .\\travis-deploy-key -d
-    rm travis-deploy-key.enc # Don't need it anymore
-    chmod 600 travis-deploy-key
-    mv travis-deploy-key ~/.ssh/id_rsa
-
     git init
-
-    git remote add deploy "travisdeploy@178.62.41.238:/usr/share/nginx/html/admin-staging.streetsupport.net"
-    git config user.name "vincelee"
-    git config user.email "travis-deploy@streetsupport.net"
-
-    git add .
-    git commit -m "Deploy"
-    git push --force deploy master
+    git add -A
+    git commit -m "Travis CI automatic build for $THE_COMMIT"
+    git push --force --quiet "https://${GH_TOKEN}@${REPO}" master:gh-pages > /dev/null 2>&1
+    echo $vincetestenvvar
 fi
