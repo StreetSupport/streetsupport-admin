@@ -41,9 +41,6 @@ cd ../../
 # Run gulp
 gulp deploy --debug --production
 
-# Move to created directory
-cd _dist
-
 echo "pushing to repo"
 
 # Push to git by overriding previous commits
@@ -51,6 +48,7 @@ echo "pushing to repo"
 
 if [[ $TRAVIS_BRANCH == 'master' ]] # live
   then
+    cd _dist
     git init
     git add -A
     git commit -m "Travis CI automatic build for $THE_COMMIT"
@@ -64,6 +62,7 @@ if [[ $TRAVIS_BRANCH == 'develop' ]] # dev
     chmod 600 travis-deploy-key
     mv travis-deploy-key ~/.ssh/id_rsa
 
+    cd _dist
     git init
 
     git remote add deploy "travisdeploy@178.62.41.238:/usr/share/nginx/html/admin-staging.streetsupport.net"
