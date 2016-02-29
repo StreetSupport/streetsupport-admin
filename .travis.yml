@@ -13,6 +13,3 @@ script: "./deploy-gh-pages.sh"
 env:
   global:
   - secure: jlPXP9nKXuPU9YEe2OgVlx68k3l49X7Jk9ugH02jTZyZ/iSvHxiFSu55/T7jP2Ah+XE3xODbSA4VMSobq7h+rmmanx9RsJZZ1+3hG3/uXdMgZMFnyG+qm7PIuUavXvhtywIq8CN2IQf3KBoYEtNzt3oNFRMYycp9U8P6XE6BSKVemt/Cc2rAp39xD68X0IXfYsu68qCxELZhMuCNBcUQUbhZYmRqI0L0qJnWnPa+uXhZpy+TEuYCLglFPN2/N68V9fYj5awgjIT31V9PntT6vBRzmdXY9QtcYDfKg/Elb+wr6BKC4RVnCa/wMqOP/IZMknu+Xr9PXj0Ovu1j8n11VdZe6H/poj7q7P1QXCId6FQIoeXESjEcuQ4Gj2UyIMflZXcne7zIBmpgR7Lpfn2zMEVeA5Atmqh6Rk6QX9yRezrIWv7o8+mOm/375vhC3lMWOk9D4Mk7araB0NS6BYopNEOoHZU8ZjDFF4zuNjTuJWf3Fv/Cd/awccTASc9+pmE/jt0IBv5RgzrvQ+/VB2NGKOjA1SPli8SK96tbcBXuPuLjbde+6j7AkrVjp5BxARVcChsOBSePsgM6KzR2ELlRhPg0tNz8LF0j+sUyQiC8g0PIpNvybkCAGhfrIUQOA92gBu16GLbsKfaz49XYjlah7nppfiH2UU1zTkOHUAPFsug=
-before_install:
-- openssl aes-256-cbc -K $encrypted_516b0b657008_key -iv $encrypted_516b0b657008_iv
-  -in travis-deploy-key.enc -out .\\travis-deploy-key -d
