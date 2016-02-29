@@ -44,13 +44,6 @@ gulp deploy --debug --production
 # Move to created directory
 cd _dist
 
-echo "creating cname file"
-
-# Create CNAME file and populate with domain depending on branch
-#cat > CNAME << EOF
-#$DOMAIN
-#EOF
-
 echo "pushing to repo"
 
 # Push to git by overriding previous commits
