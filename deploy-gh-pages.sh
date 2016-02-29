@@ -61,9 +61,9 @@ fi
 if [[ $TRAVIS_BRANCH == 'develop' ]] # dev
   then
     openssl aes-256-cbc -K $encrypted_516b0b657008_key -iv $encrypted_516b0b657008_iv -in travis-deploy-key.enc -out .\\travis-deploy-key -d
-    rm deploy-key.enc # Don't need it anymore
-    chmod 600 deploy-key
-    mv deploy-key ~/.ssh/id_rsa
+    rm travis-deploy-key.enc # Don't need it anymore
+    chmod 600 travis-deploy-key
+    mv travis-deploy-key ~/.ssh/id_rsa
 
     git init
 
