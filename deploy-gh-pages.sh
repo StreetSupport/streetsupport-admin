@@ -61,8 +61,12 @@ fi
 if [[ $TRAVIS_BRANCH == 'develop' ]] # dev
   then
     git init
-    git add -A
-    git commit -m "Travis CI automatic build for $THE_COMMIT"
-    git push --force --quiet "https://${GH_TOKEN}@${REPO}" master:gh-pages > /dev/null 2>&1
-    echo $vincetestenvvar
+
+    git remote add deploy "travisdeploy@178.62.41.238:/usr/share/nginx/html/admin-staging.streetsupport.net"
+    git config user.name "Travis CI"
+    git config user.email "travis-deploy@streetsupport.net"
+
+    git add .
+    git commit -m "Deploy"
+    git push --force deploy master
 fi
