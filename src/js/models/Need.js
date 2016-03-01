@@ -24,7 +24,7 @@ function Need (data) {
   self.listeners = ko.observableArray()
 
   self.deleteNeed = function () {
-    var endpoint = self.endpointBuilder.serviceProviders(getUrlParameter.parameter('providerId')).needs(self.id()).build()
+    var endpoint = self.endpointBuilder.serviceProviders(getUrlParameter.parameter('key')).needs(self.id()).build()
     ajax.delete(endpoint, self.headers(cookies.get('session-token')), JSON.stringify({}))
     .then(function (result) {
       _.forEach(self.listeners(), function (listener) {

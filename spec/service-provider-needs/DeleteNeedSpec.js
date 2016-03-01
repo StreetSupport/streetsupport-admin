@@ -13,7 +13,7 @@ describe('Delete individual Need', function () {
 
   beforeEach (function () {
     sinon.stub(browser, 'dataLoaded')
-    sinon.stub(getUrlParameter, 'parameter').withArgs('providerId').returns('coffee4craig')
+    sinon.stub(getUrlParameter, 'parameter').withArgs('key').returns('coffee4craig')
     model = new Model({
       id: "abcde",
       description: "description"
