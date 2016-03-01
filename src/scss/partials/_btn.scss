@@ -11,6 +11,10 @@
   text-align: center;
   outline: none;
 
+  &:hover {
+    cursor: pointer;
+  }
+
   // Components
   &__icon {
     height: 90px;
