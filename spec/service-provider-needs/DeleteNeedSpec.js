@@ -51,8 +51,4 @@ describe('Delete individual Need', function () {
     var postAsExpected = ajaxStub.withArgs(endpoint, headers, payload).calledOnce
     expect(postAsExpected).toBeTruthy()
   })
-
-  it('should notify listeners', function () {
-
-  })
 })

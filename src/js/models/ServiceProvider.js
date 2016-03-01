@@ -63,6 +63,13 @@ function ServiceProvider (data) {
     })
     self.services(remainingServices)
   }
+
+  self.deleteNeed = function (deletedNeed) {
+    var remainingNeeds = _.filter(self.needs(), function (need) {
+      return need.id() !== deletedNeed.id()
+    })
+    self.needs(remainingNeeds)
+  }
 }
 
 function ServiceProviderDetails () {

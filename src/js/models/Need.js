@@ -28,7 +28,7 @@ function Need (data) {
     ajax.delete(endpoint, self.headers(cookies.get('session-token')), JSON.stringify({}))
     .then(function (result) {
       _.forEach(self.listeners(), function (listener) {
-        //listener.deleteAddress(self)
+        listener.deleteNeed(self)
       })
     }, function (error) {
       self.handleError(error)
