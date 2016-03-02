@@ -13,6 +13,7 @@ function Need (data) {
   self.endpoints = new Endpoints()
 
   self.serviceProviderId = getUrlParameter.parameter('providerId')
+  self.availableTypes = ko.observableArray(['Money', 'People', 'Things'])
 
   self.id = ko.observable(data.id)
   self.savedDescription = ko.observable(data.description)

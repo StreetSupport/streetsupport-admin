@@ -29,6 +29,12 @@ describe('Add individual Need', function () {
     expect(model.need().serviceProviderId).toEqual('coffee4craig')
   })
 
+  it('should set need types available', function() {
+    expect(model.need().availableTypes()[0]).toEqual('Money')
+    expect(model.need().availableTypes()[1]).toEqual('People')
+    expect(model.need().availableTypes()[2]).toEqual('Things')
+  })
+
   describe('Save', function () {
     var browserStub
     var ajaxStub
