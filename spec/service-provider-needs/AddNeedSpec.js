@@ -24,9 +24,15 @@ describe('Add individual Need', function () {
         }
       }
     }
-
-    sinon.stub(ajax, 'get').returns(fakeGetResolution())
     sinon.stub(cookies, 'get').returns('saved-session-token')
+    sinon.stub(ajax, 'get').withArgs(
+      endpoints.getServiceProviders + '/coffee4craig/addresses',
+      {
+        'content-type': 'application/json',
+        'session-token': 'saved-session-token'
+      },
+      JSON.stringify({})
+    ).returns(fakeGetResolution())
     model = new Model()
   })
 

@@ -20,8 +20,7 @@ function AddServiceProviderNeed () {
     browser.redirect(redirect)
   }
 
-  var addressEndpoint = self.endpointBuilder.serviceProviders(getUrlParameter.parameter('key')).addresses()
-
+  var addressEndpoint = self.endpointBuilder.serviceProviders(getUrlParameter.parameter('providerId')).addresses().build()
   ajax.get(addressEndpoint, self.headers(cookies.get('session-token')), JSON.stringify({}))
     .then(function (result) {
       var need = new Need({ postcode: result.json.addresses[0].postcode })
