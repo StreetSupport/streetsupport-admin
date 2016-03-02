@@ -18,6 +18,9 @@ function Need (data) {
   self.savedDescription = ko.observable(data.description)
 
   self.description = ko.observable(data.description)
+  self.type = ko.observable(data.type)
+  self.reason = ko.observable(data.reason)
+  self.moreInfoUrl = ko.observable(data.moreInfoUrl)
 
   self.tempKey = ko.observable(data.tempKey)
   self.isEditing = ko.observable(false)
@@ -38,6 +41,9 @@ function Need (data) {
   self.save = function () {
     var model = JSON.stringify({
       'Description': self.description(),
+      'Type': self.type(),
+      'Reason': self.reason(),
+      'MoreInfoUrl': self.moreInfoUrl()
     })
 
     // if (self.tempKey() !== undefined || self.key() === undefined) {

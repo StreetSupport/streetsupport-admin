@@ -49,6 +49,9 @@ describe('Add individual Need', function () {
       ajaxStub = sinon.stub(ajax, 'post').returns(fakeResolved())
 
       model.need().description('new description')
+      model.need().type('type')
+      model.need().reason('reason')
+      model.need().moreInfoUrl('http://moreinfo.com')
 
       model.need().save()
     })
@@ -67,6 +70,9 @@ describe('Add individual Need', function () {
       }
       var payload = JSON.stringify({
         'Description': 'new description',
+        'Type': 'type',
+        'Reason': 'reason',
+        'MoreInfoUrl': 'http://moreinfo.com'
       })
       var postAsExpected = ajaxStub.withArgs(endpoint, headers, payload).calledOnce
       expect(postAsExpected).toBeTruthy()
