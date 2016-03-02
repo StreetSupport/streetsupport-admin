@@ -21,4 +21,18 @@
   <dd class="key-value-pair__value">
     <input type="text" data-bind="textInput: moreInfoUrl" class="form__input" />
   </dd>
+  <!-- ko if: isPeopleOrThings -->
+  <dt class="key-value-pair__key">Additional Instructions</dt>
+  <dd class="key-value-pair__value">
+    <textarea data-bind="textInput: instructions" class="form__input--textarea"></textarea>
+  </dd>
+  <dt class="key-value-pair__key">Postcode</dt>
+  <dd class="key-value-pair__value">
+    <input type="text" data-bind="textInput: postcode" class="form__input" />
+  </dd>
+  <dt class="key-value-pair__key">Email</dt>
+  <dd class="key-value-pair__value">
+    <input type="email" data-bind="textInput: email" class="form__input" />
+  </dd>
+  <!-- /ko -->
 </dl>

@@ -20,6 +20,10 @@ function Need (data) {
 
   self.description = ko.observable(data.description)
   self.type = ko.observable(data.type)
+  self.isPeopleOrThings = ko.computed(function () {
+    var type = self.type()
+    return type !== undefined && (type.toLowerCase() === 'people' || type.toLowerCase() === 'things')
+  }, self)
   self.reason = ko.observable(data.reason)
   self.moreInfoUrl = ko.observable(data.moreInfoUrl)
   self.postcode = ko.observable(data.postcode)

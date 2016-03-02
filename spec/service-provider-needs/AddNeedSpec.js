@@ -35,6 +35,30 @@ describe('Add individual Need', function () {
     expect(model.need().availableTypes()[2]).toEqual('Things')
   })
 
+  it('should initially set isPeopleOrThings to false', function () {
+    expect(model.need().isPeopleOrThings()).toBeFalsy()
+  })
+
+  describe('selecting People', function () {
+    beforeEach(function () {
+      model.need().type('People')
+    })
+
+    it('should set isPeopleOrThings to true', function () {
+      expect(model.need().isPeopleOrThings()).toBeTruthy()
+    })
+  })
+
+  describe('selecting Things', function () {
+    beforeEach(function () {
+      model.need().type('Things')
+    })
+
+    it('should set isPeopleOrThings to true', function () {
+      expect(model.need().isPeopleOrThings()).toBeTruthy()
+    })
+  })
+
   describe('Save', function () {
     var browserStub
     var ajaxStub
