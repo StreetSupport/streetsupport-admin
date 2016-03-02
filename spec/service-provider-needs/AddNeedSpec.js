@@ -58,6 +58,9 @@ describe('Add individual Need', function () {
       model.need().type('type')
       model.need().reason('reason')
       model.need().moreInfoUrl('http://moreinfo.com')
+      model.need().postcode('postcode')
+      model.need().instructions('instructions')
+      model.need().email('test@test.com')
 
       model.need().save()
     })
@@ -78,7 +81,10 @@ describe('Add individual Need', function () {
         'Description': 'new description',
         'Type': 'type',
         'Reason': 'reason',
-        'MoreInfoUrl': 'http://moreinfo.com'
+        'MoreInfoUrl': 'http://moreinfo.com',
+        'Postcode': 'postcode',
+        'Instructions': 'instructions',
+        'Email': 'test@test.com'
       })
       var postAsExpected = ajaxStub.withArgs(endpoint, headers, payload).calledOnce
       expect(postAsExpected).toBeTruthy()

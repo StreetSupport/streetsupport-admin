@@ -22,6 +22,9 @@ function Need (data) {
   self.type = ko.observable(data.type)
   self.reason = ko.observable(data.reason)
   self.moreInfoUrl = ko.observable(data.moreInfoUrl)
+  self.postcode = ko.observable(data.postcode)
+  self.instructions = ko.observable(data.instructions)
+  self.email = ko.observable(data.email)
 
   self.tempKey = ko.observable(data.tempKey)
   self.isEditing = ko.observable(false)
@@ -44,7 +47,10 @@ function Need (data) {
       'Description': self.description(),
       'Type': self.type(),
       'Reason': self.reason(),
-      'MoreInfoUrl': self.moreInfoUrl()
+      'MoreInfoUrl': self.moreInfoUrl(),
+      'Postcode': self.postcode(),
+      'Instructions': self.instructions(),
+      'Email': self.email()
     })
 
     // if (self.tempKey() !== undefined || self.key() === undefined) {
