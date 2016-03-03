@@ -34,6 +34,15 @@ pageName: serviceProvider
               <button data-bind="click: $parent.saveGeneralDetails" class="btn btn--primary"><span class="btn__text">save</span></button>
               <!-- /ko -->
               <dl class="key-value-pair">
+                <dt class="key-value-pair__key">Short Description</dt>
+                <dd class="key-value-pair__value">
+                  <!-- ko ifnot: $parent.isEditingGeneralDetails -->
+                  <span data-bind="text: shortDescription"></span>
+                  <!-- /ko -->
+                  <!-- ko if: $parent.isEditingGeneralDetails -->
+                  <textarea data-bind="textInput: shortDescription" class="form__input form__input"></textarea>
+                  <!-- /ko -->
+                </dd>
                 <dt class="key-value-pair__key">Description</dt>
                 <dd class="key-value-pair__value">
                   <!-- ko ifnot: $parent.isEditingGeneralDetails -->

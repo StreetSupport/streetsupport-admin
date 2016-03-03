@@ -15,6 +15,7 @@ function ServiceProvider (data) {
 
   self.key = ko.observable(data.key)
   self.name = ko.observable(data.name)
+  self.shortDescription = ko.observable(data.shortDescription)
   self.description = ko.observable(data.description)
   self.telephone = ko.observable(data.telephone)
   self.email = ko.observable(data.email)
@@ -110,13 +111,14 @@ function ServiceProviderDetails () {
       ajax.put(self.endpointBuilder.serviceProviders(getUrlParameter.parameter('key')).generalInformation().build(),
         self.headers(cookies.get('session-token')),
         JSON.stringify({
-          'Description': self.serviceProvider().description()
+          'Description': self.serviceProvider().description(),
+          'ShortDescription': self.serviceProvider().shortDescription()
         })
         ).then(function (result) {
+          self.clearErrors()
           self.isEditingGeneralDetails(false)
         }, function (error) {
-          var response = JSON.parse(error.response)
-          self.message(response.messages.join('<br />'))
+          self.setErrors(error)
         })
     }
   }
