@@ -13,7 +13,6 @@ function AddServiceProviderNeed () {
   var need = new Need({})
   need.addListener(self)
   self.need = ko.observable()
-  self.endpoints = new Endpoints()
 
   self.saveNeed = function (need) {
     var redirect = adminurls.serviceProviders + '?key=' + getUrlParameter.parameter('providerId')

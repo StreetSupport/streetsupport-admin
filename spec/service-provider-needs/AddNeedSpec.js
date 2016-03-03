@@ -61,6 +61,10 @@ describe('Add individual Need', function () {
     expect(model.need().isPeopleOrThings()).toBeFalsy()
   })
 
+  it('should initially set isMoney to false', function () {
+    expect(model.need().isMoney()).toBeFalsy()
+  })
+
   it('should set postcode to organisation\'s first address postcode', function () {
     expect(model.need().postcode()).toEqual('M6 8AQ')
   })
@@ -110,6 +114,8 @@ describe('Add individual Need', function () {
       model.need().postcode('postcode')
       model.need().instructions('instructions')
       model.need().email('test@test.com')
+      model.need().donationAmountInPounds(123.45)
+      model.need().donationUrl('http://donatehere.com')
 
       model.need().save()
     })
@@ -132,7 +138,9 @@ describe('Add individual Need', function () {
         'MoreInfoUrl': 'http://moreinfo.com',
         'Postcode': 'postcode',
         'Instructions': 'instructions',
-        'Email': 'test@test.com'
+        'Email': 'test@test.com',
+        'DonationAmountInPounds': 123.45,
+        'DonationUrl': 'http://donatehere.com'
       })
       var postAsExpected = ajaxStub.withArgs(endpoint, headers, payload).calledOnce
       expect(postAsExpected).toBeTruthy()

@@ -24,11 +24,17 @@ function Need (data) {
     var type = self.type()
     return type !== undefined && (type.toLowerCase() === 'people' || type.toLowerCase() === 'things')
   }, self)
+  self.isMoney = ko.computed(function () {
+    var type = self.type()
+    return type !== undefined && (type.toLowerCase() === 'money')
+  }, self)
   self.reason = ko.observable(data.reason)
   self.moreInfoUrl = ko.observable(data.moreInfoUrl)
   self.postcode = ko.observable(data.postcode)
   self.instructions = ko.observable(data.instructions)
   self.email = ko.observable(data.email)
+  self.donationAmountInPounds = ko.observable(data.donationAmountInPounds)
+  self.donationUrl = ko.observable(data.donationUrl)
 
   self.tempKey = ko.observable(data.tempKey)
   self.isEditing = ko.observable(false)
@@ -54,7 +60,9 @@ function Need (data) {
       'MoreInfoUrl': self.moreInfoUrl(),
       'Postcode': self.postcode(),
       'Instructions': self.instructions(),
-      'Email': self.email()
+      'Email': self.email(),
+      'DonationAmountInPounds': self.donationAmountInPounds(),
+      'DonationUrl': self.donationUrl()
     })
 
     // if (self.tempKey() !== undefined || self.key() === undefined) {
