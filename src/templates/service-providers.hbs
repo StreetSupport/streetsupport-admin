@@ -34,6 +34,15 @@ pageName: serviceProvider
               <button data-bind="click: $parent.saveGeneralDetails" class="btn btn--primary"><span class="btn__text">save</span></button>
               <!-- /ko -->
               <dl class="key-value-pair">
+                <dt class="key-value-pair__key">Short Description</dt>
+                <dd class="key-value-pair__value">
+                  <!-- ko ifnot: $parent.isEditingGeneralDetails -->
+                  <span data-bind="text: shortDescription"></span>
+                  <!-- /ko -->
+                  <!-- ko if: $parent.isEditingGeneralDetails -->
+                  <textarea data-bind="textInput: shortDescription" class="form__input form__input"></textarea>
+                  <!-- /ko -->
+                </dd>
                 <dt class="key-value-pair__key">Description</dt>
                 <dd class="key-value-pair__value">
                   <!-- ko ifnot: $parent.isEditingGeneralDetails -->
@@ -154,10 +163,10 @@ pageName: serviceProvider
                   <h3 data-bind="text: description"></h3>
                   {{!-- <a data-bind="attr: { 'href': editServiceUrl }" title="edit need" class="btn btn--info">
                     <span class="btn__text">Edit</span>
-                  </a>
+                  </a> --}}
                   <a data-bind="click: deleteNeed" title="edit need" class="btn btn--warning">
                     <span class="btn__text">Delete</span>
-                  </a> --}}
+                  </a>
                 </article>
               </div>
             </section>

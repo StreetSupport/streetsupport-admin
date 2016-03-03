@@ -5,7 +5,9 @@ node_js:
 - '5'
 cache:
   directories:
-    - node_modules
+  - node_modules
+addons:
+  ssh_known_hosts: 178.62.41.238
 before_script:
 - npm install gulp -g
 - chmod +x ./deploy-gh-pages.sh

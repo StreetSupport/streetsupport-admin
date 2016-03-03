@@ -65,6 +65,7 @@ describe ('Edit Service Provider General Details', function () {
       stubbedPutApi = sinon.stub(ajax, 'put').returns(fakeResolved ())
 
       model.serviceProvider().description('new description')
+      model.serviceProvider().shortDescription('new short description')
 
       model.saveGeneralDetails()
     })
@@ -80,7 +81,8 @@ describe ('Edit Service Provider General Details', function () {
           'session-token': 'stored-session-token'
         }
         var payload = JSON.stringify({
-          'Description': 'new description'
+          'Description': 'new description',
+          'ShortDescription': 'new short description'
         })
         var apiCalledWithExpectedArgs = stubbedPutApi.withArgs(endpoint, headers, payload).calledOnce
         expect(apiCalledWithExpectedArgs).toBeTruthy()
@@ -120,11 +122,44 @@ describe ('Edit Service Provider General Details', function () {
     })
 
     it ('should set message as joined error messages', function () {
-      expect(model.message()).toEqual('returned error message 1<br />returned error message 2')
+      expect(model.errors()[1]).toEqual('returned error message 2')
     })
 
     it ('should keep isEditingGeneralDetails as true', function () {
       expect(model.isEditingGeneralDetails()).toBeTruthy()
+    })
+  })
+
+  describe ('Invalid submission then valid submission', function () {
+    var stubbedPutApi
+
+    beforeEach (function () {
+      function fakeResolved (value) {
+        return {
+          then: function (success, error) {
+            success({
+              'status': 200,
+              'json': {}
+            })
+          }
+        }
+      }
+
+      stubbedPutApi = sinon.stub(ajax, 'put').returns(fakeResolved ())
+
+      model.errors(['error a', 'error b'])
+      model.serviceProvider().description('new description')
+      model.serviceProvider().shortDescription('new short description')
+
+      model.saveGeneralDetails()
+    })
+
+    afterEach (function () {
+      ajax.put.restore()
+    })
+
+    it ('should clear errors', function () {
+        expect(model.hasErrors()).toBeFalsy()
     })
   })
 })

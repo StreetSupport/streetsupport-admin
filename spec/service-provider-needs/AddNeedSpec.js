@@ -13,12 +13,34 @@ describe('Add individual Need', function () {
   beforeEach (function () {
     sinon.stub(browser, 'dataLoaded')
     sinon.stub(getUrlParameter, 'parameter').withArgs('providerId').returns('coffee4craig')
+
+    function fakeGetResolution (value) {
+      return {
+        then: function (success, error) {
+          success({
+            'status': 200,
+            'json': coffee4CraigAddresses()
+          })
+        }
+      }
+    }
+    sinon.stub(cookies, 'get').returns('saved-session-token')
+    sinon.stub(ajax, 'get').withArgs(
+      endpoints.getServiceProviders + '/coffee4craig/addresses',
+      {
+        'content-type': 'application/json',
+        'session-token': 'saved-session-token'
+      },
+      JSON.stringify({})
+    ).returns(fakeGetResolution())
     model = new Model()
   })
 
   afterEach(function () {
     browser.dataLoaded.restore()
     getUrlParameter.parameter.restore()
+    ajax.get.restore()
+    cookies.get.restore()
   })
 
   it('should set an empty description', function() {
@@ -27,6 +49,44 @@ describe('Add individual Need', function () {
 
   it('should set serviceProviderId to that given in querystring', function() {
     expect(model.need().serviceProviderId).toEqual('coffee4craig')
+  })
+
+  it('should set need types available', function() {
+    expect(model.need().availableTypes()[0]).toEqual('Money')
+    expect(model.need().availableTypes()[1]).toEqual('People')
+    expect(model.need().availableTypes()[2]).toEqual('Things')
+  })
+
+  it('should initially set isPeopleOrThings to false', function () {
+    expect(model.need().isPeopleOrThings()).toBeFalsy()
+  })
+
+  it('should initially set isMoney to false', function () {
+    expect(model.need().isMoney()).toBeFalsy()
+  })
+
+  it('should set postcode to organisation\'s first address postcode', function () {
+    expect(model.need().postcode()).toEqual('M6 8AQ')
+  })
+
+  describe('selecting People', function () {
+    beforeEach(function () {
+      model.need().type('People')
+    })
+
+    it('should set isPeopleOrThings to true', function () {
+      expect(model.need().isPeopleOrThings()).toBeTruthy()
+    })
+  })
+
+  describe('selecting Things', function () {
+    beforeEach(function () {
+      model.need().type('Things')
+    })
+
+    it('should set isPeopleOrThings to true', function () {
+      expect(model.need().isPeopleOrThings()).toBeTruthy()
+    })
   })
 
   describe('Save', function () {
@@ -45,10 +105,17 @@ describe('Add individual Need', function () {
           }
         }
       browserStub = sinon.stub(browser, 'redirect')
-      sinon.stub(cookies, 'get').returns('saved-session-token')
       ajaxStub = sinon.stub(ajax, 'post').returns(fakeResolved())
 
       model.need().description('new description')
+      model.need().type('type')
+      model.need().reason('reason')
+      model.need().moreInfoUrl('http://moreinfo.com')
+      model.need().postcode('postcode')
+      model.need().instructions('instructions')
+      model.need().email('test@test.com')
+      model.need().donationAmountInPounds(123.45)
+      model.need().donationUrl('http://donatehere.com')
 
       model.need().save()
     })
@@ -56,7 +123,6 @@ describe('Add individual Need', function () {
     afterEach(function () {
       ajax.post.restore()
       browser.redirect.restore()
-      cookies.get.restore()
     })
 
     it('should post need to api', function () {
@@ -67,6 +133,14 @@ describe('Add individual Need', function () {
       }
       var payload = JSON.stringify({
         'Description': 'new description',
+        'Type': 'type',
+        'Reason': 'reason',
+        'MoreInfoUrl': 'http://moreinfo.com',
+        'Postcode': 'postcode',
+        'Instructions': 'instructions',
+        'Email': 'test@test.com',
+        'DonationAmountInPounds': 123.45,
+        'DonationUrl': 'http://donatehere.com'
       })
       var postAsExpected = ajaxStub.withArgs(endpoint, headers, payload).calledOnce
       expect(postAsExpected).toBeTruthy()
@@ -78,3 +152,31 @@ describe('Add individual Need', function () {
     })
   })
 })
+
+
+function coffee4CraigAddresses() {
+  return {
+    "key": "coffee4craig",
+    "name": "Coffee 4 Craig",
+    "addresses": [
+    {
+      "key": "1234",
+      "street": "7-11 Lancaster Rd",
+      "street1": null,
+      "street2": null,
+      "street3": null,
+      "city": "Salford",
+      "postcode": "M6 8AQ"
+    },
+    {
+      "key": "5678",
+      "street": "Manchester Picadilly",
+      "street1": null,
+      "street2": null,
+      "street3": null,
+      "city": null,
+      "postcode": "M1 1AF"
+    }
+    ]
+  }
+}

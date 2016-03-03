@@ -1,7 +1,48 @@
 <h3>Need</h3>
 <dl class="key-value-pair">
+  <dt class="key-value-pair__key">Type</dt>
+  <dd class="key-value-pair__value">
+    <select data-bind="options: availableTypes,
+    optionsText: function (item) {
+      return item
+    },
+    value: type,
+    optionsCaption: '-- please select --'" class="form__input"></select>
+  </dd>
   <dt class="key-value-pair__key">Description</dt>
   <dd class="key-value-pair__value">
     <textarea data-bind="textInput: description" class="form__input--textarea"></textarea>
   </dd>
+  <dt class="key-value-pair__key">Reason for Need</dt>
+  <dd class="key-value-pair__value">
+    <textarea data-bind="textInput: reason" class="form__input--textarea"></textarea>
+  </dd>
+  <dt class="key-value-pair__key">Link for more information</dt>
+  <dd class="key-value-pair__value">
+    <input type="text" data-bind="textInput: moreInfoUrl" class="form__input" />
+  </dd>
+  <!-- ko if: isPeopleOrThings -->
+  <dt class="key-value-pair__key">Additional Instructions</dt>
+  <dd class="key-value-pair__value">
+    <textarea data-bind="textInput: instructions" class="form__input--textarea"></textarea>
+  </dd>
+  <dt class="key-value-pair__key">Postcode</dt>
+  <dd class="key-value-pair__value">
+    <input type="text" data-bind="textInput: postcode" class="form__input" />
+  </dd>
+  <dt class="key-value-pair__key">Email</dt>
+  <dd class="key-value-pair__value">
+    <input type="email" data-bind="textInput: email" class="form__input" />
+  </dd>
+  <!-- /ko -->
+  <!-- ko if: isMoney -->
+  <dt class="key-value-pair__key">Donation Amount (£)</dt>
+  <dd class="key-value-pair__value">
+    <input type="text" data-bind="textInput: donationAmountInPounds" class="form__input" />
+  </dd>
+  <dt class="key-value-pair__key">Donation Url</dt>
+  <dd class="key-value-pair__value">
+    <input type="text" data-bind="textInput: donationUrl" class="form__input" />
+  </dd>
+  <!-- /ko -->
 </dl>
