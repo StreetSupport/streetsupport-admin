@@ -5,7 +5,6 @@ var browser = require('../../browser')
 var adminurls = require('../../admin-urls')
 var getUrlParameter = require('../../get-url-parameter')
 var ajax = require('basic-ajax')
-var Endpoints = require('../../endpoint-builder')
 var cookies = require('../../cookies')
 
 function AddServiceProviderNeed () {
@@ -29,7 +28,6 @@ function AddServiceProviderNeed () {
     }, function (error) {
       self.handleError(error)
     })
-
 }
 
 AddServiceProviderNeed.prototype = new BaseViewModel()

@@ -33,6 +33,7 @@ module.exports = {
     addServiceProviderService: pagesDir + 'add-service-provider-service',
     editServiceProviderService: pagesDir + 'edit-service-provider-service',
     addServiceProviderNeed: pagesDir + 'add-service-provider-need',
+    editServiceProviderNeed: pagesDir + 'edit-service-provider-need',
     addUser: pagesDir + 'add-user',
     verifyNewUser: pagesDir + 'verify-new-user'
   },
