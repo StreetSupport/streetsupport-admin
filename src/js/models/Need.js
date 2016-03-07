@@ -82,9 +82,9 @@ function Need (data) {
         self.headers(cookies.get('session-token')),
         model
       ).then(function (result) {
-        // _.forEach(self.listeners(), function (listener) {
-        //   listener.saveAddress(self)
-        // })
+        _.forEach(self.listeners(), function (listener) {
+          listener.saveNeed(self)
+        })
       }, function (error) {
         self.handleError(error)
       })

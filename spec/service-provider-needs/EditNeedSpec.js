@@ -10,10 +10,12 @@ describe('Editing Service Provider Need', function () {
   var Model = require('../../src/js/models/service-provider-needs/EditServiceProviderNeed')
   var model
   var browserStub
+  var browserRedirectStub
   var ajaxGetStub
 
   beforeEach(function () {
     browserStub = sinon.stub(browser, 'dataLoaded')
+    browserRedirectStub  = sinon.stub(browser, 'redirect')
 
     function fakeGetResolution (value) {
       return {
@@ -45,6 +47,7 @@ describe('Editing Service Provider Need', function () {
     browser.dataLoaded.restore()
     getUrlParameter.parameter.restore()
     cookies.get.restore()
+    browser.redirect.restore()
   })
 
   it('should get need from api', function () {
@@ -110,7 +113,6 @@ describe('Editing Service Provider Need', function () {
 
   describe('save', function () {
     var ajaxPutStub
-    var browserRedirectStub
 
     beforeEach(function () {
       function fakePutResolution (value) {
@@ -140,7 +142,6 @@ describe('Editing Service Provider Need', function () {
           'DonationUrl': 'http://www.donationUrl.com'
         })
       ).returns(fakePutResolution())
-      browserRedirectStub  = sinon.stub(browser, 'redirect')
 
       model.need().save()
     })
@@ -154,7 +155,7 @@ describe('Editing Service Provider Need', function () {
     })
 
     it('should redirect back to service provider', function () {
-      var redirect = adminurls.serviceProviders + '?key=coffee4craig'
+      var redirect = adminurls.serviceProviders + '?key=albert-kennedy-trust'
       expect(browserRedirectStub.withArgs(redirect).calledOnce).toBeTruthy()
     })
   })
