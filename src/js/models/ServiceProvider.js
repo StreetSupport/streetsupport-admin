@@ -118,7 +118,7 @@ function ServiceProviderDetails () {
           self.clearErrors()
           self.isEditingGeneralDetails(false)
         }, function (error) {
-          self.setErrors(error)
+          self.handleError(error)
         })
     }
   }

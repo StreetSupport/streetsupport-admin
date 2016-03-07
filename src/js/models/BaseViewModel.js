@@ -33,7 +33,7 @@ function BaseViewModel () {
   }
 
   self.handleError = function (error) {
-    if (error.status === 401) {
+    if (error.status === 401 || error.status === 403) {
       browser.redirect(adminUrls.redirector)
     } else {
       self.message('')
