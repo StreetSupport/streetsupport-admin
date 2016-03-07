@@ -26,7 +26,7 @@ describe('Editing Service Provider Need', function () {
       }
     }
     ajaxGetStub = sinon.stub(ajax, 'get').withArgs(
-      endpoints.getServiceProviders + '/provider-id/needs/abc123',
+      endpoints.getServiceProviders + '/albert-kennedy-trust/needs/56d8784092855610f88d492a',
       {
         'content-type': 'application/json',
         'session-token': 'saved-session-token'
@@ -34,8 +34,8 @@ describe('Editing Service Provider Need', function () {
       JSON.stringify({})
     ).returns(fakeGetResolution())
     var urlParamsStub = sinon.stub(getUrlParameter, 'parameter')
-    urlParamsStub.withArgs('providerId').returns('provider-id')
-    urlParamsStub.withArgs('needId').returns('abc123')
+    urlParamsStub.withArgs('providerId').returns('albert-kennedy-trust')
+    urlParamsStub.withArgs('needId').returns('56d8784092855610f88d492a')
     sinon.stub(cookies, 'get').returns('saved-session-token')
     model = new Model()
   })
@@ -52,7 +52,56 @@ describe('Editing Service Provider Need', function () {
   })
 
   it('should set editNeedUrl', function () {
-    expect(model.need().editNeedUrl).toEqual(adminurls.serviceProviderNeedsEdit + '?providerId=provider-id&needId=abc123')
+    expect(model.need().editNeedUrl).toEqual(adminurls.serviceProviderNeedsEdit + '?providerId=albert-kennedy-trust&needId=56d8784092855610f88d492a')
+  })
+
+  it('should set need id', function () {
+    expect(model.need().id()).toEqual('56d8784092855610f88d492a')
+  })
+
+  it('should set need service provider id', function () {
+    expect(model.need().serviceProviderId).toEqual('albert-kennedy-trust')
+  })
+
+  it('should set need description', function () {
+    expect(model.need().description()).toEqual('test')
+  })
+
+  it('should set need type', function () {
+    expect(model.need().type()).toEqual('Money')
+  })
+
+  it('should set need reason', function () {
+    expect(model.need().reason()).toEqual('reas')
+  })
+
+  it('should set need moreInfoUrl', function () {
+    expect(model.need().moreInfoUrl()).toEqual('http://www.wang.com')
+  })
+
+
+  it('should set need postcode', function () {
+    expect(model.need().postcode()).toEqual('m1 3ly')
+  })
+
+
+  it('should set need instructions', function () {
+    expect(model.need().instructions()).toEqual('instructions')
+  })
+
+
+  it('should set need email', function () {
+    expect(model.need().email()).toEqual('email')
+  })
+
+
+  it('should set need donationAmountInPounds', function () {
+    expect(model.need().donationAmountInPounds()).toEqual(1)
+  })
+
+
+  it('should set need donationUrl', function () {
+    expect(model.need().donationUrl()).toEqual('http://www.donationUrl.com')
   })
 
   it('should tell browser dataLoaded', function () {
@@ -62,7 +111,16 @@ describe('Editing Service Provider Need', function () {
 
 function needData() {
   return {
-    'id': 'abc123',
-    'serviceProviderId': 'provider-id'
+    'id': '56d8784092855610f88d492a',
+    'description': 'test',
+    'serviceProviderId': 'albert-kennedy-trust',
+    'type': 'Money',
+    'reason': 'reas',
+    'moreInfoUrl': 'http://www.wang.com',
+    'postcode': 'm1 3ly',
+    'instructions': 'instructions',
+    'email': 'email',
+    'donationAmountInPounds': 1,
+    'donationUrl': 'http://www.donationUrl.com'
   }
 }

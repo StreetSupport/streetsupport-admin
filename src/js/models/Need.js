@@ -72,8 +72,6 @@ function Need (data) {
         model
       ).then(function (result) {
         self.isEditing(false)
-        //self.key(result.json.key)
-        //self.setFields()
         _.forEach(self.listeners(), function (listener) {
           listener.saveNeed(self)
         })
