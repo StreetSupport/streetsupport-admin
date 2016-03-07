@@ -146,7 +146,7 @@ function coffee4Craig() {
     "needs": [{
       "id": "56ca227f92855621e8d60318",
       "description": "some new description.",
-      "serviceProviderId": "albert-kennedy-trust"
+      "serviceProviderId": "coffee4craig"
     }]
   }
 }

@@ -11,14 +11,13 @@ describe('Editing Service Provider Need', function () {
   var model
 
   beforeEach(function () {
-    sinon.stub(getUrlParameter, 'parameter').returns('provider-id')
     model = new Model({
-      id: 'abc123'
+      'id': 'abc123',
+      'serviceProviderId': 'provider-id'
     })
   })
 
   afterEach(function () {
-    getUrlParameter.parameter.restore()
   })
 
   it('should set editNeedUrl', function () {

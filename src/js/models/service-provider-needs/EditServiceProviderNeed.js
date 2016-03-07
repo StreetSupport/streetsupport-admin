@@ -7,8 +7,10 @@ var getUrlParameter = require('../../get-url-parameter')
 var ajax = require('basic-ajax')
 var cookies = require('../../cookies')
 
-function AddServiceProviderNeed () {
+function EditServiceProviderNeed () {
   var self = this
+  var need = new Need({})
+  need.addListener(self)
   self.need = ko.observable()
 
   self.saveNeed = function (need) {
@@ -19,10 +21,7 @@ function AddServiceProviderNeed () {
   var addressEndpoint = self.endpointBuilder.serviceProviders(getUrlParameter.parameter('providerId')).addresses().build()
   ajax.get(addressEndpoint, self.headers(cookies.get('session-token')), JSON.stringify({}))
     .then(function (result) {
-      var need = new Need({
-        'serviceProviderId': getUrlParameter.parameter('providerId'),
-        'postcode': result.json.addresses[0].postcode
-      })
+      var need = new Need({ postcode: result.json.addresses[0].postcode })
       need.addListener(self)
       self.need(need)
       self.dataLoaded()
@@ -31,6 +30,6 @@ function AddServiceProviderNeed () {
     })
 }
 
-AddServiceProviderNeed.prototype = new BaseViewModel()
+EditServiceProviderNeed.prototype = new BaseViewModel()
 
-module.exports = AddServiceProviderNeed
+module.exports = EditServiceProviderNeed
