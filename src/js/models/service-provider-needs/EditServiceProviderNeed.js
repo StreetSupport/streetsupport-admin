@@ -9,25 +9,31 @@ var cookies = require('../../cookies')
 
 function EditServiceProviderNeed () {
   var self = this
-  var need = new Need({})
-  need.addListener(self)
   self.need = ko.observable()
 
+  var providerId = getUrlParameter.parameter('providerId')
+  var needId = getUrlParameter.parameter('needId')
+
   self.saveNeed = function (need) {
-    var redirect = adminurls.serviceProviders + '?key=' + getUrlParameter.parameter('providerId')
+    var redirect = adminurls.serviceProviders + '?key=' + providerId
     browser.redirect(redirect)
   }
 
-  var addressEndpoint = self.endpointBuilder.serviceProviders(getUrlParameter.parameter('providerId')).addresses().build()
-  ajax.get(addressEndpoint, self.headers(cookies.get('session-token')), JSON.stringify({}))
-    .then(function (result) {
-      var need = new Need({ postcode: result.json.addresses[0].postcode })
+  var endpoint = self.endpointBuilder.serviceProviders(providerId).needs(needId).build()
+  var headers = self.headers(cookies.get('session-token'))
+  var payload = JSON.stringify({})
+
+  ajax
+    .get(endpoint, headers, payload)
+    .then(function(success) {
+      var need = new Need(success.json)
       need.addListener(self)
       self.need(need)
-      self.dataLoaded()
-    }, function (error) {
+    }, function(error) {
       self.handleError(error)
     })
+
+  browser.dataLoaded()
 }
 
 EditServiceProviderNeed.prototype = new BaseViewModel()
