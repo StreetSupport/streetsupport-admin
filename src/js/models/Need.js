@@ -40,6 +40,8 @@ function Need (data) {
   self.isEditing = ko.observable(false)
   self.listeners = ko.observableArray()
 
+  self.editNeedUrl = adminUrls.serviceProviderNeedsEdit + '?providerId=' + self.serviceProviderId + '&needId=' + self.id()
+
   self.deleteNeed = function () {
     var endpoint = self.endpointBuilder.serviceProviders(getUrlParameter.parameter('key')).needs(self.id()).build()
     ajax.delete(endpoint, self.headers(cookies.get('session-token')), JSON.stringify({}))
