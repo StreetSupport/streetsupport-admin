@@ -110,6 +110,7 @@ describe('Editing Service Provider Need', function () {
 
   describe('save', function () {
     var ajaxPutStub
+    var browserRedirectStub
 
     beforeEach(function () {
       function fakePutResolution (value) {
@@ -139,6 +140,7 @@ describe('Editing Service Provider Need', function () {
           'DonationUrl': 'http://www.donationUrl.com'
         })
       ).returns(fakePutResolution())
+      browserRedirectStub  = sinon.stub(browser, 'redirect')
 
       model.need().save()
     })
@@ -149,6 +151,11 @@ describe('Editing Service Provider Need', function () {
 
     it('should put to api', function () {
       expect(ajaxPutStub.calledOnce).toBeTruthy()
+    })
+
+    it('should redirect back to service provider', function () {
+      var redirect = adminurls.serviceProviders + '?key=coffee4craig'
+      expect(browserRedirectStub.withArgs(redirect).calledOnce).toBeTruthy()
     })
   })
 })
