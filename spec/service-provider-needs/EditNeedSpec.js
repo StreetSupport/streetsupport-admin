@@ -107,6 +107,50 @@ describe('Editing Service Provider Need', function () {
   it('should tell browser dataLoaded', function () {
     expect(browserStub.calledOnce).toBeTruthy()
   })
+
+  describe('save', function () {
+    var ajaxPutStub
+
+    beforeEach(function () {
+      function fakePutResolution (value) {
+        return {
+          then: function (success, error) {
+            success({
+              'status': 200
+            })
+          }
+        }
+      }
+      ajaxPutStub = sinon.stub(ajax, 'put').withArgs(
+        endpoints.getServiceProviders + '/albert-kennedy-trust/needs/56d8784092855610f88d492a',
+        {
+          'content-type': 'application/json',
+          'session-token': 'saved-session-token'
+        },
+        JSON.stringify({
+          'Description': 'test',
+          'Type': 'Money',
+          'Reason': 'reas',
+          'MoreInfoUrl': 'http://www.wang.com',
+          'Postcode': 'm1 3ly',
+          'Instructions': 'instructions',
+          'Email': 'email',
+          'DonationAmountInPounds': 1,
+          'DonationUrl': 'http://www.donationUrl.com'
+        })
+      ).returns(fakePutResolution())
+
+      model.need().save()
+    })
+
+    afterEach(function () {
+      ajax.put.restore()
+    })
+
+    it('should put to api', function () {
+      expect(ajaxPutStub.calledOnce).toBeTruthy()
+    })
+  })
 })
 
 function needData() {
