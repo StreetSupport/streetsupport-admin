@@ -4,7 +4,6 @@ var ajax = require('basic-ajax')
 var Endpoints = require('../endpoint-builder')
 var getUrlParameter = require('../get-url-parameter')
 var cookies = require('../cookies')
-var OpeningTime = require('./OpeningTime')
 var BaseViewModel = require('./BaseViewModel')
 var adminUrls = require('../admin-urls')
 

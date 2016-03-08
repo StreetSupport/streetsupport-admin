@@ -11,11 +11,11 @@
   </dd>
   <dt class="key-value-pair__key">Description</dt>
   <dd class="key-value-pair__value">
-    <textarea data-bind="textInput: description" class="form__input--textarea"></textarea>
+    <input type="text" data-bind="textInput: description" class="form__input form__input--full-width" maxlength="100" />
   </dd>
   <dt class="key-value-pair__key">Reason for Need</dt>
   <dd class="key-value-pair__value">
-    <textarea data-bind="textInput: reason" class="form__input--textarea"></textarea>
+    <textarea data-bind="textInput: reason" class="form__input form__input--textarea"></textarea>
   </dd>
   <dt class="key-value-pair__key">Link for more information</dt>
   <dd class="key-value-pair__value">
@@ -24,7 +24,7 @@
   <!-- ko if: isPeopleOrThings -->
   <dt class="key-value-pair__key">Additional Instructions</dt>
   <dd class="key-value-pair__value">
-    <textarea data-bind="textInput: instructions" class="form__input--textarea"></textarea>
+    <textarea data-bind="textInput: instructions" class="form__input form__input--textarea"></textarea>
   </dd>
   <dt class="key-value-pair__key">Postcode</dt>
   <dd class="key-value-pair__value">

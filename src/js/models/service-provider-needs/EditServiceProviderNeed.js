@@ -25,11 +25,11 @@ function EditServiceProviderNeed () {
 
   ajax
     .get(endpoint, headers, payload)
-    .then(function(success) {
+    .then(function (success) {
       var need = new Need(success.json)
       need.addListener(self)
       self.need(need)
-    }, function(error) {
+    }, function (error) {
       self.handleError(error)
     })
 
