@@ -5,7 +5,7 @@ if [[ $TRAVIS_BRANCH == 'master' ]]
   then
     REPO="github.com/StreetSupport/admin.streetsupport.net-live.git"
     DOMAIN="service.streetsupport.net"
-    APIENVIRONMENT=2
+    APIENVIRONMENT=3
   else
     REPO="github.com/StreetSupport/admin.streetsupport.net-dev.git"
     DOMAIN="dev-service.streetsupport.net"
