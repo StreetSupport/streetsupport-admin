@@ -2,7 +2,9 @@ var ko = require('knockout')
 var ajax = require('basic-ajax')
 var cookies = require('../cookies')
 var getUrlParameter = require('../get-url-parameter')
+var browser = require('../browser')
 var BaseViewModel = require('./BaseViewModel')
+var adminurls = require('../admin-urls')
 
 function AddUser () {
   var self = this
@@ -21,6 +23,7 @@ function AddUser () {
         self.message('User created.')
         self.userCreated(true)
         self.clearErrors()
+        browser.redirect(adminurls.dashboard)
       }, function (error) {
         self.handleError(error)
       })
