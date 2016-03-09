@@ -1,12 +1,20 @@
 #!/bin/bash
 
 # Define variables depending on the branch
-if [[ $TRAVIS_BRANCH == 'master' ]]
+if [[ $TRAVIS_BRANCH == 'release' ]]
   then
     REPO="github.com/StreetSupport/admin.streetsupport.net-live.git"
     DOMAIN="service.streetsupport.net"
     APIENVIRONMENT=3
-  else
+fi
+if [[ $TRAVIS_BRANCH == 'staging' ]]
+  then
+    REPO="github.com/StreetSupport/admin.streetsupport.net-staging.git"
+    DOMAIN="dev-service.streetsupport.net"
+    APIENVIRONMENT=2
+fi
+if [[ $TRAVIS_BRANCH == 'develop' ]]
+  then
     REPO="github.com/StreetSupport/admin.streetsupport.net-dev.git"
     DOMAIN="dev-service.streetsupport.net"
     APIENVIRONMENT=1
@@ -49,7 +57,7 @@ echo "pushing to repo"
 # Push to git by overriding previous commits
 # IMPORTANT: Supress messages so nothing appears in logs
 
-if [[ $TRAVIS_BRANCH == 'master' ]] # live
+if [[ $TRAVIS_BRANCH == 'release' ]]
   then
     git init
     git add -A
@@ -57,12 +65,18 @@ if [[ $TRAVIS_BRANCH == 'master' ]] # live
     git push --force --quiet "https://${GH_TOKEN}@${REPO}" master > /dev/null 2>&1
 fi
 
-
-if [[ $TRAVIS_BRANCH == 'develop' ]] # dev
+if [[ $TRAVIS_BRANCH == 'staging' ]]
   then
     git init
     git add -A
     git commit -m "Travis CI automatic build for $THE_COMMIT"
     git push --force --quiet "https://${GH_TOKEN}@${REPO}" master:gh-pages > /dev/null 2>&1
-    echo $vincetestenvvar
+fi
+
+if [[ $TRAVIS_BRANCH == 'develop' ]]
+  then
+    git init
+    git add -A
+    git commit -m "Travis CI automatic build for $THE_COMMIT"
+    git push --force --quiet "https://${GH_TOKEN}@${REPO}" master:gh-pages > /dev/null 2>&1
 fi
