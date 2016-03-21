@@ -16,7 +16,7 @@ describe ('Submit invalid credentials', function () {
     function fakeResolved (value) {
       return {
         then: function (success, error) {
-          error({
+          success({
             status: 'error',
             statusCode: 401,
             messages: ['returned error message']

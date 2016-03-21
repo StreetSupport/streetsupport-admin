@@ -30,10 +30,11 @@ function LoginModel () {
       .then(function (result) {
         if (result.status === 'error') {
           handleSubmitError(result)
+        } else {
+          cookies.set('session-token', result.json.sessionToken)
+          cookies.set('auth-claims', result.json.authClaims)
+          browser.redirect(adminUrls.redirector)
         }
-        cookies.set('session-token', result.json.sessionToken)
-        cookies.set('auth-claims', result.json.authClaims)
-        browser.redirect(adminUrls.redirector)
       }, function (error) {
         self.handleServerError(error)
       })
