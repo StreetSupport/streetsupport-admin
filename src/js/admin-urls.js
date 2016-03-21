@@ -11,6 +11,7 @@ module.exports = {
   dashboard: s('dashboard'),
   serviceProviders: s('service-providers'),
   notFound: s('404'),
+  serverError: s('500'),
   serviceProviderAddresses: s('service-provider-addresses'),
   serviceProviderAddressesAdd: s('add-service-provider-address'),
   serviceProviderAddressesEdit: s('edit-service-provider-address'),

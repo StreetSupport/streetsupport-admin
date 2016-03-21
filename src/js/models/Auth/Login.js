@@ -35,7 +35,7 @@ function LoginModel () {
         cookies.set('auth-claims', result.json.authClaims)
         browser.redirect(adminUrls.redirector)
       }, function (error) {
-        handleSubmitError(error)
+        self.handleServerError(error)
       })
     }
   }
