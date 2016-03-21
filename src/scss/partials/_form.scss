@@ -1,6 +1,6 @@
 .form {
   &__input {
-    color: black; padding: 10px; width: 240px;
+    color: black; padding: 10px; width: 100%;
 
     &--short {
       width: 120px!important;
@@ -32,4 +32,12 @@
   &__checkbox-label {
     &:hover { cursor: pointer }
   }
+}
+
+.form-feedback {
+  padding: 10px 0px;
+  .form-feedback__heading {
+    width: 100%;
+    margin: 0px;
+   }
 }

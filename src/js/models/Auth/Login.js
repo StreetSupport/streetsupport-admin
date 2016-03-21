@@ -1,4 +1,4 @@
-var ajax = require('basic-ajax')
+var ajax = require('../../ajax')
 var adminUrls = require('../../admin-urls')
 var browser = require('../../browser')
 var cookies = require('../../cookies')
@@ -12,6 +12,12 @@ function LoginModel () {
   self.password = ko.observable('')
   self.isSubmitting = false
 
+  var handleSubmitError = function(error) {
+    self.showErrors(error)
+    self.message('')
+    self.isSubmitting = false
+  }
+
   self.submit = function () {
     var self = this
     if (!self.isSubmitting) {
@@ -22,13 +28,14 @@ function LoginModel () {
         'password': self.password()
       })
       .then(function (result) {
+        if (result.status === 'error') {
+          handleSubmitError(result)
+        }
         cookies.set('session-token', result.json.sessionToken)
         cookies.set('auth-claims', result.json.authClaims)
         browser.redirect(adminUrls.redirector)
       }, function (error) {
-        self.setErrors(error)
-        self.message('')
-        self.isSubmitting = false
+        handleSubmitError(error)
       })
     }
   }

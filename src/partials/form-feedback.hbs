@@ -4,8 +4,10 @@
 <!-- /ko -->
 
 <script type="text/html" id="form-feedback-template">
-<h2>There were errors in your submission:</h2>
-<ul data-bind="foreach: errors">
-  <li data-bind="text: $data"></li>
-</ul>
+<div class="form-feedback">
+  <h2 class="form-feedback__heading">There were errors in your submission:</h2>
+  <ul data-bind="foreach: errors">
+    <li data-bind="text: $data"></li>
+  </ul>
+</div>
 </script>
