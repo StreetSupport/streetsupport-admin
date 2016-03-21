@@ -28,8 +28,12 @@ function BaseViewModel () {
     self.errors([])
   }
 
-  self.setErrors = function (error) {
+  self.setErrors = function (error) { // deprecated
     self.errors(JSON.parse(error.response).messages)
+  }
+
+  self.showErrors = function (error) {
+    self.errors(error.messages)
   }
 
   self.handleError = function (error) {

@@ -1,5 +1,5 @@
 var sinon =     require('sinon'),
-    ajax =      require('basic-ajax'),
+    ajax =      require('../../src/js/ajax'),
     endpoints = require('../../src/js/api-endpoints'),
     adminurls = require('../../src/js/admin-urls'),
     browser =   require('../../src/js/browser'),
