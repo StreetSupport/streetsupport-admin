@@ -1,15 +1,15 @@
-var sinon = require('sinon'),
-ajax =      require('../../src/js/ajax'),
-endpoints = require('../../src/js/api-endpoints'),
-adminurls = require('../../src/js/admin-urls'),
-browser =   require('../../src/js/browser'),
-cookies =   require('../../src/js/cookies')
+var sinon = require('sinon')
+var ajax =      require('../../src/js/ajax')
+var endpoints = require('../../src/js/api-endpoints')
+var adminurls = require('../../src/js/admin-urls')
+var browser =   require('../../src/js/browser')
+var cookies =   require('../../src/js/cookies')
 
 describe ('Submit invalid credentials', function () {
   var Login = require('../../src/js/models/Auth/Login')
   var login
-  var stubbedApi,
-      stubbedBrowser
+  var stubbedApi
+  var stubbedBrowser
 
   beforeEach (function () {
     login = new Login()
