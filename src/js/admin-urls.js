@@ -6,6 +6,7 @@ var s = function (page) {
 
 module.exports = {
   redirector: s('index'),
+  fiveHundred: s('500'),
   login: s('login'),
   dashboard: s('dashboard'),
   serviceProviders: s('service-providers'),
