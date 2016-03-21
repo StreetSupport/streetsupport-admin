@@ -1,7 +1,11 @@
 <p data-bind="text: message"></p>
 <!-- ko if: hasErrors -->
+  <!-- ko template: { name: 'form-feedback-template' } --><!-- /ko -->
+<!-- /ko -->
+
+<script type="text/html" id="form-feedback-template">
 <h2>There were errors in your submission:</h2>
 <ul data-bind="foreach: errors">
   <li data-bind="text: $data"></li>
 </ul>
-<!-- /ko -->
+</script>
