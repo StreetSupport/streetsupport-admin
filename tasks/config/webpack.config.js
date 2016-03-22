@@ -15,27 +15,31 @@ if (argv.production) {
 
 var pagesDir = __dirname + '/../../src/js/pages/page-'
 
+var p = function(pageName) {
+  return pagesDir + pageName
+}
+
 module.exports = {
   entry: {
-    generic: pagesDir + 'generic',
-    index: pagesDir + 'index',
-    login: pagesDir + 'login',
-    logout: pagesDir + 'logout',
-    requestResetPassword: pagesDir + 'request-reset-password',
-    resetPassword: pagesDir + 'reset-password',
-    dashboard: pagesDir + 'dashboard',
-    serviceProvider: pagesDir + 'service-provider',
-    addServiceProvider: pagesDir + 'add-service-provider',
-    serviceProviderAddresses: pagesDir + 'service-provider-addresses',
-    addServiceProviderAddress: pagesDir + 'add-service-provider-address',
-    editServiceProviderAddress: pagesDir + 'edit-service-provider-address',
-    serviceProviderServices: pagesDir + 'service-provider-services',
-    addServiceProviderService: pagesDir + 'add-service-provider-service',
-    editServiceProviderService: pagesDir + 'edit-service-provider-service',
-    addServiceProviderNeed: pagesDir + 'add-service-provider-need',
-    editServiceProviderNeed: pagesDir + 'edit-service-provider-need',
-    addUser: pagesDir + 'add-user',
-    verifyNewUser: pagesDir + 'verify-new-user'
+    generic: p('generic'),
+    index: p('index'),
+    login: p('login'),
+    logout: p('logout'),
+    requestResetPassword: p('request-reset-password'),
+    resetPassword: p('reset-password'),
+    dashboard: p('dashboard'),
+    serviceProvider: p('service-provider'),
+    addServiceProvider: p('add-service-provider'),
+    serviceProviderAddresses: p('service-provider-addresses'),
+    addServiceProviderAddress: p('add-service-provider-address'),
+    editServiceProviderAddress: p('edit-service-provider-address'),
+    serviceProviderServices: p('service-provider-services'),
+    addServiceProviderService: p('add-service-provider-service'),
+    editServiceProviderService: p('edit-service-provider-service'),
+    addServiceProviderNeed: p('add-service-provider-need'),
+    editServiceProviderNeed: p('edit-service-provider-need'),
+    addUser: p('add-user'),
+    verifyNewUser: p('verify-new-user')
   },
   output: {
     path: path.join(__dirname, '/../../_dist/assets/js/'),
