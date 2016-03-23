@@ -1,4 +1,38 @@
 .form {
+  &__field-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  &__field-item {
+    padding: 5px 0;
+    @include cf();
+    position: relative;
+
+    @include mq($from: m) {
+      @include span(3 of $column-small);
+    }
+
+    &--full {
+      @include mq($from: m) {
+        @include span(full);
+      }
+    }
+  }
+
+  &__error {
+    font-family: $font-headline;
+    font-weight: $font-headline-weight;
+    margin-top: 7px;
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: $brand-g;
+  }
+
+
   &__input {
     color: black; padding: 10px; width: 100%;
 

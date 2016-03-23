@@ -1,7 +1,7 @@
 var Q = require('q')
 
 var post = function (url, headers, data) {
-  if(Object.keys(headers).length === 0) {
+  if (Object.keys(headers).length === 0) {
     headers = {
       'content-type': 'application/json'
     }

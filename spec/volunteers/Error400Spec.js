@@ -6,7 +6,7 @@ var browser =   require('../../src/js/browser')
 var cookies =   require('../../src/js/cookies')
 var Model = require('../../src/js/models/volunteers/ContactVolunteerModel')
 
-describe('Contact Volunteer', function () {
+describe('Contact Volunteer API returns 400', function () {
   var model
   var headers = {
     'content-type': 'application/json',
@@ -21,7 +21,13 @@ describe('Contact Volunteer', function () {
       return {
         then: function (success, error) {
           success({
-            'status': 'created'
+            'status': 'error',
+            'statusCode': 400,
+            'data': {
+              'messages': [
+                'error message'
+              ]
+            }
           })
         }
       }
@@ -69,7 +75,11 @@ describe('Contact Volunteer', function () {
     expect(browserLoadedStub.calledAfter(ajaxPostStub)).toBeTruthy()
   })
 
-  it('should set isFormSubmitSuccessful to true' ,function () {
-    expect(model.isFormSubmitSuccessful()).toBeTruthy()
+  it('should set isFormSubmitFailure to true' ,function () {
+    expect(model.isFormSubmitFailure()).toBeTruthy()
+  })
+
+  it('should show returned errors' ,function () {
+    expect(model.errors()[0]).toEqual('error message')
   })
 })

@@ -68,6 +68,7 @@
     "fastclick": "1.0.6",
     "hogan.js": "3.0.2",
     "knockout": "3.4.0",
+    "knockout.validation": "^2.0.3",
     "lodash": "3.10.1",
     "node-uuid": "1.4.7",
     "q": "1.4.1",

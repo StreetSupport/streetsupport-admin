@@ -3976,6 +3976,11 @@
       "from": "knockout@>=3.4.0 <4.0.0",
       "resolved": "https://registry.npmjs.org/knockout/-/knockout-3.4.0.tgz"
     },
+    "knockout.validation": {
+      "version": "2.0.3",
+      "from": "knockout.validation@*",
+      "resolved": "https://registry.npmjs.org/knockout.validation/-/knockout.validation-2.0.3.tgz"
+    },
     "latest-version": {
       "version": "1.0.1",
       "from": "latest-version@>=1.0.0 <2.0.0",
