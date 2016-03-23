@@ -1,6 +1,7 @@
 var sinon = require('sinon')
 var ajax =      require('../../src/js/ajax')
 var endpoints = require('../../src/js/api-endpoints')
+var adminUrls = require('../../src/js/admin-urls')
 var browser =   require('../../src/js/browser')
 var cookies =   require('../../src/js/cookies')
 var Model = require('../../src/js/models/volunteers/ListVolunteersModel')
@@ -58,6 +59,10 @@ describe('List Volunteers', function () {
 
   it('should set volunteers', function () {
     expect(model.volunteers().length).toEqual(3)
+  })
+
+  it('should set url to contact volunteer', function () {
+    expect(model.volunteers()[1].contactUrl).toEqual(adminUrls.contactVolunteer + '?id=56d845e59285563428569851')
   })
 
   it('should show user then that is loaded', function () {

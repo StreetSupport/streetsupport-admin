@@ -34,7 +34,7 @@ pageName: volunteers
       <span data-bind="text: person.email"></span>
       <span data-bind="text: person.telephone"></span>
       <span data-bind="text: person.postcode"></span>
-      <a href="#" class="btn btn--primary"><span class="btn__text">Contact</span></a>
+      <a data-bind="attr: { href: contactUrl }" class="btn btn--primary"><span class="btn__text">Contact</span></a>
     </header>
     <dl class="key-value-pair">
       <dt class="key-value-pair__key">Skills and Experience</dt>
