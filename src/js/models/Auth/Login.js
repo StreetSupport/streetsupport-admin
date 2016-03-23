@@ -12,7 +12,7 @@ function LoginModel () {
   self.password = ko.observable('')
   self.isSubmitting = false
 
-  var handleSubmitError = function(error) {
+  var handleSubmitError = function (error) {
     self.showErrors(error)
     self.message('')
     self.isSubmitting = false

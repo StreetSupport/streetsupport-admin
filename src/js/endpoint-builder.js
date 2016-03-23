@@ -40,6 +40,11 @@ function EndpointBuilder () {
     return self
   }
 
+  self.volunteers = function (volunteerId) {
+    self.updateBaseResource(endpoints.volunteers, volunteerId)
+    return self
+  }
+
   self.addresses = function (addressId) {
     self.childResource = 'addresses'
     self.childResourceId = addressId
