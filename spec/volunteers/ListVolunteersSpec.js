@@ -1,10 +1,8 @@
 var sinon = require('sinon')
 var ajax =      require('../../src/js/ajax')
 var endpoints = require('../../src/js/api-endpoints')
-var adminurls = require('../../src/js/admin-urls')
 var browser =   require('../../src/js/browser')
 var cookies =   require('../../src/js/cookies')
-var getUrlParameter = require('../../src/js/get-url-parameter')
 var Model = require('../../src/js/models/volunteers/ListVolunteersModel')
 
 describe('List Volunteers', function () {
@@ -14,6 +12,8 @@ describe('List Volunteers', function () {
     'session-token': 'stored-session-token'
   }
   var ajaxGetStub
+  var browserLoadingStub
+  var browserLoadedStub
 
   beforeEach(function () {
     var getVolunteersPromise = function () {
@@ -35,12 +35,21 @@ describe('List Volunteers', function () {
       .withArgs('session-token')
       .returns('stored-session-token')
 
+    browserLoadingStub = sinon.stub(browser, 'loading')
+    browserLoadedStub = sinon.stub(browser, 'loaded')
+
     model = new Model()
   })
 
   afterEach(function () {
     ajax.get.restore()
     cookies.get.restore()
+    browser.loading.restore()
+    browser.loaded.restore()
+  })
+
+  it('should notify user it is loading' ,function () {
+      expect(browserLoadingStub.calledOnce).toBeTruthy()
   })
 
   it('should get volunteers from api', function () {
@@ -49,6 +58,10 @@ describe('List Volunteers', function () {
 
   it('should set volunteers', function () {
     expect(model.volunteers().length).toEqual(3)
+  })
+
+  it('should show user then that is loaded', function () {
+    expect(browserLoadedStub.calledAfter(ajaxGetStub)).toBeTruthy()
   })
 })
 

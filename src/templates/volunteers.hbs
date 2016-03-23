@@ -17,10 +17,21 @@ pageName: volunteers
     <div class="block">
       <div class="container block__inner">
         <div class="block__content">
-          <p>hello</p>
+          <div data-bind="foreach:volunteers">
+            <!-- ko template: { name: 'volunteer' } --><!-- /ko -->
+          </div>
         </div>
       </div>
     </div>
   {{/content}}
-  {{#content "gutter"}}{{/content}}
+  {{#content "gutter"}}
+
+  {{> loading-spinner}}
+  <script type="text/html" id="volunteer">
+    <article class="volunteer">
+    <h1 data-bind="text:person.firstName"></h1>
+    </article>
+  </script>
+
+  {{/content}}
 {{/extend}}
