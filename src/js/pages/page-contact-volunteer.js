@@ -4,8 +4,8 @@ var nav = require('./../nav.js')
 nav.init()
 FastClick.attach(document.body)
 
-require.ensure(['knockout', '../models/volunteers/ContactVolunteer'], function (require) {
+require.ensure(['knockout', '../models/volunteers/ContactVolunteerModel'], function (require) {
   var ko = require('knockout')
-  var Model = require('../models/volunteers/ContactVolunteer')
+  var Model = require('../models/volunteers/ContactVolunteerModel')
   ko.applyBindings(new Model())
 })
