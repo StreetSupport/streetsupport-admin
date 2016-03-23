@@ -52,4 +52,16 @@ describe('Contact Volunteer', function () {
   it('should notify user it is loading' ,function () {
       expect(browserLoadingStub.calledOnce).toBeTruthy()
   })
+
+  it('should post to api', function () {
+    var posted = ajaxPostStub.withArgs(
+      endpoints.contactVolunteer,
+      headers,
+      {
+        'Message': 'this is my message'
+      }
+    ).calledOnce
+
+    expect(posted).toBeTruthy()
+  })
 })
