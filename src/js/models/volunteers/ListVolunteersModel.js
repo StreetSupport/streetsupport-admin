@@ -7,12 +7,12 @@ var ko = require('knockout')
 var ListVolunteersModel = function () {
   var self = this
 
-  var endpoint = self.endpointBuilder.volunteers().build()
-  var headers = self.headers(cookies.get('session-token'))
-
   self.volunteers = ko.observableArray()
 
   browser.loading()
+
+  var endpoint = self.endpointBuilder.volunteers().build()
+  var headers = self.headers(cookies.get('session-token'))
 
   ajax
     .get(endpoint, headers)

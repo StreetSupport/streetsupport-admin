@@ -43,6 +43,12 @@ var get = function (url, headers) {
 
   req.open('GET', url, true)
 
+  for (var key in headers) {
+    if (headers.hasOwnProperty(key)) {
+      req.setRequestHeader(key, headers[key])
+    }
+  }
+
   req.onload = function () {
     if (this.status === 200) {
       var json = JSON.parse(req.responseText)
