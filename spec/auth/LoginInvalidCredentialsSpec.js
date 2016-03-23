@@ -19,7 +19,9 @@ describe ('Submit invalid credentials', function () {
           success({
             status: 'error',
             statusCode: 401,
-            messages: ['returned error message']
+            data: {
+              messages: ['returned error message']
+            }
           })
         }
       }

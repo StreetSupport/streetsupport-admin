@@ -64,4 +64,12 @@ describe('Contact Volunteer', function () {
 
     expect(posted).toBeTruthy()
   })
+
+  it('should notify user it has loaded' ,function () {
+    expect(browserLoadedStub.calledAfter(ajaxPostStub)).toBeTruthy()
+  })
+
+  it('should set isFormSubmitted to true' ,function () {
+    expect(model.isFormSubmitted()).toBeTruthy()
+  })
 })

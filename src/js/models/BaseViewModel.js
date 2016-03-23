@@ -33,7 +33,8 @@ function BaseViewModel () {
   }
 
   self.showErrors = function (error) {
-    self.errors(error.messages)
+    console.log(error.data.messages)
+    self.errors(error.data.messages)
   }
 
   self.handleError = function (error) {

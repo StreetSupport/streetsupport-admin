@@ -7,6 +7,7 @@ var ko = require('knockout')
 
 var ContactVolunteerModel = function () {
   var self = this
+  self.isFormSubmitted = ko.observable(false)
   self.message = ko.observable()
 
   self.submit = function () {
@@ -17,7 +18,12 @@ var ContactVolunteerModel = function () {
       {
         'Message': self.message()
       }
-    )
+    ).then(function (success) {
+      browser.loaded()
+      self.isFormSubmitted(true)
+    }, function (error) {
+
+    })
   }
 }
 
