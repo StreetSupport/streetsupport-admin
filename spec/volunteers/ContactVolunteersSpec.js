@@ -4,6 +4,7 @@ var endpoints = require('../../src/js/api-endpoints')
 var adminUrls = require('../../src/js/admin-urls')
 var browser =   require('../../src/js/browser')
 var cookies =   require('../../src/js/cookies')
+var getUrlParam = require('../../src/js/get-url-parameter')
 var Model = require('../../src/js/models/volunteers/ContactVolunteerModel')
 
 describe('Contact Volunteer', function () {
@@ -34,6 +35,8 @@ describe('Contact Volunteer', function () {
       .withArgs('session-token')
       .returns('stored-session-token')
 
+    sinon.stub(getUrlParam, 'parameter').withArgs('id').returns('56d0362c928556085cc569b3')
+
     browserLoadingStub = sinon.stub(browser, 'loading')
     browserLoadedStub = sinon.stub(browser, 'loaded')
 
@@ -47,6 +50,7 @@ describe('Contact Volunteer', function () {
     cookies.get.restore()
     browser.loading.restore()
     browser.loaded.restore()
+    getUrlParam.parameter.restore()
   })
 
   it('should notify user it is loading' ,function () {
@@ -58,7 +62,8 @@ describe('Contact Volunteer', function () {
       endpoints.contactVolunteer,
       headers,
       {
-        'Message': 'this is my message'
+        'Message': 'this is my message',
+        'VolunteerId': '56d0362c928556085cc569b3'
       }
     ).calledOnce
 

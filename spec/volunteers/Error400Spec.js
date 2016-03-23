@@ -4,6 +4,7 @@ var endpoints = require('../../src/js/api-endpoints')
 var adminUrls = require('../../src/js/admin-urls')
 var browser =   require('../../src/js/browser')
 var cookies =   require('../../src/js/cookies')
+var getUrlParam = require('../../src/js/get-url-parameter')
 var Model = require('../../src/js/models/volunteers/ContactVolunteerModel')
 
 describe('Contact Volunteer API returns 400', function () {
@@ -43,6 +44,8 @@ describe('Contact Volunteer API returns 400', function () {
     browserLoadingStub = sinon.stub(browser, 'loading')
     browserLoadedStub = sinon.stub(browser, 'loaded')
 
+    sinon.stub(getUrlParam, 'parameter').withArgs('id').returns('56d0362c928556085cc569b3')
+
     model = new Model()
     model.formModel().message('this is my message')
     model.submit()
@@ -53,6 +56,7 @@ describe('Contact Volunteer API returns 400', function () {
     cookies.get.restore()
     browser.loading.restore()
     browser.loaded.restore()
+    getUrlParam.parameter.restore()
   })
 
   it('should notify user it is loading' ,function () {
@@ -60,13 +64,7 @@ describe('Contact Volunteer API returns 400', function () {
   })
 
   it('should post to api', function () {
-    var posted = ajaxPostStub.withArgs(
-      endpoints.contactVolunteer,
-      headers,
-      {
-        'Message': 'this is my message'
-      }
-    ).calledOnce
+    var posted = ajaxPostStub.calledOnce
 
     expect(posted).toBeTruthy()
   })
