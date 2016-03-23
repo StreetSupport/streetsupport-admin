@@ -25,16 +25,16 @@ var ContactVolunteerModel = function () {
         {
           'Message': self.formModel().message()
         }
-      ).then(function (success) {
+      ).then(function (res) {
         browser.loaded()
-        if (success.status === 'error') {
+        if (res.status === 'error') {
           self.isFormSubmitFailure(true)
-          self.showErrors(success)
+          self.showErrors(res)
         } else {
           self.isFormSubmitSuccessful(true)
         }
-      }, function (error) {
-        self.handleServerError(error)
+      }, function (res) {
+        self.handleServerError(res)
       })
     } else {
       self.fieldErrors.showAllMessages()
