@@ -39,7 +39,8 @@ module.exports = {
     addServiceProviderNeed: p('add-service-provider-need'),
     editServiceProviderNeed: p('edit-service-provider-need'),
     addUser: p('add-user'),
-    verifyNewUser: p('verify-new-user')
+    verifyNewUser: p('verify-new-user'),
+    volunteers: p('volunteers')
   },
   output: {
     path: path.join(__dirname, '/../../_dist/assets/js/'),
