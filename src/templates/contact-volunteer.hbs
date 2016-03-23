@@ -17,6 +17,30 @@ pageName: contactVolunteer
     <div class="block">
       <div class="container block__inner">
         <div class="block__content">
+        <!-- ko if: isFormSubmitSuccessful -->
+          <!-- ko template: { name: 'form-submit-success-template' } -->
+          <!-- /ko -->
+        <!-- /ko -->
+        <!-- ko if: isFormSubmitFailure -->
+          <!-- ko template: { name: 'form-submit-failure-template' } -->
+          <!-- /ko -->
+        <!-- /ko -->
+        <!-- ko ifnot: isFormSubmitSuccessful -->
+        <form class="form" data-bind="submit: submit">
+          <p>Please fill in the form below, detailing how you can fulfil this need.</p>
+          <p>* denotes a required field.</p>
+          <fieldset class="form__fieldset" data-bind="with: formModel">
+            <legend class="h2 form__fieldset-title">Contact Volunteer</legend>
+            <ul class="form__field-list">
+              <li class="form__field-item form__field-item--full">
+                <label class="form__label" for="message">Message *</label>
+                <textarea class="form__input form__input--textarea" id="message" data-bind="value: message"></textarea>
+              </li>
+            </ul>
+          </fieldset>
+          <button type="submit" class="btn btn--primary form__submit" data-bind="click: submit"><span class="btn__text">Submit</span></button>
+        </form>
+        <!-- /ko -->
         </div>
       </div>
     </div>
@@ -24,8 +48,20 @@ pageName: contactVolunteer
   {{#content "gutter"}}
 
   {{> loading-spinner}}
-  <script type="text/html" id="volunteer">
+  <script type="text/html" id="contact-form">
   </script>
 
   {{/content}}
 {{/extend}}
+
+<script type="text/html" id="form-submit-success-template">
+  <h2>Thank you for submitting your details</h2>
+  <p>Your message has been added to our system. The organisation you are helping will be in touch soon!</p>
+</script>
+
+<script type="text/html" id="form-submit-failure-template">
+  <h2>There was a problem with your submission:</h2>
+  <ul data-bind="foreach: errors">
+    <li data-bind="text: $data"></li>
+  </ul>
+</script>

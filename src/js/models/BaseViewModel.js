@@ -1,5 +1,4 @@
 var ko = require('knockout')
-require('knockout.validation') // No variable here is deliberate!
 var Endpoints = require('../endpoint-builder')
 var browser = require('../browser')
 var adminUrls = require('../admin-urls')
@@ -48,16 +47,6 @@ function BaseViewModel () {
 
   self.handleServerError = function () {
     browser.redirect(adminUrls.serverError)
-  }
-
-  self.configureValidation = function () {
-    ko.validation.init({
-      insertMessages: true,
-      decorateInputElement: true,
-      parseInputAttributes: true,
-      errorMessageClass: 'form__error',
-      errorElementClass: 'form__input--error'
-    }, true)
   }
 }
 

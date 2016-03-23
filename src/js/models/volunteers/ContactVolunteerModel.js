@@ -16,6 +16,14 @@ var ContactVolunteerModel = function () {
   self.fieldErrors = ko.validation.group(self.formModel)
   self.apiErrors = ko.observableArray()
 
+  ko.validation.init({
+    insertMessages: true,
+    decorateInputElement: true,
+    parseInputAttributes: true,
+    errorMessageClass: 'form__error',
+    errorElementClass: 'form__input--error'
+  }, true)
+
   self.submit = function () {
     if (self.formModel.isValid()) {
       browser.loading()
