@@ -69,7 +69,5 @@ var makeRequest = function (options) {
 }
 module.exports = {
   get: get,
-  getJson: get, // deprecated
-  post: post,
-  postJson: post // deprecated
+  post: post
 }
