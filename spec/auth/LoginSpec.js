@@ -32,7 +32,7 @@ describe ('Login', function () {
           then: function (success, error) {
             success({
               'status': 201,
-              'json': {
+              'data': {
                 'sessionToken': 'returnedSessionToken',
                 'authClaims': [ 'SuperAdmin', 'claimB' ]
               }
@@ -41,7 +41,7 @@ describe ('Login', function () {
         }
       }
 
-      stubbedApi = sinon.stub(ajax, 'postJson')
+      stubbedApi = sinon.stub(ajax, 'post')
       stubbedApi.returns(fakeResolved ())
       stubbedBrowser = sinon.stub(browser, 'redirect')
 
@@ -56,7 +56,7 @@ describe ('Login', function () {
     })
 
     afterEach (function () {
-      ajax.postJson.restore()
+      ajax.post.restore()
       browser.redirect.restore()
       mockCookies.restore()
     })
@@ -70,7 +70,7 @@ describe ('Login', function () {
     })
 
     it ('should send credentials to api', function () {
-      var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoints.sessions + '/create', {
+      var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoints.sessions + '/create', {}, {
         'username': 'username',
         'password': 'password'
       }).calledOnce
@@ -80,7 +80,7 @@ describe ('Login', function () {
 
     it ('should not be able to send credentials after submitting', function () {
       login.submit ()
-      var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoints.sessions + '/create', {
+      var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoints.sessions + '/create', {}, {
         'username': 'username',
         'password': 'password'
       }).calledOnce

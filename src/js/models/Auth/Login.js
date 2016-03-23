@@ -23,16 +23,18 @@ function LoginModel () {
     if (!self.isSubmitting) {
       self.isSubmitting = true
       self.message('Loading, please wait')
-      ajax.postJson(self.endpointBuilder.sessions().build() + '/create', {
-        'username': self.username(),
-        'password': self.password()
-      })
+      ajax.post(self.endpointBuilder.sessions().build() + '/create',
+        {},
+        {
+          'username': self.username(),
+          'password': self.password()
+        })
       .then(function (result) {
         if (result.status === 'error') {
           handleSubmitError(result)
         } else {
-          cookies.set('session-token', result.json.sessionToken)
-          cookies.set('auth-claims', result.json.authClaims)
+          cookies.set('session-token', result.data.sessionToken)
+          cookies.set('auth-claims', result.data.authClaims)
           browser.redirect(adminUrls.redirector)
         }
       }, function (error) {

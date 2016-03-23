@@ -25,7 +25,7 @@ describe ('Submit invalid credentials', function () {
       }
     }
 
-    stubbedApi = sinon.stub(ajax, 'postJson')
+    stubbedApi = sinon.stub(ajax, 'post')
     stubbedApi.returns(fakeResolved ())
     stubbedBrowser = sinon.stub(browser, 'redirect')
 
@@ -36,7 +36,7 @@ describe ('Submit invalid credentials', function () {
   })
 
   afterEach (function () {
-    ajax.postJson.restore()
+    ajax.post.restore()
     browser.redirect.restore()
   })
 
@@ -55,7 +55,7 @@ describe ('Submit invalid credentials', function () {
 
   it ('should be able to send credentials again', function () {
     login.submit()
-    var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoints.sessions + '/create', {
+    var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoints.sessions + '/create', {}, {
       'username': 'username',
       'password': 'password'
     }).calledTwice
