@@ -37,8 +37,7 @@ var makeRequest = function (options) {
     if (this.status === 201) {
       deferred.resolve({
         'status': 'created',
-        'statusCode': this.status,
-        'data': JSON.parse(this.responseText)
+        'statusCode': this.status
       })
     } else if (this.status === 200) {
       deferred.resolve({
