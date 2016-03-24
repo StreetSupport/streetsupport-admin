@@ -9,10 +9,6 @@ var Model = require('../../src/js/models/volunteers/ContactVolunteerModel')
 
 describe('Contact Volunteer', function () {
   var model
-  var headers = {
-    'content-type': 'application/json',
-    'session-token': 'stored-session-token'
-  }
   var ajaxPostStub
   var browserLoadingStub
   var browserLoadedStub
@@ -58,15 +54,15 @@ describe('Contact Volunteer', function () {
   })
 
   it('should post to api', function () {
-    var posted = ajaxPostStub.withArgs(
-      endpoints.contactVolunteer,
-      headers,
-      {
-        'Message': 'this is my message',
-        'VolunteerId': '56d0362c928556085cc569b3'
-      }
-    ).calledOnce
-
+    var endpoint = endpoints.volunteers + '/56d0362c928556085cc569b3/contact-requests'
+    var headers = {
+      'content-type': 'application/json',
+      'session-token': 'stored-session-token'
+    }
+    var payload = {
+      'Message': 'this is my message'
+    }
+    var posted = ajaxPostStub.withArgs(endpoint, headers, payload).calledOnce
     expect(posted).toBeTruthy()
   })
 

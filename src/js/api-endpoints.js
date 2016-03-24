@@ -18,7 +18,6 @@ var unverifiedUsers = '/v1/unverified-users'
 var sessions = '/v1/sessions'
 var resetPassword = '/v1/reset-password-applications'
 var volunteers = '/v1/volunteer-enquiries'
-var contactVolunteer = '/v1/contact-volunteer-requests'
 
 module.exports = {
   getServiceProviders: p(getServiceProviders),
@@ -27,6 +26,5 @@ module.exports = {
   unverifiedUsers: p(unverifiedUsers),
   sessions: p(sessions),
   resetPassword: p(resetPassword),
-  volunteers: p(volunteers),
-  contactVolunteer: p(contactVolunteer)
+  volunteers: p(volunteers)
 }
