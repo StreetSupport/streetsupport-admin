@@ -31,12 +31,15 @@ pageName: volunteers
     <article class="volunteer">
     <header>
       <h1><span data-bind="text:person.firstName"></span> <span data-bind="text:person.lastName"></span></h1>
-      <span data-bind="text: person.email"></span>
-      <span data-bind="text: person.telephone"></span>
-      <span data-bind="text: person.postcode"></span>
       <a data-bind="attr: { href: contactUrl }" class="btn btn--primary"><span class="btn__text">Contact</span></a>
     </header>
     <dl class="key-value-pair">
+      <dt class="key-value-pair__key">Email</dt>
+      <dd class="key-value-pair__value" data-bind="text:person.email"></dd>
+      <dt class="key-value-pair__key">Telephone</dt>
+      <dd class="key-value-pair__value" data-bind="text:person.telephone"></dd>
+      <dt class="key-value-pair__key">Postcode</dt>
+      <dd class="key-value-pair__value" data-bind="text:person.postcode"></dd>
       <dt class="key-value-pair__key">Skills and Experience</dt>
       <dd class="key-value-pair__value" data-bind="text:skillsAndExperience.description"></dd>
       <dt class="key-value-pair__key">Resources</dt>

@@ -33,23 +33,33 @@ var makeRequest = function (options) {
     }
   }
 
+  var parseResponseText = function(response) {
+    if(response.responseText.length) {
+      console.log(response.responseText)
+      var parsed = JSON.parse(response.responseText)
+      return parsed
+    }
+    return {}
+  }
+
   req.onload = function () {
     if (this.status === 201) {
       deferred.resolve({
         'status': 'created',
-        'statusCode': this.status
+        'statusCode': this.status,
+        'data': parseResponseText(this)
       })
     } else if (this.status === 200) {
       deferred.resolve({
         'status': 'ok',
         'statusCode': this.status,
-        'data': JSON.parse(this.responseText)
+        'data': parseResponseText(this)
       })
     } else {
       deferred.resolve({
         'status': 'error',
         'statusCode': this.status,
-        'data': JSON.parse(this.responseText)
+        'data': parseResponseText(this)
       })
     }
   }
