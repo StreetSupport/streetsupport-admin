@@ -1,3 +1,5 @@
+'use strict'
+
 // Load global config and gulp
 var config  = require(__dirname + '/tasks/config/foley.json')
 var argv    = require('yargs').argv
