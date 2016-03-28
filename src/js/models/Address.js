@@ -1,3 +1,5 @@
+'use strict'
+
 var ko = require('knockout')
 var _ = require('lodash')
 var ajax = require('basic-ajax')
@@ -29,10 +31,12 @@ function Address (data) {
   self.city = ko.observable(data.city)
   self.postcode = ko.observable(data.postcode)
 
-  // self.savedOpeningTimes = ko.observableArray(data.openingTimes.map(time => new OpeningTime(time)))
-  self.savedOpeningTimes = ko.observableArray(_.map(data.openingTimes, function (time) {
+  let buildOpeningTime = function (time) {
     return new OpeningTime(time)
-  }))
+  }
+
+  // self.savedOpeningTimes = ko.observableArray(data.openingTimes.map(time => new OpeningTime(time)))
+  self.savedOpeningTimes = ko.observableArray(_.map(data.openingTimes, buildOpeningTime))
 
   self.openingTimes = ko.observableArray(_.map(data.openingTimes, function (time) {
     return new OpeningTime(time)
@@ -100,6 +104,14 @@ function Address (data) {
   }
 
   self.save = function () {
+    var mapOpeningTime = function (openingTime) {
+      return {
+        'startTime': openingTime.startTime(),
+        'endTime': openingTime.endTime(),
+        'day': openingTime.day()
+      }
+    }
+
     var model = JSON.stringify({
       'Street': self.street1(),
       'Street1': self.street2(),
@@ -107,13 +119,7 @@ function Address (data) {
       'Street3': self.street4(),
       'City': self.city(),
       'Postcode': self.postcode(),
-      'OpeningTimes': _.map(self.openingTimes(), function (openingTime) {
-        return {
-          'startTime': openingTime.startTime(),
-          'endTime': openingTime.endTime(),
-          'day': openingTime.day()
-        }
-      })
+      'OpeningTimes': self.openingTimes().map(openingTime => mapOpeningTime(openingTime))
     })
 
     if (self.tempKey() !== undefined || self.key() === undefined) {
@@ -151,13 +157,15 @@ function Address (data) {
     self.city(self.savedCity())
     self.postcode(self.savedPostcode())
 
-    var restoredOpeningTimes = _.map(self.savedOpeningTimes(), function (ot) {
+    let buildOpeningTime = function (ot) {
       return new OpeningTime({
         'day': ot.day(),
         'startTime': ot.startTime(),
         'endTime': ot.endTime()
       })
-    })
+    }
+
+    var restoredOpeningTimes = self.savedOpeningTimes().map(ot => buildOpeningTime(ot))
 
     self.openingTimes(restoredOpeningTimes)
   }
