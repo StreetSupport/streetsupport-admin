@@ -12,7 +12,7 @@ function Need (data) {
   self.endpoints = new Endpoints()
 
   self.serviceProviderId = data.serviceProviderId
-  self.availableTypes = ko.observableArray(['Money', 'Time', 'Items'])
+  self.availableTypes = ko.observableArray(['money', 'time', 'items'])
 
   self.id = ko.observable(data.id)
 
@@ -20,7 +20,7 @@ function Need (data) {
   self.type = ko.observable(data.type)
   self.isPeopleOrThings = ko.computed(function () {
     var type = self.type()
-    return type !== undefined && (type.toLowerCase() === 'people' || type.toLowerCase() === 'things')
+    return type !== undefined && (type.toLowerCase() === 'time' || type.toLowerCase() === 'items')
   }, self)
   self.isMoney = ko.computed(function () {
     var type = self.type()
