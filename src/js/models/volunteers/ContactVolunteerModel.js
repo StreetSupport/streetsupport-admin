@@ -2,7 +2,6 @@ var BaseViewModel = require('../BaseViewModel')
 var ajax = require('../../ajax')
 var browser = require('../../browser')
 var cookies = require('../../cookies')
-var endpoints = require('../../api-endpoints')
 var getUrlParam = require('../../get-url-parameter')
 var ko = require('knockout')
 require('knockout.validation') // No variable here is deliberate!
