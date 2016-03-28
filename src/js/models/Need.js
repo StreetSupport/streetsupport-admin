@@ -12,7 +12,7 @@ function Need (data) {
   self.endpoints = new Endpoints()
 
   self.serviceProviderId = data.serviceProviderId
-  self.availableTypes = ko.observableArray(['Money', 'People', 'Things'])
+  self.availableTypes = ko.observableArray(['Money', 'Time', 'Items'])
 
   self.id = ko.observable(data.id)
 

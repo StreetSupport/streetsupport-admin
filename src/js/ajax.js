@@ -35,7 +35,6 @@ var makeRequest = function (options) {
 
   var parseResponseText = function(response) {
     if(response.responseText.length) {
-      console.log(response.responseText)
       var parsed = JSON.parse(response.responseText)
       return parsed
     }

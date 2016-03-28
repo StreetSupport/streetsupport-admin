@@ -53,8 +53,8 @@ describe('Add individual Need', function () {
 
   it('should set need types available', function() {
     expect(model.need().availableTypes()[0]).toEqual('Money')
-    expect(model.need().availableTypes()[1]).toEqual('People')
-    expect(model.need().availableTypes()[2]).toEqual('Things')
+    expect(model.need().availableTypes()[1]).toEqual('Time')
+    expect(model.need().availableTypes()[2]).toEqual('Items')
   })
 
   it('should initially set isPeopleOrThings to false', function () {
