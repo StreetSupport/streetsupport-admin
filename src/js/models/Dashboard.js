@@ -2,7 +2,6 @@ var ajax = require('basic-ajax')
 var adminUrls = require('../admin-urls')
 var cookies = require('../cookies')
 var ko = require('knockout')
-var _ = require('lodash')
 var BaseViewModel = require('./BaseViewModel')
 
 function ServiceProvider (sp) {
