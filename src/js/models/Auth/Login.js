@@ -33,7 +33,6 @@ function LoginModel () {
         if (result.status === 'error') {
           handleSubmitError(result)
         } else {
-          console.log(result)
           cookies.set('session-token', result.data.sessionToken)
           cookies.set('auth-claims', result.data.authClaims)
           browser.redirect(adminUrls.redirector)
