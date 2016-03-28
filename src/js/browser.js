@@ -1,4 +1,3 @@
-var _ = require('lodash')
 var Spinner = require('spin.js')
 
 var redirect = function (url) {
@@ -7,7 +6,7 @@ var redirect = function (url) {
 
 var dataLoaded = function () {
   var dynamicElements = document.getElementsByClassName('awaiting-data')
-  _.forEach(dynamicElements, function (element) {
+  Array.from(dynamicElements).forEach(element => {
     element.className = element.className.replace(/(?:^|\s)awaiting-data(?!\S)/g, '')
   })
 }
