@@ -7,7 +7,6 @@ var Address = require('./Address')
 var Service = require('./Service')
 var Need = require('./Need')
 var ko = require('knockout')
-var _ = require('lodash')
 var BaseViewModel = require('./BaseViewModel')
 
 function ServiceProvider (data) {
