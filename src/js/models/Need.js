@@ -1,3 +1,5 @@
+'use strict'
+
 var ko = require('knockout')
 var _ = require('lodash')
 var ajax = require('basic-ajax')
@@ -33,6 +35,7 @@ function Need (data) {
   self.email = ko.observable(data.email)
   self.donationAmountInPounds = ko.observable(data.donationAmountInPounds)
   self.donationUrl = ko.observable(data.donationUrl)
+  self.keywords = ko.observable(data.keywords !== undefined ? data.keywords.join(', ') : '')
 
   self.tempKey = ko.observable(data.tempKey)
   self.isEditing = ko.observable(false)
@@ -53,6 +56,7 @@ function Need (data) {
   }
 
   self.save = function () {
+    let keywords = self.keywords() !== undefined ? self.keywords().split(',').map(k => k.trim()) : []
     var model = JSON.stringify({
       'Description': self.description(),
       'Type': self.type(),
@@ -62,7 +66,8 @@ function Need (data) {
       'Instructions': self.instructions(),
       'Email': self.email(),
       'DonationAmountInPounds': self.donationAmountInPounds(),
-      'DonationUrl': self.donationUrl()
+      'DonationUrl': self.donationUrl(),
+      'Keywords': keywords
     })
 
     if (self.id() === undefined) {

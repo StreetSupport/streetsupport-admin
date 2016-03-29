@@ -116,6 +116,7 @@ describe('Add individual Need', function () {
       model.need().email('test@test.com')
       model.need().donationAmountInPounds(123.45)
       model.need().donationUrl('http://donatehere.com')
+      model.need().keywords(' keywordA, keywordB ,keywordC ')
 
       model.need().save()
     })
@@ -140,7 +141,8 @@ describe('Add individual Need', function () {
         'Instructions': 'instructions',
         'Email': 'test@test.com',
         'DonationAmountInPounds': 123.45,
-        'DonationUrl': 'http://donatehere.com'
+        'DonationUrl': 'http://donatehere.com',
+        'Keywords': [ 'keywordA', 'keywordB', 'keywordC' ]
       })
       var postAsExpected = ajaxStub.withArgs(endpoint, headers, payload).calledOnce
       expect(postAsExpected).toBeTruthy()
