@@ -1,5 +1,4 @@
 var ko = require('knockout')
-var _ = require('lodash')
 var Address = require('../Address')
 var BaseViewModel = require('../BaseViewModel')
 var OpeningTime = require('../OpeningTime')
@@ -33,9 +32,7 @@ function AddServiceProviderService () {
   self.address = ko.observable(new Address({}))
 
   self.setAvailableSubCategories = function () {
-    self.subCategories(_.map(self.category().subCategories, function (sc) {
-      return new SubCat(sc.key, sc.name)
-    }))
+    self.subCategories(self.category().subCategories.map(sc => new SubCat(sc.key, sc.name)))
   }
 
   self.prefillAddress = function () {
@@ -48,13 +45,12 @@ function AddServiceProviderService () {
       city: self.preselectedAddress().city(),
       postcode: self.preselectedAddress().postcode()
     })
-    address.openingTimes(_.map(self.preselectedAddress().openingTimes(), function (ot) {
-      return new OpeningTime({
+    address.openingTimes(self.preselectedAddress().openingTimes().map(ot => new OpeningTime({
         day: ot.day(),
         startTime: ot.startTime(),
         endTime: ot.endTime()
       })
-    }))
+    ))
     self.address(address)
   }
 
@@ -62,7 +58,7 @@ function AddServiceProviderService () {
     var endpoint = self.endpointBuilder.serviceProviders(getUrlParameter.parameter('providerId')).services().build()
 
     var tags = []
-    if (self.targetAudience().length > 0) tags = _.map(self.targetAudience().split(','), function (t) { return t.trim() })
+    if (self.targetAudience().length > 0) tags = self.targetAudience().split(',').map(t => t.trim())
     if (self.category() === undefined) {
       self.errors(['Please select a category.'])
     } else {
@@ -71,14 +67,10 @@ function AddServiceProviderService () {
         'LocationDescription': self.locationDescription(),
         'Tags': tags,
         'Category': self.category().key,
-        'SubCategories': _.chain(self.subCategories())
-          .filter(function (sc) {
-            return sc.isSelected() === true
-          })
-          .map(function (sc) {
-            return sc.key
-          }),
-        'OpeningTimes': _.map(self.address().openingTimes(), function (openingTime) {
+        'SubCategories': self.subCategories()
+          .filter(sc => sc.isSelected() === true)
+          .map(sc => sc.key),
+        'OpeningTimes': self.address().openingTimes().map(openingTime => {
           return {
             'StartTime': openingTime.startTime(),
             'EndTime': openingTime.endTime(),
@@ -107,9 +99,7 @@ function AddServiceProviderService () {
     var serviceProviderEndpoint = self.endpointBuilder.serviceProviders(getUrlParameter.parameter('providerId')).build()
     ajax.get(serviceProviderEndpoint, self.headers(cookies.get('session-token')), {})
     .then(function (result) {
-      self.addresses(_.map(result.json.addresses, function (a) {
-        return new Address(a)
-      }))
+      self.addresses(result.json.addresses.map(a => new Address(a)))
     },
     function (error) {
       self.handleError(error)
