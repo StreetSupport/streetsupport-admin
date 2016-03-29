@@ -21,17 +21,13 @@ function Service (data) {
   var tags = data.tags !== null ? data.tags.join(', ') : ''
 
   self.tags = ko.observable(tags)
-  self.openingTimes = ko.observableArray(_.map(data.openingTimes, function (ot) {
-    return new OpeningTime(ot)
-  }))
+  self.openingTimes = ko.observableArray(data.openingTimes.map(ot => new OpeningTime(ot)))
   self.address = new Address(data.address)
 
   self.savedName = ko.observable(data.name)
   self.savedInfo = ko.observable(data.info)
   self.savedTags = ko.observable(tags)
-  self.savedOpeningTimes = ko.observableArray(_.map(data.openingTimes, function (ot) {
-    return new OpeningTime(ot)
-  }))
+  self.savedOpeningTimes = ko.observableArray(data.openingTimes.map(ot => new OpeningTime(ot)))
   self.savedAddress = new Address(data.address)
 
   self.isEditing = ko.observable(false)
@@ -54,7 +50,7 @@ function Service (data) {
     self.info(self.savedInfo())
     self.tags(self.savedTags())
 
-    var restoredOpeningTimes = _.map(self.savedOpeningTimes(), function (ot) {
+    var restoredOpeningTimes = self.savedOpeningTimes().map(ot => {
       return new OpeningTime({
         'day': ot.day(),
         'startTime': ot.startTime(),
@@ -90,13 +86,13 @@ function Service (data) {
   self.save = function () {
     var endpoint = self.endpointBuilder.serviceProviders(self.serviceProviderId).services(self.id()).build()
     var tags = []
-    if (self.tags().length > 0) tags = _.map(self.tags().split(','), function (t) { return t.trim() })
+    if (self.tags().length > 0) tags = self.tags().split(',').map(t => t.trim())
 
     var model = JSON.stringify({
       'Info': self.info(),
       'LocationDescription': self.locationDescription(),
       'Tags': tags,
-      'OpeningTimes': _.map(self.openingTimes(), function (openingTime) {
+      'OpeningTimes': self.openingTimes().map(openingTime => {
         return {
           'StartTime': openingTime.startTime(),
           'EndTime': openingTime.endTime(),
@@ -128,9 +124,7 @@ function Service (data) {
     var endpoint = self.endpointBuilder.serviceProviders(getUrlParameter.parameter('key')).services(self.id()).build()
     ajax.delete(endpoint, self.headers(cookies.get('session-token')), JSON.stringify({}))
     .then(function (result) {
-      _.forEach(self.listeners(), function (listener) {
-        listener.deleteService(self)
-      })
+      self.listeners().forEach(l => l.deleteService(self))
     }, function (error) {
       self.handleError(error)
     })
