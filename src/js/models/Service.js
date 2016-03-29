@@ -77,11 +77,12 @@ function Service (data) {
   }
 
   self.removeOpeningTime = function (openingTimeToRemove) {
-    var remaining = _.filter(self.openingTimes(), function (o) {
+    var o = function (o) {
       return o.day() !== openingTimeToRemove.day() ||
              o.startTime() !== openingTimeToRemove.startTime() ||
              o.endTime() !== openingTimeToRemove.endTime()
-    })
+    }
+    var remaining = self.openingTimes().filter(o => notToBeRemoved(o))
 
     self.openingTimes(remaining)
   }
@@ -117,9 +118,7 @@ function Service (data) {
       model
     ).then(function (result) {
       self.isEditing(false)
-      _.forEach(self.listeners(), function (l) {
-        l.serviceSaved(self)
-      })
+      self.listeners().forEach(l => l.serviceSaved(self))
     }, function (error) {
       self.handleError(error)
     })
