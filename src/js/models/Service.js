@@ -77,7 +77,7 @@ function Service (data) {
   }
 
   self.removeOpeningTime = function (openingTimeToRemove) {
-    var o = function (o) {
+    var notToBeRemoved = function (o) {
       return o.day() !== openingTimeToRemove.day() ||
              o.startTime() !== openingTimeToRemove.startTime() ||
              o.endTime() !== openingTimeToRemove.endTime()
