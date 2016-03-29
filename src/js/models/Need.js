@@ -35,7 +35,7 @@ function Need (data) {
   self.email = ko.observable(data.email)
   self.donationAmountInPounds = ko.observable(data.donationAmountInPounds)
   self.donationUrl = ko.observable(data.donationUrl)
-  self.keywords = ko.observable(data.keywords !== undefined ? data.keywords.join(', ') : '')
+  self.keywords = ko.observable(data.keywords !== undefined && data.keywords !== null ? data.keywords.join(', ') : '')
 
   self.tempKey = ko.observable(data.tempKey)
   self.isEditing = ko.observable(false)
