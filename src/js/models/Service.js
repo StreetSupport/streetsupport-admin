@@ -1,5 +1,4 @@
 var ko = require('knockout')
-var _ = require('lodash')
 var ajax = require('basic-ajax')
 var Endpoints = require('../endpoint-builder')
 var getUrlParameter = require('../get-url-parameter')

@@ -30,7 +30,13 @@ function ServiceProvider (data) {
   self.services = ko.observableArray(data.providedServices.map(s => new Service(s) ))
   self.services().forEach(s => s.addListener(self))
 
-  self.needs = ko.observableArray(_.map(data.needs, function (n) { return new Need(n) }))
+  var buildNeeds = function (needs) {
+    return needs !== undefined && needs !== null
+    ? needs.map(n => new Need(n))
+    : []
+  }
+
+  self.needs = ko.observableArray(buildNeeds(data.needs))
   self.needs().forEach(s => s.addListener(self))
 
   self.addAddressUrl = adminUrls.serviceProviderAddressesAdd + '?providerId=' + data.key
