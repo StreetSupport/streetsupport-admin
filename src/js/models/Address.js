@@ -31,16 +31,14 @@ function Address (data) {
   self.city = ko.observable(data.city)
   self.postcode = ko.observable(data.postcode)
 
-  let buildOpeningTime = function (time) {
-    return new OpeningTime(time)
+  var buildOpeningTimes = function(openingTimesData) {
+    var openingTimes = openingTimesData !== undefined && openingTimesData !== null
+      ? openingTimesData.map(o => new OpeningTime(o))
+      : []
+    return openingTimes
   }
-
-  // self.savedOpeningTimes = ko.observableArray(data.openingTimes.map(time => new OpeningTime(time)))
-  self.savedOpeningTimes = ko.observableArray(_.map(data.openingTimes, buildOpeningTime))
-
-  self.openingTimes = ko.observableArray(_.map(data.openingTimes, function (time) {
-    return new OpeningTime(time)
-  }))
+  self.savedOpeningTimes = ko.observableArray(buildOpeningTimes(data.openingTimes))
+  self.openingTimes = ko.observableArray(buildOpeningTimes(data.openingTimes))
 
   self.tempKey = ko.observable(data.tempKey)
   self.isEditing = ko.observable(false)
