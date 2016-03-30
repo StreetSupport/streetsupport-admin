@@ -33,8 +33,8 @@ var makeRequest = function (options) {
     }
   }
 
-  var parseResponseText = function(response) {
-    if(response.responseText.length) {
+  var parseResponseText = function (response) {
+    if (response.responseText.length) {
       var parsed = JSON.parse(response.responseText)
       return parsed
     }
@@ -70,7 +70,7 @@ var makeRequest = function (options) {
   if (options.data !== undefined) {
     req.send(JSON.stringify(options.data))
   } else {
-   req.send()
+    req.send()
   }
 
   return deferred

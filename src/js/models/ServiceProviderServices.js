@@ -5,7 +5,6 @@ var Address = require('./Address')
 var Service = require('./Service')
 var getUrlParameter = require('../get-url-parameter')
 var ko = require('knockout')
-var _ = require('lodash')
 var BaseViewModel = require('./BaseViewModel')
 
 function ServiceProvider (data) {
@@ -13,21 +12,21 @@ function ServiceProvider (data) {
 
   self.key = ko.observable(data.key)
   self.name = ko.observable(data.name)
-  self.addresses = ko.observableArray(_.map(data.addresses, function (address) {
+  self.addresses = ko.observableArray(data.addresses.map(address => {
     address.serviceProviderId = self.key
     return new Address(address)
   }))
-  self.services = ko.observableArray(_.map(data.providedServices, function (service) {
+  self.services = ko.observableArray(data.providedServices.map(service => {
     var newbie = new Service(service)
     newbie.addListener(self)
     return newbie
   }))
 
   self.deleteService = function (deletedService) {
-    var remainingServices = _.filter(self.services(), function (service) {
+    var notTheOneToDelete = function (service) {
       return service.id() !== deletedService.id()
-    })
-    self.services(remainingServices)
+    }
+    self.services(self.services().filter(s => notTheOneToDelete(s)))
   }
 }
 

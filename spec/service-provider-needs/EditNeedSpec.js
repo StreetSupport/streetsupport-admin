@@ -107,6 +107,11 @@ describe('Editing Service Provider Need', function () {
     expect(model.need().donationUrl()).toEqual('http://www.donationUrl.com')
   })
 
+
+  it('should set need keywords', function () {
+    expect(model.need().keywords()).toEqual('keywordA, keywordB, keywordC')
+  })
+
   it('should tell browser dataLoaded', function () {
     expect(browserStub.calledOnce).toBeTruthy()
   })
@@ -139,7 +144,8 @@ describe('Editing Service Provider Need', function () {
           'Instructions': 'instructions',
           'Email': 'email',
           'DonationAmountInPounds': 1,
-          'DonationUrl': 'http://www.donationUrl.com'
+          'DonationUrl': 'http://www.donationUrl.com',
+          'Keywords': [ 'keywordA', 'keywordB', 'keywordC' ]
         })
       ).returns(fakePutResolution())
 
@@ -173,6 +179,7 @@ function needData() {
     'instructions': 'instructions',
     'email': 'email',
     'donationAmountInPounds': 1,
-    'donationUrl': 'http://www.donationUrl.com'
+    'donationUrl': 'http://www.donationUrl.com',
+    'keywords': [ 'keywordA', 'keywordB', 'keywordC' ]
   }
 }

@@ -7,7 +7,6 @@ var Address = require('./Address')
 var Service = require('./Service')
 var Need = require('./Need')
 var ko = require('knockout')
-var _ = require('lodash')
 var BaseViewModel = require('./BaseViewModel')
 
 function ServiceProvider (data) {
@@ -22,26 +21,22 @@ function ServiceProvider (data) {
   self.website = ko.observable(data.website)
   self.facebook = ko.observable(data.facebook)
   self.twitter = ko.observable(data.twitter)
-  _.forEach(data.addresses, function (a) {
-    a.serviceProviderId = data.key
-  })
-  self.addresses = ko.observableArray(_.map(data.addresses, function (a) { return new Address(a) }))
-  _.forEach(self.addresses(), function (a) {
-    a.addListener(self)
-  })
+  data.addresses.forEach(a => a.serviceProviderId = data.key)
+  self.addresses = ko.observableArray(data.addresses.map(a => new Address(a)))
+  self.addresses().forEach(a => a.addListener(self))
 
-  _.forEach(data.providedServices, function (s) {
-    s.serviceProviderId = data.key
-  })
-  self.services = ko.observableArray(_.map(data.providedServices, function (s) { return new Service(s) }))
-  _.forEach(self.services(), function (s) {
-    s.addListener(self)
-  })
+  data.providedServices.forEach(s => s.serviceProviderId = data.key)
+  self.services = ko.observableArray(data.providedServices.map(s => new Service(s) ))
+  self.services().forEach(s => s.addListener(self))
 
-  self.needs = ko.observableArray(_.map(data.needs, function (n) { return new Need(n) }))
-  _.forEach(self.needs(), function (s) {
-    s.addListener(self)
-  })
+  var buildNeeds = function (needs) {
+    return needs !== undefined && needs !== null
+    ? needs.map(n => new Need(n))
+    : []
+  }
+
+  self.needs = ko.observableArray(buildNeeds(data.needs))
+  self.needs().forEach(s => s.addListener(self))
 
   self.addAddressUrl = adminUrls.serviceProviderAddressesAdd + '?providerId=' + data.key
   self.amendAddressesUrl = adminUrls.serviceProviderAddresses + '?key=' + data.key
@@ -52,23 +47,26 @@ function ServiceProvider (data) {
   self.addNeedUrl = adminUrls.serviceProviderNeedsAdd + '?providerId=' + data.key
 
   self.deleteAddress = function (deletedAddress) {
-    var remainingAddresses = _.filter(self.addresses(), function (address) {
+    var notDeleted = function (address) {
       return address.key() !== deletedAddress.key()
-    })
+    }
+    var remainingAddresses = self.addresses().filter(a => notDeleted(a))
     self.addresses(remainingAddresses)
   }
 
   self.deleteService = function (deletedService) {
-    var remainingServices = _.filter(self.services(), function (service) {
+    var notDeleted = function (service) {
       return service.id() !== deletedService.id()
-    })
+    }
+    var remainingServices = self.services().filter(s => notDeleted(s))
     self.services(remainingServices)
   }
 
   self.deleteNeed = function (deletedNeed) {
-    var remainingNeeds = _.filter(self.needs(), function (need) {
+    var notDeleted = function (need) {
       return need.id() !== deletedNeed.id()
-    })
+    }
+    var remainingNeeds = self.needs().filter(n => notDeleted(n))
     self.needs(remainingNeeds)
   }
 }

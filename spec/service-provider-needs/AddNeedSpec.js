@@ -52,9 +52,9 @@ describe('Add individual Need', function () {
   })
 
   it('should set need types available', function() {
-    expect(model.need().availableTypes()[0]).toEqual('Money')
-    expect(model.need().availableTypes()[1]).toEqual('People')
-    expect(model.need().availableTypes()[2]).toEqual('Things')
+    expect(model.need().availableTypes()[0]).toEqual('money')
+    expect(model.need().availableTypes()[1]).toEqual('time')
+    expect(model.need().availableTypes()[2]).toEqual('items')
   })
 
   it('should initially set isPeopleOrThings to false', function () {
@@ -69,9 +69,9 @@ describe('Add individual Need', function () {
     expect(model.need().postcode()).toEqual('M6 8AQ')
   })
 
-  describe('selecting People', function () {
+  describe('selecting Time', function () {
     beforeEach(function () {
-      model.need().type('People')
+      model.need().type('time')
     })
 
     it('should set isPeopleOrThings to true', function () {
@@ -79,9 +79,9 @@ describe('Add individual Need', function () {
     })
   })
 
-  describe('selecting Things', function () {
+  describe('selecting Items', function () {
     beforeEach(function () {
-      model.need().type('Things')
+      model.need().type('items')
     })
 
     it('should set isPeopleOrThings to true', function () {
@@ -116,6 +116,7 @@ describe('Add individual Need', function () {
       model.need().email('test@test.com')
       model.need().donationAmountInPounds(123.45)
       model.need().donationUrl('http://donatehere.com')
+      model.need().keywords(' keywordA, keywordB ,keywordC ')
 
       model.need().save()
     })
@@ -140,7 +141,8 @@ describe('Add individual Need', function () {
         'Instructions': 'instructions',
         'Email': 'test@test.com',
         'DonationAmountInPounds': 123.45,
-        'DonationUrl': 'http://donatehere.com'
+        'DonationUrl': 'http://donatehere.com',
+        'Keywords': [ 'keywordA', 'keywordB', 'keywordC' ]
       })
       var postAsExpected = ajaxStub.withArgs(endpoint, headers, payload).calledOnce
       expect(postAsExpected).toBeTruthy()

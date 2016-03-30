@@ -3,7 +3,6 @@ var cookies = require('../cookies')
 var Address = require('./Address')
 var getUrlParameter = require('../get-url-parameter')
 var ko = require('knockout')
-var _ = require('lodash')
 var guid = require('node-uuid')
 var BaseViewModel = require('./BaseViewModel')
 
@@ -12,7 +11,7 @@ function ServiceProvider (data) {
 
   self.key = ko.observable(data.key)
   self.name = ko.observable(data.name)
-  self.addresses = ko.observableArray(_.map(data.addresses, function (address) {
+  self.addresses = ko.observableArray(data.addresses.map(address => {
     var newbie = new Address(address)
     newbie.addListener(self)
     return newbie
@@ -33,7 +32,7 @@ function ServiceProvider (data) {
   }
 
   self.cancelAddress = function (cancelledAddress) {
-    var remainingAddresses = _.filter(self.addresses(), function (address) {
+    var notTheCancelledAddress = function (address) {
       var isNew = address.tempKey() === undefined
 
       if (isNew) return true
@@ -41,14 +40,16 @@ function ServiceProvider (data) {
       var isNotTheAddressWeAreLookingFor = address.tempKey() !== cancelledAddress.tempKey()
 
       return isNotTheAddressWeAreLookingFor
-    })
+    }
+    var remainingAddresses = self.addresses().filter(address => notTheCancelledAddress(address))
     self.addresses(remainingAddresses)
   }
 
   self.deleteAddress = function (deleteAddress) {
-    var remainingAddresses = _.filter(self.addresses(), function (address) {
+    var notTheDeletedAddress = function (address)  {
       return address.key() !== deleteAddress.key()
-    })
+    }
+    var remainingAddresses = self.addresses().filter(address => notTheDeletedAddress(address))
     self.addresses(remainingAddresses)
   }
 }

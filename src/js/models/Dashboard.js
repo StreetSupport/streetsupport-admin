@@ -2,7 +2,6 @@ var ajax = require('basic-ajax')
 var adminUrls = require('../admin-urls')
 var cookies = require('../cookies')
 var ko = require('knockout')
-var _ = require('lodash')
 var BaseViewModel = require('./BaseViewModel')
 
 function ServiceProvider (sp) {
@@ -40,13 +39,12 @@ function DashboardModel () {
   }
 
   self.mapServiceProviders = function (data) {
-    return _
-    .chain(data)
-    .sortBy('key')
-    .map(function (sp) {
-      return new ServiceProvider(sp)
-    })
-    .value()
+    return data
+    .sort((a, b) => {
+      if (a.key > b.key) return 1
+      if (a.key < b.key) return -1
+      return 0
+    }).map(sp => new ServiceProvider(sp))
   }
 
   self.toggleVerified = function (serviceProvider, event) {
@@ -88,7 +86,7 @@ function DashboardModel () {
   }
 
   self.updateServiceProvider = function (serviceProvider, invert) {
-    var updatedSPs = _.map(self.serviceProviders(), function (sp) {
+    var updatedSPs = self.serviceProviders().map(sp => {
       if (sp.key !== serviceProvider.key) return sp
 
       invert(sp, serviceProvider)

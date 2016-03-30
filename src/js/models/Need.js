@@ -1,5 +1,6 @@
+'use strict'
+
 var ko = require('knockout')
-var _ = require('lodash')
 var ajax = require('basic-ajax')
 var Endpoints = require('../endpoint-builder')
 var getUrlParameter = require('../get-url-parameter')
@@ -12,7 +13,7 @@ function Need (data) {
   self.endpoints = new Endpoints()
 
   self.serviceProviderId = data.serviceProviderId
-  self.availableTypes = ko.observableArray(['Money', 'People', 'Things'])
+  self.availableTypes = ko.observableArray(['money', 'time', 'items'])
 
   self.id = ko.observable(data.id)
 
@@ -20,7 +21,7 @@ function Need (data) {
   self.type = ko.observable(data.type)
   self.isPeopleOrThings = ko.computed(function () {
     var type = self.type()
-    return type !== undefined && (type.toLowerCase() === 'people' || type.toLowerCase() === 'things')
+    return type !== undefined && (type.toLowerCase() === 'time' || type.toLowerCase() === 'items')
   }, self)
   self.isMoney = ko.computed(function () {
     var type = self.type()
@@ -33,6 +34,7 @@ function Need (data) {
   self.email = ko.observable(data.email)
   self.donationAmountInPounds = ko.observable(data.donationAmountInPounds)
   self.donationUrl = ko.observable(data.donationUrl)
+  self.keywords = ko.observable(data.keywords !== undefined && data.keywords !== null ? data.keywords.join(', ') : '')
 
   self.tempKey = ko.observable(data.tempKey)
   self.isEditing = ko.observable(false)
@@ -44,15 +46,14 @@ function Need (data) {
     var endpoint = self.endpointBuilder.serviceProviders(getUrlParameter.parameter('key')).needs(self.id()).build()
     ajax.delete(endpoint, self.headers(cookies.get('session-token')), JSON.stringify({}))
     .then(function (result) {
-      _.forEach(self.listeners(), function (listener) {
-        listener.deleteNeed(self)
-      })
+      self.listeners().forEach(l => l.deleteNeed(self))
     }, function (error) {
       self.handleError(error)
     })
   }
 
   self.save = function () {
+    let keywords = self.keywords() !== undefined ? self.keywords().split(',').map(k => k.trim()) : []
     var model = JSON.stringify({
       'Description': self.description(),
       'Type': self.type(),
@@ -62,7 +63,8 @@ function Need (data) {
       'Instructions': self.instructions(),
       'Email': self.email(),
       'DonationAmountInPounds': self.donationAmountInPounds(),
-      'DonationUrl': self.donationUrl()
+      'DonationUrl': self.donationUrl(),
+      'Keywords': keywords
     })
 
     if (self.id() === undefined) {
@@ -70,9 +72,7 @@ function Need (data) {
         self.headers(cookies.get('session-token')),
         model
       ).then(function (result) {
-        _.forEach(self.listeners(), function (listener) {
-          listener.saveNeed(self)
-        })
+        self.listeners().forEach(l => l.saveNeed(self))
       }, function (error) {
         self.handleError(error)
       })
@@ -81,9 +81,7 @@ function Need (data) {
         self.headers(cookies.get('session-token')),
         model
       ).then(function (result) {
-        _.forEach(self.listeners(), function (listener) {
-          listener.saveNeed(self)
-        })
+        self.listeners().forEach(l => l.saveNeed(self))
       }, function (error) {
         self.handleError(error)
       })

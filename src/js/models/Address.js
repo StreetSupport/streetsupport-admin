@@ -1,5 +1,6 @@
+'use strict'
+
 var ko = require('knockout')
-var _ = require('lodash')
 var ajax = require('basic-ajax')
 var Endpoints = require('../endpoint-builder')
 var getUrlParameter = require('../get-url-parameter')
@@ -29,13 +30,14 @@ function Address (data) {
   self.city = ko.observable(data.city)
   self.postcode = ko.observable(data.postcode)
 
-  self.savedOpeningTimes = ko.observableArray(_.map(data.openingTimes, function (time) {
-    return new OpeningTime(time)
-  }))
-
-  self.openingTimes = ko.observableArray(_.map(data.openingTimes, function (time) {
-    return new OpeningTime(time)
-  }))
+  var buildOpeningTimes = function(openingTimesData) {
+    var openingTimes = openingTimesData !== undefined && openingTimesData !== null
+      ? openingTimesData.map(o => new OpeningTime(o))
+      : []
+    return openingTimes
+  }
+  self.savedOpeningTimes = ko.observableArray(buildOpeningTimes(data.openingTimes))
+  self.openingTimes = ko.observableArray(buildOpeningTimes(data.openingTimes))
 
   self.tempKey = ko.observable(data.tempKey)
   self.isEditing = ko.observable(false)
@@ -43,15 +45,13 @@ function Address (data) {
   self.listeners = ko.observableArray()
 
   self.formatAddress = function (address) {
-    return _.chain(['street', 'street1', 'street2', 'street3', 'city', 'postcode'])
-      .filter(function (key) {
-        if (address[key] === undefined || address[key] === null) return false
-        return address[key].length > 0
-      })
-      .map(function (key) {
-        return address[key]
-      })
-      .value()
+    var fieldHasValue = function (key) {
+      if (address[key] === undefined || address[key] === null) return false
+      return address[key].length > 0
+    }
+    return ['street', 'street1', 'street2', 'street3', 'city', 'postcode']
+      .filter(key => fieldHasValue(key))
+      .map(key => address[key])
       .join(', ')
   }
   self.formatted = self.formatAddress(data)
@@ -66,18 +66,14 @@ function Address (data) {
 
   self.cancel = function () {
     self.restoreFields()
-    _.forEach(self.listeners(), function (listener) {
-      listener.cancelAddress(self)
-    })
+    self.listeners().forEach(listener => listener.cancelAddress(self))
   }
 
   self.deleteAddress = function () {
     var endpoint = self.endpointBuilder.serviceProviders(getUrlParameter.parameter('key')).addresses(self.key()).build()
     ajax.delete(endpoint, self.headers(cookies.get('session-token')), JSON.stringify({}))
     .then(function (result) {
-      _.forEach(self.listeners(), function (listener) {
-        listener.deleteAddress(self)
-      })
+      self.listeners().forEach(listener => listener.deleteAddress(self))
     }, function (error) {
       self.handleError(error)
     })
@@ -94,16 +90,25 @@ function Address (data) {
   }
 
   self.removeOpeningTime = function (openingTimeToRemove) {
-    var remaining = _.filter(self.openingTimes(), function (o) {
+    var openingTimeHasChanged = function (o) {
       return o.day() !== openingTimeToRemove.day() ||
-             o.startTime() !== openingTimeToRemove.startTime() ||
-             o.endTime() !== openingTimeToRemove.endTime()
-    })
+        o.startTime() !== openingTimeToRemove.startTime() ||
+        o.endTime() !== openingTimeToRemove.endTime()
+    }
+    var remaining = self.openingTimes().filter(o => openingTimeHasChanged(o))
 
     self.openingTimes(remaining)
   }
 
   self.save = function () {
+    var mapOpeningTime = function (openingTime) {
+      return {
+        'startTime': openingTime.startTime(),
+        'endTime': openingTime.endTime(),
+        'day': openingTime.day()
+      }
+    }
+
     var model = JSON.stringify({
       'Street': self.street1(),
       'Street1': self.street2(),
@@ -111,13 +116,7 @@ function Address (data) {
       'Street3': self.street4(),
       'City': self.city(),
       'Postcode': self.postcode(),
-      'OpeningTimes': _.map(self.openingTimes(), function (openingTime) {
-        return {
-          'startTime': openingTime.startTime(),
-          'endTime': openingTime.endTime(),
-          'day': openingTime.day()
-        }
-      })
+      'OpeningTimes': self.openingTimes().map(openingTime => mapOpeningTime(openingTime))
     })
 
     if (self.tempKey() !== undefined || self.key() === undefined) {
@@ -128,9 +127,7 @@ function Address (data) {
         self.isEditing(false)
         self.key(result.json.key)
         self.setFields()
-        _.forEach(self.listeners(), function (listener) {
-          listener.saveAddress(self)
-        })
+        self.listeners().forEach(listener => listener.saveAddress(self))
       }, function (error) {
         self.handleError(error)
       })
@@ -141,9 +138,7 @@ function Address (data) {
       ).then(function (result) {
         self.isEditing(false)
         self.setFields()
-        _.forEach(self.listeners(), function (listener) {
-          listener.saveAddress(self)
-        })
+        self.listeners().forEach(listener => listener.saveAddress(self))
       }, function (error) {
         self.handleError(error)
       })
@@ -159,13 +154,15 @@ function Address (data) {
     self.city(self.savedCity())
     self.postcode(self.savedPostcode())
 
-    var restoredOpeningTimes = _.map(self.savedOpeningTimes(), function (ot) {
+    let buildOpeningTime = function (ot) {
       return new OpeningTime({
         'day': ot.day(),
         'startTime': ot.startTime(),
         'endTime': ot.endTime()
       })
-    })
+    }
+
+    var restoredOpeningTimes = self.savedOpeningTimes().map(ot => buildOpeningTime(ot))
 
     self.openingTimes(restoredOpeningTimes)
   }

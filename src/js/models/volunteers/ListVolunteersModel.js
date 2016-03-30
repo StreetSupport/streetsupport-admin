@@ -4,7 +4,6 @@ var browser = require('../../browser')
 var cookies = require('../../cookies')
 var BaseViewModel = require('../BaseViewModel')
 var ko = require('knockout')
-var forEach = require('lodash/collection/forEach')
 
 var ListVolunteersModel = function () {
   var self = this
@@ -20,9 +19,7 @@ var ListVolunteersModel = function () {
     .get(endpoint, headers)
     .then(function (success) {
       var volunteers = success.data
-      forEach(volunteers, function (v) {
-        v.contactUrl = adminUrls.contactVolunteer + '?id=' + v.id
-      })
+      volunteers.forEach(v => v.contactUrl = adminUrls.contactVolunteer + '?id=' + v.id)
       self.volunteers(volunteers)
       browser.loaded()
     }, function (error) {
