@@ -62,7 +62,7 @@ if [[ $TRAVIS_BRANCH == 'release' ]]
     git init
     git add -A
     git commit -m "Travis CI automatic build for $THE_COMMIT"
-    git push --force --quiet "https://${GH_TOKEN}@${REPO}" master > /dev/null 2>&1
+    git push --quiet --force "https://${LIVE_AZURE_USER}:${LIVE_AZURE_PASSWORD}@${LIVE_AZURE_WEBSITE}.scm.azurewebsites.net:443/${LIVE_AZURE_WEBSITE}.git" master > /dev/null 2>&1
 fi
 
 if [[ $TRAVIS_BRANCH == 'staging' ]]
