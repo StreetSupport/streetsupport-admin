@@ -78,5 +78,5 @@ if [[ $TRAVIS_BRANCH == 'develop' ]]
     git init
     git add -A
     git commit -m "Travis CI automatic build for $THE_COMMIT"
-    git push --force --quiet "https://${GH_TOKEN}@${REPO}" master:gh-pages > /dev/null 2>&1
+    git push --quiet --force "https://${DEV_AZURE_USER}:${DEV_AZURE_PASSWORD}@${DEV_AZURE_WEBSITE}.scm.azurewebsites.net:443/${DEV_AZURE_WEBSITE}.git" master > /dev/null 2>&1
 fi
