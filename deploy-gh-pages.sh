@@ -6,20 +6,14 @@ set -e
 # Define variables depending on the branch
 if [[ $TRAVIS_BRANCH == 'release' ]]
   then
-    REPO="github.com/StreetSupport/admin.streetsupport.net-live.git"
-    DOMAIN="service.streetsupport.net"
     APIENVIRONMENT=3
 fi
 if [[ $TRAVIS_BRANCH == 'staging' ]]
   then
-    REPO="github.com/StreetSupport/admin.streetsupport.net-staging.git"
-    DOMAIN="dev-service.streetsupport.net"
     APIENVIRONMENT=2
 fi
 if [[ $TRAVIS_BRANCH == 'develop' ]]
   then
-    REPO="github.com/StreetSupport/admin.streetsupport.net-dev.git"
-    DOMAIN="dev-service.streetsupport.net"
     APIENVIRONMENT=1
 fi
 
