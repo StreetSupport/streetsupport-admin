@@ -99,6 +99,7 @@ gulp.task('dev', function(callback) {
 // Build website, either with development or minified assets depending on flag
 gulp.task('deploy', function(callback) {
   runSequence(
+    'test',
     'clean',
     'assets',
     'crticalcss',
