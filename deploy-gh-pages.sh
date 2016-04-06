@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# If there are any errors, fail Travis
-set -e
-
 # Define variables depending on the branch
 if [[ $TRAVIS_BRANCH == 'release' ]]
   then
