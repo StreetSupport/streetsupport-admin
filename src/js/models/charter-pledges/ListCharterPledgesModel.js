@@ -46,6 +46,19 @@ function ListCharterPledgesModel() {
   var self = this
   self.pledges = ko.observableArray()
   self.showAll = ko.observable(false)
+  self.showAllButtonLabel = ko.computed(function () {
+    return self.showAll()
+      ? 'View awaiting approval'
+      : 'Show all'
+  }, self)
+  self.toggleShowAll = function () {
+    self.showAll(!self.showAll())
+    if(self.showAll() === true) {
+      self.pledges(self.allPledges)
+    }else {
+      self.pledges(self.allPledges.filter(x => x.isApproved() === false))
+    }
+  }
 
   browser.loading()
 
@@ -56,7 +69,7 @@ function ListCharterPledgesModel() {
     .get(endpoint, headers)
     .then(function (result) {
       self.allPledges = result.data.map(p => new Pledge(p))
-      self.pledges(self.allPledges)
+      self.pledges(self.allPledges.filter(x => x.isApproved() === false))
       browser.loaded()
     }, function (error) {
       self.handleServerError(error)

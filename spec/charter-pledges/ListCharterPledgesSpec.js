@@ -61,20 +61,25 @@ describe('List Charter Pledges', function () {
     expect(model.showAll()).toBeFalsy()
   })
 
-  it('should set pledges', function () {
-    expect(model.pledges().length).toEqual(2)
+  it('should set show all button label to show all', function () {
+    expect(model.showAllButtonLabel()).toEqual('Show all')
+  })
+
+  it('should only show disapproved pledges', function () {
+    expect(model.pledges().length).toEqual(1)
+    expect(model.pledges()[0].isApproved()).toBeFalsy()
   })
 
   it('should set url to supporter full name', function () {
-    expect(model.pledges()[1].fullName).toEqual('first name 1 last name 1')
+    expect(model.pledges()[0].fullName).toEqual('first name last name')
   })
 
   it('should set pledge description', function () {
-    expect(model.pledges()[1].description).toEqual('pledge description 1')
+    expect(model.pledges()[0].description).toEqual('pledge description')
   })
 
   it('should set pledge approval status', function () {
-    expect(model.pledges()[1].isApproved()).toBeTruthy()
+    expect(model.pledges()[0].isApproved()).toBeFalsy()
   })
 
   it('should show user then that is loaded', function () {
@@ -86,16 +91,38 @@ describe('List Charter Pledges', function () {
     expect(model.pledges()[0].buttonLabel()).toEqual('Approve Pledge')
   })
 
-  it('should set btn--warning class for currently approved', function () {
-    expect(model.pledges()[1].buttonClass()).toEqual('btn btn--warning')
-    expect(model.pledges()[1].buttonLabel()).toEqual('Disapprove Pledge')
-  })
-
   describe('Toggle Show All', function () {
     beforeEach(function () {
       model.toggleShowAll()
     })
 
+    it('should set show all button label to only disapproved', function () {
+      expect(model.showAllButtonLabel()).toEqual('View awaiting approval')
+    })
+
+    it('should show all pledges', function () {
+      expect(model.pledges().length).toEqual(2)
+      expect(model.pledges()[0].isApproved()).toBeFalsy()
+      expect(model.pledges()[1].isApproved()).toBeTruthy()
+      expect(model.showAll()).toBeTruthy()
+    })
+
+    it('should set btn--warning class for currently approved', function () {
+      expect(model.pledges()[1].buttonClass()).toEqual('btn btn--warning')
+      expect(model.pledges()[1].buttonLabel()).toEqual('Disapprove Pledge')
+    })
+
+    describe('And Toggle Back', function () {
+      beforeEach(function () {
+        model.toggleShowAll()
+      })
+
+      it('should show only disapproved pledges', function () {
+        expect(model.pledges().length).toEqual(1)
+        expect(model.pledges()[0].isApproved()).toBeFalsy()
+        expect(model.showAll()).toBeFalsy()
+      })
+    })
   })
 
   describe('Toggle Approval', function () {
@@ -155,13 +182,13 @@ var pledgeData = function () {
     "id": "570b84af3535ff1a8459a142",
     "documentCreationDate": "2016-04-11T11:04:15.1810000Z"
   }, {
-    "firstName": "first name 1",
-    "lastName": "last name 1",
+    "firstName": "first name",
+    "lastName": "last name",
     "email": "test1@test.com",
-    "organisation": "organisation 1",
+    "organisation": "organisation",
     "isOptedIn": true,
     "proposedPledge": {
-      "description": "pledge description 1",
+      "description": "pledge description",
       "isApproved": true
     },
     "id": "570b84d73535ff1a8459a143",
