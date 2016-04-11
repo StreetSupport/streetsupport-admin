@@ -57,6 +57,10 @@ describe('List Charter Pledges', function () {
     expect(ajaxGetStub.calledOnce).toBeTruthy()
   })
 
+  it('should set show all pledges to false', function () {
+    expect(model.showAll()).toBeFalsy()
+  })
+
   it('should set pledges', function () {
     expect(model.pledges().length).toEqual(2)
   })
@@ -75,6 +79,65 @@ describe('List Charter Pledges', function () {
 
   it('should show user then that is loaded', function () {
     expect(browserLoadedStub.calledAfter(ajaxGetStub)).toBeTruthy()
+  })
+
+  it('should set btn--primary class for currently disapproved', function () {
+    expect(model.pledges()[0].buttonClass()).toEqual('btn btn--primary')
+    expect(model.pledges()[0].buttonLabel()).toEqual('Approve Pledge')
+  })
+
+  it('should set btn--warning class for currently approved', function () {
+    expect(model.pledges()[1].buttonClass()).toEqual('btn btn--warning')
+    expect(model.pledges()[1].buttonLabel()).toEqual('Disapprove Pledge')
+  })
+
+  describe('Toggle Show All', function () {
+    beforeEach(function () {
+      model.toggleShowAll()
+    })
+
+  })
+
+  describe('Toggle Approval', function () {
+    var ajaxPutStub
+    beforeEach(function () {
+      var getPutPromise = function () {
+        return {
+          then: function (success, error) {
+            success({
+              'status': 'ok'
+            })
+          }
+        }
+      }
+      ajaxPutStub = sinon.stub(ajax, 'put')
+        .withArgs(endpoints.charterPledges + '/' + model.pledges()[0].id, headers, { isApproved: true })
+        .returns(getPutPromise())
+      browser.loading.reset()
+      browser.loaded.reset()
+
+      model.pledges()[0].toggleApproval()
+    })
+
+    afterEach(function () {
+      ajax.put.restore()
+    })
+
+    it('should show browser is loading', function () {
+      expect(browserLoadingStub.calledOnce).toBeTruthy()
+    })
+
+    it('should put new approval status to api', function () {
+      expect(ajaxPutStub.calledOnce).toBeTruthy()
+    })
+
+    it('should set new approval status of pledge', function () {
+      expect(model.pledges()[0].isApproved()).toBeTruthy()
+    })
+
+    it('should show browser is loaded', function () {
+      expect(browserLoadedStub.calledAfter(ajaxPutStub)).toBeTruthy()
+    })
   })
 })
 

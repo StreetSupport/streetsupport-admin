@@ -38,6 +38,9 @@ pageName: charterPledges
       <dd class="key-value-pair__value" data-bind="text:organisation"></dd>
     </dl>
   </article>
+  <button data-bind="click: toggleApproval, attr: { class: buttonClass }">
+    <span class="btn__text" data-bind="text: buttonLabel"></span>
+  </button>
   </script>
 
   {{/content}}
