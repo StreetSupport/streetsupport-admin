@@ -17,9 +17,9 @@ pageName: charterPledges
     <div class="block">
       <div class="container block__inner">
         <div class="block__content">
-          {{!-- <div data-bind="foreach:volunteers"> --}}
-            <!-- ko template: { name: 'volunteer' } --><!-- /ko -->
-          {{!-- </div> --}}
+          <div data-bind="foreach:pledges">
+            <!-- ko template: { name: 'pledge' } --><!-- /ko -->
+          </div>
         </div>
       </div>
     </div>
@@ -27,8 +27,17 @@ pageName: charterPledges
   {{#content "gutter"}}
 
   {{> loading-spinner}}
-  <script type="text/html" id="volunteer">
-
+  <script type="text/html" id="pledge">
+  <article>
+    <dl class="key-value-pair">
+      <dt class="key-value-pair__key">Pledge</dt>
+      <dd class="key-value-pair__value" data-bind="text:description"></dd>
+      <dt class="key-value-pair__key">Name</dt>
+      <dd class="key-value-pair__value" data-bind="text:fullName"></dd>
+      <dt class="key-value-pair__key">Organisation</dt>
+      <dd class="key-value-pair__value" data-bind="text:organisation"></dd>
+    </dl>
+  </article>
   </script>
 
   {{/content}}

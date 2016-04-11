@@ -11,20 +11,13 @@ function p (addr) {
   return envs[env] + addr
 }
 
-var getServiceProviders = '/v1/all-service-providers'
-var getServiceCategories = '/v2/service-categories'
-var verifiedUsers = '/v1/verified-users'
-var unverifiedUsers = '/v1/unverified-users'
-var sessions = '/v1/sessions'
-var resetPassword = '/v1/reset-password-applications'
-var volunteers = '/v1/volunteer-enquiries'
-
 module.exports = {
-  getServiceProviders: p(getServiceProviders),
-  getServiceCategories: p(getServiceCategories),
-  verifiedUsers: p(verifiedUsers),
-  unverifiedUsers: p(unverifiedUsers),
-  sessions: p(sessions),
-  resetPassword: p(resetPassword),
-  volunteers: p(volunteers)
+  getServiceProviders:  p('/v1/all-service-providers'),
+  getServiceCategories: p('/v2/service-categories'),
+  verifiedUsers:        p('/v1/verified-users'),
+  unverifiedUsers:      p('/v1/unverified-users'),
+  sessions:             p('/v1/sessions'),
+  resetPassword:        p('/v1/reset-password-applications'),
+  volunteers:           p('/v1/volunteer-enquiries'),
+  charterPledges:       p('/v1/charter-supporters')
 }
