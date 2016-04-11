@@ -30,7 +30,7 @@ function ListCharterPledgesModel() {
       self.pledges(pledges)
       browser.loaded()
     }, function (error) {
-
+      self.handleServerError(error)
     })
 }
 
