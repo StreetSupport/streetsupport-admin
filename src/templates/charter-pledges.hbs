@@ -32,18 +32,14 @@ pageName: charterPledges
   {{> loading-spinner}}
   <script type="text/html" id="pledge">
   <article>
-    <dl class="key-value-pair">
-      <dt class="key-value-pair__key">Pledge</dt>
-      <dd class="key-value-pair__value" data-bind="text:description"></dd>
-      <dt class="key-value-pair__key">Name</dt>
-      <dd class="key-value-pair__value" data-bind="text:fullName"></dd>
-      <dt class="key-value-pair__key">Organisation</dt>
-      <dd class="key-value-pair__value" data-bind="text:organisation"></dd>
-    </dl>
+    <blockquote>
+      <p data-bind="text:description"></p>
+      <cite><span data-bind="text:fullName"></span> <span  data-bind="text:organisation"></span></cite>
+    </blockquote>
+    <button data-bind="click: toggleApproval, attr: { class: buttonClass }">
+      <span class="btn__text" data-bind="text: buttonLabel"></span>
+    </button>
   </article>
-  <button data-bind="click: toggleApproval, attr: { class: buttonClass }">
-    <span class="btn__text" data-bind="text: buttonLabel"></span>
-  </button>
   </script>
 
   {{/content}}
