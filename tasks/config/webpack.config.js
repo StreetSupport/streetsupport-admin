@@ -41,6 +41,7 @@ module.exports = {
     addUser: p('add-user'),
     verifyNewUser: p('verify-new-user'),
     volunteers: p('volunteers'),
+    charterPledges: p('charter-pledges'),
     contactVolunteer: p('contact-volunteer')
   },
   output: {
