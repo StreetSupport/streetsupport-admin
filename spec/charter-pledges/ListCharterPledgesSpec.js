@@ -69,6 +69,10 @@ describe('List Charter Pledges', function () {
     expect(model.pledges()[1].description).toEqual('pledge description 1')
   })
 
+  it('should set pledge approval status', function () {
+    expect(model.pledges()[1].isApproved()).toBeTruthy()
+  })
+
   it('should show user then that is loaded', function () {
     expect(browserLoadedStub.calledAfter(ajaxGetStub)).toBeTruthy()
   })
@@ -82,7 +86,8 @@ var pledgeData = function () {
     "organisation": "organisation",
     "isOptedIn": true,
     "proposedPledge": {
-      "description": "pledge description"
+      "description": "pledge description",
+      "isApproved": false
     },
     "id": "570b84af3535ff1a8459a142",
     "documentCreationDate": "2016-04-11T11:04:15.1810000Z"
@@ -93,7 +98,8 @@ var pledgeData = function () {
     "organisation": "organisation 1",
     "isOptedIn": true,
     "proposedPledge": {
-      "description": "pledge description 1"
+      "description": "pledge description 1",
+      "isApproved": true
     },
     "id": "570b84d73535ff1a8459a143",
     "documentCreationDate": "2016-04-11T11:04:55.8600000Z"

@@ -10,6 +10,7 @@ function Pledge(data) {
   self.fullName = data.firstName + ' ' + data.lastName
   self.description = data.proposedPledge.description
   self.organisation = data.organisation
+  self.isApproved = ko.observable(data.proposedPledge.isApproved)
 }
 
 function ListCharterPledgesModel() {
@@ -25,8 +26,6 @@ function ListCharterPledgesModel() {
     .get(endpoint, headers)
     .then(function (result) {
       var pledges = result.data.map(p => new Pledge(p))
-      console.log('pledges')
-      console.log(pledges)
       self.pledges(pledges)
       browser.loaded()
     }, function (error) {
