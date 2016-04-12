@@ -60,9 +60,6 @@ function ListCharterPledgesModel() {
     } else {
       self.pledges(self.allPledges.filter(x => x.isApproved() === false))
     }
-
-    console.log(self.allPledges[0].isApproved())
-    console.log(self.allPledges[1].isApproved())
   }
 
   self.toggleShowAll = function () {
