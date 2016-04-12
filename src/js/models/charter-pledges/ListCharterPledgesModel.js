@@ -5,9 +5,10 @@ var cookies = require('../../cookies')
 var BaseViewModel = require('../BaseViewModel')
 var ko = require('knockout')
 
-function Pledge(data) {
+function Pledge(data, listener) {
   var self = this
-  self.id= data.id
+  self.listener = listener
+  self.id = data.id
   self.fullName = data.firstName + ' ' + data.lastName
   self.description = data.proposedPledge.description
   self.organisation = data.organisation
@@ -33,6 +34,7 @@ function Pledge(data) {
       .put(endpoint, headers, { isApproved: !self.isApproved() })
       .then(function (result) {
         self.isApproved(!self.isApproved())
+        listener.pledgeApprovalUpdated(self.isApproved())
         browser.loaded()
       }, function (error) {
         self.handleServerError(error)
@@ -51,13 +53,25 @@ function ListCharterPledgesModel() {
       ? 'View awaiting approval'
       : 'Show all'
   }, self)
-  self.toggleShowAll = function () {
-    self.showAll(!self.showAll())
+
+  self.updateVisiblePledges = function () {
     if(self.showAll() === true) {
       self.pledges(self.allPledges)
-    }else {
+    } else {
       self.pledges(self.allPledges.filter(x => x.isApproved() === false))
     }
+
+    console.log(self.allPledges[0].isApproved())
+    console.log(self.allPledges[1].isApproved())
+  }
+
+  self.toggleShowAll = function () {
+    self.showAll(!self.showAll())
+    self.updateVisiblePledges()
+  }
+
+  self.pledgeApprovalUpdated = function (pledge) {
+    self.updateVisiblePledges()
   }
 
   browser.loading()
@@ -68,7 +82,7 @@ function ListCharterPledgesModel() {
   ajax
     .get(endpoint, headers)
     .then(function (result) {
-      self.allPledges = result.data.map(p => new Pledge(p))
+      self.allPledges = result.data.map(p => new Pledge(p, self))
       self.pledges(self.allPledges.filter(x => x.isApproved() === false))
       browser.loaded()
     }, function (error) {

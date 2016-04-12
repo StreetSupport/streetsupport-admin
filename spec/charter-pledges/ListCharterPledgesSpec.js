@@ -159,11 +159,15 @@ describe('List Charter Pledges', function () {
     })
 
     it('should set new approval status of pledge', function () {
-      expect(model.pledges()[0].isApproved()).toBeTruthy()
+      expect(model.allPledges[0].isApproved()).toBeTruthy()
     })
 
     it('should show browser is loaded', function () {
       expect(browserLoadedStub.calledAfter(ajaxPutStub)).toBeTruthy()
+    })
+
+    it('should hide the newly approved pledge as we are only view disapproved', function () {
+      expect(model.pledges().length).toEqual(0)
     })
   })
 })

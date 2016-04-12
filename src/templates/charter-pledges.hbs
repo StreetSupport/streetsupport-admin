@@ -31,11 +31,11 @@ pageName: charterPledges
 
   {{> loading-spinner}}
   <script type="text/html" id="pledge">
-  <article>
-    <blockquote>
-      <p data-bind="text:description"></p>
-      <cite><span data-bind="text:fullName"></span> <span  data-bind="text:organisation"></span></cite>
-    </blockquote>
+  <article class="pledge">
+      <p data-bind="text:description" class="pledge__description"></p>
+      <p class="pledge__author">
+        <span class="pledge__author-name" data-bind="text:fullName"></span> <span data-bind="text:organisation" class="pledge__author-organisation"></span>
+      </p>
     <button data-bind="click: toggleApproval, attr: { class: buttonClass }">
       <span class="btn__text" data-bind="text: buttonLabel"></span>
     </button>
