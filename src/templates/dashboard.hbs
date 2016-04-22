@@ -23,7 +23,7 @@ pageName: dashboard
       <section class="block__content" data-bind="foreach: serviceProviders" class="stacked-list">
           <article class="stacked-list__item">
               <header class="stacked-list__element--header">
-                <h2><a data-bind="attr: { 'href': url, 'title': name }, text: name"></a></h2>
+                <h2><a data-bind="attr: { 'href': url, 'title': name }, html: name"></a></h2>
                 <span data-bind="text: verifiedLabel, css: verifiedLabelClass"></span>
                 <span data-bind="text: publishedLabel, css: publishedLabelClass"></span>
               </header>
