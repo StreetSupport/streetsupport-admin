@@ -103,7 +103,6 @@ gulp.task('deploy', function(callback) {
     'clean',
     'assets',
     'crticalcss',
-    'copywebconfig',
     callback
   )
 })
