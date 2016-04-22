@@ -32,12 +32,6 @@ gulp.task('reload', function(callback) {
   callback()
 })
 
-// Copy Web.config
-gulp.task('copywebconfig', function() {
-   gulp.src('./Web.config')
-   .pipe(gulp.dest('./_dist/'))
-})
-
 // Rebuild JS task.
 // We need to manually reload BrowserSync after
 gulp.task('rebuildJs', function(callback) {
