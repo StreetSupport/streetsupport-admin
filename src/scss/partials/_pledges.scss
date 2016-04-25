@@ -1,0 +1,21 @@
+.pledge {
+
+}
+
+.pledge__description {
+  &::before {
+    content: open-quote;
+  }
+  &::after {
+    content:close-quote;
+  }
+  @extend .h2;
+}
+
+.pledge__author {
+
+}
+
+.pledge__organisation {
+
+}
