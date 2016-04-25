@@ -14,6 +14,20 @@ var post = function (url, headers, data) {
   }).promise
 }
 
+var put = function (url, headers, data) {
+  if (Object.keys(headers).length === 0) {
+    headers = {
+      'content-type': 'application/json'
+    }
+  }
+  return makeRequest({
+    method: 'PUT',
+    url: url,
+    headers: headers,
+    data: data
+  }).promise
+}
+
 var get = function (url, headers) {
   return makeRequest({
     method: 'GET',
@@ -77,5 +91,6 @@ var makeRequest = function (options) {
 }
 module.exports = {
   get: get,
-  post: post
+  post: post,
+  put: put
 }

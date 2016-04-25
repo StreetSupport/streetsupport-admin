@@ -45,6 +45,11 @@ function EndpointBuilder () {
     return self
   }
 
+  self.charterPledges = function (pledgeId) {
+    self.updateBaseResource(endpoints.charterPledges, pledgeId)
+    return self
+  }
+
   self.addresses = function (addressId) {
     self.childResource = 'addresses'
     self.childResourceId = addressId

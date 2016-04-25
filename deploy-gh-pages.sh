@@ -42,6 +42,8 @@ cd ../../
 # Run gulp
 gulp deploy --debug --production
 
+echo $AZURE_USER
+
 # Move to created directory
 cd _dist
 

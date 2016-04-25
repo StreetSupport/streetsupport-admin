@@ -11,7 +11,7 @@ pageName: serviceProvider
       <div class="container block__inner">
         <div data-bind="with: serviceProvider">
           <header>
-            <h1 data-bind="text: name"></h1>
+            <h1 data-bind="html: name"></h1>
             <a href="dashboard.html" class="btn btn--info">
               <span class="btn__text">Back to dashboard</span>
               </a>
@@ -37,7 +37,7 @@ pageName: serviceProvider
                 <dt class="key-value-pair__key">Short Description</dt>
                 <dd class="key-value-pair__value">
                   <!-- ko ifnot: $parent.isEditingGeneralDetails -->
-                  <span data-bind="text: shortDescription"></span>
+                  <span data-bind="html: shortDescription"></span>
                   <!-- /ko -->
                   <!-- ko if: $parent.isEditingGeneralDetails -->
                   <textarea data-bind="textInput: shortDescription" class="form__input form__input"></textarea>
@@ -46,7 +46,7 @@ pageName: serviceProvider
                 <dt class="key-value-pair__key">Description</dt>
                 <dd class="key-value-pair__value">
                   <!-- ko ifnot: $parent.isEditingGeneralDetails -->
-                  <span data-bind="text: description"></span>
+                  <span data-bind="html: description"></span>
                   <!-- /ko -->
                   <!-- ko if: $parent.isEditingGeneralDetails -->
                   <textarea data-bind="textInput: description" class="form__input form__input--textarea"></textarea>

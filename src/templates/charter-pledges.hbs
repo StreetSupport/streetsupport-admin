@@ -1,0 +1,46 @@
+---
+title: Charter Pledges - Street Support Admin
+description: Street Support - Making it easier to help homeless people in Manchester
+jsName: charterPledges
+pageName: charterPledges
+---
+
+{{#extend "_default"}}
+  {{#content "main"}}
+    <div class="block block--highlight">
+      <div class="container block__inner">
+        <header>
+        <h1>Charter Pledges</h1>
+        <button data-bind="click: toggleShowAll" class="btn btn--info">
+          <span data-bind="text: showAllButtonLabel"></span>
+        </button>
+        </header>
+      </div>
+    </div>
+    <div class="block">
+      <div class="container block__inner">
+        <div class="block__content">
+          <div data-bind="foreach:pledges">
+            <!-- ko template: { name: 'pledge' } --><!-- /ko -->
+          </div>
+        </div>
+      </div>
+    </div>
+  {{/content}}
+  {{#content "gutter"}}
+
+  {{> loading-spinner}}
+  <script type="text/html" id="pledge">
+  <article class="pledge">
+      <p data-bind="text:description" class="pledge__description"></p>
+      <p class="pledge__author">
+        <span class="pledge__author-name" data-bind="text:fullName"></span> <span data-bind="text:organisation" class="pledge__author-organisation"></span>
+      </p>
+    <button data-bind="click: toggleApproval, attr: { class: buttonClass }">
+      <span class="btn__text" data-bind="text: buttonLabel"></span>
+    </button>
+  </article>
+  </script>
+
+  {{/content}}
+{{/extend}}
