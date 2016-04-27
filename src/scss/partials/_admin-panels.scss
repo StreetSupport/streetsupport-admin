@@ -1,17 +1,25 @@
+.page-serviceProvider {
+  .split {
+    overflow: hidden;
+    margin-bottom: 1rem;
+  }
+}
+
 .admin-panel {
   @include span(6 of 12);
-  margin-bottom: 1rem;
+  margin-bottom: -99999px;
+  padding-bottom: 99999px;
+  padding-left: 1rem;
+  padding-right: 1rem;
   background: #eee;
-  -webkit-border-top-left-radius: 5px;
-  -webkit-border-top-right-radius: 5px;
-  -moz-border-radius-topleft: 5px;
-  -moz-border-radius-topright: 5px;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
   h2 {
-    width: 100%;
+    width: calc(100% + 2rem);
     padding: 1rem;
     margin-top: 0;
+    margin-left: -1rem;
     background: $brand-a;
     color: #fff;
     -webkit-border-top-left-radius: 5px;
@@ -21,4 +29,22 @@
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
   }
+  .btn {
+    float: left;
+    margin-right: 1rem;
+  }
+  article {
+    border-top: 1px solid gray;
+    clear: both;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    h3 {
+      float: left;
+      width: auto;
+    }
+    address {
+      width: 100%;
+    }
+  }
+
 }
