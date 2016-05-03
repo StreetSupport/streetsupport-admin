@@ -44,6 +44,13 @@
     }
     address {
       width: 100%;
+      font-style: normal;
+      font-weight: bold;
+    }
+    &.service-provider__service {
+      h3 {
+        width: 12em;
+      }
     }
   }
 
