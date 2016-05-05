@@ -90,7 +90,12 @@ function EndpointBuilder () {
 
   self.approval = () => {
     self.childResource = 'approval'
-    return self;
+    return self
+  }
+
+  self.pledge = () => {
+    self.childResource = 'pledge'
+    return self
   }
 
   self.build = function () {

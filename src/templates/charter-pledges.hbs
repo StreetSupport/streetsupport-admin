@@ -32,13 +32,31 @@ pageName: charterPledges
   {{> loading-spinner}}
   <script type="text/html" id="pledge">
   <article class="pledge">
-      <p data-bind="text:description" class="pledge__description"></p>
-      <p class="pledge__author">
-        <span class="pledge__author-name" data-bind="text:fullName"></span> (<a data-bind="text:email, attr: { href: mailToLink }" class="pledge__author-email"></a>) <span data-bind="text:organisation" class="pledge__author-organisation"></span> Submitted on: <span data-bind="text:creationDate" class="pledge__author-creationDate"></span>
-      </p>
+    <!-- ko ifnot: isEditable -->
+    <p data-bind="text:description" class="pledge__description"></p>
+    <!-- /ko -->
+    <!-- ko if: isEditable -->
+    <textarea class="form__input form__input--textarea" data-bind="textInput:newDescription"></textarea>
+    <!-- /ko -->
+    <p class="pledge__author">
+      <span class="pledge__author-name" data-bind="text:fullName"></span> (<a data-bind="text:email, attr: { href: mailToLink }" class="pledge__author-email"></a>) <span data-bind="text:organisation" class="pledge__author-organisation"></span> Submitted on: <span data-bind="text:creationDate" class="pledge__author-creationDate"></span>
+    </p>
     <button data-bind="click: toggleApproval, attr: { class: buttonClass }">
       <span class="btn__text" data-bind="text: buttonLabel"></span>
     </button>
+    <!-- ko ifnot: isEditable -->
+    <button data-bind="click: editPledge" class="btn btn--info">
+      <span class="btn__text">Edit</span>
+    </button>
+    <!-- /ko -->
+    <!-- ko if: isEditable -->
+    <button data-bind="click: updatePledge" class="btn btn--primary">
+      <span class="btn__text">Save</span>
+    </button>
+    <button data-bind="click: cancelEdit" class="btn btn--indifferent">
+      <span class="btn__text">Cancel</span>
+    </button>
+    <!-- /ko -->
   </article>
   </script>
 

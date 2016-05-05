@@ -1,3 +1,5 @@
+'use strict'
+
 var ajax = require('../../ajax')
 var browser = require('../../browser')
 var cookies = require('../../cookies')
@@ -10,12 +12,14 @@ function Pledge (data, listener) {
   self.listener = listener
   self.id = data.id
   self.fullName = data.firstName + ' ' + data.lastName
-  self.description = data.proposedPledge.description
+  self.description = ko.observable(data.proposedPledge.description)
+  self.newDescription = ko.observable(data.proposedPledge.description)
   self.organisation = data.organisation
   self.email = data.email
   self.mailToLink = 'mailto:' + data.email
   self.creationDate = moment(data.documentCreationDate).format('DD/MM/YY')
   self.isApproved = ko.observable(data.proposedPledge.isApproved)
+  self.isEditable = ko.observable(false)
   self.buttonClass = ko.computed(function () {
     return self.isApproved()
       ? 'btn btn--warning'
@@ -31,7 +35,6 @@ function Pledge (data, listener) {
     browser.loading()
 
     var endpoint = self.endpointBuilder.charterPledges(self.id).approval().build()
-    console.log(endpoint)
     var headers = self.headers(cookies.get('session-token'))
 
     ajax
@@ -42,6 +45,34 @@ function Pledge (data, listener) {
         browser.loaded()
       }, function (error) {
         self.handleServerError(error)
+      })
+  }
+
+  self.editPledge = () => {
+    self.isEditable(true)
+  }
+
+  self.cancelEdit = () => {
+    self.isEditable(false)
+  }
+
+  self.updatePledge = () => {
+    browser.loading()
+
+    let endpoint = self.endpointBuilder.charterPledges(self.id).pledge().build()
+    let headers = self.headers(cookies.get('session-token'))
+    let payload = {
+      pledge: self.newDescription()
+    }
+
+    ajax
+      .put(endpoint, headers, payload)
+      .then((result) => {
+        browser.loaded()
+        self.description(self.newDescription())
+        self.isEditable(false)
+      }, (error) => {
+
       })
   }
 }
