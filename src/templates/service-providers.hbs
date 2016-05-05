@@ -24,7 +24,11 @@ pageName: serviceProvider
         <div class="block__content form">
           {{> form-feedback}}
           <div data-bind="with: serviceProvider">
-            <section>
+
+
+            <div class="split">
+
+            <section class="admin-panel">
               <h2>General Details</h2>
               <!-- ko ifnot: $parent.isEditingGeneralDetails -->
               <button data-bind="click: $parent.editGeneralDetails" class="btn btn--info"><span class="btn__text">edit</span></button>
@@ -54,7 +58,8 @@ pageName: serviceProvider
                 </dd>
               </dl>
             </section>
-            <section>
+
+            <section class="admin-panel">
               <h2>Contact Information</h2>
               <!-- ko ifnot: $parent.isEditingContactDetails -->
               <button data-bind="click: $parent.editContactDetails" class="btn btn--info">
@@ -117,7 +122,13 @@ pageName: serviceProvider
                 </dd>
               </dl>
             </section>
-            <section>
+
+          </div>
+
+
+          <div class="split">
+
+            <section class="admin-panel">
               <header>
                 <h2>Locations</h2>
                 <a data-bind="attr: { 'href': addAddressUrl }" title="add location" class="btn btn--primary">
@@ -125,7 +136,7 @@ pageName: serviceProvider
                 </a>
               </header>
               <div data-bind="foreach: addresses">
-                <article class="key-value-pair">
+                <article class="key-value-pair location">
                   <address data-bind="text: formatted" class="key-value-pair__key"></address>
                   <a data-bind="attr: { 'href': editAddressUrl }" title="edit location" class="btn btn--info">
                     <span class="btn__text">Edit</span>
@@ -136,13 +147,14 @@ pageName: serviceProvider
                 </article>
               </div>
             </section>
-            <section>
+
+            <section class="admin-panel">
               <h2>Services</h2>
               <a data-bind="attr: { 'href': addServiceUrl }" title="add services" class="btn btn--primary">
                 <span class="btn__text">Add</span>
               </a>
               <div data-bind="foreach: services">
-                <article>
+                <article class="service-provider__service">
                   <h3 data-bind="text: name"></h3>
                   <a data-bind="attr: { 'href': editServiceUrl }" title="edit service" class="btn btn--info">
                     <span class="btn__text">Edit</span>
@@ -153,7 +165,13 @@ pageName: serviceProvider
                 </article>
               </div>
             </section>
-            <section>
+
+          </div>
+
+
+          <div class="split">
+
+            <section class="admin-panel">
               <h2>Needs</h2>
               <a data-bind="attr: { 'href': addNeedUrl }" title="add need" class="btn btn--primary">
                 <span class="btn__text">Add</span>
@@ -170,6 +188,10 @@ pageName: serviceProvider
                 </article>
               </div>
             </section>
+
+          </div>
+
+
           </div>
         </div>
       </div>
