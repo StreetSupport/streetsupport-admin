@@ -146,7 +146,7 @@ describe('List Charter Pledges', function () {
         }
       }
       ajaxPutStub = sinon.stub(ajax, 'put')
-        .withArgs(endpoints.charterPledges + '/' + model.pledges()[0].id, headers, { isApproved: true })
+        .withArgs(endpoints.charterPledges + '/' + model.pledges()[0].id + '/approval', headers, { isApproved: true })
         .returns(getPutPromise())
       browser.loading.reset()
       browser.loaded.reset()

@@ -30,7 +30,8 @@ function Pledge (data, listener) {
   self.toggleApproval = function () {
     browser.loading()
 
-    var endpoint = self.endpointBuilder.charterPledges(self.id).build()
+    var endpoint = self.endpointBuilder.charterPledges(self.id).approval().build()
+    console.log(endpoint)
     var headers = self.headers(cookies.get('session-token'))
 
     ajax

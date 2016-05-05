@@ -88,6 +88,11 @@ function EndpointBuilder () {
     return self
   }
 
+  self.approval = () => {
+    self.childResource = 'approval'
+    return self;
+  }
+
   self.build = function () {
     var uri = self.baseResource
     if (self.baseResourceId !== undefined) {
