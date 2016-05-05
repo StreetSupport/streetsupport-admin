@@ -78,6 +78,14 @@ describe('List Charter Pledges', function () {
     expect(model.pledges()[0].description).toEqual('pledge description')
   })
 
+  it('should set mail to link', function () {
+    expect(model.pledges()[0].mailToLink).toEqual('mailto:test@test.com')
+  })
+
+  it('should format creation date', function () {
+    expect(model.pledges()[0].creationDate).toEqual('11/04/16')
+  })
+
   it('should set pledge approval status', function () {
     expect(model.pledges()[0].isApproved()).toBeFalsy()
   })
