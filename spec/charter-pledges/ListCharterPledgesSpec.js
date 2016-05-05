@@ -167,7 +167,7 @@ describe('List Charter Pledges', function () {
     })
 
     it('should set new approval status of pledge', function () {
-      expect(model.allPledges[0].isApproved()).toBeTruthy()
+      expect(model.allPledges()[0].isApproved()).toBeTruthy()
     })
 
     it('should show browser is loaded', function () {

@@ -91,12 +91,27 @@ function Pledge (data, listener) {
       self.fieldErrors.showAllMessages()
     }
   }
+
+  self.deletePledge = () => {
+    browser.loading()
+    let endpoint = self.endpointBuilder.charterPledges(self.id).deleted().build()
+    let headers = self.headers(cookies.get('session-token'))
+    ajax
+      .put(endpoint, headers)
+      .then((result) => {
+        browser.loaded()
+        self.listener.pledgeDeleted(self)
+      }, (error) => {
+        self.handleServerError(error)
+      })
+  }
 }
 
 Pledge.prototype = new BaseViewModel()
 
 function ListCharterPledgesModel () {
   var self = this
+  self.allPledges = ko.observableArray()
   self.pledges = ko.observableArray()
   self.showAll = ko.observable(false)
   self.showAllButtonLabel = ko.computed(function () {
@@ -107,9 +122,9 @@ function ListCharterPledgesModel () {
 
   self.updateVisiblePledges = function () {
     if (self.showAll() === true) {
-      self.pledges(self.allPledges)
+      self.pledges(self.allPledges())
     } else {
-      self.pledges(self.allPledges.filter(x => x.isApproved() === false))
+      self.pledges(self.allPledges().filter(x => x.isApproved() === false))
     }
   }
 
@@ -122,6 +137,12 @@ function ListCharterPledgesModel () {
     self.updateVisiblePledges()
   }
 
+  self.pledgeDeleted = (pledge) => {
+    let pledgesWithDeletedRemoved = self.allPledges().filter((p) => p.id !== pledge.id)
+    self.allPledges(pledgesWithDeletedRemoved)
+    self.updateVisiblePledges()
+  }
+
   browser.loading()
 
   var endpoint = self.endpointBuilder.charterPledges().build()
@@ -130,8 +151,8 @@ function ListCharterPledgesModel () {
   ajax
     .get(endpoint, headers)
     .then(function (result) {
-      self.allPledges = result.data.map(p => new Pledge(p, self))
-      self.pledges(self.allPledges.filter(x => x.isApproved() === false))
+      self.allPledges(result.data.map(p => new Pledge(p, self)))
+      self.pledges(self.allPledges().filter(x => x.isApproved() === false))
       browser.loaded()
     }, function (error) {
       self.handleServerError(error)

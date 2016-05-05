@@ -98,6 +98,11 @@ function EndpointBuilder () {
     return self
   }
 
+  self.deleted = () => {
+    self.childResource = 'deleted'
+    return self
+  }
+
   self.build = function () {
     var uri = self.baseResource
     if (self.baseResourceId !== undefined) {
