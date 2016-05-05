@@ -107,11 +107,16 @@ describe('Edit Charter Pledge', function () {
 
   describe('- Cancel Edit mode', () => {
     beforeEach(() => {
+      model.pledges()[0].newDescription('a new pledge description')
       model.pledges()[0].cancelEdit()
     })
 
     it('should set IsEditable to true', () => {
       expect(model.pledges()[0].isEditable()).toBeFalsy()
+    })
+
+    it('should set reset new description', () => {
+      expect(model.pledges()[0].newDescription()).toEqual('pledge description')
     })
   })
 })

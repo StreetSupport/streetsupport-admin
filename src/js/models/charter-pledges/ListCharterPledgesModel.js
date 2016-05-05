@@ -54,6 +54,7 @@ function Pledge (data, listener) {
 
   self.cancelEdit = () => {
     self.isEditable(false)
+    self.newDescription(self.description())
   }
 
   self.updatePledge = () => {
