@@ -1,17 +1,20 @@
 var ajax = require('../../ajax')
-var adminUrls = require('../../admin-urls')
 var browser = require('../../browser')
 var cookies = require('../../cookies')
 var BaseViewModel = require('../BaseViewModel')
 var ko = require('knockout')
+var moment = require('moment')
 
-function Pledge(data, listener) {
+function Pledge (data, listener) {
   var self = this
   self.listener = listener
   self.id = data.id
   self.fullName = data.firstName + ' ' + data.lastName
   self.description = data.proposedPledge.description
   self.organisation = data.organisation
+  self.email = data.email
+  self.mailToLink = 'mailto:' + data.email
+  self.creationDate = moment(data.documentCreationDate).format('DD/MM/YY')
   self.isApproved = ko.observable(data.proposedPledge.isApproved)
   self.buttonClass = ko.computed(function () {
     return self.isApproved()
@@ -44,7 +47,7 @@ function Pledge(data, listener) {
 
 Pledge.prototype = new BaseViewModel()
 
-function ListCharterPledgesModel() {
+function ListCharterPledgesModel () {
   var self = this
   self.pledges = ko.observableArray()
   self.showAll = ko.observable(false)
@@ -55,7 +58,7 @@ function ListCharterPledgesModel() {
   }, self)
 
   self.updateVisiblePledges = function () {
-    if(self.showAll() === true) {
+    if (self.showAll() === true) {
       self.pledges(self.allPledges)
     } else {
       self.pledges(self.allPledges.filter(x => x.isApproved() === false))
