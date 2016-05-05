@@ -5,6 +5,7 @@ var ajax = require('../../src/js/ajax')
 var endpoints = require('../../src/js/api-endpoints')
 var browser = require('../../src/js/browser')
 var cookies = require('../../src/js/cookies')
+var validation = require('../../src/js/validation')
 var Model = require('../../src/js/models/charter-pledges/ListCharterPledgesModel')
 
 describe('Edit Charter Pledge', function () {
@@ -12,6 +13,7 @@ describe('Edit Charter Pledge', function () {
   var browserLoadingStub
   var browserLoadedStub
   var ajaxPutStub
+  var validationShowErrorsStub
 
   var headers = {
     'content-type': 'application/json',
@@ -40,6 +42,7 @@ describe('Edit Charter Pledge', function () {
 
     browserLoadingStub = sinon.stub(browser, 'loading')
     browserLoadedStub = sinon.stub(browser, 'loaded')
+    validationShowErrorsStub = sinon.stub(validation, 'showErrors')
 
     var getPutPromise = function () {
       return {
@@ -64,6 +67,7 @@ describe('Edit Charter Pledge', function () {
     browser.loading.restore()
     browser.loaded.restore()
     ajax.put.restore()
+    validation.showErrors.restore()
   })
 
   describe('- Set Edit mode', () => {
@@ -79,7 +83,7 @@ describe('Edit Charter Pledge', function () {
       beforeEach(() => {
         browser.loading.reset()
         browser.loaded.reset()
-        model.pledges()[0].newDescription('my new pledge')
+        model.pledges()[0].formModel().description('my new pledge')
         model.pledges()[0].updatePledge()
       })
 
@@ -103,11 +107,28 @@ describe('Edit Charter Pledge', function () {
         expect(model.pledges()[0].isEditable()).toBeFalsy()
       })
     })
+
+    describe('- Submit empty new Pledge', () => {
+      beforeEach(() => {
+        browser.loading.reset()
+        browser.loaded.reset()
+        model.pledges()[0].formModel().description('')
+        model.pledges()[0].updatePledge()
+      })
+
+      it('should not put new approval status to api', function () {
+        expect(ajaxPutStub.called).toBeFalsy()
+      })
+
+      it('should show validation errors', function () {
+        expect(validationShowErrorsStub.calledOnce).toBeFalsy()
+      })
+    })
   })
 
   describe('- Cancel Edit mode', () => {
     beforeEach(() => {
-      model.pledges()[0].newDescription('a new pledge description')
+      model.pledges()[0].formModel().description('a new pledge description')
       model.pledges()[0].cancelEdit()
     })
 
@@ -116,7 +137,7 @@ describe('Edit Charter Pledge', function () {
     })
 
     it('should set reset new description', () => {
-      expect(model.pledges()[0].newDescription()).toEqual('pledge description')
+      expect(model.pledges()[0].formModel().description()).toEqual('pledge description')
     })
   })
 })

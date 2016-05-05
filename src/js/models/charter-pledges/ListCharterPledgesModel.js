@@ -3,17 +3,19 @@
 var ajax = require('../../ajax')
 var browser = require('../../browser')
 var cookies = require('../../cookies')
+var validation = require('../../validation')
 var BaseViewModel = require('../BaseViewModel')
 var ko = require('knockout')
+require('knockout.validation') // No variable here is deliberate!
 var moment = require('moment')
 
 function Pledge (data, listener) {
+  validation.initialise(ko.validation)
   var self = this
   self.listener = listener
   self.id = data.id
   self.fullName = data.firstName + ' ' + data.lastName
   self.description = ko.observable(data.proposedPledge.description)
-  self.newDescription = ko.observable(data.proposedPledge.description)
   self.organisation = data.organisation
   self.email = data.email
   self.mailToLink = 'mailto:' + data.email
@@ -30,6 +32,11 @@ function Pledge (data, listener) {
       ? 'Disapprove Pledge'
       : 'Approve Pledge'
   }, self)
+
+  self.formModel = ko.validatedObservable({
+    description: ko.observable(data.proposedPledge.description).extend({ required: true })
+  })
+  self.fieldErrors = validation.getValidationGroup(ko.validation, self.formModel)
 
   self.toggleApproval = function () {
     browser.loading()
@@ -54,27 +61,35 @@ function Pledge (data, listener) {
 
   self.cancelEdit = () => {
     self.isEditable(false)
-    self.newDescription(self.description())
+    self.formModel().description(self.description())
   }
 
-  self.updatePledge = () => {
+  let submitForm = () => {
     browser.loading()
 
     let endpoint = self.endpointBuilder.charterPledges(self.id).pledge().build()
     let headers = self.headers(cookies.get('session-token'))
     let payload = {
-      pledge: self.newDescription()
+      pledge: self.formModel().description()
     }
 
     ajax
       .put(endpoint, headers, payload)
       .then((result) => {
         browser.loaded()
-        self.description(self.newDescription())
+        self.description(self.formModel().description())
         self.isEditable(false)
       }, (error) => {
-
+        self.handleServerError(error)
       })
+  }
+
+  self.updatePledge = () => {
+    if (self.formModel.isValid()) {
+      submitForm()
+    } else {
+      self.fieldErrors.showAllMessages()
+    }
   }
 }
 
