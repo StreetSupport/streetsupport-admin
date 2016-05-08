@@ -1,18 +1,27 @@
+'use strict'
+
 var ajax = require('../../ajax')
-var adminUrls = require('../../admin-urls')
 var browser = require('../../browser')
 var cookies = require('../../cookies')
+var validation = require('../../validation')
 var BaseViewModel = require('../BaseViewModel')
 var ko = require('knockout')
+require('knockout.validation') // No variable here is deliberate!
+var moment = require('moment')
 
-function Pledge(data, listener) {
+function Pledge (data, listener) {
+  validation.initialise(ko.validation)
   var self = this
   self.listener = listener
   self.id = data.id
   self.fullName = data.firstName + ' ' + data.lastName
-  self.description = data.proposedPledge.description
+  self.description = ko.observable(data.proposedPledge.description)
   self.organisation = data.organisation
+  self.email = data.email
+  self.mailToLink = 'mailto:' + data.email
+  self.creationDate = moment(data.documentCreationDate).format('DD/MM/YY')
   self.isApproved = ko.observable(data.proposedPledge.isApproved)
+  self.isEditable = ko.observable(false)
   self.buttonClass = ko.computed(function () {
     return self.isApproved()
       ? 'btn btn--warning'
@@ -24,10 +33,15 @@ function Pledge(data, listener) {
       : 'Approve Pledge'
   }, self)
 
+  self.formModel = ko.validatedObservable({
+    description: ko.observable(data.proposedPledge.description).extend({ required: true })
+  })
+  self.fieldErrors = validation.getValidationGroup(ko.validation, self.formModel)
+
   self.toggleApproval = function () {
     browser.loading()
 
-    var endpoint = self.endpointBuilder.charterPledges(self.id).build()
+    var endpoint = self.endpointBuilder.charterPledges(self.id).approval().build()
     var headers = self.headers(cookies.get('session-token'))
 
     ajax
@@ -40,12 +54,64 @@ function Pledge(data, listener) {
         self.handleServerError(error)
       })
   }
+
+  self.editPledge = () => {
+    self.isEditable(true)
+  }
+
+  self.cancelEdit = () => {
+    self.isEditable(false)
+    self.formModel().description(self.description())
+  }
+
+  let submitForm = () => {
+    browser.loading()
+
+    let endpoint = self.endpointBuilder.charterPledges(self.id).pledge().build()
+    let headers = self.headers(cookies.get('session-token'))
+    let payload = {
+      pledge: self.formModel().description()
+    }
+
+    ajax
+      .put(endpoint, headers, payload)
+      .then((result) => {
+        browser.loaded()
+        self.description(self.formModel().description())
+        self.isEditable(false)
+      }, (error) => {
+        self.handleServerError(error)
+      })
+  }
+
+  self.updatePledge = () => {
+    if (self.formModel.isValid()) {
+      submitForm()
+    } else {
+      self.fieldErrors.showAllMessages()
+    }
+  }
+
+  self.deletePledge = () => {
+    browser.loading()
+    let endpoint = self.endpointBuilder.charterPledges(self.id).deleted().build()
+    let headers = self.headers(cookies.get('session-token'))
+    ajax
+      .put(endpoint, headers)
+      .then((result) => {
+        browser.loaded()
+        self.listener.pledgeDeleted(self)
+      }, (error) => {
+        self.handleServerError(error)
+      })
+  }
 }
 
 Pledge.prototype = new BaseViewModel()
 
-function ListCharterPledgesModel() {
+function ListCharterPledgesModel () {
   var self = this
+  self.allPledges = ko.observableArray()
   self.pledges = ko.observableArray()
   self.showAll = ko.observable(false)
   self.showAllButtonLabel = ko.computed(function () {
@@ -55,10 +121,10 @@ function ListCharterPledgesModel() {
   }, self)
 
   self.updateVisiblePledges = function () {
-    if(self.showAll() === true) {
-      self.pledges(self.allPledges)
+    if (self.showAll() === true) {
+      self.pledges(self.allPledges())
     } else {
-      self.pledges(self.allPledges.filter(x => x.isApproved() === false))
+      self.pledges(self.allPledges().filter(x => x.isApproved() === false))
     }
   }
 
@@ -71,6 +137,12 @@ function ListCharterPledgesModel() {
     self.updateVisiblePledges()
   }
 
+  self.pledgeDeleted = (pledge) => {
+    let pledgesWithDeletedRemoved = self.allPledges().filter((p) => p.id !== pledge.id)
+    self.allPledges(pledgesWithDeletedRemoved)
+    self.updateVisiblePledges()
+  }
+
   browser.loading()
 
   var endpoint = self.endpointBuilder.charterPledges().build()
@@ -79,8 +151,8 @@ function ListCharterPledgesModel() {
   ajax
     .get(endpoint, headers)
     .then(function (result) {
-      self.allPledges = result.data.map(p => new Pledge(p, self))
-      self.pledges(self.allPledges.filter(x => x.isApproved() === false))
+      self.allPledges(result.data.map(p => new Pledge(p, self)))
+      self.pledges(self.allPledges().filter(x => x.isApproved() === false))
       browser.loaded()
     }, function (error) {
       self.handleServerError(error)
