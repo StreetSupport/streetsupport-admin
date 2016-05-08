@@ -1,25 +1,31 @@
-var sinon =     require('sinon'),
-    ajax =      require('basic-ajax'),
-    endpoints = require('../../src/js/api-endpoints'),
-    adminurls = require('../../src/js/admin-urls'),
-    browser =   require('../../src/js/browser'),
-    cookies = require('../../src/js/cookies')
+/*
+global describe, beforeEach, afterEach, it, expect
+*/
 
-describe ('Index', function () {
+'use strict'
+
+var sinon = require('sinon')
+var ajax =  require('basic-ajax')
+var endpoints = require('../../src/js/api-endpoints')
+var adminurls = require('../../src/js/admin-urls')
+var browser = require('../../src/js/browser')
+var cookies = require('../../src/js/cookies')
+
+describe('Index', function () {
   var Model = require('../../src/js/models/Index')
   var model
   var stubbedBrowser
   var stubbedApi
 
-  afterEach (function () {
+  afterEach(function () {
     cookies.get.restore()
     browser.redirect.restore()
     ajax.get.restore()
   })
 
-  describe ('Not logged in', function () {
+  describe('Not logged in', function () {
 
-    beforeEach (function () {
+    beforeEach(function () {
       sinon.stub(cookies, 'get').returns(null)
       stubbedBrowser = sinon.stub(browser, 'redirect')
 
@@ -122,6 +128,40 @@ describe ('Index', function () {
 
       it ('should redirect to service provider page', function () {
         var browserRedirectedWithExpectedUrl = stubbedBrowser.withArgs(adminurls.serviceProviders + '?key=coffee4craig').calledOnce
+        expect(browserRedirectedWithExpectedUrl).toBeTruthy()
+      })
+    })
+
+    describe('Charter Admin', function () {
+      beforeEach(function () {
+        let resolved = {
+          then: function (success, error) {
+            success({
+              'status': 200,
+              'json': {
+                'authClaims': [ 'CharterAdmin' ]
+              }
+            })
+          }
+        }
+
+        stubbedApi.returns(resolved)
+        model = new Model()
+      })
+
+      it('should check if session still valid', function () {
+        var apiCalled = stubbedApi.withArgs(endpoints.sessions,
+          {
+            'content-type': 'application/json',
+            'session-token': 'stored-session-token'
+          },
+          {}).calledOnce
+
+        expect(apiCalled).toBeTruthy()
+      })
+
+      it ('should redirect to charter page', function () {
+        var browserRedirectedWithExpectedUrl = stubbedBrowser.withArgs(adminurls.charter).calledOnce
         expect(browserRedirectedWithExpectedUrl).toBeTruthy()
       })
     })
