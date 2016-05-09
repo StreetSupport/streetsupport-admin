@@ -1,5 +1,5 @@
 .pledge {
-
+  padding: 20px;
 }
 
 .pledge__description {
@@ -9,7 +9,6 @@
   &::after {
     content:close-quote;
   }
-  @extend .h2;
 }
 
 .pledge__author {

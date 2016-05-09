@@ -8,6 +8,7 @@ var BaseViewModel = require('../BaseViewModel')
 var ko = require('knockout')
 require('knockout.validation') // No variable here is deliberate!
 var moment = require('moment')
+var htmlEncode = require('htmlencode')
 
 function Pledge (data, listener) {
   validation.initialise(ko.validation)
@@ -15,7 +16,7 @@ function Pledge (data, listener) {
   self.listener = listener
   self.id = data.id
   self.fullName = data.firstName + ' ' + data.lastName
-  self.description = ko.observable(data.proposedPledge.description)
+  self.description = ko.observable(htmlEncode.htmlEncode(data.proposedPledge.description))
   self.organisation = data.organisation
   self.email = data.email
   self.mailToLink = 'mailto:' + data.email
@@ -34,7 +35,7 @@ function Pledge (data, listener) {
   }, self)
 
   self.formModel = ko.validatedObservable({
-    description: ko.observable(data.proposedPledge.description).extend({ required: true })
+    description: ko.observable(htmlEncode.htmlDecode(data.proposedPledge.description)).extend({ required: true })
   })
   self.fieldErrors = validation.getValidationGroup(ko.validation, self.formModel)
 
@@ -61,7 +62,7 @@ function Pledge (data, listener) {
 
   self.cancelEdit = () => {
     self.isEditable(false)
-    self.formModel().description(self.description())
+    self.formModel().description(htmlEncode.htmlDecode(self.description()))
   }
 
   let submitForm = () => {
@@ -70,7 +71,7 @@ function Pledge (data, listener) {
     let endpoint = self.endpointBuilder.charterPledges(self.id).pledge().build()
     let headers = self.headers(cookies.get('session-token'))
     let payload = {
-      pledge: self.formModel().description()
+      pledge: htmlEncode.htmlDecode(self.formModel().description())
     }
 
     ajax
