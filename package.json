@@ -67,6 +67,7 @@
     "cookie-cutter": "0.1.1",
     "fastclick": "1.0.6",
     "hogan.js": "3.0.2",
+    "htmlencode": "0.0.4",
     "knockout": "3.4.0",
     "knockout.validation": "^2.0.3",
     "moment": "^2.13.0",
