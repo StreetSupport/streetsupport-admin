@@ -33,7 +33,7 @@ pageName: charterPledges
   <script type="text/html" id="pledge">
   <article class="pledge">
     <!-- ko ifnot: isEditable -->
-    <p data-bind="text:description" class="pledge__description"></p>
+    <p data-bind="html:description" class="pledge__description"></p>
     <!-- /ko -->
     <!-- ko if: isEditable -->
     <div data-bind="with: formModel" class="form__field-item form__field-item--full">
