@@ -16,7 +16,7 @@ describe('List Charter Pledges', function () {
   var browserLoadingStub
   var browserLoadedStub
 
-  beforeEach(function () {
+  beforeEach (function () {
     var getCharterPledgesPromise = function () {
       return {
         then: function (success, error) {
@@ -42,7 +42,7 @@ describe('List Charter Pledges', function () {
     model = new Model()
   })
 
-  afterEach(function () {
+  afterEach (function () {
     ajax.get.restore()
     cookies.get.restore()
     browser.loading.restore()
@@ -75,7 +75,15 @@ describe('List Charter Pledges', function () {
   })
 
   it('should set pledge description', function () {
-    expect(model.pledges()[0].description).toEqual('pledge description')
+    expect(model.pledges()[0].description()).toEqual('pledge description')
+  })
+
+  it('should set mail to link', function () {
+    expect(model.pledges()[0].mailToLink).toEqual('mailto:test@test.com')
+  })
+
+  it('should format creation date', function () {
+    expect(model.pledges()[0].creationDate).toEqual('11/04/16')
   })
 
   it('should set pledge approval status', function () {
@@ -138,7 +146,7 @@ describe('List Charter Pledges', function () {
         }
       }
       ajaxPutStub = sinon.stub(ajax, 'put')
-        .withArgs(endpoints.charterPledges + '/' + model.pledges()[0].id, headers, { isApproved: true })
+        .withArgs(endpoints.charterPledges + '/' + model.pledges()[0].id + '/approval', headers, { isApproved: true })
         .returns(getPutPromise())
       browser.loading.reset()
       browser.loaded.reset()
@@ -159,7 +167,7 @@ describe('List Charter Pledges', function () {
     })
 
     it('should set new approval status of pledge', function () {
-      expect(model.allPledges[0].isApproved()).toBeTruthy()
+      expect(model.allPledges()[0].isApproved()).toBeTruthy()
     })
 
     it('should show browser is loaded', function () {

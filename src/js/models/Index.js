@@ -15,6 +15,8 @@ function Index () {
       var authClaims = success.json.authClaims
       if (authClaims[0] === 'SuperAdmin') {
         browser.redirect(adminUrls.dashboard)
+      } else if (authClaims[0] === 'CharterAdmin') {
+        browser.redirect(adminUrls.charter)
       } else if (authClaims[0].startsWith(adminForPrefix)) {
         var destination = adminUrls.serviceProviders + '?key=' + authClaims[0].substring(adminForPrefix.length)
         browser.redirect(destination)
