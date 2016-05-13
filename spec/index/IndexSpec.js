@@ -67,7 +67,7 @@ describe('Index', function () {
               success({
                 'status': 200,
                 'json': {
-                  'authClaims': [ 'SuperAdmin' ]
+                  'authClaims': [ 'OrgAdmin', 'SuperAdmin' ]
                 }
               })
             }
