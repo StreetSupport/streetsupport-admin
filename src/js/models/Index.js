@@ -1,3 +1,5 @@
+'use strict'
+
 var cookies = require('../cookies')
 var browser = require('../browser')
 var adminUrls = require('../admin-urls')
@@ -13,13 +15,17 @@ function Index () {
 
     var success = function (success) {
       var authClaims = success.json.authClaims
-      if (authClaims[0] === 'SuperAdmin') {
+      if (authClaims.indexOf('SuperAdmin') > -1) {
         browser.redirect(adminUrls.dashboard)
-      } else if (authClaims[0] === 'CharterAdmin') {
+      } else if (authClaims.indexOf('CharterAdmin') > -1) {
         browser.redirect(adminUrls.charter)
-      } else if (authClaims[0].startsWith(adminForPrefix)) {
-        var destination = adminUrls.serviceProviders + '?key=' + authClaims[0].substring(adminForPrefix.length)
-        browser.redirect(destination)
+      } else {
+        let adminForClaim = authClaims.filter((a) => a.startsWith(adminForPrefix))
+        if (adminForClaim.length > 0) {
+          let providerKey = adminForClaim[0].substring(adminForPrefix.length)
+          var destination = adminUrls.serviceProviders + '?key=' + providerKey
+          browser.redirect(destination)
+        }
       }
     }
 
