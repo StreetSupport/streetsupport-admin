@@ -17,12 +17,14 @@ pageName: dashboard
         </header>
       </div>
     </div>
-    <div class="block">
+    <div class="block block--main-body">
       <div class="container block__inner">
-      {{> form-feedback}}
-
-      <section class="block__content" data-bind="template: { name: 'serviceProvider-template', foreach: serviceProviders }" class="stacked-list">
+        <div class="block__content">
+          {{> form-feedback}}
+          <section class="block__content" data-bind="template: { name: 'serviceProvider-template', foreach: serviceProviders }" class="stacked-list">
       </section>
+          {{> loading-spinner}}
+        </div>
       </div>
     </div>
   {{/content}}
@@ -48,4 +50,3 @@ pageName: dashboard
     </a>
 </article>
 </script>
-{{> loading-spinner}}

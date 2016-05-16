@@ -17,12 +17,13 @@ pageName: charterPledges
         </header>
       </div>
     </div>
-    <div class="block">
+    <div class="block block--main-body">
       <div class="container block__inner">
         <div class="block__content">
-          <div data-bind="foreach:pledges">
-            <!-- ko template: { name: 'pledge' } --><!-- /ko -->
-          </div>
+          <!-- ko if: pledges.length === 0 -->
+          <p>There are no pledges currently awaiting approval.</p>
+          <!-- /ko -->
+          <div data-bind="template: { name: 'pledge', foreach:pledges }"></div>
         </div>
       </div>
     </div>

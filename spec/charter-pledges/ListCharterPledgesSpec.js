@@ -1,3 +1,9 @@
+/*
+global describe, beforeEach, afterEach, it, expect
+*/
+
+'use strict'
+
 var sinon = require('sinon')
 var ajax =      require('../../src/js/ajax')
 var endpoints = require('../../src/js/api-endpoints')
@@ -49,8 +55,8 @@ describe('List Charter Pledges', function () {
     browser.loaded.restore()
   })
 
-  it('should notify user it is loading' ,function () {
-      expect(browserLoadingStub.calledOnce).toBeTruthy()
+  it('should notify user it is loading', function () {
+    expect(browserLoadingStub.calledOnce).toBeTruthy()
   })
 
   it('should get pledges from api', function () {
