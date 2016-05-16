@@ -11,7 +11,7 @@ describe('Delete individual Need', function () {
   var model
   var ajaxStub
 
-  beforeEach (function () {
+  beforeEach(function () {
     sinon.stub(browser, 'dataLoaded')
     sinon.stub(getUrlParameter, 'parameter').withArgs('key').returns('coffee4craig')
     model = new Model({

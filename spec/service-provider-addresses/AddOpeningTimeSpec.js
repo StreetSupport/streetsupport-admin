@@ -10,20 +10,20 @@ describe('Add Opening Time', function () {
   var Model = require('../../src/js/models/Address'),
       model
 
-  beforeEach (function () {
+  beforeEach(function () {
     model = new Model(getAddressData())
 
     model.edit()
     model.newOpeningTime()
   })
 
-  it ('should add a new openingTimes', function () {
+  it('should add a new openingTimes', function () {
     expect(model.openingTimes().length).toEqual(3)
   })
 
   describe('Then cancel', function () {
 
-    beforeEach (function () {
+    beforeEach(function () {
       model.cancel()
     })
 

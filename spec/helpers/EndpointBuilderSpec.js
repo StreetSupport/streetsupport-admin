@@ -1,4 +1,4 @@
-describe ('Endpoint Builder', function () {
+describe('Endpoint Builder', function () {
   var Builder = require('../../src/js/endpoint-builder')
   var stu
   var result

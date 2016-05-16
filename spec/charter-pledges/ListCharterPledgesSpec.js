@@ -16,7 +16,7 @@ describe('List Charter Pledges', function () {
   var browserLoadingStub
   var browserLoadedStub
 
-  beforeEach (function () {
+  beforeEach(function () {
     var getCharterPledgesPromise = function () {
       return {
         then: function (success, error) {
@@ -42,7 +42,7 @@ describe('List Charter Pledges', function () {
     model = new Model()
   })
 
-  afterEach (function () {
+  afterEach(function () {
     ajax.get.restore()
     cookies.get.restore()
     browser.loading.restore()

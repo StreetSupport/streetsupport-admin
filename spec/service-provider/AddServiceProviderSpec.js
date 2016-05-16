@@ -6,11 +6,11 @@ var sinon = require('sinon'),
     cookies =   require('../../src/js/cookies')
 
 
-describe ('Add Service Provider', function () {
+describe('Add Service Provider', function () {
   var Model = require('../../src/js/models/AddServiceProvider'),
   model
 
-  beforeEach (function () {
+  beforeEach(function () {
     sinon.stub(browser, 'dataLoaded')
     model = new Model()
   })
@@ -50,7 +50,7 @@ describe ('Add Service Provider', function () {
       model.save()
     })
 
-    afterEach (function () {
+    afterEach(function () {
       ajax.post.restore()
       cookies.get.restore()
       browser.redirect.restore()
@@ -100,7 +100,7 @@ describe ('Add Service Provider', function () {
       model.save()
     })
 
-    afterEach (function () {
+    afterEach(function () {
       ajax.post.restore()
       cookies.get.restore()
       browser.redirect.restore()
