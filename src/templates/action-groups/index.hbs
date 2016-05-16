@@ -1,0 +1,35 @@
+---
+title: Action Groups - Street Support Admin
+description: Street Support - Making it easier to help homeless people in Manchester
+jsName: actionGroups
+pageName: actionGroups
+---
+
+{{#extend "_default"}}
+  {{#content "main"}}
+    <div class="block block--highlight">
+      <div class="container block__inner">
+        <header>
+          <h1>Action Groups</h1>
+        </header>
+      </div>
+    </div>
+    <div class="block block--main-body">
+      <div class="container block__inner">
+        <div class="block__content">
+          <div data-bind="template: { name: 'pledge', foreach:group }"></div>
+        </div>
+      </div>
+    </div>
+  {{/content}}
+  {{#content "gutter"}}
+
+  {{> loading-spinner}}
+
+  <script type="text/html" id="group">
+  <article class="group">
+  </article>
+  </script>
+
+  {{/content}}
+{{/extend}}
