@@ -15,9 +15,8 @@ if (argv.production) {
   plugins.push(new webpack.optimize.UglifyJsPlugin())
 }
 
-var pagesDir = __dirname + '/../../src/js/pages/page-'
-
 var p = (pageName) => {
+  var pagesDir = __dirname + '/../../src/js/pages/page-'
   return pagesDir + pageName
 }
 
@@ -42,16 +41,16 @@ module.exports = {
     editServiceProviderNeed: p('edit-service-provider-need'),
     addUser: p('add-user'),
     verifyNewUser: p('verify-new-user'),
-    volunteers: p('volunteers'),
     charterPledges: p('charter-pledges'),
     actionGroups: p('action-groups'),
+    volunteers: p('volunteers'),
     contactVolunteer: p('contact-volunteer')
   },
   output: {
     path: path.join(__dirname, '/../../_dist/assets/js/'),
     filename: '[name].bundle.js',
     chunkFilename: '[id].chunk.js',
-    publicPath: 'assets/js/'
+    publicPath: '/assets/js/'
   },
   plugins: plugins,
   module: {

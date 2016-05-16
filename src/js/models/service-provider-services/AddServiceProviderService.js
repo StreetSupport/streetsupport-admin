@@ -46,11 +46,10 @@ function AddServiceProviderService () {
       postcode: self.preselectedAddress().postcode()
     })
     address.openingTimes(self.preselectedAddress().openingTimes().map(ot => new OpeningTime({
-        day: ot.day(),
-        startTime: ot.startTime(),
-        endTime: ot.endTime()
-      })
-    ))
+      day: ot.day(),
+      startTime: ot.startTime(),
+      endTime: ot.endTime()
+    })))
     self.address(address)
   }
 

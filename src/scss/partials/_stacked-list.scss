@@ -6,17 +6,26 @@
 
   &__item {
     @include cf();
+
+    background: #eee;
+    padding: 1em;
+    margin-bottom: 1em;
+    border-radius: 10px;
+  }
+  &__header {
+    float: left;
+    margin-right: 1em;
+
+    .stacked-list__item--service-providers & {
+      @include span(3 of 6)
+    }
   }
 
-  &__element {
-    float:left;
-    &--header {
-      float:left;
-      @include span(6 of $column-large);
-    }
-    &--button {
-      float:left;
-      .btn { margin-top: -15px }
-    }
+  &__heading {
+    margin-top: 0;
+  }
+  &__button {
+    margin-right: .5em;
+    position: relative;
   }
 }

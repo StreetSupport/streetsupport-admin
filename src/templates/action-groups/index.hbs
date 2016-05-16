@@ -17,19 +17,21 @@ pageName: actionGroups
     <div class="block block--main-body">
       <div class="container block__inner">
         <div class="block__content">
-          <div data-bind="template: { name: 'pledge', foreach:group }"></div>
+          <div data-bind="template: { name: 'group', foreach: actionGroups }"></div>
+          {{> loading-spinner}}
         </div>
       </div>
     </div>
   {{/content}}
   {{#content "gutter"}}
-
-  {{> loading-spinner}}
-
-  <script type="text/html" id="group">
-  <article class="group">
-  </article>
-  </script>
-
   {{/content}}
 {{/extend}}
+
+<script type="text/html" id="group">
+  <article class="stacked-list__item stacked-list__item--action-group">
+    <header>
+      <h2><a data-bind="attr: { 'href': url, 'title': name }, html: name"></a></h2>
+      <p data-bind="text: synopsis"></p>
+    </header>
+  </article>
+</script>

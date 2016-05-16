@@ -46,7 +46,7 @@ function ServiceProvider (data) {
   }
 
   self.deleteAddress = function (deleteAddress) {
-    var notTheDeletedAddress = function (address)  {
+    var notTheDeletedAddress = function (address) {
       return address.key() !== deleteAddress.key()
     }
     var remainingAddresses = self.addresses().filter(address => notTheDeletedAddress(address))
