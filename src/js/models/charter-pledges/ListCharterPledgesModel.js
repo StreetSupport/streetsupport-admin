@@ -36,12 +36,12 @@ function Pledge (data, listener) {
       : 'Approve Pledge'
   }, self)
   self.featuredButtonClass = ko.computed(function () {
-    return self.isApproved()
+    return self.isFeatured()
       ? 'btn btn--indifferent'
       : 'btn btn--primary'
   }, self)
   self.featuredButtonLabel = ko.computed(function () {
-    return self.isApproved()
+    return self.isFeatured()
       ? 'Unmark as Featured'
       : 'Mark as Featured'
   }, self)

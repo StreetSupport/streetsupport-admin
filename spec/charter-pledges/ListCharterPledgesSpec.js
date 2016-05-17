@@ -105,9 +105,9 @@ describe('List Charter Pledges', function () {
     expect(model.pledges()[0].approvedButtonLabel()).toEqual('Approve Pledge')
   })
 
-  it('should set btn--primary class for currently unfeatured', function () {
-    expect(model.pledges()[0].featuredButtonClass()).toEqual('btn btn--primary')
-    expect(model.pledges()[0].featuredButtonLabel()).toEqual('Mark as Featured')
+  it('should set btn--primary class for currently featured', function () {
+    expect(model.pledges()[0].featuredButtonClass()).toEqual('btn btn--indifferent')
+    expect(model.pledges()[0].featuredButtonLabel()).toEqual('Unmark as Featured')
   })
 
   describe('Toggle Show All', function () {
@@ -132,8 +132,8 @@ describe('List Charter Pledges', function () {
     })
 
     it('should set btn--indifferent class for currently featured', function () {
-      expect(model.pledges()[1].featuredButtonClass()).toEqual('btn btn--indifferent')
-      expect(model.pledges()[1].featuredButtonLabel()).toEqual('Unmark as Featured')
+      expect(model.pledges()[0].featuredButtonClass()).toEqual('btn btn--indifferent')
+      expect(model.pledges()[0].featuredButtonLabel()).toEqual('Unmark as Featured')
     })
 
     describe('And Toggle Back', function () {
