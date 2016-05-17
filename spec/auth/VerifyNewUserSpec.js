@@ -6,16 +6,16 @@ var sinon = require('sinon'),
     browser =   require('../../src/js/browser'),
     getUrlParameter = require('../../src/js/get-url-parameter')
 
-describe ('Verify New User', function () {
+describe('Verify New User', function () {
   var Model = require('../../src/js/models/Auth/VerifyUser'),
   model
 
-  beforeEach (function () {
+  beforeEach(function () {
     sinon.stub(browser, 'dataLoaded')
     model = new Model()
   })
 
-  afterEach (function () {
+  afterEach(function () {
     browser.dataLoaded.restore()
   })
 
@@ -47,7 +47,7 @@ describe ('Verify New User', function () {
       model.save()
     })
 
-    afterEach (function () {
+    afterEach(function () {
       ajax.post.restore()
       cookies.get.restore()
       getUrlParameter.parameter.restore()
@@ -105,7 +105,7 @@ describe ('Verify New User', function () {
       model.save()
     })
 
-    afterEach (function () {
+    afterEach(function () {
       ajax.post.restore()
       cookies.get.restore()
       getUrlParameter.parameter.restore()

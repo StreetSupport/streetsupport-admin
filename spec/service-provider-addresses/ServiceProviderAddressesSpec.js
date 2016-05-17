@@ -6,14 +6,14 @@ var sinon = require('sinon'),
     cookies =   require('../../src/js/cookies'),
     getUrlParameter = require('../../src/js/get-url-parameter')
 
-describe ('Service Provider Addresses', function () {
+describe('Service Provider Addresses', function () {
   var Model = require('../../src/js/models/ServiceProviderAddresses'),
   model,
   stubbedApi,
   stubbedCookies,
   stubbedUrlParams
 
-  beforeEach (function () {
+  beforeEach(function () {
     function fakeResolved (value) {
       return {
         then: function (success, error) {
@@ -32,13 +32,13 @@ describe ('Service Provider Addresses', function () {
     model = new Model()
   })
 
-  afterEach (function () {
+  afterEach(function () {
     ajax.get.restore()
     cookies.get.restore()
     getUrlParameter.parameter.restore()
   })
 
-  it ('should retrieve service provider from api with session token', function () {
+  it('should retrieve service provider from api with session token', function () {
     var endpoint = endpoints.getServiceProviders + '/coffee4craig/addresses'
     var headers = {
       'content-type': 'application/json',

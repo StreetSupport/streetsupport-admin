@@ -30,7 +30,7 @@ function Address (data) {
   self.city = ko.observable(data.city)
   self.postcode = ko.observable(data.postcode)
 
-  var buildOpeningTimes = function(openingTimesData) {
+  var buildOpeningTimes = function (openingTimesData) {
     var openingTimes = openingTimesData !== undefined && openingTimesData !== null
       ? openingTimesData.map(o => new OpeningTime(o))
       : []

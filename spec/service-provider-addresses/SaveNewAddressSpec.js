@@ -9,7 +9,7 @@ describe('Save brand new Address', function () {
   var Model = require('../../src/js/models/Address'),
   model
 
-  beforeEach (function () {
+  beforeEach(function () {
     model = new Model({})
 
     model.edit()
@@ -102,7 +102,7 @@ describe('Save brand new Address', function () {
     })
 
     describe('Edit again and Cancel', function () {
-      beforeEach (function () {
+      beforeEach(function () {
         model.edit()
         model.street1('another new street1')
         model.cancel()
@@ -124,7 +124,7 @@ describe('Save new Address as part of collection', function () {
   var Model = require('../../src/js/models/Address'),
   model
 
-  beforeEach (function () {
+  beforeEach(function () {
     model = new Model({
       'tempKey': 'some temp key',
       'openingTimes': []
@@ -218,7 +218,7 @@ describe('Save new Address as part of collection', function () {
     })
 
     describe('Edit again and Cancel', function () {
-      beforeEach (function () {
+      beforeEach(function () {
         model.edit()
         model.street1('another new street1')
         model.cancel()

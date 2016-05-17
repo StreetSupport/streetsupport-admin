@@ -78,4 +78,11 @@
       color: inherit;
     }
   }
+
+  &--main-body {
+    position: relative;
+    & > .block__inner {
+      min-height: 80vh;
+    }
+  }
 }

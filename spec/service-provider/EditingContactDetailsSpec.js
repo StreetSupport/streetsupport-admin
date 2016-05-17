@@ -6,14 +6,14 @@ var sinon = require('sinon'),
     cookies =   require('../../src/js/cookies'),
     getUrlParameter = require('../../src/js/get-url-parameter')
 
-describe ('Edit Service Provider Contact Information', function () {
+describe('Edit Service Provider Contact Information', function () {
   var Model = require('../../src/js/models/ServiceProvider'),
   model,
   stubbedApi,
   stubbedCookies,
   stubbedUrlParams
 
-  beforeEach (function () {
+  beforeEach(function () {
     function fakeResolved (value) {
       return {
         then: function (success, error) {
@@ -35,21 +35,21 @@ describe ('Edit Service Provider Contact Information', function () {
     model.editContactDetails()
   })
 
-  afterEach (function () {
+  afterEach(function () {
     ajax.get.restore()
     cookies.get.restore()
     getUrlParameter.parameter.restore()
     browser.dataLoaded.restore()
   })
 
-  it ('should set isEditingContactDetails to true', function () {
+  it('should set isEditingContactDetails to true', function () {
     expect(model.isEditingContactDetails).toBeTruthy()
   })
 
-  describe ('Save', function () {
+  describe('Save', function () {
     var stubbedPutApi
 
-    beforeEach (function () {
+    beforeEach(function () {
       function fakeResolved (value) {
         return {
           then: function (success, error) {
@@ -72,11 +72,11 @@ describe ('Edit Service Provider Contact Information', function () {
       model.saveContactDetails()
     })
 
-    afterEach (function () {
+    afterEach(function () {
       ajax.put.restore()
     })
 
-    it ('should put service provider contact details to api with session token', function () {
+    it('should put service provider contact details to api with session token', function () {
         var endpoint = endpoints.getServiceProviders + '/coffee4craig/contact-details'
         var headers = {
           'content-type': 'application/json',
@@ -93,15 +93,15 @@ describe ('Edit Service Provider Contact Information', function () {
         expect(apiCalledWithExpectedArgs).toBeTruthy()
     })
 
-    it ('should set isEditingContactDetails to false', function () {
+    it('should set isEditingContactDetails to false', function () {
       expect(model.isEditingContactDetails()).toBeFalsy()
     })
   })
 
-  describe ('Invalid submission', function () {
+  describe('Invalid submission', function () {
     var stubbedPutApi
 
-    beforeEach (function () {
+    beforeEach(function () {
       function fakeResolved (value) {
         return {
           then: function (success, error) {
@@ -126,16 +126,16 @@ describe ('Edit Service Provider Contact Information', function () {
       model.saveContactDetails()
     })
 
-    afterEach (function () {
+    afterEach(function () {
       ajax.put.restore()
     })
 
-    it ('should set message as joined error messages', function () {
+    it('should set message as joined error messages', function () {
       expect(model.errors()[0]).toEqual('returned error message 1')
       expect(model.errors()[1]).toEqual('returned error message 2')
     })
 
-    it ('should keep isEditingContactDetails as true', function () {
+    it('should keep isEditingContactDetails as true', function () {
       expect(model.isEditingContactDetails()).toBeTruthy()
     })
   })

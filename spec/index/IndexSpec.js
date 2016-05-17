@@ -45,7 +45,7 @@ describe('Index', function () {
       model = new Model()
     })
 
-    it ('should redirect to login', function () {
+    it('should redirect to login', function () {
       var browserRedirectedWithExpectedUrl = stubbedBrowser.withArgs(adminurls.login).calledOnce
       expect(browserRedirectedWithExpectedUrl).toBeTruthy()
     })
@@ -53,14 +53,14 @@ describe('Index', function () {
 
   describe('Has session token', function () {
 
-    beforeEach (function () {
+    beforeEach(function () {
       sinon.stub(cookies, 'get').returns('stored-session-token')
       stubbedBrowser = sinon.stub(browser, 'redirect')
       stubbedApi = sinon.stub(ajax, 'get')
     })
 
-    describe ('as Super Admin', function () {
-      beforeEach (function () {
+    describe('as Super Admin', function () {
+      beforeEach(function () {
         function resolved(value) {
           return {
             then: function (success, error) {
@@ -89,14 +89,14 @@ describe('Index', function () {
         expect(apiCalled).toBeTruthy()
       })
 
-      it ('should redirect to dashboard', function () {
+      it('should redirect to dashboard', function () {
         var browserRedirectedWithExpectedUrl = stubbedBrowser.withArgs(adminurls.dashboard).calledOnce
         expect(browserRedirectedWithExpectedUrl).toBeTruthy()
       })
     })
 
-    describe ('Admin For', function () {
-      beforeEach (function () {
+    describe('Admin For', function () {
+      beforeEach(function () {
 
         function resolved(value) {
           return {
@@ -126,7 +126,7 @@ describe('Index', function () {
         expect(apiCalled).toBeTruthy()
       })
 
-      it ('should redirect to service provider page', function () {
+      it('should redirect to service provider page', function () {
         var browserRedirectedWithExpectedUrl = stubbedBrowser.withArgs(adminurls.serviceProviders + '?key=coffee4craig').calledOnce
         expect(browserRedirectedWithExpectedUrl).toBeTruthy()
       })
@@ -160,14 +160,14 @@ describe('Index', function () {
         expect(apiCalled).toBeTruthy()
       })
 
-      it ('should redirect to charter page', function () {
+      it('should redirect to charter page', function () {
         var browserRedirectedWithExpectedUrl = stubbedBrowser.withArgs(adminurls.charter).calledOnce
         expect(browserRedirectedWithExpectedUrl).toBeTruthy()
       })
     })
 
     describe('session expired', function () {
-      beforeEach (function () {
+      beforeEach(function () {
 
         function resolved(value) {
           return {
@@ -194,7 +194,7 @@ describe('Index', function () {
         expect(apiCalled).toBeTruthy()
       })
 
-      it ('should redirect to login', function () {
+      it('should redirect to login', function () {
         var browserRedirectedWithExpectedUrl = stubbedBrowser.withArgs(adminurls.login).calledOnce
         expect(browserRedirectedWithExpectedUrl).toBeTruthy()
       })

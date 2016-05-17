@@ -1,0 +1,70 @@
+---
+title: Action Groups - Street Support Admin
+description: Street Support - Making it easier to help homeless people in Manchester
+jsName: actionGroups
+pageName: actionGroups
+---
+
+{{#extend "_default"}}
+  {{#content "main"}}
+    <div class="block block--highlight">
+      <div class="container block__inner">
+        <header>
+          <h1>Action Groups</h1>
+        </header>
+      </div>
+    </div>
+    <div class="block block--main-body">
+      <div class="container block__inner">
+        <div class="block__content">
+          <!-- ko if: shouldShowList() -->
+          <div data-bind="template: { name: 'group', foreach: actionGroups }"></div>
+          <!-- /ko -->
+          <!-- ko ifnot: shouldShowList() -->
+          <div class="action-group-details" data-bind="with: openedActionGroup">
+            <header>
+            <h1 data-bind="text: name"></h1>
+            <h2 data-bind="text: synopsis"></h2>
+            </header>
+            <button class="btn btn--indifferent" data-bind="click: $parent.backToList"><span class="btn__text">Back to Action Groups</span></button>
+            <h3>Members</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Organisation</th>
+                  <th>Email</th>
+                  <th>Message</th>
+                  <th>Registered On</th>
+                </tr>
+              </thead>
+              <tbody data-bind="foreach: members">
+                <tr>
+                  <td><span data-bind="text: firstName" /><span data-bind="text: lastName" /></td>
+                  <td data-bind="text: organisation" /></td>
+                  <td data-bind="text: email" /></td>
+                  <td data-bind="html: message" /></td>
+                  <td data-bind="text: creationDate" /></td>
+                </tr>
+              </tbody>
+            </table>
+            </ul>
+          </div>
+          <!-- /ko -->
+          {{> loading-spinner}}
+        </div>
+      </div>
+    </div>
+  {{/content}}
+  {{#content "gutter"}}
+  {{/content}}
+{{/extend}}
+
+<script type="text/html" id="group">
+  <article class="stacked-list__item stacked-list__item--action-group">
+    <header>
+      <h2 data-bind="click: openGroup, text: name"></h2>
+      <p data-bind="text: synopsis"></p>
+    </header>
+  </article>
+</script>
