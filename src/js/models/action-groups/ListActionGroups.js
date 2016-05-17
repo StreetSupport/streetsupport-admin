@@ -7,6 +7,7 @@ let querystring = require('../../get-url-parameter')
 let BaseViewModel = require('../BaseViewModel')
 
 let ko = require('knockout')
+let moment = require('moment')
 
 function Member (data) {
   let self = this
@@ -16,6 +17,7 @@ function Member (data) {
   self.message = data.message
   self.organisation = data.organisation
   self.email = data.email
+  self.creationDate = moment(data.creationDate).format('DD/MM/YY')
 }
 
 function ActionGroup (data, listener) {
@@ -29,7 +31,9 @@ function ActionGroup (data, listener) {
   self.description = data.actionGroup.description
   self.url = '?id=' + data.actionGroup.id
 
-  self.members = data.members.map((m) => new Member(m))
+  self.members = data.members
+    .sort((a, b) => a.creationDate > b.creationDate)
+    .map((m) => new Member(m))
 
   self.openGroup = (group, target) => {
     self.listener.actionGroupOpened(self)

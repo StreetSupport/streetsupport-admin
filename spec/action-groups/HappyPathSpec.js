@@ -93,8 +93,14 @@ describe('List Action Groups', () => {
     expect(model.actionGroups()[1].url).toEqual('?id=57166227e4b09686f6b2c88a')
   })
 
+  it('- Should map sort members by creation date', () => {
+    expect(model.actionGroups()[1].members[0].firstName).toEqual('first')
+    expect(model.actionGroups()[1].members[1].firstName).toEqual('second')
+    expect(model.actionGroups()[1].members[2].firstName).toEqual('third')
+  })
+
   it('- Should map member first name', () => {
-    expect(model.actionGroups()[1].members[1].firstName).toEqual('Vince')
+    expect(model.actionGroups()[1].members[1].firstName).toEqual('second')
   })
 
   it('- Should map member last name', () => {
@@ -111,6 +117,10 @@ describe('List Action Groups', () => {
 
   it('- Should map member email', () => {
     expect(model.actionGroups()[1].members[1].email).toEqual('testemail+ncc@gmail.com')
+  })
+
+  it('- Should format member creationDate', () => {
+    expect(model.actionGroups()[1].members[1].creationDate).toEqual('20/04/16')
   })
 
   describe('- Expand Action Group', () => {
@@ -195,43 +205,50 @@ let groupData = () => {
       'lastName': 'Lee',
       'message': 'eafwfawf aw',
       'organisation': null,
-      'email': 'testemail+ncc@gmail.com'
+      'email': 'testemail+ncc@gmail.com',
+      'creationDate': '2016-04-20T14:13:51.3190000Z'
     }, {
       'firstName': 'Vincent',
       'lastName': 'Lee',
       'message': 'aewfw',
       'organisation': null,
-      'email': 'testemail+ncc@gmail.com'
+      'email': 'testemail+ncc@gmail.com',
+      'creationDate': '2016-04-20T15:39:18.7940000Z'
     }, {
       'firstName': 'Vincent',
       'lastName': 'Lee',
       'message': 'aefa',
       'organisation': '0',
-      'email': 'info+jetbrains@polyhatsoftware.co.uk'
+      'email': 'info+jetbrains@polyhatsoftware.co.uk',
+      'creationDate': '2016-04-22T11:45:07.4820000Z'
     }, {
       'firstName': 'test',
       'lastName': 'test',
       'message': 'test',
       'organisation': null,
-      'email': 'test@test.com'
+      'email': 'test@test.com',
+      'creationDate': '2016-04-22T13:38:53.4120000Z'
     }, {
       'firstName': 'Vincent',
       'lastName': 'Lee',
       'message': 'wef af a',
       'organisation': null,
-      'email': 'testemail+ncc@gmail.com'
+      'email': 'testemail+ncc@gmail.com',
+      'creationDate': '2016-04-23T14:36:07.4070000Z'
     }, {
       'firstName': 'aw efw ',
       'lastName': ' awef ',
       'message': 'wfe ',
       'organisation': null,
-      'email': 'testemail+spicyhut@gmail.com'
+      'email': 'testemail+spicyhut@gmail.com',
+      'creationDate': '2016-04-23T15:04:29.6290000Z'
     }, {
       'firstName': 'Vincent',
       'lastName': 'Lee',
       'message': ' awf w',
       'organisation': null,
-      'email': 'testemail+ncc@gmail.com'
+      'email': 'testemail+ncc@gmail.com',
+      'creationDate': '2016-04-24T14:09:18.0800000Z'
     }]
   }, {
     'actionGroup': {
@@ -241,23 +258,26 @@ let groupData = () => {
       'description': 'womens direct access group description'
     },
     'members': [{
-      'firstName': 'Vince',
+      'firstName': 'first',
       'lastName': 'Lee',
       'message': 'eafwfawf aw',
       'organisation': 'aefa eae',
-      'email': 'testemail+ncc@gmail.com'
+      'email': 'testemail+ncc@gmail.com',
+      'creationDate': '2016-04-20T14:18:56.2780000Z'
     }, {
-      'firstName': 'Vince',
-      'lastName': 'Lee',
-      'message': 'message',
-      'organisation': 'organisation',
-      'email': 'testemail+ncc@gmail.com'
-    }, {
-      'firstName': 'Vincent',
+      'firstName': 'third',
       'lastName': 'Lee',
       'message': 'fawffwe',
       'organisation': '0',
-      'email': 'info+jetbrains@polyhatsoftware.co.uk'
+      'email': 'info+jetbrains@polyhatsoftware.co.uk',
+      'creationDate': '2016-04-22T12:18:12.4250000Z'
+    }, {
+      'firstName': 'second',
+      'lastName': 'Lee',
+      'message': 'message',
+      'organisation': 'organisation',
+      'email': 'testemail+ncc@gmail.com',
+      'creationDate': '2016-04-20T14:23:22.6280000Z'
     }]
   }, {
     'actionGroup': {
@@ -271,7 +291,8 @@ let groupData = () => {
       'lastName': 'Lee',
       'message': 'ae fw fwe',
       'organisation': null,
-      'email': 'testemail+ncc@gmail.com'
+      'email': 'testemail+ncc@gmail.com',
+      'creationDate': '2016-04-23T12:36:46.4770000Z'
     }]
   }, {
     'actionGroup': {
@@ -285,19 +306,22 @@ let groupData = () => {
       'lastName': 'Lee',
       'message': ' aew we',
       'organisation': null,
-      'email': 'testemail+ncc@gmail.com'
+      'email': 'testemail+ncc@gmail.com',
+      'creationDate': '2016-04-20T15:44:07.0160000Z'
     }, {
       'firstName': 'Viv',
       'lastName': 'Slack',
       'message': 'lll',
       'organisation': '',
-      'email': 'vivslack@gmail.com'
+      'email': 'vivslack@gmail.com',
+      'creationDate': '2016-04-22T16:36:33.9130000Z'
     }, {
       'firstName': 'a w',
       'lastName': ' ewwe',
       'message': 'wefawef we',
       'organisation': 'Iawe ',
-      'email': 'testemail+spicyhut@gmail.com'
+      'email': 'testemail+spicyhut@gmail.com',
+      'creationDate': '2016-04-23T15:09:46.6450000Z'
     }]
   }, {
     'actionGroup': {
@@ -311,13 +335,15 @@ let groupData = () => {
       'lastName': 'Lee',
       'message': 'e faew w',
       'organisation': null,
-      'email': 'testemail+ncc@gmail.com'
+      'email': 'testemail+ncc@gmail.com',
+      'creationDate': '2016-04-24T16:30:33.1750000Z'
     }, {
       'firstName': 'Vincent',
       'lastName': 'Lee',
       'message': 'test',
       'organisation': null,
-      'email': 'testemail+ncc@gmail.com'
+      'email': 'testemail+ncc@gmail.com',
+      'creationDate': '2016-04-24T17:28:54.6240000Z'
     }]
   }, {
     'actionGroup': {
@@ -331,7 +357,8 @@ let groupData = () => {
       'lastName': 'Lee',
       'message': 'ae wf we',
       'organisation': null,
-      'email': 'testemail+ncc@gmail.com'
+      'email': 'testemail+ncc@gmail.com',
+      'creationDate': '2016-04-23T15:13:17.8490000Z'
     }]
   }, {
     'actionGroup': {
@@ -353,37 +380,43 @@ let groupData = () => {
       'lastName': 'Lee',
       'message': 'faf ewf',
       'organisation': null,
-      'email': 'testemail+ncc@gmail.com'
+      'email': 'testemail+ncc@gmail.com',
+      'creationDate': '2016-04-20T15:42:38.6110000Z'
     }, {
       'firstName': 'Carmen',
       'lastName': 'Byrne',
       'message': 'test test',
       'organisation': null,
-      'email': 'carmenbyrne@rocketmail.com'
+      'email': 'carmenbyrne@rocketmail.com',
+      'creationDate': '2016-04-22T13:11:26.1430000Z'
     }, {
       'firstName': 'Carmen',
       'lastName': 'Byrne',
       'message': 'test test',
       'organisation': null,
-      'email': 'carmenbyrne@rocketmail.com'
+      'email': 'carmenbyrne@rocketmail.com',
+      'creationDate': '2016-04-22T13:11:26.1430000Z'
     }, {
       'firstName': 'ytest',
       'lastName': 'e',
       'message': 'ytest',
       'organisation': 'yiry1iry',
-      'email': 'iwhjrw@gosdfjg.com'
+      'email': 'iwhjrw@gosdfjg.com',
+      'creationDate': '2016-04-22T13:53:19.3940000Z'
     }, {
       'firstName': 'Vince',
       'lastName': 'Lee',
       'message': ' ae f',
       'organisation': null,
-      'email': 'testemail+mancomcent@gmail.com'
+      'email': 'testemail+mancomcent@gmail.com',
+      'creationDate': '2016-04-24T14:12:25.6810000Z'
     }, {
       'firstName': 'Vince',
       'lastName': 'Lee',
       'message': 'awe f',
       'organisation': null,
-      'email': 'testemail+mancomcent@gmail.com'
+      'email': 'testemail+mancomcent@gmail.com',
+      'creationDate': '2016-04-24T14:13:15.5280000Z'
     }]
   }]
 }

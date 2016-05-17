@@ -35,6 +35,7 @@ pageName: actionGroups
                   <th>Organisation</th>
                   <th>Email</th>
                   <th>Message</th>
+                  <th>Registered On</th>
                 </tr>
               </thead>
               <tbody data-bind="foreach: members">
@@ -43,6 +44,7 @@ pageName: actionGroups
                   <td data-bind="text: organisation" /></td>
                   <td data-bind="text: email" /></td>
                   <td data-bind="html: message" /></td>
+                  <td data-bind="text: creationDate" /></td>
                 </tr>
               </tbody>
             </table>
