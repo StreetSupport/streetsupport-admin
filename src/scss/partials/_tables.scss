@@ -2,4 +2,5 @@ table {
   width: 100%;
   th, td { padding: 5px }
   thead { border-bottom: 1px solid $brand-a }
+  tbody tr:nth-child(2n) { background: $brand-i }
 }

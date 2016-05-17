@@ -13,10 +13,10 @@ let Model = require('../../src/js/models/action-groups/ListActionGroups')
 
 let sinon = require('sinon')
 
-describe('List Action Groups', () => {
+describe('List Action Groups - id is in querystring', () => {
   let model = null
   let browserLoadingStub = null
-  let browserSetOnHistoryPopStub = null
+  let browserPushHistoryStub = null
   let browserLoadedStub = null
   let ajaxGetStub = null
 
@@ -24,8 +24,9 @@ describe('List Action Groups', () => {
     sinon.stub(cookies, 'get').returns('stored-session-token')
     browserLoadingStub = sinon.stub(browser, 'loading')
     browserLoadedStub = sinon.stub(browser, 'loaded')
-    browserSetOnHistoryPopStub = sinon.stub(browser, 'setOnHistoryPop')
-    sinon.stub(urlParams, 'parameter').returns('')
+    browserPushHistoryStub = sinon.stub(browser, 'pushHistory')
+    sinon.stub(browser, 'setOnHistoryPop')
+    sinon.stub(urlParams, 'parameter').returns('57166227e4b09686f6b2c88a')
 
     let headers = {
       'content-type': 'application/json',
@@ -49,6 +50,7 @@ describe('List Action Groups', () => {
   afterEach(() => {
     browser.loading.restore()
     browser.loaded.restore()
+    browser.pushHistory.restore()
     browser.setOnHistoryPop.restore()
     ajax.get.restore()
     cookies.get.restore()
@@ -63,122 +65,23 @@ describe('List Action Groups', () => {
     expect(ajaxGetStub.calledAfter(browserLoadingStub)).toBeTruthy()
   })
 
+  it('- Should hide list', () => {
+    expect(model.shouldShowList()).toBeFalsy()
+  })
+
+  it('- Should set opened action group', () => {
+    expect(model.openedActionGroup().id).toEqual('57166227e4b09686f6b2c88a')
+  })
+
+  it('- Should push new history entry', () => {
+    let called = browserPushHistoryStub
+      .withArgs({}, 'Women\'s Direct Access', '?id=57166227e4b09686f6b2c88a')
+      .calledOnce
+    expect(called).toBeTruthy()
+  })
+
   it('- Should notify user it is loaded', () => {
     expect(browserLoadedStub.calledAfter(ajaxGetStub)).toBeTruthy()
-  })
-
-  it('- Should set on history pop function', () => {
-    expect(browserSetOnHistoryPopStub.withArgs(model.closeActionGroup).calledOnce).toBeTruthy()
-  })
-
-  it('- Should map group id', () => {
-    expect(model.actionGroups()[1].id).toEqual('57166227e4b09686f6b2c88a')
-  })
-
-  it('- Should map group name', () => {
-    expect(model.actionGroups()[1].name).toEqual('Women\'s Direct Access')
-  })
-
-  it('- Should map group synopsis', () => {
-    expect(model.actionGroups()[1].synopsis).toEqual('Re-designing the Women’s Direct Access hotel',
-    'description')
-  })
-
-  it('- Should map group description', () => {
-    expect(model.actionGroups()[1].description).toEqual('womens direct access group description',
-    'description')
-  })
-
-  it('- Should map group details url', () => {
-    expect(model.actionGroups()[1].url).toEqual('?id=57166227e4b09686f6b2c88a')
-  })
-
-  it('- Should map member first name', () => {
-    expect(model.actionGroups()[1].members[1].firstName).toEqual('Vince')
-  })
-
-  it('- Should map member last name', () => {
-    expect(model.actionGroups()[1].members[1].lastName).toEqual('Lee')
-  })
-
-  it('- Should map member message', () => {
-    expect(model.actionGroups()[1].members[1].message).toEqual('message')
-  })
-
-  it('- Should map member organisation', () => {
-    expect(model.actionGroups()[1].members[1].organisation).toEqual('organisation')
-  })
-
-  it('- Should map member email', () => {
-    expect(model.actionGroups()[1].members[1].email).toEqual('testemail+ncc@gmail.com')
-  })
-
-  describe('- Expand Action Group', () => {
-    let browserPushHistoryStub = null
-
-    beforeEach(() => {
-      browserPushHistoryStub = sinon.stub(browser, 'pushHistory')
-
-      model.actionGroups()[1].openGroup()
-    })
-
-    afterEach(() => {
-      browser.pushHistory.restore()
-    })
-
-    it('- Should hide list', () => {
-      expect(model.shouldShowList()).toBeFalsy()
-    })
-
-    it('- Should set opened action group', () => {
-      expect(model.openedActionGroup().id).toEqual('57166227e4b09686f6b2c88a')
-    })
-
-    it('- Should push new history entry', () => {
-      let called = browserPushHistoryStub
-        .withArgs({}, 'Women\'s Direct Access', '?id=57166227e4b09686f6b2c88a')
-        .calledOnce
-      expect(called).toBeTruthy()
-    })
-  })
-
-  describe('- Close Action Group', () => {
-    beforeEach(() => {
-      model.closeActionGroup()
-    })
-
-    it('- Should show list', () => {
-      expect(model.shouldShowList()).toBeTruthy()
-    })
-
-    it('- Should set open action group to null', () => {
-      expect(model.openedActionGroup()).toEqual(null)
-    })
-  })
-
-  describe('- Back to list', () => {
-    let browserPopHistoryStub = null
-
-    beforeEach(() => {
-      browserPopHistoryStub = sinon.stub(browser, 'popHistory')
-      model.backToList()
-    })
-
-    afterEach(() => {
-      browser.popHistory.restore()
-    })
-
-    it('- Should show list', () => {
-      expect(model.shouldShowList()).toBeTruthy()
-    })
-
-    it('- Should set open action group to null', () => {
-      expect(model.openedActionGroup()).toEqual(null)
-    })
-
-    it('- Should rewind history', () => {
-      expect(browserPopHistoryStub.calledOnce).toBeTruthy()
-    })
   })
 })
 

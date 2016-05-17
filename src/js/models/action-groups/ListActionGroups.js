@@ -3,6 +3,7 @@
 let ajax = require('../../ajax')
 let browser = require('../../browser')
 let cookies = require('../../cookies')
+let querystring = require('../../get-url-parameter')
 let BaseViewModel = require('../BaseViewModel')
 
 let ko = require('knockout')
@@ -65,6 +66,12 @@ function ListActionGroupsModel () {
       self.headers(cookies.get('session-token')))
       .then((result) => {
         self.actionGroups(result.data.map((ag) => new ActionGroup(ag, self)))
+
+        let preselectedActionGroupId = querystring.parameter('id')
+        if (preselectedActionGroupId.length > 0) {
+          self.actionGroupOpened(self.actionGroups().filter((ag) => ag.id === preselectedActionGroupId)[0])
+        }
+
         browser.loaded()
         browser.setOnHistoryPop(self.closeActionGroup)
       }, () => {

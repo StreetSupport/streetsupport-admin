@@ -42,7 +42,6 @@ let pushHistory = (stateObject, title, url) => {
 }
 
 let popHistory = () => {
-  console.log(history)
   history.back()
 }
 
