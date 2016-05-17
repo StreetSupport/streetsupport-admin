@@ -45,9 +45,9 @@
     @include mq($from: m) {
       background-color: $brand-j;
       position: absolute;
-      top: $header-top;
+      top: 217px;
       width: 100%;
-      height: $header-subnav-height;
+      height: 44px;
       transition: none;
       transform: none;
       box-shadow: 0px 2px 5px 0px rgba(50, 50, 50, 0.7);
@@ -218,5 +218,16 @@
 
   100% {
     opacity: 1;
+  }
+}
+
+
+.page-volunteers, .page-addServiceProviderAddress, .page-addServiceProviderService, .page-editServiceProviderService, .page-editServiceProviderAddress, .page-addServiceProviderNeed, .page-contactVolunteer {
+  .nav {
+    &__container {
+      @include mq($from: m) {
+        top: 147px;
+      }
+    }
   }
 }
