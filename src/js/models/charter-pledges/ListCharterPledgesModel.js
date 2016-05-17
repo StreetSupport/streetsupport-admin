@@ -1,6 +1,7 @@
 'use strict'
 
 var ajax = require('../../ajax')
+var adminUrls = require('../../admin-urls')
 var browser = require('../../browser')
 var cookies = require('../../cookies')
 var validation = require('../../validation')
@@ -20,7 +21,7 @@ function Pledge (data, listener) {
   self.organisation = data.organisation
   self.email = data.email
   self.mailToLink = 'mailto:' + data.email
-  self.creationDate = moment(data.documentCreationDate).format('DD/MM/YY')
+  self.creationDate = moment(data.creationDate).format('DD/MM/YY')
   self.isApproved = ko.observable(data.proposedPledge.isApproved)
   self.isEditable = ko.observable(false)
   self.buttonClass = ko.computed(function () {
@@ -152,9 +153,13 @@ function ListCharterPledgesModel () {
   ajax
     .get(endpoint, headers)
     .then(function (result) {
-      self.allPledges(result.data.map(p => new Pledge(p, self)))
-      self.pledges(self.allPledges().filter(x => x.isApproved() === false))
-      browser.loaded()
+      if (result.statusCode === 401) {
+        browser.redirect(adminUrls.login)
+      } else {
+        self.allPledges(result.data.map(p => new Pledge(p, self)))
+        self.pledges(self.allPledges().filter(x => x.isApproved() === false))
+        browser.loaded()
+      }
     }, function (error) {
       self.handleServerError(error)
     })

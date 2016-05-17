@@ -26,7 +26,7 @@ function ServiceProvider (data) {
   self.addresses().forEach(a => a.addListener(self))
 
   data.providedServices.forEach(s => s.serviceProviderId = data.key)
-  self.services = ko.observableArray(data.providedServices.map(s => new Service(s) ))
+  self.services = ko.observableArray(data.providedServices.map(s => new Service(s)))
   self.services().forEach(s => s.addListener(self))
 
   var buildNeeds = function (needs) {

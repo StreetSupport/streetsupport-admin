@@ -14,7 +14,7 @@ describe('Add individual Address', function () {
   cookiesStub,
   stubbedParameters
 
-  beforeEach (function () {
+  beforeEach(function () {
     sinon.stub(browser, 'dataLoaded')
     model = new Model()
   })

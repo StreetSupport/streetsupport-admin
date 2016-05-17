@@ -7,14 +7,14 @@ var sinon = require('sinon'),
     getUrlParameter = require('../../src/js/get-url-parameter')
 
 
-describe ('Cancel Edit Service Provider Contact Details', function () {
+describe('Cancel Edit Service Provider Contact Details', function () {
   var Model = require('../../src/js/models/ServiceProvider'),
   model,
   stubbedApi,
   stubbedCookies,
   stubbedUrlParams
 
-  beforeEach (function () {
+  beforeEach(function () {
     function fakeResolved (value) {
       return {
         then: function (success, error) {
@@ -43,18 +43,18 @@ describe ('Cancel Edit Service Provider Contact Details', function () {
     model.cancelEditContactDetails()
   })
 
-  afterEach (function () {
+  afterEach(function () {
     ajax.get.restore()
     cookies.get.restore()
     getUrlParameter.parameter.restore()
     browser.dataLoaded.restore()
   })
 
-  it ('should reset isEditingContactDetails to false', function () {
+  it('should reset isEditingContactDetails to false', function () {
     expect(model.isEditingContactDetails()).toBeFalsy()
   })
 
-  it ('should restore description to its previous value', function () {
+  it('should restore description to its previous value', function () {
     expect(model.serviceProvider().telephone()).toEqual('initial telephone')
     expect(model.serviceProvider().email()).toEqual('initial email')
     expect(model.serviceProvider().website()).toEqual('initial website')

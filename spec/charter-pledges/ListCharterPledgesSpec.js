@@ -1,3 +1,9 @@
+/*
+global describe, beforeEach, afterEach, it, expect
+*/
+
+'use strict'
+
 var sinon = require('sinon')
 var ajax =      require('../../src/js/ajax')
 var endpoints = require('../../src/js/api-endpoints')
@@ -16,7 +22,7 @@ describe('List Charter Pledges', function () {
   var browserLoadingStub
   var browserLoadedStub
 
-  beforeEach (function () {
+  beforeEach(function () {
     var getCharterPledgesPromise = function () {
       return {
         then: function (success, error) {
@@ -42,15 +48,15 @@ describe('List Charter Pledges', function () {
     model = new Model()
   })
 
-  afterEach (function () {
+  afterEach(function () {
     ajax.get.restore()
     cookies.get.restore()
     browser.loading.restore()
     browser.loaded.restore()
   })
 
-  it('should notify user it is loading' ,function () {
-      expect(browserLoadingStub.calledOnce).toBeTruthy()
+  it('should notify user it is loading', function () {
+    expect(browserLoadingStub.calledOnce).toBeTruthy()
   })
 
   it('should get pledges from api', function () {
@@ -182,28 +188,28 @@ describe('List Charter Pledges', function () {
 
 var pledgeData = function () {
   return [{
-    "firstName": "first name",
-    "lastName": "last name",
-    "email": "test@test.com",
-    "organisation": "organisation",
-    "isOptedIn": true,
-    "proposedPledge": {
-      "description": "pledge description",
-      "isApproved": false
+    'firstName': 'first name',
+    'lastName': 'last name',
+    'email': 'test@test.com',
+    'organisation': 'organisation',
+    'isOptedIn': true,
+    'proposedPledge': {
+      'description': 'pledge description',
+      'isApproved': false
     },
-    "id": "570b84af3535ff1a8459a142",
-    "documentCreationDate": "2016-04-11T11:04:15.1810000Z"
+    'id': '570b84af3535ff1a8459a142',
+    'creationDate': '2016-04-11T11:04:15.1810000Z'
   }, {
-    "firstName": "first name",
-    "lastName": "last name",
-    "email": "test1@test.com",
-    "organisation": "organisation",
-    "isOptedIn": true,
-    "proposedPledge": {
-      "description": "pledge description",
-      "isApproved": true
+    'firstName': 'first name',
+    'lastName': 'last name',
+    'email': 'test1@test.com',
+    'organisation': 'organisation',
+    'isOptedIn': true,
+    'proposedPledge': {
+      'description': 'pledge description',
+      'isApproved': true
     },
-    "id": "570b84d73535ff1a8459a143",
-    "documentCreationDate": "2016-04-11T11:04:55.8600000Z"
+    'id': '570b84d73535ff1a8459a143',
+    'creationDate': '2016-04-11T11:04:55.8600000Z'
   }]
 }

@@ -12,12 +12,13 @@ function p (addr) {
 }
 
 module.exports = {
-  getServiceProviders:  p('/v1/all-service-providers'),
+  getServiceProviders: p('/v1/all-service-providers'),
   getServiceCategories: p('/v2/service-categories'),
-  verifiedUsers:        p('/v1/verified-users'),
-  unverifiedUsers:      p('/v1/unverified-users'),
-  sessions:             p('/v1/sessions'),
-  resetPassword:        p('/v1/reset-password-applications'),
-  volunteers:           p('/v1/volunteer-enquiries'),
-  charterPledges:       p('/v1/charter-supporters')
+  verifiedUsers: p('/v1/verified-users'),
+  unverifiedUsers: p('/v1/unverified-users'),
+  sessions: p('/v1/sessions'),
+  resetPassword: p('/v1/reset-password-applications'),
+  volunteers: p('/v1/volunteer-enquiries'),
+  charterPledges: p('/v1/charter-supporters'),
+  actionGroups: p('/v1/action-groups/members')
 }

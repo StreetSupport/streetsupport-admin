@@ -1,34 +1,54 @@
-var Spinner = require('spin.js')
+/*
+global ga, history, window
+*/
 
-var redirect = function (url) {
+'use strict'
+
+let Spinner = require('spin.js')
+
+let redirect = (url) => {
   window.location = url
 }
 
-var dataLoaded = function () {
-  var dynamicElements = document.getElementsByClassName('awaiting-data')
+let dataLoaded = () => {
+  let dynamicElements = document.getElementsByClassName('awaiting-data')
   Array.from(dynamicElements).forEach(element => {
     element.className = element.className.replace(/(?:^|\s)awaiting-data(?!\S)/g, '')
   })
 }
 
-var loaderAnim
-var getLoader = function () {
+let loaderAnim
+let getLoader = () => {
   if (loaderAnim === undefined) {
     loaderAnim = new Spinner()
   }
   return loaderAnim
 }
 
-var loading = function () {
+let loading = () => {
   getLoader().spin(document.getElementById('spin'))
 }
 
-var loaded = function () {
+let loaded = () => {
   getLoader().stop()
 }
 
-var trackEvent = function (src, action, description) {
+let trackEvent = (src, action, description) => {
   ga('send', 'event', src, action, description)
+}
+
+let pushHistory = (stateObject, title, url) => {
+  history.pushState(stateObject, title, url)
+}
+
+let popHistory = () => {
+  history.back()
+}
+
+let setOnHistoryPop = (onPopCallback) => {
+  window.onpopstate = () => {
+    onPopCallback()
+  }
 }
 
 module.exports = {
@@ -36,5 +56,8 @@ module.exports = {
   loading: loading,
   loaded: loaded,
   trackEvent: trackEvent,
-  dataLoaded: dataLoaded // deprecated
+  dataLoaded: dataLoaded, // deprecated
+  pushHistory: pushHistory,
+  popHistory: popHistory,
+  setOnHistoryPop: setOnHistoryPop
 }

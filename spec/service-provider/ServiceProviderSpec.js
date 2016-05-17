@@ -6,14 +6,14 @@ var sinon = require('sinon'),
     cookies =   require('../../src/js/cookies'),
     getUrlParameter = require('../../src/js/get-url-parameter')
 
-describe ('Show Service Provider', function () {
+describe('Show Service Provider', function () {
   var Model = require('../../src/js/models/ServiceProvider'),
   model,
   stubbedApi,
   stubbedCookies,
   stubbedUrlParams
 
-  beforeEach (function () {
+  beforeEach(function () {
     function fakeResolved (value) {
       return {
         then: function (success, error) {
@@ -33,14 +33,14 @@ describe ('Show Service Provider', function () {
     model = new Model()
   })
 
-  afterEach (function () {
+  afterEach(function () {
     ajax.get.restore()
     cookies.get.restore()
     getUrlParameter.parameter.restore()
     browser.dataLoaded.restore()
   })
 
-  it ('should retrieve service provider from api with session token', function () {
+  it('should retrieve service provider from api with session token', function () {
     var endpoint = endpoints.getServiceProviders + '/coffee4craig'
     var headers = {
       'content-type': 'application/json',
@@ -51,35 +51,35 @@ describe ('Show Service Provider', function () {
     expect(apiCalledWithExpectedArgs).toBeTruthy()
   })
 
-  it ('should set service provider', function () {
+  it('should set service provider', function () {
     expect(model.serviceProvider().key()).toEqual('coffee4craig')
   })
 
-  it ('should set addresses', function () {
+  it('should set addresses', function () {
     expect(model.serviceProvider().addresses().length).toEqual(2)
   })
 
-  it ('should set addresses\' service provider id', function () {
+  it('should set addresses\' service provider id', function () {
     expect(model.serviceProvider().addresses()[0].serviceProviderId).toEqual('coffee4craig')
   })
 
-  it ('should set services\' service provider id', function () {
+  it('should set services\' service provider id', function () {
     expect(model.serviceProvider().services()[0].serviceProviderId).toEqual('coffee4craig')
   })
 
-  it ('should set needs\' service provider id', function () {
+  it('should set needs\' service provider id', function () {
     expect(model.serviceProvider().needs()[0].serviceProviderId).toEqual('coffee4craig')
   })
 
-  it ('should set link to add address', function () {
+  it('should set link to add address', function () {
     expect(model.serviceProvider().addAddressUrl).toEqual('add-service-provider-address.html?providerId=coffee4craig')
   })
 
-  it ('should set link to manage services', function () {
+  it('should set link to manage services', function () {
     expect(model.serviceProvider().addServiceUrl).toEqual('add-service-provider-service.html?providerId=coffee4craig')
   })
 
-  it ('should set link to manage needs', function () {
+  it('should set link to manage needs', function () {
     expect(model.serviceProvider().addNeedUrl).toEqual('add-service-provider-need.html?providerId=coffee4craig')
   })
 })

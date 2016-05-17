@@ -10,12 +10,12 @@ describe('Add User', function () {
   var Model = require('../../src/js/models/AddUser')
   var model
 
-  // beforeEach (function () {
+  // beforeEach(function () {
   //   sinon.stub(browser, 'dataLoaded')
   //   model = new Model()
   // })
 
-  // afterEach (function () {
+  // afterEach(function () {
   //   browser.dataLoaded.restore()
   // })
 
@@ -48,7 +48,7 @@ describe('Add User', function () {
   //     model.save()
   //   })
 
-  //   afterEach (function () {
+  //   afterEach(function () {
   //     ajax.post.restore()
   //     cookies.get.restore()
   //     getUrlParameter.parameter.restore()
@@ -108,7 +108,7 @@ describe('Add User', function () {
   //     model.save()
   //   })
 
-  //   afterEach (function () {
+  //   afterEach(function () {
   //     ajax.post.restore()
   //     cookies.get.restore()
   //     getUrlParameter.parameter.restore()

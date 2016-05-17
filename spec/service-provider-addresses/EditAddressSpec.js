@@ -13,7 +13,7 @@ describe('Edit individual Address', function () {
   stubbedCookies,
   stubbedUrlParams
 
-  beforeEach (function () {
+  beforeEach(function () {
     function fakeResolved (value) {
       return {
         then: function (success, error) {
@@ -35,14 +35,14 @@ describe('Edit individual Address', function () {
     model = new Model()
   })
 
-  afterEach (function () {
+  afterEach(function () {
     ajax.get.restore()
     cookies.get.restore()
     browser.dataLoaded.restore()
     getUrlParameter.parameter.restore()
   })
 
-  it ('should retrieve address from api with session token', function () {
+  it('should retrieve address from api with session token', function () {
     var endpoint = endpoints.getServiceProviders + '/coffee4craig/addresses/1234'
     var headers = {
       'content-type': 'application/json',

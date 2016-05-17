@@ -10,37 +10,43 @@ pageName: dashboard
     <div class="block block--highlight">
       <div class="container block__inner">
         <header>
-          <h1>Dashboard</h1>
+          <h1>Service Providers</h1>
           <a href="add-service-provider.html" class="btn btn--info">
             <span class="btn__text">Add Service Provider</span>
           </a>
         </header>
       </div>
     </div>
-    <div class="block awaiting-data">
+    <div class="block block--main-body">
       <div class="container block__inner">
-      {{> form-feedback}}
-      <section class="block__content" data-bind="foreach: serviceProviders" class="stacked-list">
-          <article class="stacked-list__item sp">
-              <header class="">
-                <h2><a data-bind="attr: { 'href': url, 'title': name }, html: name"></a></h2>
-                <span data-bind="text: verifiedLabel, css: verifiedLabelClass"></span>
-                <span data-bind="text: publishedLabel, css: publishedLabelClass"></span>
-              </header>
-              <button data-bind="click: $parent.toggleVerified" class="btn btn--info">
-                <span data-bind="text: toggleVerificationButtonLabel" class="btn__text"></span>
-              </button>
-              <button data-bind="click: $parent.togglePublished" class="btn btn--info">
-                <span data-bind="text: togglePublishButtonLabel" class="btn__text"></span>
-              </button>
-              <a data-bind="attr: { href: newUserUrl }" class="btn btn--primary">
-                <span class="btn__text">New User</span>
-              </a>
-          </article>
+        <div class="block__content">
+          {{> form-feedback}}
+          <section class="block__content" data-bind="template: { name: 'serviceProvider-template', foreach: serviceProviders }" class="stacked-list">
       </section>
+          {{> loading-spinner}}
+        </div>
       </div>
     </div>
   {{/content}}
 
   {{#content "gutter"}}{{/content}}
 {{/extend}}
+
+<script type="text/html" id="serviceProvider-template">
+<article class="stacked-list__item stacked-list__item--service-providers">
+    <header class="stacked-list__header">
+      <h2 class="stacked-list__heading"><a data-bind="attr: { 'href': url, 'title': name }, html: name"></a></h2>
+      <span data-bind="text: verifiedLabel, css: verifiedLabelClass"></span>
+      <span data-bind="text: publishedLabel, css: publishedLabelClass"></span>
+    </header>
+    <button data-bind="click: $parent.toggleVerified" class="stacked-list__button btn btn--info">
+      <span data-bind="text: toggleVerificationButtonLabel" class="btn__text"></span>
+    </button>
+    <button data-bind="click: $parent.togglePublished" class="stacked-list__button btn btn--info">
+      <span data-bind="text: togglePublishButtonLabel" class="btn__text"></span>
+    </button>
+    <a data-bind="attr: { href: newUserUrl }" class="stacked-list__button btn btn--primary">
+      <span class="btn__text">New User</span>
+    </a>
+</article>
+</script>

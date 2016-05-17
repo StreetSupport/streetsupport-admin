@@ -14,7 +14,7 @@ describe('Save new Service', function () {
   stubbedCookies,
   stubbedUrlParams
 
-  beforeEach (function () {
+  beforeEach(function () {
     function categoriesPromise (value) {
       return {
         then: function (success, error) {
