@@ -20,5 +20,5 @@ module.exports = {
   resetPassword: p('/v1/reset-password-applications'),
   volunteers: p('/v1/volunteer-enquiries'),
   charterPledges: p('/v1/charter-supporters'),
-  actionGroups: p('/v1/action-groups')
+  actionGroups: p('/v1/action-groups/members')
 }
