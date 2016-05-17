@@ -23,16 +23,27 @@ function Pledge (data, listener) {
   self.mailToLink = 'mailto:' + data.email
   self.creationDate = moment(data.creationDate).format('DD/MM/YY')
   self.isApproved = ko.observable(data.proposedPledge.isApproved)
+  self.isFeatured = ko.observable(data.proposedPledge.isFeatured)
   self.isEditable = ko.observable(false)
-  self.buttonClass = ko.computed(function () {
+  self.approvedButtonClass = ko.computed(function () {
     return self.isApproved()
       ? 'btn btn--warning'
       : 'btn btn--primary'
   }, self)
-  self.buttonLabel = ko.computed(function () {
+  self.approvedButtonLabel = ko.computed(function () {
     return self.isApproved()
       ? 'Disapprove Pledge'
       : 'Approve Pledge'
+  }, self)
+  self.featuredButtonClass = ko.computed(function () {
+    return self.isApproved()
+      ? 'btn btn--indifferent'
+      : 'btn btn--primary'
+  }, self)
+  self.featuredButtonLabel = ko.computed(function () {
+    return self.isApproved()
+      ? 'Unmark as Featured'
+      : 'Mark as Featured'
   }, self)
 
   self.formModel = ko.validatedObservable({
@@ -51,6 +62,22 @@ function Pledge (data, listener) {
       .then(function (result) {
         self.isApproved(!self.isApproved())
         listener.pledgeApprovalUpdated(self.isApproved())
+        browser.loaded()
+      }, function (error) {
+        self.handleServerError(error)
+      })
+  }
+
+  self.toggleFeatured = function () {
+    browser.loading()
+
+    var endpoint = self.endpointBuilder.charterPledges(self.id).featured().build()
+    var headers = self.headers(cookies.get('session-token'))
+
+    ajax
+      .put(endpoint, headers, { isFeatured: !self.isFeatured() })
+      .then(function (result) {
+        self.isFeatured(!self.isFeatured())
         browser.loaded()
       }, function (error) {
         self.handleServerError(error)
