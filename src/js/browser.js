@@ -41,6 +41,11 @@ let pushHistory = (stateObject, title, url) => {
   history.pushState(stateObject, title, url)
 }
 
+let popHistory = () => {
+  console.log(history)
+  history.back()
+}
+
 let setOnHistoryPop = (onPopCallback) => {
   window.onpopstate = () => {
     onPopCallback()
@@ -54,5 +59,6 @@ module.exports = {
   trackEvent: trackEvent,
   dataLoaded: dataLoaded, // deprecated
   pushHistory: pushHistory,
+  popHistory: popHistory,
   setOnHistoryPop: setOnHistoryPop
 }

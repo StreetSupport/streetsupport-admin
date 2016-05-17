@@ -1,6 +1,5 @@
 'use strict'
 
-let adminUrls = require('../../admin-urls')
 let ajax = require('../../ajax')
 let browser = require('../../browser')
 let cookies = require('../../cookies')
@@ -40,7 +39,7 @@ function ListActionGroupsModel () {
   let self = this
 
   self.actionGroups = ko.observableArray()
-  self.shouldShowList = ko.observable()
+  self.shouldShowList = ko.observable(true)
   self.openedActionGroup = ko.observable()
 
   self.closeActionGroup = () => {
@@ -52,6 +51,11 @@ function ListActionGroupsModel () {
     self.shouldShowList(false)
     self.openedActionGroup(actionGroup)
     browser.pushHistory({}, actionGroup.name, actionGroup.url)
+  }
+
+  self.backToList = () => {
+    self.closeActionGroup()
+    browser.popHistory()
   }
 
   self.init = () => {

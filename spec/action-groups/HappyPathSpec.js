@@ -152,6 +152,31 @@ describe('List Action Groups', () => {
       expect(model.openedActionGroup()).toEqual(null)
     })
   })
+
+  describe('- Back to list', () => {
+    let browserPopHistoryStub = null
+
+    beforeEach(() => {
+      browserPopHistoryStub = sinon.stub(browser, 'popHistory')
+      model.backToList()
+    })
+
+    afterEach(() => {
+      browser.popHistory.restore()
+    })
+
+    it('- Should show list', () => {
+      expect(model.shouldShowList()).toBeTruthy()
+    })
+
+    it('- Should set open action group to null', () => {
+      expect(model.openedActionGroup()).toEqual(null)
+    })
+
+    it('- Should rewind history', () => {
+      expect(browserPopHistoryStub.calledOnce).toBeTruthy()
+    })
+  })
 })
 
 let groupData = () => {
