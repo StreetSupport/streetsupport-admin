@@ -16,6 +16,7 @@ let sinon = require('sinon')
 describe('List Action Groups', () => {
   let model = null
   let browserLoadingStub = null
+  let browserSetOnHistoryPopStub = null
   let browserLoadedStub = null
   let ajaxGetStub = null
 
@@ -23,6 +24,7 @@ describe('List Action Groups', () => {
     sinon.stub(cookies, 'get').returns('stored-session-token')
     browserLoadingStub = sinon.stub(browser, 'loading')
     browserLoadedStub = sinon.stub(browser, 'loaded')
+    browserSetOnHistoryPopStub = sinon.stub(browser, 'setOnHistoryPop')
     let headers = {
       'content-type': 'application/json',
       'session-token': 'stored-session-token'
@@ -45,6 +47,7 @@ describe('List Action Groups', () => {
   afterEach(() => {
     browser.loading.restore()
     browser.loaded.restore()
+    browser.setOnHistoryPop.restore()
     ajax.get.restore()
     cookies.get.restore()
   })
@@ -59,6 +62,10 @@ describe('List Action Groups', () => {
 
   it('- Should notify user it is loaded', () => {
     expect(browserLoadedStub.calledAfter(ajaxGetStub)).toBeTruthy()
+  })
+
+  it('- Should set on history pop function', () => {
+    expect(browserSetOnHistoryPopStub.withArgs(model.closeActionGroup).calledOnce).toBeTruthy()
   })
 
   it('- Should map group id', () => {
@@ -80,7 +87,7 @@ describe('List Action Groups', () => {
   })
 
   it('- Should map group details url', () => {
-    expect(model.actionGroups()[1].url).toEqual(adminUrls.actionGroups + '?id=57166227e4b09686f6b2c88a')
+    expect(model.actionGroups()[1].url).toEqual('?id=57166227e4b09686f6b2c88a')
   })
 
   it('- Should map member first name', () => {
@@ -100,7 +107,50 @@ describe('List Action Groups', () => {
   })
 
   it('- Should map member email', () => {
-    expect(model.actionGroups()[1].members[1].email).toEqual('vslee888+ncc@gmail.com')
+    expect(model.actionGroups()[1].members[1].email).toEqual('testemail+ncc@gmail.com')
+  })
+
+  describe('- Expand Action Group', () => {
+    let browserPushHistoryStub = null
+
+    beforeEach(() => {
+      browserPushHistoryStub = sinon.stub(browser, 'pushHistory')
+
+      model.actionGroups()[1].openGroup()
+    })
+
+    afterEach(() => {
+      browser.pushHistory.restore()
+    })
+
+    it('- Should hide list', () => {
+      expect(model.shouldShowList()).toBeFalsy()
+    })
+
+    it('- Should set opened action group', () => {
+      expect(model.openedActionGroup().id).toEqual('57166227e4b09686f6b2c88a')
+    })
+
+    it('- Should push new history entry', () => {
+      let called = browserPushHistoryStub
+        .withArgs({}, 'Women\'s Direct Access', '?id=57166227e4b09686f6b2c88a')
+        .calledOnce
+      expect(called).toBeTruthy()
+    })
+  })
+
+  describe('- Close Action Group', () => {
+    beforeEach(() => {
+      model.closeActionGroup()
+    })
+
+    it('- Should show list', () => {
+      expect(model.shouldShowList()).toBeTruthy()
+    })
+
+    it('- Should set open action group to null', () => {
+      expect(model.openedActionGroup()).toEqual(null)
+    })
   })
 })
 
@@ -117,13 +167,13 @@ let groupData = () => {
       'lastName': 'Lee',
       'message': 'eafwfawf aw',
       'organisation': null,
-      'email': 'vslee888+ncc@gmail.com'
+      'email': 'testemail+ncc@gmail.com'
     }, {
       'firstName': 'Vincent',
       'lastName': 'Lee',
       'message': 'aewfw',
       'organisation': null,
-      'email': 'vslee888+ncc@gmail.com'
+      'email': 'testemail+ncc@gmail.com'
     }, {
       'firstName': 'Vincent',
       'lastName': 'Lee',
@@ -141,19 +191,19 @@ let groupData = () => {
       'lastName': 'Lee',
       'message': 'wef af a',
       'organisation': null,
-      'email': 'vslee888+ncc@gmail.com'
+      'email': 'testemail+ncc@gmail.com'
     }, {
       'firstName': 'aw efw ',
       'lastName': ' awef ',
       'message': 'wfe ',
       'organisation': null,
-      'email': 'vslee888+spicyhut@gmail.com'
+      'email': 'testemail+spicyhut@gmail.com'
     }, {
       'firstName': 'Vincent',
       'lastName': 'Lee',
       'message': ' awf w',
       'organisation': null,
-      'email': 'vslee888+ncc@gmail.com'
+      'email': 'testemail+ncc@gmail.com'
     }]
   }, {
     'actionGroup': {
@@ -167,13 +217,13 @@ let groupData = () => {
       'lastName': 'Lee',
       'message': 'eafwfawf aw',
       'organisation': 'aefa eae',
-      'email': 'vslee888+ncc@gmail.com'
+      'email': 'testemail+ncc@gmail.com'
     }, {
       'firstName': 'Vince',
       'lastName': 'Lee',
       'message': 'message',
       'organisation': 'organisation',
-      'email': 'vslee888+ncc@gmail.com'
+      'email': 'testemail+ncc@gmail.com'
     }, {
       'firstName': 'Vincent',
       'lastName': 'Lee',
@@ -193,7 +243,7 @@ let groupData = () => {
       'lastName': 'Lee',
       'message': 'ae fw fwe',
       'organisation': null,
-      'email': 'vslee888+ncc@gmail.com'
+      'email': 'testemail+ncc@gmail.com'
     }]
   }, {
     'actionGroup': {
@@ -207,7 +257,7 @@ let groupData = () => {
       'lastName': 'Lee',
       'message': ' aew we',
       'organisation': null,
-      'email': 'vslee888+ncc@gmail.com'
+      'email': 'testemail+ncc@gmail.com'
     }, {
       'firstName': 'Viv',
       'lastName': 'Slack',
@@ -219,7 +269,7 @@ let groupData = () => {
       'lastName': ' ewwe',
       'message': 'wefawef we',
       'organisation': 'Iawe ',
-      'email': 'vslee888+spicyhut@gmail.com'
+      'email': 'testemail+spicyhut@gmail.com'
     }]
   }, {
     'actionGroup': {
@@ -233,13 +283,13 @@ let groupData = () => {
       'lastName': 'Lee',
       'message': 'e faew w',
       'organisation': null,
-      'email': 'vslee888+ncc@gmail.com'
+      'email': 'testemail+ncc@gmail.com'
     }, {
       'firstName': 'Vincent',
       'lastName': 'Lee',
       'message': 'test',
       'organisation': null,
-      'email': 'vslee888+ncc@gmail.com'
+      'email': 'testemail+ncc@gmail.com'
     }]
   }, {
     'actionGroup': {
@@ -253,7 +303,7 @@ let groupData = () => {
       'lastName': 'Lee',
       'message': 'ae wf we',
       'organisation': null,
-      'email': 'vslee888+ncc@gmail.com'
+      'email': 'testemail+ncc@gmail.com'
     }]
   }, {
     'actionGroup': {
@@ -275,7 +325,7 @@ let groupData = () => {
       'lastName': 'Lee',
       'message': 'faf ewf',
       'organisation': null,
-      'email': 'vslee888+ncc@gmail.com'
+      'email': 'testemail+ncc@gmail.com'
     }, {
       'firstName': 'Carmen',
       'lastName': 'Byrne',
@@ -299,13 +349,13 @@ let groupData = () => {
       'lastName': 'Lee',
       'message': ' ae f',
       'organisation': null,
-      'email': 'vslee888+mancomcent@gmail.com'
+      'email': 'testemail+mancomcent@gmail.com'
     }, {
       'firstName': 'Vince',
       'lastName': 'Lee',
       'message': 'awe f',
       'organisation': null,
-      'email': 'vslee888+mancomcent@gmail.com'
+      'email': 'testemail+mancomcent@gmail.com'
     }]
   }]
 }

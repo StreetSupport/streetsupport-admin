@@ -18,22 +18,41 @@ function Member (data) {
   self.email = data.email
 }
 
-function ActionGroup (data) {
+function ActionGroup (data, listener) {
   let self = this
+
+  self.listener = listener
 
   self.id = data.actionGroup.id
   self.name = data.actionGroup.name
   self.synopsis = data.actionGroup.synopsis
   self.description = data.actionGroup.description
-  self.url = adminUrls.actionGroups + '?id=' + data.actionGroup.id
+  self.url = '?id=' + data.actionGroup.id
 
   self.members = data.members.map((m) => new Member(m))
+
+  self.openGroup = (group, target) => {
+    self.listener.actionGroupOpened(self)
+  }
 }
 
 function ListActionGroupsModel () {
   let self = this
 
   self.actionGroups = ko.observableArray()
+  self.shouldShowList = ko.observable()
+  self.openedActionGroup = ko.observable()
+
+  self.closeActionGroup = () => {
+    self.shouldShowList(true)
+    self.openedActionGroup(null)
+  }
+
+  self.actionGroupOpened = (actionGroup) => {
+    self.shouldShowList(false)
+    self.openedActionGroup(actionGroup)
+    browser.pushHistory({}, actionGroup.name, actionGroup.url)
+  }
 
   self.init = () => {
     browser.loading()
@@ -41,8 +60,9 @@ function ListActionGroupsModel () {
       .get(self.endpointBuilder.actionGroups().build(),
       self.headers(cookies.get('session-token')))
       .then((result) => {
-        self.actionGroups(result.data.map((ag) => new ActionGroup(ag)))
+        self.actionGroups(result.data.map((ag) => new ActionGroup(ag, self)))
         browser.loaded()
+        browser.setOnHistoryPop(self.closeActionGroup)
       }, () => {
 
       })

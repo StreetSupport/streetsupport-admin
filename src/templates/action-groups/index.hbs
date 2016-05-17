@@ -30,7 +30,7 @@ pageName: actionGroups
 <script type="text/html" id="group">
   <article class="stacked-list__item stacked-list__item--action-group">
     <header>
-      <h2><a data-bind="attr: { 'href': url, 'title': name }, html: name"></a></h2>
+      <h2 data-bind="click: openGroup, text: name"></h2>
       <p data-bind="text: synopsis"></p>
     </header>
   </article>
