@@ -8,6 +8,16 @@ let BaseViewModel = require('../BaseViewModel')
 
 let ko = require('knockout')
 
+function Member (data) {
+  let self = this
+
+  self.firstName = data.firstName
+  self.lastName = data.lastName
+  self.message = data.message
+  self.organisation = data.organisation
+  self.email = data.email
+}
+
 function ActionGroup (data) {
   let self = this
 
@@ -16,6 +26,8 @@ function ActionGroup (data) {
   self.synopsis = data.actionGroup.synopsis
   self.description = data.actionGroup.description
   self.url = adminUrls.actionGroups + '?id=' + data.actionGroup.id
+
+  self.members = data.members.map((m) => new Member(m))
 }
 
 function ListActionGroupsModel () {

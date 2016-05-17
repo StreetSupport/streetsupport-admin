@@ -82,6 +82,26 @@ describe('List Action Groups', () => {
   it('- Should map group details url', () => {
     expect(model.actionGroups()[1].url).toEqual(adminUrls.actionGroups + '?id=57166227e4b09686f6b2c88a')
   })
+
+  it('- Should map member first name', () => {
+    expect(model.actionGroups()[1].members[1].firstName).toEqual('Vince')
+  })
+
+  it('- Should map member last name', () => {
+    expect(model.actionGroups()[1].members[1].lastName).toEqual('Lee')
+  })
+
+  it('- Should map member message', () => {
+    expect(model.actionGroups()[1].members[1].message).toEqual('message')
+  })
+
+  it('- Should map member organisation', () => {
+    expect(model.actionGroups()[1].members[1].organisation).toEqual('organisation')
+  })
+
+  it('- Should map member email', () => {
+    expect(model.actionGroups()[1].members[1].email).toEqual('vslee888+ncc@gmail.com')
+  })
 })
 
 let groupData = () => {
@@ -151,8 +171,8 @@ let groupData = () => {
     }, {
       'firstName': 'Vince',
       'lastName': 'Lee',
-      'message': 'aefa efa ea',
-      'organisation': null,
+      'message': 'message',
+      'organisation': 'organisation',
       'email': 'vslee888+ncc@gmail.com'
     }, {
       'firstName': 'Vincent',
