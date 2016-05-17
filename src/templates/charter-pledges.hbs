@@ -20,7 +20,7 @@ pageName: charterPledges
     <div class="block block--main-body">
       <div class="container block__inner">
         <div class="block__content">
-          <!-- ko if: pledges.length === 0 -->
+          <!-- ko if: pledges().length === 0 -->
           <p>There are no pledges currently awaiting approval.</p>
           <!-- /ko -->
           <div data-bind="template: { name: 'pledge', foreach:pledges }"></div>
