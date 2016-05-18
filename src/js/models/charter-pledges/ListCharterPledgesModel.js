@@ -1,7 +1,6 @@
 'use strict'
 
 var ajax = require('../../ajax')
-var adminUrls = require('../../admin-urls')
 var browser = require('../../browser')
 var cookies = require('../../cookies')
 var validation = require('../../validation')

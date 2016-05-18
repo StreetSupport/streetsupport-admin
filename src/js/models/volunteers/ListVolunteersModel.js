@@ -20,7 +20,8 @@ var ListVolunteersModel = function () {
     .get(endpoint, headers)
     .then(function (success) {
       var volunteers = success.data
-      volunteers.sort((a, b) => a.creationDate > b.creationDate)
+        .sort((a, b) => a.creationDate < b.creationDate)
+
       volunteers.forEach(v => {
         v.contactUrl = adminUrls.contactVolunteer + '?id=' + v.id
         v.creationDate = moment(v.creationDate).format('DD/MM/YY')
