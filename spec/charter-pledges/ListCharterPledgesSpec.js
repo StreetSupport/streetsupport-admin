@@ -101,8 +101,13 @@ describe('List Charter Pledges', function () {
   })
 
   it('should set btn--primary class for currently disapproved', function () {
-    expect(model.pledges()[0].buttonClass()).toEqual('btn btn--primary')
-    expect(model.pledges()[0].buttonLabel()).toEqual('Approve Pledge')
+    expect(model.pledges()[0].approvedButtonClass()).toEqual('btn btn--primary')
+    expect(model.pledges()[0].approvedButtonLabel()).toEqual('Approve Pledge')
+  })
+
+  it('should set btn--primary class for currently featured', function () {
+    expect(model.pledges()[0].featuredButtonClass()).toEqual('btn btn--indifferent')
+    expect(model.pledges()[0].featuredButtonLabel()).toEqual('Unmark as Featured')
   })
 
   describe('Toggle Show All', function () {
@@ -116,14 +121,19 @@ describe('List Charter Pledges', function () {
 
     it('should show all pledges', function () {
       expect(model.pledges().length).toEqual(2)
-      expect(model.pledges()[0].isApproved()).toBeFalsy()
-      expect(model.pledges()[1].isApproved()).toBeTruthy()
+      expect(model.pledges()[1].isApproved()).toBeFalsy()
+      expect(model.pledges()[0].isApproved()).toBeTruthy()
       expect(model.showAll()).toBeTruthy()
     })
 
     it('should set btn--warning class for currently approved', function () {
-      expect(model.pledges()[1].buttonClass()).toEqual('btn btn--warning')
-      expect(model.pledges()[1].buttonLabel()).toEqual('Disapprove Pledge')
+      expect(model.pledges()[0].approvedButtonClass()).toEqual('btn btn--warning')
+      expect(model.pledges()[0].approvedButtonLabel()).toEqual('Disapprove Pledge')
+    })
+
+    it('should set btn--indifferent class for currently featured', function () {
+      expect(model.pledges()[1].featuredButtonClass()).toEqual('btn btn--indifferent')
+      expect(model.pledges()[1].featuredButtonLabel()).toEqual('Unmark as Featured')
     })
 
     describe('And Toggle Back', function () {
@@ -180,8 +190,48 @@ describe('List Charter Pledges', function () {
       expect(browserLoadedStub.calledAfter(ajaxPutStub)).toBeTruthy()
     })
 
-    it('should hide the newly approved pledge as we are only view disapproved', function () {
+    it('should hide the newly approved pledge as we are only viewing disapproved', function () {
       expect(model.pledges().length).toEqual(0)
+    })
+  })
+
+  describe('Toggle Flagged as Featured', function () {
+    var ajaxPutStub
+    beforeEach(function () {
+      var getPutPromise = {
+        then: function (success, error) {
+          success({
+            'status': 'ok'
+          })
+        }
+      }
+      ajaxPutStub = sinon.stub(ajax, 'put')
+        .withArgs(endpoints.charterPledges + '/' + model.pledges()[0].id + '/featured', headers, { isFeatured: false })
+        .returns(getPutPromise)
+      browser.loading.reset()
+      browser.loaded.reset()
+
+      model.pledges()[0].toggleFeatured()
+    })
+
+    afterEach(function () {
+      ajax.put.restore()
+    })
+
+    it('should show browser is loading', function () {
+      expect(browserLoadingStub.calledOnce).toBeTruthy()
+    })
+
+    it('should put new featured status to api', function () {
+      expect(ajaxPutStub.calledOnce).toBeTruthy()
+    })
+
+    it('should set new featured status of pledge', function () {
+      expect(model.pledges()[0].isFeatured()).toBeFalsy()
+    })
+
+    it('should show browser is loaded', function () {
+      expect(browserLoadedStub.calledAfter(ajaxPutStub)).toBeTruthy()
     })
   })
 })
@@ -195,7 +245,8 @@ var pledgeData = function () {
     'isOptedIn': true,
     'proposedPledge': {
       'description': 'pledge description',
-      'isApproved': false
+      'isApproved': false,
+      'isFeatured': true
     },
     'id': '570b84af3535ff1a8459a142',
     'creationDate': '2016-04-11T11:04:15.1810000Z'
@@ -207,7 +258,8 @@ var pledgeData = function () {
     'isOptedIn': true,
     'proposedPledge': {
       'description': 'pledge description',
-      'isApproved': true
+      'isApproved': true,
+      'isFeatured': false
     },
     'id': '570b84d73535ff1a8459a143',
     'creationDate': '2016-04-11T11:04:55.8600000Z'
