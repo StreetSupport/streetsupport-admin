@@ -180,13 +180,9 @@ function ListCharterPledgesModel () {
   ajax
     .get(endpoint, headers)
     .then(function (result) {
-      if (result.statusCode === 401) {
-        browser.redirect(adminUrls.login)
-      } else {
-        self.allPledges(result.data.map(p => new Pledge(p, self)))
-        self.pledges(self.allPledges().filter(x => x.isApproved() === false))
-        browser.loaded()
-      }
+      self.allPledges(result.data.map(p => new Pledge(p, self)))
+      self.pledges(self.allPledges().filter(x => x.isApproved() === false))
+      browser.loaded()
     }, function (error) {
       self.handleServerError(error)
     })
