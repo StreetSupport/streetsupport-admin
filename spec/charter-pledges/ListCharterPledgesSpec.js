@@ -121,19 +121,19 @@ describe('List Charter Pledges', function () {
 
     it('should show all pledges', function () {
       expect(model.pledges().length).toEqual(2)
-      expect(model.pledges()[0].isApproved()).toBeFalsy()
-      expect(model.pledges()[1].isApproved()).toBeTruthy()
+      expect(model.pledges()[1].isApproved()).toBeFalsy()
+      expect(model.pledges()[0].isApproved()).toBeTruthy()
       expect(model.showAll()).toBeTruthy()
     })
 
     it('should set btn--warning class for currently approved', function () {
-      expect(model.pledges()[1].approvedButtonClass()).toEqual('btn btn--warning')
-      expect(model.pledges()[1].approvedButtonLabel()).toEqual('Disapprove Pledge')
+      expect(model.pledges()[0].approvedButtonClass()).toEqual('btn btn--warning')
+      expect(model.pledges()[0].approvedButtonLabel()).toEqual('Disapprove Pledge')
     })
 
     it('should set btn--indifferent class for currently featured', function () {
-      expect(model.pledges()[0].featuredButtonClass()).toEqual('btn btn--indifferent')
-      expect(model.pledges()[0].featuredButtonLabel()).toEqual('Unmark as Featured')
+      expect(model.pledges()[1].featuredButtonClass()).toEqual('btn btn--indifferent')
+      expect(model.pledges()[1].featuredButtonLabel()).toEqual('Unmark as Featured')
     })
 
     describe('And Toggle Back', function () {

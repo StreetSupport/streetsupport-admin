@@ -180,7 +180,10 @@ function ListCharterPledgesModel () {
   ajax
     .get(endpoint, headers)
     .then(function (result) {
-      self.allPledges(result.data.map(p => new Pledge(p, self)))
+      let pledges = result.data
+        .sort((a, b) => a.creationDate < b.creationDate)
+        .map(p => new Pledge(p, self))
+      self.allPledges(pledges)
       self.pledges(self.allPledges().filter(x => x.isApproved() === false))
       browser.loaded()
     }, function (error) {
