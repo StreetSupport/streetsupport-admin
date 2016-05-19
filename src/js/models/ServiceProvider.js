@@ -80,6 +80,7 @@ function ServiceProviderDetails () {
   self.message = ko.observable('')
 
   self.init = function () {
+    browser.loading()
     var providerId = getUrlParameter.parameter('key')
 
     ajax.get(self.endpointBuilder.serviceProviders(providerId).build(),
@@ -88,7 +89,7 @@ function ServiceProviderDetails () {
       .then(function (result) {
         self.serviceProvider(new ServiceProvider(result.json))
         self.initialServiceProvider(new ServiceProvider(result.json))
-        self.dataLoaded()
+        browser.loaded()
       },
       function () {
         browser.redirect(adminUrls.notFound)
