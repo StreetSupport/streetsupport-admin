@@ -28,7 +28,7 @@ function LoginModel () {
         {
           'username': self.username(),
           'password': self.password()
-        })
+        }, true)
       .then(function (result) {
         if (result.status === 'error') {
           handleSubmitError(result)
