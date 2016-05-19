@@ -94,9 +94,9 @@ describe('List Action Groups', () => {
   })
 
   it('- Should map sort members by creation date', () => {
-    expect(model.actionGroups()[1].members[0].firstName).toEqual('first')
+    expect(model.actionGroups()[1].members[0].firstName).toEqual('third')
     expect(model.actionGroups()[1].members[1].firstName).toEqual('second')
-    expect(model.actionGroups()[1].members[2].firstName).toEqual('third')
+    expect(model.actionGroups()[1].members[2].firstName).toEqual('first')
   })
 
   it('- Should map member first name', () => {

@@ -1,7 +1,6 @@
 'use strict'
 
 var ajax = require('../../ajax')
-var adminUrls = require('../../admin-urls')
 var browser = require('../../browser')
 var cookies = require('../../cookies')
 var validation = require('../../validation')
@@ -180,13 +179,12 @@ function ListCharterPledgesModel () {
   ajax
     .get(endpoint, headers)
     .then(function (result) {
-      if (result.statusCode === 401) {
-        browser.redirect(adminUrls.login)
-      } else {
-        self.allPledges(result.data.map(p => new Pledge(p, self)))
-        self.pledges(self.allPledges().filter(x => x.isApproved() === false))
-        browser.loaded()
-      }
+      let pledges = result.data
+        .sort((a, b) => a.creationDate < b.creationDate)
+        .map(p => new Pledge(p, self))
+      self.allPledges(pledges)
+      self.pledges(self.allPledges().filter(x => x.isApproved() === false))
+      browser.loaded()
     }, function (error) {
       self.handleServerError(error)
     })

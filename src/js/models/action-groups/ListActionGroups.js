@@ -32,7 +32,7 @@ function ActionGroup (data, listener) {
   self.url = '?id=' + data.actionGroup.id
 
   self.members = data.members
-    .sort((a, b) => a.creationDate > b.creationDate)
+    .sort((a, b) => a.creationDate < b.creationDate)
     .map((m) => new Member(m))
 
   self.openGroup = (group, target) => {

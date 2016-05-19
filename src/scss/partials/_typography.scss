@@ -13,35 +13,17 @@ body {
 .h1 {
   font-size: 36px;
   line-height: 1.25;
-  margin-top: 0;  
-
-  /*
-  @include mq($from: m) {
-    font-size: 45px;
-  }
-  */
+  margin-top: 0;
 }
 
 .h2 {
   font-size: 25px;
   line-height: 1.25;
-
-  /*
-  @include mq($from: m) {
-    font-size: 30px;
-  }
-  */
 }
 
 .h3 {
   font-size: 16px;
   line-height: 1.25;
-
-  /*
-  @include mq($from: m) {
-    font-size: 22px;
-  }
-  */
 }
 
 p {

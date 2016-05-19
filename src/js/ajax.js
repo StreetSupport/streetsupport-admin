@@ -1,6 +1,7 @@
 /* global XMLHttpRequest */
 
 var Q = require('q')
+var browser = require('./browser')
 
 var post = function (url, headers, data) {
   if (Object.keys(headers).length === 0) {
@@ -70,6 +71,10 @@ var makeRequest = function (options) {
         'statusCode': this.status,
         'data': parseResponseText(this)
       })
+    } else if (this.status === 401) {
+      browser.redirect('/login.html')
+    } else if (this.status === 403) {
+      browser.redirect('/403.html')
     } else {
       deferred.resolve({
         'status': 'error',
