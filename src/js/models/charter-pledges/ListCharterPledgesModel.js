@@ -179,9 +179,18 @@ function ListCharterPledgesModel () {
   ajax
     .get(endpoint, headers)
     .then(function (result) {
+      console.log(result.data)
       let pledges = result.data
-        .sort((a, b) => a.creationDate < b.creationDate)
+        .sort((a, b) => {
+          if (a.creationDate < b.creationDate) return 1
+          if (a.creationDate > b.creationDate) return -1
+          return 0
+        })
+      console.log(pledges)
+      pledges = pledges
         .map(p => new Pledge(p, self))
+
+      console.log(pledges)
       self.allPledges(pledges)
       self.pledges(self.allPledges().filter(x => x.isApproved() === false))
       browser.loaded()

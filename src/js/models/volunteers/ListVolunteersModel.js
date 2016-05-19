@@ -20,7 +20,11 @@ var ListVolunteersModel = function () {
     .get(endpoint, headers)
     .then(function (success) {
       var volunteers = success.data
-        .sort((a, b) => a.creationDate < b.creationDate)
+        .sort((a, b) => {
+          if (a.creationDate < b.creationDate) return 1
+          if (a.creationDate > b.creationDate) return -1
+          return 0
+        })
 
       volunteers.forEach(v => {
         v.contactUrl = adminUrls.contactVolunteer + '?id=' + v.id
