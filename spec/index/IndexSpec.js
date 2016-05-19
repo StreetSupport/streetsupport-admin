@@ -104,7 +104,7 @@ describe('Index', function () {
               success({
                 'status': 200,
                 'json': {
-                  'authClaims': [ 'AdminFor:coffee4craig' ]
+                  'authClaims': [ 'OrgAdmin', 'AdminFor:coffee4craig' ]
                 }
               })
             }
