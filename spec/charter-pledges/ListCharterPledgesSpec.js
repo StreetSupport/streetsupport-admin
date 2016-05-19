@@ -5,11 +5,10 @@ global describe, beforeEach, afterEach, it, expect
 'use strict'
 
 var sinon = require('sinon')
-var ajax =      require('../../src/js/ajax')
+var ajax = require('../../src/js/ajax')
 var endpoints = require('../../src/js/api-endpoints')
-var adminUrls = require('../../src/js/admin-urls')
-var browser =   require('../../src/js/browser')
-var cookies =   require('../../src/js/cookies')
+var browser = require('../../src/js/browser')
+var cookies = require('../../src/js/cookies')
 var Model = require('../../src/js/models/charter-pledges/ListCharterPledgesModel')
 
 describe('List Charter Pledges', function () {
@@ -120,8 +119,8 @@ describe('List Charter Pledges', function () {
     })
 
     it('should show all pledges', function () {
-      expect(model.pledges().length).toEqual(2)
-      expect(model.pledges()[1].isApproved()).toBeFalsy()
+      expect(model.pledges().length).toEqual(3)
+      expect(model.pledges()[2].isApproved()).toBeFalsy()
       expect(model.pledges()[0].isApproved()).toBeTruthy()
       expect(model.showAll()).toBeTruthy()
     })
@@ -132,8 +131,8 @@ describe('List Charter Pledges', function () {
     })
 
     it('should set btn--indifferent class for currently featured', function () {
-      expect(model.pledges()[1].featuredButtonClass()).toEqual('btn btn--indifferent')
-      expect(model.pledges()[1].featuredButtonLabel()).toEqual('Unmark as Featured')
+      expect(model.pledges()[2].featuredButtonClass()).toEqual('btn btn--indifferent')
+      expect(model.pledges()[2].featuredButtonLabel()).toEqual('Unmark as Featured')
     })
 
     describe('And Toggle Back', function () {
@@ -263,5 +262,18 @@ var pledgeData = function () {
     },
     'id': '570b84d73535ff1a8459a143',
     'creationDate': '2016-04-11T11:04:55.8600000Z'
+  }, {
+    'firstName': 'first name',
+    'lastName': 'last name',
+    'email': 'test1@test.com',
+    'organisation': 'organisation',
+    'isOptedIn': true,
+    'proposedPledge': {
+      'description': 'pledge description',
+      'isApproved': true,
+      'isFeatured': false
+    },
+    'id': '570b84d73535ff1a8459a144',
+    'creationDate': '2016-06-11T11:04:55.8600000Z'
   }]
 }
