@@ -14,7 +14,8 @@ describe('Editing Service Provider Need', function () {
   var ajaxGetStub
 
   beforeEach(function () {
-    browserStub = sinon.stub(browser, 'dataLoaded')
+    browserStub = sinon.stub(browser, 'loading')
+    browserStub = sinon.stub(browser, 'loaded')
     browserRedirectStub  = sinon.stub(browser, 'redirect')
 
     function fakeGetResolution (value) {
@@ -44,7 +45,8 @@ describe('Editing Service Provider Need', function () {
 
   afterEach(function () {
     ajax.get.restore()
-    browser.dataLoaded.restore()
+    browser.loading.restore()
+    browser.loaded.restore()
     getUrlParameter.parameter.restore()
     cookies.get.restore()
     browser.redirect.restore()

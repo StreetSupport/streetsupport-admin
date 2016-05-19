@@ -15,7 +15,8 @@ describe('Add individual Need', function () {
   var model
 
   beforeEach(function () {
-    sinon.stub(browser, 'dataLoaded')
+    sinon.stub(browser, 'loading')
+    sinon.stub(browser, 'loaded')
     sinon.stub(getUrlParameter, 'parameter').withArgs('providerId').returns('coffee4craig')
 
     function fakeGetResolution (value) {
@@ -41,7 +42,8 @@ describe('Add individual Need', function () {
   })
 
   afterEach(function () {
-    browser.dataLoaded.restore()
+    browser.loading.restore()
+    browser.loaded.restore()
     getUrlParameter.parameter.restore()
     ajax.get.restore()
     cookies.get.restore()

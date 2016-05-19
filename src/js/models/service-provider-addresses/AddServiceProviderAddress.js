@@ -14,7 +14,6 @@ function AddServiceProviderAddress () {
   self.saveAddress = function (address) {
     browser.redirect(adminurls.serviceProviders + '?key=' + getUrlParameter.parameter('providerId'))
   }
-  self.dataLoaded()
 }
 
 AddServiceProviderAddress.prototype = new BaseViewModel()

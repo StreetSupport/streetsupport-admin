@@ -13,6 +13,7 @@ function EditServiceProviderService () {
   self.service = ko.observable()
 
   self.init = function () {
+    browser.loading()
     var serviceProviderEndpoint = self.endpointBuilder
       .serviceProviders(getUrlParameter.parameter('providerId'))
       .services(getUrlParameter.parameter('serviceId'))
@@ -24,7 +25,7 @@ function EditServiceProviderService () {
       data.serviceProviderId = getUrlParameter.parameter('providerId')
       self.service(new Service(data))
       self.service().addListener(self)
-      self.dataLoaded()
+      browser.loaded()
     },
     function (error) {
       self.handleError(error)

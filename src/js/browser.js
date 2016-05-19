@@ -10,13 +10,6 @@ let redirect = (url) => {
   window.location = url
 }
 
-let dataLoaded = () => {
-  let dynamicElements = document.getElementsByClassName('awaiting-data')
-  Array.from(dynamicElements).forEach(element => {
-    element.className = element.className.replace(/(?:^|\s)awaiting-data(?!\S)/g, '')
-  })
-}
-
 let loaderAnim
 let getLoader = () => {
   if (loaderAnim === undefined) {
@@ -56,7 +49,6 @@ module.exports = {
   loading: loading,
   loaded: loaded,
   trackEvent: trackEvent,
-  dataLoaded: dataLoaded, // deprecated
   pushHistory: pushHistory,
   popHistory: popHistory,
   setOnHistoryPop: setOnHistoryPop
