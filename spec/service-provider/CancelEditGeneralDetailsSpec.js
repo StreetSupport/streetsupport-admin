@@ -29,7 +29,8 @@ describe('Cancel Edit Service Provider General Details', function () {
     stubbedApi = sinon.stub(ajax, 'get').returns(fakeResolved ())
     stubbedCookies = sinon.stub(cookies, 'get').returns('stored-session-token')
     stubbedUrlParams = sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
-    sinon.stub(browser, 'dataLoaded')
+    sinon.stub(browser, 'loading')
+    sinon.stub(browser, 'loaded')
 
     model = new Model()
     model.editGeneralDetails()
@@ -43,7 +44,8 @@ describe('Cancel Edit Service Provider General Details', function () {
     ajax.get.restore()
     cookies.get.restore()
     getUrlParameter.parameter.restore()
-    browser.dataLoaded.restore()
+    browser.loading.restore()
+    browser.loaded.restore()
   })
 
   it('should reset isEditingGeneralDetails to false', function () {

@@ -1,3 +1,5 @@
+'use strict'
+
 var ko = require('knockout')
 var Address = require('../Address')
 var BaseViewModel = require('../BaseViewModel')
@@ -95,6 +97,17 @@ function AddServiceProviderService () {
   }
 
   self.init = function () {
+    browser.loading()
+
+    let addressesLoaded = false
+    let categoriesLoaded = false
+
+    let stuffHasLoaded = () => {
+      if (addressesLoaded && categoriesLoaded) {
+        browser.loaded()
+      }
+    }
+
     var serviceProviderEndpoint = self.endpointBuilder.serviceProviders(getUrlParameter.parameter('providerId')).build()
     ajax.get(serviceProviderEndpoint, self.headers(cookies.get('session-token')), {})
     .then(function (result) {
@@ -103,12 +116,11 @@ function AddServiceProviderService () {
     function (error) {
       self.handleError(error)
     })
-    var categoriesEndpoint = self.endpointBuilder.categories().build()
 
+    var categoriesEndpoint = self.endpointBuilder.categories().build()
     ajax.get(categoriesEndpoint, self.headers(cookies.get('session-token')), {})
     .then(function (result) {
       self.categories(result.json)
-      self.dataLoaded()
     },
     function (error) {
       self.handleError(error)

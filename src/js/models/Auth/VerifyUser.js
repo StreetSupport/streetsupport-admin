@@ -1,4 +1,5 @@
 var ko = require('knockout')
+var browser = require('../../browser')
 var cookies = require('../../cookies')
 var getUrlParameter = require('../../get-url-parameter')
 var ajax = require('basic-ajax')
@@ -12,6 +13,7 @@ function VerifyUser () {
   self.userCreated = ko.observable(false)
 
   self.save = function () {
+    browser.loading()
     var endpoint = self.endpointBuilder.verifiedUsers().build()
     var payload = {
       'UserName': self.username(),
@@ -24,12 +26,11 @@ function VerifyUser () {
         self.message('User verified. You can now log in.')
         self.clearErrors()
         self.userCreated(true)
+        browser.loaded()
       }, function (error) {
         self.handleError(error)
       })
   }
-
-  self.dataLoaded()
 }
 
 VerifyUser.prototype = new BaseViewModel()

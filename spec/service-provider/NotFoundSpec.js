@@ -30,6 +30,7 @@ describe('Service Provider not found', function () {
     stubbedCookies = sinon.stub(cookies, 'get').returns('stored-session-token')
     stubbedUrlParams = sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
     stubbedBrowser = sinon.stub(browser, 'redirect')
+    sinon.stub(browser, 'loading')
 
     model = new Model()
   })
@@ -39,6 +40,7 @@ describe('Service Provider not found', function () {
     cookies.get.restore()
     getUrlParameter.parameter.restore()
     browser.redirect.restore()
+    browser.loading.restore()
   })
 
   it('should redirect browser to 404', function () {

@@ -28,7 +28,8 @@ describe('Edit Service Provider Contact Information', function () {
     stubbedApi = sinon.stub(ajax, 'get').returns(fakeResolved ())
     stubbedCookies = sinon.stub(cookies, 'get').returns('stored-session-token')
     stubbedUrlParams = sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
-    sinon.stub(browser, 'dataLoaded')
+    sinon.stub(browser, 'loading')
+    sinon.stub(browser, 'loaded')
 
     model = new Model()
 
@@ -39,7 +40,8 @@ describe('Edit Service Provider Contact Information', function () {
     ajax.get.restore()
     cookies.get.restore()
     getUrlParameter.parameter.restore()
-    browser.dataLoaded.restore()
+    browser.loaded.restore()
+    browser.loading.restore()
   })
 
   it('should set isEditingContactDetails to true', function () {

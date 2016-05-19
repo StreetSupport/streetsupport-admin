@@ -11,12 +11,14 @@ describe('Add Service Provider', function () {
   model
 
   beforeEach(function () {
-    sinon.stub(browser, 'dataLoaded')
+    sinon.stub(browser, 'loading')
+    sinon.stub(browser, 'loaded')
     model = new Model()
   })
 
   afterEach(function () {
-    browser.dataLoaded.restore()
+    browser.loading.restore()
+    browser.loaded.restore()
   })
 
   it('should start with Name empty', function () {
