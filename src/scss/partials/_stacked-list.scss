@@ -11,6 +11,14 @@
     padding: 1em;
     margin-bottom: 1em;
     border-radius: 10px;
+
+    &--action-group {
+      cursor: pointer;
+      action-group__heading {
+        color: $brand-c;
+        text-decoration: underline;
+      }
+    }
   }
   &__header {
     float: left;

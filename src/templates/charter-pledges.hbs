@@ -45,8 +45,11 @@ pageName: charterPledges
       <span class="pledge__author-name" data-bind="text:fullName"></span> (<a data-bind="text:email, attr: { href: mailToLink }" class="pledge__author-email"></a>) <span data-bind="text:organisation" class="pledge__author-organisation"></span> Submitted on: <span data-bind="text:creationDate" class="pledge__author-creationDate"></span>
     </p>
     <!-- ko ifnot: isEditable -->
-    <button data-bind="click: toggleApproval, attr: { class: buttonClass }">
-      <span class="btn__text" data-bind="text: buttonLabel"></span>
+    <button data-bind="click: toggleApproval, attr: { class: approvedButtonClass }">
+      <span class="btn__text" data-bind="text: approvedButtonLabel"></span>
+    </button>
+    <button data-bind="click: toggleFeatured, attr: { class: featuredButtonClass }">
+      <span class="btn__text" data-bind="text: featuredButtonLabel"></span>
     </button>
     <button data-bind="click: editPledge" class="btn btn--info">
       <span class="btn__text">Edit</span>

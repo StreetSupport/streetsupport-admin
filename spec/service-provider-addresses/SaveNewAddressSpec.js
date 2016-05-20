@@ -37,7 +37,8 @@ describe('Save brand new Address', function () {
       stubbedApi = sinon.stub(ajax, 'post').returns(fakeResolved ())
       stubbedCookies = sinon.stub(cookies, 'get').returns('stored-session-token')
       stubbedUrlParams = sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
-      sinon.stub(browser, 'dataLoaded')
+      sinon.stub(browser, 'loading')
+      sinon.stub(browser, 'loaded')
 
       model.street1('new street1')
       model.street2('new street2')
@@ -61,7 +62,8 @@ describe('Save brand new Address', function () {
       ajax.post.restore()
       cookies.get.restore()
       getUrlParameter.parameter.restore()
-      browser.dataLoaded.restore()
+      browser.loading.restore()
+      browser.loaded.restore()
     })
 
     it('should post address details to api create endpoint with session token', function () {

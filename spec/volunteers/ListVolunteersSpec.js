@@ -68,9 +68,9 @@ describe('List Volunteers', function () {
   })
 
   it('should order by creationDate', function () {
-    expect(model.volunteers()[0].id).toEqual('56f2867701ad122cd0eb5b2f')
+    expect(model.volunteers()[0].id).toEqual('571dd1fcd021fb2890259127')
     expect(model.volunteers()[1].id).toEqual('570542130a4f951fb8abe4b9')
-    expect(model.volunteers()[2].id).toEqual('571dd1fcd021fb2890259127')
+    expect(model.volunteers()[2].id).toEqual('56f2867701ad122cd0eb5b2f')
   })
 
   it('should set url to contact volunteer', function () {

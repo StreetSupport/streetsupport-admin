@@ -28,7 +28,8 @@ describe('Show Service Provider', function () {
     sinon.stub(ajax, 'get').returns(fakeResolved ())
     stubbedCookies = sinon.stub(cookies, 'get').returns('stored-session-token')
     stubbedUrlParams = sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
-    sinon.stub(browser, 'dataLoaded')
+    sinon.stub(browser, 'loading')
+    sinon.stub(browser, 'loaded')
 
     model = new Model()
     model.serviceProvider().needs()[0].deleteNeed()
@@ -39,7 +40,8 @@ describe('Show Service Provider', function () {
     ajax.delete.restore()
     cookies.get.restore()
     getUrlParameter.parameter.restore()
-    browser.dataLoaded.restore()
+    browser.loaded.restore()
+    browser.loading.restore()
   })
 
   it('should remove need from collection', function () {

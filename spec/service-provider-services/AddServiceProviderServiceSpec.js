@@ -1,18 +1,21 @@
-var sinon =           require('sinon')
-var ajax =            require('basic-ajax')
-var endpoints =       require('../../src/js/api-endpoints')
-var endPointBuilder = require('../../src/js/endpoint-builder')
-var cookies =         require('../../src/js/cookies')
+/*
+global describe, beforeEach, afterEach, it, expect
+*/
+
+'use strict'
+
+var sinon = require('sinon')
+var ajax = require('basic-ajax')
+var endpoints = require('../../src/js/api-endpoints')
+var cookies = require('../../src/js/cookies')
 var getUrlParameter = require('../../src/js/get-url-parameter')
-var browser =         require('../../src/js/browser')
-var adminUrls =       require('../../src/js/admin-urls')
+var browser = require('../../src/js/browser')
+var adminUrls = require('../../src/js/admin-urls')
 
 describe('Save new Service', function () {
-  var Model = require('../../src/js/models/service-provider-services/AddServiceProviderService'),
-  model,
-  stubbedApi,
-  stubbedCookies,
-  stubbedUrlParams
+  var Model = require('../../src/js/models/service-provider-services/AddServiceProviderService')
+  var model
+  var stubbedApi
 
   beforeEach(function () {
     function categoriesPromise (value) {
@@ -52,17 +55,19 @@ describe('Save new Service', function () {
       headers,
       {}).returns(providerPromise())
 
-    stubbedCookies = sinon.stub(cookies, 'get').returns('stored-session-token')
-    stubbedUrlParams = sinon.stub(getUrlParameter, 'parameter').withArgs('providerId').returns('coffee4craig')
+    sinon.stub(cookies, 'get').returns('stored-session-token')
+    sinon.stub(getUrlParameter, 'parameter').withArgs('providerId').returns('coffee4craig')
 
-    sinon.stub(browser, 'dataLoaded')
+    sinon.stub(browser, 'loading')
+    sinon.stub(browser, 'loaded')
 
     model = new Model()
   })
 
   afterEach(function () {
     ajax.get.restore()
-    browser.dataLoaded.restore()
+    browser.loading.restore()
+    browser.loaded.restore()
     cookies.get.restore()
     getUrlParameter.parameter.restore()
   })
@@ -172,10 +177,11 @@ describe('Save new Service', function () {
   })
 
   describe('save', function () {
-    var stubbedPostApi,
-        browserSpy
-    function savePromise (value) {
-      return {
+    var stubbedPostApi
+    var browserSpy
+
+    beforeEach(function () {
+      let savePromise = {
         then: function (success, error) {
           success({
             'status': 200,
@@ -183,13 +189,7 @@ describe('Save new Service', function () {
           })
         }
       }
-    }
-    var headers = {
-      'content-type': 'application/json',
-      'session-token': 'stored-session-token'
-    }
-    beforeEach(function () {
-      stubbedPostApi = sinon.stub(ajax, 'post').returns(savePromise())
+      stubbedPostApi = sinon.stub(ajax, 'post').returns(savePromise)
       browserSpy = sinon.stub(browser, 'redirect')
 
       model.category(model.categories()[0])
@@ -211,7 +211,7 @@ describe('Save new Service', function () {
       browser.redirect.restore()
     })
 
-    it('should post service details with new to api with session token', function() {
+    it('should post service details with new to api with session token', function () {
       var endpoint = endpoints.getServiceProviders + '/coffee4craig/services'
       var headers = {
         'content-type': 'application/json',
@@ -219,7 +219,7 @@ describe('Save new Service', function () {
       }
       var payload = JSON.stringify({
         'Info': 'new info',
-	'LocationDescription': 'new location description',
+        'LocationDescription': 'new location description',
         'Tags': ['tag a', 'tag b'],
         'Category': 'accom',
         'SubCategories': ['hostel', 'rented'],
@@ -227,16 +227,15 @@ describe('Save new Service', function () {
           'StartTime': '10:00',
           'EndTime': '16:30',
           'Day': 'Monday'
-        },
-        {
+        }, {
           'StartTime': '10:00',
           'EndTime': '16:30',
           'Day': 'Tuesday'
         }],
         'Street1': '5 Oak Street',
-        'Street2': 'street 2' ,
-        'Street3': 'street 3' ,
-        'Street4': 'street 4' ,
+        'Street2': 'street 2',
+        'Street3': 'street 3',
+        'Street4': 'street 4',
         'City': 'Manchester',
         'Postcode': 'M4 5JD'
       })
@@ -252,59 +251,59 @@ describe('Save new Service', function () {
   })
 })
 
-function categories() {
+function categories () {
   return [{
-    "key": "accom",
-    "sortOrder": 90,
-    "name": "Accommodation",
-    "synopsis": "Permanent and temporary accomodation.",
-    "subCategories": [{
-      "key": "emergency",
-      "name": "Emergency",
-      "synopsis": "Emergency accomodation"
+    'key': 'accom',
+    'sortOrder': 90,
+    'name': 'Accommodation',
+    'synopsis': 'Permanent and temporary accomodation.',
+    'subCategories': [{
+      'key': 'emergency',
+      'name': 'Emergency',
+      'synopsis': 'Emergency accomodation'
     }, {
-      "key": "hostel",
-      "name": "Hostel",
-      "synopsis": "Hostel accomodation"
+      'key': 'hostel',
+      'name': 'Hostel',
+      'synopsis': 'Hostel accomodation'
     }, {
-      "key": "hosted",
-      "name": "Hosted",
-      "synopsis": "Hosted accomodation"
+      'key': 'hosted',
+      'name': 'Hosted',
+      'synopsis': 'Hosted accomodation'
     }, {
-      "key": "rented",
-      "name": "Rented",
-      "synopsis": "Rented accomodation in the private sector"
+      'key': 'rented',
+      'name': 'Rented',
+      'synopsis': 'Rented accomodation in the private sector'
     }, {
-      "key": "supported",
-      "name": "Supported",
-      "synopsis": "Supported lodgings"
+      'key': 'supported',
+      'name': 'Supported',
+      'synopsis': 'Supported lodgings'
     }, {
-      "key": "social",
-      "name": "Social Housing",
-      "synopsis": "Social Housing"
+      'key': 'social',
+      'name': 'Social Housing',
+      'synopsis': 'Social Housing'
     }, {
-      "key": "shelter",
-      "name": "Night shelter",
-      "synopsis": "Night shelter"
+      'key': 'shelter',
+      'name': 'Night shelter',
+      'synopsis': 'Night shelter'
     }],
-    "documentCreationDate": "2015-12-16T16:12:49.8370000Z",
-    "documentModifiedDate": "2015-12-16T16:12:49.8370000Z"
+    'documentCreationDate': '2015-12-16T16:12:49.8370000Z',
+    'documentModifiedDate': '2015-12-16T16:12:49.8370000Z'
   }, {
-    "key": "communications",
-    "sortOrder": 0,
-    "name": "Communications",
-    "synopsis": "Internet and telephone access, and postal services.",
-    "subCategories": [{
-      "key": "telephone",
-      "name": "Telephone",
-      "synopsis": "Free telephone use"
+    'key': 'communications',
+    'sortOrder': 0,
+    'name': 'Communications',
+    'synopsis': 'Internet and telephone access, and postal services.',
+    'subCategories': [{
+      'key': 'telephone',
+      'name': 'Telephone',
+      'synopsis': 'Free telephone use'
     }, {
-      "key": "internet",
-      "name": "Internet access",
-      "synopsis": "Internet access"
+      'key': 'internet',
+      'name': 'Internet access',
+      'synopsis': 'Internet access'
     }],
-    "documentCreationDate": "2015-12-16T16:12:49.8370000Z",
-    "documentModifiedDate": "2015-12-16T16:12:49.8370000Z"
+    'documentCreationDate': '2015-12-16T16:12:49.8370000Z',
+    'documentModifiedDate': '2015-12-16T16:12:49.8370000Z'
   }]
 }
 

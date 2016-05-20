@@ -98,6 +98,11 @@ function EndpointBuilder () {
     return self
   }
 
+  self.featured = () => {
+    self.childResource = 'featured'
+    return self
+  }
+
   self.pledge = () => {
     self.childResource = 'pledge'
     return self

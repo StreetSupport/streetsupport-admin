@@ -16,6 +16,8 @@ function EditServiceProviderAddress () {
   }
 
   self.init = function () {
+    browser.loading()
+
     var endpoint = self.endpointBuilder
       .serviceProviders(getUrlParameter.parameter('providerId'))
       .addresses(getUrlParameter.parameter('addressId'))
@@ -28,7 +30,7 @@ function EditServiceProviderAddress () {
         var address = new Address(result.json)
         address.addListener(self)
         self.address(address)
-        self.dataLoaded()
+        browser.loading()
       },
       function (error) {
         self.handleError(error)

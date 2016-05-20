@@ -30,7 +30,8 @@ describe('Edit individual Address', function () {
     stubbedUrlParams = sinon.stub(getUrlParameter, 'parameter')
     stubbedUrlParams.withArgs('providerId').returns('coffee4craig')
     stubbedUrlParams.withArgs('addressId').returns('1234')
-    sinon.stub(browser, 'dataLoaded')
+    sinon.stub(browser, 'loaded')
+    sinon.stub(browser, 'loading')
 
     model = new Model()
   })
@@ -38,7 +39,8 @@ describe('Edit individual Address', function () {
   afterEach(function () {
     ajax.get.restore()
     cookies.get.restore()
-    browser.dataLoaded.restore()
+    browser.loaded.restore()
+    browser.loading.restore()
     getUrlParameter.parameter.restore()
   })
 

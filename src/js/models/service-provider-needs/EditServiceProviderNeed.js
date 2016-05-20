@@ -19,6 +19,8 @@ function EditServiceProviderNeed () {
     browser.redirect(redirect)
   }
 
+  browser.loading()
+
   var endpoint = self.endpointBuilder.serviceProviders(providerId).needs(needId).build()
   var headers = self.headers(cookies.get('session-token'))
   var payload = JSON.stringify({})
@@ -29,11 +31,10 @@ function EditServiceProviderNeed () {
       var need = new Need(success.json)
       need.addListener(self)
       self.need(need)
+      browser.loaded()
     }, function (error) {
       self.handleError(error)
     })
-
-  browser.dataLoaded()
 }
 
 EditServiceProviderNeed.prototype = new BaseViewModel()

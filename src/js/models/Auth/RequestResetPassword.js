@@ -1,4 +1,5 @@
 var ajax = require('basic-ajax')
+var browser = require('../../browser')
 var cookies = require('../../cookies')
 var ko = require('knockout')
 var BaseViewModel = require('../BaseViewModel')
@@ -13,6 +14,7 @@ function RequestResetPasswordModel () {
   self.submit = function () {
     var self = this
     if (!self.isSubmitting) {
+      browser.loading()
       self.isSubmitting = true
       self.message('Loading, please wait')
       ajax.post(self.endpointBuilder.resetPassword().build(),
@@ -22,14 +24,13 @@ function RequestResetPasswordModel () {
       }))
       .then(function (result) {
         self.isSubmissionSuccessful(true)
+        browser.loaded()
       }, function (error) {
         self.handleError(error)
         self.isSubmitting = false
       })
     }
   }
-
-  self.dataLoaded()
 }
 
 RequestResetPasswordModel.prototype = new BaseViewModel()

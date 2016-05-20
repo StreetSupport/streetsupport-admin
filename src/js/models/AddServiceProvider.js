@@ -11,6 +11,7 @@ function AddServiceProvider () {
   self.name = ko.observable('')
 
   self.save = function () {
+    browser.loading()
     var endpoint = self.endpointBuilder.serviceProviders().build()
     var payload = {
       'Name': self.name()
@@ -23,7 +24,6 @@ function AddServiceProvider () {
         self.handleError(error)
       })
   }
-  self.dataLoaded()
 }
 
 AddServiceProvider.prototype = new BaseViewModel()

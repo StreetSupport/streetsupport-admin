@@ -20,10 +20,6 @@ function BaseViewModel () {
     }
   }
 
-  self.dataLoaded = function () {
-    browser.dataLoaded()
-  }
-
   self.clearErrors = function () {
     self.errors([])
   }
