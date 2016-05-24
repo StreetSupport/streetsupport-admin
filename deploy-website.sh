@@ -8,6 +8,9 @@ gulp deploy --debug --production
 
 if [[ $TRAVIS_PULL_REQUEST == 'false' ]]
   then
+    # Move to created directory
+    cd _dist
+
     if [[ $TRAVIS_BRANCH == 'release' ]] || [[ $TRAVIS_BRANCH == 'uat' ]] || [[ $TRAVIS_BRANCH == 'develop' ]]
       then
         # Define variables depending on the branch
@@ -27,6 +30,13 @@ if [[ $TRAVIS_PULL_REQUEST == 'false' ]]
             APIENVIRONMENT=1
         fi
 
+        # Get the commit details
+        THE_COMMIT=`git rev-parse HEAD`
+
+        # Set git details
+        git config --global user.email "enquiry@streetsupport.net"
+        git config --global user.name "Travis CI"
+
         # Set environment
         cd src/js
         rm env.js
@@ -39,26 +49,13 @@ if [[ $TRAVIS_PULL_REQUEST == 'false' ]]
 
         cd ../../
 
-        # Move to created directory
-        cd _dist
-
-        # Set git details
-        git config --global user.email "enquiry@streetsupport.net"
-        git config --global user.name "Travis CI"
-
         git init
         git add -A
-
-        # Get the commit details
-        THE_COMMIT=`git rev-parse HEAD`
         git commit -m "Travis CI automatic build for $THE_COMMIT"
-
         # Push to git by overriding previous commits
         # IMPORTANT: Supress messages so nothing appears in logs
         git push --quiet --force "https://${AZURE_USER}:${AZURE_PASSWORD}@${AZURE_WEBSITE}.scm.azurewebsites.net:443/${AZURE_WEBSITE}.git" master > /dev/null 2>&1
       else
         echo "Not on a build branch so don't push the changes to GitHub Pages"
     fi
-  else
-    echo "PR - don't deploy"
 fi
