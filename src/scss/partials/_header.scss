@@ -2,7 +2,10 @@
   @include cf();
   height: 50px;
   background-color: $brand-a;
-  margin-bottom: 44px;
+
+  @include mq($from: m) {
+    margin-bottom: 44px;
+  }
 
   &__title {
     margin: 8px $site-gutter 0 $site-gutter;
