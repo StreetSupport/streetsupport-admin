@@ -42,13 +42,11 @@ cd ../../
 # Run gulp
 gulp deploy --debug --production
 
-echo $AZURE_USER
-
-# Move to created directory
-cd _dist
-
 if [[ $TRAVIS_PULL_REQUEST == 'false ]]
   then
+    # Move to created directory
+    cd _dist
+
     # Push to git by overriding previous commits
     # IMPORTANT: Supress messages so nothing appears in logs
 
