@@ -169,7 +169,7 @@ describe('List Charter Pledges', function () {
     })
 
     it('- Should show all pledges', () => {
-      expect(model.pledges().length).toEqual(3)
+      expect(model.pledges().length).toEqual(1)
     })
   })
 
