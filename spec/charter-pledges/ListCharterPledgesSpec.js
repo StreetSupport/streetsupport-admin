@@ -66,6 +66,10 @@ describe('List Charter Pledges', function () {
     expect(model.showAll()).toBeFalsy()
   })
 
+  it('should set list of distinct supporter categories', function () {
+    expect(model.supporterCategories().length).toEqual(2)
+  })
+
   it('should set show all button label to show all', function () {
     expect(model.showAllButtonLabel()).toEqual('Show all')
   })
@@ -145,6 +149,27 @@ describe('List Charter Pledges', function () {
         expect(model.pledges()[0].isApproved()).toBeFalsy()
         expect(model.showAll()).toBeFalsy()
       })
+    })
+  })
+
+  describe('- Filter by Category', () => {
+    beforeEach(() => {
+      model.selectedCategory('I represent a business')
+    })
+
+    it('- Should filter pledges by selected Category', () => {
+      expect(model.pledges().length).toEqual(2)
+    })
+  })
+
+  describe('- Filter by Category - and back', () => {
+    beforeEach(() => {
+      model.selectedCategory('I represent a business')
+      model.selectedCategory(undefined)
+    })
+
+    it('- Should show all pledges', () => {
+      expect(model.pledges().length).toEqual(3)
     })
   })
 
@@ -248,7 +273,8 @@ var pledgeData = function () {
       'isFeatured': true
     },
     'id': '570b84af3535ff1a8459a142',
-    'creationDate': '2016-04-11T11:04:15.1810000Z'
+    'creationDate': '2016-04-11T11:04:15.1810000Z',
+    'supporterCategory': 'I represent a business'
   }, {
     'firstName': 'first name',
     'lastName': 'last name',
@@ -261,7 +287,8 @@ var pledgeData = function () {
       'isFeatured': false
     },
     'id': '570b84d73535ff1a8459a143',
-    'creationDate': '2016-04-11T11:04:55.8600000Z'
+    'creationDate': '2016-04-11T11:04:55.8600000Z',
+    'supporterCategory': 'I represent a business'
   }, {
     'firstName': 'first name',
     'lastName': 'last name',
@@ -274,6 +301,7 @@ var pledgeData = function () {
       'isFeatured': false
     },
     'id': '570b84d73535ff1a8459a144',
-    'creationDate': '2016-06-11T11:04:55.8600000Z'
+    'creationDate': '2016-06-11T11:04:55.8600000Z',
+    'supporterCategory': 'I have experienced homelessness'
   }]
 }
