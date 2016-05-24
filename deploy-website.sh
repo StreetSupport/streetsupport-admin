@@ -3,6 +3,42 @@
 # If there are any errors, fail Travis
 set -e
 
+# Define variables depending on the branch
+if [[ $TRAVIS_BRANCH == 'release' ]]
+  then
+    AZURE_WEBSITE=$PROD_AZURE_WEBSITE_W_EUR
+    APIENVIRONMENT=3
+fi
+if [[ $TRAVIS_BRANCH == 'uat' ]]
+  then
+    AZURE_WEBSITE=$UAT_AZURE_WEBSITE
+    APIENVIRONMENT=2
+fi
+if [[ $TRAVIS_BRANCH == 'develop' ]]
+  then
+    AZURE_WEBSITE=$DEV_AZURE_WEBSITE
+    APIENVIRONMENT=1
+fi
+
+# Get the commit details
+THE_COMMIT=`git rev-parse HEAD`
+
+# Set git details
+git config --global user.email "enquiry@streetsupport.net"
+git config --global user.name "Travis CI"
+
+# Set environment
+cd src/js
+rm env.js
+cat > env.js << EOF
+module.exports = $APIENVIRONMENT
+EOF
+
+echo "env file rewritten to:"
+cat env.js
+
+cd ../../
+
 # Run gulp
 gulp deploy --debug --production
 
@@ -13,42 +49,6 @@ if [[ $TRAVIS_PULL_REQUEST == 'false' ]]
 
     if [[ $TRAVIS_BRANCH == 'release' ]] || [[ $TRAVIS_BRANCH == 'uat' ]] || [[ $TRAVIS_BRANCH == 'develop' ]]
       then
-        # Define variables depending on the branch
-        if [[ $TRAVIS_BRANCH == 'release' ]]
-          then
-            AZURE_WEBSITE=$PROD_AZURE_WEBSITE_W_EUR
-            APIENVIRONMENT=3
-        fi
-        if [[ $TRAVIS_BRANCH == 'uat' ]]
-          then
-            AZURE_WEBSITE=$UAT_AZURE_WEBSITE
-            APIENVIRONMENT=2
-        fi
-        if [[ $TRAVIS_BRANCH == 'develop' ]]
-          then
-            AZURE_WEBSITE=$DEV_AZURE_WEBSITE
-            APIENVIRONMENT=1
-        fi
-
-        # Get the commit details
-        THE_COMMIT=`git rev-parse HEAD`
-
-        # Set git details
-        git config --global user.email "enquiry@streetsupport.net"
-        git config --global user.name "Travis CI"
-
-        # Set environment
-        cd src/js
-        rm env.js
-        cat > env.js << EOF
-        module.exports = $APIENVIRONMENT
-        EOF
-
-        echo "env file rewritten to:"
-        cat env.js
-
-        cd ../../
-
         git init
         git add -A
         git commit -m "Travis CI automatic build for $THE_COMMIT"
