@@ -25,9 +25,7 @@ pageName: serviceProvider
           {{> form-feedback}}
           <div data-bind="with: serviceProvider">
 
-
             <div class="split">
-
             <section class="admin-panel">
               <h2>General Details</h2>
               <!-- ko ifnot: $parent.isEditingGeneralDetails -->
@@ -178,7 +176,7 @@ pageName: serviceProvider
               </a>
               <div data-bind="foreach: needs">
                 <article>
-                  <h3 data-bind="text: description"></h3>
+                  <h3 data-bind="html: description"></h3>
                   <a data-bind="attr: { 'href': editNeedUrl }" title="edit need" class="btn btn--info">
                     <span class="btn__text">Edit</span>
                   </a>
