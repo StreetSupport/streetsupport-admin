@@ -7,13 +7,21 @@ pageName: charterPledges
 
 {{#extend "_default"}}
   {{#content "main"}}
-    <div class="block block--highlight">
+    <div class="block block--highlight admin-header">
       <div class="container block__inner">
         <header>
         <h1>Charter Pledges</h1>
-        <button data-bind="click: toggleShowAll" class="btn btn--info">
-          <span data-bind="text: showAllButtonLabel"></span>
-        </button>
+        <div class="form__field-item form__field-item--full-width">
+          <button data-bind="click: toggleShowAll" class="btn btn--info">
+            <span data-bind="text: showAllButtonLabel"></span>
+          </button>
+        </div>
+        <div class="form__field-item form__field-item--full-width">
+          <label class="form__label">Filter by Category:</label>
+          <select class="form__input form__input--full" data-bind="options: supporterCategories,
+                             value: selectedCategory,
+                             optionsCaption: '-- All Categories --'"></select>
+        </div>
         </header>
       </div>
     </div>

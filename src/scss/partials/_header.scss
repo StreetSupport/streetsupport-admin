@@ -3,6 +3,10 @@
   height: 50px;
   background-color: $brand-a;
 
+  @include mq($from: m) {
+    margin-bottom: 44px;
+  }
+
   &__title {
     margin: 8px $site-gutter 0 $site-gutter;
     padding: 0;
@@ -47,11 +51,25 @@
     padding: 0 15px 0 15px;
     width: auto;
     margin: 0;
-
     .icon {
       height: 20px;
       width: 20px;
       vertical-align: middle;
     }
+    @include mq($from: m) {
+      display: none;
+    }
+  }
+}
+
+.admin-header {
+  &.block {
+    padding-top: 80px;
+  }
+  h1 {
+    margin-top: 0;
+  }
+  a {
+    margin-bottom: 0;
   }
 }

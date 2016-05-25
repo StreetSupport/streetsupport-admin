@@ -19,6 +19,7 @@ function Pledge (data, listener) {
   self.description = ko.observable(htmlEncode.htmlEncode(data.proposedPledge.description))
   self.organisation = data.organisation
   self.email = data.email
+  self.supporterCategory = data.supporterCategory
   self.mailToLink = 'mailto:' + data.email
   self.creationDate = moment(data.creationDate).format('DD/MM/YY')
   self.isApproved = ko.observable(data.proposedPledge.isApproved)
@@ -147,6 +148,15 @@ function ListCharterPledgesModel () {
       ? 'View awaiting approval'
       : 'Show all'
   }, self)
+  self.supporterCategories = ko.observableArray()
+  self.selectedCategory = ko.observable('')
+  self.selectedCategory.subscribe((newValue) => {
+    if (newValue === undefined) {
+      self.updateVisiblePledges()
+    } else {
+      self.pledges(self.allPledges().filter(x => x.supporterCategory === newValue))
+    }
+  })
 
   self.updateVisiblePledges = function () {
     if (self.showAll() === true) {
@@ -189,6 +199,11 @@ function ListCharterPledgesModel () {
 
       self.allPledges(pledges)
       self.pledges(self.allPledges().filter(x => x.isApproved() === false))
+
+      self.supporterCategories(pledges
+        .map((p) => p.supporterCategory)
+        .filter((item, i, ar) => ar.indexOf(item) === i))
+
       browser.loaded()
     }, function (error) {
       self.handleServerError(error)
