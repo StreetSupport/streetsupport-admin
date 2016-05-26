@@ -10,7 +10,7 @@ var el = document.querySelectorAll('.js-nav-container, .js-nav-push, .js-nav-ove
 let disableForbiddenLinks = () => {
   let claims = cookies.get('auth-claims')
 
-  if (claims === undefined) return
+  if (claims === undefined) claims = ''
 
   claims = claims.toLowerCase()
 
