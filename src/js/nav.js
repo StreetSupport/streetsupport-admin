@@ -8,7 +8,11 @@ var activeClass = 'is-active'
 var el = document.querySelectorAll('.js-nav-container, .js-nav-push, .js-nav-overlay, html, body')
 
 let disableForbiddenLinks = () => {
-  let claims = cookies.get('auth-claims').toLowerCase()
+  let claims = cookies.get('auth-claims')
+
+  if (claims === undefined) return
+
+  claims = claims.toLowerCase()
 
   if (claims !== 'superadmin') {
     let navLinks = document.querySelectorAll('.nav__item a')
