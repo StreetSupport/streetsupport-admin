@@ -135,7 +135,7 @@ pageName: serviceProvider
               </header>
               <div data-bind="foreach: addresses">
                 <article class="key-value-pair location">
-                  <address data-bind="text: formatted" class="key-value-pair__key"></address>
+                  <address data-bind="html: formatted" class="key-value-pair__key"></address>
                   <a data-bind="attr: { 'href': editAddressUrl }" title="edit location" class="btn btn--info">
                     <span class="btn__text">Edit</span>
                   </a>
