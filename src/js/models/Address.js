@@ -2,7 +2,7 @@
 
 var ko = require('knockout')
 var ajax = require('basic-ajax')
-var htmlEncode = require('htmlEncode')
+var htmlEncode = require('htmlencode')
 var Endpoints = require('../endpoint-builder')
 var getUrlParameter = require('../get-url-parameter')
 var cookies = require('../cookies')
