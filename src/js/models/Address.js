@@ -2,6 +2,7 @@
 
 var ko = require('knockout')
 var ajax = require('basic-ajax')
+var htmlEncode = require('htmlencode')
 var Endpoints = require('../endpoint-builder')
 var getUrlParameter = require('../get-url-parameter')
 var cookies = require('../cookies')
@@ -16,18 +17,18 @@ function Address (data) {
   self.serviceProviderId = data.serviceProviderId
 
   self.key = ko.observable(data.key)
-  self.savedStreet1 = ko.observable(data.street)
-  self.savedStreet2 = ko.observable(data.street1)
-  self.savedStreet3 = ko.observable(data.street2)
-  self.savedStreet4 = ko.observable(data.street3)
-  self.savedCity = ko.observable(data.city)
+  self.savedStreet1 = ko.observable(htmlEncode.htmlDecode(data.street))
+  self.savedStreet2 = ko.observable(htmlEncode.htmlDecode(data.street1))
+  self.savedStreet3 = ko.observable(htmlEncode.htmlDecode(data.street2))
+  self.savedStreet4 = ko.observable(htmlEncode.htmlDecode(data.street3))
+  self.savedCity = ko.observable(htmlEncode.htmlDecode(data.city))
   self.savedPostcode = ko.observable(data.postcode)
 
-  self.street1 = ko.observable(data.street)
-  self.street2 = ko.observable(data.street1)
-  self.street3 = ko.observable(data.street2)
-  self.street4 = ko.observable(data.street3)
-  self.city = ko.observable(data.city)
+  self.street1 = ko.observable(htmlEncode.htmlDecode(data.street))
+  self.street2 = ko.observable(htmlEncode.htmlDecode(data.street1))
+  self.street3 = ko.observable(htmlEncode.htmlDecode(data.street2))
+  self.street4 = ko.observable(htmlEncode.htmlDecode(data.street3))
+  self.city = ko.observable(htmlEncode.htmlDecode(data.city))
   self.postcode = ko.observable(data.postcode)
 
   var buildOpeningTimes = function (openingTimesData) {

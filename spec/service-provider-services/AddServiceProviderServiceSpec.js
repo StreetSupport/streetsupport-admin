@@ -103,11 +103,11 @@ describe('Save new Service', function () {
   })
 
   it('address street should start empty', function () {
-    expect(model.address().street1()).toEqual(undefined)
+    expect(model.address().street1()).toEqual('')
   })
 
   it('address street should start empty', function () {
-    expect(model.address().street1()).toEqual(undefined)
+    expect(model.address().street1()).toEqual('')
   })
 
   describe('select category', function () {

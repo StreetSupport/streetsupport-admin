@@ -60,8 +60,8 @@ describe('Address', function() {
       it('should set reset fields', function() {
         expect(model.street1()).toEqual('5 Oak Street')
         expect(model.street2()).toEqual('')
-        expect(model.street3()).toEqual(null)
-        expect(model.street4()).toEqual(null)
+        expect(model.street3()).toEqual('')
+        expect(model.street4()).toEqual('')
         expect(model.city()).toEqual('Manchester')
         expect(model.postcode()).toEqual('M4 5JD')
         expect(model.openingTimes()[1].startTime()).toEqual('10:00')
