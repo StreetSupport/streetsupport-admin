@@ -1,10 +1,33 @@
+'use strict'
+var cookies = require('./cookies')
+
 var openElement = '.js-nav-open'
 var closeElement = '.js-nav-close'
 var overlayElement = '.js-nav-overlay'
 var activeClass = 'is-active'
 var el = document.querySelectorAll('.js-nav-container, .js-nav-push, .js-nav-overlay, html, body')
 
-var init = function () {
+let disableForbiddenLinks = () => {
+  let claims = cookies.get('auth-claims').toLowerCase()
+
+  if (claims !== 'superadmin') {
+    let navLinks = document.querySelectorAll('.nav__item a')
+
+    console.log(navLinks)
+
+    for (let i = 0; i < navLinks.length; ++i) {
+      let requiredClaims = navLinks[i].getAttribute('data-claims')
+      if (requiredClaims !== null) {
+        requiredClaims = requiredClaims.split(',')
+        for (let j = 0; j < requiredClaims.length; ++j) {
+          if (claims.indexOf(requiredClaims[j]) < 0) navLinks[i].parentNode.classList += ' hide'
+        }
+      }
+    }
+  }
+}
+
+let initEventListeners = () => {
   document.querySelector(openElement).addEventListener('click', function (e) {
     open()
   })
@@ -18,18 +41,19 @@ var init = function () {
   })
 }
 
-var open = function () {
-  var i
+var init = function () {
+  initEventListeners()
+  disableForbiddenLinks()
+}
 
-  for (i = 0; i < el.length; ++i) {
+var open = function () {
+  for (let i = 0; i < el.length; ++i) {
     el[i].classList.add(activeClass)
   }
 }
 
 var close = function () {
-  var i
-
-  for (i = 0; i < el.length; ++i) {
+  for (let i = 0; i < el.length; ++i) {
     el[i].classList.remove(activeClass)
   }
 }
