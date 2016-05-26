@@ -99,15 +99,6 @@ function AddServiceProviderService () {
   self.init = function () {
     browser.loading()
 
-    let addressesLoaded = false
-    let categoriesLoaded = false
-
-    let stuffHasLoaded = () => {
-      if (addressesLoaded && categoriesLoaded) {
-        browser.loaded()
-      }
-    }
-
     var serviceProviderEndpoint = self.endpointBuilder.serviceProviders(getUrlParameter.parameter('providerId')).build()
     ajax.get(serviceProviderEndpoint, self.headers(cookies.get('session-token')), {})
     .then(function (result) {
