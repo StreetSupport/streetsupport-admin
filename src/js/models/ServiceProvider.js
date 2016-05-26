@@ -1,4 +1,5 @@
 var ajax = require('basic-ajax')
+var htmlEncode = require('htmlencode')
 var adminUrls = require('../admin-urls')
 var cookies = require('../cookies')
 var browser = require('../browser')
@@ -14,8 +15,8 @@ function ServiceProvider (data) {
 
   self.key = ko.observable(data.key)
   self.name = ko.observable(data.name)
-  self.shortDescription = ko.observable(data.shortDescription)
-  self.description = ko.observable(data.description)
+  self.shortDescription = ko.observable(htmlEncode.htmlDecode(data.shortDescription))
+  self.description = ko.observable(htmlEncode.htmlDecode(data.description))
   self.telephone = ko.observable(data.telephone)
   self.email = ko.observable(data.email)
   self.website = ko.observable(data.website)
