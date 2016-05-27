@@ -50,7 +50,7 @@ describe('Add individual Need', function () {
   })
 
   it('should set an empty description', function () {
-    expect(model.need().description()).toEqual(undefined)
+    expect(model.need().description()).toEqual('')
   })
 
   it('should set serviceProviderId to that given in querystring', function () {

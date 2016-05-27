@@ -1,32 +1,35 @@
-var sinon = require('sinon'),
-    ajax =      require('basic-ajax'),
-    endpoints = require('../../src/js/api-endpoints'),
-    adminurls = require('../../src/js/admin-urls'),
-    browser =   require('../../src/js/browser'),
-    cookies =   require('../../src/js/cookies'),
-    getUrlParameter = require('../../src/js/get-url-parameter')
+/*
+global describe, beforeEach, afterEach, it, expect
+*/
+
+'use strict'
+
+var sinon = require('sinon')
+var ajax = require('basic-ajax')
+var endpoints = require('../../src/js/api-endpoints')
+var adminurls = require('../../src/js/admin-urls')
+var browser = require('../../src/js/browser')
+var cookies = require('../../src/js/cookies')
+var getUrlParameter = require('../../src/js/get-url-parameter')
 
 describe('Edit individual Address', function () {
-  var Model = require('../../src/js/models/service-provider-addresses/EditServiceProviderAddress'),
-  model,
-  stubbedApi,
-  stubbedCookies,
-  stubbedUrlParams
+  var Model = require('../../src/js/models/service-provider-addresses/EditServiceProviderAddress')
+  var model
+  var stubbedApi
+  var stubbedUrlParams
 
   beforeEach(function () {
-    function fakeResolved (value) {
-      return {
-        then: function (success, error) {
-          success({
-            'status': 200,
-            'json': addressData()
-          })
-        }
+    let fakeResolved = {
+      then: function (success, error) {
+        success({
+          'status': 200,
+          'json': addressData()
+        })
       }
     }
 
-    stubbedApi = sinon.stub(ajax, 'get').returns(fakeResolved ())
-    stubbedCookies = sinon.stub(cookies, 'get').returns('stored-session-token')
+    stubbedApi = sinon.stub(ajax, 'get').returns(fakeResolved)
+    sinon.stub(cookies, 'get').returns('stored-session-token')
     stubbedUrlParams = sinon.stub(getUrlParameter, 'parameter')
     stubbedUrlParams.withArgs('providerId').returns('coffee4craig')
     stubbedUrlParams.withArgs('addressId').returns('1234')
@@ -55,26 +58,45 @@ describe('Edit individual Address', function () {
     expect(apiCalledWithExpectedArgs).toBeTruthy()
   })
 
-  it('should map Address', function() {
+  it('should map and decode Address street line 1', function () {
+    expect(model.address().street1()).toEqual('St Mary\'s street 1')
+  })
+
+  it('should map and decode Address street line 2', function () {
+    expect(model.address().street2()).toEqual('St Mary\'s street 2')
+  })
+
+  it('should map and decode Address street line 3', function () {
+    expect(model.address().street3()).toEqual('St Mary\'s street 3')
+  })
+
+  it('should map and decode Address street line 4', function () {
+    expect(model.address().street4()).toEqual('St Mary\'s street 4')
+  })
+
+  it('should map and decode Address city', function () {
+    expect(model.address().city()).toEqual('St Mary\'s city')
+  })
+
+  it('should map Address postcode', function () {
     expect(model.address().postcode()).toEqual('M4 5JD')
   })
 
   describe('Save', function () {
-    var browserSpy,
-        stubbedPutApi
+    var browserSpy
+
     beforeEach(function () {
-      function fakeResolved(value) {
-          return {
-            then: function(success, error) {
-              success({
-                'status': 200,
-                'json': {}
-              })
-            }
-          }
+      let fakeResolved = {
+        then: function (success, error) {
+          success({
+            'status': 200,
+            'json': {}
+          })
         }
+      }
+
       browserSpy = sinon.stub(browser, 'redirect')
-      stubbedPutApi = sinon.stub(ajax, 'put').returns(fakeResolved())
+      sinon.stub(ajax, 'put').returns(fakeResolved)
 
       model.address().save()
     })
@@ -91,16 +113,14 @@ describe('Edit individual Address', function () {
   })
 })
 
-
-
 function addressData () {
   return {
     'key': 1234,
-    'street': '5 Oak Street',
-    'street1': 'street 2',
-    'street2': 'street 3',
-    'street3': 'street 4',
-    'city': 'Manchester',
+    'street': 'St Mary&#39;s street 1',
+    'street1': 'St Mary&#39;s street 2',
+    'street2': 'St Mary&#39;s street 3',
+    'street3': 'St Mary&#39;s street 4',
+    'city': 'St Mary&#39;s city',
     'postcode': 'M4 5JD',
     'openingTimes': [{
       'startTime': '10:00',
