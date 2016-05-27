@@ -64,7 +64,9 @@
 
 .admin-header {
   &.block {
-    padding-top: 80px;
+    @include mq($from: m) {
+      padding-top: 80px;
+    }
   }
   h1 {
     margin-top: 0;
