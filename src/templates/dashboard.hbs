@@ -40,13 +40,13 @@ pageName: dashboard
       <span data-bind="text: publishedLabel, css: publishedLabelClass"></span>
     </header>
     <button data-bind="click: $parent.toggleVerified" class="stacked-list__button btn btn--info">
-      <span data-bind="text: toggleVerificationButtonLabel" class="btn__text"></span>
+      <span data-bind="text: toggleVerificationButtonLabel" class="btn__text btn__text--dashboard"></span>
     </button>
     <button data-bind="click: $parent.togglePublished" class="stacked-list__button btn btn--info">
-      <span data-bind="text: togglePublishButtonLabel" class="btn__text"></span>
+      <span data-bind="text: togglePublishButtonLabel" class="btn__text btn__text--dashboard"></span>
     </button>
     <a data-bind="attr: { href: newUserUrl }" class="stacked-list__button btn btn--primary">
-      <span class="btn__text">New User</span>
+      <span class="btn__text btn__text--dashboard">New User</span>
     </a>
 </article>
 </script>

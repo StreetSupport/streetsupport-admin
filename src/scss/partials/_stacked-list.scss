@@ -8,9 +8,13 @@
     @include cf();
 
     background: #eee;
-    padding: 1em;
+    padding: 1em 1em 0.5em 1em;
     margin-bottom: 1em;
     border-radius: 10px;
+
+    @include mq($from: m) {
+      padding: 1em;
+    }
 
     &--action-group {
       cursor: pointer;
@@ -22,10 +26,15 @@
   }
   &__header {
     float: left;
+    width: 100%;
     margin-right: 1em;
-
-    .stacked-list__item--service-providers & {
-      @include span(3 of 6)
+    margin-bottom: 1em;
+    @include mq($from: m) {
+      width: 50%;
+      margin-bottom: 0;
+    }
+    h2 {
+      margin-top: 0;
     }
   }
 
