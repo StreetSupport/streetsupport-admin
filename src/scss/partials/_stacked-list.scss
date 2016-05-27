@@ -18,7 +18,7 @@
 
     &--action-group {
       cursor: pointer;
-      action-group__heading {
+      .action-group__heading {
         color: $brand-c;
         text-decoration: underline;
       }
