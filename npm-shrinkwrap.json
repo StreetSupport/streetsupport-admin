@@ -6691,6 +6691,11 @@
         }
       }
     },
+    "webfontloader": {
+      "version": "1.6.24",
+      "from": "webfontloader@*",
+      "resolved": "https://registry.npmjs.org/webfontloader/-/webfontloader-1.6.24.tgz"
+    },
     "webidl-conversions": {
       "version": "2.0.1",
       "from": "webidl-conversions@>=2.0.0 <3.0.0",
