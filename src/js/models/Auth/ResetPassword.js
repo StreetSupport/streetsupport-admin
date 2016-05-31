@@ -1,4 +1,4 @@
-var ajax = require('basic-ajax')
+var ajax = require('../../ajax')
 var browser = require('../../browser')
 var cookies = require('../../cookies')
 var ko = require('knockout')

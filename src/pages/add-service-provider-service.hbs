@@ -5,10 +5,9 @@ layout: default.hbs
 permalink: false
 jsBundle: addServiceProviderService
 page: addServiceProviderService
+nosubnav: true
 ---
 
-{{#extend "_default"}}
-{{#content "main"}}
 <div class="block block--highlight admin-header">
   <div class="container block__inner">
     <header>
@@ -59,7 +58,7 @@ page: addServiceProviderService
         </section>
         <section>
           <h3>Location</h3>
-	  <p>Enter a location for this service, either by selecting an existing address, or entering new details. For outreach services with no fixed address, enter a description in the field below.</p>
+	        <p>Enter a location for this service, either by selecting an existing address, or entering new details. For outreach services with no fixed address, enter a description in the field below.</p>
           <dl class="key-value-pair">
             <dt class="key-value-pair__key">Outreach Locations Description</dt>
             <dd class="key-value-pair__value">
@@ -72,24 +71,20 @@ page: addServiceProviderService
             <dd class="key-value-pair__value">
               <select data-bind="options: addresses,
               optionsText: function (item) {
-              return item.street1() + ' - ' + item.postcode()
-            },
-            value: preselectedAddress,
-            optionsCaption: '-- please select --',
-            event: { change: prefillAddress }" class="form__input"></select>
-          </dd>
-        </dl>
-      </section>
-      <div data-bind="with: address" />
-      {{> address}}
-      {{> opening-times}}
+                return item.street1() + ' - ' + item.postcode()
+              },
+              value: preselectedAddress,
+              optionsCaption: '-- please select --',
+              event: { change: prefillAddress }" class="form__input"></select>
+            </dd>
+          </dl>
+        </section>
+        <div data-bind="with: address" />
+          {{> address}}
+          {{> opening-times}}
+        </div>
+        <button data-bind="click: save" class="btn btn--primary"><span class="btn__text">save</span></button>
+      </article>
     </div>
-    <button data-bind="click: save" class="btn btn--primary"><span class="btn__text">save</span></button>
-  </article>
+  </div>
 </div>
-</div>
-</div>
-{{/content}}
-
-{{#content "gutter"}}{{/content}}
-{{/extend}}

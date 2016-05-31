@@ -5,7 +5,7 @@ global describe, beforeEach, afterEach, it, expect
 'use strict'
 
 var sinon = require('sinon')
-let ajax = require('basic-ajax')
+let ajax = require('../../src/js/ajax')
 let endpoints = require('../../src/js/api-endpoints')
 let adminurls = require('../../src/js/admin-urls')
 let cookies = require('../../src/js/cookies')

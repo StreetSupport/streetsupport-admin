@@ -6,7 +6,7 @@ var BaseViewModel = require('../BaseViewModel')
 var OpeningTime = require('../OpeningTime')
 var getUrlParameter = require('../../get-url-parameter')
 var cookies = require('../../cookies')
-var ajax = require('basic-ajax')
+var ajax = require('../../ajax')
 var browser = require('../../browser')
 var adminUrls = require('../../admin-urls')
 

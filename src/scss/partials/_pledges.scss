@@ -1,0 +1,20 @@
+.pledge {
+  padding: 20px;
+}
+
+.pledge__description {
+  &::before {
+    content: open-quote;
+  }
+  &::after {
+    content:close-quote;
+  }
+}
+
+.pledge__author {
+
+}
+
+.pledge__organisation {
+
+}

@@ -5,122 +5,117 @@ layout: default.hbs
 permalink: false
 jsBundle: serviceProviderAddresses
 page: serviceProviderAddresses
+nosubnav: true
 ---
 
-{{#extend "_default"}}
-  {{#content "main"}}
-    <div class="block">
-      <div class="container block__inner">
-        <div class="block__content form">
-          <div data-bind="with: serviceProvider">
-            <h1 data-bind="text: name"></h1>
-            <h2>Addresses</h2>
-            <button data-bind="click: addAddress" class="btn btn--info"><span class="btn__text">add address</span></button>
-            <div data-bind="foreach: addresses">
-              <p data-bind="text: message"></p>
-              <article>
-                <h3 data-bind="text: street1"></h3>
+<div class="block">
+  <div class="container block__inner">
+    <div class="block__content form">
+      <div data-bind="with: serviceProvider">
+        <h1 data-bind="text: name"></h1>
+        <h2>Addresses</h2>
+        <button data-bind="click: addAddress" class="btn btn--info"><span class="btn__text">add address</span></button>
+        <div data-bind="foreach: addresses">
+          <p data-bind="text: message"></p>
+          <article>
+            <h3 data-bind="text: street1"></h3>
+            <!-- ko ifnot: isEditing -->
+            <button data-bind="click: edit" class="btn btn--info"><span class="btn__text">edit</span></button>
+            <button data-bind="click: deleteAddress" class="btn btn--warning"><span class="btn__text">delete</span></button>
+            <!-- /ko -->
+            <!-- ko if: isEditing -->
+            <button data-bind="click: cancel" class="btn btn--indifferent"><span class="btn__text">cancel</span></button>
+            <button data-bind="click: save" class="btn btn--primary"><span class="btn__text">save</span></button>
+            <!-- /ko -->
+            <dl class="key-value-pair">
+              <dt class="key-value-pair__key">Street Line 1</dt>
+              <dd class="key-value-pair__value">
                 <!-- ko ifnot: isEditing -->
-                <button data-bind="click: edit" class="btn btn--info"><span class="btn__text">edit</span></button>
-                <button data-bind="click: deleteAddress" class="btn btn--warning"><span class="btn__text">delete</span></button>
+                <span data-bind="text: street1"></span>
                 <!-- /ko -->
                 <!-- ko if: isEditing -->
-                <button data-bind="click: cancel" class="btn btn--indifferent"><span class="btn__text">cancel</span></button>
-                <button data-bind="click: save" class="btn btn--primary"><span class="btn__text">save</span></button>
+                <input data-bind="textInput: street1" type="text" />
                 <!-- /ko -->
-                <dl class="key-value-pair">
-                  <dt class="key-value-pair__key">Street Line 1</dt>
-                  <dd class="key-value-pair__value">
-                    <!-- ko ifnot: isEditing -->
-                    <span data-bind="text: street1"></span>
-                    <!-- /ko -->
-                    <!-- ko if: isEditing -->
-                    <input data-bind="textInput: street1" type="text" />
-                    <!-- /ko -->
-                  </dd>
-                  <dt class="key-value-pair__key">Street Line 2</dt>
-                  <dd class="key-value-pair__value">
-                    <!-- ko ifnot: isEditing -->
-                    <span data-bind="text: street2"></span>
-                    <!-- /ko -->
-                    <!-- ko if: isEditing -->
-                    <input data-bind="textInput: street2" type="text" />
-                    <!-- /ko -->
-                  </dd>
-                  <dt class="key-value-pair__key">Street Line 3</dt>
-                  <dd class="key-value-pair__value">
-                    <!-- ko ifnot: isEditing -->
-                    <span data-bind="text: street3"></span>
-                    <!-- /ko -->
-                    <!-- ko if: isEditing -->
-                    <input data-bind="textInput: street3" type="text" />
-                    <!-- /ko -->
-                  </dd>
-                  <dt class="key-value-pair__key">Street Line 4</dt>
-                  <dd class="key-value-pair__value">
-                    <!-- ko ifnot: isEditing -->
-                    <span data-bind="text: street4"></span>
-                    <!-- /ko -->
-                    <!-- ko if: isEditing -->
-                    <input data-bind="textInput: street4" type="text" />
-                    <!-- /ko -->
-                  </dd>
-                  <dt class="key-value-pair__key">City</dt>
-                  <dd class="key-value-pair__value">
-                    <!-- ko ifnot: isEditing -->
-                    <span data-bind="text: city"></span>
-                    <!-- /ko -->
-                    <!-- ko if: isEditing -->
-                    <input data-bind="textInput: city" type="text" />
-                    <!-- /ko -->
-                  </dd>
-                  <dt class="key-value-pair__key">Postcode</dt>
-                  <dd class="key-value-pair__value">
-                    <!-- ko ifnot: isEditing -->
-                    <span data-bind="text: postcode"></span>
-                    <!-- /ko -->
-                    <!-- ko if: isEditing -->
-                    <input data-bind="textInput: postcode" type="text" />
-                    <!-- /ko -->
-                  </dd>
-                </dl>
-                <h4>Opening Times</h4>
+              </dd>
+              <dt class="key-value-pair__key">Street Line 2</dt>
+              <dd class="key-value-pair__value">
+                <!-- ko ifnot: isEditing -->
+                <span data-bind="text: street2"></span>
+                <!-- /ko -->
                 <!-- ko if: isEditing -->
-                <button data-bind="click: newOpeningTime" class="btn btn--info"><span class="btn__text">new</span></button>
+                <input data-bind="textInput: street2" type="text" />
                 <!-- /ko -->
-                <dl data-bind="foreach: openingTimes" class="key-value-pair">
-                  <dt class="key-value-pair__key">
-                    <!-- ko ifnot: $parent.isEditing -->
-                    <span data-bind="text: day"></span>
-                    <!-- /ko -->
-                    <!-- ko if: $parent.isEditing -->
-                    <select data-bind="options: days,
-                       optionsText: $data,
-                       value: day,
-                       optionsCaption: '-- please select --'"></select>
-                    <!-- /ko -->
-                  </dt>
-                  <dd class="key-value-pair__value">
-                    <!-- ko ifnot: $parent.isEditing -->
-                    <span data-bind="text: startTime"></span> - <span data-bind="text: endTime"></span>
-                    <!-- /ko -->
-                    <!-- ko if: $parent.isEditing -->
-                    <input data-bind="textInput: startTime" type="text" /> - <input data-bind="textInput: endTime" type="text" />
-                    <!-- /ko -->
-                  </dd>
-                    <!-- ko if: $parent.isEditing -->
-                  <dd class="key-value-pair__value">
-                    <button data-bind="click: $parent.removeOpeningTime" class="btn btn--warning"><span class="btn__text">remove</span></button>
-                  </dd>
-                    <!-- /ko -->
-                </dl>
-              </article>
-            </div>
-          </div>
+              </dd>
+              <dt class="key-value-pair__key">Street Line 3</dt>
+              <dd class="key-value-pair__value">
+                <!-- ko ifnot: isEditing -->
+                <span data-bind="text: street3"></span>
+                <!-- /ko -->
+                <!-- ko if: isEditing -->
+                <input data-bind="textInput: street3" type="text" />
+                <!-- /ko -->
+              </dd>
+              <dt class="key-value-pair__key">Street Line 4</dt>
+              <dd class="key-value-pair__value">
+                <!-- ko ifnot: isEditing -->
+                <span data-bind="text: street4"></span>
+                <!-- /ko -->
+                <!-- ko if: isEditing -->
+                <input data-bind="textInput: street4" type="text" />
+                <!-- /ko -->
+              </dd>
+              <dt class="key-value-pair__key">City</dt>
+              <dd class="key-value-pair__value">
+                <!-- ko ifnot: isEditing -->
+                <span data-bind="text: city"></span>
+                <!-- /ko -->
+                <!-- ko if: isEditing -->
+                <input data-bind="textInput: city" type="text" />
+                <!-- /ko -->
+              </dd>
+              <dt class="key-value-pair__key">Postcode</dt>
+              <dd class="key-value-pair__value">
+                <!-- ko ifnot: isEditing -->
+                <span data-bind="text: postcode"></span>
+                <!-- /ko -->
+                <!-- ko if: isEditing -->
+                <input data-bind="textInput: postcode" type="text" />
+                <!-- /ko -->
+              </dd>
+            </dl>
+            <h4>Opening Times</h4>
+            <!-- ko if: isEditing -->
+            <button data-bind="click: newOpeningTime" class="btn btn--info"><span class="btn__text">new</span></button>
+            <!-- /ko -->
+            <dl data-bind="foreach: openingTimes" class="key-value-pair">
+              <dt class="key-value-pair__key">
+                <!-- ko ifnot: $parent.isEditing -->
+                <span data-bind="text: day"></span>
+                <!-- /ko -->
+                <!-- ko if: $parent.isEditing -->
+                <select data-bind="options: days,
+                   optionsText: $data,
+                   value: day,
+                   optionsCaption: '-- please select --'"></select>
+                <!-- /ko -->
+              </dt>
+              <dd class="key-value-pair__value">
+                <!-- ko ifnot: $parent.isEditing -->
+                <span data-bind="text: startTime"></span> - <span data-bind="text: endTime"></span>
+                <!-- /ko -->
+                <!-- ko if: $parent.isEditing -->
+                <input data-bind="textInput: startTime" type="text" /> - <input data-bind="textInput: endTime" type="text" />
+                <!-- /ko -->
+              </dd>
+                <!-- ko if: $parent.isEditing -->
+              <dd class="key-value-pair__value">
+                <button data-bind="click: $parent.removeOpeningTime" class="btn btn--warning"><span class="btn__text">remove</span></button>
+              </dd>
+                <!-- /ko -->
+            </dl>
+          </article>
         </div>
       </div>
     </div>
-  {{/content}}
-
-  {{#content "gutter"}}{{/content}}
-{{/extend}}
+  </div>
+</div>

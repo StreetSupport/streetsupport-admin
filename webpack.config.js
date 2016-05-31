@@ -13,19 +13,36 @@ if (argv.production) {
   plugins.push(new webpack.optimize.UglifyJsPlugin())
 }
 
+let p = (pageName) => {
+  let pagesDir = path.join(__dirname, '/src/js/pages/page-')
+  return pagesDir + pageName
+}
+
 module.exports = {
   entry: {
-    home: path.join(__dirname, '/src/js/page-generic'),
-    generic: path.join(__dirname, '/src/js/page-generic'),
-    findhelp: path.join(__dirname, '/src/js/page-find-help'),
-    category: path.join(__dirname, '/src/js/page-category'),
-    categorybyday: path.join(__dirname, '/src/js/page-category-by-day'),
-    organisation: path.join(__dirname, '/src/js/page-organisation'),
-    allserviceproviders: path.join(__dirname, '/src/js/page-all-service-providers'),
-    giverequests: path.join(__dirname, '/src/js/page-give-requests'),
-    sponsor: path.join(__dirname, '/src/js/page-sponsor'),
-    volunteer: path.join(__dirname, '/src/js/page-volunteer'),
-    joinstreetsupport: path.join(__dirname, '/src/js/page-join-street-support')
+    generic: p('generic'),
+    index: p('index'),
+    login: p('login'),
+    logout: p('logout'),
+    requestResetPassword: p('request-reset-password'),
+    resetPassword: p('reset-password'),
+    dashboard: p('dashboard'),
+    serviceProvider: p('service-provider'),
+    addServiceProvider: p('add-service-provider'),
+    serviceProviderAddresses: p('service-provider-addresses'),
+    addServiceProviderAddress: p('add-service-provider-address'),
+    editServiceProviderAddress: p('edit-service-provider-address'),
+    serviceProviderServices: p('service-provider-services'),
+    addServiceProviderService: p('add-service-provider-service'),
+    editServiceProviderService: p('edit-service-provider-service'),
+    addServiceProviderNeed: p('add-service-provider-need'),
+    editServiceProviderNeed: p('edit-service-provider-need'),
+    addUser: p('add-user'),
+    verifyNewUser: p('verify-new-user'),
+    charterPledges: p('charter-pledges'),
+    actionGroups: p('action-groups'),
+    volunteers: p('volunteers'),
+    contactVolunteer: p('contact-volunteer')
   },
   output: {
     path: path.join(__dirname, '/_dist/assets/js/'),

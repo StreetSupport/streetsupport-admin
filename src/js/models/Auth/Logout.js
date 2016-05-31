@@ -1,4 +1,4 @@
-var ajax = require('basic-ajax')
+var ajax = require('../../ajax')
 var cookies = require('../../cookies')
 var BaseViewModel = require('../BaseViewModel')
 

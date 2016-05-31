@@ -5,34 +5,27 @@ layout: default.hbs
 permalink: false
 jsBundle: volunteers
 page: volunteers
+nosubnav: true
 ---
 
-{{#extend "_default"}}
-  {{#content "main"}}
-    <div class="block block--highlight admin-header">
-      <div class="container block__inner">
-        <header>
-        <h1>Volunteers</h1>
-        <!-- ko template: { name: 'search' } --><!-- /ko -->
-        </header>
+<div class="block block--highlight admin-header">
+  <div class="container block__inner">
+    <header>
+    <h1>Volunteers</h1>
+    <!-- ko template: { name: 'search' } --><!-- /ko -->
+    </header>
+  </div>
+</div>
+<div class="block">
+  <div class="container block__inner">
+    <div class="block__content">
+      <div data-bind="foreach:volunteers">
+        <!-- ko template: { name: 'volunteer' } --><!-- /ko -->
       </div>
     </div>
-    <div class="block">
-      <div class="container block__inner">
-        <div class="block__content">
-          <div data-bind="foreach:volunteers">
-            <!-- ko template: { name: 'volunteer' } --><!-- /ko -->
-          </div>
-        </div>
-      </div>
-    </div>
-  {{/content}}
-  {{#content "gutter"}}
-
-  {{> loading-spinner}}
-
-  {{/content}}
-{{/extend}}
+  </div>
+</div>
+{{> loading-spinner}}
 
 <script type="text/html" id="search">
 <label for="search" class="form__label">Search</label>

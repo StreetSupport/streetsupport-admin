@@ -43,7 +43,7 @@
     transition: background-color 250ms linear, box-shadow 250ms linear;
     margin-bottom: 3px; // safari box-shadow fix
     font-family: $font-headline;
-    font-weight: $font-headline-weight;   
+    font-weight: $font-headline-weight;
   }
 
   &__overlay {
@@ -59,7 +59,19 @@
   }
 
   // Variants
-  &--brand-d {
+  &--indifferent {
+    .btn__text {
+      background-color: $brand-b;
+      color: #fff;
+      box-shadow: 0px 3px 0px 0px darken( $brand-b, 15% );
+
+      &:hover {
+        background-color: darken( $brand-b, 5% );
+      }
+    }
+  }
+
+  &--info {
     .btn__text {
       background-color: $brand-d;
       color: #fff;
@@ -71,19 +83,19 @@
     }
   }
 
-  &--brand-e {
+  &--primary {
     .btn__text {
-      background-color: $brand-e;
-      color: $brand-m;
-      box-shadow: 0px 3px 0px 0px darken( $brand-e, 15% );
+      background-color: $brand-c;
+      color: #fff;
+      box-shadow: 0px 3px 0px 0px darken( $brand-c, 15% );
 
       &:hover {
-        background-color: darken( $brand-e, 5% );
+        background-color: darken( $brand-c, 5% );
       }
     }
   }
 
-  &--brand-g {
+  &--warning {
     .btn__text {
       background-color: $brand-g;
       color: #fff;

@@ -5,34 +5,29 @@ layout: default.hbs
 permalink: false
 jsBundle: actionGroups
 page: actionGroups
+nosubnav: true
 ---
 
-{{#extend "_default"}}
-  {{#content "main"}}
-    <div class="block block--highlight">
-      <div class="container block__inner">
-        <header>
-          <h1>Action Groups</h1>
-        </header>
-      </div>
+<div class="block block--highlight">
+  <div class="container block__inner">
+    <header>
+      <h1>Action Groups</h1>
+    </header>
+  </div>
+</div>
+<div class="block block--main-body">
+  <div class="container block__inner">
+    <div class="block__content">
+      <!-- ko if: shouldShowList() -->
+      <div data-bind="template: { name: 'group', foreach: actionGroups }"></div>
+      <!-- /ko -->
+      <!-- ko ifnot: shouldShowList() -->
+        <!-- ko template: { name: 'group-detail' } --><!-- /ko -->
+      <!-- /ko -->
+      {{> loading-spinner}}
     </div>
-    <div class="block block--main-body">
-      <div class="container block__inner">
-        <div class="block__content">
-          <!-- ko if: shouldShowList() -->
-          <div data-bind="template: { name: 'group', foreach: actionGroups }"></div>
-          <!-- /ko -->
-          <!-- ko ifnot: shouldShowList() -->
-            <!-- ko template: { name: 'group-detail' } --><!-- /ko -->
-          <!-- /ko -->
-          {{> loading-spinner}}
-        </div>
-      </div>
-    </div>
-  {{/content}}
-  {{#content "gutter"}}
-  {{/content}}
-{{/extend}}
+  </div>
+</div>
 
 <script type="text/html" id="group">
   <article class="stacked-list__item stacked-list__item--action-group" data-bind="click: openGroup">

@@ -3,7 +3,7 @@
 var cookies = require('../cookies')
 var browser = require('../browser')
 var adminUrls = require('../admin-urls')
-var ajax = require('basic-ajax')
+var ajax = require('../ajax')
 var BaseViewModel = require('./BaseViewModel')
 
 function Index () {

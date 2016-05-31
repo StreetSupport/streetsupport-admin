@@ -5,43 +5,40 @@ layout: default.hbs
 permalink: false
 jsBundle: charterPledges
 page: charterPledges
+nosubnav: true
 ---
 
-{{#extend "_default"}}
-  {{#content "main"}}
-    <div class="block block--highlight admin-header">
-      <div class="container block__inner">
-        <header>
-        <h1>Charter Pledges</h1>
-        <div class="form__field-item form__field-item--full-width">
-          <button data-bind="click: toggleShowAll" class="btn btn--info">
-            <span data-bind="text: showAllButtonLabel"></span>
-          </button>
-        </div>
-        <div class="form__field-item form__field-item--full-width">
-          <label class="form__label">Filter by Category:</label>
-          <select class="form__input form__input--full" data-bind="options: supporterCategories,
-                             value: selectedCategory,
-                             optionsCaption: '-- All Categories --'"></select>
-        </div>
-        </header>
+<div class="block block--highlight admin-header">
+  <div class="container block__inner">
+    <header>
+      <h1>Charter Pledges</h1>
+      <div class="form__field-item form__field-item--full-width">
+        <button data-bind="click: toggleShowAll" class="btn btn--info">
+          <span data-bind="text: showAllButtonLabel"></span>
+        </button>
       </div>
-    </div>
-    <div class="block block--main-body">
-      <div class="container block__inner">
-        <div class="block__content">
-          <!-- ko if: pledges().length === 0 -->
-          <p>There are no pledges currently awaiting approval.</p>
-          <!-- /ko -->
-          <div data-bind="template: { name: 'pledge', foreach:pledges }"></div>
-        </div>
+      <div class="form__field-item form__field-item--full-width">
+        <label class="form__label">Filter by Category:</label>
+        <select class="form__input form__input--full" data-bind="options: supporterCategories,
+        value: selectedCategory,
+        optionsCaption: '-- All Categories --'"></select>
       </div>
+    </header>
+  </div>
+</div>
+<div class="block block--main-body">
+  <div class="container block__inner">
+    <div class="block__content">
+      <!-- ko if: pledges().length === 0 -->
+      <p>There are no pledges currently awaiting approval.</p>
+      <!-- /ko -->
+      <div data-bind="template: { name: 'pledge', foreach:pledges }"></div>
     </div>
-  {{/content}}
-  {{#content "gutter"}}
+  </div>
+</div>
 
-  {{> loading-spinner}}
-  <script type="text/html" id="pledge">
+{{> loading-spinner}}
+<script type="text/html" id="pledge">
   <article class="pledge">
     <!-- ko ifnot: isEditable -->
     <p data-bind="html:description" class="h3 pledge__description"></p>
@@ -77,7 +74,4 @@ page: charterPledges
     </button>
     <!-- /ko -->
   </article>
-  </script>
-
-  {{/content}}
-{{/extend}}
+</script>

@@ -1,5 +1,5 @@
 var sinon =           require('sinon')
-var ajax =            require('basic-ajax')
+var ajax =            require('../../src/js/ajax')
 var endpoints =       require('../../src/js/api-endpoints')
 var endPointBuilder = require('../../src/js/endpoint-builder')
 var cookies =         require('../../src/js/cookies')

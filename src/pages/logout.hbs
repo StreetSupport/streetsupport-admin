@@ -5,16 +5,11 @@ layout: default.hbs
 permalink: false
 jsBundle: logout
 page: logout
+nosubnav: true
 ---
 
-{{#extend "_default"}}
-  {{#content "main"}}
-    <div class="block">
-      <div class="container block__inner">
-      <h1>You have been logged out.</h1>
-      </div>
-    </div>
-  {{/content}}
-
-  {{#content "gutter"}}{{/content}}
-{{/extend}}
+<div class="block">
+  <div class="container block__inner">
+  <h1>You have been logged out.</h1>
+  </div>
+</div>

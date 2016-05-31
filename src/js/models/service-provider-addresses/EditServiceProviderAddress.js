@@ -1,4 +1,4 @@
-var ajax = require('basic-ajax')
+var ajax = require('../../ajax')
 var ko = require('knockout')
 var cookies = require('../../cookies')
 var Address = require('../Address')

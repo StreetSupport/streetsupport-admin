@@ -5,54 +5,49 @@ layout: default.hbs
 permalink: false
 jsBundle: verifyNewUser
 page: verifyNewUser
+nosubnav: true
 ---
 
-{{#extend "_default"}}
-  {{#content "main"}}
-    <div class="block block--highlight">
-      <div class="container block__inner">
-        <header>
-        <h1>Verify Account</h1>
-        </header>
-      </div>
+<div class="block block--highlight">
+  <div class="container block__inner">
+    <header>
+    <h1>Verify Account</h1>
+    </header>
+  </div>
+</div>
+<div class="block">
+  <div class="container block__inner">
+    <div class="block__content form">
+      <!-- ko if: userCreated -->
+      <p><a href="login.html">Login now!</a></p>
+      <!-- /ko -->
+      <!-- ko ifnot: userCreated -->
+      <article>
+        <p>Please enter a username and password which you would like to use to log into StreetSupport.</p>
+        <p>Passwords should be at least 12 characters in length, and contain a mix of upper- and lower-case letters.</p>
+        <p>Tip: try three or four unrelated words eg: "Monkey Rainbow Shovel Perturb" - they are easier to remember, but more difficult to crack.</p>
+        <p data-bind="text: message"></p>
+        <!-- ko if: hasErrors -->
+        <h2>There were errors in your submission:</h2>
+        <ul data-bind="foreach: errors">
+          <li data-bind="text: $data"></li>
+        </ul>
+        <!-- /ko -->
+        <dl class="key-value-pair">
+          <dt class="key-value-pair__key">Username</dt>
+          <dd class="key-value-pair__value">
+            <input data-bind="textInput: username" type="text" class="form__input" />
+          </dd>
+        </dl>
+        <dl class="key-value-pair">
+          <dt class="key-value-pair__key">Password</dt>
+          <dd class="key-value-pair__value">
+            <input data-bind="textInput: password" type="password" class="form__input" />
+          </dd>
+        </dl>
+        <button data-bind="click: save" class="btn btn--primary"><span class="btn__text">save</span></button>
+      </article>
+      <!-- /ko -->
     </div>
-    <div class="block">
-      <div class="container block__inner">
-        <div class="block__content form">
-          <!-- ko if: userCreated -->
-          <p><a href="login.html">Login now!</a></p>
-          <!-- /ko -->
-          <!-- ko ifnot: userCreated -->
-          <article>
-            <p>Please enter a username and password which you would like to use to log into StreetSupport.</p>
-            <p>Passwords should be at least 12 characters in length, and contain a mix of upper- and lower-case letters.</p>
-            <p>Tip: try three or four unrelated words eg: "Monkey Rainbow Shovel Perturb" - they are easier to remember, but more difficult to crack.</p>
-            <p data-bind="text: message"></p>
-            <!-- ko if: hasErrors -->
-            <h2>There were errors in your submission:</h2>
-            <ul data-bind="foreach: errors">
-              <li data-bind="text: $data"></li>
-            </ul>
-            <!-- /ko -->
-            <dl class="key-value-pair">
-              <dt class="key-value-pair__key">Username</dt>
-              <dd class="key-value-pair__value">
-                <input data-bind="textInput: username" type="text" class="form__input" />
-              </dd>
-            </dl>
-            <dl class="key-value-pair">
-              <dt class="key-value-pair__key">Password</dt>
-              <dd class="key-value-pair__value">
-                <input data-bind="textInput: password" type="password" class="form__input" />
-              </dd>
-            </dl>
-            <button data-bind="click: save" class="btn btn--primary"><span class="btn__text">save</span></button>
-          </article>
-          <!-- /ko -->
-        </div>
-      </div>
-    </div>
-  {{/content}}
-
-  {{#content "gutter"}}{{/content}}
-{{/extend}}
+  </div>
+</div>

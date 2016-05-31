@@ -5,34 +5,29 @@ layout: default.hbs
 permalink: false
 jsBundle: dashboard
 page: dashboard
+nosubnav: true
 ---
 
-{{#extend "_default"}}
-  {{#content "main"}}
-    <div class="block block--highlight admin-header">
-      <div class="container block__inner">
-        <header>
-          <h1>Service Providers</h1>
-          <a href="add-service-provider.html" class="btn btn--info">
-            <span class="btn__text">Add Service Provider</span>
-          </a>
-        </header>
-      </div>
+<div class="block block--highlight admin-header">
+  <div class="container block__inner">
+    <header>
+      <h1>Service Providers</h1>
+      <a href="add-service-provider.html" class="btn btn--info">
+        <span class="btn__text">Add Service Provider</span>
+      </a>
+    </header>
+  </div>
+</div>
+<div class="block block--main-body">
+  <div class="container block__inner">
+    <div class="block__content">
+      {{> form-feedback}}
+      <section class="block__content" data-bind="template: { name: 'serviceProvider-template', foreach: serviceProviders }" class="stacked-list">
+  </section>
+      {{> loading-spinner}}
     </div>
-    <div class="block block--main-body">
-      <div class="container block__inner">
-        <div class="block__content">
-          {{> form-feedback}}
-          <section class="block__content" data-bind="template: { name: 'serviceProvider-template', foreach: serviceProviders }" class="stacked-list">
-      </section>
-          {{> loading-spinner}}
-        </div>
-      </div>
-    </div>
-  {{/content}}
-
-  {{#content "gutter"}}{{/content}}
-{{/extend}}
+  </div>
+</div>
 
 <script type="text/html" id="serviceProvider-template">
 <article class="stacked-list__item stacked-list__item--service-providers">

@@ -1,0 +1,48 @@
+.stacked-list {
+  @include cf();
+  padding: 0;
+  list-style-type: none;
+  margin: 0 auto;
+
+  &__item {
+    @include cf();
+
+    background: #eee;
+    padding: 1em 1em 0.5em 1em;
+    margin-bottom: 1em;
+    border-radius: 10px;
+
+    @include mq($from: m) {
+      padding: 1em;
+    }
+
+    &--action-group {
+      cursor: pointer;
+      .action-group__heading {
+        color: $brand-c;
+        text-decoration: underline;
+      }
+    }
+  }
+  &__header {
+    float: left;
+    width: 100%;
+    margin-right: 1em;
+    margin-bottom: 1em;
+    @include mq($from: m) {
+      width: 50%;
+      margin-bottom: 0;
+    }
+    h2 {
+      margin-top: 0;
+    }
+  }
+
+  &__heading {
+    margin-top: 0;
+  }
+  &__button {
+    margin-right: .5em;
+    position: relative;
+  }
+}

@@ -1,4 +1,4 @@
-var ajax = require('basic-ajax')
+var ajax = require('../ajax')
 var htmlEncode = require('htmlencode')
 var adminUrls = require('../admin-urls')
 var cookies = require('../cookies')

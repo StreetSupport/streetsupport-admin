@@ -1,0 +1,20 @@
+.key-value-pair {
+  @include cf();
+  & > * { text-align: left; padding-bottom: 10px; }
+
+  &__key {
+    clear: left;
+    font-weight: bold;
+    @include mq($from: m) {
+      @include span(4 of 12);
+    }
+  }
+  &__value {
+    margin: 0px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    @include mq($from: m) {
+      @include span(8 of 12);
+    }
+  }
+}

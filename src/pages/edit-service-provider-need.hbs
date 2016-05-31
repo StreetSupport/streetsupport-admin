@@ -5,30 +5,25 @@ layout: default.hbs
 permalink: false
 jsBundle: editServiceProviderNeed
 page: editServiceProviderNeed
+nosubnav: true
 ---
 
-{{#extend "_default"}}
-  {{#content "main"}}
-    <div class="block block--highlight admin-header">
-      <div class="container block__inner">
-          <header>
-            <h1>Edit Need</h1>
-          </header>
-        </div>
-      </div>
+<div class="block block--highlight admin-header">
+  <div class="container block__inner">
+      <header>
+        <h1>Edit Need</h1>
+      </header>
     </div>
-    <div class="block">
-      <div class="container block__inner">
-        <div class="block__content form">
-          <article data-bind="with: need">
-            {{> form-feedback}}
-            {{> need }}
-            <button data-bind="click: save" class="btn btn--primary"><span class="btn__text">save</span></button>
-          </article>
-        </div>
-      </div>
+  </div>
+</div>
+<div class="block">
+  <div class="container block__inner">
+    <div class="block__content form">
+      <article data-bind="with: need">
+        {{> form-feedback}}
+        {{> need }}
+        <button data-bind="click: save" class="btn btn--primary"><span class="btn__text">save</span></button>
+      </article>
     </div>
-  {{/content}}
-
-  {{#content "gutter"}}{{/content}}
-{{/extend}}
+  </div>
+</div>
