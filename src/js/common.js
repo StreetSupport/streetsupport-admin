@@ -1,5 +1,5 @@
 var FastClick = require('fastclick')
-var nav = require('./../nav.js')
+var nav = require('./nav.js')
 import webFontLoader from 'webfontloader'
 
 let loadWebFonts = () => {

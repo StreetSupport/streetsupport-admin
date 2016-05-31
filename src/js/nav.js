@@ -17,8 +17,6 @@ let disableForbiddenLinks = () => {
   if (claims !== 'superadmin') {
     let navLinks = document.querySelectorAll('.nav__item a')
 
-    console.log(navLinks)
-
     for (let i = 0; i < navLinks.length; ++i) {
       let requiredClaims = navLinks[i].getAttribute('data-claims')
       if (requiredClaims !== null) {
