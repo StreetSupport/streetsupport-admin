@@ -50,8 +50,7 @@ describe('Logout', () => {
     }
 
     var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint,
-      headers,
-      {}).calledOnce
+      headers).calledOnce
 
     expect(apiCalledWithExpectedArgs).toBeTruthy()
   })

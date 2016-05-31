@@ -72,7 +72,7 @@ function Address (data) {
 
   self.deleteAddress = function () {
     var endpoint = self.endpointBuilder.serviceProviders(getUrlParameter.parameter('key')).addresses(self.key()).build()
-    ajax.delete(endpoint, self.headers(cookies.get('session-token')), JSON.stringify({}))
+    ajax.delete(endpoint, self.headers(cookies.get('session-token')))
     .then(function (result) {
       self.listeners().forEach(listener => listener.deleteAddress(self))
     }, function (error) {

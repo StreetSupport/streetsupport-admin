@@ -49,8 +49,7 @@ describe('Delete individual Need', () => {
       'content-type': 'application/json',
       'session-token': 'saved-session-token'
     }
-    var payload = JSON.stringify({})
-    var postAsExpected = ajaxStub.withArgs(endpoint, headers, payload).calledOnce
+    var postAsExpected = ajaxStub.withArgs(endpoint, headers).calledOnce
     expect(postAsExpected).toBeTruthy()
   })
 })

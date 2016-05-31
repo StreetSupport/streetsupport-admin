@@ -121,7 +121,7 @@ function Service (data) {
 
   self.deleteService = function () {
     var endpoint = self.endpointBuilder.serviceProviders(getUrlParameter.parameter('key')).services(self.id()).build()
-    ajax.delete(endpoint, self.headers(cookies.get('session-token')), JSON.stringify({}))
+    ajax.delete(endpoint, self.headers(cookies.get('session-token')))
     .then(function (result) {
       self.listeners().forEach(l => l.deleteService(self))
     }, function (error) {

@@ -44,8 +44,7 @@ describe('Delete Address', () => {
       'content-type': 'application/json',
       'session-token': 'stored-session-token'
     }
-    var payload = JSON.stringify({})
-    var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, headers, payload).calledOnce
+    var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, headers).calledOnce
     expect(apiCalledWithExpectedArgs).toBeTruthy()
   })
 })

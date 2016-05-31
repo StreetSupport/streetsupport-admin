@@ -8,8 +8,7 @@ function LogoutModel () {
   var sessionToken = cookies.get('session-token')
 
   ajax.delete(self.endpointBuilder.sessions(sessionToken).build(),
-    self.headers(sessionToken),
-    {})
+    self.headers(sessionToken))
   .then(function (result) {
     cookies.unset('session-token')
     cookies.unset('auth-claims')

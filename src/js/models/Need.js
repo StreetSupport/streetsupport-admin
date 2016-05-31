@@ -45,7 +45,7 @@ function Need (data) {
 
   self.deleteNeed = function () {
     var endpoint = self.endpointBuilder.serviceProviders(getUrlParameter.parameter('key')).needs(self.id()).build()
-    ajax.delete(endpoint, self.headers(cookies.get('session-token')), JSON.stringify({}))
+    ajax.delete(endpoint, self.headers(cookies.get('session-token')))
     .then(function (result) {
       self.listeners().forEach(l => l.deleteNeed(self))
     }, function (error) {
