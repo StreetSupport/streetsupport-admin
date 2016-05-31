@@ -1,44 +1,48 @@
-var sinon = require('sinon'),
-  ajax = require('basic-ajax'),
-  endpoints = require('../../src/js/api-endpoints'),
-  adminurls = require('../../src/js/admin-urls'),
-  browser = require('../../src/js/browser'),
-  cookies = require('../../src/js/cookies')
+/*
+global describe, beforeEach, afterEach, it, expect
+*/
 
-describe('Logout', function() {
+'use strict'
+
+var sinon = require('sinon')
+var ajax = require('basic-ajax')
+var endpoints = require('../../src/js/api-endpoints')
+var adminurls = require('../../src/js/admin-urls')
+var browser = require('../../src/js/browser')
+var cookies = require('../../src/js/cookies')
+
+describe('Logout', () => {
   var Model = require('../../src/js/models/Auth/Logout')
   var model
-  var stubbedCookies
-  var stubbedSetCookies
+  var stubbedApi
+  var stubbedUnsetCookies
 
-  beforeEach(function() {
-    function fakeResolved(value) {
-      return {
-        then: function(success, error) {
-          success({
-            'status': 200,
-            'json': {}
-          })
-        }
+  beforeEach(() => {
+    let fakeResolved = {
+      then: function (success, error) {
+        success({
+          'status': 200,
+          'json': {}
+        })
       }
     }
 
     stubbedApi = sinon.stub(ajax, 'delete')
-    stubbedApi.returns(fakeResolved())
+    stubbedApi.returns(fakeResolved)
 
-    stubbedCookies = sinon.stub(cookies, 'get').returns('stored-session-token')
+    sinon.stub(cookies, 'get').returns('stored-session-token')
     stubbedUnsetCookies = sinon.stub(cookies, 'unset')
 
     model = new Model()
   })
 
-  afterEach(function() {
+  afterEach(() => {
     ajax.delete.restore()
     cookies.get.restore()
     cookies.unset.restore()
   })
 
-  it('should send session token to api', function() {
+  it('should send session token to api', () => {
     var endpoint = endpoints.sessions + '/stored-session-token'
     var headers = {
       'content-type': 'application/json',
@@ -52,12 +56,12 @@ describe('Logout', function() {
     expect(apiCalledWithExpectedArgs).toBeTruthy()
   })
 
-  it('should unset session token', function () {
+  it('should unset session token', () => {
       var cookieSetCalled = stubbedUnsetCookies.withArgs('session-token').calledOnce
       expect(cookieSetCalled).toBeTruthy()
   })
 
-  it('should unset auth claims', function () {
+  it('should unset auth claims', () => {
       var cookieSetCalled = stubbedUnsetCookies.withArgs('auth-claims').calledOnce
       expect(cookieSetCalled).toBeTruthy()
   })

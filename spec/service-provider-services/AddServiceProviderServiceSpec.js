@@ -12,12 +12,12 @@ var getUrlParameter = require('../../src/js/get-url-parameter')
 var browser = require('../../src/js/browser')
 var adminUrls = require('../../src/js/admin-urls')
 
-describe('Save new Service', function () {
+describe('Save new Service', () => {
   var Model = require('../../src/js/models/service-provider-services/AddServiceProviderService')
   var model
   var stubbedApi
 
-  beforeEach(function () {
+  beforeEach(() => {
     function categoriesPromise (value) {
       return {
         then: function (success, error) {
@@ -64,7 +64,7 @@ describe('Save new Service', function () {
     model = new Model()
   })
 
-  afterEach(function () {
+  afterEach(() => {
     ajax.get.restore()
     browser.loading.restore()
     browser.loaded.restore()
@@ -72,7 +72,7 @@ describe('Save new Service', function () {
     getUrlParameter.parameter.restore()
   })
 
-  it('should request categories', function () {
+  it('should request categories', () => {
     var endpoint = endpoints.getServiceCategories
     var headers = {
       'content-type': 'application/json',
@@ -83,7 +83,7 @@ describe('Save new Service', function () {
     expect(apiCalled).toBeTruthy()
   })
 
-  it('should request for provider', function () {
+  it('should request for provider', () => {
     var endpoint = endpoints.getServiceProviders + '/coffee4craig'
     var headers = {
       'content-type': 'application/json',
@@ -94,93 +94,93 @@ describe('Save new Service', function () {
     expect(apiCalled).toBeTruthy()
   })
 
-  it('should populate categories', function () {
+  it('should populate categories', () => {
     expect(model.categories().length).toEqual(2)
   })
 
-  it('should populate addresses', function () {
+  it('should populate addresses', () => {
     expect(model.addresses().length).toEqual(2)
   })
 
-  it('address street should start empty', function () {
+  it('address street should start empty', () => {
     expect(model.address().street1()).toEqual('')
   })
 
-  it('address street should start empty', function () {
+  it('address street should start empty', () => {
     expect(model.address().street1()).toEqual('')
   })
 
-  describe('select category', function () {
-    beforeEach(function () {
+  describe('select category', () => {
+    beforeEach(() => {
       model.category(model.categories()[0])
       model.setAvailableSubCategories()
     })
 
-    it('should set subCategories', function () {
+    it('should set subCategories', () => {
       expect(model.subCategories().length).toEqual(7)
     })
 
-    it('should map subCategory key', function () {
+    it('should map subCategory key', () => {
       expect(model.subCategories()[0].key).toEqual('emergency')
     })
 
-    it('should map subCategory name', function () {
+    it('should map subCategory name', () => {
       expect(model.subCategories()[0].name).toEqual('Emergency')
     })
 
-    it('should set subCategory isSelected to false', function () {
+    it('should set subCategory isSelected to false', () => {
       expect(model.subCategories()[0].isSelected()).toBeFalsy()
     })
   })
 
-  describe('select existing address', function () {
-    beforeEach(function () {
+  describe('select existing address', () => {
+    beforeEach(() => {
       model.preselectedAddress(model.addresses()[0])
       model.prefillAddress()
     })
 
-    it('should set address street 1', function () {
+    it('should set address street 1', () => {
       expect(model.address().street1()).toEqual('5 Oak Street')
     })
 
-    it('should set address street 2', function () {
+    it('should set address street 2', () => {
       expect(model.address().street2()).toEqual('street 2')
     })
 
-    it('should set address street 3', function () {
+    it('should set address street 3', () => {
       expect(model.address().street3()).toEqual('street 3')
     })
 
-    it('should set address street 4', function () {
+    it('should set address street 4', () => {
       expect(model.address().street4()).toEqual('street 4')
     })
 
-    it('should set address city', function () {
+    it('should set address city', () => {
       expect(model.address().city()).toEqual('Manchester')
     })
 
-    it('should set address postcode', function () {
+    it('should set address postcode', () => {
       expect(model.address().postcode()).toEqual('M4 5JD')
     })
 
-    it('should set opening time start time', function () {
+    it('should set opening time start time', () => {
       expect(model.address().openingTimes()[0].startTime()).toEqual('10:00')
     })
 
-    it('should set opening time end time', function () {
+    it('should set opening time end time', () => {
       expect(model.address().openingTimes()[0].endTime()).toEqual('16:30')
     })
 
-    it('should set opening time day', function () {
+    it('should set opening time day', () => {
       expect(model.address().openingTimes()[0].day()).toEqual('Monday')
     })
   })
 
-  describe('save', function () {
+  describe('save', () => {
     var stubbedPostApi
     var browserSpy
 
-    beforeEach(function () {
+    beforeEach(() => {
       let savePromise = {
         then: function (success, error) {
           success({
@@ -206,12 +206,12 @@ describe('Save new Service', function () {
       model.save()
     })
 
-    afterEach(function () {
+    afterEach(() => {
       ajax.post.restore()
       browser.redirect.restore()
     })
 
-    it('should post service details with new to api with session token', function () {
+    it('should post service details with new to api with session token', () => {
       var endpoint = endpoints.getServiceProviders + '/coffee4craig/services'
       var headers = {
         'content-type': 'application/json',
@@ -244,7 +244,7 @@ describe('Save new Service', function () {
       expect(apiCalledWithExpectedArgs).toBeTruthy()
     })
 
-    it('should redirect to services list', function () {
+    it('should redirect to services list', () => {
       var redirect = adminUrls.serviceProviders + '?key=coffee4craig'
       expect(browserSpy.withArgs(redirect).calledOnce).toBeTruthy()
     })

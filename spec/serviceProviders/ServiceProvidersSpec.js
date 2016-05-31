@@ -11,14 +11,14 @@ var adminurls = require('../../src/js/admin-urls')
 var browser = require('../../src/js/browser')
 var cookies = require('../../src/js/cookies')
 
-describe('Service Providers', function () {
+describe('Service Providers', () => {
   var Dashboard = require('../../src/js/models/ServiceProviders')
   var dashboard
   var stubbedApi
   var browserLoadingStub
   var browserLoadedStub
 
-  beforeEach(function () {
+  beforeEach(() => {
     let fakeResolved = {
       then: function (success, error) {
         success({
@@ -55,18 +55,18 @@ describe('Service Providers', function () {
     dashboard = new Dashboard()
   })
 
-  afterEach(function () {
+  afterEach(() => {
     ajax.get.restore()
     cookies.get.restore()
     browser.loading.restore()
     browser.loaded.restore()
   })
 
-  it('should tell user loading', function () {
+  it('should tell user loading', () => {
     expect(browserLoadingStub.calledOnce).toBeTruthy()
   })
 
-  it('should retrieve service providers from api with session token', function () {
+  it('should retrieve service providers from api with session token', () => {
     var endpoint = endpoints.getServiceProviders
     var headers = {
       'content-type': 'application/json',
@@ -77,44 +77,44 @@ describe('Service Providers', function () {
     expect(apiCalledWithExpectedArgs).toBeTruthy()
   })
 
-  it('should tell user loaded', function () {
+  it('should tell user loaded', () => {
     expect(browserLoadedStub.calledAfter(stubbedApi)).toBeTruthy()
   })
 
-  it('should populate service provider collection', function () {
+  it('should populate service provider collection', () => {
     expect(dashboard.serviceProviders().length).toEqual(3)
   })
 
-  it('should sort service provider by name', function () {
+  it('should sort service provider by name', () => {
     expect(dashboard.serviceProviders()[0].key).toEqual('albert-kennedy-trust')
     expect(dashboard.serviceProviders()[1].key).toEqual('booth-centre')
     expect(dashboard.serviceProviders()[2].key).toEqual('coffee4craig')
   })
 
-  it('should set service provider url', function () {
+  it('should set service provider url', () => {
     expect(dashboard.serviceProviders()[0].url).toEqual(adminurls.serviceProviders + '?key=albert-kennedy-trust')
   })
 
-  it('should set create new user url', function () {
+  it('should set create new user url', () => {
     expect(dashboard.serviceProviders()[0].newUserUrl).toEqual(adminurls.userAdd + '?key=albert-kennedy-trust')
   })
 
-  it('should have verifiedLabel equal to the providers verification status', function () {
+  it('should have verifiedLabel equal to the providers verification status', () => {
     expect(dashboard.serviceProviders()[0].verifiedLabel()).toEqual('under review')
     expect(dashboard.serviceProviders()[1].verifiedLabel()).toEqual('verified')
   })
 
-  it('should have verifiedLabelClass based on the providers verification status', function () {
+  it('should have verifiedLabelClass based on the providers verification status', () => {
     expect(dashboard.serviceProviders()[0].verifiedLabelClass()).toEqual('status status--false')
     expect(dashboard.serviceProviders()[1].verifiedLabelClass()).toEqual('status status--true')
   })
 
-  it('should have publishedLabel equal to the providers publication status', function () {
+  it('should have publishedLabel equal to the providers publication status', () => {
     expect(dashboard.serviceProviders()[0].publishedLabel()).toEqual('disabled')
     expect(dashboard.serviceProviders()[1].publishedLabel()).toEqual('published')
   })
 
-  it('should have publishedLabelClass based on the providers publication status', function () {
+  it('should have publishedLabelClass based on the providers publication status', () => {
     expect(dashboard.serviceProviders()[0].publishedLabelClass()).toEqual('status status--false')
     expect(dashboard.serviceProviders()[1].publishedLabelClass()).toEqual('status status--true')
   })

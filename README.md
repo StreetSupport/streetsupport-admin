@@ -1,50 +1,65 @@
-# StreetSupport Admin
+# StreetSupport Website
 
-The Frontend codebase for service.streetsupport.net.
+The website codebase for streetsupport.net.
+
+## Git Branching
+
+Please work in the develop branch first, and use feature branches for significant pieces of work. Only merge to staging when ready, tested and signed off. Travis CI automatically builds on each commit to develop, staging and release. The release branch automatically builds to: [http://streetsupport.net](http://streetsupport.net).
 
 ## Build Status
 
-* Beta (master) - [![Build Status](https://travis-ci.org/StreetSupport/streetsupport-admin.svg?branch=master)](https://travis-ci.org/StreetSupport/streetsupport-admin)
-* Dev (develop) - [![Build Status](https://travis-ci.org/StreetSupport/streetsupport-admin.svg?branch=develop)](https://travis-ci.org/StreetSupport/streetsupport-admin)
-
-## Domains
-
-Please work in the develop branch first and only merge to master when ready and tested. Travis CI automatically builds on each commit to develop and master.
-
-* The master branch automatically builds to: [http://service.streetsupport.net](http://service.streetsupport.net).
-* The develop branch automatically builds to: [http://dev-service.streetsupport.net](http://dev-service.streetsupport.net).
+* develop - [![Build Status](https://travis-ci.org/StreetSupport/streetsupport-web.svg?branch=develop)](https://travis-ci.org/StreetSupport/streetsupport-web)
+* staging - [![Build Status](https://travis-ci.org/StreetSupport/streetsupport-web.svg?branch=staging)](https://travis-ci.org/StreetSupport/streetsupport-web)
+* release - [![Build Status](https://travis-ci.org/StreetSupport/streetsupport-web.svg?branch=release)](https://travis-ci.org/StreetSupport/streetsupport-web)
 
 ## Install
 
-* Install Node.js 5 stable. Other versions may work but this has not been tested,
-* run `npm i gulp -g`,
-* Navigate to the cloned folder in command line terminal,
-* run `npm i`,
-* run 'gulp'.
+* Install Node 4 LTS,
+* (Recommended) Run in Terminal: `npm i npm -g` (Update NPM to latest version),
+* Run in Terminal: `npm i gulp-cli -g` (Gulp does not need to be installed globally),
+* Navigate to the workflow folder in command line Terminal,
+* Run: `npm i`.
 
-See [https://github.com/PJL101/foley](https://github.com/PJL101/foley) for more information about the workflow. This project uses version 0.0.3.
+See [https://github.com/fephil/foley](https://github.com/fephil/foley) for more information about the workflow. This project uses version 0.4.3.
+
+### Optional Installs
+
+In your editor of choice, the following plugins are recommended but not required. Note the plugin names might be slightly different depending on your editor.
+
+* editorconfig,
+* tabs-to-spaces,
+* linter,
+* linter-handlebars,
+* linter-js-standard,
+* linter-stylelint.
 
 ## Usage
+
+Run these tasks in your command line Terminal:
 
 `gulp [--production] [--debug]`
 
 `gulp deploy [--production] [--debug]`
 
+`gulp auditcode`
+
 * The `gulp` task builds the website, watches for changes and starts up a sever,
 * The `gulp deploy` task builds the website without watching for changes or running the server,
+* The `gulp auditcode` task runs various linting on the project source files,
+* The `gulp visualtest` task builds the website, starts up a sever and runs visual regression tests,
+* The `gulp jsdev` task only checks and builds javascript with associated tests,
 * The `--production` flag builds minified assets with no sourcemaps,
 * The `--debug` flag shows the files being created in each task (if the task has a pipe).
+* The `gulp test` task builds the website, starts up a sever and runs visual regression tests.
 
 ## Frontend Conventions
 
 Happy to discuss any of this:
 
-* The SCSS uses BEM and mobile first,
-* Try to modularise & reuse components (if possible),
-* Add each new component to component.html,
-* Webpack is used, so try and follow the require module structure,
-* Vanilla JavaScript is in use with minimal libraries,
-* Try to install framework/modules as a last resort or only when needed,
-* No Angular or similar please (for now!),
-* ES2015 is fully supported in the workflow but I'm still using ES5 for now,
-* Client side templating (Hogan.js/mustache) is in use but do any logic in the API/JavaScript. Use it for output only.
+* SCSS styling uses BEM and mobile first,
+* Try to modularise & reuse style components (if possible),
+* Webpack is used, so try and follow the ES2015 module structure,
+* Vanilla JavaScript is in use with minimal libraries. Try to install framework/modules only when needed,
+* ES2015 code is fully supported in the workflow as Babel is used to transpile,
+* Client side templating (Hogan.js/mustache) is in use but do any logic in the API/JavaScript. Use templating for rendering output only,
+* To use client side templating in a page, you must use a \ before each statement.

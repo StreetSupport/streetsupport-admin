@@ -6,28 +6,28 @@ var sinon = require('sinon'),
     cookies =   require('../../src/js/cookies'),
     getUrlParameter = require('../../src/js/get-url-parameter')
 
-describe('Add Opening Time', function () {
+describe('Add Opening Time', () => {
   var Model = require('../../src/js/models/Address'),
       model
 
-  beforeEach(function () {
+  beforeEach(() => {
     model = new Model(getAddressData())
 
     model.edit()
     model.newOpeningTime()
   })
 
-  it('should add a new openingTimes', function () {
+  it('should add a new openingTimes', () => {
     expect(model.openingTimes().length).toEqual(3)
   })
 
-  describe('Then cancel', function () {
+  describe('Then cancel', () => {
 
-    beforeEach(function () {
+    beforeEach(() => {
       model.cancel()
     })
 
-    it('should reset openingTimes', function () {
+    it('should reset openingTimes', () => {
       expect(model.openingTimes().length).toEqual(2)
     })
   })

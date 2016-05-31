@@ -5,29 +5,29 @@ var adminurls = require('../../src/js/admin-urls')
 var browser = require('../../src/js/browser')
 var cookies = require('../../src/js/cookies')
 
-describe('Reset Password', function() {
+describe('Reset Password', () => {
   var Model = require('../../src/js/models/Auth/RequestResetPassword')
   var model
 
-  beforeEach(function () {
+  beforeEach(() => {
     sinon.stub(browser, 'loading')
     sinon.stub(browser, 'loaded')
     model = new Model()
   })
 
-  afterEach(function () {
+  afterEach(() => {
     browser.loading.restore()
     browser.loaded.restore()
   })
 
-  it('should set email as empty', function () {
+  it('should set email as empty', () => {
     expect(model.email()).toEqual('')
   })
 
-  describe('On submit', function () {
+  describe('On submit', () => {
     var stubbedApiPost
 
-    beforeEach(function () {
+    beforeEach(() => {
       function postResolved () {
         return {
           then: function(success, error) {
@@ -45,12 +45,12 @@ describe('Reset Password', function() {
       model.submit()
     })
 
-    afterEach(function () {
+    afterEach(() => {
       ajax.post.restore()
       cookies.get.restore()
     })
 
-    it('should post email address to api', function () {
+    it('should post email address to api', () => {
       var endpoint = endpoints.resetPassword
       var headers = {
         'content-type': 'application/json',
@@ -63,7 +63,7 @@ describe('Reset Password', function() {
       expect(called).toBeTruthy()
     })
 
-    it('should set isSubmissionSuccessful to true', function () {
+    it('should set isSubmissionSuccessful to true', () => {
       expect(model.isSubmissionSuccessful()).toBeTruthy()
     })
   })

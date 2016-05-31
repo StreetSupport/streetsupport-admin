@@ -1,39 +1,43 @@
-var sinon =           require('sinon')
-var ajax =            require('basic-ajax')
-var endpoints =       require('../../src/js/api-endpoints')
-var cookies =         require('../../src/js/cookies')
+/*
+global describe, beforeEach, afterEach, it, expect
+*/
+
+'use strict'
+
+var sinon = require('sinon')
+var ajax = require('basic-ajax')
+var endpoints = require('../../src/js/api-endpoints')
+var cookies = require('../../src/js/cookies')
 var getUrlParameter = require('../../src/js/get-url-parameter')
-var guid = require('node-uuid')
 
-describe('Delete Service', function () {
-  var Model = require('../../src/js/models/Service'),
-  model = new Model(getData())
+describe('Delete Service', () => {
+  var Model = require('../../src/js/models/Service')
+  let model = new Model(getData())
+  let stubbedApi = null
 
-  beforeEach(function () {
-    function fakeResolved(value) {
-      return {
-        then: function (success, error) {
-          success({
-            'status': 200
-          })
-        }
+  beforeEach(() => {
+    let fakeResolved = {
+      then: function (success, error) {
+        success({
+          'status': 200
+        })
       }
     }
 
-    stubbedApi = sinon.stub(ajax, 'delete').returns(fakeResolved ())
-    stubbedCookies = sinon.stub(cookies, 'get').returns('stored-session-token')
-    stubbedUrlParams = sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
+    stubbedApi = sinon.stub(ajax, 'delete').returns(fakeResolved)
+    sinon.stub(cookies, 'get').returns('stored-session-token')
+    sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
 
     model.deleteService()
   })
 
-  afterEach(function () {
+  afterEach(() => {
     ajax.delete.restore()
     cookies.get.restore()
     getUrlParameter.parameter.restore()
   })
 
-  it('should delete service id to api create endpoint with session token', function () {
+  it('should delete service id to api create endpoint with session token', () => {
     var endpoint = endpoints.getServiceProviders + '/coffee4craig/services/' + model.id()
     var headers = {
       'content-type': 'application/json',
@@ -45,7 +49,7 @@ describe('Delete Service', function () {
   })
 })
 
-function getData() {
+function getData () {
   return {
     'key': '569d2b468705432268b65c75',
     'name': 'Meals',

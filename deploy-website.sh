@@ -3,6 +3,9 @@
 # If there are any errors, fail Travis
 set -e
 
+# Set a default API environment for other branches/pull requests
+APIENVIRONMENT=1
+
 # Define variables depending on the branch
 if [[ $TRAVIS_BRANCH == 'release' ]]
   then
@@ -18,6 +21,20 @@ if [[ $TRAVIS_BRANCH == 'develop' ]]
   then
     AZURE_WEBSITE=$DEV_AZURE_WEBSITE
     APIENVIRONMENT=1
+fi
+
+# block robots if not live
+if [[ $TRAVIS_BRANCH == 'develop' ]] || [[ $TRAVIS_BRANCH == 'uat' ]]
+  then
+    cd src/files
+
+    echo "User-agent: *" > robots.txt
+    echo "Disallow /" >> robots.txt
+
+    echo "robots.txt rewritten to:"
+    cat robots.txt
+
+    cd ../../
 fi
 
 # Get the commit details
@@ -47,15 +64,15 @@ if [[ $TRAVIS_PULL_REQUEST == 'false' ]]
     # Move to created directory
     cd _dist
 
+    # Push to git by overriding previous commits
+    # IMPORTANT: Supress messages so nothing appears in logs
     if [[ $TRAVIS_BRANCH == 'release' ]] || [[ $TRAVIS_BRANCH == 'uat' ]] || [[ $TRAVIS_BRANCH == 'develop' ]]
       then
         git init
         git add -A
         git commit -m "Travis CI automatic build for $THE_COMMIT"
-        # Push to git by overriding previous commits
-        # IMPORTANT: Supress messages so nothing appears in logs
         git push --quiet --force "https://${AZURE_USER}:${AZURE_PASSWORD}@${AZURE_WEBSITE}.scm.azurewebsites.net:443/${AZURE_WEBSITE}.git" master > /dev/null 2>&1
       else
-        echo "Not on a build branch so don't push the changes to GitHub Pages"
+        echo "Not on a build branch so don't push the changes"
     fi
 fi

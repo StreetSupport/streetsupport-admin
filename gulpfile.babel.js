@@ -1,101 +1,82 @@
 'use strict'
 
 // Load global config and gulp
-var config  = require(__dirname + '/tasks/config/foley.json')
-var argv    = require('yargs').argv
-var gulp    = require('gulp')
-var plumber = require('gulp-plumber')
-var debug   = require('gulp-debug')
-var gulpif  = require('gulp-if')
+import config from './foley.json'
+import gulp from 'gulp'
 
 // Load modules to run tasks from files
-var requireDir   = require('require-dir')
-var tasks        = requireDir(__dirname + '/tasks')
-var runSequence  = require('run-sequence')
-
-// Specific task modules
-var browserSync = require('browser-sync')
-var watch       = require('gulp-watch')
-
-// Assets task. Metalsmith needs to run first
-gulp.task('assets', function (callback) {
-  runSequence(
-    'metalsmith',
-    ['svgicon', 'scss', 'webpack', 'img', 'copy', 'html'],
-    callback
-  )
-})
-
-// BrowserSync reload task
-gulp.task('reload', function (callback) {
-  browserSync.reload()
-  callback()
-})
-
-// Rebuild JS task.
-// We need to manually reload BrowserSync after
-gulp.task('rebuildJs', function (callback) {
-  runSequence(
-    'webpack',
-    'reload',
-    callback
-  )
-})
-
-// Rebuild Metalsmith task. Needed because Metalsmith doesn't do incremental builds
-// We need to manually reload BrowserSync after
-gulp.task('rebuildMetalsmith', function (callback) {
-  runSequence(
-    'assets',
-    'reload',
-    callback
-  )
-})
+import requireDir from 'require-dir'
+import runSequence from 'run-sequence'
+const tasks = requireDir(__dirname + '/tasks') // eslint-disable-line
 
 // Watch task
-gulp.task('watch', function (callback) {
+gulp.task('watch', () => {
   gulp.watch(config.paths.scss + '**/*.scss', ['scss'])
-  gulp.watch(config.paths.js + '**/*.js', ['rebuildJs', ['run-jasmine']])
+  gulp.watch(config.paths.spec + '**/*[Ss]pec.js', ['jasmine'])
+  gulp.watch(config.paths.js + '**/*.js', ['jasmine', 'standardlint', 'webpack'])
   gulp.watch(config.paths.img + '{,**/}*.{png,jpg,gif,svg}', ['img'])
-  gulp.watch(config.paths.icons + '**/*.svg', ['svgicon'])
-  gulp.watch([config.paths.pages + '**/*.hbs', config.paths.partials + '**/*.hbs'], ['rebuildMetalsmith'])
-  gulp.watch(config.paths.tests + '**/*.js', [['run-jasmine']])
+  gulp.watch(config.paths.icons + '**/*.svg', ['svgsprite'])
+  gulp.watch([config.paths.fonts + '**/*', config.paths.files + '**/*'], ['copy'])
+  gulp.watch([config.paths.data + '**/*.json', config.paths.layouts + '**/*.hbs', config.paths.pages + '**/*.hbs', config.paths.partials + '**/*.hbs'], ['metalsmith'])
 })
 
-// Watch task - just tests
-gulp.task('devWatch', function (callback) {
-  gulp.watch(config.paths.js + '**/*.js', [['run-jasmine']])
-  gulp.watch(config.paths.tests + '**/*.js', [['run-jasmine']])
+// jsdev Watch task
+gulp.task('jsdevwatch', () => {
+  gulp.watch(config.paths.spec + '**/*[Ss]pec.js', ['jasmine', 'specsstandardlint'])
+  gulp.watch(config.paths.js + '**/*.js', ['jasmine', 'standardlint'])
 })
 
-// Build website with development assets and run server with live reloading
-gulp.task('default', function (callback) {
+// Build website, either with development or minified assets and run server with live reloading
+gulp.task('default', (callback) => {
   runSequence(
-    ['run-jasmine'],
+    'jasmine',
+    'standardlint',
     'clean',
-    'assets',
-    'browsersync',
-    'watch',
-    callback
-  )
-})
-
-// run tests
-gulp.task('jsdev', function (callback) {
-  runSequence(
-    'run-jasmine',
-    'devWatch',
+    'metalsmith',
+    ['htmlmin', 'svgsprite', 'scss', 'webpack', 'img', 'copy'],
+    ['browsersync', 'watch'],
     callback
   )
 })
 
 // Build website, either with development or minified assets depending on flag
-gulp.task('deploy', function (callback) {
+gulp.task('deploy', (callback) => {
   runSequence(
-    ['run-jasmine'],
+    'jasmine',
+    'standardlint',
     'clean',
-    'assets',
+    'metalsmith',
+    ['htmlmin', 'svgsprite', 'scss', 'webpack', 'img', 'copy'],
     'crticalcss',
     callback
   )
+})
+
+// Run tests and watch js/spec files
+gulp.task('jsdev', (callback) => {
+  runSequence(
+    'jasmine',
+    'standardlint',
+    'specsstandardlint',
+    'jsdevwatch',
+    callback
+  )
+})
+
+// Run the audit task to check code standards
+gulp.task('auditcode', (callback) => {
+  runSequence(
+    'scsslint',
+    'standardlint',
+    callback
+  )
+})
+
+// Run the test task to visually test the website -
+// @note run when localhost is already serving the website
+gulp.task('visualtest', (callback) => {
+  runSequence(
+    'visualTesting',
+     callback
+   )
 })

@@ -11,25 +11,25 @@ var adminurls = require('../../src/js/admin-urls')
 var browser = require('../../src/js/browser')
 var cookies = require('../../src/js/cookies')
 
-describe('Index', function () {
+describe('Index', () => {
   var Model = require('../../src/js/models/Index')
   var model
   var stubbedBrowser
   var stubbedApi
 
-  afterEach(function () {
+  afterEach(() => {
     cookies.get.restore()
     browser.redirect.restore()
     ajax.get.restore()
   })
 
-  describe('Not logged in', function () {
+  describe('Not logged in', () => {
 
-    beforeEach(function () {
+    beforeEach(() => {
       sinon.stub(cookies, 'get').returns(null)
       stubbedBrowser = sinon.stub(browser, 'redirect')
 
-      var resolved = function () {
+      var resolved = () => {
         return {
           then: function (success, error) {
             error({
@@ -45,22 +45,22 @@ describe('Index', function () {
       model = new Model()
     })
 
-    it('should redirect to login', function () {
+    it('should redirect to login', () => {
       var browserRedirectedWithExpectedUrl = stubbedBrowser.withArgs(adminurls.login).calledOnce
       expect(browserRedirectedWithExpectedUrl).toBeTruthy()
     })
   })
 
-  describe('Has session token', function () {
+  describe('Has session token', () => {
 
-    beforeEach(function () {
+    beforeEach(() => {
       sinon.stub(cookies, 'get').returns('stored-session-token')
       stubbedBrowser = sinon.stub(browser, 'redirect')
       stubbedApi = sinon.stub(ajax, 'get')
     })
 
-    describe('as Super Admin', function () {
-      beforeEach(function () {
+    describe('as Super Admin', () => {
+      beforeEach(() => {
         function resolved(value) {
           return {
             then: function (success, error) {
@@ -78,7 +78,7 @@ describe('Index', function () {
         model = new Model()
       })
 
-      it('should check if session still valid', function () {
+      it('should check if session still valid', () => {
         var apiCalled = stubbedApi.withArgs(endpoints.sessions,
           {
             'content-type': 'application/json',
@@ -89,14 +89,14 @@ describe('Index', function () {
         expect(apiCalled).toBeTruthy()
       })
 
-      it('should redirect to dashboard', function () {
+      it('should redirect to dashboard', () => {
         var browserRedirectedWithExpectedUrl = stubbedBrowser.withArgs(adminurls.dashboard).calledOnce
         expect(browserRedirectedWithExpectedUrl).toBeTruthy()
       })
     })
 
-    describe('Admin For', function () {
-      beforeEach(function () {
+    describe('Admin For', () => {
+      beforeEach(() => {
 
         function resolved(value) {
           return {
@@ -115,7 +115,7 @@ describe('Index', function () {
         model = new Model()
       })
 
-      it('should check if session still valid', function () {
+      it('should check if session still valid', () => {
         var apiCalled = stubbedApi.withArgs(endpoints.sessions,
           {
             'content-type': 'application/json',
@@ -126,14 +126,14 @@ describe('Index', function () {
         expect(apiCalled).toBeTruthy()
       })
 
-      it('should redirect to service provider page', function () {
+      it('should redirect to service provider page', () => {
         var browserRedirectedWithExpectedUrl = stubbedBrowser.withArgs(adminurls.serviceProviders + '?key=coffee4craig').calledOnce
         expect(browserRedirectedWithExpectedUrl).toBeTruthy()
       })
     })
 
-    describe('Charter Admin', function () {
-      beforeEach(function () {
+    describe('Charter Admin', () => {
+      beforeEach(() => {
         let resolved = {
           then: function (success, error) {
             success({
@@ -149,7 +149,7 @@ describe('Index', function () {
         model = new Model()
       })
 
-      it('should check if session still valid', function () {
+      it('should check if session still valid', () => {
         var apiCalled = stubbedApi.withArgs(endpoints.sessions,
           {
             'content-type': 'application/json',
@@ -160,14 +160,14 @@ describe('Index', function () {
         expect(apiCalled).toBeTruthy()
       })
 
-      it('should redirect to charter page', function () {
+      it('should redirect to charter page', () => {
         var browserRedirectedWithExpectedUrl = stubbedBrowser.withArgs(adminurls.charter).calledOnce
         expect(browserRedirectedWithExpectedUrl).toBeTruthy()
       })
     })
 
-    describe('session expired', function () {
-      beforeEach(function () {
+    describe('session expired', () => {
+      beforeEach(() => {
 
         function resolved(value) {
           return {
@@ -183,7 +183,7 @@ describe('Index', function () {
         model = new Model()
       })
 
-      it('should check if session still valid', function () {
+      it('should check if session still valid', () => {
         var apiCalled = stubbedApi.withArgs(endpoints.sessions,
           {
             'content-type': 'application/json',
@@ -194,7 +194,7 @@ describe('Index', function () {
         expect(apiCalled).toBeTruthy()
       })
 
-      it('should redirect to login', function () {
+      it('should redirect to login', () => {
         var browserRedirectedWithExpectedUrl = stubbedBrowser.withArgs(adminurls.login).calledOnce
         expect(browserRedirectedWithExpectedUrl).toBeTruthy()
       })

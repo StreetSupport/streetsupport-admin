@@ -6,34 +6,34 @@ var sinon = require('sinon'),
     cookies =   require('../../src/js/cookies')
 
 
-describe('Add Service Provider', function () {
+describe('Add Service Provider', () => {
   var Model = require('../../src/js/models/AddServiceProvider'),
   model
 
-  beforeEach(function () {
+  beforeEach(() => {
     sinon.stub(browser, 'loading')
     sinon.stub(browser, 'loaded')
     model = new Model()
   })
 
-  afterEach(function () {
+  afterEach(() => {
     browser.loading.restore()
     browser.loaded.restore()
   })
 
-  it('should start with Name empty', function () {
+  it('should start with Name empty', () => {
     expect(model.name()).toEqual('')
   })
 
-  it('should start with errors false', function () {
+  it('should start with errors false', () => {
     expect(model.hasErrors()).toBeFalsy()
   })
 
-  describe('Save', function () {
+  describe('Save', () => {
     var stubbedApi,
         stubbedCookies,
         stubbedBrowser
-    beforeEach(function () {
+    beforeEach(() => {
       function fakeResolved (value) {
         return {
           then: function (success, error) {
@@ -52,13 +52,13 @@ describe('Add Service Provider', function () {
       model.save()
     })
 
-    afterEach(function () {
+    afterEach(() => {
       ajax.post.restore()
       cookies.get.restore()
       browser.redirect.restore()
     })
 
-    it('should post service provider name to api', function () {
+    it('should post service provider name to api', () => {
         var endpoint = endpoints.getServiceProviders
         var headers = {
           'content-type': 'application/json',
@@ -71,16 +71,16 @@ describe('Add Service Provider', function () {
         expect(apiCalledWithExpectedArgs).toBeTruthy()
     })
 
-    it('should redirect to dashboard', function () {
+    it('should redirect to dashboard', () => {
       expect(stubbedBrowser.withArgs(adminurls.dashboard).calledOnce).toBeTruthy()
     })
   })
 
-  describe('Save fail', function () {
+  describe('Save fail', () => {
     var stubbedApi,
         stubbedCookies,
         stubbedBrowser
-    beforeEach(function () {
+    beforeEach(() => {
       function fakeResolved (value) {
         return {
           then: function (success, error) {
@@ -102,18 +102,18 @@ describe('Add Service Provider', function () {
       model.save()
     })
 
-    afterEach(function () {
+    afterEach(() => {
       ajax.post.restore()
       cookies.get.restore()
       browser.redirect.restore()
     })
 
-    it('set errors in message', function () {
+    it('set errors in message', () => {
       expect(model.errors()[0]).toEqual('returned error message 1')
       expect(model.errors()[1]).toEqual('returned error message 2')
     })
 
-    it('should not redirect to dashboard', function () {
+    it('should not redirect to dashboard', () => {
       expect(stubbedBrowser.withArgs(adminurls.dashboard).notCalled).toBeTruthy()
     })
   })

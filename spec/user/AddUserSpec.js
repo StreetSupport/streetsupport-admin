@@ -6,29 +6,29 @@ var cookies =   require('../../src/js/cookies')
 var browser =   require('../../src/js/browser')
 var getUrlParameter = require('../../src/js/get-url-parameter')
 
-describe('Add User', function () {
+describe('Add User', () => {
   var Model = require('../../src/js/models/AddUser')
   var model
 
-  // beforeEach(function () {
+  // beforeEach(() => {
   //   sinon.stub(browser, 'dataLoaded')
   //   model = new Model()
   // })
 
-  // afterEach(function () {
+  // afterEach(() => {
   //   browser.dataLoaded.restore()
   // })
 
-  // it('should start with errors false', function () {
+  // it('should start with errors false', () => {
   //   expect(model.hasErrors()).toBeFalsy()
   // })
 
-  // describe('Save', function () {
+  // describe('Save', () => {
   //   var stubbedApi,
   //       stubbedCookies,
   //       stubbedUrlParameter,
   //       stubbedBrowser
-  //   beforeEach(function () {
+  //   beforeEach(() => {
   //     function fakeResolved (value) {
   //       return {
   //         then: function (success, error) {
@@ -48,14 +48,14 @@ describe('Add User', function () {
   //     model.save()
   //   })
 
-  //   afterEach(function () {
+  //   afterEach(() => {
   //     ajax.post.restore()
   //     cookies.get.restore()
   //     getUrlParameter.parameter.restore()
   //     browser.redirect.restore()
   //   })
 
-  //   it('should post service provider name to api', function () {
+  //   it('should post service provider name to api', () => {
   //       var endpoint = endpoints.unverifiedUsers
   //       var headers = {
   //         'content-type': 'application/json',
@@ -69,24 +69,24 @@ describe('Add User', function () {
   //       expect(apiCalledWithExpectedArgs).toBeTruthy()
   //   })
 
-  //   it('should set message', function () {
+  //   it('should set message', () => {
   //     expect(model.message()).toEqual('User created.')
   //   })
 
-  //   it('should set userCreated to true', function () {
+  //   it('should set userCreated to true', () => {
   //     expect(model.userCreated()).toBeTruthy()
   //   })
 
-  //   it('should redirect to dashboard', function () {
+  //   it('should redirect to dashboard', () => {
   //     expect(stubbedBrowser.withArgs(adminurls.dashboard).calledOnce).toBeTruthy()
   //   })
   // })
 
-  // describe('Save fail', function () {
+  // describe('Save fail', () => {
   //   var stubbedApi,
   //       stubbedCookies,
   //       stubbedUrlParameter
-  //   beforeEach(function () {
+  //   beforeEach(() => {
   //     function fakeResolved (value) {
   //       return {
   //         then: function (success, error) {
@@ -108,13 +108,13 @@ describe('Add User', function () {
   //     model.save()
   //   })
 
-  //   afterEach(function () {
+  //   afterEach(() => {
   //     ajax.post.restore()
   //     cookies.get.restore()
   //     getUrlParameter.parameter.restore()
   //   })
 
-  //   it('set errors in message', function () {
+  //   it('set errors in message', () => {
   //     expect(model.errors()[0]).toEqual('returned error message 1')
   //     expect(model.errors()[1]).toEqual('returned error message 2')
   //   })

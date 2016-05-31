@@ -5,28 +5,28 @@ var sinon =     require('sinon'),
     browser =   require('../../src/js/browser'),
     cookies = require('../../src/js/cookies')
 
-describe('Login', function () {
+describe('Login', () => {
   var Login = require('../../src/js/models/Auth/Login')
   var login
 
-  beforeEach(function () {
+  beforeEach(() => {
     login = new Login()
   })
 
-  it('should set username as empty', function () {
+  it('should set username as empty', () => {
     expect(login.username()).toEqual('')
   })
 
-  it('should set password as empty', function () {
+  it('should set password as empty', () => {
     expect(login.password()).toEqual('')
   })
 
-  describe('Submit', function () {
+  describe('Submit', () => {
     var mockCookies,
     stubbedApi,
     stubbedBrowser
 
-    beforeEach(function () {
+    beforeEach(() => {
       function fakeResolved (value) {
         return {
           then: function (success, error) {
@@ -55,21 +55,21 @@ describe('Login', function () {
       login.submit()
     })
 
-    afterEach(function () {
+    afterEach(() => {
       ajax.post.restore()
       browser.redirect.restore()
       mockCookies.restore()
     })
 
-    it('should save session token to cookie', function () {
+    it('should save session token to cookie', () => {
       mockCookies.verify()
     })
 
-    it('should notify user it is authenticating', function () {
+    it('should notify user it is authenticating', () => {
       expect(login.message()).toEqual('Loading, please wait')
     })
 
-    it('should send credentials to api', function () {
+    it('should send credentials to api', () => {
       var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoints.sessions + '/create', {}, {
         'username': 'username',
         'password': 'password'
@@ -78,7 +78,7 @@ describe('Login', function () {
       expect(apiCalledWithExpectedArgs).toBeTruthy()
     })
 
-    it('should not be able to send credentials after submitting', function () {
+    it('should not be able to send credentials after submitting', () => {
       login.submit()
       var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoints.sessions + '/create', {}, {
         'username': 'username',
@@ -88,7 +88,7 @@ describe('Login', function () {
       expect(apiCalledWithExpectedArgs).toBeTruthy()
     })
 
-    it('should redirect browser to index', function () {
+    it('should redirect browser to index', () => {
       var browserRedirectedWithExpectedUrl = stubbedBrowser.withArgs(adminurls.redirector).calledOnce
       expect(browserRedirectedWithExpectedUrl).toBeTruthy()
     })

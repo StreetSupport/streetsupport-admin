@@ -7,11 +7,11 @@ var sinon = require('sinon'),
     cookies =   require('../../src/js/cookies'),
     getUrlParameter = require('../../src/js/get-url-parameter')
 
-describe('Remove Opening Time', function () {
+describe('Remove Opening Time', () => {
   var Model = require('../../src/js/models/Service'),
   model
 
-  beforeEach(function () {
+  beforeEach(() => {
     model = new Model(getData())
 
     model.edit()
@@ -22,7 +22,7 @@ describe('Remove Opening Time', function () {
     })
   })
 
-  it('should remove passed openingTimes', function () {
+  it('should remove passed openingTimes', () => {
     expect(model.openingTimes().length).toEqual(1)
     expect(model.openingTimes()[0].day()).toEqual('Tuesday')
     expect(model.openingTimes()[0].startTime()).toEqual('10:00')

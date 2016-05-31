@@ -1,0 +1,83 @@
+---
+title: Charter Pledges - Street Support Admin
+description: Street Support - Making it easier to help homeless people in Manchester
+layout: default.hbs
+permalink: false
+jsBundle: charterPledges
+page: charterPledges
+---
+
+{{#extend "_default"}}
+  {{#content "main"}}
+    <div class="block block--highlight admin-header">
+      <div class="container block__inner">
+        <header>
+        <h1>Charter Pledges</h1>
+        <div class="form__field-item form__field-item--full-width">
+          <button data-bind="click: toggleShowAll" class="btn btn--info">
+            <span data-bind="text: showAllButtonLabel"></span>
+          </button>
+        </div>
+        <div class="form__field-item form__field-item--full-width">
+          <label class="form__label">Filter by Category:</label>
+          <select class="form__input form__input--full" data-bind="options: supporterCategories,
+                             value: selectedCategory,
+                             optionsCaption: '-- All Categories --'"></select>
+        </div>
+        </header>
+      </div>
+    </div>
+    <div class="block block--main-body">
+      <div class="container block__inner">
+        <div class="block__content">
+          <!-- ko if: pledges().length === 0 -->
+          <p>There are no pledges currently awaiting approval.</p>
+          <!-- /ko -->
+          <div data-bind="template: { name: 'pledge', foreach:pledges }"></div>
+        </div>
+      </div>
+    </div>
+  {{/content}}
+  {{#content "gutter"}}
+
+  {{> loading-spinner}}
+  <script type="text/html" id="pledge">
+  <article class="pledge">
+    <!-- ko ifnot: isEditable -->
+    <p data-bind="html:description" class="h3 pledge__description"></p>
+    <!-- /ko -->
+    <!-- ko if: isEditable -->
+    <div data-bind="with: formModel" class="form__field-item form__field-item--full">
+      <textarea class="form__input form__input--textarea" data-bind="textInput:description"></textarea>
+    </div>
+    <!-- /ko -->
+    <p class="pledge__author">
+      <span class="pledge__author-name" data-bind="html:fullName"></span> (<a data-bind="text:email, attr: { href: mailToLink }" class="pledge__author-email"></a>) <span data-bind="html:organisation" class="pledge__author-organisation"></span> Submitted on: <span data-bind="text:creationDate" class="pledge__author-creationDate"></span>
+    </p>
+    <!-- ko ifnot: isEditable -->
+    <button data-bind="click: toggleApproval, attr: { class: approvedButtonClass }">
+      <span class="btn__text" data-bind="text: approvedButtonLabel"></span>
+    </button>
+    <button data-bind="click: toggleFeatured, attr: { class: featuredButtonClass }">
+      <span class="btn__text" data-bind="text: featuredButtonLabel"></span>
+    </button>
+    <button data-bind="click: editPledge" class="btn btn--info">
+      <span class="btn__text">Edit</span>
+    </button>
+    <button data-bind="click: deletePledge" class="btn btn--warning">
+      <span class="btn__text">Delete</span>
+    </button>
+    <!-- /ko -->
+    <!-- ko if: isEditable -->
+    <button data-bind="click: updatePledge" class="btn btn--primary">
+      <span class="btn__text">Save</span>
+    </button>
+    <button data-bind="click: cancelEdit" class="btn btn--indifferent">
+      <span class="btn__text">Cancel</span>
+    </button>
+    <!-- /ko -->
+  </article>
+  </script>
+
+  {{/content}}
+{{/extend}}

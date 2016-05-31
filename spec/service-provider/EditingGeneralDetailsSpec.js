@@ -6,14 +6,14 @@ var sinon = require('sinon'),
     cookies =   require('../../src/js/cookies'),
     getUrlParameter = require('../../src/js/get-url-parameter')
 
-describe('Edit Service Provider General Details', function () {
+describe('Edit Service Provider General Details', () => {
   var Model = require('../../src/js/models/ServiceProvider'),
   model,
   stubbedApi,
   stubbedCookies,
   stubbedUrlParams
 
-  beforeEach(function () {
+  beforeEach(() => {
     function fakeResolved (value) {
       return {
         then: function (success, error) {
@@ -36,7 +36,7 @@ describe('Edit Service Provider General Details', function () {
     model.editGeneralDetails()
   })
 
-  afterEach(function () {
+  afterEach(() => {
     ajax.get.restore()
     cookies.get.restore()
     getUrlParameter.parameter.restore()
@@ -44,14 +44,14 @@ describe('Edit Service Provider General Details', function () {
     browser.loading.restore()
   })
 
-  it('should set isEditingGeneralDetails to true', function () {
+  it('should set isEditingGeneralDetails to true', () => {
     expect(model.isEditingGeneralDetails).toBeTruthy()
   })
 
-  describe('Save', function () {
+  describe('Save', () => {
     var stubbedPutApi
 
-    beforeEach(function () {
+    beforeEach(() => {
       function fakeResolved (value) {
         return {
           then: function (success, error) {
@@ -71,11 +71,11 @@ describe('Edit Service Provider General Details', function () {
       model.saveGeneralDetails()
     })
 
-    afterEach(function () {
+    afterEach(() => {
       ajax.put.restore()
     })
 
-    it('should put service provider general details to api with session token', function () {
+    it('should put service provider general details to api with session token', () => {
         var endpoint = endpoints.getServiceProviders + '/coffee4craig/general-information'
         var headers = {
           'content-type': 'application/json',
@@ -89,15 +89,15 @@ describe('Edit Service Provider General Details', function () {
         expect(apiCalledWithExpectedArgs).toBeTruthy()
     })
 
-    it('should set isEditingGeneralDetails to false', function () {
+    it('should set isEditingGeneralDetails to false', () => {
       expect(model.isEditingGeneralDetails()).toBeFalsy()
     })
   })
 
-  describe('Invalid submission', function () {
+  describe('Invalid submission', () => {
     var stubbedPutApi
 
-    beforeEach(function () {
+    beforeEach(() => {
       function fakeResolved (value) {
         return {
           then: function (success, error) {
@@ -118,23 +118,23 @@ describe('Edit Service Provider General Details', function () {
       model.saveGeneralDetails()
     })
 
-    afterEach(function () {
+    afterEach(() => {
       ajax.put.restore()
     })
 
-    it('should set message as joined error messages', function () {
+    it('should set message as joined error messages', () => {
       expect(model.errors()[1]).toEqual('returned error message 2')
     })
 
-    it('should keep isEditingGeneralDetails as true', function () {
+    it('should keep isEditingGeneralDetails as true', () => {
       expect(model.isEditingGeneralDetails()).toBeTruthy()
     })
   })
 
-  describe('Invalid submission then valid submission', function () {
+  describe('Invalid submission then valid submission', () => {
     var stubbedPutApi
 
-    beforeEach(function () {
+    beforeEach(() => {
       function fakeResolved (value) {
         return {
           then: function (success, error) {
@@ -155,11 +155,11 @@ describe('Edit Service Provider General Details', function () {
       model.saveGeneralDetails()
     })
 
-    afterEach(function () {
+    afterEach(() => {
       ajax.put.restore()
     })
 
-    it('should clear errors', function () {
+    it('should clear errors', () => {
         expect(model.hasErrors()).toBeFalsy()
     })
   })

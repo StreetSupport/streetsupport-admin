@@ -10,11 +10,11 @@ var endpoints = require('../../src/js/api-endpoints')
 var browser = require('../../src/js/browser')
 var cookies = require('../../src/js/cookies')
 
-describe('VerifiedServiceProviders', function () {
+describe('VerifiedServiceProviders', () => {
   var Dashboard = require('../../src/js/models/ServiceProviders')
   var dashboard
 
-  beforeEach(function () {
+  beforeEach(() => {
     let fakeResolved = {
       then: function (success, error) {
         success({
@@ -43,30 +43,30 @@ describe('VerifiedServiceProviders', function () {
     dashboard = new Dashboard()
   })
 
-  afterEach(function () {
+  afterEach(() => {
     ajax.get.restore()
     cookies.get.restore()
     browser.loading.restore()
     browser.loaded.restore()
   })
 
-  it('should set published labels', function () {
+  it('should set published labels', () => {
     expect(dashboard.serviceProviders()[0].publishedLabel()).toEqual('published')
   })
 
-  it('should set un-published labels', function () {
+  it('should set un-published labels', () => {
     expect(dashboard.serviceProviders()[1].publishedLabel()).toEqual('disabled')
   })
 
-  it('should set toggle publish button labels', function () {
+  it('should set toggle publish button labels', () => {
     expect(dashboard.serviceProviders()[0].togglePublishButtonLabel()).toEqual('disable')
     expect(dashboard.serviceProviders()[1].togglePublishButtonLabel()).toEqual('publish')
   })
 
-  describe('Toggle Published status', function () {
+  describe('Toggle Published status', () => {
     var stubbedPutApi
 
-    beforeEach(function () {
+    beforeEach(() => {
       let fakePostResolved = {
         then: function (success, error) {
           success({
@@ -81,11 +81,11 @@ describe('VerifiedServiceProviders', function () {
       dashboard.togglePublished(dashboard.serviceProviders()[0])
     })
 
-    afterEach(function () {
+    afterEach(() => {
       ajax.put.restore()
     })
 
-    it('should send inverse of current isPublished to api', function () {
+    it('should send inverse of current isPublished to api', () => {
       var endpoint = endpoints.getServiceProviders + '/albert-kennedy-trust/is-published'
       var headers = {
         'content-type': 'application/json',
@@ -98,15 +98,15 @@ describe('VerifiedServiceProviders', function () {
       expect(apiCalledWithExpectedArgs).toBeTruthy()
     })
 
-    it('should invert isPublished', function () {
+    it('should invert isPublished', () => {
       expect(dashboard.serviceProviders()[0].isPublished()).toBeFalsy()
     })
 
-    it('should set published labels', function () {
+    it('should set published labels', () => {
       expect(dashboard.serviceProviders()[0].publishedLabel()).toEqual('disabled')
     })
 
-    it('should set toggle publish button labels', function () {
+    it('should set toggle publish button labels', () => {
       expect(dashboard.serviceProviders()[0].togglePublishButtonLabel()).toEqual('publish')
     })
   })

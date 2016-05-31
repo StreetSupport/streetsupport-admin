@@ -6,41 +6,41 @@ var sinon = require('sinon'),
   cookies = require('../../src/js/cookies'),
   getUrlParameter = require('../../src/js/get-url-parameter')
 
-describe('Address', function() {
+describe('Address', () => {
   var Model = require('../../src/js/models/Address'),
     model
 
-  beforeEach(function() {
+  beforeEach(() => {
     model = new Model(getAddressData())
   })
 
-  it('should format addresses', function() {
+  it('should format addresses', () => {
     expect(model.formatted).toEqual('5 Oak Street, Manchester, M4 5JD')
   })
 
-  it('should set link to edit each address', function() {
+  it('should set link to edit each address', () => {
     expect(model.editAddressUrl).toEqual('edit-service-provider-address.html?providerId=coffee4craig&addressId=1234')
   })
 
-  it('should set link to add an address', function() {
+  it('should set link to add an address', () => {
     expect(model.addAddressUrl).toEqual('add-service-provider-address.html?providerId=coffee4craig')
   })
 
-  it('should set link to delete an address', function() {
+  it('should set link to delete an address', () => {
     expect(model.deleteAddressUrl).toEqual('delete-service-provider-address.html?providerId=coffee4craig&addressId=1234')
   })
 
-  describe('Editing', function() {
-    beforeEach(function() {
+  describe('Editing', () => {
+    beforeEach(() => {
       model.edit()
     })
 
-    it('should set isEditing to true', function() {
+    it('should set isEditing to true', () => {
       expect(model.isEditing).toBeTruthy()
     })
 
-    describe('Cancel', function() {
-      beforeEach(function() {
+    describe('Cancel', () => {
+      beforeEach(() => {
         model.street1('new street1')
         model.street2('new street2')
         model.street3('new street3')
@@ -53,11 +53,11 @@ describe('Address', function() {
         model.cancel()
       })
 
-      it('should set isEditing to false', function() {
+      it('should set isEditing to false', () => {
         expect(model.isEditing()).toBeFalsy()
       })
 
-      it('should set reset fields', function() {
+      it('should set reset fields', () => {
         expect(model.street1()).toEqual('5 Oak Street')
         expect(model.street2()).toEqual('')
         expect(model.street3()).toEqual('')
@@ -70,12 +70,12 @@ describe('Address', function() {
       })
     })
 
-    describe('Save', function() {
+    describe('Save', () => {
       var stubbedApi,
         stubbedCookies,
         stubbedUrlParams
 
-      beforeEach(function() {
+      beforeEach(() => {
         function fakeResolved(value) {
           return {
             then: function(success, error) {
@@ -107,13 +107,13 @@ describe('Address', function() {
         model.save()
       })
 
-      afterEach(function() {
+      afterEach(() => {
         ajax.put.restore()
         cookies.get.restore()
         getUrlParameter.parameter.restore()
       })
 
-      it('should put address details to api with session token', function() {
+      it('should put address details to api with session token', () => {
         var endpoint = endpoints.getServiceProviders + '/coffee4craig/addresses/1234'
         var headers = {
           'content-type': 'application/json',
@@ -141,33 +141,33 @@ describe('Address', function() {
         expect(apiCalledWithExpectedArgs).toBeTruthy()
       })
 
-      it('should set isEditing to false', function() {
+      it('should set isEditing to false', () => {
         expect(model.isEditing()).toBeFalsy()
       })
 
-      describe('Edit again and Cancel', function() {
-        beforeEach(function() {
+      describe('Edit again and Cancel', () => {
+        beforeEach(() => {
           model.edit()
           model.street1('another new street1')
           model.cancel()
         })
 
-        it('should set isEditing to false', function() {
+        it('should set isEditing to false', () => {
           expect(model.isEditing()).toBeFalsy()
         })
 
-        it('should set reset fields', function() {
+        it('should set reset fields', () => {
           expect(model.street1()).toEqual('new street1')
         })
       })
     })
 
-    describe('Save Fail', function() {
+    describe('Save Fail', () => {
       var stubbedApi,
         stubbedCookies,
         stubbedUrlParams
 
-      beforeEach(function() {
+      beforeEach(() => {
         function fakeResolved(value) {
           return {
             then: function(success, error) {
@@ -190,18 +190,18 @@ describe('Address', function() {
         model.save()
       })
 
-      afterEach(function() {
+      afterEach(() => {
         ajax.put.restore()
         cookies.get.restore()
         getUrlParameter.parameter.restore()
       })
 
-      it('should set message as joined error messages', function() {
+      it('should set message as joined error messages', () => {
         expect(model.errors()[0]).toEqual('returned error message 1')
         expect(model.errors()[1]).toEqual('returned error message 2')
       })
 
-      it('should keep isEditing as true', function() {
+      it('should keep isEditing as true', () => {
         expect(model.isEditing()).toBeTruthy()
       })
     })

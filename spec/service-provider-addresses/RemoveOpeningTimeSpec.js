@@ -6,11 +6,11 @@ var sinon = require('sinon'),
     browser =   require('../../src/js/browser'),
     cookies =   require('../../src/js/cookies')
 
-describe('Remove Opening Time', function () {
+describe('Remove Opening Time', () => {
   var Model = require('../../src/js/models/Address'),
   model
 
-  beforeEach(function () {
+  beforeEach(() => {
     model = new Model(getAddressData())
 
     model.edit()
@@ -21,7 +21,7 @@ describe('Remove Opening Time', function () {
     })
   })
 
-  it('should remove passed openingTimes', function () {
+  it('should remove passed openingTimes', () => {
     expect(model.openingTimes().length).toEqual(1)
     expect(model.openingTimes()[0].day()).toEqual('Tuesday')
     expect(model.openingTimes()[0].startTime()).toEqual('10:00')

@@ -10,12 +10,12 @@ const endpoints = require('../../src/js/api-endpoints')
 const cookies = require('../../src/js/cookies')
 const getUrlParameter = require('../../src/js/get-url-parameter')
 
-describe('Service Provider Addresses', function () {
+describe('Service Provider Addresses', () => {
   let Model = require('../../src/js/models/ServiceProviderAddresses')
   let model = null
   let stubbedApi = null
 
-  beforeEach(function () {
+  beforeEach(() => {
     const fakeResolved = {
       then: function (success, error) {
         success({
@@ -32,13 +32,13 @@ describe('Service Provider Addresses', function () {
     model = new Model()
   })
 
-  afterEach(function () {
+  afterEach(() => {
     ajax.get.restore()
     cookies.get.restore()
     getUrlParameter.parameter.restore()
   })
 
-  it('should retrieve service provider from api with session token', function () {
+  it('should retrieve service provider from api with session token', () => {
     var endpoint = endpoints.getServiceProviders + '/coffee4craig/addresses'
     var headers = {
       'content-type': 'application/json',
@@ -49,34 +49,34 @@ describe('Service Provider Addresses', function () {
     expect(apiCalledWithExpectedArgs).toBeTruthy()
   })
 
-  describe('Add new Address', function () {
-    beforeEach(function () {
+  describe('Add new Address', () => {
+    beforeEach(() => {
       model.serviceProvider().addAddress()
     })
 
-    it('should add an empty address to the view model', function () {
+    it('should add an empty address to the view model', () => {
       expect(model.serviceProvider().addresses().length).toEqual(3)
     })
 
-    it('should set the new address in edit mode', function () {
+    it('should set the new address in edit mode', () => {
       expect(model.serviceProvider().addresses()[2].isEditing()).toBeTruthy()
     })
   })
 
-  describe('Add two new Addresses then cancel first', function () {
-    beforeEach(function () {
+  describe('Add two new Addresses then cancel first', () => {
+    beforeEach(() => {
       model.serviceProvider().addAddress()
       model.serviceProvider().addAddress()
       model.serviceProvider().addresses()[2].cancel()
     })
 
-    it('should remove it from the collection', function () {
+    it('should remove it from the collection', () => {
       expect(model.serviceProvider().addresses().length).toEqual(3)
     })
   })
 
-  describe('Delete Address', function () {
-    beforeEach(function () {
+  describe('Delete Address', () => {
+    beforeEach(() => {
       const fakeResolved = {
         then: function (success, error) {
           success({
@@ -90,11 +90,11 @@ describe('Service Provider Addresses', function () {
       model.serviceProvider().addresses()[0].deleteAddress()
     })
 
-    afterEach(function () {
+    afterEach(() => {
       ajax.delete.restore()
     })
 
-    it('should remove the address from the collection', function () {
+    it('should remove the address from the collection', () => {
       expect(model.serviceProvider().addresses().length).toEqual(1)
       expect(model.serviceProvider().addresses()[0].key()).toEqual(2)
     })

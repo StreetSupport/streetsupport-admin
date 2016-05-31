@@ -12,14 +12,14 @@ var browser = require('../../src/js/browser')
 var cookies = require('../../src/js/cookies')
 var getUrlParameter = require('../../src/js/get-url-parameter')
 
-describe('Editing Service Provider Need', function () {
+describe('Editing Service Provider Need', () => {
   var Model = require('../../src/js/models/service-provider-needs/EditServiceProviderNeed')
   var model
   var browserStub
   var browserRedirectStub
   var ajaxGetStub
 
-  beforeEach(function () {
+  beforeEach(() => {
     browserStub = sinon.stub(browser, 'loading')
     browserStub = sinon.stub(browser, 'loaded')
     browserRedirectStub = sinon.stub(browser, 'redirect')
@@ -49,7 +49,7 @@ describe('Editing Service Provider Need', function () {
     model = new Model()
   })
 
-  afterEach(function () {
+  afterEach(() => {
     ajax.get.restore()
     browser.loading.restore()
     browser.loaded.restore()
@@ -58,70 +58,70 @@ describe('Editing Service Provider Need', function () {
     browser.redirect.restore()
   })
 
-  it('should get need from api', function () {
+  it('should get need from api', () => {
     expect(ajaxGetStub.calledOnce).toBeTruthy()
   })
 
-  it('should set editNeedUrl', function () {
+  it('should set editNeedUrl', () => {
     expect(model.need().editNeedUrl).toEqual(adminurls.serviceProviderNeedsEdit + '?providerId=albert-kennedy-trust&needId=56d8784092855610f88d492a')
   })
 
-  it('should set need id', function () {
+  it('should set need id', () => {
     expect(model.need().id()).toEqual('56d8784092855610f88d492a')
   })
 
-  it('should set need service provider id', function () {
+  it('should set need service provider id', () => {
     expect(model.need().serviceProviderId).toEqual('albert-kennedy-trust')
   })
 
-  it('should set decoded need description', function () {
+  it('should set decoded need description', () => {
     expect(model.need().description()).toEqual('men\'s shoes & socks')
   })
 
-  it('should set need type', function () {
+  it('should set need type', () => {
     expect(model.need().type()).toEqual('Money')
   })
 
-  it('should set need reason', function () {
+  it('should set need reason', () => {
     expect(model.need().reason()).toEqual('we need \'em')
   })
 
-  it('should set need moreInfoUrl', function () {
+  it('should set need moreInfoUrl', () => {
     expect(model.need().moreInfoUrl()).toEqual('http://www.wang.com')
   })
 
-  it('should set need postcode', function () {
+  it('should set need postcode', () => {
     expect(model.need().postcode()).toEqual('m1 3ly')
   })
 
-  it('should set need instructions', function () {
+  it('should set need instructions', () => {
     expect(model.need().instructions()).toEqual('instructions')
   })
 
-  it('should set need email', function () {
+  it('should set need email', () => {
     expect(model.need().email()).toEqual('email')
   })
 
-  it('should set need donationAmountInPounds', function () {
+  it('should set need donationAmountInPounds', () => {
     expect(model.need().donationAmountInPounds()).toEqual(1)
   })
 
-  it('should set need donationUrl', function () {
+  it('should set need donationUrl', () => {
     expect(model.need().donationUrl()).toEqual('http://www.donationUrl.com')
   })
 
-  it('should set need keywords', function () {
+  it('should set need keywords', () => {
     expect(model.need().keywords()).toEqual('keywordA, keywordB, keywordC')
   })
 
-  it('should tell browser dataLoaded', function () {
+  it('should tell browser dataLoaded', () => {
     expect(browserStub.calledOnce).toBeTruthy()
   })
 
-  describe('save', function () {
+  describe('save', () => {
     var ajaxPutStub
 
-    beforeEach(function () {
+    beforeEach(() => {
       function fakePutResolution (value) {
         return {
           then: function (success, error) {
@@ -154,15 +154,15 @@ describe('Editing Service Provider Need', function () {
       model.need().save()
     })
 
-    afterEach(function () {
+    afterEach(() => {
       ajax.put.restore()
     })
 
-    it('should put to api', function () {
+    it('should put to api', () => {
       expect(ajaxPutStub.calledOnce).toBeTruthy()
     })
 
-    it('should redirect back to service provider', function () {
+    it('should redirect back to service provider', () => {
       var redirect = adminurls.serviceProviders + '?key=albert-kennedy-trust'
       expect(browserRedirectStub.withArgs(redirect).calledOnce).toBeTruthy()
     })

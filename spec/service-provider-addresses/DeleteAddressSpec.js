@@ -1,39 +1,44 @@
-var sinon =           require('sinon')
-var ajax =            require('basic-ajax')
-var endpoints =       require('../../src/js/api-endpoints')
-var cookies =         require('../../src/js/cookies')
+/*
+global describe, beforeEach, afterEach, it, expect
+*/
+
+'use strict'
+
+var sinon = require('sinon')
+var ajax = require('basic-ajax')
+var endpoints = require('../../src/js/api-endpoints')
+var cookies = require('../../src/js/cookies')
 var getUrlParameter = require('../../src/js/get-url-parameter')
 var guid = require('node-uuid')
 
-describe('Delete Address', function () {
-  var Model = require('../../src/js/models/Address'),
-  model = new Model(getAddressData())
+describe('Delete Address', () => {
+  var Model = require('../../src/js/models/Address')
+  let model = new Model(getAddressData())
+  let stubbedApi = null
 
-  beforeEach(function () {
-    function fakeResolved(value) {
-      return {
-        then: function (success, error) {
-          success({
-            'status': 200
-          })
-        }
+  beforeEach(() => {
+    let fakeResolved = {
+      then: function (success, error) {
+        success({
+          'status': 200
+        })
       }
     }
 
-    stubbedApi = sinon.stub(ajax, 'delete').returns(fakeResolved ())
-    stubbedCookies = sinon.stub(cookies, 'get').returns('stored-session-token')
-    stubbedUrlParams = sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
+    stubbedApi = sinon.stub(ajax, 'delete').returns(fakeResolved)
+    sinon.stub(cookies, 'get').returns('stored-session-token')
+    sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
 
     model.deleteAddress()
   })
 
-  afterEach(function () {
+  afterEach(() => {
     ajax.delete.restore()
     cookies.get.restore()
     getUrlParameter.parameter.restore()
   })
 
-  it('should delete address key to api create endpoint with session token', function () {
+  it('should delete address key to api create endpoint with session token', () => {
     var endpoint = endpoints.getServiceProviders + '/coffee4craig/addresses/' + model.key()
     var headers = {
       'content-type': 'application/json',
@@ -45,7 +50,7 @@ describe('Delete Address', function () {
   })
 })
 
-function getAddressData() {
+function getAddressData () {
   return {
     'key': guid.v4(),
     'street': '5 Oak Street',

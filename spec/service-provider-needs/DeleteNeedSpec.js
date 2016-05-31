@@ -6,12 +6,12 @@ var browser =   require('../../src/js/browser')
 var cookies =   require('../../src/js/cookies')
 var getUrlParameter = require('../../src/js/get-url-parameter')
 
-describe('Delete individual Need', function () {
+describe('Delete individual Need', () => {
   var Model = require('../../src/js/models/Need')
   var model
   var ajaxStub
 
-  beforeEach(function () {
+  beforeEach(() => {
     sinon.stub(browser, 'loading')
     sinon.stub(browser, 'loaded')
     sinon.stub(getUrlParameter, 'parameter').withArgs('key').returns('coffee4craig')
@@ -35,7 +35,7 @@ describe('Delete individual Need', function () {
     model.deleteNeed()
   })
 
-  afterEach(function () {
+  afterEach(() => {
     browser.loading.restore()
     browser.loaded.restore()
     getUrlParameter.parameter.restore()
@@ -43,7 +43,7 @@ describe('Delete individual Need', function () {
       cookies.get.restore()
   })
 
-  it('should delete need to api', function () {
+  it('should delete need to api', () => {
     var endpoint = endpoints.getServiceProviders + '/coffee4craig/needs/abcde'
     var headers =  {
       'content-type': 'application/json',

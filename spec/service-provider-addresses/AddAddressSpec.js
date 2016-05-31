@@ -6,7 +6,7 @@ var sinon = require('sinon'),
     cookies =   require('../../src/js/cookies'),
     getUrlParameter = require('../../src/js/get-url-parameter')
 
-describe('Add individual Address', function () {
+describe('Add individual Address', () => {
   var Model = require('../../src/js/models/service-provider-addresses/AddServiceProviderAddress'),
   model,
   stubbedApi,
@@ -14,23 +14,23 @@ describe('Add individual Address', function () {
   cookiesStub,
   stubbedParameters
 
-  beforeEach(function () {
+  beforeEach(() => {
     sinon.stub(browser, 'loading')
     sinon.stub(browser, 'loaded')
     model = new Model()
   })
 
-  afterEach(function () {
+  afterEach(() => {
     browser.loading.restore()
     browser.loaded.restore()
   })
 
-  it('should set an empty Address', function() {
+  it('should set an empty Address', () => {
     expect(model.address().postcode()).toEqual(undefined)
   })
 
-  describe('Save', function () {
-    beforeEach(function () {
+  describe('Save', () => {
+    beforeEach(() => {
       function fakeResolved(value) {
           return {
             then: function(success, error) {
@@ -49,14 +49,14 @@ describe('Add individual Address', function () {
       model.address().save()
     })
 
-    afterEach(function () {
+    afterEach(() => {
       ajax.post.restore()
       browser.redirect.restore()
       cookies.get.restore()
       getUrlParameter.parameter.restore()
     })
 
-    it('should redirect to service provider', function () {
+    it('should redirect to service provider', () => {
       var redirect = adminurls.serviceProviders + '?key=coffee4craig'
       expect(browserSpy.withArgs(redirect).calledOnce).toBeTruthy()
     })

@@ -1,41 +1,41 @@
-var sinon = require('sinon'),
-    ajax =      require('basic-ajax'),
-    endpoints = require('../../src/js/api-endpoints'),
-    adminurls = require('../../src/js/admin-urls'),
-    browser =   require('../../src/js/browser'),
-    cookies =   require('../../src/js/cookies'),
-    getUrlParameter = require('../../src/js/get-url-parameter')
+/*
+global describe, beforeEach, afterEach, it, expect
+*/
 
+'use strict'
 
-describe('Service Provider not found', function () {
-  var Model = require('../../src/js/models/ServiceProvider'),
-  model,
-  stubbedApi,
-  stubbedCookies,
-  stubbedUrlParams
+var sinon = require('sinon')
+let ajax = require('basic-ajax')
+let adminurls = require('../../src/js/admin-urls')
+let browser = require('../../src/js/browser')
+let cookies = require('../../src/js/cookies')
+let getUrlParameter = require('../../src/js/get-url-parameter')
 
-  beforeEach(function () {
-    function fakeResolved (value) {
-      return {
-        then: function (success, error) {
-          error({
-            'status': 404,
-            'json': {}
-          })
-        }
+describe('Service Provider not found', () => {
+  var Model = require('../../src/js/models/ServiceProvider')
+  let model = null // eslint-disable-line
+  let stubbedBrowser = null
+
+  beforeEach(() => {
+    let fakeResolved = {
+      then: function (success, error) {
+        error({
+          'status': 404,
+          'json': {}
+        })
       }
     }
 
-    stubbedApi = sinon.stub(ajax, 'get').returns(fakeResolved ())
-    stubbedCookies = sinon.stub(cookies, 'get').returns('stored-session-token')
-    stubbedUrlParams = sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
+    sinon.stub(ajax, 'get').returns(fakeResolved)
+    sinon.stub(cookies, 'get').returns('stored-session-token')
+    sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
     stubbedBrowser = sinon.stub(browser, 'redirect')
     sinon.stub(browser, 'loading')
 
     model = new Model()
   })
 
-  afterEach(function () {
+  afterEach(() => {
     ajax.get.restore()
     cookies.get.restore()
     getUrlParameter.parameter.restore()
@@ -43,7 +43,7 @@ describe('Service Provider not found', function () {
     browser.loading.restore()
   })
 
-  it('should redirect browser to 404', function () {
+  it('- Should redirect browser to 404', () => {
     var browserRedirectedWithExpectedUrl = stubbedBrowser.withArgs(adminurls.notFound).calledOnce
     expect(browserRedirectedWithExpectedUrl).toBeTruthy()
   })

@@ -6,14 +6,14 @@ var sinon = require('sinon'),
     cookies =   require('../../src/js/cookies'),
     getUrlParameter = require('../../src/js/get-url-parameter')
 
-describe('Show Service Provider', function () {
+describe('Show Service Provider', () => {
   var Model = require('../../src/js/models/ServiceProvider'),
   model,
   stubbedApi,
   stubbedCookies,
   stubbedUrlParams
 
-  beforeEach(function () {
+  beforeEach(() => {
     function fakeResolved (value) {
       return {
         then: function (success, error) {
@@ -35,7 +35,7 @@ describe('Show Service Provider', function () {
     model.serviceProvider().services()[0].deleteService()
   })
 
-  afterEach(function () {
+  afterEach(() => {
     ajax.get.restore()
     ajax.delete.restore()
     cookies.get.restore()
@@ -44,11 +44,11 @@ describe('Show Service Provider', function () {
     browser.loaded.restore()
   })
 
-  it('should remove Service from collection', function () {
+  it('should remove Service from collection', () => {
     expect(model.serviceProvider().services().length).toEqual(1)
   })
 
-  it('should keep expected address', function () {
+  it('should keep expected address', () => {
     expect(model.serviceProvider().services()[0].id()).toEqual('5678')
   })
 })

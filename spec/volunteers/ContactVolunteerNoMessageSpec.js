@@ -6,7 +6,7 @@ var browser =   require('../../src/js/browser')
 var cookies =   require('../../src/js/cookies')
 var Model = require('../../src/js/models/volunteers/ContactVolunteerModel')
 
-describe('Contact Volunteer - No message', function () {
+describe('Contact Volunteer - No message', () => {
   var model
   var headers = {
     'content-type': 'application/json',
@@ -16,7 +16,7 @@ describe('Contact Volunteer - No message', function () {
   var browserLoadingStub
   var browserLoadedStub
 
-  beforeEach(function () {
+  beforeEach(() => {
     sinon.stub(cookies, 'get')
       .withArgs('session-token')
       .returns('stored-session-token')
@@ -30,18 +30,18 @@ describe('Contact Volunteer - No message', function () {
     model.submit()
   })
 
-  afterEach(function () {
+  afterEach(() => {
     ajax.post.restore()
     cookies.get.restore()
     browser.loading.restore()
     browser.loaded.restore()
   })
 
-  it('should not post to api', function () {
+  it('should not post to api', () => {
     expect(ajaxPostStub.notCalled).toBeTruthy()
   })
 
-  it('should keep isFormSubmitSuccessful as false' ,function () {
+  it('should keep isFormSubmitSuccessful as false' ,() => {
     expect(model.isFormSubmitSuccessful()).toBeFalsy()
   })
 })

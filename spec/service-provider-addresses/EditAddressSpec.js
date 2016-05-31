@@ -12,13 +12,13 @@ var browser = require('../../src/js/browser')
 var cookies = require('../../src/js/cookies')
 var getUrlParameter = require('../../src/js/get-url-parameter')
 
-describe('Edit individual Address', function () {
+describe('Edit individual Address', () => {
   var Model = require('../../src/js/models/service-provider-addresses/EditServiceProviderAddress')
   var model
   var stubbedApi
   var stubbedUrlParams
 
-  beforeEach(function () {
+  beforeEach(() => {
     let fakeResolved = {
       then: function (success, error) {
         success({
@@ -39,7 +39,7 @@ describe('Edit individual Address', function () {
     model = new Model()
   })
 
-  afterEach(function () {
+  afterEach(() => {
     ajax.get.restore()
     cookies.get.restore()
     browser.loaded.restore()
@@ -47,7 +47,7 @@ describe('Edit individual Address', function () {
     getUrlParameter.parameter.restore()
   })
 
-  it('should retrieve address from api with session token', function () {
+  it('should retrieve address from api with session token', () => {
     var endpoint = endpoints.getServiceProviders + '/coffee4craig/addresses/1234'
     var headers = {
       'content-type': 'application/json',
@@ -58,34 +58,34 @@ describe('Edit individual Address', function () {
     expect(apiCalledWithExpectedArgs).toBeTruthy()
   })
 
-  it('should map and decode Address street line 1', function () {
+  it('should map and decode Address street line 1', () => {
     expect(model.address().street1()).toEqual('St Mary\'s street 1')
   })
 
-  it('should map and decode Address street line 2', function () {
+  it('should map and decode Address street line 2', () => {
     expect(model.address().street2()).toEqual('St Mary\'s street 2')
   })
 
-  it('should map and decode Address street line 3', function () {
+  it('should map and decode Address street line 3', () => {
     expect(model.address().street3()).toEqual('St Mary\'s street 3')
   })
 
-  it('should map and decode Address street line 4', function () {
+  it('should map and decode Address street line 4', () => {
     expect(model.address().street4()).toEqual('St Mary\'s street 4')
   })
 
-  it('should map and decode Address city', function () {
+  it('should map and decode Address city', () => {
     expect(model.address().city()).toEqual('St Mary\'s city')
   })
 
-  it('should map Address postcode', function () {
+  it('should map Address postcode', () => {
     expect(model.address().postcode()).toEqual('M4 5JD')
   })
 
-  describe('Save', function () {
+  describe('Save', () => {
     var browserSpy
 
-    beforeEach(function () {
+    beforeEach(() => {
       let fakeResolved = {
         then: function (success, error) {
           success({
@@ -101,12 +101,12 @@ describe('Edit individual Address', function () {
       model.address().save()
     })
 
-    afterEach(function () {
+    afterEach(() => {
       ajax.put.restore()
       browser.redirect.restore()
     })
 
-    it('should redirect to service provider', function () {
+    it('should redirect to service provider', () => {
       var redirect = adminurls.serviceProviders + '?key=coffee4craig'
       expect(browserSpy.withArgs(redirect).calledOnce).toBeTruthy()
     })

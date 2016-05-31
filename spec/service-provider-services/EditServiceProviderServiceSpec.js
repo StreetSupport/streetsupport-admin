@@ -7,7 +7,7 @@ var getUrlParameter = require('../../src/js/get-url-parameter')
 var browser =         require('../../src/js/browser')
 var adminUrls =       require('../../src/js/admin-urls')
 
-describe('Edit Service', function () {
+describe('Edit Service', () => {
   var Model = require('../../src/js/models/service-provider-services/EditServiceProviderService'),
   model,
   stubbedApi,
@@ -15,7 +15,7 @@ describe('Edit Service', function () {
   stubbedUrlParams,
   stubbedBrowser
 
-  beforeEach(function() {
+  beforeEach(() => {
     function fakeResolved(value) {
       return {
         then: function(success, error) {
@@ -39,7 +39,7 @@ describe('Edit Service', function () {
     model = new Model()
   })
 
-  afterEach(function () {
+  afterEach(() => {
     ajax.get.restore()
     cookies.get.restore()
     getUrlParameter.parameter.restore()
@@ -49,7 +49,7 @@ describe('Edit Service', function () {
   })
 
 
-  it('should request for service', function () {
+  it('should request for service', () => {
     var endpoint = endpoints.getServiceProviders + '/coffee4craig/services/2'
     var headers = {
       'content-type': 'application/json',
@@ -60,28 +60,28 @@ describe('Edit Service', function () {
     expect(apiCalled).toBeTruthy()
   })
 
-  it('should set serviceProviderId on Service', function () {
+  it('should set serviceProviderId on Service', () => {
     expect(model.service().serviceProviderId).toEqual('coffee4craig')
   })
 
-  it('should set name on Service', function () {
+  it('should set name on Service', () => {
     expect(model.service().name).toEqual('Meals')
   })
 
-  it('should set location description on Service', function () {
+  it('should set location description on Service', () => {
     expect(model.service().locationDescription()).toEqual('location description')
   })
 
-  it('should set address key on Service', function () {
+  it('should set address key on Service', () => {
     expect(model.service().address.key()).toEqual('7a6ff0f3-5b04-4bd9-b088-954e473358f5')
   })
 
-  it('should set opening times start time on Service', function () {
+  it('should set opening times start time on Service', () => {
     expect(model.service().openingTimes()[0].startTime()).toEqual('12:00')
   })
 
-  describe('Save', function () {
-    beforeEach(function () {
+  describe('Save', () => {
+    beforeEach(() => {
       function fakeResolved(value) {
         return {
           then: function(success, error) {
@@ -98,11 +98,11 @@ describe('Edit Service', function () {
       model.service().save()
     })
 
-    afterEach(function () {
+    afterEach(() => {
       ajax.put.restore()
     })
 
-    it('should redirect to service provider', function () {
+    it('should redirect to service provider', () => {
       expect(stubbedBrowser.withArgs(adminUrls.serviceProviders + '?key=coffee4craig').calledOnce).toBeTruthy()
     })
   })
