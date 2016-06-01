@@ -1,0 +1,67 @@
+.partners {
+  text-align: center;
+
+  &__list {
+    list-style: none; margin: 20px 0 30px 0; padding: 0;
+    @include cf();
+  }
+
+  &__list-item {
+    display: inline;
+  }
+
+  &__logo {
+    display: inline-block;
+    margin: 0 10px;
+    padding-top: 10px;
+
+    &:last-child { margin-right: 0 }
+
+    & a {
+      height: 38px;
+      display: block;
+      background: no-repeat;
+    }
+
+    &--coalition-of-relief {
+      a {
+        background-image: url(/assets/img/coalition-of-relief.png);
+        width: 57px;
+      }
+    }
+    &--booth-centre {
+      a {
+        background-image: url(/assets/img/booth-centre.png);
+        width: 114px;
+      }
+    }
+    &--mustard-tree {
+      a {
+        background-image: url(/assets/img/mustard-tree.png);
+        width: 172px;
+      }
+    }
+    &--bruntwood {
+      a {
+        background-image: url(/assets/img/bruntwood.png);
+        background-position: 0 9px;
+        width: 132px;
+      }
+    }
+    &--holy-name-manchester {
+      a {
+        svg {
+          height: 38px;
+          width: 195px;
+        }
+      }
+    }
+    &--partner-us {
+      a {
+        background-image: url(/assets/img/partner-with-us.png);
+        width: 38px;
+      }
+    }
+  }
+
+}

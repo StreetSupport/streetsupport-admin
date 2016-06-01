@@ -1,4 +1,4 @@
-var ajax = require('basic-ajax')
+var ajax = require('../ajax')
 var htmlEncode = require('htmlencode')
 var adminUrls = require('../admin-urls')
 var cookies = require('../cookies')
@@ -88,8 +88,8 @@ function ServiceProviderDetails () {
       self.headers(cookies.get('session-token')),
       {})
       .then(function (result) {
-        self.serviceProvider(new ServiceProvider(result.json))
-        self.initialServiceProvider(new ServiceProvider(result.json))
+        self.serviceProvider(new ServiceProvider(result.data))
+        self.initialServiceProvider(new ServiceProvider(result.data))
         browser.loaded()
       },
       function () {

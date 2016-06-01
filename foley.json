@@ -1,0 +1,63 @@
+{
+  "paths": {
+    "build": "_dist/",
+    "buildAssets": "_dist/assets/",
+    "svgicon": "_svgicon",
+    "scss": "src/scss/",
+    "files": "src/files/",
+    "fonts": "src/fonts/",
+    "icons": "src/icons/",
+    "img": "src/img/",
+    "js": "src/js/",
+    "spec": "spec/",
+    "layouts": "src/layouts/",
+    "pages": "src/pages/",
+    "partials": "src/partials/",
+    "data": "src/data/"
+  },
+  "autoprefixer": {
+    "browsers": ["last 2 versions", "IE >= 10"]
+  },
+  "critical": {
+    "dimensions": [{
+      "width": "320",
+      "height": "480"
+    }, {
+      "width": "1200",
+      "height": "900"
+    }]
+  },
+  "metalsmith": {
+    "plugins": {
+      "metalsmith-metadata-directory": {
+        "directory": "./src/data/**/*.json"
+      },
+      "metalsmith-drafts": true,
+      "metalsmith-markdownit": {
+         "typographer": true,
+         "html": true
+       },
+       "metalsmith-permalinks": {
+         "pattern": "blog/:title"
+       },
+      "metalsmith-collections": {
+        "posts": {
+          "pattern": "blog/!(index).md"
+        }
+      },
+      "metalsmith-discover-helpers": {
+        "directory": "./src/helpers",
+        "pattern": "/\\.js$/"
+      },
+      "metalsmith-layouts": {
+        "engine": "handlebars",
+        "directory": "./src/layouts",
+        "partials": "./src/partials",
+        "rename": true
+      },
+      "metalsmith-in-place": {
+        "engine": "handlebars"
+      }
+    }
+  }
+}

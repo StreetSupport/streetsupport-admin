@@ -8,7 +8,7 @@ var cookies = require('../../src/js/cookies')
 var validation = require('../../src/js/validation')
 var Model = require('../../src/js/models/charter-pledges/ListCharterPledgesModel')
 
-describe('Delete Charter Pledge', function () {
+describe('Delete Charter Pledge', () => {
   var model
   var browserLoadingStub
   var browserLoadedStub
@@ -19,8 +19,8 @@ describe('Delete Charter Pledge', function () {
     'session-token': 'stored-session-token'
   }
 
-  beforeEach(function () {
-    var getCharterPledgesPromise = function () {
+  beforeEach(() => {
+    var getCharterPledgesPromise = () => {
       return {
         then: function (success, error) {
           success({
@@ -43,7 +43,7 @@ describe('Delete Charter Pledge', function () {
     browserLoadedStub = sinon.stub(browser, 'loaded')
     sinon.stub(validation, 'showErrors')
 
-    var getPutPromise = function () {
+    var getPutPromise = () => {
       return {
         then: function (success, error) {
           success({
@@ -63,7 +63,7 @@ describe('Delete Charter Pledge', function () {
     model.pledges()[0].deletePledge()
   })
 
-  afterEach(function () {
+  afterEach(() => {
     ajax.get.restore()
     cookies.get.restore()
     browser.loading.restore()
@@ -72,26 +72,26 @@ describe('Delete Charter Pledge', function () {
     validation.showErrors.restore()
   })
 
-  it('should show browser is loading', function () {
+  it('should show browser is loading', () => {
     expect(browserLoadingStub.calledOnce).toBeTruthy()
   })
 
-  it('should put delete request to api', function () {
+  it('should put delete request to api', () => {
     expect(ajaxPutStub.calledOnce).toBeTruthy()
   })
 
-  it('should show browser is loaded', function () {
+  it('should show browser is loaded', () => {
     expect(browserLoadedStub.calledAfter(ajaxPutStub)).toBeTruthy()
   })
 
-  it('should remove deleted pledge from list', function () {
+  it('should remove deleted pledge from list', () => {
     expect(model.allPledges().length).toEqual(1)
     expect(model.pledges().length).toEqual(1)
     expect(model.pledges()[0].id).toEqual('570b84d73535ff1a8459a143')
   })
 })
 
-var pledgeData = function () {
+var pledgeData = () => {
   return [{
     'firstName': 'first name',
     'lastName': 'last name',

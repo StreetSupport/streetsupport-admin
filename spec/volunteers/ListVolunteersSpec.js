@@ -12,7 +12,7 @@ var browser = require('../../src/js/browser')
 var cookies = require('../../src/js/cookies')
 var Model = require('../../src/js/models/volunteers/ListVolunteersModel')
 
-describe('List Volunteers', function () {
+describe('List Volunteers', () => {
   var model
   var headers = {
     'content-type': 'application/json',
@@ -22,8 +22,8 @@ describe('List Volunteers', function () {
   var browserLoadingStub
   var browserLoadedStub
 
-  beforeEach(function () {
-    var getVolunteersPromise = function () {
+  beforeEach(() => {
+    var getVolunteersPromise = () => {
       return {
         then: function (success, error) {
           success({
@@ -48,45 +48,45 @@ describe('List Volunteers', function () {
     model = new Model()
   })
 
-  afterEach(function () {
+  afterEach(() => {
     ajax.get.restore()
     cookies.get.restore()
     browser.loading.restore()
     browser.loaded.restore()
   })
 
-  it('should notify user it is loading', function () {
+  it('should notify user it is loading', () => {
     expect(browserLoadingStub.calledOnce).toBeTruthy()
   })
 
-  it('should get volunteers from api', function () {
+  it('should get volunteers from api', () => {
     expect(ajaxGetStub.calledOnce).toBeTruthy()
   })
 
-  it('should set volunteers', function () {
+  it('should set volunteers', () => {
     expect(model.volunteers().length).toEqual(3)
   })
 
-  it('should order by creationDate', function () {
+  it('should order by creationDate', () => {
     expect(model.volunteers()[0].id).toEqual('571dd1fcd021fb2890259127')
     expect(model.volunteers()[1].id).toEqual('570542130a4f951fb8abe4b9')
     expect(model.volunteers()[2].id).toEqual('56f2867701ad122cd0eb5b2f')
   })
 
-  it('should set url to contact volunteer', function () {
+  it('should set url to contact volunteer', () => {
     expect(model.volunteers()[1].contactUrl).toEqual(adminUrls.contactVolunteer + '?id=570542130a4f951fb8abe4b9')
   })
 
-  it('should format creationDate', function () {
+  it('should format creationDate', () => {
     expect(model.volunteers()[1].creationDate).toEqual('06/04/16')
   })
 
-  it('should show user then that is loaded', function () {
+  it('should show user then that is loaded', () => {
     expect(browserLoadedStub.calledAfter(ajaxGetStub)).toBeTruthy()
   })
 })
 
-var volunteerData = function () {
+var volunteerData = () => {
   return [{
     'id': '56f2867701ad122cd0eb5b2f',
     'person': {

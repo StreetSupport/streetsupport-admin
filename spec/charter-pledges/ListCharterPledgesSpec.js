@@ -11,7 +11,7 @@ var browser = require('../../src/js/browser')
 var cookies = require('../../src/js/cookies')
 var Model = require('../../src/js/models/charter-pledges/ListCharterPledgesModel')
 
-describe('List Charter Pledges', function () {
+describe('List Charter Pledges', () => {
   var model
   var headers = {
     'content-type': 'application/json',
@@ -21,8 +21,8 @@ describe('List Charter Pledges', function () {
   var browserLoadingStub
   var browserLoadedStub
 
-  beforeEach(function () {
-    var getCharterPledgesPromise = function () {
+  beforeEach(() => {
+    var getCharterPledgesPromise = () => {
       return {
         then: function (success, error) {
           success({
@@ -47,104 +47,104 @@ describe('List Charter Pledges', function () {
     model = new Model()
   })
 
-  afterEach(function () {
+  afterEach(() => {
     ajax.get.restore()
     cookies.get.restore()
     browser.loading.restore()
     browser.loaded.restore()
   })
 
-  it('should notify user it is loading', function () {
+  it('should notify user it is loading', () => {
     expect(browserLoadingStub.calledOnce).toBeTruthy()
   })
 
-  it('should get pledges from api', function () {
+  it('should get pledges from api', () => {
     expect(ajaxGetStub.calledOnce).toBeTruthy()
   })
 
-  it('should set show all pledges to false', function () {
+  it('should set show all pledges to false', () => {
     expect(model.showAll()).toBeFalsy()
   })
 
-  it('should set list of distinct supporter categories', function () {
+  it('should set list of distinct supporter categories', () => {
     expect(model.supporterCategories().length).toEqual(2)
   })
 
-  it('should set show all button label to show all', function () {
+  it('should set show all button label to show all', () => {
     expect(model.showAllButtonLabel()).toEqual('Show all')
   })
 
-  it('should only show disapproved pledges', function () {
+  it('should only show disapproved pledges', () => {
     expect(model.pledges().length).toEqual(1)
     expect(model.pledges()[0].isApproved()).toBeFalsy()
   })
 
-  it('should set url to supporter full name', function () {
+  it('should set url to supporter full name', () => {
     expect(model.pledges()[0].fullName).toEqual('first name last name')
   })
 
-  it('should set pledge description', function () {
+  it('should set pledge description', () => {
     expect(model.pledges()[0].description()).toEqual('pledge description')
   })
 
-  it('should set mail to link', function () {
+  it('should set mail to link', () => {
     expect(model.pledges()[0].mailToLink).toEqual('mailto:test@test.com')
   })
 
-  it('should format creation date', function () {
+  it('should format creation date', () => {
     expect(model.pledges()[0].creationDate).toEqual('11/04/16')
   })
 
-  it('should set pledge approval status', function () {
+  it('should set pledge approval status', () => {
     expect(model.pledges()[0].isApproved()).toBeFalsy()
   })
 
-  it('should show user then that is loaded', function () {
+  it('should show user then that is loaded', () => {
     expect(browserLoadedStub.calledAfter(ajaxGetStub)).toBeTruthy()
   })
 
-  it('should set btn--primary class for currently disapproved', function () {
+  it('should set btn--primary class for currently disapproved', () => {
     expect(model.pledges()[0].approvedButtonClass()).toEqual('btn btn--primary')
     expect(model.pledges()[0].approvedButtonLabel()).toEqual('Approve Pledge')
   })
 
-  it('should set btn--primary class for currently featured', function () {
+  it('should set btn--primary class for currently featured', () => {
     expect(model.pledges()[0].featuredButtonClass()).toEqual('btn btn--indifferent')
     expect(model.pledges()[0].featuredButtonLabel()).toEqual('Unmark as Featured')
   })
 
-  describe('Toggle Show All', function () {
-    beforeEach(function () {
+  describe('Toggle Show All', () => {
+    beforeEach(() => {
       model.toggleShowAll()
     })
 
-    it('should set show all button label to only disapproved', function () {
+    it('should set show all button label to only disapproved', () => {
       expect(model.showAllButtonLabel()).toEqual('View awaiting approval')
     })
 
-    it('should show all pledges', function () {
+    it('should show all pledges', () => {
       expect(model.pledges().length).toEqual(3)
       expect(model.pledges()[2].isApproved()).toBeFalsy()
       expect(model.pledges()[0].isApproved()).toBeTruthy()
       expect(model.showAll()).toBeTruthy()
     })
 
-    it('should set btn--warning class for currently approved', function () {
+    it('should set btn--warning class for currently approved', () => {
       expect(model.pledges()[0].approvedButtonClass()).toEqual('btn btn--warning')
       expect(model.pledges()[0].approvedButtonLabel()).toEqual('Disapprove Pledge')
     })
 
-    it('should set btn--indifferent class for currently featured', function () {
+    it('should set btn--indifferent class for currently featured', () => {
       expect(model.pledges()[2].featuredButtonClass()).toEqual('btn btn--indifferent')
       expect(model.pledges()[2].featuredButtonLabel()).toEqual('Unmark as Featured')
     })
 
-    describe('And Toggle Back', function () {
-      beforeEach(function () {
+    describe('And Toggle Back', () => {
+      beforeEach(() => {
         model.toggleShowAll()
       })
 
-      it('should show only disapproved pledges', function () {
+      it('should show only disapproved pledges', () => {
         expect(model.pledges().length).toEqual(1)
         expect(model.pledges()[0].isApproved()).toBeFalsy()
         expect(model.showAll()).toBeFalsy()
@@ -173,10 +173,10 @@ describe('List Charter Pledges', function () {
     })
   })
 
-  describe('Toggle Approval', function () {
+  describe('Toggle Approval', () => {
     var ajaxPutStub
-    beforeEach(function () {
-      var getPutPromise = function () {
+    beforeEach(() => {
+      var getPutPromise = () => {
         return {
           then: function (success, error) {
             success({
@@ -194,34 +194,34 @@ describe('List Charter Pledges', function () {
       model.pledges()[0].toggleApproval()
     })
 
-    afterEach(function () {
+    afterEach(() => {
       ajax.put.restore()
     })
 
-    it('should show browser is loading', function () {
+    it('should show browser is loading', () => {
       expect(browserLoadingStub.calledOnce).toBeTruthy()
     })
 
-    it('should put new approval status to api', function () {
+    it('should put new approval status to api', () => {
       expect(ajaxPutStub.calledOnce).toBeTruthy()
     })
 
-    it('should set new approval status of pledge', function () {
+    it('should set new approval status of pledge', () => {
       expect(model.allPledges()[0].isApproved()).toBeTruthy()
     })
 
-    it('should show browser is loaded', function () {
+    it('should show browser is loaded', () => {
       expect(browserLoadedStub.calledAfter(ajaxPutStub)).toBeTruthy()
     })
 
-    it('should hide the newly approved pledge as we are only viewing disapproved', function () {
+    it('should hide the newly approved pledge as we are only viewing disapproved', () => {
       expect(model.pledges().length).toEqual(0)
     })
   })
 
-  describe('Toggle Flagged as Featured', function () {
+  describe('Toggle Flagged as Featured', () => {
     var ajaxPutStub
-    beforeEach(function () {
+    beforeEach(() => {
       var getPutPromise = {
         then: function (success, error) {
           success({
@@ -238,29 +238,29 @@ describe('List Charter Pledges', function () {
       model.pledges()[0].toggleFeatured()
     })
 
-    afterEach(function () {
+    afterEach(() => {
       ajax.put.restore()
     })
 
-    it('should show browser is loading', function () {
+    it('should show browser is loading', () => {
       expect(browserLoadingStub.calledOnce).toBeTruthy()
     })
 
-    it('should put new featured status to api', function () {
+    it('should put new featured status to api', () => {
       expect(ajaxPutStub.calledOnce).toBeTruthy()
     })
 
-    it('should set new featured status of pledge', function () {
+    it('should set new featured status of pledge', () => {
       expect(model.pledges()[0].isFeatured()).toBeFalsy()
     })
 
-    it('should show browser is loaded', function () {
+    it('should show browser is loaded', () => {
       expect(browserLoadedStub.calledAfter(ajaxPutStub)).toBeTruthy()
     })
   })
 })
 
-var pledgeData = function () {
+var pledgeData = () => {
   return [{
     'firstName': 'first name',
     'lastName': 'last name',

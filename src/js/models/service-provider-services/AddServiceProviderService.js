@@ -6,7 +6,7 @@ var BaseViewModel = require('../BaseViewModel')
 var OpeningTime = require('../OpeningTime')
 var getUrlParameter = require('../../get-url-parameter')
 var cookies = require('../../cookies')
-var ajax = require('basic-ajax')
+var ajax = require('../../ajax')
 var browser = require('../../browser')
 var adminUrls = require('../../admin-urls')
 
@@ -102,7 +102,7 @@ function AddServiceProviderService () {
     var serviceProviderEndpoint = self.endpointBuilder.serviceProviders(getUrlParameter.parameter('providerId')).build()
     ajax.get(serviceProviderEndpoint, self.headers(cookies.get('session-token')), {})
     .then(function (result) {
-      self.addresses(result.json.addresses.map(a => new Address(a)))
+      self.addresses(result.data.addresses.map(a => new Address(a)))
     },
     function (error) {
       self.handleError(error)
@@ -111,7 +111,7 @@ function AddServiceProviderService () {
     var categoriesEndpoint = self.endpointBuilder.categories().build()
     ajax.get(categoriesEndpoint, self.headers(cookies.get('session-token')), {})
     .then(function (result) {
-      self.categories(result.json)
+      self.categories(result.data)
     },
     function (error) {
       self.handleError(error)

@@ -1,0 +1,36 @@
+---
+title: Login - Street Support Admin
+description: Street Support - Making it easier to help homeless people in Manchester
+layout: default.hbs
+permalink: false
+jsBundle: login
+page: login
+nosubnav: true
+---
+
+<div class="block block--highlight">
+  <div class="container block__inner">
+    <header>
+      <h1>Login</h1>
+    </header>
+  </div>
+</div>
+<div class="block">
+  <div class="container block__inner">
+    <form class="form">
+      {{> form-feedback}}
+      <dl class="key-value-pair">
+        <dt class="key-value-pair__key"><label for="username">Username</label></dt>
+        <dd class="key-value-pair__value"><input data-bind="textInput: username" type="text" id="username" name="username" class="form__input" />
+        </dd>
+        <dt class="key-value-pair__key"><label for="password">Password</label></dt>
+        <dd class="key-value-pair__value"><input data-bind="textInput: password" type="password" id="password" name="password" class="form__input" />
+        </dd>
+      </dl>
+      <button data-bind="click: submit" class="btn btn--primary">
+        <span class="btn__text">Login</span>
+      </button>
+    </form>
+    <a href="request-reset-password.html">Forgotten password?</a>
+  </div>
+</div>

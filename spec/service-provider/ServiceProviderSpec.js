@@ -5,23 +5,23 @@ global describe, beforeEach, afterEach, it, expect
 'use strict'
 
 var sinon = require('sinon')
-var ajax = require('basic-ajax')
+var ajax = require('../../src/js/ajax')
 var endpoints = require('../../src/js/api-endpoints')
 var browser = require('../../src/js/browser')
 var cookies = require('../../src/js/cookies')
 var getUrlParameter = require('../../src/js/get-url-parameter')
 
-describe('Show Service Provider', function () {
+describe('Show Service Provider', () => {
   var Model = require('../../src/js/models/ServiceProvider')
   var model
   var stubbedApi
 
-  beforeEach(function () {
+  beforeEach(() => {
     let fakeResolved = {
       then: function (success, error) {
         success({
           'status': 200,
-          'json': coffee4Craig()
+          'data': coffee4Craig()
         })
       }
     }
@@ -35,7 +35,7 @@ describe('Show Service Provider', function () {
     model = new Model()
   })
 
-  afterEach(function () {
+  afterEach(() => {
     ajax.get.restore()
     cookies.get.restore()
     getUrlParameter.parameter.restore()
@@ -43,7 +43,7 @@ describe('Show Service Provider', function () {
     browser.loaded.restore()
   })
 
-  it('should retrieve service provider from api with session token', function () {
+  it('should retrieve service provider from api with session token', () => {
     var endpoint = endpoints.getServiceProviders + '/coffee4craig'
     var headers = {
       'content-type': 'application/json',
@@ -54,43 +54,43 @@ describe('Show Service Provider', function () {
     expect(apiCalledWithExpectedArgs).toBeTruthy()
   })
 
-  it('should set service provider', function () {
+  it('should set service provider', () => {
     expect(model.serviceProvider().key()).toEqual('coffee4craig')
   })
 
-  it('should set decoded provider short description', function () {
+  it('should set decoded provider short description', () => {
     expect(model.serviceProvider().shortDescription()).toEqual('St Mary\'s Centre provides a range of services for anyone who has been raped or sexually assaulted')
   })
 
-  it('should set decoded provider description', function () {
+  it('should set decoded provider description', () => {
     expect(model.serviceProvider().description()).toEqual('St Mary\'s Sexual Assault Referral Centre Coffee4Craig is a not-for-profit organisation set up to support, work with and be an all accepting approach to homelessness. ')
   })
 
-  it('should set addresses', function () {
+  it('should set addresses', () => {
     expect(model.serviceProvider().addresses().length).toEqual(2)
   })
 
-  it('should set addresses\' service provider id', function () {
+  it('should set addresses\' service provider id', () => {
     expect(model.serviceProvider().addresses()[0].serviceProviderId).toEqual('coffee4craig')
   })
 
-  it('should set services\' service provider id', function () {
+  it('should set services\' service provider id', () => {
     expect(model.serviceProvider().services()[0].serviceProviderId).toEqual('coffee4craig')
   })
 
-  it('should set needs\' service provider id', function () {
+  it('should set needs\' service provider id', () => {
     expect(model.serviceProvider().needs()[0].serviceProviderId).toEqual('coffee4craig')
   })
 
-  it('should set link to add address', function () {
+  it('should set link to add address', () => {
     expect(model.serviceProvider().addAddressUrl).toEqual('add-service-provider-address.html?providerId=coffee4craig')
   })
 
-  it('should set link to manage services', function () {
+  it('should set link to manage services', () => {
     expect(model.serviceProvider().addServiceUrl).toEqual('add-service-provider-service.html?providerId=coffee4craig')
   })
 
-  it('should set link to manage needs', function () {
+  it('should set link to manage needs', () => {
     expect(model.serviceProvider().addNeedUrl).toEqual('add-service-provider-need.html?providerId=coffee4craig')
   })
 })

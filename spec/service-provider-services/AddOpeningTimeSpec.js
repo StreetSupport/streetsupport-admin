@@ -1,39 +1,36 @@
-var sinon = require('sinon'),
-    ajax =      require('basic-ajax'),
-    endpoints = require('../../src/js/api-endpoints'),
-    adminurls = require('../../src/js/admin-urls'),
-    browser =   require('../../src/js/browser'),
-    cookies =   require('../../src/js/cookies'),
-    getUrlParameter = require('../../src/js/get-url-parameter')
+/*
+global describe, beforeEach, it, expect
+*/
 
-describe('Add Opening Time', function () {
-  var Model = require('../../src/js/models/Service'),
-      model
+'use strict'
 
-  beforeEach(function () {
+describe('Add Opening Time', () => {
+  let Model = require('../../src/js/models/Service')
+  let model = null
+
+  beforeEach(() => {
     model = new Model(getData())
 
     model.edit()
     model.newOpeningTime()
   })
 
-  it('should add a new openingTimes', function () {
+  it('should add a new openingTimes', () => {
     expect(model.openingTimes().length).toEqual(3)
   })
 
-  describe('Then cancel', function () {
-
-    beforeEach(function () {
+  describe('Then cancel', () => {
+    beforeEach(() => {
       model.cancelEdit()
     })
 
-    it('should reset openingTimes', function () {
+    it('should reset openingTimes', () => {
       expect(model.openingTimes().length).toEqual(2)
     })
   })
 })
 
-function getData() {
+function getData () {
   return {
     'key': '569d2b468705432268b65c75',
     'name': 'Meals',

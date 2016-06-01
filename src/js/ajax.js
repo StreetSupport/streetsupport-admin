@@ -40,6 +40,14 @@ var get = function (url, headers) {
   }).promise
 }
 
+var _delete = function (url, headers) {
+  return makeRequest({
+    method: 'DELETE',
+    url: url,
+    headers: headers
+  }).promise
+}
+
 var makeRequest = function (options) {
   var deferred = Q.defer()
   var req = new XMLHttpRequest()
@@ -100,5 +108,6 @@ var makeRequest = function (options) {
 module.exports = {
   get: get,
   post: post,
-  put: put
+  put: put,
+  delete: _delete
 }

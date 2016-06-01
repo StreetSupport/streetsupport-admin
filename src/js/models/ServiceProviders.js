@@ -1,4 +1,4 @@
-var ajax = require('basic-ajax')
+var ajax = require('../ajax')
 var adminUrls = require('../admin-urls')
 var cookies = require('../cookies')
 var browser = require('../browser')
@@ -32,7 +32,7 @@ function DashboardModel () {
       self.headers(cookies.get('session-token')),
       {})
     .then(function (result) {
-      self.serviceProviders(self.mapServiceProviders(result.json))
+      self.serviceProviders(self.mapServiceProviders(result.data))
       browser.loaded()
     },
     function (error) {

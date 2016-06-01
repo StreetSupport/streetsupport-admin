@@ -1,7 +1,7 @@
 'use strict'
 
 var ko = require('knockout')
-var ajax = require('basic-ajax')
+var ajax = require('../ajax')
 var htmlEncode = require('htmlencode')
 var Endpoints = require('../endpoint-builder')
 var getUrlParameter = require('../get-url-parameter')
@@ -72,7 +72,7 @@ function Address (data) {
 
   self.deleteAddress = function () {
     var endpoint = self.endpointBuilder.serviceProviders(getUrlParameter.parameter('key')).addresses(self.key()).build()
-    ajax.delete(endpoint, self.headers(cookies.get('session-token')), JSON.stringify({}))
+    ajax.delete(endpoint, self.headers(cookies.get('session-token')))
     .then(function (result) {
       self.listeners().forEach(listener => listener.deleteAddress(self))
     }, function (error) {
@@ -126,7 +126,7 @@ function Address (data) {
         model
       ).then(function (result) {
         self.isEditing(false)
-        self.key(result.json.key)
+        self.key(result.data.key)
         self.setFields()
         self.listeners().forEach(listener => listener.saveAddress(self))
       }, function (error) {

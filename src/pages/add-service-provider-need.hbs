@@ -1,0 +1,29 @@
+---
+title: Add Service Provider Need - Street Support Admin
+description: Street Support - Making it easier to help homeless people in Manchester
+layout: default.hbs
+permalink: false
+jsBundle: addServiceProviderNeed
+page: addServiceProviderNeed
+nosubnav: true
+---
+
+<div class="block block--highlight admin-header">
+  <div class="container block__inner">
+      <header>
+        <h1>Add Need</h1>
+      </header>
+    </div>
+  </div>
+</div>
+<div class="block">
+  <div class="container block__inner">
+    <div class="block__content form">
+      <article data-bind="with: need">
+        {{> form-feedback}}
+        {{> need}}
+        <button data-bind="click: save" class="btn btn--primary"><span class="btn__text">save</span></button>
+      </article>
+    </div>
+  </div>
+</div>

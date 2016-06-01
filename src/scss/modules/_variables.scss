@@ -5,19 +5,17 @@
 // (IE <= 8, Firefox <= 3, Opera <= 9) set $mq-responsive to false
 // Create a separate stylesheet served exclusively to these browsers,
 // meaning @media queries will be rasterized, relying on the cascade itself
-$mq-responsive: true;
+// $mq-responsive: true;
 
 // Name your breakpoints in a way that creates a ubiquitous language
 // across team members. It will improve communication between
 // stakeholders, designers, developers, and testers.
 $mq-breakpoints: (
-  xs:  480px,
-  s:   600px,
-  m:   740px,
-  l:   980px,
-  xl:  1300px,
-
-  btnhack:  350px
+  xs:  360px,
+  s:   480px,
+  m:   700px,
+  l:   800px,
+  xl:  960px
 );
 
 // Define the breakpoint from the $mq-breakpoints list that should
@@ -28,17 +26,16 @@ $mq-static-breakpoint: l;
 // If you want to display the currently active breakpoint in the top
 // right corner of your site during development, add the breakpoints
 // to this list, ordered by width, e.g. (mobile, tablet, desktop).
-//$mq-show-breakpoints: (xs, s, m, l, xl);
+// $mq-show-breakpoints: (xs, s, m, l, xl);
 
 // Site Variables
 // -----------------------------
 
 $base-font-size: 16px; // Recommended to not change this
-$site-container: 81.25rem; // 1300px
-$site-gutter: 1rem; // 16px
+$site-container: rem(1000px);
+$site-gutter: rem(16px);
 $grid-gutter: .25; // Quarter of column width
-$column-small: 6;
-$column-large: 12;
+$grid-column: 8;
 $grid-debug: hide; // Change this to show or hide
 
 // Colours
@@ -59,9 +56,33 @@ $brand-n: #9886bf;
 $brand-p: #086149;
 
 // Fonts
-$font-primary: 'museo-sans-rounded', sans-serif;
+@font-face {
+    font-family: 'museo_sans_rounded300';
+    src: url('/assets/fonts/MuseoSansRounded-300-webfont.eot');
+    src: url('/assets/fonts/MuseoSansRounded-300-webfont.eot?#iefix') format('embedded-opentype'),
+         url('/assets/fonts/MuseoSansRounded-300-webfont.woff2') format('woff2'),
+         url('/assets/fonts/MuseoSansRounded-300-webfont.woff') format('woff'),
+         url('/assets/fonts/MuseoSansRounded-300-webfont.ttf') format('truetype'),
+         url('/assets/fonts/MuseoSansRounded-300-webfont.svg#museo_sans_rounded300') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'museo_sans_rounded500';
+    src: url('/assets/fonts/MuseoSansRounded-500-webfont.eot');
+    src: url('/assets/fonts/MuseoSansRounded-500-webfont.eot?#iefix') format('embedded-opentype'),
+         url('/assets/fonts/MuseoSansRounded-500-webfont.woff2') format('woff2'),
+         url('/assets/fonts/MuseoSansRounded-500-webfont.woff') format('woff'),
+         url('/assets/fonts/MuseoSansRounded-500-webfont.ttf') format('truetype'),
+         url('/assets/fonts/MuseoSansRounded-500-webfont.svg#museo_sans_rounded500') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+$font-primary: 'museo_sans_rounded300', sans-serif;
 $font-primary-weight: 300;
-$font-headline: 'museo-sans-rounded', sans-serif;
+$font-headline: 'museo_sans_rounded500', sans-serif;
 $font-headline-weight: 500;
 
 // Header & Nav
@@ -75,21 +96,19 @@ $header-subnav-margin: 85px;
 
 $nav-width: 220px;
 
-
 // Used to automatically generate active CSS classes
 $nav-sections: home findhelp givehelp charter about contact;
 $nav-pages: home findhelp emergencyhelp allorganisations givehelp giveitems volunteer donate partnership charter readthecharter pledgeyoursupport joinactiongroup aboutthecharter about contact;
-
 
 // Default Grid Options
 // -----------------------------
 
 $susy: (
-  columns: $column-small,
+  columns: $grid-column,
   container: $site-container,
   gutters: $grid-gutter,
   global-box-sizing: border-box,
-  gutter-position: split,
+  gutter-position: after,
   debug: (
     image: $grid-debug
   )

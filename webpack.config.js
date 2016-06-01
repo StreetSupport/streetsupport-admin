@@ -1,0 +1,69 @@
+var argv = require('yargs').argv
+var path = require('path')
+var webpack = require('webpack')
+var CommonsChunkPlugin = require(path.join(__dirname, '/node_modules/webpack/lib/optimize/CommonsChunkPlugin'))
+
+// Create plugins array
+var plugins = [
+  new CommonsChunkPlugin('commons.js')
+]
+
+// Add Uglify task to plugins array if there is a production flag
+if (argv.production) {
+  plugins.push(new webpack.optimize.UglifyJsPlugin())
+}
+
+let p = (pageName) => {
+  let pagesDir = path.join(__dirname, '/src/js/pages/page-')
+  return pagesDir + pageName
+}
+
+module.exports = {
+  entry: {
+    generic: p('generic'),
+    index: p('index'),
+    login: p('login'),
+    logout: p('logout'),
+    requestResetPassword: p('request-reset-password'),
+    resetPassword: p('reset-password'),
+    dashboard: p('dashboard'),
+    serviceProvider: p('service-provider'),
+    addServiceProvider: p('add-service-provider'),
+    serviceProviderAddresses: p('service-provider-addresses'),
+    addServiceProviderAddress: p('add-service-provider-address'),
+    editServiceProviderAddress: p('edit-service-provider-address'),
+    serviceProviderServices: p('service-provider-services'),
+    addServiceProviderService: p('add-service-provider-service'),
+    editServiceProviderService: p('edit-service-provider-service'),
+    addServiceProviderNeed: p('add-service-provider-need'),
+    editServiceProviderNeed: p('edit-service-provider-need'),
+    addUser: p('add-user'),
+    verifyNewUser: p('verify-new-user'),
+    charterPledges: p('charter-pledges'),
+    actionGroups: p('action-groups'),
+    volunteers: p('volunteers'),
+    contactVolunteer: p('contact-volunteer')
+  },
+  output: {
+    path: path.join(__dirname, '/_dist/assets/js/'),
+    filename: '[name].bundle.js',
+    chunkFilename: '[id].chunk.js',
+    publicPath: '/assets/js/'
+  },
+  plugins: plugins,
+  module: {
+    loaders: [
+      {
+        test: /\.jsx?$/,
+        exclude: /(node_modules|bower_components)/,
+        loader: 'babel',
+        query: {
+          presets: ['es2015']
+        }
+      }
+    ]
+  },
+  standard: {
+    parser: 'babel-eslint'
+  }
+}

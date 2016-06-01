@@ -1,7 +1,7 @@
 'use strict'
 
 var ko = require('knockout')
-var ajax = require('basic-ajax')
+var ajax = require('../ajax')
 var Endpoints = require('../endpoint-builder')
 var getUrlParameter = require('../get-url-parameter')
 var cookies = require('../cookies')
@@ -45,7 +45,7 @@ function Need (data) {
 
   self.deleteNeed = function () {
     var endpoint = self.endpointBuilder.serviceProviders(getUrlParameter.parameter('key')).needs(self.id()).build()
-    ajax.delete(endpoint, self.headers(cookies.get('session-token')), JSON.stringify({}))
+    ajax.delete(endpoint, self.headers(cookies.get('session-token')))
     .then(function (result) {
       self.listeners().forEach(l => l.deleteNeed(self))
     }, function (error) {

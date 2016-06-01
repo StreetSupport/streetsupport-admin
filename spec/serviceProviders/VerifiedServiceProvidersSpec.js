@@ -5,22 +5,21 @@ global describe, beforeEach, afterEach, it, expect
 'use strict'
 
 var sinon = require('sinon')
-var ajax = require('basic-ajax')
+var ajax = require('../../src/js/ajax')
 var endpoints = require('../../src/js/api-endpoints')
 var browser = require('../../src/js/browser')
 var cookies = require('../../src/js/cookies')
 
-describe('VerifiedServiceProviders', function () {
+describe('VerifiedServiceProviders', () => {
   var Dashboard = require('../../src/js/models/ServiceProviders')
   var dashboard
-  var stubbedApi
 
-  beforeEach(function () {
+  beforeEach(() => {
     let fakeResolved = {
       then: function (success, error) {
         success({
           'status': 200,
-          'json': [
+          'data': [
             {
               'key': 'albert-kennedy-trust',
               'name': 'Albert Kennedy Trust',
@@ -37,7 +36,7 @@ describe('VerifiedServiceProviders', function () {
       }
     }
 
-    stubbedApi = sinon.stub(ajax, 'get').returns(fakeResolved)
+    sinon.stub(ajax, 'get').returns(fakeResolved)
     sinon.stub(browser, 'loading')
     sinon.stub(browser, 'loaded')
     sinon.stub(cookies, 'get').returns('stored-session-token')
@@ -45,35 +44,35 @@ describe('VerifiedServiceProviders', function () {
     dashboard = new Dashboard()
   })
 
-  afterEach(function () {
+  afterEach(() => {
     ajax.get.restore()
     cookies.get.restore()
     browser.loading.restore()
     browser.loaded.restore()
   })
 
-  it('should set verified labels', function () {
+  it('should set verified labels', () => {
     expect(dashboard.serviceProviders()[0].verifiedLabel()).toEqual('verified')
   })
 
-  it('should set un-verified labels', function () {
+  it('should set un-verified labels', () => {
     expect(dashboard.serviceProviders()[1].verifiedLabel()).toEqual('under review')
   })
 
-  it('should set toggle verification button labels', function () {
+  it('should set toggle verification button labels', () => {
     expect(dashboard.serviceProviders()[0].toggleVerificationButtonLabel()).toEqual('un-verify')
     expect(dashboard.serviceProviders()[1].toggleVerificationButtonLabel()).toEqual('verify')
   })
 
-  describe('Toggle Verified status', function () {
+  describe('Toggle Verified status', () => {
     var stubbedPutApi
 
-    beforeEach(function () {
+    beforeEach(() => {
       let fakePostResolved = {
         then: function (success, error) {
           success({
             'status': 200,
-            'json': {}
+            'data': {}
           })
         }
       }
@@ -84,11 +83,11 @@ describe('VerifiedServiceProviders', function () {
       dashboard.toggleVerified(dashboard.serviceProviders()[0])
     })
 
-    afterEach(function () {
+    afterEach(() => {
       ajax.put.restore()
     })
 
-    it('should send inverse of current isVerified to api', function () {
+    it('should send inverse of current isVerified to api', () => {
       var endpoint = endpoints.getServiceProviders + '/albert-kennedy-trust/is-verified'
       var payload = JSON.stringify({
         'IsVerified': false
@@ -102,19 +101,19 @@ describe('VerifiedServiceProviders', function () {
       expect(apiCalledWithExpectedArgs).toBeTruthy()
     })
 
-    it('should invert isVerified', function () {
+    it('should invert isVerified', () => {
       expect(dashboard.serviceProviders()[0].isVerified()).toBeFalsy()
     })
 
-    it('should not change isPublished', function () {
+    it('should not change isPublished', () => {
       expect(dashboard.serviceProviders()[0].isPublished()).toBeFalsy()
     })
 
-    it('should set verified labels', function () {
+    it('should set verified labels', () => {
       expect(dashboard.serviceProviders()[0].verifiedLabel()).toEqual('under review')
     })
 
-    it('should set toggle verification button labels', function () {
+    it('should set toggle verification button labels', () => {
       expect(dashboard.serviceProviders()[0].toggleVerificationButtonLabel()).toEqual('verify')
     })
   })

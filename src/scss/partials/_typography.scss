@@ -8,46 +8,54 @@ body {
 .h3 {
   font-family: $font-headline;
   font-weight: $font-headline-weight;
+  margin: 0 0 20px 0;
+  line-height: 1.5;
 }
 
 .h1 {
-  font-size: 36px;
-  line-height: 1.25;
-  margin-top: 0;
+  font-size: 35px;
 }
 
 .h2 {
-  font-size: 25px;
-  line-height: 1.25;
+  font-size: 20px;
 }
 
 .h3 {
   font-size: 16px;
-  line-height: 1.25;
+}
+
+.small {
+  font-size: 13px;
+}
+
+.standout {
+  font-family: $font-headline;
+  font-weight: $font-headline-weight;
+  text-transform: uppercase;
+  font-size: 35px;
+  margin: 0;
 }
 
 p {
-  line-height: 1.25;
+  line-height: 1.5;
 }
 
 ul {
-  line-height: 1.25;
-
   li {
     margin-bottom: 5px;
+    line-height: 1.5;
   }
 }
 
 ol {
-  line-height: 1.25;
-
   li {
     margin-bottom: 5px;
+    line-height: 1.5;
   }
 }
 
 dl {
-  line-height: 1.25;
+  line-height: 1.5;
 
   dt {
     margin-bottom: 5px;
@@ -72,4 +80,14 @@ strong {
 
 .text-right {
   text-align: right;
+}
+
+.line-break {
+  display: none;
+
+  @include mq($from: xs) {
+    display: block;
+    height: 1px;
+    width: 1px;
+  }
 }

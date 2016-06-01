@@ -1,5 +1,5 @@
 var ko = require('knockout')
-var ajax = require('basic-ajax')
+var ajax = require('../ajax')
 var adminUrls = require('../admin-urls')
 var cookies = require('../cookies')
 var browser = require('../browser')

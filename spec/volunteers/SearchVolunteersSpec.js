@@ -11,15 +11,15 @@ var browser = require('../../src/js/browser')
 var cookies = require('../../src/js/cookies')
 var Model = require('../../src/js/models/volunteers/ListVolunteersModel')
 
-describe('Search Volunteers', function () {
+describe('Search Volunteers', () => {
   var model
   var headers = {
     'content-type': 'application/json',
     'session-token': 'stored-session-token'
   }
 
-  beforeEach(function () {
-    var getVolunteersPromise = function () {
+  beforeEach(() => {
+    var getVolunteersPromise = () => {
       return {
         then: function (success, error) {
           success({
@@ -44,7 +44,7 @@ describe('Search Volunteers', function () {
     model = new Model()
   })
 
-  afterEach(function () {
+  afterEach(() => {
     ajax.get.restore()
     cookies.get.restore()
     browser.loading.restore()
@@ -183,7 +183,7 @@ describe('Search Volunteers', function () {
   })
 })
 
-var volunteerData = function () {
+var volunteerData = () => {
   return [{
     'id': 'js',
     'person': {

@@ -17,14 +17,12 @@ let disableForbiddenLinks = () => {
   if (claims !== 'superadmin') {
     let navLinks = document.querySelectorAll('.nav__item a')
 
-    console.log(navLinks)
-
     for (let i = 0; i < navLinks.length; ++i) {
       let requiredClaims = navLinks[i].getAttribute('data-claims')
       if (requiredClaims !== null) {
         requiredClaims = requiredClaims.split(',')
         for (let j = 0; j < requiredClaims.length; ++j) {
-          if (claims.indexOf(requiredClaims[j]) < 0) navLinks[i].parentNode.classList += ' hide'
+          if (claims.indexOf(requiredClaims[j]) < 0) navLinks[i].parentNode.className += ' hide'
         }
       }
     }

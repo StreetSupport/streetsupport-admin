@@ -1,34 +1,32 @@
-var sinon = require('sinon'),
-    ajax =      require('basic-ajax'),
-    endpoints = require('../../src/js/api-endpoints'),
-    adminurls = require('../../src/js/admin-urls'),
-    browser =   require('../../src/js/browser'),
-    cookies =   require('../../src/js/cookies'),
-    getUrlParameter = require('../../src/js/get-url-parameter')
+/*
+global describe, beforeEach, afterEach, it, expect
+*/
 
+'use strict'
 
-describe('Cancel Edit Service Provider Contact Details', function () {
-  var Model = require('../../src/js/models/ServiceProvider'),
-  model,
-  stubbedApi,
-  stubbedCookies,
-  stubbedUrlParams
+var sinon = require('sinon')
+let ajax = require('../../src/js/ajax')
+let browser = require('../../src/js/browser')
+let cookies = require('../../src/js/cookies')
+let getUrlParameter = require('../../src/js/get-url-parameter')
 
-  beforeEach(function () {
-    function fakeResolved (value) {
-      return {
-        then: function (success, error) {
-          success({
-            'status': 200,
-            'json': coffee4Craig()
-          })
-        }
+describe('Cancel Edit Service Provider Contact Details', () => {
+  var Model = require('../../src/js/models/ServiceProvider')
+  let model = null
+
+  beforeEach(() => {
+    let fakeResolved = {
+      then: (success, _) => {
+        success({
+          'status': 200,
+          'data': coffee4Craig()
+        })
       }
     }
 
-    stubbedApi = sinon.stub(ajax, 'get').returns(fakeResolved ())
-    stubbedCookies = sinon.stub(cookies, 'get').returns('stored-session-token')
-    stubbedUrlParams = sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
+    sinon.stub(ajax, 'get').returns(fakeResolved)
+    sinon.stub(cookies, 'get').returns('stored-session-token')
+    sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
     sinon.stub(browser, 'loaded')
     sinon.stub(browser, 'loading')
 
@@ -44,7 +42,7 @@ describe('Cancel Edit Service Provider Contact Details', function () {
     model.cancelEditContactDetails()
   })
 
-  afterEach(function () {
+  afterEach(() => {
     ajax.get.restore()
     cookies.get.restore()
     getUrlParameter.parameter.restore()
@@ -52,11 +50,11 @@ describe('Cancel Edit Service Provider Contact Details', function () {
     browser.loaded.restore()
   })
 
-  it('should reset isEditingContactDetails to false', function () {
+  it('should reset isEditingContactDetails to false', () => {
     expect(model.isEditingContactDetails()).toBeFalsy()
   })
 
-  it('should restore description to its previous value', function () {
+  it('should restore description to its previous value', () => {
     expect(model.serviceProvider().telephone()).toEqual('initial telephone')
     expect(model.serviceProvider().email()).toEqual('initial email')
     expect(model.serviceProvider().website()).toEqual('initial website')
@@ -65,16 +63,16 @@ describe('Cancel Edit Service Provider Contact Details', function () {
   })
 })
 
-function coffee4Craig() {
+function coffee4Craig () {
   return {
-    "key": "coffee4craig",
-    "name": "Coffee 4 Craig",
-    "email": "initial email",
-    "telephone": "initial telephone",
-    "website": "initial website",
-    "facebook": "initial facebook",
-    "twitter": "initial twitter",
-    "addresses": [],
-    "providedServices": []
+    'key': 'coffee4craig',
+    'name': 'Coffee 4 Craig',
+    'email': 'initial email',
+    'telephone': 'initial telephone',
+    'website': 'initial website',
+    'facebook': 'initial facebook',
+    'twitter': 'initial twitter',
+    'addresses': [],
+    'providedServices': []
   }
 }

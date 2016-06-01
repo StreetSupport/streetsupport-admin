@@ -4,7 +4,7 @@ var BaseViewModel = require('../BaseViewModel')
 var browser = require('../../browser')
 var adminurls = require('../../admin-urls')
 var getUrlParameter = require('../../get-url-parameter')
-var ajax = require('basic-ajax')
+var ajax = require('../../ajax')
 var cookies = require('../../cookies')
 
 function EditServiceProviderNeed () {
@@ -27,8 +27,8 @@ function EditServiceProviderNeed () {
 
   ajax
     .get(endpoint, headers, payload)
-    .then(function (success) {
-      var need = new Need(success.json)
+    .then((result) => {
+      var need = new Need(result.data)
       need.addListener(self)
       self.need(need)
       browser.loaded()

@@ -4,7 +4,7 @@ var BaseViewModel = require('../BaseViewModel')
 var browser = require('../../browser')
 var adminurls = require('../../admin-urls')
 var getUrlParameter = require('../../get-url-parameter')
-var ajax = require('basic-ajax')
+var ajax = require('../../ajax')
 var cookies = require('../../cookies')
 
 function AddServiceProviderNeed () {
@@ -23,7 +23,7 @@ function AddServiceProviderNeed () {
     .then(function (result) {
       var need = new Need({
         'serviceProviderId': getUrlParameter.parameter('providerId'),
-        'postcode': result.json.addresses[0].postcode
+        'postcode': result.data.addresses[0].postcode
       })
       need.addListener(self)
       self.need(need)
