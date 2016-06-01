@@ -11,8 +11,9 @@ describe('Delete individual Need', function () {
   var model
   var ajaxStub
 
-  beforeEach (function () {
-    sinon.stub(browser, 'dataLoaded')
+  beforeEach(function () {
+    sinon.stub(browser, 'loading')
+    sinon.stub(browser, 'loaded')
     sinon.stub(getUrlParameter, 'parameter').withArgs('key').returns('coffee4craig')
     model = new Model({
       id: "abcde",
@@ -35,7 +36,8 @@ describe('Delete individual Need', function () {
   })
 
   afterEach(function () {
-    browser.dataLoaded.restore()
+    browser.loading.restore()
+    browser.loaded.restore()
     getUrlParameter.parameter.restore()
       ajax.delete.restore()
       cookies.get.restore()

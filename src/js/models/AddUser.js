@@ -12,6 +12,7 @@ function AddUser () {
   self.userCreated = ko.observable(false)
 
   self.save = function () {
+    browser.loading()
     var endpoint = self.endpointBuilder.unverifiedUsers().build()
     var payload = {
       'Email': self.email(),
@@ -23,12 +24,12 @@ function AddUser () {
         self.message('User created.')
         self.userCreated(true)
         self.clearErrors()
+        browser.loaded()
         browser.redirect(adminurls.dashboard)
       }, function (error) {
         self.handleError(error)
       })
   }
-  self.dataLoaded()
 }
 
 AddUser.prototype = new BaseViewModel()

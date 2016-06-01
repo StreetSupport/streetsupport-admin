@@ -1,6 +1,9 @@
-var Q = require('q')
+/* global XMLHttpRequest */
 
-var post = function (url, headers, data) {
+var Q = require('q')
+var browser = require('./browser')
+
+var post = function (url, headers, data, isCustomErrorHandling) {
   if (Object.keys(headers).length === 0) {
     headers = {
       'content-type': 'application/json'
@@ -10,7 +13,8 @@ var post = function (url, headers, data) {
     method: 'POST',
     url: url,
     headers: headers,
-    data: data
+    data: data,
+    isCustomErrorHandling: isCustomErrorHandling
   }).promise
 }
 
@@ -68,6 +72,10 @@ var makeRequest = function (options) {
         'statusCode': this.status,
         'data': parseResponseText(this)
       })
+    } else if (this.status === 401 && !options.isCustomErrorHandling) {
+      browser.redirect('/login.html')
+    } else if (this.status === 403 && !options.isCustomErrorHandling) {
+      browser.redirect('/403.html')
     } else {
       deferred.resolve({
         'status': 'error',

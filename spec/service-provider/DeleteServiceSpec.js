@@ -6,14 +6,14 @@ var sinon = require('sinon'),
     cookies =   require('../../src/js/cookies'),
     getUrlParameter = require('../../src/js/get-url-parameter')
 
-describe ('Show Service Provider', function () {
+describe('Show Service Provider', function () {
   var Model = require('../../src/js/models/ServiceProvider'),
   model,
   stubbedApi,
   stubbedCookies,
   stubbedUrlParams
 
-  beforeEach (function () {
+  beforeEach(function () {
     function fakeResolved (value) {
       return {
         then: function (success, error) {
@@ -28,25 +28,27 @@ describe ('Show Service Provider', function () {
     sinon.stub(ajax, 'get').returns(fakeResolved ())
     stubbedCookies = sinon.stub(cookies, 'get').returns('stored-session-token')
     stubbedUrlParams = sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
-    sinon.stub(browser, 'dataLoaded')
+    sinon.stub(browser, 'loading')
+    sinon.stub(browser, 'loaded')
 
     model = new Model()
     model.serviceProvider().services()[0].deleteService()
   })
 
-  afterEach (function () {
+  afterEach(function () {
     ajax.get.restore()
     ajax.delete.restore()
     cookies.get.restore()
     getUrlParameter.parameter.restore()
-    browser.dataLoaded.restore()
+    browser.loading.restore()
+    browser.loaded.restore()
   })
 
-  it ('should remove Service from collection', function () {
+  it('should remove Service from collection', function () {
     expect(model.serviceProvider().services().length).toEqual(1)
   })
 
-  it ('should keep expected address', function () {
+  it('should keep expected address', function () {
     expect(model.serviceProvider().services()[0].id()).toEqual('5678')
   })
 })

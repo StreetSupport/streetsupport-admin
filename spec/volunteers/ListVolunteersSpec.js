@@ -1,9 +1,15 @@
+/*
+global describe, beforeEach, afterEach, it, expect
+*/
+
+'use strict'
+
 var sinon = require('sinon')
-var ajax =      require('../../src/js/ajax')
+var ajax = require('../../src/js/ajax')
 var endpoints = require('../../src/js/api-endpoints')
 var adminUrls = require('../../src/js/admin-urls')
-var browser =   require('../../src/js/browser')
-var cookies =   require('../../src/js/cookies')
+var browser = require('../../src/js/browser')
+var cookies = require('../../src/js/cookies')
 var Model = require('../../src/js/models/volunteers/ListVolunteersModel')
 
 describe('List Volunteers', function () {
@@ -49,8 +55,8 @@ describe('List Volunteers', function () {
     browser.loaded.restore()
   })
 
-  it('should notify user it is loading' ,function () {
-      expect(browserLoadingStub.calledOnce).toBeTruthy()
+  it('should notify user it is loading', function () {
+    expect(browserLoadingStub.calledOnce).toBeTruthy()
   })
 
   it('should get volunteers from api', function () {
@@ -61,8 +67,18 @@ describe('List Volunteers', function () {
     expect(model.volunteers().length).toEqual(3)
   })
 
+  it('should order by creationDate', function () {
+    expect(model.volunteers()[0].id).toEqual('571dd1fcd021fb2890259127')
+    expect(model.volunteers()[1].id).toEqual('570542130a4f951fb8abe4b9')
+    expect(model.volunteers()[2].id).toEqual('56f2867701ad122cd0eb5b2f')
+  })
+
   it('should set url to contact volunteer', function () {
-    expect(model.volunteers()[1].contactUrl).toEqual(adminUrls.contactVolunteer + '?id=56d845e59285563428569851')
+    expect(model.volunteers()[1].contactUrl).toEqual(adminUrls.contactVolunteer + '?id=570542130a4f951fb8abe4b9')
+  })
+
+  it('should format creationDate', function () {
+    expect(model.volunteers()[1].creationDate).toEqual('06/04/16')
   })
 
   it('should show user then that is loaded', function () {
@@ -72,8 +88,28 @@ describe('List Volunteers', function () {
 
 var volunteerData = function () {
   return [{
+    'id': '56f2867701ad122cd0eb5b2f',
     'person': {
       'firstName': 'Vince',
+      'lastName': 'Lee',
+      'telephone': '01234567890',
+      'email': 'vince.lee@polyhatsoftware.co.uk',
+      'postcode': 'M3 4BD'
+    },
+    'skillsAndExperience': {
+      'description': 'the interwebz. beating people up, '
+    },
+    'availability': {
+      'description': 'all day, everyday'
+    },
+    'resources': {
+      'description': 'i have a big car'
+    },
+    'creationDate': '2016-03-23T12:05:11.0420000Z'
+  }, {
+    'id': '571dd1fcd021fb2890259127',
+    'person': {
+      'firstName': 'Vincent',
       'lastName': 'Lee',
       'telephone': '',
       'email': 'vslee888+ncc@gmail.com',
@@ -88,48 +124,25 @@ var volunteerData = function () {
     'resources': {
       'description': 'r'
     },
-    'id': '56d0362c928556085cc569b3',
-    'documentCreationDate': '0001-01-01T00:00:00.0000000Z',
-    'documentModifiedDate': '0001-01-01T00:00:00.0000000Z'
+    'creationDate': '2016-04-25T08:14:52.7170000Z'
   }, {
+    'id': '570542130a4f951fb8abe4b9',
     'person': {
       'firstName': 'Vince',
       'lastName': 'Lee',
-      'telephone': '07944780742',
-      'email': 'support@streetsupport.net',
-      'postcode': 'M3 4BD'
+      'telephone': '',
+      'email': 'vslee888+060416@gmail.com',
+      'postcode': 'M1 2JB'
     },
     'skillsAndExperience': {
-      'description': 's'
+      'description': '&lt;script&gt;alert(&#39;xss!&#39;);&lt;/script&gt;'
     },
     'availability': {
-      'description': 'ar'
+      'description': '&quot;%3cscript%3ealert(document.cookie)%3c/script%3e'
     },
     'resources': {
-      'description': 'r'
+      'description': '&lt;scr&lt;script&gt;ipt&gt;alert(document.cookie)&lt;/script&gt;'
     },
-    'id': '56d845e59285563428569851',
-    'documentCreationDate': '0001-01-01T00:00:00.0000000Z',
-    'documentModifiedDate': '0001-01-01T00:00:00.0000000Z'
-  }, {
-    'person': {
-      'firstName': 'Vince',
-      'lastName': 'Lee',
-      'telephone': '07944780742',
-      'email': 'support@streetsupport.net',
-      'postcode': 'M3 4BD'
-    },
-    'skillsAndExperience': {
-      'description': 's'
-    },
-    'availability': {
-      'description': 'ar'
-    },
-    'resources': {
-      'description': 'r'
-    },
-    'id': '56d845ef9285563428569852',
-    'documentCreationDate': '0001-01-01T00:00:00.0000000Z',
-    'documentModifiedDate': '0001-01-01T00:00:00.0000000Z'
+    'creationDate': '2016-04-06T17:06:27.1830000Z'
   }]
 }

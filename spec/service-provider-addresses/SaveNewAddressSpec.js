@@ -1,43 +1,46 @@
-var sinon =           require('sinon')
-var ajax =            require('basic-ajax')
-var endpoints =       require('../../src/js/api-endpoints')
-var cookies =         require('../../src/js/cookies')
-var browser =         require('../../src/js/browser')
+/*
+global describe, beforeEach, afterEach, it, expect
+*/
+
+'use strict'
+
+var sinon = require('sinon')
+var ajax = require('basic-ajax')
+var endpoints = require('../../src/js/api-endpoints')
+var cookies = require('../../src/js/cookies')
+var browser = require('../../src/js/browser')
 var getUrlParameter = require('../../src/js/get-url-parameter')
 
 describe('Save brand new Address', function () {
-  var Model = require('../../src/js/models/Address'),
-  model
+  var Model = require('../../src/js/models/Address')
+  var model
 
-  beforeEach (function () {
+  beforeEach(function () {
     model = new Model({})
 
     model.edit()
   })
 
   describe('Save', function () {
-    var stubbedApi,
-        stubbedCookies,
-        stubbedUrlParams
+    var stubbedApi
 
     beforeEach(function () {
-      function fakeResolved(value) {
-        return {
-          then: function (success, error) {
-            success({
-              'status': 200,
-              'json': {
-                'key': 230680
-              }
-            })
-          }
+      let fakeResolved = {
+        then: function (success, error) {
+          success({
+            'status': 200,
+            'json': {
+              'key': 230680
+            }
+          })
         }
       }
 
-      stubbedApi = sinon.stub(ajax, 'post').returns(fakeResolved ())
-      stubbedCookies = sinon.stub(cookies, 'get').returns('stored-session-token')
-      stubbedUrlParams = sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
-      sinon.stub(browser, 'dataLoaded')
+      stubbedApi = sinon.stub(ajax, 'post').returns(fakeResolved)
+      sinon.stub(cookies, 'get').returns('stored-session-token')
+      sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
+      sinon.stub(browser, 'loading')
+      sinon.stub(browser, 'loaded')
 
       model.street1('new street1')
       model.street2('new street2')
@@ -61,7 +64,8 @@ describe('Save brand new Address', function () {
       ajax.post.restore()
       cookies.get.restore()
       getUrlParameter.parameter.restore()
-      browser.dataLoaded.restore()
+      browser.loading.restore()
+      browser.loaded.restore()
     })
 
     it('should post address details to api create endpoint with session token', function () {
@@ -93,16 +97,16 @@ describe('Save brand new Address', function () {
       expect(apiCalledWithExpectedArgs).toBeTruthy()
     })
 
-    it('should set returned key', function() {
+    it('should set returned key', function () {
       expect(model.key()).toEqual(230680)
     })
 
-    it('should set isEditing to false', function() {
+    it('should set isEditing to false', function () {
       expect(model.isEditing()).toBeFalsy()
     })
 
     describe('Edit again and Cancel', function () {
-      beforeEach (function () {
+      beforeEach(function () {
         model.edit()
         model.street1('another new street1')
         model.cancel()
@@ -119,12 +123,11 @@ describe('Save brand new Address', function () {
   })
 })
 
-
 describe('Save new Address as part of collection', function () {
-  var Model = require('../../src/js/models/Address'),
-  model
+  var Model = require('../../src/js/models/Address')
+  var model
 
-  beforeEach (function () {
+  beforeEach(function () {
     model = new Model({
       'tempKey': 'some temp key',
       'openingTimes': []
@@ -134,27 +137,23 @@ describe('Save new Address as part of collection', function () {
   })
 
   describe('Save', function () {
-    var stubbedApi,
-        stubbedCookies,
-        stubbedUrlParams
+    var stubbedApi
 
     beforeEach(function () {
-      function fakeResolved(value) {
-        return {
-          then: function (success, error) {
-            success({
-              'status': 200,
-              'json': {
-                'key': 230680
-              }
-            })
-          }
+      let fakeResolved = {
+        then: function (success, error) {
+          success({
+            'status': 200,
+            'json': {
+              'key': 230680
+            }
+          })
         }
       }
 
-      stubbedApi = sinon.stub(ajax, 'post').returns(fakeResolved ())
-      stubbedCookies = sinon.stub(cookies, 'get').returns('stored-session-token')
-      stubbedUrlParams = sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
+      stubbedApi = sinon.stub(ajax, 'post').returns(fakeResolved)
+      sinon.stub(cookies, 'get').returns('stored-session-token')
+      sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
 
       model.street1('new street1')
       model.street2('new street2')
@@ -209,16 +208,16 @@ describe('Save new Address as part of collection', function () {
       expect(apiCalledWithExpectedArgs).toBeTruthy()
     })
 
-    it('should set returned key', function() {
+    it('should set returned key', function () {
       expect(model.key()).toEqual(230680)
     })
 
-    it('should set isEditing to false', function() {
+    it('should set isEditing to false', function () {
       expect(model.isEditing()).toBeFalsy()
     })
 
     describe('Edit again and Cancel', function () {
-      beforeEach (function () {
+      beforeEach(function () {
         model.edit()
         model.street1('another new street1')
         model.cancel()

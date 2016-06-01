@@ -52,33 +52,26 @@ gulp.task('rebuildMetalsmith', function (callback) {
   )
 })
 
-gulp.task('test', function (callback) {
-  runSequence(
-    'run-jasmine',
-    callback
-  )
-})
-
 // Watch task
 gulp.task('watch', function (callback) {
   gulp.watch(config.paths.scss + '**/*.scss', ['scss'])
-  gulp.watch(config.paths.js + '**/*.js', ['rebuildJs', 'test'])
+  gulp.watch(config.paths.js + '**/*.js', ['rebuildJs', ['run-jasmine']])
   gulp.watch(config.paths.img + '{,**/}*.{png,jpg,gif,svg}', ['img'])
   gulp.watch(config.paths.icons + '**/*.svg', ['svgicon'])
   gulp.watch([config.paths.pages + '**/*.hbs', config.paths.partials + '**/*.hbs'], ['rebuildMetalsmith'])
-  gulp.watch(config.paths.tests + '**/*.js', ['test'])
+  gulp.watch(config.paths.tests + '**/*.js', [['run-jasmine']])
 })
 
 // Watch task - just tests
 gulp.task('devWatch', function (callback) {
-  gulp.watch(config.paths.js + '**/*.js', ['test'])
-  gulp.watch(config.paths.tests + '**/*.js', ['test'])
+  gulp.watch(config.paths.js + '**/*.js', [['run-jasmine']])
+  gulp.watch(config.paths.tests + '**/*.js', [['run-jasmine']])
 })
 
 // Build website with development assets and run server with live reloading
 gulp.task('default', function (callback) {
   runSequence(
-    'test',
+    ['run-jasmine'],
     'clean',
     'assets',
     'browsersync',
@@ -88,9 +81,9 @@ gulp.task('default', function (callback) {
 })
 
 // run tests
-gulp.task('dev', function (callback) {
+gulp.task('jsdev', function (callback) {
   runSequence(
-    'test',
+    'run-jasmine',
     'devWatch',
     callback
   )
@@ -99,7 +92,7 @@ gulp.task('dev', function (callback) {
 // Build website, either with development or minified assets depending on flag
 gulp.task('deploy', function (callback) {
   runSequence(
-    'test',
+    ['run-jasmine'],
     'clean',
     'assets',
     'crticalcss',

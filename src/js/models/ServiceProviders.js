@@ -1,6 +1,7 @@
 var ajax = require('basic-ajax')
 var adminUrls = require('../admin-urls')
 var cookies = require('../cookies')
+var browser = require('../browser')
 var ko = require('knockout')
 var BaseViewModel = require('./BaseViewModel')
 
@@ -25,13 +26,14 @@ function DashboardModel () {
   self.serviceProviders = ko.observableArray()
 
   self.init = function () {
+    browser.loading()
     ajax
     .get(self.endpointBuilder.serviceProviders().build(),
       self.headers(cookies.get('session-token')),
       {})
     .then(function (result) {
       self.serviceProviders(self.mapServiceProviders(result.json))
-      self.dataLoaded()
+      browser.loaded()
     },
     function (error) {
       self.handleError(error)

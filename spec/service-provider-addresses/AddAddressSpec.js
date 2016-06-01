@@ -14,13 +14,15 @@ describe('Add individual Address', function () {
   cookiesStub,
   stubbedParameters
 
-  beforeEach (function () {
-    sinon.stub(browser, 'dataLoaded')
+  beforeEach(function () {
+    sinon.stub(browser, 'loading')
+    sinon.stub(browser, 'loaded')
     model = new Model()
   })
 
   afterEach(function () {
-    browser.dataLoaded.restore()
+    browser.loading.restore()
+    browser.loaded.restore()
   })
 
   it('should set an empty Address', function() {

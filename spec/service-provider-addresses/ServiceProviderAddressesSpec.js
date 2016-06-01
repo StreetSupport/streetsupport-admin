@@ -1,44 +1,44 @@
-var sinon = require('sinon'),
-    ajax =      require('basic-ajax'),
-    endpoints = require('../../src/js/api-endpoints'),
-    adminurls = require('../../src/js/admin-urls'),
-    browser =   require('../../src/js/browser'),
-    cookies =   require('../../src/js/cookies'),
-    getUrlParameter = require('../../src/js/get-url-parameter')
+/*
+global describe, beforeEach, afterEach, it, expect
+*/
 
-describe ('Service Provider Addresses', function () {
-  var Model = require('../../src/js/models/ServiceProviderAddresses'),
-  model,
-  stubbedApi,
-  stubbedCookies,
-  stubbedUrlParams
+'use strict'
 
-  beforeEach (function () {
-    function fakeResolved (value) {
-      return {
-        then: function (success, error) {
-          success({
-            'status': 200,
-            'json': addresses()
-          })
-        }
+const sinon = require('sinon')
+const ajax = require('basic-ajax')
+const endpoints = require('../../src/js/api-endpoints')
+const cookies = require('../../src/js/cookies')
+const getUrlParameter = require('../../src/js/get-url-parameter')
+
+describe('Service Provider Addresses', function () {
+  let Model = require('../../src/js/models/ServiceProviderAddresses')
+  let model = null
+  let stubbedApi = null
+
+  beforeEach(function () {
+    const fakeResolved = {
+      then: function (success, error) {
+        success({
+          'status': 200,
+          'json': addresses()
+        })
       }
     }
 
-    stubbedApi = sinon.stub(ajax, 'get').returns(fakeResolved ())
-    stubbedCookies = sinon.stub(cookies, 'get').returns('stored-session-token')
-    stubbedUrlParams = sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
+    stubbedApi = sinon.stub(ajax, 'get').returns(fakeResolved)
+    sinon.stub(cookies, 'get').returns('stored-session-token')
+    sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
 
     model = new Model()
   })
 
-  afterEach (function () {
+  afterEach(function () {
     ajax.get.restore()
     cookies.get.restore()
     getUrlParameter.parameter.restore()
   })
 
-  it ('should retrieve service provider from api with session token', function () {
+  it('should retrieve service provider from api with session token', function () {
     var endpoint = endpoints.getServiceProviders + '/coffee4craig/addresses'
     var headers = {
       'content-type': 'application/json',
@@ -49,7 +49,7 @@ describe ('Service Provider Addresses', function () {
     expect(apiCalledWithExpectedArgs).toBeTruthy()
   })
 
-  describe('Add new Address', function() {
+  describe('Add new Address', function () {
     beforeEach(function () {
       model.serviceProvider().addAddress()
     })
@@ -63,7 +63,7 @@ describe ('Service Provider Addresses', function () {
     })
   })
 
-  describe('Add two new Addresses then cancel first', function() {
+  describe('Add two new Addresses then cancel first', function () {
     beforeEach(function () {
       model.serviceProvider().addAddress()
       model.serviceProvider().addAddress()
@@ -75,20 +75,17 @@ describe ('Service Provider Addresses', function () {
     })
   })
 
-  describe('Delete Address', function() {
+  describe('Delete Address', function () {
     beforeEach(function () {
-
-      function fakeResolved(value) {
-        return {
-          then: function (success, error) {
-            success({
-              'status': 200
-            })
-          }
+      const fakeResolved = {
+        then: function (success, error) {
+          success({
+            'status': 200
+          })
         }
       }
 
-      stubbedDeleteApi = sinon.stub(ajax, 'delete').returns(fakeResolved ())
+      sinon.stub(ajax, 'delete').returns(fakeResolved)
 
       model.serviceProvider().addresses()[0].deleteAddress()
     })

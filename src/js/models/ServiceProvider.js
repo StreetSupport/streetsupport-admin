@@ -1,4 +1,5 @@
 var ajax = require('basic-ajax')
+var htmlEncode = require('htmlencode')
 var adminUrls = require('../admin-urls')
 var cookies = require('../cookies')
 var browser = require('../browser')
@@ -14,8 +15,8 @@ function ServiceProvider (data) {
 
   self.key = ko.observable(data.key)
   self.name = ko.observable(data.name)
-  self.shortDescription = ko.observable(data.shortDescription)
-  self.description = ko.observable(data.description)
+  self.shortDescription = ko.observable(htmlEncode.htmlDecode(data.shortDescription))
+  self.description = ko.observable(htmlEncode.htmlDecode(data.description))
   self.telephone = ko.observable(data.telephone)
   self.email = ko.observable(data.email)
   self.website = ko.observable(data.website)
@@ -26,7 +27,7 @@ function ServiceProvider (data) {
   self.addresses().forEach(a => a.addListener(self))
 
   data.providedServices.forEach(s => s.serviceProviderId = data.key)
-  self.services = ko.observableArray(data.providedServices.map(s => new Service(s) ))
+  self.services = ko.observableArray(data.providedServices.map(s => new Service(s)))
   self.services().forEach(s => s.addListener(self))
 
   var buildNeeds = function (needs) {
@@ -80,6 +81,7 @@ function ServiceProviderDetails () {
   self.message = ko.observable('')
 
   self.init = function () {
+    browser.loading()
     var providerId = getUrlParameter.parameter('key')
 
     ajax.get(self.endpointBuilder.serviceProviders(providerId).build(),
@@ -88,7 +90,7 @@ function ServiceProviderDetails () {
       .then(function (result) {
         self.serviceProvider(new ServiceProvider(result.json))
         self.initialServiceProvider(new ServiceProvider(result.json))
-        self.dataLoaded()
+        browser.loaded()
       },
       function () {
         browser.redirect(adminUrls.notFound)

@@ -1,3 +1,5 @@
+'use strict'
+
 var ko = require('knockout')
 var Address = require('../Address')
 var BaseViewModel = require('../BaseViewModel')
@@ -46,11 +48,10 @@ function AddServiceProviderService () {
       postcode: self.preselectedAddress().postcode()
     })
     address.openingTimes(self.preselectedAddress().openingTimes().map(ot => new OpeningTime({
-        day: ot.day(),
-        startTime: ot.startTime(),
-        endTime: ot.endTime()
-      })
-    ))
+      day: ot.day(),
+      startTime: ot.startTime(),
+      endTime: ot.endTime()
+    })))
     self.address(address)
   }
 
@@ -96,6 +97,8 @@ function AddServiceProviderService () {
   }
 
   self.init = function () {
+    browser.loading()
+
     var serviceProviderEndpoint = self.endpointBuilder.serviceProviders(getUrlParameter.parameter('providerId')).build()
     ajax.get(serviceProviderEndpoint, self.headers(cookies.get('session-token')), {})
     .then(function (result) {
@@ -104,12 +107,11 @@ function AddServiceProviderService () {
     function (error) {
       self.handleError(error)
     })
-    var categoriesEndpoint = self.endpointBuilder.categories().build()
 
+    var categoriesEndpoint = self.endpointBuilder.categories().build()
     ajax.get(categoriesEndpoint, self.headers(cookies.get('session-token')), {})
     .then(function (result) {
       self.categories(result.json)
-      self.dataLoaded()
     },
     function (error) {
       self.handleError(error)

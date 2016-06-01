@@ -1,22 +1,24 @@
-var sinon = require('sinon'),
-    ajax =      require('basic-ajax'),
-    endpoints = require('../../src/js/api-endpoints'),
-    adminurls = require('../../src/js/admin-urls'),
-    cookies =   require('../../src/js/cookies'),
-    browser =   require('../../src/js/browser'),
-    getUrlParameter = require('../../src/js/get-url-parameter')
+var sinon = require('sinon')
+var ajax = require('basic-ajax')
+var endpoints = require('../../src/js/api-endpoints')
+var adminurls = require('../../src/js/admin-urls')
+var cookies = require('../../src/js/cookies')
+var browser = require('../../src/js/browser')
+var getUrlParameter = require('../../src/js/get-url-parameter')
 
-describe ('Verify New User', function () {
+describe('Verify New User', function () {
   var Model = require('../../src/js/models/Auth/VerifyUser'),
   model
 
-  beforeEach (function () {
-    sinon.stub(browser, 'dataLoaded')
+  beforeEach(function () {
+    sinon.stub(browser, 'loading')
+    sinon.stub(browser, 'loaded')
     model = new Model()
   })
 
-  afterEach (function () {
-    browser.dataLoaded.restore()
+  afterEach(function () {
+    browser.loaded.restore()
+    browser.loading.restore()
   })
 
   it('should start with errors false', function () {
@@ -47,7 +49,7 @@ describe ('Verify New User', function () {
       model.save()
     })
 
-    afterEach (function () {
+    afterEach(function () {
       ajax.post.restore()
       cookies.get.restore()
       getUrlParameter.parameter.restore()
@@ -105,7 +107,7 @@ describe ('Verify New User', function () {
       model.save()
     })
 
-    afterEach (function () {
+    afterEach(function () {
       ajax.post.restore()
       cookies.get.restore()
       getUrlParameter.parameter.restore()

@@ -1,10 +1,16 @@
-var sinon = require('sinon'),
-    ajax =      require('basic-ajax'),
-    endpoints = require('../../src/js/api-endpoints'),
-    adminurls = require('../../src/js/admin-urls'),
-    browser =   require('../../src/js/browser'),
-    cookies =   require('../../src/js/cookies'),
-    getUrlParameter = require('../../src/js/get-url-parameter')
+/*
+global describe, beforeEach, afterEach, it, expect
+*/
+
+'use strict'
+
+var sinon = require('sinon')
+var ajax = require('basic-ajax')
+var endpoints = require('../../src/js/api-endpoints')
+var adminurls = require('../../src/js/admin-urls')
+var browser = require('../../src/js/browser')
+var cookies = require('../../src/js/cookies')
+var getUrlParameter = require('../../src/js/get-url-parameter')
 
 describe('Editing Service Provider Need', function () {
   var Model = require('../../src/js/models/service-provider-needs/EditServiceProviderNeed')
@@ -14,8 +20,9 @@ describe('Editing Service Provider Need', function () {
   var ajaxGetStub
 
   beforeEach(function () {
-    browserStub = sinon.stub(browser, 'dataLoaded')
-    browserRedirectStub  = sinon.stub(browser, 'redirect')
+    browserStub = sinon.stub(browser, 'loading')
+    browserStub = sinon.stub(browser, 'loaded')
+    browserRedirectStub = sinon.stub(browser, 'redirect')
 
     function fakeGetResolution (value) {
       return {
@@ -44,7 +51,8 @@ describe('Editing Service Provider Need', function () {
 
   afterEach(function () {
     ajax.get.restore()
-    browser.dataLoaded.restore()
+    browser.loading.restore()
+    browser.loaded.restore()
     getUrlParameter.parameter.restore()
     cookies.get.restore()
     browser.redirect.restore()
@@ -66,8 +74,8 @@ describe('Editing Service Provider Need', function () {
     expect(model.need().serviceProviderId).toEqual('albert-kennedy-trust')
   })
 
-  it('should set need description', function () {
-    expect(model.need().description()).toEqual('test')
+  it('should set decoded need description', function () {
+    expect(model.need().description()).toEqual('men\'s shoes & socks')
   })
 
   it('should set need type', function () {
@@ -75,38 +83,32 @@ describe('Editing Service Provider Need', function () {
   })
 
   it('should set need reason', function () {
-    expect(model.need().reason()).toEqual('reas')
+    expect(model.need().reason()).toEqual('we need \'em')
   })
 
   it('should set need moreInfoUrl', function () {
     expect(model.need().moreInfoUrl()).toEqual('http://www.wang.com')
   })
 
-
   it('should set need postcode', function () {
     expect(model.need().postcode()).toEqual('m1 3ly')
   })
-
 
   it('should set need instructions', function () {
     expect(model.need().instructions()).toEqual('instructions')
   })
 
-
   it('should set need email', function () {
     expect(model.need().email()).toEqual('email')
   })
-
 
   it('should set need donationAmountInPounds', function () {
     expect(model.need().donationAmountInPounds()).toEqual(1)
   })
 
-
   it('should set need donationUrl', function () {
     expect(model.need().donationUrl()).toEqual('http://www.donationUrl.com')
   })
-
 
   it('should set need keywords', function () {
     expect(model.need().keywords()).toEqual('keywordA, keywordB, keywordC')
@@ -136,9 +138,9 @@ describe('Editing Service Provider Need', function () {
           'session-token': 'saved-session-token'
         },
         JSON.stringify({
-          'Description': 'test',
+          'Description': 'men\'s shoes & socks',
           'Type': 'Money',
-          'Reason': 'reas',
+          'Reason': 'we need \'em',
           'MoreInfoUrl': 'http://www.wang.com',
           'Postcode': 'm1 3ly',
           'Instructions': 'instructions',
@@ -167,13 +169,13 @@ describe('Editing Service Provider Need', function () {
   })
 })
 
-function needData() {
+function needData () {
   return {
     'id': '56d8784092855610f88d492a',
-    'description': 'test',
+    'description': 'men&#39;s shoes &amp; socks',
     'serviceProviderId': 'albert-kennedy-trust',
     'type': 'Money',
-    'reason': 'reas',
+    'reason': 'we need &#39;em',
     'moreInfoUrl': 'http://www.wang.com',
     'postcode': 'm1 3ly',
     'instructions': 'instructions',

@@ -11,18 +11,20 @@ describe('Reset Password', function() {
   var model
 
   beforeEach(function () {
-    sinon.stub(browser, 'dataLoaded')
+    sinon.stub(browser, 'loading')
+    sinon.stub(browser, 'loaded')
     model = new Model()
   })
 
   afterEach(function () {
-    browser.dataLoaded.restore()
+    browser.loading.restore()
+    browser.loaded.restore()
   })
 
   it('should set password as empty', function () {
     expect(model.password()).toEqual('')
   })
-  
+
   it('should set password2 as empty', function () {
     expect(model.password2()).toEqual('')
   })
@@ -44,7 +46,7 @@ describe('Reset Password', function() {
       stubbedApiPut = sinon.stub(ajax, 'put').returns(putResolved())
       sinon.stub(cookies, 'get').withArgs('session-token').returns('storedSessionToken')
       sinon.stub(getParams, 'parameter').returns('verificationCode')
-   
+
       model.password('MyNewPassword!')
       model.password2('MyNewPassword!')
       model.submit()
@@ -68,7 +70,7 @@ describe('Reset Password', function() {
       var called = stubbedApiPut.withArgs(endpoint, headers, payload).calledOnce
       expect(called).toBeTruthy()
     })
-    
+
     it('should set isSubmissionSuccessful to true', function () {
       expect(model.isSubmissionSuccessful()).toBeTruthy()
     })
@@ -92,11 +94,11 @@ describe('Reset Password', function() {
     it('should not put password to api', function () {
       expect(stubbedApiPut.calledCount).toEqual(undefined)
     })
-    
+
     it('should not set isSubmissionSuccessful to true', function () {
       expect(model.isSubmissionSuccessful()).toBeFalsy()
     })
-    
+
     it('should set errors', function () {
       expect(model.errors()[0]).toEqual('Passwords must match.')
     })

@@ -7,6 +7,7 @@ var getUrlParameter = require('../get-url-parameter')
 var cookies = require('../cookies')
 var BaseViewModel = require('./BaseViewModel')
 var adminUrls = require('../admin-urls')
+var htmlEncode = require('htmlencode')
 
 function Need (data) {
   var self = this
@@ -17,7 +18,7 @@ function Need (data) {
 
   self.id = ko.observable(data.id)
 
-  self.description = ko.observable(data.description)
+  self.description = ko.observable(htmlEncode.htmlDecode(data.description))
   self.type = ko.observable(data.type)
   self.isPeopleOrThings = ko.computed(function () {
     var type = self.type()
@@ -27,7 +28,7 @@ function Need (data) {
     var type = self.type()
     return type !== undefined && (type.toLowerCase() === 'money')
   }, self)
-  self.reason = ko.observable(data.reason)
+  self.reason = ko.observable(htmlEncode.htmlDecode(data.reason))
   self.moreInfoUrl = ko.observable(data.moreInfoUrl)
   self.postcode = ko.observable(data.postcode)
   self.instructions = ko.observable(data.instructions)
@@ -67,7 +68,7 @@ function Need (data) {
       'Keywords': keywords
     })
 
-    if (self.id() === undefined) {
+    if (self.id() === undefined) { // adding
       ajax.post(self.endpointBuilder.serviceProviders(getUrlParameter.parameter('providerId')).needs().build(),
         self.headers(cookies.get('session-token')),
         model
@@ -76,8 +77,9 @@ function Need (data) {
       }, function (error) {
         self.handleError(error)
       })
-    } else {
-      ajax.put(self.endpointBuilder.serviceProviders(getUrlParameter.parameter('providerId')).needs(self.id()).build(),
+    } else { // editing
+      let endpoint = self.endpointBuilder.serviceProviders(getUrlParameter.parameter('providerId')).needs(self.id()).build()
+      ajax.put(endpoint,
         self.headers(cookies.get('session-token')),
         model
       ).then(function (result) {

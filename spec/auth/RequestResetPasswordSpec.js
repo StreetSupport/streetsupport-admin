@@ -10,12 +10,14 @@ describe('Reset Password', function() {
   var model
 
   beforeEach(function () {
-    sinon.stub(browser, 'dataLoaded')
+    sinon.stub(browser, 'loading')
+    sinon.stub(browser, 'loaded')
     model = new Model()
   })
 
   afterEach(function () {
-    browser.dataLoaded.restore()
+    browser.loading.restore()
+    browser.loaded.restore()
   })
 
   it('should set email as empty', function () {
@@ -38,7 +40,7 @@ describe('Reset Password', function() {
 
       stubbedApiPost = sinon.stub(ajax, 'post').returns(postResolved())
       sinon.stub(cookies, 'get').withArgs('session-token').returns('storedSessionToken')
-    
+
       model.email('vince@test.com')
       model.submit()
     })
@@ -60,7 +62,7 @@ describe('Reset Password', function() {
       var called = stubbedApiPost.withArgs(endpoint, headers, payload).calledOnce
       expect(called).toBeTruthy()
     })
-    
+
     it('should set isSubmissionSuccessful to true', function () {
       expect(model.isSubmissionSuccessful()).toBeTruthy()
     })

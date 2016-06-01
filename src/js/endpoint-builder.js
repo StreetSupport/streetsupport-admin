@@ -3,92 +3,117 @@ var endpoints = require('./api-endpoints')
 function EndpointBuilder () {
   var self = this
 
-  self.updateBaseResource = function (resource, resourceId) {
+  self.updateBaseResource = (resource, resourceId) => {
     self.baseResource = resource
     self.baseResourceId = resourceId
     self.childResource = undefined
     self.childResourceId = undefined
   }
 
-  self.serviceProviders = function (providerId) {
+  self.serviceProviders = (providerId) => {
     self.updateBaseResource(endpoints.getServiceProviders, providerId)
     return self
   }
 
-  self.verifiedUsers = function (userId) {
+  self.verifiedUsers = (userId) => {
     self.updateBaseResource(endpoints.verifiedUsers, userId)
     return self
   }
 
-  self.unverifiedUsers = function (userId) {
+  self.unverifiedUsers = (userId) => {
     self.updateBaseResource(endpoints.unverifiedUsers, userId)
     return self
   }
 
-  self.sessions = function (sessionToken) {
+  self.sessions = (sessionToken) => {
     self.updateBaseResource(endpoints.sessions, sessionToken)
     return self
   }
 
-  self.categories = function () {
+  self.categories = () => {
     self.updateBaseResource(endpoints.getServiceCategories)
     return self
   }
 
-  self.resetPassword = function (verificationCode) {
+  self.resetPassword = (verificationCode) => {
     self.updateBaseResource(endpoints.resetPassword, verificationCode)
     return self
   }
 
-  self.volunteers = function (volunteerId) {
+  self.volunteers = (volunteerId) => {
     self.updateBaseResource(endpoints.volunteers, volunteerId)
     return self
   }
 
-  self.charterPledges = function (pledgeId) {
+  self.charterPledges = (pledgeId) => {
     self.updateBaseResource(endpoints.charterPledges, pledgeId)
     return self
   }
 
-  self.addresses = function (addressId) {
+  self.actionGroups = (groupId) => {
+    self.updateBaseResource(endpoints.actionGroups, groupId)
+    return self
+  }
+
+  self.addresses = (addressId) => {
     self.childResource = 'addresses'
     self.childResourceId = addressId
     return self
   }
 
-  self.services = function (serviceId) {
+  self.services = (serviceId) => {
     self.childResource = 'services'
     self.childResourceId = serviceId
     return self
   }
 
-  self.needs = function (needId) {
+  self.needs = (needId) => {
     self.childResource = 'needs'
     self.childResourceId = needId
     return self
   }
 
-  self.isVerified = function () {
+  self.isVerified = () => {
     self.childResource = 'is-verified'
     return self
   }
 
-  self.isPublished = function () {
+  self.isPublished = () => {
     self.childResource = 'is-published'
     return self
   }
 
-  self.generalInformation = function () {
+  self.generalInformation = () => {
     self.childResource = 'general-information'
     return self
   }
 
-  self.contactDetails = function () {
+  self.contactDetails = () => {
     self.childResource = 'contact-details'
     return self
   }
 
-  self.build = function () {
+  self.approval = () => {
+    self.childResource = 'approval'
+    return self
+  }
+
+  self.featured = () => {
+    self.childResource = 'featured'
+    return self
+  }
+
+  self.pledge = () => {
+    self.childResource = 'pledge'
+    return self
+  }
+
+  self.deleted = () => {
+    self.childResource = 'deleted'
+    return self
+  }
+
+  self.build = () => {
     var uri = self.baseResource
     if (self.baseResourceId !== undefined) {
       uri += '/' + self.baseResourceId

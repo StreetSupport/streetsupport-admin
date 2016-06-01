@@ -1,9 +1,14 @@
+/*
+global describe, beforeEach, afterEach, it, expect
+*/
+
+'use strict'
+
 var sinon = require('sinon')
-var ajax =      require('../../src/js/ajax')
+var ajax = require('../../src/js/ajax')
 var endpoints = require('../../src/js/api-endpoints')
-var adminUrls = require('../../src/js/admin-urls')
-var browser =   require('../../src/js/browser')
-var cookies =   require('../../src/js/cookies')
+var browser = require('../../src/js/browser')
+var cookies = require('../../src/js/cookies')
 var Model = require('../../src/js/models/charter-pledges/ListCharterPledgesModel')
 
 describe('List Charter Pledges', function () {
@@ -49,8 +54,8 @@ describe('List Charter Pledges', function () {
     browser.loaded.restore()
   })
 
-  it('should notify user it is loading' ,function () {
-      expect(browserLoadingStub.calledOnce).toBeTruthy()
+  it('should notify user it is loading', function () {
+    expect(browserLoadingStub.calledOnce).toBeTruthy()
   })
 
   it('should get pledges from api', function () {
@@ -59,6 +64,10 @@ describe('List Charter Pledges', function () {
 
   it('should set show all pledges to false', function () {
     expect(model.showAll()).toBeFalsy()
+  })
+
+  it('should set list of distinct supporter categories', function () {
+    expect(model.supporterCategories().length).toEqual(2)
   })
 
   it('should set show all button label to show all', function () {
@@ -75,7 +84,15 @@ describe('List Charter Pledges', function () {
   })
 
   it('should set pledge description', function () {
-    expect(model.pledges()[0].description).toEqual('pledge description')
+    expect(model.pledges()[0].description()).toEqual('pledge description')
+  })
+
+  it('should set mail to link', function () {
+    expect(model.pledges()[0].mailToLink).toEqual('mailto:test@test.com')
+  })
+
+  it('should format creation date', function () {
+    expect(model.pledges()[0].creationDate).toEqual('11/04/16')
   })
 
   it('should set pledge approval status', function () {
@@ -87,8 +104,13 @@ describe('List Charter Pledges', function () {
   })
 
   it('should set btn--primary class for currently disapproved', function () {
-    expect(model.pledges()[0].buttonClass()).toEqual('btn btn--primary')
-    expect(model.pledges()[0].buttonLabel()).toEqual('Approve Pledge')
+    expect(model.pledges()[0].approvedButtonClass()).toEqual('btn btn--primary')
+    expect(model.pledges()[0].approvedButtonLabel()).toEqual('Approve Pledge')
+  })
+
+  it('should set btn--primary class for currently featured', function () {
+    expect(model.pledges()[0].featuredButtonClass()).toEqual('btn btn--indifferent')
+    expect(model.pledges()[0].featuredButtonLabel()).toEqual('Unmark as Featured')
   })
 
   describe('Toggle Show All', function () {
@@ -101,15 +123,20 @@ describe('List Charter Pledges', function () {
     })
 
     it('should show all pledges', function () {
-      expect(model.pledges().length).toEqual(2)
-      expect(model.pledges()[0].isApproved()).toBeFalsy()
-      expect(model.pledges()[1].isApproved()).toBeTruthy()
+      expect(model.pledges().length).toEqual(3)
+      expect(model.pledges()[2].isApproved()).toBeFalsy()
+      expect(model.pledges()[0].isApproved()).toBeTruthy()
       expect(model.showAll()).toBeTruthy()
     })
 
     it('should set btn--warning class for currently approved', function () {
-      expect(model.pledges()[1].buttonClass()).toEqual('btn btn--warning')
-      expect(model.pledges()[1].buttonLabel()).toEqual('Disapprove Pledge')
+      expect(model.pledges()[0].approvedButtonClass()).toEqual('btn btn--warning')
+      expect(model.pledges()[0].approvedButtonLabel()).toEqual('Disapprove Pledge')
+    })
+
+    it('should set btn--indifferent class for currently featured', function () {
+      expect(model.pledges()[2].featuredButtonClass()).toEqual('btn btn--indifferent')
+      expect(model.pledges()[2].featuredButtonLabel()).toEqual('Unmark as Featured')
     })
 
     describe('And Toggle Back', function () {
@@ -122,6 +149,27 @@ describe('List Charter Pledges', function () {
         expect(model.pledges()[0].isApproved()).toBeFalsy()
         expect(model.showAll()).toBeFalsy()
       })
+    })
+  })
+
+  describe('- Filter by Category', () => {
+    beforeEach(() => {
+      model.selectedCategory('I represent a business')
+    })
+
+    it('- Should filter pledges by selected Category', () => {
+      expect(model.pledges().length).toEqual(2)
+    })
+  })
+
+  describe('- Filter by Category - and back', () => {
+    beforeEach(() => {
+      model.selectedCategory('I represent a business')
+      model.selectedCategory(undefined)
+    })
+
+    it('- Should show all pledges', () => {
+      expect(model.pledges().length).toEqual(1)
     })
   })
 
@@ -138,7 +186,7 @@ describe('List Charter Pledges', function () {
         }
       }
       ajaxPutStub = sinon.stub(ajax, 'put')
-        .withArgs(endpoints.charterPledges + '/' + model.pledges()[0].id, headers, { isApproved: true })
+        .withArgs(endpoints.charterPledges + '/' + model.pledges()[0].id + '/approval', headers, { isApproved: true })
         .returns(getPutPromise())
       browser.loading.reset()
       browser.loaded.reset()
@@ -159,43 +207,101 @@ describe('List Charter Pledges', function () {
     })
 
     it('should set new approval status of pledge', function () {
-      expect(model.allPledges[0].isApproved()).toBeTruthy()
+      expect(model.allPledges()[0].isApproved()).toBeTruthy()
     })
 
     it('should show browser is loaded', function () {
       expect(browserLoadedStub.calledAfter(ajaxPutStub)).toBeTruthy()
     })
 
-    it('should hide the newly approved pledge as we are only view disapproved', function () {
+    it('should hide the newly approved pledge as we are only viewing disapproved', function () {
       expect(model.pledges().length).toEqual(0)
+    })
+  })
+
+  describe('Toggle Flagged as Featured', function () {
+    var ajaxPutStub
+    beforeEach(function () {
+      var getPutPromise = {
+        then: function (success, error) {
+          success({
+            'status': 'ok'
+          })
+        }
+      }
+      ajaxPutStub = sinon.stub(ajax, 'put')
+        .withArgs(endpoints.charterPledges + '/' + model.pledges()[0].id + '/featured', headers, { isFeatured: false })
+        .returns(getPutPromise)
+      browser.loading.reset()
+      browser.loaded.reset()
+
+      model.pledges()[0].toggleFeatured()
+    })
+
+    afterEach(function () {
+      ajax.put.restore()
+    })
+
+    it('should show browser is loading', function () {
+      expect(browserLoadingStub.calledOnce).toBeTruthy()
+    })
+
+    it('should put new featured status to api', function () {
+      expect(ajaxPutStub.calledOnce).toBeTruthy()
+    })
+
+    it('should set new featured status of pledge', function () {
+      expect(model.pledges()[0].isFeatured()).toBeFalsy()
+    })
+
+    it('should show browser is loaded', function () {
+      expect(browserLoadedStub.calledAfter(ajaxPutStub)).toBeTruthy()
     })
   })
 })
 
 var pledgeData = function () {
   return [{
-    "firstName": "first name",
-    "lastName": "last name",
-    "email": "test@test.com",
-    "organisation": "organisation",
-    "isOptedIn": true,
-    "proposedPledge": {
-      "description": "pledge description",
-      "isApproved": false
+    'firstName': 'first name',
+    'lastName': 'last name',
+    'email': 'test@test.com',
+    'organisation': 'organisation',
+    'isOptedIn': true,
+    'proposedPledge': {
+      'description': 'pledge description',
+      'isApproved': false,
+      'isFeatured': true
     },
-    "id": "570b84af3535ff1a8459a142",
-    "documentCreationDate": "2016-04-11T11:04:15.1810000Z"
+    'id': '570b84af3535ff1a8459a142',
+    'creationDate': '2016-04-11T11:04:15.1810000Z',
+    'supporterCategory': 'I represent a business'
   }, {
-    "firstName": "first name",
-    "lastName": "last name",
-    "email": "test1@test.com",
-    "organisation": "organisation",
-    "isOptedIn": true,
-    "proposedPledge": {
-      "description": "pledge description",
-      "isApproved": true
+    'firstName': 'first name',
+    'lastName': 'last name',
+    'email': 'test1@test.com',
+    'organisation': 'organisation',
+    'isOptedIn': true,
+    'proposedPledge': {
+      'description': 'pledge description',
+      'isApproved': true,
+      'isFeatured': false
     },
-    "id": "570b84d73535ff1a8459a143",
-    "documentCreationDate": "2016-04-11T11:04:55.8600000Z"
+    'id': '570b84d73535ff1a8459a143',
+    'creationDate': '2016-04-11T11:04:55.8600000Z',
+    'supporterCategory': 'I represent a business'
+  }, {
+    'firstName': 'first name',
+    'lastName': 'last name',
+    'email': 'test1@test.com',
+    'organisation': 'organisation',
+    'isOptedIn': true,
+    'proposedPledge': {
+      'description': 'pledge description',
+      'isApproved': true,
+      'isFeatured': false
+    },
+    'id': '570b84d73535ff1a8459a144',
+    'creationDate': '2016-06-11T11:04:55.8600000Z',
+    'supporterCategory': 'I have experienced homelessness'
   }]
 }

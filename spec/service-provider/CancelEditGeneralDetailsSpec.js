@@ -7,14 +7,14 @@ var sinon = require('sinon'),
     getUrlParameter = require('../../src/js/get-url-parameter')
 
 
-describe ('Cancel Edit Service Provider General Details', function () {
+describe('Cancel Edit Service Provider General Details', function () {
   var Model = require('../../src/js/models/ServiceProvider'),
   model,
   stubbedApi,
   stubbedCookies,
   stubbedUrlParams
 
-  beforeEach (function () {
+  beforeEach(function () {
     function fakeResolved (value) {
       return {
         then: function (success, error) {
@@ -29,7 +29,8 @@ describe ('Cancel Edit Service Provider General Details', function () {
     stubbedApi = sinon.stub(ajax, 'get').returns(fakeResolved ())
     stubbedCookies = sinon.stub(cookies, 'get').returns('stored-session-token')
     stubbedUrlParams = sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
-    sinon.stub(browser, 'dataLoaded')
+    sinon.stub(browser, 'loading')
+    sinon.stub(browser, 'loaded')
 
     model = new Model()
     model.editGeneralDetails()
@@ -39,18 +40,19 @@ describe ('Cancel Edit Service Provider General Details', function () {
     model.cancelEditGeneralDetails()
   })
 
-  afterEach (function () {
+  afterEach(function () {
     ajax.get.restore()
     cookies.get.restore()
     getUrlParameter.parameter.restore()
-    browser.dataLoaded.restore()
+    browser.loading.restore()
+    browser.loaded.restore()
   })
 
-  it ('should reset isEditingGeneralDetails to false', function () {
+  it('should reset isEditingGeneralDetails to false', function () {
     expect(model.isEditingGeneralDetails()).toBeFalsy()
   })
 
-  it ('should restore description to its previous value', function () {
+  it('should restore description to its previous value', function () {
     expect(model.serviceProvider().description()).toEqual('initial description')
   })
 })

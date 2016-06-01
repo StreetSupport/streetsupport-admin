@@ -22,5 +22,7 @@ module.exports = {
   serviceProviderNeedsAdd: s('add-service-provider-need'),
   serviceProviderNeedsEdit: s('edit-service-provider-need'),
   userAdd: s('add-user'),
-  contactVolunteer: s('contact-volunteer')
+  contactVolunteer: s('contact-volunteer'),
+  actionGroups: '/action-groups/',
+  charter: s('charter-pledges')
 }
