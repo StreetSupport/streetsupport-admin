@@ -186,4 +186,9 @@
     padding: 20px 0;
     background: $brand-i;
   }
+
+  &--main-body {
+    min-height: 400px;
+    position: relative;
+  }
 }
