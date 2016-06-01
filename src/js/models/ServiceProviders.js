@@ -32,7 +32,7 @@ function DashboardModel () {
       self.headers(cookies.get('session-token')),
       {})
     .then(function (result) {
-      self.serviceProviders(self.mapServiceProviders(result.json))
+      self.serviceProviders(self.mapServiceProviders(result.data))
       browser.loaded()
     },
     function (error) {

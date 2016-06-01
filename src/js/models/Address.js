@@ -126,7 +126,7 @@ function Address (data) {
         model
       ).then(function (result) {
         self.isEditing(false)
-        self.key(result.json.key)
+        self.key(result.data.key)
         self.setFields()
         self.listeners().forEach(listener => listener.saveAddress(self))
       }, function (error) {

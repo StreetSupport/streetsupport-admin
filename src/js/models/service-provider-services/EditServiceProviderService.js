@@ -21,7 +21,7 @@ function EditServiceProviderService () {
 
     ajax.get(serviceProviderEndpoint, self.headers(cookies.get('session-token')), {})
     .then(function (result) {
-      var data = result.json
+      var data = result.data
       data.serviceProviderId = getUrlParameter.parameter('providerId')
       self.service(new Service(data))
       self.service().addListener(self)

@@ -13,8 +13,8 @@ function Index () {
 
     var adminForPrefix = 'AdminFor:'
 
-    var success = function (success) {
-      var authClaims = success.json.authClaims
+    var success = (result) => {
+      var authClaims = result.data.authClaims
       if (authClaims.indexOf('SuperAdmin') > -1) {
         browser.redirect(adminUrls.dashboard)
       } else if (authClaims.indexOf('CharterAdmin') > -1) {
@@ -29,7 +29,7 @@ function Index () {
       }
     }
 
-    var error = function () {
+    var error = () => {
       browser.redirect(adminUrls.login)
     }
 

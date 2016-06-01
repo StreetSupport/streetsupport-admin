@@ -63,7 +63,7 @@ function ServiceProviderAddresses () {
       self.headers(cookies.get('session-token')),
       {})
       .then(function (result) {
-        self.serviceProvider(new ServiceProvider(result.json))
+        self.serviceProvider(new ServiceProvider(result.data))
       },
       function (error) {
         self.handleError(error)

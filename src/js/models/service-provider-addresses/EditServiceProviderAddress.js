@@ -27,7 +27,7 @@ function EditServiceProviderAddress () {
       self.headers(cookies.get('session-token')),
       {})
       .then(function (result) {
-        var address = new Address(result.json)
+        var address = new Address(result.data)
         address.addListener(self)
         self.address(address)
         browser.loading()

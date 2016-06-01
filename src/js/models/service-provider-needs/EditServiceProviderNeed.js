@@ -27,8 +27,8 @@ function EditServiceProviderNeed () {
 
   ajax
     .get(endpoint, headers, payload)
-    .then(function (success) {
-      var need = new Need(success.json)
+    .then((result) => {
+      var need = new Need(result.data)
       need.addListener(self)
       self.need(need)
       browser.loaded()
