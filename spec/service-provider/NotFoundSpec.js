@@ -21,7 +21,7 @@ describe('Service Provider not found', () => {
       then: function (success, error) {
         error({
           'status': 404,
-          'json': {}
+          'data': {}
         })
       }
     }

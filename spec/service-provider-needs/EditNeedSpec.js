@@ -29,7 +29,7 @@ describe('Editing Service Provider Need', () => {
         then: function (success, error) {
           success({
             'status': 200,
-            'json': needData()
+            'data': needData()
           })
         }
       }

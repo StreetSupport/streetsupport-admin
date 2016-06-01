@@ -13,14 +13,13 @@ var cookies = require('../../src/js/cookies')
 describe('VerifiedServiceProviders', () => {
   var Dashboard = require('../../src/js/models/ServiceProviders')
   var dashboard
-  var stubbedApi
 
   beforeEach(() => {
     let fakeResolved = {
       then: function (success, error) {
         success({
           'status': 200,
-          'json': [
+          'data': [
             {
               'key': 'albert-kennedy-trust',
               'name': 'Albert Kennedy Trust',
@@ -37,7 +36,7 @@ describe('VerifiedServiceProviders', () => {
       }
     }
 
-    stubbedApi = sinon.stub(ajax, 'get').returns(fakeResolved)
+    sinon.stub(ajax, 'get').returns(fakeResolved)
     sinon.stub(browser, 'loading')
     sinon.stub(browser, 'loaded')
     sinon.stub(cookies, 'get').returns('stored-session-token')
@@ -73,7 +72,7 @@ describe('VerifiedServiceProviders', () => {
         then: function (success, error) {
           success({
             'status': 200,
-            'json': {}
+            'data': {}
           })
         }
       }

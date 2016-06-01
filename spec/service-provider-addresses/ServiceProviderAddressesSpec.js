@@ -20,7 +20,7 @@ describe('Service Provider Addresses', () => {
       then: function (success, error) {
         success({
           'status': 200,
-          'json': addresses()
+          'data': addresses()
         })
       }
     }

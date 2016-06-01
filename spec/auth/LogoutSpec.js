@@ -22,7 +22,7 @@ describe('Logout', () => {
       then: function (success, error) {
         success({
           'status': 200,
-          'json': {}
+          'data': {}
         })
       }
     }

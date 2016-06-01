@@ -21,7 +21,7 @@ describe('Edit Service', () => {
         then: function(success, error) {
           success({
             'status': 200,
-            'json': serviceData()
+            'data': serviceData()
           })
         }
       }
@@ -87,7 +87,7 @@ describe('Edit Service', () => {
           then: function(success, error) {
             success({
               'status': 200,
-              'json': serviceData()
+              'data': serviceData()
             })
           }
         }

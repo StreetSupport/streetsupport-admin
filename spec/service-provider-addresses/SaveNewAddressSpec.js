@@ -29,7 +29,7 @@ describe('Save brand new Address', () => {
         then: function (success, error) {
           success({
             'status': 200,
-            'json': {
+            'data': {
               'key': 230680
             }
           })
@@ -144,7 +144,7 @@ describe('Save new Address as part of collection', () => {
         then: function (success, error) {
           success({
             'status': 200,
-            'json': {
+            'data': {
               'key': 230680
             }
           })

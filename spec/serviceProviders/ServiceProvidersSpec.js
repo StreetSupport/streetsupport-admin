@@ -23,7 +23,7 @@ describe('Service Providers', () => {
       then: function (success, error) {
         success({
           'status': 200,
-          'json': [
+          'data': [
             {
               'key': 'albert-kennedy-trust',
               'name': 'Albert Kennedy Trust',

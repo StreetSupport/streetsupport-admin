@@ -34,7 +34,7 @@ describe('Index', () => {
           then: function (success, error) {
             error({
               'status': 404,
-              'json': {}
+              'data': {}
             })
           }
         }
@@ -66,7 +66,7 @@ describe('Index', () => {
             then: function (success, error) {
               success({
                 'status': 200,
-                'json': {
+                'data': {
                   'authClaims': [ 'OrgAdmin', 'SuperAdmin' ]
                 }
               })
@@ -103,7 +103,7 @@ describe('Index', () => {
             then: function (success, error) {
               success({
                 'status': 200,
-                'json': {
+                'data': {
                   'authClaims': [ 'OrgAdmin', 'AdminFor:coffee4craig' ]
                 }
               })
@@ -138,7 +138,7 @@ describe('Index', () => {
           then: function (success, error) {
             success({
               'status': 200,
-              'json': {
+              'data': {
                 'authClaims': [ 'CharterAdmin' ]
               }
             })

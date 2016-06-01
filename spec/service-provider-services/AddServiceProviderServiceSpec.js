@@ -23,7 +23,7 @@ describe('Save new Service', () => {
         then: function (success, error) {
           success({
             'status': 200,
-            'json': categories()
+            'data': categories()
           })
         }
       }
@@ -34,7 +34,7 @@ describe('Save new Service', () => {
         then: function (success, error) {
           success({
             'status': 200,
-            'json': addresses()
+            'data': addresses()
           })
         }
       }
@@ -185,7 +185,7 @@ describe('Save new Service', () => {
         then: function (success, error) {
           success({
             'status': 200,
-            'json': 'wang'
+            'data': 'wang'
           })
         }
       }

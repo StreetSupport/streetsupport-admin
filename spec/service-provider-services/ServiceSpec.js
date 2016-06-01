@@ -66,7 +66,7 @@ describe('Service', () => {
           then: function (success, error) {
             success({
               'status': 200,
-              'json': getData()
+              'data': getData()
             })
           }
         }
@@ -157,7 +157,7 @@ describe('Service', () => {
           then: function (success, error) {
             success({
               'status': 200,
-              'json': getData()
+              'data': getData()
             })
           }
         }

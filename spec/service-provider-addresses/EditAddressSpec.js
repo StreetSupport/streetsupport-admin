@@ -23,7 +23,7 @@ describe('Edit individual Address', () => {
       then: function (success, error) {
         success({
           'status': 200,
-          'json': addressData()
+          'data': addressData()
         })
       }
     }
@@ -90,7 +90,7 @@ describe('Edit individual Address', () => {
         then: function (success, error) {
           success({
             'status': 200,
-            'json': {}
+            'data': {}
           })
         }
       }

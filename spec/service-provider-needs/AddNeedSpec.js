@@ -24,7 +24,7 @@ describe('Add individual Need', () => {
         then: function (success, error) {
           success({
             'status': 200,
-            'json': coffee4CraigAddresses()
+            'data': coffee4CraigAddresses()
           })
         }
       }
@@ -105,7 +105,7 @@ describe('Add individual Need', () => {
           then: function (success, error) {
             success({
               'status': 200,
-              'json': {}
+              'data': {}
             })
           }
         }

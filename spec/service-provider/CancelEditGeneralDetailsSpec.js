@@ -20,7 +20,7 @@ describe('Cancel Edit Service Provider General Details', () => {
         then: function (success, error) {
           success({
             'status': 200,
-            'json': coffee4Craig()
+            'data': coffee4Craig()
           })
         }
       }

@@ -21,7 +21,7 @@ describe('Service Provider Services', () => {
       then: (success, error) => {
         success({
           'status': 200,
-          'json': coffee4Craig()
+          'data': coffee4Craig()
         })
       }
     }

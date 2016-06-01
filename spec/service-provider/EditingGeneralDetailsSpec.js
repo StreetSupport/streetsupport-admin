@@ -19,7 +19,7 @@ describe('Edit Service Provider General Details', () => {
         then: function (success, error) {
           success({
             'status': 200,
-            'json': coffee4Craig()
+            'data': coffee4Craig()
           })
         }
       }
@@ -57,7 +57,7 @@ describe('Edit Service Provider General Details', () => {
           then: function (success, error) {
             success({
               'status': 200,
-              'json': {}
+              'data': {}
             })
           }
         }
@@ -140,7 +140,7 @@ describe('Edit Service Provider General Details', () => {
           then: function (success, error) {
             success({
               'status': 200,
-              'json': {}
+              'data': {}
             })
           }
         }
