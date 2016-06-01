@@ -1,10 +1,16 @@
+/*
+global describe, beforeEach, it, expect
+*/
+
+'use strict'
+
 describe('Endpoint Builder', () => {
   var Builder = require('../../src/js/endpoint-builder')
   var stu
   var result
 
-  String.prototype.endsWith = function(suffix) {
-    return this.indexOf(suffix, this.length - suffix.length) !== -1;
+  String.prototype.endsWith = function (suffix) { // eslint-disable-line
+    return this.indexOf(suffix, this.length - suffix.length) !== -1
   }
 
   beforeEach(() => {

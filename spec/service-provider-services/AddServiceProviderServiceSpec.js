@@ -307,7 +307,7 @@ function categories () {
   }]
 }
 
-function addresses() {
+function addresses () {
   return {
     'key': 'coffee4craig',
     'name': 'Coffee 4 Craig',

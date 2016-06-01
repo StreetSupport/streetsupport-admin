@@ -1,14 +1,14 @@
-var sinon = require('sinon'),
-    ajax =      require('../../src/js/ajax'),
-    ko =      require('knockout'),
-    endpoints = require('../../src/js/api-endpoints'),
-    adminurls = require('../../src/js/admin-urls'),
-    browser =   require('../../src/js/browser'),
-    cookies =   require('../../src/js/cookies')
+/*
+global describe, beforeEach, it, expect
+*/
+
+'use strict'
+
+let ko = require('knockout')
 
 describe('Remove Opening Time', () => {
-  var Model = require('../../src/js/models/Address'),
-  model
+  let Model = require('../../src/js/models/Address')
+  let model = null
 
   beforeEach(() => {
     model = new Model(getAddressData())
@@ -29,7 +29,7 @@ describe('Remove Opening Time', () => {
   })
 })
 
-function getAddressData() {
+function getAddressData () {
   return {
     'key': 1,
     'street': '5 Oak Street',

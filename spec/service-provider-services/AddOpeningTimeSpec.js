@@ -1,14 +1,12 @@
-var sinon = require('sinon'),
-    ajax =      require('../../src/js/ajax'),
-    endpoints = require('../../src/js/api-endpoints'),
-    adminurls = require('../../src/js/admin-urls'),
-    browser =   require('../../src/js/browser'),
-    cookies =   require('../../src/js/cookies'),
-    getUrlParameter = require('../../src/js/get-url-parameter')
+/*
+global describe, beforeEach, it, expect
+*/
+
+'use strict'
 
 describe('Add Opening Time', () => {
-  var Model = require('../../src/js/models/Service'),
-      model
+  let Model = require('../../src/js/models/Service')
+  let model = null
 
   beforeEach(() => {
     model = new Model(getData())
@@ -22,7 +20,6 @@ describe('Add Opening Time', () => {
   })
 
   describe('Then cancel', () => {
-
     beforeEach(() => {
       model.cancelEdit()
     })
@@ -33,7 +30,7 @@ describe('Add Opening Time', () => {
   })
 })
 
-function getData() {
+function getData () {
   return {
     'key': '569d2b468705432268b65c75',
     'name': 'Meals',

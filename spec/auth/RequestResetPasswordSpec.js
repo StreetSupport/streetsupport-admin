@@ -1,7 +1,12 @@
+/*
+global describe, beforeEach, afterEach, it, expect
+*/
+
+'use strict'
+
 var sinon = require('sinon')
 var ajax = require('../../src/js/ajax')
 var endpoints = require('../../src/js/api-endpoints')
-var adminurls = require('../../src/js/admin-urls')
 var browser = require('../../src/js/browser')
 var cookies = require('../../src/js/cookies')
 
@@ -28,17 +33,15 @@ describe('Reset Password', () => {
     var stubbedApiPost
 
     beforeEach(() => {
-      function postResolved () {
-        return {
-          then: function(success, error) {
-            success({
-              'status': 201
-            })
-          }
+      let postResolved = {
+        then: (success, _) => {
+          success({
+            'status': 201
+          })
         }
       }
 
-      stubbedApiPost = sinon.stub(ajax, 'post').returns(postResolved())
+      stubbedApiPost = sinon.stub(ajax, 'post').returns(postResolved)
       sinon.stub(cookies, 'get').withArgs('session-token').returns('storedSessionToken')
 
       model.email('vince@test.com')

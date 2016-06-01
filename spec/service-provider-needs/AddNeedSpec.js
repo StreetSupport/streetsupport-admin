@@ -2,6 +2,8 @@
 global describe, beforeEach, afterEach, it, expect
 */
 
+'use strict'
+
 var sinon = require('sinon')
 var ajax = require('../../src/js/ajax')
 var endpoints = require('../../src/js/api-endpoints')
@@ -19,14 +21,12 @@ describe('Add individual Need', () => {
     sinon.stub(browser, 'loaded')
     sinon.stub(getUrlParameter, 'parameter').withArgs('providerId').returns('coffee4craig')
 
-    function fakeGetResolution (value) {
-      return {
-        then: function (success, error) {
-          success({
-            'status': 200,
-            'data': coffee4CraigAddresses()
-          })
-        }
+    let fakeGetResolution = {
+      then: function (success, error) {
+        success({
+          'status': 200,
+          'data': coffee4CraigAddresses()
+        })
       }
     }
     sinon.stub(cookies, 'get').returns('saved-session-token')
@@ -37,7 +37,7 @@ describe('Add individual Need', () => {
         'session-token': 'saved-session-token'
       },
       JSON.stringify({})
-    ).returns(fakeGetResolution())
+    ).returns(fakeGetResolution)
     model = new Model()
   })
 
@@ -100,18 +100,16 @@ describe('Add individual Need', () => {
     var ajaxStub
 
     beforeEach(() => {
-      function fakeResolved (value) {
-        return {
-          then: function (success, error) {
-            success({
-              'status': 200,
-              'data': {}
-            })
-          }
+      let fakeResolved = {
+        then: (success, _) => {
+          success({
+            'status': 200,
+            'data': {}
+          })
         }
       }
       browserStub = sinon.stub(browser, 'redirect')
-      ajaxStub = sinon.stub(ajax, 'post').returns(fakeResolved())
+      ajaxStub = sinon.stub(ajax, 'post').returns(fakeResolved)
 
       model.need().description('new description')
       model.need().type('type')

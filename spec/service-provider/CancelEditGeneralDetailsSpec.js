@@ -1,34 +1,32 @@
-var sinon = require('sinon'),
-    ajax =      require('../../src/js/ajax'),
-    endpoints = require('../../src/js/api-endpoints'),
-    adminurls = require('../../src/js/admin-urls'),
-    browser =   require('../../src/js/browser'),
-    cookies =   require('../../src/js/cookies'),
-    getUrlParameter = require('../../src/js/get-url-parameter')
+/*
+global describe, beforeEach, afterEach, it, expect
+*/
 
+'use strict'
+
+const sinon = require('sinon')
+const ajax = require('../../src/js/ajax')
+const browser = require('../../src/js/browser')
+const cookies = require('../../src/js/cookies')
+const getUrlParameter = require('../../src/js/get-url-parameter')
 
 describe('Cancel Edit Service Provider General Details', () => {
-  var Model = require('../../src/js/models/ServiceProvider'),
-  model,
-  stubbedApi,
-  stubbedCookies,
-  stubbedUrlParams
+  const Model = require('../../src/js/models/ServiceProvider')
+  let model = null
 
   beforeEach(() => {
-    function fakeResolved (value) {
-      return {
-        then: function (success, error) {
-          success({
-            'status': 200,
-            'data': coffee4Craig()
-          })
-        }
+    let fakeResolved = {
+      then: (success, _) => {
+        success({
+          'status': 200,
+          'data': coffee4Craig()
+        })
       }
     }
 
-    stubbedApi = sinon.stub(ajax, 'get').returns(fakeResolved ())
-    stubbedCookies = sinon.stub(cookies, 'get').returns('stored-session-token')
-    stubbedUrlParams = sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
+    sinon.stub(ajax, 'get').returns(fakeResolved)
+    sinon.stub(cookies, 'get').returns('stored-session-token')
+    sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
     sinon.stub(browser, 'loading')
     sinon.stub(browser, 'loaded')
 
@@ -57,12 +55,12 @@ describe('Cancel Edit Service Provider General Details', () => {
   })
 })
 
-function coffee4Craig() {
+const coffee4Craig = () => {
   return {
-    "key": "coffee4craig",
-    "name": "Coffee 4 Craig",
-    "description": "initial description",
-    "addresses": [],
-    "providedServices": []
+    'key': 'coffee4craig',
+    'name': 'Coffee 4 Craig',
+    'description': 'initial description',
+    'addresses': [],
+    'providedServices': []
   }
 }

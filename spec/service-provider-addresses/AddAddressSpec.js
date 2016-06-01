@@ -1,18 +1,20 @@
-var sinon = require('sinon'),
-    ajax =      require('../../src/js/ajax'),
-    endpoints = require('../../src/js/api-endpoints'),
-    adminurls = require('../../src/js/admin-urls'),
-    browser =   require('../../src/js/browser'),
-    cookies =   require('../../src/js/cookies'),
-    getUrlParameter = require('../../src/js/get-url-parameter')
+/*
+global describe, beforeEach, afterEach, it, expect
+*/
+
+'use strict'
+
+let sinon = require('sinon')
+let ajax = require('../../src/js/ajax')
+let adminurls = require('../../src/js/admin-urls')
+let browser = require('../../src/js/browser')
+let cookies = require('../../src/js/cookies')
+let getUrlParameter = require('../../src/js/get-url-parameter')
 
 describe('Add individual Address', () => {
-  var Model = require('../../src/js/models/service-provider-addresses/AddServiceProviderAddress'),
-  model,
-  stubbedApi,
-  browserSpy,
-  cookiesStub,
-  stubbedParameters
+  let Model = require('../../src/js/models/service-provider-addresses/AddServiceProviderAddress')
+  let model = null
+  let browserSpy = null
 
   beforeEach(() => {
     sinon.stub(browser, 'loading')
@@ -31,20 +33,18 @@ describe('Add individual Address', () => {
 
   describe('Save', () => {
     beforeEach(() => {
-      function fakeResolved(value) {
-          return {
-            then: function(success, error) {
-              success({
-                'status': 200,
-                'data': {}
-              })
-            }
-          }
+      let fakeResolved = {
+        then: (success, _) => {
+          success({
+            'status': 200,
+            'data': {}
+          })
         }
+      }
       browserSpy = sinon.stub(browser, 'redirect')
-      cookiesStub = sinon.stub(cookies, 'get').returns('saved-session-token')
-      stubbedParameters = sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
-      stubbedApi = sinon.stub(ajax, 'post').returns(fakeResolved())
+      sinon.stub(cookies, 'get').returns('saved-session-token')
+      sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
+      sinon.stub(ajax, 'post').returns(fakeResolved)
 
       model.address().save()
     })

@@ -1,14 +1,18 @@
-var sinon = require('sinon'),
-  ajax = require('../../src/js/ajax'),
-  endpoints = require('../../src/js/api-endpoints'),
-  adminurls = require('../../src/js/admin-urls'),
-  browser = require('../../src/js/browser'),
-  cookies = require('../../src/js/cookies'),
-  getUrlParameter = require('../../src/js/get-url-parameter')
+/*
+global describe, beforeEach, afterEach, it, expect
+*/
+
+'use strict'
+
+let sinon = require('sinon')
+let ajax = require('../../src/js/ajax')
+let endpoints = require('../../src/js/api-endpoints')
+let cookies = require('../../src/js/cookies')
+let getUrlParameter = require('../../src/js/get-url-parameter')
 
 describe('Address', () => {
-  var Model = require('../../src/js/models/Address'),
-    model
+  let Model = require('../../src/js/models/Address')
+  let model = null
 
   beforeEach(() => {
     model = new Model(getAddressData())
@@ -71,25 +75,21 @@ describe('Address', () => {
     })
 
     describe('Save', () => {
-      var stubbedApi,
-        stubbedCookies,
-        stubbedUrlParams
+      var stubbedApi
 
       beforeEach(() => {
-        function fakeResolved(value) {
-          return {
-            then: function(success, error) {
-              success({
-                'status': 200,
-                'data': getAddressData()
-              })
-            }
+        let fakeResolved = {
+          then: (success, _) => {
+            success({
+              'status': 200,
+              'data': getAddressData()
+            })
           }
         }
 
-        stubbedApi = sinon.stub(ajax, 'put').returns(fakeResolved())
-        stubbedCookies = sinon.stub(cookies, 'get').returns('stored-session-token')
-        stubbedUrlParams = sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
+        stubbedApi = sinon.stub(ajax, 'put').returns(fakeResolved)
+        sinon.stub(cookies, 'get').returns('stored-session-token')
+        sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
 
         model.street1('new street1')
         model.street2('new street2')
@@ -163,27 +163,21 @@ describe('Address', () => {
     })
 
     describe('Save Fail', () => {
-      var stubbedApi,
-        stubbedCookies,
-        stubbedUrlParams
-
       beforeEach(() => {
-        function fakeResolved(value) {
-          return {
-            then: function(success, error) {
-              error({
-                'status': 400,
-                'response': JSON.stringify({
-                  'messages': ['returned error message 1', 'returned error message 2']
-                })
+        let fakeResolved = {
+          then: (_, error) => {
+            error({
+              'status': 400,
+              'response': JSON.stringify({
+                'messages': ['returned error message 1', 'returned error message 2']
               })
-            }
+            })
           }
         }
 
-        stubbedApi = sinon.stub(ajax, 'put').returns(fakeResolved())
-        stubbedCookies = sinon.stub(cookies, 'get').returns('stored-session-token')
-        stubbedUrlParams = sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
+        sinon.stub(ajax, 'put').returns(fakeResolved)
+        sinon.stub(cookies, 'get').returns('stored-session-token')
+        sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
 
         model.street1('new street1')
 
@@ -208,8 +202,7 @@ describe('Address', () => {
   })
 })
 
-
-function getAddressData() {
+function getAddressData () {
   return {
     'serviceProviderId': 'coffee4craig',
     'key': 1234,

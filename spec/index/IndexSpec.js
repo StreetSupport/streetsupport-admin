@@ -5,7 +5,7 @@ global describe, beforeEach, afterEach, it, expect
 'use strict'
 
 var sinon = require('sinon')
-var ajax =  require('../../src/js/ajax')
+var ajax = require('../../src/js/ajax')
 var endpoints = require('../../src/js/api-endpoints')
 var adminurls = require('../../src/js/admin-urls')
 var browser = require('../../src/js/browser')
@@ -13,7 +13,7 @@ var cookies = require('../../src/js/cookies')
 
 describe('Index', () => {
   var Model = require('../../src/js/models/Index')
-  var model
+  let model = null
   var stubbedBrowser
   var stubbedApi
 
@@ -24,7 +24,6 @@ describe('Index', () => {
   })
 
   describe('Not logged in', () => {
-
     beforeEach(() => {
       sinon.stub(cookies, 'get').returns(null)
       stubbedBrowser = sinon.stub(browser, 'redirect')
@@ -42,7 +41,7 @@ describe('Index', () => {
 
       stubbedApi = sinon.stub(ajax, 'get').returns(resolved)
 
-      model = new Model()
+      model = new Model() // eslint-disable-line
     })
 
     it('should redirect to login', () => {
@@ -52,7 +51,6 @@ describe('Index', () => {
   })
 
   describe('Has session token', () => {
-
     beforeEach(() => {
       sinon.stub(cookies, 'get').returns('stored-session-token')
       stubbedBrowser = sinon.stub(browser, 'redirect')
@@ -61,21 +59,19 @@ describe('Index', () => {
 
     describe('as Super Admin', () => {
       beforeEach(() => {
-        function resolved(value) {
-          return {
-            then: function (success, error) {
-              success({
-                'status': 200,
-                'data': {
-                  'authClaims': [ 'OrgAdmin', 'SuperAdmin' ]
-                }
-              })
-            }
+        let resolved = {
+          then: function (success, error) {
+            success({
+              'status': 200,
+              'data': {
+                'authClaims': [ 'OrgAdmin', 'SuperAdmin' ]
+              }
+            })
           }
         }
 
-        stubbedApi.returns(resolved())
-        model = new Model()
+        stubbedApi.returns(resolved)
+        model = new Model() // eslint-disable-line
       })
 
       it('should check if session still valid', () => {
@@ -97,22 +93,19 @@ describe('Index', () => {
 
     describe('Admin For', () => {
       beforeEach(() => {
-
-        function resolved(value) {
-          return {
-            then: function (success, error) {
-              success({
-                'status': 200,
-                'data': {
-                  'authClaims': [ 'OrgAdmin', 'AdminFor:coffee4craig' ]
-                }
-              })
-            }
+        let resolved = {
+          then: (success, _) => {
+            success({
+              'status': 200,
+              'data': {
+                'authClaims': [ 'OrgAdmin', 'AdminFor:coffee4craig' ]
+              }
+            })
           }
         }
 
-        stubbedApi.returns(resolved())
-        model = new Model()
+        stubbedApi.returns(resolved)
+        model = new Model() // eslint-disable-line
       })
 
       it('should check if session still valid', () => {
@@ -146,7 +139,7 @@ describe('Index', () => {
         }
 
         stubbedApi.returns(resolved)
-        model = new Model()
+        model = new Model() // eslint-disable-line
       })
 
       it('should check if session still valid', () => {
@@ -168,19 +161,16 @@ describe('Index', () => {
 
     describe('session expired', () => {
       beforeEach(() => {
-
-        function resolved(value) {
-          return {
-            then: function (success, error) {
-              error({
-                'status': 401
-              })
-            }
+        let resolved = {
+          then: function (success, error) {
+            error({
+              'status': 401
+            })
           }
         }
 
-        stubbedApi.returns(resolved())
-        model = new Model()
+        stubbedApi.returns(resolved)
+        model = new Model() // eslint-disable-line
       })
 
       it('should check if session still valid', () => {

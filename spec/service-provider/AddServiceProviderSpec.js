@@ -1,14 +1,19 @@
-var sinon = require('sinon'),
-    ajax =      require('../../src/js/ajax'),
-    endpoints = require('../../src/js/api-endpoints'),
-    adminurls = require('../../src/js/admin-urls'),
-    browser =   require('../../src/js/browser'),
-    cookies =   require('../../src/js/cookies')
+/*
+global describe, beforeEach, afterEach, it, expect
+*/
 
+'use strict'
+
+let sinon = require('sinon')
+let ajax = require('../../src/js/ajax')
+let endpoints = require('../../src/js/api-endpoints')
+let adminurls = require('../../src/js/admin-urls')
+let browser = require('../../src/js/browser')
+let cookies = require('../../src/js/cookies')
 
 describe('Add Service Provider', () => {
-  var Model = require('../../src/js/models/AddServiceProvider'),
-  model
+  let Model = require('../../src/js/models/AddServiceProvider')
+  let model = null
 
   beforeEach(() => {
     sinon.stub(browser, 'loading')
@@ -30,22 +35,20 @@ describe('Add Service Provider', () => {
   })
 
   describe('Save', () => {
-    var stubbedApi,
-        stubbedCookies,
-        stubbedBrowser
+    var stubbedApi
+    let stubbedBrowser = null
+
     beforeEach(() => {
-      function fakeResolved (value) {
-        return {
-          then: function (success, error) {
-            success({
-              'status': 201,
-            })
-          }
+      let fakeResolved = {
+        then: (success, _) => {
+          success({
+            'status': 201
+          })
         }
       }
 
-      stubbedApi = sinon.stub(ajax, 'post').returns(fakeResolved ())
-      stubbedCookies = sinon.stub(cookies, 'get').returns('stored-session-token')
+      stubbedApi = sinon.stub(ajax, 'post').returns(fakeResolved)
+      sinon.stub(cookies, 'get').returns('stored-session-token')
       stubbedBrowser = sinon.stub(browser, 'redirect')
 
       model.name('New Service Provider')
@@ -59,16 +62,16 @@ describe('Add Service Provider', () => {
     })
 
     it('should post service provider name to api', () => {
-        var endpoint = endpoints.getServiceProviders
-        var headers = {
-          'content-type': 'application/json',
-          'session-token': 'stored-session-token'
-        }
-        var payload = JSON.stringify({
-          'Name': 'New Service Provider'
-        })
-        var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, headers, payload).calledOnce
-        expect(apiCalledWithExpectedArgs).toBeTruthy()
+      var endpoint = endpoints.getServiceProviders
+      var headers = {
+        'content-type': 'application/json',
+        'session-token': 'stored-session-token'
+      }
+      var payload = JSON.stringify({
+        'Name': 'New Service Provider'
+      })
+      var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, headers, payload).calledOnce
+      expect(apiCalledWithExpectedArgs).toBeTruthy()
     })
 
     it('should redirect to dashboard', () => {
@@ -77,25 +80,21 @@ describe('Add Service Provider', () => {
   })
 
   describe('Save fail', () => {
-    var stubbedApi,
-        stubbedCookies,
-        stubbedBrowser
+    var stubbedBrowser
     beforeEach(() => {
-      function fakeResolved (value) {
-        return {
-          then: function (success, error) {
-            error({
-              'status': 400,
-              'response': JSON.stringify({
-                'messages': ['returned error message 1', 'returned error message 2']
-              })
+      let fakeResolved = {
+        then: (_, error) => {
+          error({
+            'status': 400,
+            'response': JSON.stringify({
+              'messages': ['returned error message 1', 'returned error message 2']
             })
-          }
+          })
         }
       }
 
-      stubbedApi = sinon.stub(ajax, 'post').returns(fakeResolved ())
-      stubbedCookies = sinon.stub(cookies, 'get').returns('stored-session-token')
+      sinon.stub(ajax, 'post').returns(fakeResolved)
+      sinon.stub(cookies, 'get').returns('stored-session-token')
       stubbedBrowser = sinon.stub(browser, 'redirect')
 
       model.name('New Service Provider')

@@ -1,9 +1,14 @@
+/*
+global describe, beforeEach, afterEach, it, expect
+*/
+
+'use strict'
+
 var sinon = require('sinon')
-var ajax =      require('../../src/js/ajax')
+var ajax = require('../../src/js/ajax')
 var endpoints = require('../../src/js/api-endpoints')
 var adminurls = require('../../src/js/admin-urls')
-var browser =   require('../../src/js/browser')
-var cookies =   require('../../src/js/cookies')
+var browser = require('../../src/js/browser')
 
 describe('Submit invalid credentials', () => {
   var Login = require('../../src/js/models/Auth/Login')
@@ -13,22 +18,20 @@ describe('Submit invalid credentials', () => {
 
   beforeEach(() => {
     login = new Login()
-    function fakeResolved (value) {
-      return {
-        then: function (success, error) {
-          success({
-            status: 'error',
-            statusCode: 401,
-            data: {
-              messages: ['returned error message']
-            }
-          })
-        }
+    let fakeResolved = {
+      then: function (success, _) {
+        success({
+          status: 'error',
+          statusCode: 401,
+          data: {
+            messages: ['returned error message']
+          }
+        })
       }
     }
 
     stubbedApi = sinon.stub(ajax, 'post')
-    stubbedApi.returns(fakeResolved ())
+    stubbedApi.returns(fakeResolved)
     stubbedBrowser = sinon.stub(browser, 'redirect')
 
     login.username('username')

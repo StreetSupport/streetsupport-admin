@@ -1,14 +1,19 @@
+/*
+global describe, beforeEach, afterEach, it, expect
+*/
+
+'use strict'
+
 var sinon = require('sinon')
 var ajax = require('../../src/js/ajax')
 var endpoints = require('../../src/js/api-endpoints')
-var adminurls = require('../../src/js/admin-urls')
 var cookies = require('../../src/js/cookies')
 var browser = require('../../src/js/browser')
 var getUrlParameter = require('../../src/js/get-url-parameter')
 
 describe('Verify New User', () => {
-  var Model = require('../../src/js/models/Auth/VerifyUser'),
-  model
+  let Model = require('../../src/js/models/Auth/VerifyUser')
+  let model = null
 
   beforeEach(() => {
     sinon.stub(browser, 'loading')
@@ -26,23 +31,19 @@ describe('Verify New User', () => {
   })
 
   describe('Save', () => {
-    var stubbedApi,
-        stubbedCookies,
-        stubbedUrlParameter
+    var stubbedApi
     beforeEach(() => {
-      function fakeResolved (value) {
-        return {
-          then: function (success, error) {
-            success({
-              'status': 201,
-            })
-          }
+      let fakeResolved = {
+        then: function (success, _) {
+          success({
+            'status': 201
+          })
         }
       }
 
-      stubbedApi = sinon.stub(ajax, 'post').returns(fakeResolved ())
-      stubbedCookies = sinon.stub(cookies, 'get').returns('stored-session-token')
-      stubbedUrlParameter = sinon.stub(getUrlParameter, 'parameter').returns('verification-token')
+      stubbedApi = sinon.stub(ajax, 'post').returns(fakeResolved)
+      sinon.stub(cookies, 'get').returns('stored-session-token')
+      sinon.stub(getUrlParameter, 'parameter').returns('verification-token')
 
       model.username('username')
       model.password('password')
@@ -56,18 +57,18 @@ describe('Verify New User', () => {
     })
 
     it('should post service provider name to api', () => {
-        var endpoint = endpoints.verifiedUsers
-        var headers = {
-          'content-type': 'application/json',
-          'session-token': 'stored-session-token'
-        }
-        var payload = JSON.stringify({
-          'UserName': 'username',
-          'Password': 'password',
-          'VerificationToken': 'verification-token'
-        })
-        var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, headers, payload).calledOnce
-        expect(apiCalledWithExpectedArgs).toBeTruthy()
+      var endpoint = endpoints.verifiedUsers
+      var headers = {
+        'content-type': 'application/json',
+        'session-token': 'stored-session-token'
+      }
+      var payload = JSON.stringify({
+        'UserName': 'username',
+        'Password': 'password',
+        'VerificationToken': 'verification-token'
+      })
+      var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, headers, payload).calledOnce
+      expect(apiCalledWithExpectedArgs).toBeTruthy()
     })
 
     it('should set message', () => {
@@ -80,27 +81,21 @@ describe('Verify New User', () => {
   })
 
   describe('Save fail', () => {
-    var stubbedApi,
-        stubbedCookies,
-        stubbedUrlParameter
-
     beforeEach(() => {
-      function fakeResolved (value) {
-        return {
-          then: function (success, error) {
-            error({
-              'status': 400,
-              'response': JSON.stringify({
-                'messages': ['returned error message 1', 'returned error message 2']
-              })
+      let fakeResolved = {
+        then: (_, error) => {
+          error({
+            'status': 400,
+            'response': JSON.stringify({
+              'messages': ['returned error message 1', 'returned error message 2']
             })
-          }
+          })
         }
       }
 
-      stubbedApi = sinon.stub(ajax, 'post').returns(fakeResolved ())
-      stubbedCookies = sinon.stub(cookies, 'get').returns('stored-session-token')
-      stubbedUrlParameter = sinon.stub(getUrlParameter, 'parameter').returns('verification-token')
+      sinon.stub(ajax, 'post').returns(fakeResolved)
+      sinon.stub(cookies, 'get').returns('stored-session-token')
+      sinon.stub(getUrlParameter, 'parameter').returns('verification-token')
 
       model.username('username')
       model.password('password')
