@@ -137,16 +137,16 @@ describe('Edit Service Provider Contact Information', () => {
   })
 })
 
-function coffee4Craig() {
+function coffee4Craig () {
   return {
-    "key": "coffee4craig",
-    "name": "Coffee 4 Craig",
-    "email": "risha@coffee4craig.com",
-    "telephone": "07973955003",
-    "website": "http://www.coffee4craig.com/",
-    "facebook": "https://www.facebook.com/Coffee4Craig/?fref=ts",
-    "twitter": "@Coffee4Craig",
-    "addresses": [],
-    "providedServices": []
+    'key': 'coffee4craig',
+    'name': 'Coffee 4 Craig',
+    'email': 'risha@coffee4craig.com',
+    'telephone': '07973955003',
+    'website': 'http://www.coffee4craig.com/',
+    'facebook': 'https://www.facebook.com/Coffee4Craig/?fref=ts',
+    'twitter': '@Coffee4Craig',
+    'addresses': [],
+    'providedServices': []
   }
 }

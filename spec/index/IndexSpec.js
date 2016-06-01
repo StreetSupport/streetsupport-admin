@@ -13,7 +13,7 @@ var cookies = require('../../src/js/cookies')
 
 describe('Index', () => {
   var Model = require('../../src/js/models/Index')
-  let model = null
+  let model = null // eslint-disable-line
   var stubbedBrowser
   var stubbedApi
 
@@ -41,7 +41,7 @@ describe('Index', () => {
 
       stubbedApi = sinon.stub(ajax, 'get').returns(resolved)
 
-      model = new Model() // eslint-disable-line
+      model = new Model()
     })
 
     it('should redirect to login', () => {
@@ -71,7 +71,7 @@ describe('Index', () => {
         }
 
         stubbedApi.returns(resolved)
-        model = new Model() // eslint-disable-line
+        model = new Model()
       })
 
       it('should check if session still valid', () => {
@@ -105,7 +105,7 @@ describe('Index', () => {
         }
 
         stubbedApi.returns(resolved)
-        model = new Model() // eslint-disable-line
+        model = new Model()
       })
 
       it('should check if session still valid', () => {
@@ -139,7 +139,7 @@ describe('Index', () => {
         }
 
         stubbedApi.returns(resolved)
-        model = new Model() // eslint-disable-line
+        model = new Model()
       })
 
       it('should check if session still valid', () => {
@@ -170,7 +170,7 @@ describe('Index', () => {
         }
 
         stubbedApi.returns(resolved)
-        model = new Model() // eslint-disable-line
+        model = new Model()
       })
 
       it('should check if session still valid', () => {

@@ -1,14 +1,12 @@
-var sinon = require('sinon'),
-    ajax =      require('../../src/js/ajax'),
-    endpoints = require('../../src/js/api-endpoints'),
-    adminurls = require('../../src/js/admin-urls'),
-    browser =   require('../../src/js/browser'),
-    cookies =   require('../../src/js/cookies'),
-    getUrlParameter = require('../../src/js/get-url-parameter')
+/*
+global describe, beforeEach, it, expect
+*/
+
+'use strict'
 
 describe('Add Opening Time', () => {
-  var Model = require('../../src/js/models/Address'),
-      model
+  const Model = require('../../src/js/models/Address')
+  let model = null
 
   beforeEach(() => {
     model = new Model(getAddressData())
@@ -22,7 +20,6 @@ describe('Add Opening Time', () => {
   })
 
   describe('Then cancel', () => {
-
     beforeEach(() => {
       model.cancel()
     })
@@ -33,7 +30,7 @@ describe('Add Opening Time', () => {
   })
 })
 
-function getAddressData() {
+function getAddressData () {
   return {
     'key': 1,
     'street': '5 Oak Street',

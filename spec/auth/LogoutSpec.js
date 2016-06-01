@@ -7,13 +7,10 @@ global describe, beforeEach, afterEach, it, expect
 var sinon = require('sinon')
 var ajax = require('../../src/js/ajax')
 var endpoints = require('../../src/js/api-endpoints')
-var adminurls = require('../../src/js/admin-urls')
-var browser = require('../../src/js/browser')
 var cookies = require('../../src/js/cookies')
 
 describe('Logout', () => {
   var Model = require('../../src/js/models/Auth/Logout')
-  var model
   var stubbedApi
   var stubbedUnsetCookies
 
@@ -33,7 +30,7 @@ describe('Logout', () => {
     sinon.stub(cookies, 'get').returns('stored-session-token')
     stubbedUnsetCookies = sinon.stub(cookies, 'unset')
 
-    model = new Model()
+    new Model() // eslint-disable-line
   })
 
   afterEach(() => {
@@ -56,12 +53,12 @@ describe('Logout', () => {
   })
 
   it('should unset session token', () => {
-      var cookieSetCalled = stubbedUnsetCookies.withArgs('session-token').calledOnce
-      expect(cookieSetCalled).toBeTruthy()
+    var cookieSetCalled = stubbedUnsetCookies.withArgs('session-token').calledOnce
+    expect(cookieSetCalled).toBeTruthy()
   })
 
   it('should unset auth claims', () => {
-      var cookieSetCalled = stubbedUnsetCookies.withArgs('auth-claims').calledOnce
-      expect(cookieSetCalled).toBeTruthy()
+    var cookieSetCalled = stubbedUnsetCookies.withArgs('auth-claims').calledOnce
+    expect(cookieSetCalled).toBeTruthy()
   })
 })

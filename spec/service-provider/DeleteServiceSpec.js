@@ -109,7 +109,6 @@ function coffee4Craig () {
       },
       'tags': ['some tags']
     }, {
-      'key': 5678,
       'serviceProviderId': 'coffee4craig',
       'key': '5678',
       'name': 'Meals',
