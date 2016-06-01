@@ -1,9 +1,14 @@
+/*
+global describe, beforeEach, afterEach, it, expect
+*/
+
+'use strict'
+
 var sinon = require('sinon')
-var ajax =      require('../../src/js/ajax')
+var ajax = require('../../src/js/ajax')
 var endpoints = require('../../src/js/api-endpoints')
-var adminUrls = require('../../src/js/admin-urls')
-var browser =   require('../../src/js/browser')
-var cookies =   require('../../src/js/cookies')
+var browser = require('../../src/js/browser')
+var cookies = require('../../src/js/cookies')
 var getUrlParam = require('../../src/js/get-url-parameter')
 var Model = require('../../src/js/models/volunteers/ContactVolunteerModel')
 
@@ -49,8 +54,8 @@ describe('Contact Volunteer', () => {
     getUrlParam.parameter.restore()
   })
 
-  it('should notify user it is loading' ,() => {
-      expect(browserLoadingStub.calledOnce).toBeTruthy()
+  it('should notify user it is loading', () => {
+    expect(browserLoadingStub.calledOnce).toBeTruthy()
   })
 
   it('should post to api', () => {
@@ -66,11 +71,11 @@ describe('Contact Volunteer', () => {
     expect(posted).toBeTruthy()
   })
 
-  it('should notify user it has loaded' ,() => {
+  it('should notify user it has loaded', () => {
     expect(browserLoadedStub.calledAfter(ajaxPostStub)).toBeTruthy()
   })
 
-  it('should set isFormSubmitSuccessful to true' ,() => {
+  it('should set isFormSubmitSuccessful to true', () => {
     expect(model.isFormSubmitSuccessful()).toBeTruthy()
   })
 })

@@ -12,7 +12,7 @@ const tasks = requireDir(__dirname + '/tasks') // eslint-disable-line
 // Watch task
 gulp.task('watch', () => {
   gulp.watch(config.paths.scss + '**/*.scss', ['scss'])
-  gulp.watch(config.paths.spec + '**/*[Ss]pec.js', ['jasmine'])
+  gulp.watch(config.paths.spec + '**/*[Ss]pec.js', ['jasmine', 'specsstandardlint'])
   gulp.watch(config.paths.js + '**/*.js', ['jasmine', 'standardlint', 'webpack'])
   gulp.watch(config.paths.img + '{,**/}*.{png,jpg,gif,svg}', ['img'])
   gulp.watch(config.paths.icons + '**/*.svg', ['svgsprite'])

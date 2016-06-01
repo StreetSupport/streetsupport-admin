@@ -1,35 +1,37 @@
-var sinon =           require('sinon')
-var ajax =            require('../../src/js/ajax')
-var endpoints =       require('../../src/js/api-endpoints')
-var endPointBuilder = require('../../src/js/endpoint-builder')
-var cookies =         require('../../src/js/cookies')
+/*
+global describe, beforeEach, afterEach, it, expect
+*/
+
+'use strict'
+
+var sinon = require('sinon')
+var ajax = require('../../src/js/ajax')
+var endpoints = require('../../src/js/api-endpoints')
+var cookies = require('../../src/js/cookies')
 var getUrlParameter = require('../../src/js/get-url-parameter')
-var browser =         require('../../src/js/browser')
-var adminUrls =       require('../../src/js/admin-urls')
+var browser = require('../../src/js/browser')
+var adminUrls = require('../../src/js/admin-urls')
 
 describe('Edit Service', () => {
-  var Model = require('../../src/js/models/service-provider-services/EditServiceProviderService'),
-  model,
-  stubbedApi,
-  stubbedCookies,
-  stubbedUrlParams,
-  stubbedBrowser
+  let Model = require('../../src/js/models/service-provider-services/EditServiceProviderService')
+  let model = null
+  let stubbedApi = null
+  let stubbedUrlParams = null
+  let stubbedBrowser = null
 
   beforeEach(() => {
-    function fakeResolved(value) {
-      return {
-        then: function(success, error) {
-          success({
-            'status': 200,
-            'data': serviceData()
-          })
-        }
+    let fakeResolved = {
+      then: (success, _) => {
+        success({
+          'status': 200,
+          'data': serviceData()
+        })
       }
     }
 
-    stubbedApi = sinon.stub(ajax, 'get').returns(fakeResolved())
+    stubbedApi = sinon.stub(ajax, 'get').returns(fakeResolved)
     stubbedBrowser = sinon.stub(browser, 'redirect')
-    stubbedCookies = sinon.stub(cookies, 'get').returns('stored-session-token')
+    sinon.stub(cookies, 'get').returns('stored-session-token')
     stubbedUrlParams = sinon.stub(getUrlParameter, 'parameter')
     stubbedUrlParams.withArgs('providerId').returns('coffee4craig')
     stubbedUrlParams.withArgs('serviceId').returns('2')
@@ -47,7 +49,6 @@ describe('Edit Service', () => {
     browser.loaded.restore()
     browser.redirect.restore()
   })
-
 
   it('should request for service', () => {
     var endpoint = endpoints.getServiceProviders + '/coffee4craig/services/2'
@@ -82,18 +83,16 @@ describe('Edit Service', () => {
 
   describe('Save', () => {
     beforeEach(() => {
-      function fakeResolved(value) {
-        return {
-          then: function(success, error) {
-            success({
-              'status': 200,
-              'data': serviceData()
-            })
-          }
+      let fakeResolved = {
+        then: (success, _) => {
+          success({
+            'status': 200,
+            'data': serviceData()
+          })
         }
       }
 
-      stubbedApi = sinon.stub(ajax, 'put').returns(fakeResolved())
+      stubbedApi = sinon.stub(ajax, 'put').returns(fakeResolved)
 
       model.service().save()
     })
@@ -108,43 +107,43 @@ describe('Edit Service', () => {
   })
 })
 
-function serviceData() {
+function serviceData () {
   return {
-    "key": 2,
-    "name": "Meals",
-    "info": "Lunch",
-    "locationDescription": "location description",
-    "openingTimes": [{
-      "startTime": "12:00",
-      "endTime": "13:00",
-      "day": "Monday"
+    'key': 2,
+    'name': 'Meals',
+    'info': 'Lunch',
+    'locationDescription': 'location description',
+    'openingTimes': [{
+      'startTime': '12:00',
+      'endTime': '13:00',
+      'day': 'Monday'
     }, {
-      "startTime": "12:00",
-      "endTime": "13:00",
-      "day": "Tuesday"
+      'startTime': '12:00',
+      'endTime': '13:00',
+      'day': 'Tuesday'
     }, {
-      "startTime": "12:00",
-      "endTime": "13:00",
-      "day": "Wednesday"
+      'startTime': '12:00',
+      'endTime': '13:00',
+      'day': 'Wednesday'
     }, {
-      "startTime": "12:00",
-      "endTime": "13:00",
-      "day": "Thursday"
+      'startTime': '12:00',
+      'endTime': '13:00',
+      'day': 'Thursday'
     }, {
-      "startTime": "12:00",
-      "endTime": "13:00",
-      "day": "Friday"
+      'startTime': '12:00',
+      'endTime': '13:00',
+      'day': 'Friday'
     }],
-    "address": {
-      "key": "7a6ff0f3-5b04-4bd9-b088-954e473358f5",
-      "street": "Booth Centre",
-      "street1": null,
-      "street2": "Edward Holt House",
-      "street3": "Pimblett Street",
-      "city": "Manchester",
-      "postcode": "M3 1FU",
-      "openingTimes": null
+    'address': {
+      'key': '7a6ff0f3-5b04-4bd9-b088-954e473358f5',
+      'street': 'Booth Centre',
+      'street1': null,
+      'street2': 'Edward Holt House',
+      'street3': 'Pimblett Street',
+      'city': 'Manchester',
+      'postcode': 'M3 1FU',
+      'openingTimes': null
     },
-    "tags": null
+    'tags': null
   }
 }

@@ -1,9 +1,15 @@
-var sinon =     require('sinon'),
-    ajax =      require('../../src/js/ajax'),
-    endpoints = require('../../src/js/api-endpoints'),
-    adminurls = require('../../src/js/admin-urls'),
-    browser =   require('../../src/js/browser'),
-    cookies = require('../../src/js/cookies')
+/*
+global describe, beforeEach, afterEach, it, expect
+*/
+
+'use strict'
+
+let sinon = require('sinon')
+let ajax = require('../../src/js/ajax')
+let endpoints = require('../../src/js/api-endpoints')
+let adminurls = require('../../src/js/admin-urls')
+let browser = require('../../src/js/browser')
+let cookies = require('../../src/js/cookies')
 
 describe('Login', () => {
   var Login = require('../../src/js/models/Auth/Login')
@@ -22,27 +28,25 @@ describe('Login', () => {
   })
 
   describe('Submit', () => {
-    var mockCookies,
-    stubbedApi,
-    stubbedBrowser
+    var mockCookies
+    let stubbedApi = null
+    let stubbedBrowser = null
 
     beforeEach(() => {
-      function fakeResolved (value) {
-        return {
-          then: function (success, error) {
-            success({
-              'status': 201,
-              'data': {
-                'sessionToken': 'returnedSessionToken',
-                'authClaims': [ 'SuperAdmin', 'claimB' ]
-              }
-            })
-          }
+      let fakeResolved = {
+        then: function (success, error) {
+          success({
+            'status': 201,
+            'data': {
+              'sessionToken': 'returnedSessionToken',
+              'authClaims': [ 'SuperAdmin', 'claimB' ]
+            }
+          })
         }
       }
 
       stubbedApi = sinon.stub(ajax, 'post')
-      stubbedApi.returns(fakeResolved ())
+      stubbedApi.returns(fakeResolved)
       stubbedBrowser = sinon.stub(browser, 'redirect')
 
       mockCookies = sinon.mock(cookies)
