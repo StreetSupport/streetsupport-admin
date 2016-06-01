@@ -22,7 +22,7 @@ let disableForbiddenLinks = () => {
       if (requiredClaims !== null) {
         requiredClaims = requiredClaims.split(',')
         for (let j = 0; j < requiredClaims.length; ++j) {
-          if (claims.indexOf(requiredClaims[j]) < 0) navLinks[i].parentNode.classList += ' hide'
+          if (claims.indexOf(requiredClaims[j]) < 0) navLinks[i].parentNode.className += ' hide'
         }
       }
     }
