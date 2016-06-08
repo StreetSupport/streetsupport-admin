@@ -6,7 +6,7 @@
     clear: left;
     font-weight: bold;
     @include mq($from: m) {
-      @include span(4 of 12);
+      @include span(3 of 12);
     }
   }
   &__value {
