@@ -65,7 +65,7 @@ var ListVolunteersModel = function () {
             return 0
           })
 
-        volunteers.forEach(v => {
+        volunteers.forEach((v) => {
           v.contactUrl = adminUrls.contactVolunteer + '?id=' + v.id
           v.creationDate = moment(v.creationDate).format('DD/MM/YY')
         })
