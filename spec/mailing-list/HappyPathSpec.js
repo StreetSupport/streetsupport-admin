@@ -61,24 +61,28 @@ describe('List Members', () => {
     expect(browserLoadedStub.calledAfter(ajaxGetStub)).toBeTruthy()
   })
 
+  it('- Should map all members', () => {
+    expect(model.members().length).toEqual(3)
+  })
+
   it('- Should map id', () => {
-    expect(model.members()[1].id).toEqual('572a1a78d421fb12a436b5d5')
+    expect(model.members()[1].id()).toEqual('572a1a78d421fb12a436b5d5')
   })
 
   it('- Should map name', () => {
-    expect(model.members()[1].name).toEqual('Trevor MacFarlane')
+    expect(model.members()[1].name()).toEqual('Trevor BoFimble')
   })
 
   it('- Should map type', () => {
-    expect(model.members()[1].type).toEqual('Volunteer')
+    expect(model.members()[1].type()).toEqual('Volunteer')
   })
 
   it('- Should map email', () => {
-    expect(model.members()[1].email).toEqual('trevor@juliewardmep.eu')
+    expect(model.members()[1].email()).toEqual('trevor@bofimble.eu')
   })
 
   it('- Should get unique list of member types', () => {
-    expect(model.memberTypes.length).toEqual(2)
+    expect(model.memberTypes().length).toEqual(2)
   })
 
   describe('- Filter by Type', () => {
@@ -89,7 +93,18 @@ describe('List Members', () => {
 
     it('- Should filter by selected type', () => {
       expect(model.members().length).toEqual(1)
-      expect(model.members()[0].id).toEqual('572a1a78d421fb12a436b5d5')
+      expect(model.members()[0].id()).toEqual('572a1a78d421fb12a436b5d5')
+    })
+  })
+
+  describe('- Reset Filter', () => {
+    beforeEach(() => {
+      model.selectedMemberTypeFilter(undefined)
+      model.filterByType()
+    })
+
+    it('- Should show all', () => {
+      expect(model.members().length).toEqual(3)
     })
   })
 })
@@ -98,20 +113,20 @@ const getData = () => {
   return [{
     'id': '5729f5c4d421fa0cc0dd74a0',
     'firstName': 'Vincent',
-    'lastName': 'Lee',
-    'email': 'vslee888@gmail.com',
+    'lastName': 'Test',
+    'email': 'test@gmail.com',
     'memberType': 'CharterSignee'
   }, {
     'id': '572a1a78d421fb12a436b5d5',
     'firstName': 'Trevor',
-    'lastName': 'MacFarlane',
-    'email': 'trevor@juliewardmep.eu',
+    'lastName': 'BoFimble',
+    'email': 'trevor@bofimble.eu',
     'memberType': 'Volunteer'
   }, {
     'id': '572a69b3ae21fa0fe41a0eb2',
     'firstName': 'Ellie ',
-    'lastName': 'Trimble',
-    'email': 'eleanor.trimble@btinternet.com',
+    'lastName': 'BoBimble',
+    'email': 'eleanor@btinternet.com',
     'memberType': 'CharterSignee'
   }]
 }

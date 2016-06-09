@@ -7,10 +7,10 @@ const BaseViewModel = require('../BaseViewModel')
 const ko = require('knockout')
 
 function Member (data) {
-  this.id = data.id
-  this.name = data.firstName + ' ' + data.lastName
-  this.email = data.email
-  this.type = data.memberType
+  this.id = ko.observable(data.id)
+  this.name = ko.observable(data.firstName + ' ' + data.lastName)
+  this.email = ko.observable(data.email)
+  this.type = ko.observable(data.memberType)
 }
 
 function ListMembers () {
@@ -19,7 +19,7 @@ function ListMembers () {
   const headers = self.headers(cookies.get('session-token'))
 
   const getUniqueMemberTypes = (members) => {
-    var memberTypes = []
+    const memberTypes = []
     members
       .map((m) => m.memberType)
       .forEach((mt) => {
@@ -28,15 +28,19 @@ function ListMembers () {
     return memberTypes
   }
 
-  self.allMembers = []
+  self.allMembers = ko.observableArray()
   self.members = ko.observableArray()
-  self.memberTypes = []
+  self.memberTypes = ko.observableArray()
   self.selectedMemberTypeFilter = ko.observable()
 
   self.filterByType = () => {
-    const filtered = self.allMembers
-      .filter((m) => m.type === self.selectedMemberTypeFilter())
-    self.members(filtered)
+    if (self.selectedMemberTypeFilter() === undefined) {
+      self.members(self.allMembers())
+    } else {
+      const filtered = self.allMembers()
+        .filter((m) => m.type() === self.selectedMemberTypeFilter())
+      self.members(filtered)
+    }
   }
 
   self.init = () => {
@@ -45,10 +49,9 @@ function ListMembers () {
     ajax
       .get(endpoint, headers)
       .then(function (result) {
-        self.allMembers = result.data.map((m) => new Member(m))
-        self.members(self.allMembers)
-        self.memberTypes = getUniqueMemberTypes(result.data)
-
+        self.allMembers(result.data.map((m) => new Member(m)))
+        self.members(self.allMembers())
+        self.memberTypes(getUniqueMemberTypes(result.data))
         browser.loaded()
       }, function (error) {
         self.handleServerError(error)

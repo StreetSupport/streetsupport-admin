@@ -12,6 +12,13 @@ nosubnav: true
   <div class="container block__inner">
     <header>
       <h1>Mailing List</h1>
+      <div class="form__field-item form__field-item--full-width">
+        <label class="form__label">Filter by Type:</label>
+        <select data-bind="options: memberTypes,
+        value: selectedMemberTypeFilter,
+        optionsCaption: '-- please select --',
+        event: { change: filterByType }" class="form__input"></select>
+      </div>
     </header>
   </div>
 </div>
@@ -26,17 +33,17 @@ nosubnav: true
             <th>Email</th>
           </tr>
         </thead>
-        <tbody data-bind="template: { name: 'group', foreach: members }"></tbody>
+        <tbody data-bind="template: { name: 'members-tmpl', foreach: members }"></tbody>
       </table>
       {{> loading-spinner}}
     </div>
   </div>
 </div>
 
-<script type="text/html" id="members">
+<script type="text/html" id="members-tmpl">
   <tr>
-      <td data-bind="text: type"></td>
-      <td data-bind="html: name"></td>
-      <td data-bind="text: email"></td>
+    <td data-bind="text: type"></td>
+    <td data-bind="html: name"></td>
+    <td data-bind="text: email"></td>
   </tr>
 </script>
