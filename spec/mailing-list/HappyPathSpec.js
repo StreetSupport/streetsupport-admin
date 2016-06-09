@@ -61,8 +61,36 @@ describe('List Members', () => {
     expect(browserLoadedStub.calledAfter(ajaxGetStub)).toBeTruthy()
   })
 
-  it('- Should map group id', () => {
-    // expect(model.actionGroups()[1].id).toEqual('57166227e4b09686f6b2c88a')
+  it('- Should map id', () => {
+    expect(model.members()[1].id).toEqual('572a1a78d421fb12a436b5d5')
+  })
+
+  it('- Should map name', () => {
+    expect(model.members()[1].name).toEqual('Trevor MacFarlane')
+  })
+
+  it('- Should map type', () => {
+    expect(model.members()[1].type).toEqual('Volunteer')
+  })
+
+  it('- Should map email', () => {
+    expect(model.members()[1].email).toEqual('trevor@juliewardmep.eu')
+  })
+
+  it('- Should get unique list of member types', () => {
+    expect(model.memberTypes.length).toEqual(2)
+  })
+
+  describe('- Filter by Type', () => {
+    beforeEach(() => {
+      model.selectedMemberTypeFilter('Volunteer')
+      model.filterByType()
+    })
+
+    it('- Should filter by selected type', () => {
+      expect(model.members().length).toEqual(1)
+      expect(model.members()[0].id).toEqual('572a1a78d421fb12a436b5d5')
+    })
   })
 })
 
@@ -78,7 +106,7 @@ const getData = () => {
     'firstName': 'Trevor',
     'lastName': 'MacFarlane',
     'email': 'trevor@juliewardmep.eu',
-    'memberType': 'CharterSignee'
+    'memberType': 'Volunteer'
   }, {
     'id': '572a69b3ae21fa0fe41a0eb2',
     'firstName': 'Ellie ',
