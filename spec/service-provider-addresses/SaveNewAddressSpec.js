@@ -74,7 +74,7 @@ describe('Save brand new Address', () => {
         'content-type': 'application/json',
         'session-token': 'stored-session-token'
       }
-      var payload = JSON.stringify({
+      var payload = {
         'Street': 'new street1',
         'Street1': 'new street2',
         'Street2': 'new street3',
@@ -92,7 +92,7 @@ describe('Save brand new Address', () => {
             'day': 'Tuesday'
           }
         ]
-      })
+      }
       var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, headers, payload).calledOnce
       expect(apiCalledWithExpectedArgs).toBeTruthy()
     })
@@ -185,7 +185,7 @@ describe('Save new Address as part of collection', () => {
         'content-type': 'application/json',
         'session-token': 'stored-session-token'
       }
-      var payload = JSON.stringify({
+      var payload = {
         'Street': 'new street1',
         'Street1': 'new street2',
         'Street2': 'new street3',
@@ -203,7 +203,7 @@ describe('Save new Address as part of collection', () => {
             'day': 'Tuesday'
           }
         ]
-      })
+      }
       var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, headers, payload).calledOnce
       expect(apiCalledWithExpectedArgs).toBeTruthy()
     })

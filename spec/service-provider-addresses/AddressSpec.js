@@ -119,7 +119,7 @@ describe('Address', () => {
           'content-type': 'application/json',
           'session-token': 'stored-session-token'
         }
-        var payload = JSON.stringify({
+        var payload = {
           'Street': 'new street1',
           'Street1': 'new street2',
           'Street2': 'new street3',
@@ -135,7 +135,7 @@ describe('Address', () => {
             'endTime': '15:30',
             'day': 'Tuesday'
           }]
-        })
+        }
 
         var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, headers, payload).calledOnce
         expect(apiCalledWithExpectedArgs).toBeTruthy()
