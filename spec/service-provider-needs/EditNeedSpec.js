@@ -39,8 +39,7 @@ describe('Editing Service Provider Need', () => {
       {
         'content-type': 'application/json',
         'session-token': 'saved-session-token'
-      },
-      JSON.stringify({})
+      }
     ).returns(fakeGetResolution())
     var urlParamsStub = sinon.stub(getUrlParameter, 'parameter')
     urlParamsStub.withArgs('providerId').returns('albert-kennedy-trust')

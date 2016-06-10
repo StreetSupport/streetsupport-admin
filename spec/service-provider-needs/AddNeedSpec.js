@@ -35,8 +35,7 @@ describe('Add individual Need', () => {
       {
         'content-type': 'application/json',
         'session-token': 'saved-session-token'
-      },
-      JSON.stringify({})
+      }
     ).returns(fakeGetResolution)
     model = new Model()
   })
