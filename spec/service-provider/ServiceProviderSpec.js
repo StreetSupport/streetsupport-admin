@@ -83,15 +83,15 @@ describe('Show Service Provider', () => {
   })
 
   it('should set link to add address', () => {
-    expect(model.serviceProvider().addAddressUrl).toEqual('add-service-provider-address.html?providerId=coffee4craig')
+    expect(model.serviceProvider().addAddressUrl).toEqual('/add-service-provider-address.html?providerId=coffee4craig')
   })
 
   it('should set link to manage services', () => {
-    expect(model.serviceProvider().addServiceUrl).toEqual('add-service-provider-service.html?providerId=coffee4craig')
+    expect(model.serviceProvider().addServiceUrl).toEqual('/add-service-provider-service.html?providerId=coffee4craig')
   })
 
   it('should set link to manage needs', () => {
-    expect(model.serviceProvider().addNeedUrl).toEqual('add-service-provider-need.html?providerId=coffee4craig')
+    expect(model.serviceProvider().addNeedUrl).toEqual('/add-service-provider-need.html?providerId=coffee4craig')
   })
 })
 

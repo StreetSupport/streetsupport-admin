@@ -1,6 +1,6 @@
 var env = require('./env')
 
-var local = 'https://localhost:44302' // eslint-disable-line
+var local = 'http://localhost:55881' // eslint-disable-line
 var dev = 'https://dev-api-streetsupport.azurewebsites.net' // eslint-disable-line
 var staging = 'https://staging-api-streetsupport.azurewebsites.net' // eslint-disable-line
 var live = 'https://live-api-streetsupport.azurewebsites.net' // eslint-disable-line
@@ -20,5 +20,6 @@ module.exports = {
   resetPassword: p('/v1/reset-password-applications'),
   volunteers: p('/v1/volunteer-enquiries'),
   charterPledges: p('/v1/charter-supporters'),
-  actionGroups: p('/v1/action-groups/members')
+  actionGroups: p('/v1/action-groups/members'),
+  mailingListMembers: p('/v1/mailing-list-members')
 }

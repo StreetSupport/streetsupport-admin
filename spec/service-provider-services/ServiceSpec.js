@@ -20,7 +20,7 @@ describe('Service', () => {
   })
 
   it('should set link to edit each service', () => {
-    expect(model.editServiceUrl).toEqual('edit-service-provider-service.html?providerId=coffee4craig&serviceId=569d2b468705432268b65c75')
+    expect(model.editServiceUrl).toEqual('/edit-service-provider-service.html?providerId=coffee4craig&serviceId=569d2b468705432268b65c75')
   })
 
   describe('Editing', () => {

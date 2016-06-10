@@ -46,7 +46,7 @@ function DashboardModel () {
       if (a.key > b.key) return 1
       if (a.key < b.key) return -1
       return 0
-    }).map(sp => new ServiceProvider(sp))
+    }).map((sp) => new ServiceProvider(sp))
   }
 
   self.toggleVerified = function (serviceProvider, event) {
@@ -88,7 +88,7 @@ function DashboardModel () {
   }
 
   self.updateServiceProvider = function (serviceProvider, invert) {
-    var updatedSPs = self.serviceProviders().map(sp => {
+    var updatedSPs = self.serviceProviders().map((sp) => {
       if (sp.key !== serviceProvider.key) return sp
 
       invert(sp, serviceProvider)

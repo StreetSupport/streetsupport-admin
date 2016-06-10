@@ -34,7 +34,7 @@ function AddServiceProviderService () {
   self.address = ko.observable(new Address({}))
 
   self.setAvailableSubCategories = function () {
-    self.subCategories(self.category().subCategories.map(sc => new SubCat(sc.key, sc.name)))
+    self.subCategories(self.category().subCategories.map((sc) => new SubCat(sc.key, sc.name)))
   }
 
   self.prefillAddress = function () {
@@ -47,7 +47,7 @@ function AddServiceProviderService () {
       city: self.preselectedAddress().city(),
       postcode: self.preselectedAddress().postcode()
     })
-    address.openingTimes(self.preselectedAddress().openingTimes().map(ot => new OpeningTime({
+    address.openingTimes(self.preselectedAddress().openingTimes().map((ot) => new OpeningTime({
       day: ot.day(),
       startTime: ot.startTime(),
       endTime: ot.endTime()
@@ -59,7 +59,7 @@ function AddServiceProviderService () {
     var endpoint = self.endpointBuilder.serviceProviders(getUrlParameter.parameter('providerId')).services().build()
 
     var tags = []
-    if (self.targetAudience().length > 0) tags = self.targetAudience().split(',').map(t => t.trim())
+    if (self.targetAudience().length > 0) tags = self.targetAudience().split(',').map((t) => t.trim())
     if (self.category() === undefined) {
       self.errors(['Please select a category.'])
     } else {
@@ -69,9 +69,9 @@ function AddServiceProviderService () {
         'Tags': tags,
         'Category': self.category().key,
         'SubCategories': self.subCategories()
-          .filter(sc => sc.isSelected() === true)
-          .map(sc => sc.key),
-        'OpeningTimes': self.address().openingTimes().map(openingTime => {
+          .filter((sc) => sc.isSelected() === true)
+          .map((sc) => sc.key),
+        'OpeningTimes': self.address().openingTimes().map((openingTime) => {
           return {
             'StartTime': openingTime.startTime(),
             'EndTime': openingTime.endTime(),
@@ -102,7 +102,7 @@ function AddServiceProviderService () {
     var serviceProviderEndpoint = self.endpointBuilder.serviceProviders(getUrlParameter.parameter('providerId')).build()
     ajax.get(serviceProviderEndpoint, self.headers(cookies.get('session-token')), {})
     .then(function (result) {
-      self.addresses(result.data.addresses.map(a => new Address(a)))
+      self.addresses(result.data.addresses.map((a) => new Address(a)))
     },
     function (error) {
       self.handleError(error)

@@ -50,6 +50,11 @@ function EndpointBuilder () {
     return self
   }
 
+  self.mailingListMembers = () => {
+    self.updateBaseResource(endpoints.mailingListMembers)
+    return self
+  }
+
   self.actionGroups = (groupId) => {
     self.updateBaseResource(endpoints.actionGroups, groupId)
     return self
