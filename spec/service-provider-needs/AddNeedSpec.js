@@ -35,8 +35,7 @@ describe('Add individual Need', () => {
       {
         'content-type': 'application/json',
         'session-token': 'saved-session-token'
-      },
-      JSON.stringify({})
+      }
     ).returns(fakeGetResolution)
     model = new Model()
   })
@@ -136,7 +135,7 @@ describe('Add individual Need', () => {
         'content-type': 'application/json',
         'session-token': 'saved-session-token'
       }
-      var payload = JSON.stringify({
+      var payload = {
         'Description': 'new description',
         'Type': 'type',
         'Reason': 'reason',
@@ -147,7 +146,7 @@ describe('Add individual Need', () => {
         'DonationAmountInPounds': 123.45,
         'DonationUrl': 'http://donatehere.com',
         'Keywords': [ 'keywordA', 'keywordB', 'keywordC' ]
-      })
+      }
       var postAsExpected = ajaxStub.withArgs(endpoint, headers, payload).calledOnce
       expect(postAsExpected).toBeTruthy()
     })

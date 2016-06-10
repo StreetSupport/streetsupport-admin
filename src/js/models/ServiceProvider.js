@@ -110,10 +110,10 @@ function ServiceProviderDetails () {
     if (self.isEditingGeneralDetails()) {
       ajax.put(self.endpointBuilder.serviceProviders(getUrlParameter.parameter('key')).generalInformation().build(),
         self.headers(cookies.get('session-token')),
-        JSON.stringify({
+        {
           'Description': self.serviceProvider().description(),
           'ShortDescription': self.serviceProvider().shortDescription()
-        })
+        }
         ).then(function (result) {
           self.clearErrors()
           self.isEditingGeneralDetails(false)
@@ -136,13 +136,13 @@ function ServiceProviderDetails () {
     if (self.isEditingContactDetails()) {
       ajax.put(self.endpointBuilder.serviceProviders(getUrlParameter.parameter('key')).contactDetails().build(),
         self.headers(cookies.get('session-token')),
-        JSON.stringify({
+        {
           'Telephone': self.serviceProvider().telephone(),
           'Email': self.serviceProvider().email(),
           'Website': self.serviceProvider().website(),
           'Facebook': self.serviceProvider().facebook(),
           'Twitter': self.serviceProvider().twitter()
-        })
+        }
         ).then(function (result) {
           self.isEditingContactDetails(false)
         }, function (error) {

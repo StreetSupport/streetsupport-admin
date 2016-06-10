@@ -217,7 +217,7 @@ describe('Save new Service', () => {
         'content-type': 'application/json',
         'session-token': 'stored-session-token'
       }
-      var payload = JSON.stringify({
+      var payload = {
         'Info': 'new info',
         'LocationDescription': 'new location description',
         'Tags': ['tag a', 'tag b'],
@@ -238,7 +238,7 @@ describe('Save new Service', () => {
         'Street4': 'street 4',
         'City': 'Manchester',
         'Postcode': 'M4 5JD'
-      })
+      }
 
       var apiCalledWithExpectedArgs = stubbedPostApi.withArgs(endpoint, headers, payload).calledOnce
       expect(apiCalledWithExpectedArgs).toBeTruthy()

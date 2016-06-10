@@ -21,7 +21,7 @@ function VerifyUser () {
       'VerificationToken': getUrlParameter.parameter('id')
     }
     ajax
-      .post(endpoint, self.headers(cookies.get('session-token')), JSON.stringify(payload))
+      .post(endpoint, self.headers(cookies.get('session-token')), payload)
       .then(function (result) {
         self.message('User verified. You can now log in.')
         self.clearErrors()

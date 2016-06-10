@@ -87,7 +87,7 @@ function Service (data) {
     var tags = []
     if (self.tags().length > 0) tags = self.tags().split(',').map((t) => t.trim())
 
-    var model = JSON.stringify({
+    var model = {
       'Info': self.info(),
       'LocationDescription': self.locationDescription(),
       'Tags': tags,
@@ -106,7 +106,7 @@ function Service (data) {
         'City': self.address.city(),
         'Postcode': self.address.postcode()
       }
-    })
+    }
 
     ajax.put(endpoint,
       self.headers(cookies.get('session-token')),

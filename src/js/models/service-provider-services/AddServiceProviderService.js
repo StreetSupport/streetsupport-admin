@@ -63,7 +63,7 @@ function AddServiceProviderService () {
     if (self.category() === undefined) {
       self.errors(['Please select a category.'])
     } else {
-      var payload = JSON.stringify({
+      var payload = {
         'Info': self.info(),
         'LocationDescription': self.locationDescription(),
         'Tags': tags,
@@ -84,7 +84,7 @@ function AddServiceProviderService () {
         'Street4': self.address().street4(),
         'City': self.address().city(),
         'Postcode': self.address().postcode()
-      })
+      }
 
       ajax.post(endpoint, self.headers(cookies.get('session-token')), payload)
       .then(function (result) {

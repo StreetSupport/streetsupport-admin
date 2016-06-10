@@ -19,7 +19,7 @@ function AddServiceProviderNeed () {
   browser.loading()
 
   var addressEndpoint = self.endpointBuilder.serviceProviders(getUrlParameter.parameter('providerId')).addresses().build()
-  ajax.get(addressEndpoint, self.headers(cookies.get('session-token')), JSON.stringify({}))
+  ajax.get(addressEndpoint, self.headers(cookies.get('session-token')))
     .then(function (result) {
       var need = new Need({
         'serviceProviderId': getUrlParameter.parameter('providerId'),

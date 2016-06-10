@@ -57,7 +57,7 @@ function Need (data) {
     let keywords = self.keywords() !== undefined
       ? self.keywords().split(',').map((k) => k.trim())
       : []
-    var model = JSON.stringify({
+    var model = {
       'Description': self.description(),
       'Type': self.type(),
       'Reason': self.reason(),
@@ -68,7 +68,7 @@ function Need (data) {
       'DonationAmountInPounds': self.donationAmountInPounds(),
       'DonationUrl': self.donationUrl(),
       'Keywords': keywords
-    })
+    }
 
     if (self.id() === undefined) { // adding
       ajax.post(self.endpointBuilder.serviceProviders(getUrlParameter.parameter('providerId')).needs().build(),

@@ -82,13 +82,13 @@ describe('Edit Service Provider Contact Information', () => {
         'content-type': 'application/json',
         'session-token': 'stored-session-token'
       }
-      var payload = JSON.stringify({
+      var payload = {
         'Telephone': 'new telephone',
         'Email': 'new email',
         'Website': 'new website',
         'Facebook': 'new facebook',
         'Twitter': 'new twitter'
-      })
+      }
       var apiCalledWithExpectedArgs = stubbedPutApi.withArgs(endpoint, headers, payload).calledOnce
       expect(apiCalledWithExpectedArgs).toBeTruthy()
     })

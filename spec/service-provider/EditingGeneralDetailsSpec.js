@@ -79,10 +79,10 @@ describe('Edit Service Provider General Details', () => {
         'content-type': 'application/json',
         'session-token': 'stored-session-token'
       }
-      var payload = JSON.stringify({
+      var payload = {
         'Description': 'new description',
         'ShortDescription': 'new short description'
-      })
+      }
       var apiCalledWithExpectedArgs = stubbedPutApi.withArgs(endpoint, headers, payload).calledOnce
       expect(apiCalledWithExpectedArgs).toBeTruthy()
     })
