@@ -47,14 +47,16 @@ function Need (data) {
     var endpoint = self.endpointBuilder.serviceProviders(getUrlParameter.parameter('key')).needs(self.id()).build()
     ajax.delete(endpoint, self.headers(cookies.get('session-token')))
     .then(function (result) {
-      self.listeners().forEach(l => l.deleteNeed(self))
+      self.listeners().forEach((l) => l.deleteNeed(self))
     }, function (error) {
       self.handleError(error)
     })
   }
 
   self.save = function () {
-    let keywords = self.keywords() !== undefined ? self.keywords().split(',').map(k => k.trim()) : []
+    let keywords = self.keywords() !== undefined
+      ? self.keywords().split(',').map((k) => k.trim())
+      : []
     var model = JSON.stringify({
       'Description': self.description(),
       'Type': self.type(),
@@ -73,7 +75,7 @@ function Need (data) {
         self.headers(cookies.get('session-token')),
         model
       ).then(function (result) {
-        self.listeners().forEach(l => l.saveNeed(self))
+        self.listeners().forEach((l) => l.saveNeed(self))
       }, function (error) {
         self.handleError(error)
       })
@@ -83,7 +85,7 @@ function Need (data) {
         self.headers(cookies.get('session-token')),
         model
       ).then(function (result) {
-        self.listeners().forEach(l => l.saveNeed(self))
+        self.listeners().forEach((l) => l.saveNeed(self))
       }, function (error) {
         self.handleError(error)
       })

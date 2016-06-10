@@ -23,15 +23,15 @@ describe('Address', () => {
   })
 
   it('should set link to edit each address', () => {
-    expect(model.editAddressUrl).toEqual('edit-service-provider-address.html?providerId=coffee4craig&addressId=1234')
+    expect(model.editAddressUrl).toEqual('/edit-service-provider-address.html?providerId=coffee4craig&addressId=1234')
   })
 
   it('should set link to add an address', () => {
-    expect(model.addAddressUrl).toEqual('add-service-provider-address.html?providerId=coffee4craig')
+    expect(model.addAddressUrl).toEqual('/add-service-provider-address.html?providerId=coffee4craig')
   })
 
   it('should set link to delete an address', () => {
-    expect(model.deleteAddressUrl).toEqual('delete-service-provider-address.html?providerId=coffee4craig&addressId=1234')
+    expect(model.deleteAddressUrl).toEqual('/delete-service-provider-address.html?providerId=coffee4craig&addressId=1234')
   })
 
   describe('Editing', () => {

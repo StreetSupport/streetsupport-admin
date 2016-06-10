@@ -42,7 +42,8 @@ module.exports = {
     charterPledges: p('charter-pledges'),
     actionGroups: p('action-groups'),
     volunteers: p('volunteers'),
-    contactVolunteer: p('contact-volunteer')
+    contactVolunteer: p('contact-volunteer'),
+    mailingList: p('mailing-list')
   },
   output: {
     path: path.join(__dirname, '/_dist/assets/js/'),
