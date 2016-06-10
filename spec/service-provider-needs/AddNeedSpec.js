@@ -2,31 +2,31 @@
 global describe, beforeEach, afterEach, it, expect
 */
 
+'use strict'
+
 var sinon = require('sinon')
-var ajax = require('basic-ajax')
+var ajax = require('../../src/js/ajax')
 var endpoints = require('../../src/js/api-endpoints')
 var adminurls = require('../../src/js/admin-urls')
 var browser = require('../../src/js/browser')
 var cookies = require('../../src/js/cookies')
 var getUrlParameter = require('../../src/js/get-url-parameter')
 
-describe('Add individual Need', function () {
+describe('Add individual Need', () => {
   var Model = require('../../src/js/models/service-provider-needs/AddServiceProviderNeed')
   var model
 
-  beforeEach(function () {
+  beforeEach(() => {
     sinon.stub(browser, 'loading')
     sinon.stub(browser, 'loaded')
     sinon.stub(getUrlParameter, 'parameter').withArgs('providerId').returns('coffee4craig')
 
-    function fakeGetResolution (value) {
-      return {
-        then: function (success, error) {
-          success({
-            'status': 200,
-            'json': coffee4CraigAddresses()
-          })
-        }
+    let fakeGetResolution = {
+      then: function (success, error) {
+        success({
+          'status': 200,
+          'data': coffee4CraigAddresses()
+        })
       }
     }
     sinon.stub(cookies, 'get').returns('saved-session-token')
@@ -37,11 +37,11 @@ describe('Add individual Need', function () {
         'session-token': 'saved-session-token'
       },
       JSON.stringify({})
-    ).returns(fakeGetResolution())
+    ).returns(fakeGetResolution)
     model = new Model()
   })
 
-  afterEach(function () {
+  afterEach(() => {
     browser.loading.restore()
     browser.loaded.restore()
     getUrlParameter.parameter.restore()
@@ -49,69 +49,67 @@ describe('Add individual Need', function () {
     cookies.get.restore()
   })
 
-  it('should set an empty description', function () {
+  it('should set an empty description', () => {
     expect(model.need().description()).toEqual('')
   })
 
-  it('should set serviceProviderId to that given in querystring', function () {
+  it('should set serviceProviderId to that given in querystring', () => {
     expect(model.need().serviceProviderId).toEqual('coffee4craig')
   })
 
-  it('should set need types available', function () {
+  it('should set need types available', () => {
     expect(model.need().availableTypes()[0]).toEqual('money')
     expect(model.need().availableTypes()[1]).toEqual('time')
     expect(model.need().availableTypes()[2]).toEqual('items')
   })
 
-  it('should initially set isPeopleOrThings to false', function () {
+  it('should initially set isPeopleOrThings to false', () => {
     expect(model.need().isPeopleOrThings()).toBeFalsy()
   })
 
-  it('should initially set isMoney to false', function () {
+  it('should initially set isMoney to false', () => {
     expect(model.need().isMoney()).toBeFalsy()
   })
 
-  it('should set postcode to organisation\'s first address postcode', function () {
+  it('should set postcode to organisation\'s first address postcode', () => {
     expect(model.need().postcode()).toEqual('M6 8AQ')
   })
 
-  describe('selecting Time', function () {
-    beforeEach(function () {
+  describe('selecting Time', () => {
+    beforeEach(() => {
       model.need().type('time')
     })
 
-    it('should set isPeopleOrThings to true', function () {
+    it('should set isPeopleOrThings to true', () => {
       expect(model.need().isPeopleOrThings()).toBeTruthy()
     })
   })
 
-  describe('selecting Items', function () {
-    beforeEach(function () {
+  describe('selecting Items', () => {
+    beforeEach(() => {
       model.need().type('items')
     })
 
-    it('should set isPeopleOrThings to true', function () {
+    it('should set isPeopleOrThings to true', () => {
       expect(model.need().isPeopleOrThings()).toBeTruthy()
     })
   })
 
-  describe('Save', function () {
+  describe('Save', () => {
     var browserStub
     var ajaxStub
 
-    beforeEach(function () {
-      function fakeResolved (value) {
-        return {
-          then: function (success, error) {
-            success({
-              'status': 200,
-              'json': {}
-            })
-          }
+    beforeEach(() => {
+      let fakeResolved = {
+        then: (success, _) => {
+          success({
+            'status': 200,
+            'data': {}
+          })
         }
       }
       browserStub = sinon.stub(browser, 'redirect')
-      ajaxStub = sinon.stub(ajax, 'post').returns(fakeResolved())
+      ajaxStub = sinon.stub(ajax, 'post').returns(fakeResolved)
 
       model.need().description('new description')
       model.need().type('type')
@@ -127,12 +125,12 @@ describe('Add individual Need', function () {
       model.need().save()
     })
 
-    afterEach(function () {
+    afterEach(() => {
       ajax.post.restore()
       browser.redirect.restore()
     })
 
-    it('should post need to api', function () {
+    it('should post need to api', () => {
       var endpoint = endpoints.getServiceProviders + '/coffee4craig/needs'
       var headers = {
         'content-type': 'application/json',
@@ -154,7 +152,7 @@ describe('Add individual Need', function () {
       expect(postAsExpected).toBeTruthy()
     })
 
-    it('should redirect to service provider', function () {
+    it('should redirect to service provider', () => {
       var redirect = adminurls.serviceProviders + '?key=coffee4craig'
       expect(browserStub.withArgs(redirect).calledOnce).toBeTruthy()
     })

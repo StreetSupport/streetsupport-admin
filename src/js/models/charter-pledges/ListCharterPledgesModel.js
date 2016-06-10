@@ -154,7 +154,7 @@ function ListCharterPledgesModel () {
     if (newValue === undefined) {
       self.updateVisiblePledges()
     } else {
-      self.pledges(self.allPledges().filter(x => x.supporterCategory === newValue))
+      self.pledges(self.allPledges().filter((x) => x.supporterCategory === newValue))
     }
   })
 
@@ -162,7 +162,7 @@ function ListCharterPledgesModel () {
     if (self.showAll() === true) {
       self.pledges(self.allPledges())
     } else {
-      self.pledges(self.allPledges().filter(x => x.isApproved() === false))
+      self.pledges(self.allPledges().filter((x) => x.isApproved() === false))
     }
   }
 
@@ -195,10 +195,10 @@ function ListCharterPledgesModel () {
           if (a.creationDate > b.creationDate) return -1
           return 0
         })
-        .map(p => new Pledge(p, self))
+        .map((p) => new Pledge(p, self))
 
       self.allPledges(pledges)
-      self.pledges(self.allPledges().filter(x => x.isApproved() === false))
+      self.pledges(self.allPledges().filter((x) => x.isApproved() === false))
 
       self.supporterCategories(pledges
         .map((p) => p.supporterCategory)

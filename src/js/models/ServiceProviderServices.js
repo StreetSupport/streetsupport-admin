@@ -1,4 +1,4 @@
-var ajax = require('basic-ajax')
+var ajax = require('../ajax')
 var adminUrls = require('../admin-urls')
 var cookies = require('../cookies')
 var Address = require('./Address')
@@ -12,11 +12,11 @@ function ServiceProvider (data) {
 
   self.key = ko.observable(data.key)
   self.name = ko.observable(data.name)
-  self.addresses = ko.observableArray(data.addresses.map(address => {
+  self.addresses = ko.observableArray(data.addresses.map((address) => {
     address.serviceProviderId = self.key
     return new Address(address)
   }))
-  self.services = ko.observableArray(data.providedServices.map(service => {
+  self.services = ko.observableArray(data.providedServices.map((service) => {
     var newbie = new Service(service)
     newbie.addListener(self)
     return newbie
@@ -26,7 +26,7 @@ function ServiceProvider (data) {
     var notTheOneToDelete = function (service) {
       return service.id() !== deletedService.id()
     }
-    self.services(self.services().filter(s => notTheOneToDelete(s)))
+    self.services(self.services().filter((s) => notTheOneToDelete(s)))
   }
 }
 
@@ -41,7 +41,7 @@ function ServiceProviderServices () {
       self.headers(cookies.get('session-token')),
       {})
       .then(function (result) {
-        self.serviceProvider(new ServiceProvider(result.json))
+        self.serviceProvider(new ServiceProvider(result.data))
       },
       function (error) {
         self.handleError(error)

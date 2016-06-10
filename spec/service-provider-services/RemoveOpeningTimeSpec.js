@@ -1,17 +1,16 @@
-var sinon = require('sinon'),
-    ajax =      require('basic-ajax'),
-    ko =      require('knockout'),
-    endpoints = require('../../src/js/api-endpoints'),
-    adminurls = require('../../src/js/admin-urls'),
-    browser =   require('../../src/js/browser'),
-    cookies =   require('../../src/js/cookies'),
-    getUrlParameter = require('../../src/js/get-url-parameter')
+/*
+global describe, beforeEach, it, expect
+*/
 
-describe('Remove Opening Time', function () {
-  var Model = require('../../src/js/models/Service'),
-  model
+'use strict'
 
-  beforeEach(function () {
+let ko = require('knockout')
+
+describe('Remove Opening Time', () => {
+  let Model = require('../../src/js/models/Service')
+  let model = null
+
+  beforeEach(() => {
     model = new Model(getData())
 
     model.edit()
@@ -22,7 +21,7 @@ describe('Remove Opening Time', function () {
     })
   })
 
-  it('should remove passed openingTimes', function () {
+  it('should remove passed openingTimes', () => {
     expect(model.openingTimes().length).toEqual(1)
     expect(model.openingTimes()[0].day()).toEqual('Tuesday')
     expect(model.openingTimes()[0].startTime()).toEqual('10:00')
@@ -30,7 +29,7 @@ describe('Remove Opening Time', function () {
   })
 })
 
-function getData() {
+function getData () {
   return {
     'key': '569d2b468705432268b65c75',
     'name': 'Meals',

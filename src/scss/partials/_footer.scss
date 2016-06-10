@@ -1,5 +1,7 @@
+// Footer - global page footer styles
+
 .footer {
-  background-color: $brand-c;
+  background: linear-gradient($brand-l, $brand-m);
   color: #fff;
   padding-top: 30px;
   padding-bottom: 30px;
@@ -7,10 +9,6 @@
 
   &__header {
     margin-top: 0;
-
-    @include mq($from: btnhack) {
-      display: inline-block;
-    }
   }
 
   &__copy {
@@ -18,18 +16,14 @@
   }
 
   &__social-list {
-    margin: 0;
+    margin: 0 0 0 10px;
     padding: 0;
-    list-style: none;
+    list-style-type: none;
     text-align: center;
-
-    @include mq($from: btnhack) {
-      display: inline-block;
-    }
   }
 
   &__social-item {
-    margin: 0 5px;
+    margin: 0 4px;
     padding: 0;
     display: inline-block;
   }
@@ -38,5 +32,9 @@
     height: 37px;
     width: 34px;
     vertical-align: middle;
+  }
+
+  @media print {
+    & { display: none }
   }
 }

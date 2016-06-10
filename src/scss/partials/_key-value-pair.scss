@@ -6,7 +6,7 @@
     clear: left;
     font-weight: bold;
     @include mq($from: m) {
-      @include span(4 of $column-large);
+      @include span(4 of 12);
     }
   }
   &__value {
@@ -14,7 +14,13 @@
     overflow: hidden;
     text-overflow: ellipsis;
     @include mq($from: m) {
-      @include span(8 of $column-large);
+      @include span(8 of 12);
+    }
+
+    .split__element--admin-panel & {
+      @include mq($from: m) {
+        @include span(1 of 1);
+      }
     }
   }
 }

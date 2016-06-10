@@ -1,4 +1,4 @@
-var ajax = require('basic-ajax')
+var ajax = require('../ajax')
 var adminUrls = require('../admin-urls')
 var cookies = require('../cookies')
 var browser = require('../browser')
@@ -32,7 +32,7 @@ function DashboardModel () {
       self.headers(cookies.get('session-token')),
       {})
     .then(function (result) {
-      self.serviceProviders(self.mapServiceProviders(result.json))
+      self.serviceProviders(self.mapServiceProviders(result.data))
       browser.loaded()
     },
     function (error) {
@@ -46,7 +46,7 @@ function DashboardModel () {
       if (a.key > b.key) return 1
       if (a.key < b.key) return -1
       return 0
-    }).map(sp => new ServiceProvider(sp))
+    }).map((sp) => new ServiceProvider(sp))
   }
 
   self.toggleVerified = function (serviceProvider, event) {
@@ -88,7 +88,7 @@ function DashboardModel () {
   }
 
   self.updateServiceProvider = function (serviceProvider, invert) {
-    var updatedSPs = self.serviceProviders().map(sp => {
+    var updatedSPs = self.serviceProviders().map((sp) => {
       if (sp.key !== serviceProvider.key) return sp
 
       invert(sp, serviceProvider)

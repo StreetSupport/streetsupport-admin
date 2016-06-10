@@ -1,4 +1,4 @@
-var ajax = require('basic-ajax')
+var ajax = require('../ajax')
 var htmlEncode = require('htmlencode')
 var adminUrls = require('../admin-urls')
 var cookies = require('../cookies')
@@ -22,22 +22,22 @@ function ServiceProvider (data) {
   self.website = ko.observable(data.website)
   self.facebook = ko.observable(data.facebook)
   self.twitter = ko.observable(data.twitter)
-  data.addresses.forEach(a => a.serviceProviderId = data.key)
-  self.addresses = ko.observableArray(data.addresses.map(a => new Address(a)))
-  self.addresses().forEach(a => a.addListener(self))
+  data.addresses.forEach((a) => { a.serviceProviderId = data.key })
+  self.addresses = ko.observableArray(data.addresses.map((a) => new Address(a)))
+  self.addresses().forEach((a) => a.addListener(self))
 
-  data.providedServices.forEach(s => s.serviceProviderId = data.key)
-  self.services = ko.observableArray(data.providedServices.map(s => new Service(s)))
-  self.services().forEach(s => s.addListener(self))
+  data.providedServices.forEach((s) => { s.serviceProviderId = data.key })
+  self.services = ko.observableArray(data.providedServices.map((s) => new Service(s)))
+  self.services().forEach((s) => s.addListener(self))
 
   var buildNeeds = function (needs) {
     return needs !== undefined && needs !== null
-    ? needs.map(n => new Need(n))
+    ? needs.map((n) => new Need(n))
     : []
   }
 
   self.needs = ko.observableArray(buildNeeds(data.needs))
-  self.needs().forEach(s => s.addListener(self))
+  self.needs().forEach((s) => s.addListener(self))
 
   self.addAddressUrl = adminUrls.serviceProviderAddressesAdd + '?providerId=' + data.key
   self.amendAddressesUrl = adminUrls.serviceProviderAddresses + '?key=' + data.key
@@ -51,7 +51,7 @@ function ServiceProvider (data) {
     var notDeleted = function (address) {
       return address.key() !== deletedAddress.key()
     }
-    var remainingAddresses = self.addresses().filter(a => notDeleted(a))
+    var remainingAddresses = self.addresses().filter((a) => notDeleted(a))
     self.addresses(remainingAddresses)
   }
 
@@ -59,7 +59,7 @@ function ServiceProvider (data) {
     var notDeleted = function (service) {
       return service.id() !== deletedService.id()
     }
-    var remainingServices = self.services().filter(s => notDeleted(s))
+    var remainingServices = self.services().filter((s) => notDeleted(s))
     self.services(remainingServices)
   }
 
@@ -67,7 +67,7 @@ function ServiceProvider (data) {
     var notDeleted = function (need) {
       return need.id() !== deletedNeed.id()
     }
-    var remainingNeeds = self.needs().filter(n => notDeleted(n))
+    var remainingNeeds = self.needs().filter((n) => notDeleted(n))
     self.needs(remainingNeeds)
   }
 }
@@ -88,8 +88,8 @@ function ServiceProviderDetails () {
       self.headers(cookies.get('session-token')),
       {})
       .then(function (result) {
-        self.serviceProvider(new ServiceProvider(result.json))
-        self.initialServiceProvider(new ServiceProvider(result.json))
+        self.serviceProvider(new ServiceProvider(result.data))
+        self.initialServiceProvider(new ServiceProvider(result.data))
         browser.loaded()
       },
       function () {

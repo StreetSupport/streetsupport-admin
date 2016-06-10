@@ -1,46 +1,50 @@
-var sinon = require('sinon'),
-  ajax = require('basic-ajax'),
-  endpoints = require('../../src/js/api-endpoints'),
-  adminurls = require('../../src/js/admin-urls'),
-  browser = require('../../src/js/browser'),
-  cookies = require('../../src/js/cookies'),
-  getUrlParameter = require('../../src/js/get-url-parameter')
+/*
+global describe, beforeEach, afterEach, it, expect
+*/
 
-describe('Address', function() {
-  var Model = require('../../src/js/models/Address'),
-    model
+'use strict'
 
-  beforeEach(function() {
+let sinon = require('sinon')
+let ajax = require('../../src/js/ajax')
+let endpoints = require('../../src/js/api-endpoints')
+let cookies = require('../../src/js/cookies')
+let getUrlParameter = require('../../src/js/get-url-parameter')
+
+describe('Address', () => {
+  let Model = require('../../src/js/models/Address')
+  let model = null
+
+  beforeEach(() => {
     model = new Model(getAddressData())
   })
 
-  it('should format addresses', function() {
+  it('should format addresses', () => {
     expect(model.formatted).toEqual('5 Oak Street, Manchester, M4 5JD')
   })
 
-  it('should set link to edit each address', function() {
-    expect(model.editAddressUrl).toEqual('edit-service-provider-address.html?providerId=coffee4craig&addressId=1234')
+  it('should set link to edit each address', () => {
+    expect(model.editAddressUrl).toEqual('/edit-service-provider-address.html?providerId=coffee4craig&addressId=1234')
   })
 
-  it('should set link to add an address', function() {
-    expect(model.addAddressUrl).toEqual('add-service-provider-address.html?providerId=coffee4craig')
+  it('should set link to add an address', () => {
+    expect(model.addAddressUrl).toEqual('/add-service-provider-address.html?providerId=coffee4craig')
   })
 
-  it('should set link to delete an address', function() {
-    expect(model.deleteAddressUrl).toEqual('delete-service-provider-address.html?providerId=coffee4craig&addressId=1234')
+  it('should set link to delete an address', () => {
+    expect(model.deleteAddressUrl).toEqual('/delete-service-provider-address.html?providerId=coffee4craig&addressId=1234')
   })
 
-  describe('Editing', function() {
-    beforeEach(function() {
+  describe('Editing', () => {
+    beforeEach(() => {
       model.edit()
     })
 
-    it('should set isEditing to true', function() {
+    it('should set isEditing to true', () => {
       expect(model.isEditing).toBeTruthy()
     })
 
-    describe('Cancel', function() {
-      beforeEach(function() {
+    describe('Cancel', () => {
+      beforeEach(() => {
         model.street1('new street1')
         model.street2('new street2')
         model.street3('new street3')
@@ -53,11 +57,11 @@ describe('Address', function() {
         model.cancel()
       })
 
-      it('should set isEditing to false', function() {
+      it('should set isEditing to false', () => {
         expect(model.isEditing()).toBeFalsy()
       })
 
-      it('should set reset fields', function() {
+      it('should set reset fields', () => {
         expect(model.street1()).toEqual('5 Oak Street')
         expect(model.street2()).toEqual('')
         expect(model.street3()).toEqual('')
@@ -70,26 +74,22 @@ describe('Address', function() {
       })
     })
 
-    describe('Save', function() {
-      var stubbedApi,
-        stubbedCookies,
-        stubbedUrlParams
+    describe('Save', () => {
+      var stubbedApi
 
-      beforeEach(function() {
-        function fakeResolved(value) {
-          return {
-            then: function(success, error) {
-              success({
-                'status': 200,
-                'json': getAddressData()
-              })
-            }
+      beforeEach(() => {
+        let fakeResolved = {
+          then: (success, _) => {
+            success({
+              'status': 200,
+              'data': getAddressData()
+            })
           }
         }
 
-        stubbedApi = sinon.stub(ajax, 'put').returns(fakeResolved())
-        stubbedCookies = sinon.stub(cookies, 'get').returns('stored-session-token')
-        stubbedUrlParams = sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
+        stubbedApi = sinon.stub(ajax, 'put').returns(fakeResolved)
+        sinon.stub(cookies, 'get').returns('stored-session-token')
+        sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
 
         model.street1('new street1')
         model.street2('new street2')
@@ -107,13 +107,13 @@ describe('Address', function() {
         model.save()
       })
 
-      afterEach(function() {
+      afterEach(() => {
         ajax.put.restore()
         cookies.get.restore()
         getUrlParameter.parameter.restore()
       })
 
-      it('should put address details to api with session token', function() {
+      it('should put address details to api with session token', () => {
         var endpoint = endpoints.getServiceProviders + '/coffee4craig/addresses/1234'
         var headers = {
           'content-type': 'application/json',
@@ -141,75 +141,68 @@ describe('Address', function() {
         expect(apiCalledWithExpectedArgs).toBeTruthy()
       })
 
-      it('should set isEditing to false', function() {
+      it('should set isEditing to false', () => {
         expect(model.isEditing()).toBeFalsy()
       })
 
-      describe('Edit again and Cancel', function() {
-        beforeEach(function() {
+      describe('Edit again and Cancel', () => {
+        beforeEach(() => {
           model.edit()
           model.street1('another new street1')
           model.cancel()
         })
 
-        it('should set isEditing to false', function() {
+        it('should set isEditing to false', () => {
           expect(model.isEditing()).toBeFalsy()
         })
 
-        it('should set reset fields', function() {
+        it('should set reset fields', () => {
           expect(model.street1()).toEqual('new street1')
         })
       })
     })
 
-    describe('Save Fail', function() {
-      var stubbedApi,
-        stubbedCookies,
-        stubbedUrlParams
-
-      beforeEach(function() {
-        function fakeResolved(value) {
-          return {
-            then: function(success, error) {
-              error({
-                'status': 400,
-                'response': JSON.stringify({
-                  'messages': ['returned error message 1', 'returned error message 2']
-                })
+    describe('Save Fail', () => {
+      beforeEach(() => {
+        let fakeResolved = {
+          then: (_, error) => {
+            error({
+              'status': 400,
+              'response': JSON.stringify({
+                'messages': ['returned error message 1', 'returned error message 2']
               })
-            }
+            })
           }
         }
 
-        stubbedApi = sinon.stub(ajax, 'put').returns(fakeResolved())
-        stubbedCookies = sinon.stub(cookies, 'get').returns('stored-session-token')
-        stubbedUrlParams = sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
+        sinon.stub(ajax, 'put').returns(fakeResolved)
+        sinon.stub(cookies, 'get').returns('stored-session-token')
+        sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
 
         model.street1('new street1')
 
         model.save()
       })
 
-      afterEach(function() {
+      afterEach(() => {
         ajax.put.restore()
         cookies.get.restore()
         getUrlParameter.parameter.restore()
       })
 
-      it('should set message as joined error messages', function() {
+      it('should set message as joined error messages', () => {
         expect(model.errors()[0]).toEqual('returned error message 1')
         expect(model.errors()[1]).toEqual('returned error message 2')
       })
 
-      it('should keep isEditing as true', function() {
+      it('should keep isEditing as true', () => {
         expect(model.isEditing()).toBeTruthy()
       })
     })
   })
 })
 
-
-function getAddressData() {
+function getAddressData () {
   return {
     'serviceProviderId': 'coffee4craig',
     'key': 1234,

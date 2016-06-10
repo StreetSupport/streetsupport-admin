@@ -8,7 +8,7 @@ var cookies = require('../../src/js/cookies')
 var validation = require('../../src/js/validation')
 var Model = require('../../src/js/models/charter-pledges/ListCharterPledgesModel')
 
-describe('Edit Charter Pledge', function () {
+describe('Edit Charter Pledge', () => {
   var model
   var browserLoadingStub
   var browserLoadedStub
@@ -20,8 +20,8 @@ describe('Edit Charter Pledge', function () {
     'session-token': 'stored-session-token'
   }
 
-  beforeEach(function () {
-    var getCharterPledgesPromise = function () {
+  beforeEach(() => {
+    var getCharterPledgesPromise = () => {
       return {
         then: function (success, error) {
           success({
@@ -44,7 +44,7 @@ describe('Edit Charter Pledge', function () {
     browserLoadedStub = sinon.stub(browser, 'loaded')
     validationShowErrorsStub = sinon.stub(validation, 'showErrors')
 
-    var getPutPromise = function () {
+    var getPutPromise = () => {
       return {
         then: function (success, error) {
           success({
@@ -61,7 +61,7 @@ describe('Edit Charter Pledge', function () {
     model = new Model()
   })
 
-  afterEach(function () {
+  afterEach(() => {
     ajax.get.restore()
     cookies.get.restore()
     browser.loading.restore()
@@ -87,23 +87,23 @@ describe('Edit Charter Pledge', function () {
         model.pledges()[0].updatePledge()
       })
 
-      it('should show browser is loading', function () {
+      it('should show browser is loading', () => {
         expect(browserLoadingStub.calledOnce).toBeTruthy()
       })
 
-      it('should put new approval status to api', function () {
+      it('should put new approval status to api', () => {
         expect(ajaxPutStub.calledOnce).toBeTruthy()
       })
 
-      it('should set new pledge', function () {
+      it('should set new pledge', () => {
         expect(model.allPledges()[0].description()).toEqual('my new pledge')
       })
 
-      it('should show browser is loaded', function () {
+      it('should show browser is loaded', () => {
         expect(browserLoadedStub.calledAfter(ajaxPutStub)).toBeTruthy()
       })
 
-      it('should set isEditable to false', function () {
+      it('should set isEditable to false', () => {
         expect(model.pledges()[0].isEditable()).toBeFalsy()
       })
     })
@@ -116,11 +116,11 @@ describe('Edit Charter Pledge', function () {
         model.pledges()[0].updatePledge()
       })
 
-      it('should not put new approval status to api', function () {
+      it('should not put new approval status to api', () => {
         expect(ajaxPutStub.called).toBeFalsy()
       })
 
-      it('should show validation errors', function () {
+      it('should show validation errors', () => {
         expect(validationShowErrorsStub.calledOnce).toBeFalsy()
       })
     })
@@ -142,7 +142,7 @@ describe('Edit Charter Pledge', function () {
   })
 })
 
-var pledgeData = function () {
+var pledgeData = () => {
   return [{
     'firstName': 'first name',
     'lastName': 'last name',

@@ -3,7 +3,7 @@ var Service = require('../Service')
 var BaseViewModel = require('../BaseViewModel')
 var getUrlParameter = require('../../get-url-parameter')
 var cookies = require('../../cookies')
-var ajax = require('basic-ajax')
+var ajax = require('../../ajax')
 var browser = require('../../browser')
 var adminUrls = require('../../admin-urls')
 
@@ -21,7 +21,7 @@ function EditServiceProviderService () {
 
     ajax.get(serviceProviderEndpoint, self.headers(cookies.get('session-token')), {})
     .then(function (result) {
-      var data = result.json
+      var data = result.data
       data.serviceProviderId = getUrlParameter.parameter('providerId')
       self.service(new Service(data))
       self.service().addListener(self)

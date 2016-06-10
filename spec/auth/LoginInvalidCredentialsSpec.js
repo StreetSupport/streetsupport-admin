@@ -1,34 +1,37 @@
+/*
+global describe, beforeEach, afterEach, it, expect
+*/
+
+'use strict'
+
 var sinon = require('sinon')
-var ajax =      require('../../src/js/ajax')
+var ajax = require('../../src/js/ajax')
 var endpoints = require('../../src/js/api-endpoints')
 var adminurls = require('../../src/js/admin-urls')
-var browser =   require('../../src/js/browser')
-var cookies =   require('../../src/js/cookies')
+var browser = require('../../src/js/browser')
 
-describe('Submit invalid credentials', function () {
+describe('Submit invalid credentials', () => {
   var Login = require('../../src/js/models/Auth/Login')
   var login
   var stubbedApi
   var stubbedBrowser
 
-  beforeEach(function () {
+  beforeEach(() => {
     login = new Login()
-    function fakeResolved (value) {
-      return {
-        then: function (success, error) {
-          success({
-            status: 'error',
-            statusCode: 401,
-            data: {
-              messages: ['returned error message']
-            }
-          })
-        }
+    let fakeResolved = {
+      then: function (success, _) {
+        success({
+          status: 'error',
+          statusCode: 401,
+          data: {
+            messages: ['returned error message']
+          }
+        })
       }
     }
 
     stubbedApi = sinon.stub(ajax, 'post')
-    stubbedApi.returns(fakeResolved ())
+    stubbedApi.returns(fakeResolved)
     stubbedBrowser = sinon.stub(browser, 'redirect')
 
     login.username('username')
@@ -37,25 +40,25 @@ describe('Submit invalid credentials', function () {
     login.submit()
   })
 
-  afterEach(function () {
+  afterEach(() => {
     ajax.post.restore()
     browser.redirect.restore()
   })
 
-  it('should set error messages', function () {
+  it('should set error messages', () => {
     expect(login.errors()[0]).toEqual('returned error message')
   })
 
-  it('should clear message', function () {
+  it('should clear message', () => {
     expect(login.message()).toEqual('')
   })
 
-  it('should not redirect browser to dashboard', function () {
+  it('should not redirect browser to dashboard', () => {
     var browserRedirectedWithExpectedUrl = stubbedBrowser.withArgs(adminurls.dashboard).called
     expect(browserRedirectedWithExpectedUrl).toBeFalsy()
   })
 
-  it('should be able to send credentials again', function () {
+  it('should be able to send credentials again', () => {
     login.submit()
     var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoints.sessions + '/create', {}, {
       'username': 'username',

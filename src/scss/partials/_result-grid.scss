@@ -1,30 +1,22 @@
 .result-grid {
   @include cf();
-  padding-top: 30px;
-  padding-bottom: 30px;
+  padding: 0 0 20px 0;
 
-  &__item {
-    @include span(3 of $column-small);
+  .btn__text {
+    @include mq($from: xs) {
+      font-size: 14px;
+    }
+
+    @include mq($from: s) {
+      font-size: 16px;
+    }
 
     @include mq($from: m) {
-      @include span(4 of $column-large);
+      font-size: 14px;
     }
 
     @include mq($from: l) {
-      @include span(3 of $column-large);
-    }
-
-    // NOTE: Both these classes are horrible hacks and needs to be changed ASAP
-    .btn__icon {
-      max-height: 180px !important;
-    }
-
-    .btn__text {
-      font-size: 14px;
-
-      @include mq($from: btnhack) {
-        font-size: 16px;
-      }
+      font-size: 16px;
     }
   }
 }

@@ -1,52 +1,35 @@
 // Load global config and gulp
-var config  = require(__dirname + '/config/foley.json');
-var argv    = require('yargs').argv;
-var gulp    = require('gulp');
-var plumber = require('gulp-plumber');
-var debug   = require('gulp-debug');
-var gulpif  = require('gulp-if');
+import config from '../foley.json'
+import gulp from 'gulp'
 
 // Specific task modules
-var metalsmith  = require('metalsmith');
-var rename      = require('metalsmith-rename');
-var handlebars  = require('handlebars');
-var layouts     = require('handlebars-layouts');
-
-// Register handlebars layout
-handlebars.registerHelper(layouts(handlebars));
-
-// Build Metalsmith
-function runMetalsmith(callback) {
-  // Metalsmith instance and options
-  var metal = new metalsmith('.');
-  metal.source(config.paths.pages);
-  metal.destination(config.paths.build);
-
-  // Get metalsmith options from config
-  var plugins = config.metalsmith.plugins || {};
-
-  // Require plugins and options
-  Object.keys(plugins).forEach(function(key) {
-    var plugin = require(key);
-    var options = plugins[key];
-
-    metal.use(plugin(options));
-  });
-
-  // Rename file extensions
-  metal.use(rename([[/\.hbs$/, '.html'], [/\.md$/, '.html']]));
-
-  // Build Metalsmith or error out
-  metal.build(function(err) {
-    if (err) {
-      return callback(err);
-    }
-
-    callback();
-  });
-}
+import browserSync from 'browser-sync'
+import Metalsmith from 'metalsmith'
 
 // Metalsmith task
-gulp.task('metalsmith', function(callback) {
-  runMetalsmith(callback);
-});
+gulp.task('metalsmith', function (callback) {
+  // Metalsmith instance and options
+  var metalsmith = new Metalsmith('.').clean(false)
+  var plugins = config.metalsmith.plugins || {}
+  metalsmith.source(config.paths.pages)
+  metalsmith.destination(config.paths.build)
+
+  // For each plugin
+  Object.keys(plugins).forEach(function (key) {
+    var plugin = require(key) // Require Metalsmith plugins
+    var options = plugins[key] // Get options
+
+    // Add plugins to Metalsmith
+    metalsmith.use(plugin(options))
+  })
+
+  // Build Metalsmith or error out
+  metalsmith.build(function (err) {
+    if (err) {
+      return callback(err)
+    }
+
+    browserSync.reload()
+    callback()
+  })
+})

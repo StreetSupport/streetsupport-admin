@@ -1,62 +1,62 @@
-var sinon = require('sinon'),
-    ajax =      require('basic-ajax'),
-    endpoints = require('../../src/js/api-endpoints'),
-    adminurls = require('../../src/js/admin-urls'),
-    browser =   require('../../src/js/browser'),
-    cookies =   require('../../src/js/cookies'),
-    getUrlParameter = require('../../src/js/get-url-parameter')
+/*
+global describe, beforeEach, afterEach, it, expect
+*/
 
-describe('Add individual Address', function () {
-  var Model = require('../../src/js/models/service-provider-addresses/AddServiceProviderAddress'),
-  model,
-  stubbedApi,
-  browserSpy,
-  cookiesStub,
-  stubbedParameters
+'use strict'
 
-  beforeEach(function () {
+let sinon = require('sinon')
+let ajax = require('../../src/js/ajax')
+let adminurls = require('../../src/js/admin-urls')
+let browser = require('../../src/js/browser')
+let cookies = require('../../src/js/cookies')
+let getUrlParameter = require('../../src/js/get-url-parameter')
+
+describe('Add individual Address', () => {
+  let Model = require('../../src/js/models/service-provider-addresses/AddServiceProviderAddress')
+  let model = null
+  let browserSpy = null
+
+  beforeEach(() => {
     sinon.stub(browser, 'loading')
     sinon.stub(browser, 'loaded')
     model = new Model()
   })
 
-  afterEach(function () {
+  afterEach(() => {
     browser.loading.restore()
     browser.loaded.restore()
   })
 
-  it('should set an empty Address', function() {
+  it('should set an empty Address', () => {
     expect(model.address().postcode()).toEqual(undefined)
   })
 
-  describe('Save', function () {
-    beforeEach(function () {
-      function fakeResolved(value) {
-          return {
-            then: function(success, error) {
-              success({
-                'status': 200,
-                'json': {}
-              })
-            }
-          }
+  describe('Save', () => {
+    beforeEach(() => {
+      let fakeResolved = {
+        then: (success, _) => {
+          success({
+            'status': 200,
+            'data': {}
+          })
         }
+      }
       browserSpy = sinon.stub(browser, 'redirect')
-      cookiesStub = sinon.stub(cookies, 'get').returns('saved-session-token')
-      stubbedParameters = sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
-      stubbedApi = sinon.stub(ajax, 'post').returns(fakeResolved())
+      sinon.stub(cookies, 'get').returns('saved-session-token')
+      sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
+      sinon.stub(ajax, 'post').returns(fakeResolved)
 
       model.address().save()
     })
 
-    afterEach(function () {
+    afterEach(() => {
       ajax.post.restore()
       browser.redirect.restore()
       cookies.get.restore()
       getUrlParameter.parameter.restore()
     })
 
-    it('should redirect to service provider', function () {
+    it('should redirect to service provider', () => {
       var redirect = adminurls.serviceProviders + '?key=coffee4craig'
       expect(browserSpy.withArgs(redirect).calledOnce).toBeTruthy()
     })

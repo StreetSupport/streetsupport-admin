@@ -1,0 +1,90 @@
+---
+title: Add Service Provider Address - Street Support Admin
+description: Street Support - Making it easier to help homeless people in Manchester
+layout: default.hbs
+permalink: false
+jsBundle: addServiceProviderService
+page: addServiceProviderService
+nosubnav: true
+---
+
+<div class="block block--highlight admin-header">
+  <div class="container block__inner">
+    <header>
+      <h1>Add Service</h1>
+    </header>
+  </div>
+</div>
+<div class="block">
+  <div class="container block__inner">
+    <div class="block__content form">
+      {{> form-feedback}}
+      <article>
+        <section>
+          <h3>Category</h3>
+          <dl class="key-value-pair">
+            <dt class="key-value-pair__key">Category</dt>
+            <dd class="key-value-pair__value">
+              <select data-bind="options: categories,
+                optionsText: function (item) {
+                return item.name
+              },
+              value: category,
+              optionsCaption: '-- please select --',
+              event: { change: setAvailableSubCategories }" class="form__input"></select>
+          </dd>
+          <dt class="key-value-pair__key">Sub Categories</dt>
+          <dd class="key-value-pair__value">
+            <ul data-bind="foreach: subCategories" class="form__checkbox-container">
+              <li>
+                <input type="checkbox" data-bind="attr: { name: name, id: name, value: key }, checked: isSelected" class="form__checkbox" />
+                <label data-bind="text: name, attr: { for: name }" class="form__checkbox-label"></label>
+              </li>
+            </ul>
+          </dd>
+        </section>
+        <section>
+          <h3>Service Details</h3>
+          <dl>
+            <dt class="key-value-pair__key">Description</dt>
+            <dd class="key-value-pair__value">
+              <textarea data-bind="textInput: info" class="form__input--textarea"></textarea>
+            </dd>
+            <dt class="key-value-pair__key">Target Audience - eg: "lgbt, under 25s"</dt>
+            <dd class="key-value-pair__value">
+              <input data-bind="textInput: targetAudience" type="text" class="form__input" />
+            </dd>
+          </dl>
+        </section>
+        <section>
+          <h3>Location</h3>
+	        <p>Enter a location for this service, either by selecting an existing address, or entering new details. For outreach services with no fixed address, enter a description in the field below.</p>
+          <dl class="key-value-pair">
+            <dt class="key-value-pair__key">Outreach Locations Description</dt>
+            <dd class="key-value-pair__value">
+              <textarea data-bind="textInput: locationDescription" class="form__input--textarea"></textarea>
+            </dd>
+          </dl>
+          <h3>Use Existing Address</h3>
+          <dl>
+            <dt class="key-value-pair__key">Select</dt>
+            <dd class="key-value-pair__value">
+              <select data-bind="options: addresses,
+              optionsText: function (item) {
+                return item.street1() + ' - ' + item.postcode()
+              },
+              value: preselectedAddress,
+              optionsCaption: '-- please select --',
+              event: { change: prefillAddress }" class="form__input"></select>
+            </dd>
+          </dl>
+        </section>
+        <div data-bind="with: address" />
+          {{> address}}
+          {{> opening-times}}
+        </div>
+        <button data-bind="click: save" class="btn btn--primary"><span class="btn__text">save</span></button>
+      </article>
+    </div>
+  </div>
+</div>

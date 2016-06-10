@@ -1,4 +1,4 @@
-var ajax = require('basic-ajax')
+var ajax = require('../ajax')
 var cookies = require('../cookies')
 var Address = require('./Address')
 var getUrlParameter = require('../get-url-parameter')
@@ -11,7 +11,7 @@ function ServiceProvider (data) {
 
   self.key = ko.observable(data.key)
   self.name = ko.observable(data.name)
-  self.addresses = ko.observableArray(data.addresses.map(address => {
+  self.addresses = ko.observableArray(data.addresses.map((address) => {
     var newbie = new Address(address)
     newbie.addListener(self)
     return newbie
@@ -41,7 +41,7 @@ function ServiceProvider (data) {
 
       return isNotTheAddressWeAreLookingFor
     }
-    var remainingAddresses = self.addresses().filter(address => notTheCancelledAddress(address))
+    var remainingAddresses = self.addresses().filter((address) => notTheCancelledAddress(address))
     self.addresses(remainingAddresses)
   }
 
@@ -49,7 +49,7 @@ function ServiceProvider (data) {
     var notTheDeletedAddress = function (address) {
       return address.key() !== deleteAddress.key()
     }
-    var remainingAddresses = self.addresses().filter(address => notTheDeletedAddress(address))
+    var remainingAddresses = self.addresses().filter((address) => notTheDeletedAddress(address))
     self.addresses(remainingAddresses)
   }
 }
@@ -63,7 +63,7 @@ function ServiceProviderAddresses () {
       self.headers(cookies.get('session-token')),
       {})
       .then(function (result) {
-        self.serviceProvider(new ServiceProvider(result.json))
+        self.serviceProvider(new ServiceProvider(result.data))
       },
       function (error) {
         self.handleError(error)

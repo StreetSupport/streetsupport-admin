@@ -1,48 +1,52 @@
-var sinon =     require('sinon'),
-    ajax =      require('../../src/js/ajax'),
-    endpoints = require('../../src/js/api-endpoints'),
-    adminurls = require('../../src/js/admin-urls'),
-    browser =   require('../../src/js/browser'),
-    cookies = require('../../src/js/cookies')
+/*
+global describe, beforeEach, afterEach, it, expect
+*/
 
-describe('Login', function () {
+'use strict'
+
+let sinon = require('sinon')
+let ajax = require('../../src/js/ajax')
+let endpoints = require('../../src/js/api-endpoints')
+let adminurls = require('../../src/js/admin-urls')
+let browser = require('../../src/js/browser')
+let cookies = require('../../src/js/cookies')
+
+describe('Login', () => {
   var Login = require('../../src/js/models/Auth/Login')
   var login
 
-  beforeEach(function () {
+  beforeEach(() => {
     login = new Login()
   })
 
-  it('should set username as empty', function () {
+  it('should set username as empty', () => {
     expect(login.username()).toEqual('')
   })
 
-  it('should set password as empty', function () {
+  it('should set password as empty', () => {
     expect(login.password()).toEqual('')
   })
 
-  describe('Submit', function () {
-    var mockCookies,
-    stubbedApi,
-    stubbedBrowser
+  describe('Submit', () => {
+    var mockCookies
+    let stubbedApi = null
+    let stubbedBrowser = null
 
-    beforeEach(function () {
-      function fakeResolved (value) {
-        return {
-          then: function (success, error) {
-            success({
-              'status': 201,
-              'data': {
-                'sessionToken': 'returnedSessionToken',
-                'authClaims': [ 'SuperAdmin', 'claimB' ]
-              }
-            })
-          }
+    beforeEach(() => {
+      let fakeResolved = {
+        then: function (success, error) {
+          success({
+            'status': 201,
+            'data': {
+              'sessionToken': 'returnedSessionToken',
+              'authClaims': [ 'SuperAdmin', 'claimB' ]
+            }
+          })
         }
       }
 
       stubbedApi = sinon.stub(ajax, 'post')
-      stubbedApi.returns(fakeResolved ())
+      stubbedApi.returns(fakeResolved)
       stubbedBrowser = sinon.stub(browser, 'redirect')
 
       mockCookies = sinon.mock(cookies)
@@ -55,21 +59,21 @@ describe('Login', function () {
       login.submit()
     })
 
-    afterEach(function () {
+    afterEach(() => {
       ajax.post.restore()
       browser.redirect.restore()
       mockCookies.restore()
     })
 
-    it('should save session token to cookie', function () {
+    it('should save session token to cookie', () => {
       mockCookies.verify()
     })
 
-    it('should notify user it is authenticating', function () {
+    it('should notify user it is authenticating', () => {
       expect(login.message()).toEqual('Loading, please wait')
     })
 
-    it('should send credentials to api', function () {
+    it('should send credentials to api', () => {
       var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoints.sessions + '/create', {}, {
         'username': 'username',
         'password': 'password'
@@ -78,7 +82,7 @@ describe('Login', function () {
       expect(apiCalledWithExpectedArgs).toBeTruthy()
     })
 
-    it('should not be able to send credentials after submitting', function () {
+    it('should not be able to send credentials after submitting', () => {
       login.submit()
       var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoints.sessions + '/create', {}, {
         'username': 'username',
@@ -88,7 +92,7 @@ describe('Login', function () {
       expect(apiCalledWithExpectedArgs).toBeTruthy()
     })
 
-    it('should redirect browser to index', function () {
+    it('should redirect browser to index', () => {
       var browserRedirectedWithExpectedUrl = stubbedBrowser.withArgs(adminurls.redirector).calledOnce
       expect(browserRedirectedWithExpectedUrl).toBeTruthy()
     })

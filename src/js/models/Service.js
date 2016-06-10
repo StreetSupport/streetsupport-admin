@@ -1,5 +1,5 @@
 var ko = require('knockout')
-var ajax = require('basic-ajax')
+var ajax = require('../ajax')
 var Endpoints = require('../endpoint-builder')
 var getUrlParameter = require('../get-url-parameter')
 var cookies = require('../cookies')
@@ -20,13 +20,13 @@ function Service (data) {
   var tags = data.tags !== null ? data.tags.join(', ') : ''
 
   self.tags = ko.observable(tags)
-  self.openingTimes = ko.observableArray(data.openingTimes.map(ot => new OpeningTime(ot)))
+  self.openingTimes = ko.observableArray(data.openingTimes.map((ot) => new OpeningTime(ot)))
   self.address = new Address(data.address)
 
   self.savedName = ko.observable(data.name)
   self.savedInfo = ko.observable(data.info)
   self.savedTags = ko.observable(tags)
-  self.savedOpeningTimes = ko.observableArray(data.openingTimes.map(ot => new OpeningTime(ot)))
+  self.savedOpeningTimes = ko.observableArray(data.openingTimes.map((ot) => new OpeningTime(ot)))
   self.savedAddress = new Address(data.address)
 
   self.isEditing = ko.observable(false)
@@ -49,7 +49,7 @@ function Service (data) {
     self.info(self.savedInfo())
     self.tags(self.savedTags())
 
-    var restoredOpeningTimes = self.savedOpeningTimes().map(ot => {
+    var restoredOpeningTimes = self.savedOpeningTimes().map((ot) => {
       return new OpeningTime({
         'day': ot.day(),
         'startTime': ot.startTime(),
@@ -77,7 +77,7 @@ function Service (data) {
              o.startTime() !== openingTimeToRemove.startTime() ||
              o.endTime() !== openingTimeToRemove.endTime()
     }
-    var remaining = self.openingTimes().filter(o => notToBeRemoved(o))
+    var remaining = self.openingTimes().filter((o) => notToBeRemoved(o))
 
     self.openingTimes(remaining)
   }
@@ -85,13 +85,13 @@ function Service (data) {
   self.save = function () {
     var endpoint = self.endpointBuilder.serviceProviders(self.serviceProviderId).services(self.id()).build()
     var tags = []
-    if (self.tags().length > 0) tags = self.tags().split(',').map(t => t.trim())
+    if (self.tags().length > 0) tags = self.tags().split(',').map((t) => t.trim())
 
     var model = JSON.stringify({
       'Info': self.info(),
       'LocationDescription': self.locationDescription(),
       'Tags': tags,
-      'OpeningTimes': self.openingTimes().map(openingTime => {
+      'OpeningTimes': self.openingTimes().map((openingTime) => {
         return {
           'StartTime': openingTime.startTime(),
           'EndTime': openingTime.endTime(),
@@ -113,7 +113,7 @@ function Service (data) {
       model
     ).then(function (result) {
       self.isEditing(false)
-      self.listeners().forEach(l => l.serviceSaved(self))
+      self.listeners().forEach((l) => l.serviceSaved(self))
     }, function (error) {
       self.handleError(error)
     })
@@ -121,9 +121,9 @@ function Service (data) {
 
   self.deleteService = function () {
     var endpoint = self.endpointBuilder.serviceProviders(getUrlParameter.parameter('key')).services(self.id()).build()
-    ajax.delete(endpoint, self.headers(cookies.get('session-token')), JSON.stringify({}))
+    ajax.delete(endpoint, self.headers(cookies.get('session-token')))
     .then(function (result) {
-      self.listeners().forEach(l => l.deleteService(self))
+      self.listeners().forEach((l) => l.deleteService(self))
     }, function (error) {
       self.handleError(error)
     })

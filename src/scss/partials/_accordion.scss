@@ -1,6 +1,17 @@
 .accordion {
   margin-bottom: 20px;
 
+
+  &__incopy {
+    @include cf();
+
+    @include mq($from: l) {
+      .accordion {
+        @include span(6 of $grid-column);
+      }
+    }
+  }
+
   & > * {
     overflow: hidden;
   }
@@ -9,23 +20,44 @@
     background-color: $brand-d;
     color: #fff;
     margin: 0;
-    padding: 15px;
+    padding: 15px 40px 15px 15px;
     border: 0;
     border-bottom: 1px solid #fff;
     appearance: none;
     width: 100%;
     outline: none;
     text-align: left;
+    position: relative;
 
     &.is-active {
       border-bottom: 0;
+
+      .accordion__icon {
+        &--open {
+          display: none;
+        }
+
+        &--close {
+          display: block;
+        }
+      }
+    }
+  }
+
+  &__icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    height: 20px;
+    width: 20px;
+    margin-top: -10px;
+
+    &--open {
+      display: block;
     }
 
-    .icon {
-      float: right;
-      height: 20px;
-      width: 20px;
-      background-position: center;
+    &--close {
+      display: none;
     }
   }
 
@@ -39,13 +71,17 @@
     transition: max-height 250ms, visibility 250ms, opacity 250ms;
 
     &.is-active {
-      max-height: 300rem;
+      max-height: 1000rem;
       opacity: 1;
       visibility: visible;
+    }
+
+    a {
+      color: $brand-c;
     }
   }
 
   &__inner {
-    padding: 30px 15px;
+    padding: 30px 30px;
   }
 }

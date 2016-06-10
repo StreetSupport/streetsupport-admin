@@ -1,39 +1,36 @@
-var sinon = require('sinon'),
-    ajax =      require('basic-ajax'),
-    endpoints = require('../../src/js/api-endpoints'),
-    adminurls = require('../../src/js/admin-urls'),
-    browser =   require('../../src/js/browser'),
-    cookies =   require('../../src/js/cookies'),
-    getUrlParameter = require('../../src/js/get-url-parameter')
+/*
+global describe, beforeEach, it, expect
+*/
 
-describe('Add Opening Time', function () {
-  var Model = require('../../src/js/models/Address'),
-      model
+'use strict'
 
-  beforeEach(function () {
+describe('Add Opening Time', () => {
+  const Model = require('../../src/js/models/Address')
+  let model = null
+
+  beforeEach(() => {
     model = new Model(getAddressData())
 
     model.edit()
     model.newOpeningTime()
   })
 
-  it('should add a new openingTimes', function () {
+  it('should add a new openingTimes', () => {
     expect(model.openingTimes().length).toEqual(3)
   })
 
-  describe('Then cancel', function () {
-
-    beforeEach(function () {
+  describe('Then cancel', () => {
+    beforeEach(() => {
       model.cancel()
     })
 
-    it('should reset openingTimes', function () {
+    it('should reset openingTimes', () => {
       expect(model.openingTimes().length).toEqual(2)
     })
   })
 })
 
-function getAddressData() {
+function getAddressData () {
   return {
     'key': 1,
     'street': '5 Oak Street',

@@ -1,7 +1,7 @@
 'use strict'
 
 var ko = require('knockout')
-var ajax = require('basic-ajax')
+var ajax = require('../ajax')
 var htmlEncode = require('htmlencode')
 var Endpoints = require('../endpoint-builder')
 var getUrlParameter = require('../get-url-parameter')
@@ -33,7 +33,7 @@ function Address (data) {
 
   var buildOpeningTimes = function (openingTimesData) {
     var openingTimes = openingTimesData !== undefined && openingTimesData !== null
-      ? openingTimesData.map(o => new OpeningTime(o))
+      ? openingTimesData.map((o) => new OpeningTime(o))
       : []
     return openingTimes
   }
@@ -51,8 +51,8 @@ function Address (data) {
       return address[key].length > 0
     }
     return ['street', 'street1', 'street2', 'street3', 'city', 'postcode']
-      .filter(key => fieldHasValue(key))
-      .map(key => address[key])
+      .filter((key) => fieldHasValue(key))
+      .map((key) => address[key])
       .join(', ')
   }
   self.formatted = self.formatAddress(data)
@@ -67,14 +67,14 @@ function Address (data) {
 
   self.cancel = function () {
     self.restoreFields()
-    self.listeners().forEach(listener => listener.cancelAddress(self))
+    self.listeners().forEach((listener) => listener.cancelAddress(self))
   }
 
   self.deleteAddress = function () {
     var endpoint = self.endpointBuilder.serviceProviders(getUrlParameter.parameter('key')).addresses(self.key()).build()
-    ajax.delete(endpoint, self.headers(cookies.get('session-token')), JSON.stringify({}))
+    ajax.delete(endpoint, self.headers(cookies.get('session-token')))
     .then(function (result) {
-      self.listeners().forEach(listener => listener.deleteAddress(self))
+      self.listeners().forEach((listener) => listener.deleteAddress(self))
     }, function (error) {
       self.handleError(error)
     })
@@ -96,7 +96,7 @@ function Address (data) {
         o.startTime() !== openingTimeToRemove.startTime() ||
         o.endTime() !== openingTimeToRemove.endTime()
     }
-    var remaining = self.openingTimes().filter(o => openingTimeHasChanged(o))
+    var remaining = self.openingTimes().filter((o) => openingTimeHasChanged(o))
 
     self.openingTimes(remaining)
   }
@@ -117,7 +117,7 @@ function Address (data) {
       'Street3': self.street4(),
       'City': self.city(),
       'Postcode': self.postcode(),
-      'OpeningTimes': self.openingTimes().map(openingTime => mapOpeningTime(openingTime))
+      'OpeningTimes': self.openingTimes().map((openingTime) => mapOpeningTime(openingTime))
     })
 
     if (self.tempKey() !== undefined || self.key() === undefined) {
@@ -126,9 +126,9 @@ function Address (data) {
         model
       ).then(function (result) {
         self.isEditing(false)
-        self.key(result.json.key)
+        self.key(result.data.key)
         self.setFields()
-        self.listeners().forEach(listener => listener.saveAddress(self))
+        self.listeners().forEach((listener) => listener.saveAddress(self))
       }, function (error) {
         self.handleError(error)
       })
@@ -139,7 +139,7 @@ function Address (data) {
       ).then(function (result) {
         self.isEditing(false)
         self.setFields()
-        self.listeners().forEach(listener => listener.saveAddress(self))
+        self.listeners().forEach((listener) => listener.saveAddress(self))
       }, function (error) {
         self.handleError(error)
       })
@@ -163,7 +163,7 @@ function Address (data) {
       })
     }
 
-    var restoredOpeningTimes = self.savedOpeningTimes().map(ot => buildOpeningTime(ot))
+    var restoredOpeningTimes = self.savedOpeningTimes().map((ot) => buildOpeningTime(ot))
 
     self.openingTimes(restoredOpeningTimes)
   }

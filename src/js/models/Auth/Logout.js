@@ -1,4 +1,4 @@
-var ajax = require('basic-ajax')
+var ajax = require('../../ajax')
 var cookies = require('../../cookies')
 var BaseViewModel = require('../BaseViewModel')
 
@@ -8,8 +8,7 @@ function LogoutModel () {
   var sessionToken = cookies.get('session-token')
 
   ajax.delete(self.endpointBuilder.sessions(sessionToken).build(),
-    self.headers(sessionToken),
-    {})
+    self.headers(sessionToken))
   .then(function (result) {
     cookies.unset('session-token')
     cookies.unset('auth-claims')

@@ -1,11 +1,12 @@
 <nav class="nav__container js-nav-container">
-  <button class="btn btn--plain nav__btn js-nav-close" type="button"><span class="icon icon-close"></span><span class="hide-screen">Close</span></button>
+  <button class="btn btn--plain nav__btn js-nav-close" type="button">{{>icon name="close" class="icon"}}<span class="hide-screen">Close</span></button>
 
   <ul class="nav__list">
-    <li class="nav__item"><a href="/index.html">Home</a></li>
+    <li class="nav__item"><a href="/">Home</a></li>
     <li class="nav__item"><a data-claims="orgadmin" href="/volunteers.html">Volunteers</a></li>
     <li class="nav__item"><a data-claims="charteradmin" href="/charter-pledges.html">Charter Pledges</a></li>
     <li class="nav__item"><a data-claims="charteradmin" href="/action-groups">Action Groups</a></li>
+    <li class="nav__item"><a data-claims="superadmin" href="/mailing-list">Mailing List</a></li>
     <li class="nav__item"><a href="/logout.html">Logout</a></li>
   </ul>
 </nav>

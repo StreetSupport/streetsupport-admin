@@ -6,34 +6,34 @@ global describe, beforeEach, afterEach, it, expect
 'use strict'
 
 const sinon = require('sinon')
-const ajax = require('basic-ajax')
+const ajax = require('../../src/js/ajax')
 const endpoints = require('../../src/js/api-endpoints')
 const cookies = require('../../src/js/cookies')
 const getUrlParameter = require('../../src/js/get-url-parameter')
 
-describe('Service', function () {
+describe('Service', () => {
   const Model = require('../../src/js/models/Service')
   let model = null
 
-  beforeEach(function () {
+  beforeEach(() => {
     model = new Model(getData())
   })
 
-  it('should set link to edit each service', function () {
-    expect(model.editServiceUrl).toEqual('edit-service-provider-service.html?providerId=coffee4craig&serviceId=569d2b468705432268b65c75')
+  it('should set link to edit each service', () => {
+    expect(model.editServiceUrl).toEqual('/edit-service-provider-service.html?providerId=coffee4craig&serviceId=569d2b468705432268b65c75')
   })
 
-  describe('Editing', function () {
-    beforeEach(function () {
+  describe('Editing', () => {
+    beforeEach(() => {
       model.edit()
     })
 
-    it('should set isEditing to true', function () {
+    it('should set isEditing to true', () => {
       expect(model.isEditing).toBeTruthy()
     })
 
-    describe('Cancel', function () {
-      beforeEach(function () {
+    describe('Cancel', () => {
+      beforeEach(() => {
         model.info('new info')
         model.tags('new tags')
         model.openingTimes()[1].startTime('20:00')
@@ -43,11 +43,11 @@ describe('Service', function () {
         model.cancelEdit()
       })
 
-      it('should set isEditing to false', function () {
+      it('should set isEditing to false', () => {
         expect(model.isEditing()).toBeFalsy()
       })
 
-      it('should set reset fields', function () {
+      it('should set reset fields', () => {
         expect(model.name).toEqual('Meals')
         expect(model.info()).toEqual('Breakfast')
         expect(model.tags()).toEqual('some tags')
@@ -58,15 +58,15 @@ describe('Service', function () {
       })
     })
 
-    describe('Save', function () {
+    describe('Save', () => {
       let stubbedApi = null
 
-      beforeEach(function () {
+      beforeEach(() => {
         const fakeResolved = {
           then: function (success, error) {
             success({
               'status': 200,
-              'json': getData()
+              'data': getData()
             })
           }
         }
@@ -90,13 +90,13 @@ describe('Service', function () {
         model.save()
       })
 
-      afterEach(function () {
+      afterEach(() => {
         ajax.put.restore()
         cookies.get.restore()
         getUrlParameter.parameter.restore()
       })
 
-      it('should put service details with new to api with session token', function () {
+      it('should put service details with new to api with session token', () => {
         var endpoint = endpoints.getServiceProviders + '/coffee4craig/services/569d2b468705432268b65c75'
         var headers = {
           'content-type': 'application/json',
@@ -128,36 +128,36 @@ describe('Service', function () {
         expect(apiCalledWithExpectedArgs).toBeTruthy()
       })
 
-      it('should set isEditing to false', function () {
+      it('should set isEditing to false', () => {
         expect(model.isEditing()).toBeFalsy()
       })
 
-      describe('Edit again and Cancel', function () {
-        beforeEach(function () {
+      describe('Edit again and Cancel', () => {
+        beforeEach(() => {
           model.edit()
           model.info('different info')
           model.cancelEdit()
         })
 
-        it('should set isEditing to false', function () {
+        it('should set isEditing to false', () => {
           expect(model.isEditing()).toBeFalsy()
         })
 
-        it('should set reset fields', function () {
+        it('should set reset fields', () => {
           expect(model.info()).toEqual('Breakfast')
         })
       })
     })
 
-    describe('Save with empty tags', function () {
+    describe('Save with empty tags', () => {
       let stubbedApi = null
 
-      beforeEach(function () {
+      beforeEach(() => {
         const fakeResolved = {
           then: function (success, error) {
             success({
               'status': 200,
-              'json': getData()
+              'data': getData()
             })
           }
         }
@@ -171,13 +171,13 @@ describe('Service', function () {
         model.save()
       })
 
-      afterEach(function () {
+      afterEach(() => {
         ajax.put.restore()
         cookies.get.restore()
         getUrlParameter.parameter.restore()
       })
 
-      it('should put service details with new to api with session token', function () {
+      it('should put service details with new to api with session token', () => {
         var endpoint = endpoints.getServiceProviders + '/coffee4craig/services/569d2b468705432268b65c75'
         var headers = {
           'content-type': 'application/json',
@@ -210,8 +210,8 @@ describe('Service', function () {
       })
     })
 
-    describe('Save Fail', function () {
-      beforeEach(function () {
+    describe('Save Fail', () => {
+      beforeEach(() => {
         const fakeResolved = {
           then: function (success, error) {
             error({
@@ -232,18 +232,18 @@ describe('Service', function () {
         model.save()
       })
 
-      afterEach(function () {
+      afterEach(() => {
         ajax.put.restore()
         cookies.get.restore()
         getUrlParameter.parameter.restore()
       })
 
-      it('should set message as joined error messages', function () {
+      it('should set message as joined error messages', () => {
         expect(model.errors()[0]).toEqual('returned error message 1')
         expect(model.errors()[1]).toEqual('returned error message 2')
       })
 
-      it('should keep isEditing as true', function () {
+      it('should keep isEditing as true', () => {
         expect(model.isEditing()).toBeTruthy()
       })
     })

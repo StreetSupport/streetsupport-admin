@@ -1,33 +1,33 @@
-var sinon = require('sinon'),
-    ajax =      require('basic-ajax'),
-    endpoints = require('../../src/js/api-endpoints'),
-    adminurls = require('../../src/js/admin-urls'),
-    browser =   require('../../src/js/browser'),
-    cookies =   require('../../src/js/cookies'),
-    getUrlParameter = require('../../src/js/get-url-parameter')
+/*
+global describe, beforeEach, afterEach, it, expect
+*/
 
-describe('Edit Service Provider General Details', function () {
-  var Model = require('../../src/js/models/ServiceProvider'),
-  model,
-  stubbedApi,
-  stubbedCookies,
-  stubbedUrlParams
+'use strict'
 
-  beforeEach(function () {
-    function fakeResolved (value) {
-      return {
-        then: function (success, error) {
-          success({
-            'status': 200,
-            'json': coffee4Craig()
-          })
-        }
+const sinon = require('sinon')
+const ajax = require('../../src/js/ajax')
+const endpoints = require('../../src/js/api-endpoints')
+const browser = require('../../src/js/browser')
+const cookies = require('../../src/js/cookies')
+const getUrlParameter = require('../../src/js/get-url-parameter')
+
+describe('Edit Service Provider General Details', () => {
+  const Model = require('../../src/js/models/ServiceProvider')
+  let model = null
+
+  beforeEach(() => {
+    let fakeResolved = {
+      then: (success, _) => {
+        success({
+          'status': 200,
+          'data': coffee4Craig()
+        })
       }
     }
 
-    stubbedApi = sinon.stub(ajax, 'get').returns(fakeResolved ())
-    stubbedCookies = sinon.stub(cookies, 'get').returns('stored-session-token')
-    stubbedUrlParams = sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
+    sinon.stub(ajax, 'get').returns(fakeResolved)
+    sinon.stub(cookies, 'get').returns('stored-session-token')
+    sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
     sinon.stub(browser, 'loading')
     sinon.stub(browser, 'loaded')
 
@@ -36,7 +36,7 @@ describe('Edit Service Provider General Details', function () {
     model.editGeneralDetails()
   })
 
-  afterEach(function () {
+  afterEach(() => {
     ajax.get.restore()
     cookies.get.restore()
     getUrlParameter.parameter.restore()
@@ -44,26 +44,24 @@ describe('Edit Service Provider General Details', function () {
     browser.loading.restore()
   })
 
-  it('should set isEditingGeneralDetails to true', function () {
+  it('should set isEditingGeneralDetails to true', () => {
     expect(model.isEditingGeneralDetails).toBeTruthy()
   })
 
-  describe('Save', function () {
+  describe('Save', () => {
     var stubbedPutApi
 
-    beforeEach(function () {
-      function fakeResolved (value) {
-        return {
-          then: function (success, error) {
-            success({
-              'status': 200,
-              'json': {}
-            })
-          }
+    beforeEach(() => {
+      let fakeResolved = {
+        then: (success, _) => {
+          success({
+            'status': 200,
+            'data': {}
+          })
         }
       }
 
-      stubbedPutApi = sinon.stub(ajax, 'put').returns(fakeResolved ())
+      stubbedPutApi = sinon.stub(ajax, 'put').returns(fakeResolved)
 
       model.serviceProvider().description('new description')
       model.serviceProvider().shortDescription('new short description')
@@ -71,82 +69,74 @@ describe('Edit Service Provider General Details', function () {
       model.saveGeneralDetails()
     })
 
-    afterEach(function () {
+    afterEach(() => {
       ajax.put.restore()
     })
 
-    it('should put service provider general details to api with session token', function () {
-        var endpoint = endpoints.getServiceProviders + '/coffee4craig/general-information'
-        var headers = {
-          'content-type': 'application/json',
-          'session-token': 'stored-session-token'
-        }
-        var payload = JSON.stringify({
-          'Description': 'new description',
-          'ShortDescription': 'new short description'
-        })
-        var apiCalledWithExpectedArgs = stubbedPutApi.withArgs(endpoint, headers, payload).calledOnce
-        expect(apiCalledWithExpectedArgs).toBeTruthy()
+    it('should put service provider general details to api with session token', () => {
+      var endpoint = endpoints.getServiceProviders + '/coffee4craig/general-information'
+      var headers = {
+        'content-type': 'application/json',
+        'session-token': 'stored-session-token'
+      }
+      var payload = JSON.stringify({
+        'Description': 'new description',
+        'ShortDescription': 'new short description'
+      })
+      var apiCalledWithExpectedArgs = stubbedPutApi.withArgs(endpoint, headers, payload).calledOnce
+      expect(apiCalledWithExpectedArgs).toBeTruthy()
     })
 
-    it('should set isEditingGeneralDetails to false', function () {
+    it('should set isEditingGeneralDetails to false', () => {
       expect(model.isEditingGeneralDetails()).toBeFalsy()
     })
   })
 
-  describe('Invalid submission', function () {
-    var stubbedPutApi
-
-    beforeEach(function () {
-      function fakeResolved (value) {
-        return {
-          then: function (success, error) {
-            error({
-              'status': 400,
-              'response': JSON.stringify({
-                'messages': ['returned error message 1', 'returned error message 2']
-              })
+  describe('Invalid submission', () => {
+    beforeEach(() => {
+      const fakeResolved = {
+        then: (_, error) => {
+          error({
+            'status': 400,
+            'response': JSON.stringify({
+              'messages': ['returned error message 1', 'returned error message 2']
             })
-          }
+          })
         }
       }
 
-      stubbedPutApi = sinon.stub(ajax, 'put').returns(fakeResolved ())
+      sinon.stub(ajax, 'put').returns(fakeResolved)
 
       model.serviceProvider().description('new description')
 
       model.saveGeneralDetails()
     })
 
-    afterEach(function () {
+    afterEach(() => {
       ajax.put.restore()
     })
 
-    it('should set message as joined error messages', function () {
+    it('should set message as joined error messages', () => {
       expect(model.errors()[1]).toEqual('returned error message 2')
     })
 
-    it('should keep isEditingGeneralDetails as true', function () {
+    it('should keep isEditingGeneralDetails as true', () => {
       expect(model.isEditingGeneralDetails()).toBeTruthy()
     })
   })
 
-  describe('Invalid submission then valid submission', function () {
-    var stubbedPutApi
-
-    beforeEach(function () {
-      function fakeResolved (value) {
-        return {
-          then: function (success, error) {
-            success({
-              'status': 200,
-              'json': {}
-            })
-          }
+  describe('Invalid submission then valid submission', () => {
+    beforeEach(() => {
+      let fakeResolved = {
+        then: (success, _) => {
+          success({
+            'status': 200,
+            'data': {}
+          })
         }
       }
 
-      stubbedPutApi = sinon.stub(ajax, 'put').returns(fakeResolved ())
+      sinon.stub(ajax, 'put').returns(fakeResolved)
 
       model.errors(['error a', 'error b'])
       model.serviceProvider().description('new description')
@@ -155,22 +145,22 @@ describe('Edit Service Provider General Details', function () {
       model.saveGeneralDetails()
     })
 
-    afterEach(function () {
+    afterEach(() => {
       ajax.put.restore()
     })
 
-    it('should clear errors', function () {
-        expect(model.hasErrors()).toBeFalsy()
+    it('should clear errors', () => {
+      expect(model.hasErrors()).toBeFalsy()
     })
   })
 })
 
-function coffee4Craig() {
+function coffee4Craig () {
   return {
-    "key": "coffee4craig",
-    "name": "Coffee 4 Craig",
-    "description": "initial description",
-    "addresses": [],
-    "providedServices": []
+    'key': 'coffee4craig',
+    'name': 'Coffee 4 Craig',
+    'description': 'initial description',
+    'addresses': [],
+    'providedServices': []
   }
 }

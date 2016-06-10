@@ -5,31 +5,31 @@ global describe, beforeEach, afterEach, it, expect
 'use strict'
 
 var sinon = require('sinon')
-var ajax = require('basic-ajax')
+var ajax = require('../../src/js/ajax')
 var endpoints = require('../../src/js/api-endpoints')
 var cookies = require('../../src/js/cookies')
 var browser = require('../../src/js/browser')
 var getUrlParameter = require('../../src/js/get-url-parameter')
 
-describe('Save brand new Address', function () {
+describe('Save brand new Address', () => {
   var Model = require('../../src/js/models/Address')
   var model
 
-  beforeEach(function () {
+  beforeEach(() => {
     model = new Model({})
 
     model.edit()
   })
 
-  describe('Save', function () {
+  describe('Save', () => {
     var stubbedApi
 
-    beforeEach(function () {
+    beforeEach(() => {
       let fakeResolved = {
         then: function (success, error) {
           success({
             'status': 200,
-            'json': {
+            'data': {
               'key': 230680
             }
           })
@@ -60,7 +60,7 @@ describe('Save brand new Address', function () {
       model.save()
     })
 
-    afterEach(function () {
+    afterEach(() => {
       ajax.post.restore()
       cookies.get.restore()
       getUrlParameter.parameter.restore()
@@ -68,7 +68,7 @@ describe('Save brand new Address', function () {
       browser.loaded.restore()
     })
 
-    it('should post address details to api create endpoint with session token', function () {
+    it('should post address details to api create endpoint with session token', () => {
       var endpoint = endpoints.getServiceProviders + '/coffee4craig/addresses'
       var headers = {
         'content-type': 'application/json',
@@ -97,37 +97,37 @@ describe('Save brand new Address', function () {
       expect(apiCalledWithExpectedArgs).toBeTruthy()
     })
 
-    it('should set returned key', function () {
+    it('should set returned key', () => {
       expect(model.key()).toEqual(230680)
     })
 
-    it('should set isEditing to false', function () {
+    it('should set isEditing to false', () => {
       expect(model.isEditing()).toBeFalsy()
     })
 
-    describe('Edit again and Cancel', function () {
-      beforeEach(function () {
+    describe('Edit again and Cancel', () => {
+      beforeEach(() => {
         model.edit()
         model.street1('another new street1')
         model.cancel()
       })
 
-      it('should set isEditing to false', function () {
+      it('should set isEditing to false', () => {
         expect(model.isEditing()).toBeFalsy()
       })
 
-      it('should set reset fields', function () {
+      it('should set reset fields', () => {
         expect(model.street1()).toEqual('new street1')
       })
     })
   })
 })
 
-describe('Save new Address as part of collection', function () {
+describe('Save new Address as part of collection', () => {
   var Model = require('../../src/js/models/Address')
   var model
 
-  beforeEach(function () {
+  beforeEach(() => {
     model = new Model({
       'tempKey': 'some temp key',
       'openingTimes': []
@@ -136,15 +136,15 @@ describe('Save new Address as part of collection', function () {
     model.edit()
   })
 
-  describe('Save', function () {
+  describe('Save', () => {
     var stubbedApi
 
-    beforeEach(function () {
+    beforeEach(() => {
       let fakeResolved = {
         then: function (success, error) {
           success({
             'status': 200,
-            'json': {
+            'data': {
               'key': 230680
             }
           })
@@ -173,13 +173,13 @@ describe('Save new Address as part of collection', function () {
       model.save()
     })
 
-    afterEach(function () {
+    afterEach(() => {
       ajax.post.restore()
       cookies.get.restore()
       getUrlParameter.parameter.restore()
     })
 
-    it('should post address details to api create endpoint with session token', function () {
+    it('should post address details to api create endpoint with session token', () => {
       var endpoint = endpoints.getServiceProviders + '/coffee4craig/addresses'
       var headers = {
         'content-type': 'application/json',
@@ -208,26 +208,26 @@ describe('Save new Address as part of collection', function () {
       expect(apiCalledWithExpectedArgs).toBeTruthy()
     })
 
-    it('should set returned key', function () {
+    it('should set returned key', () => {
       expect(model.key()).toEqual(230680)
     })
 
-    it('should set isEditing to false', function () {
+    it('should set isEditing to false', () => {
       expect(model.isEditing()).toBeFalsy()
     })
 
-    describe('Edit again and Cancel', function () {
-      beforeEach(function () {
+    describe('Edit again and Cancel', () => {
+      beforeEach(() => {
         model.edit()
         model.street1('another new street1')
         model.cancel()
       })
 
-      it('should set isEditing to false', function () {
+      it('should set isEditing to false', () => {
         expect(model.isEditing()).toBeFalsy()
       })
 
-      it('should set reset fields', function () {
+      it('should set reset fields', () => {
         expect(model.street1()).toEqual('new street1')
       })
     })
