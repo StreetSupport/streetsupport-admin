@@ -137,7 +137,7 @@ describe('Editing Service Provider Need', () => {
           'content-type': 'application/json',
           'session-token': 'saved-session-token'
         },
-        JSON.stringify({
+        {
           'Description': 'men\'s shoes & socks',
           'Type': 'Money',
           'Reason': 'we need \'em',
@@ -148,7 +148,7 @@ describe('Editing Service Provider Need', () => {
           'DonationAmountInPounds': 1,
           'DonationUrl': 'http://www.donationUrl.com',
           'Keywords': [ 'keywordA', 'keywordB', 'keywordC' ]
-        })
+        }
       ).returns(fakePutResolution())
 
       model.need().save()

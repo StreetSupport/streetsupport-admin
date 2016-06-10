@@ -62,11 +62,11 @@ describe('Verify New User', () => {
         'content-type': 'application/json',
         'session-token': 'stored-session-token'
       }
-      var payload = JSON.stringify({
+      var payload = {
         'UserName': 'username',
         'Password': 'password',
         'VerificationToken': 'verification-token'
-      })
+      }
       var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, headers, payload).calledOnce
       expect(apiCalledWithExpectedArgs).toBeTruthy()
     })
