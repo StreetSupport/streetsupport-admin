@@ -59,9 +59,9 @@ describe('Reset Password', () => {
         'content-type': 'application/json',
         'session-token': 'storedSessionToken'
       }
-      var payload = JSON.stringify({
+      var payload = {
         'Email': 'vince@test.com'
-      })
+      }
       var called = stubbedApiPost.withArgs(endpoint, headers, payload).calledOnce
       expect(called).toBeTruthy()
     })

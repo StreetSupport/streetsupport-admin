@@ -20,11 +20,12 @@ function ResetPasswordModel () {
         browser.loading()
         self.isSubmitting = true
         self.message('Loading, please wait')
-        ajax.put(self.endpointBuilder.resetPassword(urlParams.parameter('id')).build(),
-        self.headers(cookies.get('session-token')),
-        JSON.stringify({
-          'Password': self.password()
-        }))
+        ajax.put(
+          self.endpointBuilder.resetPassword(urlParams.parameter('id')).build(),
+          self.headers(cookies.get('session-token')),
+          {
+            'Password': self.password()
+          })
         .then(function (result) {
           self.isSubmissionSuccessful(true)
           browser.loaded()

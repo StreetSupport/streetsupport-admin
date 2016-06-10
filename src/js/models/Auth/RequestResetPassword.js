@@ -18,10 +18,10 @@ function RequestResetPasswordModel () {
       self.isSubmitting = true
       self.message('Loading, please wait')
       ajax.post(self.endpointBuilder.resetPassword().build(),
-      self.headers(cookies.get('session-token')),
-      JSON.stringify({
-        'Email': self.email()
-      }))
+        self.headers(cookies.get('session-token')),
+        {
+          'Email': self.email()
+        })
       .then(function (result) {
         self.isSubmissionSuccessful(true)
         browser.loaded()

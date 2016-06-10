@@ -17,7 +17,7 @@ function AddServiceProvider () {
       'Name': self.name()
     }
     ajax
-      .post(endpoint, self.headers(cookies.get('session-token')), JSON.stringify(payload))
+      .post(endpoint, self.headers(cookies.get('session-token')), payload)
       .then(function (result) {
         browser.redirect(adminUrls.dashboard)
       }, function (error) {

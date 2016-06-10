@@ -110,7 +110,7 @@ function Address (data) {
       }
     }
 
-    var model = JSON.stringify({
+    var model = {
       'Street': self.street1(),
       'Street1': self.street2(),
       'Street2': self.street3(),
@@ -118,7 +118,7 @@ function Address (data) {
       'City': self.city(),
       'Postcode': self.postcode(),
       'OpeningTimes': self.openingTimes().map((openingTime) => mapOpeningTime(openingTime))
-    })
+    }
 
     if (self.tempKey() !== undefined || self.key() === undefined) {
       ajax.post(self.endpointBuilder.serviceProviders(getUrlParameter.parameter('providerId')).addresses().build(),

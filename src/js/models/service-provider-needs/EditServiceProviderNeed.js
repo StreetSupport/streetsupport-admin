@@ -23,10 +23,9 @@ function EditServiceProviderNeed () {
 
   var endpoint = self.endpointBuilder.serviceProviders(providerId).needs(needId).build()
   var headers = self.headers(cookies.get('session-token'))
-  var payload = JSON.stringify({})
 
   ajax
-    .get(endpoint, headers, payload)
+    .get(endpoint, headers)
     .then((result) => {
       var need = new Need(result.data)
       need.addListener(self)

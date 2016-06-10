@@ -67,9 +67,9 @@ describe('Reset Password', () => {
         'content-type': 'application/json',
         'session-token': 'storedSessionToken'
       }
-      var payload = JSON.stringify({
+      var payload = {
         'Password': 'MyNewPassword!'
-      })
+      }
       var called = stubbedApiPut.withArgs(endpoint, headers, payload).calledOnce
       expect(called).toBeTruthy()
     })

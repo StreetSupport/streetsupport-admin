@@ -67,9 +67,9 @@ describe('Add Service Provider', () => {
         'content-type': 'application/json',
         'session-token': 'stored-session-token'
       }
-      var payload = JSON.stringify({
+      var payload = {
         'Name': 'New Service Provider'
-      })
+      }
       var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, headers, payload).calledOnce
       expect(apiCalledWithExpectedArgs).toBeTruthy()
     })

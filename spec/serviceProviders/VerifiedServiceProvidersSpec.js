@@ -89,9 +89,9 @@ describe('VerifiedServiceProviders', () => {
 
     it('should send inverse of current isVerified to api', () => {
       var endpoint = endpoints.getServiceProviders + '/albert-kennedy-trust/is-verified'
-      var payload = JSON.stringify({
+      var payload = {
         'IsVerified': false
-      })
+      }
       var headers = {
         'content-type': 'application/json',
         'session-token': 'stored-session-token'
