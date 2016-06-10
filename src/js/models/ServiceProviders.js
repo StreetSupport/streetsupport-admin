@@ -52,9 +52,9 @@ function DashboardModel () {
   self.toggleVerified = function (serviceProvider, event) {
     ajax.put(self.endpointBuilder.serviceProviders(serviceProvider.key).build() + '/is-verified',
       self.headers(cookies.get('session-token')),
-      JSON.stringify({
+      {
         'IsVerified': !serviceProvider.isVerified()
-      })
+      }
     )
     .then(function (result) {
       self.updateServiceProvider(serviceProvider, self.invertVerification)
@@ -71,9 +71,9 @@ function DashboardModel () {
   self.togglePublished = function (serviceProvider, event) {
     ajax.put(self.endpointBuilder.serviceProviders(serviceProvider.key).build() + '/is-published',
       self.headers(cookies.get('session-token')),
-      JSON.stringify({
+      {
         'IsPublished': !serviceProvider.isPublished()
-      })
+      }
     )
     .then(function (result) {
       self.updateServiceProvider(serviceProvider, self.invertPublished)
