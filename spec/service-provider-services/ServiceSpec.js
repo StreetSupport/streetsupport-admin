@@ -102,8 +102,9 @@ describe('Service', () => {
           'content-type': 'application/json',
           'session-token': 'stored-session-token'
         }
-        var payload = JSON.stringify({
+        var payload = {
           'Info': 'new info',
+          'LocationDescription': undefined,
           'Tags': ['new tags', 'tag 2'],
           'OpeningTimes': [{
             'StartTime': '09:00',
@@ -122,7 +123,7 @@ describe('Service', () => {
             'City': 'new city',
             'Postcode': 'new postcode'
           }
-        })
+        }
 
         var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, headers, payload).calledOnce
         expect(apiCalledWithExpectedArgs).toBeTruthy()
@@ -183,8 +184,9 @@ describe('Service', () => {
           'content-type': 'application/json',
           'session-token': 'stored-session-token'
         }
-        var payload = JSON.stringify({
+        var payload = {
           'Info': 'Breakfast',
+          'LocationDescription': undefined,
           'Tags': [],
           'OpeningTimes': [{
             'StartTime': '09:00',
@@ -203,7 +205,7 @@ describe('Service', () => {
             'City': 'Manchester',
             'Postcode': 'M3 1FU'
           }
-        })
+        }
 
         var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, headers, payload).calledOnce
         expect(apiCalledWithExpectedArgs).toBeTruthy()
