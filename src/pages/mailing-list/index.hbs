@@ -31,6 +31,7 @@ nosubnav: true
             <th>Type</th>
             <th>Name</th>
             <th>Email</th>
+            <th>Join Date</th>
           </tr>
         </thead>
         <tbody data-bind="template: { name: 'members-tmpl', foreach: members }"></tbody>
@@ -45,5 +46,6 @@ nosubnav: true
     <td data-bind="text: type"></td>
     <td data-bind="html: name"></td>
     <td data-bind="text: email"></td>
+    <td data-bind="text: joinDate"></td>
   </tr>
 </script>
