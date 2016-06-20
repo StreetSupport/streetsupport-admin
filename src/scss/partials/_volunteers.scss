@@ -1,3 +1,57 @@
 .volunteer {
   border-bottom: 1px solid #ccc;
+  margin-bottom: 20px;
+  position: relative;
+  padding: 20px;
+
+  &--highlighted {
+    background: rgba(255,162,0, 0.5)
+  }
+
+  &__header {
+    @include cf();
+  }
+
+  &__heading {
+    float: left;
+    margin: 0;
+  }
+
+  &__contact-btn {
+    position: absolute;
+    z-index: 200;
+    margin-top: 0;
+    right: 20px;
+    bottom: 0;
+    @include mq($from: m) {
+      margin: 0;
+      bottom: 30px;
+    }
+  }
+
+  &__details-list {
+    @include cf();
+    margin-bottom: 10px;
+  }
+}
+
+.highlight-item {
+
+  &__label {
+    top: 0px;
+    left: 0px;
+    z-index: 100;
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 100%;
+    text-align: right;
+    padding: 26px 3em 0 0;
+  }
+
+  &__checkbox {
+    position: absolute;
+    right: 20px;
+    top: 28px;
+  }
 }

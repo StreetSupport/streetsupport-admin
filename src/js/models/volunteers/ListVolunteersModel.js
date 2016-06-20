@@ -8,46 +8,91 @@ var BaseViewModel = require('../BaseViewModel')
 var ko = require('knockout')
 var moment = require('moment')
 
+let Volunteer = function (data) {
+  let self = this
+  self.id = data.id
+  self.person = {
+    firstName: data.person.firstName,
+    lastName: data.person.lastName,
+    email: data.person.email,
+    telephone: data.person.telephone,
+    postcode: data.person.postcode
+  }
+  self.skillsAndExperience = {
+    description: data.skillsAndExperience.description
+  }
+  self.availability = {
+    description: data.availability.description
+  }
+  self.resources = {
+    description: data.resources.description
+  }
+
+  self.contactUrl = adminUrls.contactVolunteer + '?id=' + data.id
+  self.creationDate = moment(data.creationDate).format('DD/MM/YY')
+  self.isHighlighted = ko.observable(false)
+  self.highlighted = ko.computed(() => {
+    return self.isHighlighted()
+      ? 'volunteer volunteer--highlighted'
+      : 'volunteer'
+  }, self)
+}
+
 var ListVolunteersModel = function () {
   var self = this
 
   self.allVolunteers = ko.observableArray()
   self.volunteers = ko.observableArray()
   self.searchTerm = ko.observable()
+  self.isFilteredByHighlighted = ko.observable(false)
 
   self.search = () => {
-    let filtered = self.allVolunteers()
-    if (self.searchTerm().length > 2) {
+    if (self.searchTerm() === undefined || self.searchTerm().length < 3) {
+      self.volunteers(self.allVolunteers())
+    } else {
       let terms = self.searchTerm()
         .split(',')
         .map((t) => t.trim())
 
-      filtered = self.allVolunteers().filter((v) => {
-        let searchedFields = [
-          v.person.firstName,
-          v.person.lastName,
-          v.person.email,
-          v.person.telephone,
-          v.person.postcode,
-          v.skillsAndExperience.description,
-          v.availability.description,
-          v.resources.description
-        ]
+      let filtered = self.allVolunteers()
+        .filter((v) => {
+          let searchedFields = [
+            v.person.firstName,
+            v.person.lastName,
+            v.person.email,
+            v.person.telephone,
+            v.person.postcode,
+            v.skillsAndExperience.description,
+            v.availability.description,
+            v.resources.description
+          ]
 
-        let match = (field, searchTerm) => {
-          return field.toLowerCase().indexOf(searchTerm.toLowerCase()) >= 0
-        }
+          let match = (field, searchTerm) => {
+            return field.toLowerCase().indexOf(searchTerm.toLowerCase()) >= 0
+          }
 
-        for (let t of terms) {
-          if (searchedFields.filter((f) => match(f, t)).length > 0) return true
-        }
-        return false
-      })
+          for (let t of terms) {
+            if (searchedFields.filter((f) => match(f, t)).length > 0) return true
+          }
+          return false
+        })
+      self.volunteers(filtered)
     }
-    self.volunteers(filtered)
   }
 
   self.searchTerm.subscribe(() => self.search())
+
+  self.filterByHighlighted = () => {
+    if (self.isFilteredByHighlighted()) {
+      const filtered = self.volunteers()
+        .filter((v) => v.isHighlighted() === true)
+      self.volunteers(filtered)
+    } else {
+      self.search()
+    }
+  }
+
+  self.isFilteredByHighlighted.subscribe(() => self.filterByHighlighted(), self)
 
   self.init = () => {
     browser.loading()
@@ -64,11 +109,8 @@ var ListVolunteersModel = function () {
             if (a.creationDate > b.creationDate) return -1
             return 0
           })
+          .map((v) => new Volunteer(v))
 
-        volunteers.forEach((v) => {
-          v.contactUrl = adminUrls.contactVolunteer + '?id=' + v.id
-          v.creationDate = moment(v.creationDate).format('DD/MM/YY')
-        })
         self.allVolunteers(volunteers)
         self.volunteers(volunteers)
         browser.loaded()
