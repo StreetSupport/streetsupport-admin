@@ -65,6 +65,11 @@ describe('List Members', () => {
     expect(model.members().length).toEqual(3)
   })
 
+  it('- Should order members date descending', () => {
+    expect(model.members()[0].creationDateTime()).toBeGreaterThan(model.members()[1].creationDateTime())
+    expect(model.members()[1].creationDateTime()).toBeGreaterThan(model.members()[2].creationDateTime())
+  })
+
   it('- Should map id', () => {
     expect(model.members()[1].id()).toEqual('572a1a78d421fb12a436b5d5')
   })
@@ -79,6 +84,10 @@ describe('List Members', () => {
 
   it('- Should map email', () => {
     expect(model.members()[1].email()).toEqual('trevor@bofimble.eu')
+  })
+
+  it('- Should map and format creation date', () => {
+    expect(model.members()[1].joinDate()).toEqual('05/04/16')
   })
 
   it('- Should get unique list of member types', () => {
@@ -111,22 +120,25 @@ describe('List Members', () => {
 
 const getData = () => {
   return [{
+    'id': '572a69b3ae21fa0fe41a0eb2',
+    'firstName': 'Ellie ',
+    'lastName': 'BoBimble',
+    'email': 'eleanor@btinternet.com',
+    'memberType': 'CharterSignee',
+    'creationDateTime': '2016-05-05T12:37:47.2740000Z'
+  }, {
     'id': '5729f5c4d421fa0cc0dd74a0',
     'firstName': 'Vincent',
     'lastName': 'Test',
     'email': 'test@gmail.com',
-    'memberType': 'CharterSignee'
+    'memberType': 'CharterSignee',
+    'creationDateTime': '2016-03-05T12:37:47.2740000Z'
   }, {
     'id': '572a1a78d421fb12a436b5d5',
     'firstName': 'Trevor',
     'lastName': 'BoFimble',
     'email': 'trevor@bofimble.eu',
-    'memberType': 'Volunteer'
-  }, {
-    'id': '572a69b3ae21fa0fe41a0eb2',
-    'firstName': 'Ellie ',
-    'lastName': 'BoBimble',
-    'email': 'eleanor@btinternet.com',
-    'memberType': 'CharterSignee'
+    'memberType': 'Volunteer',
+    'creationDateTime': '2016-04-05T12:37:47.2740000Z'
   }]
 }
