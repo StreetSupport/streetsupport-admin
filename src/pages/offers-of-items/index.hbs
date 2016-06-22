@@ -1,0 +1,66 @@
+---
+title: Offers - Street Support Admin
+description: Street Support - Making it easier to help homeless people in Manchester
+layout: default.hbs
+permalink: false
+jsBundle: offersOfItems
+page: offersOfItems
+nosubnav: true
+---
+
+<div class="block block--highlight admin-header">
+  <div class="container block__inner">
+    <header>
+    <h1>Offers</h1>
+    <!-- ko template: { name: 'search' } --><!-- /ko -->
+    </header>
+  </div>
+</div>
+<div class="block block--main-body">
+  <div class="container block__inner">
+    <div class="block__content">
+      <div data-bind="foreach: offers">
+        <!-- ko template: { name: 'volunteer' } --><!-- /ko -->
+      </div>
+    </div>
+  </div>
+</div>
+{{> loading-spinner}}
+
+<script type="text/html" id="search">
+<div class="form__field-item form__field-item--full-width">
+  <label for="search" class="form__label">Search</label>
+  <input type="text" data-bind="textInput: searchTerm, onkeyup: search" class="form__input form__input--medium" />
+</div>
+<div class="form__field-item form__field-item--full-width">
+  <label for="filter" class="form__label form__label--checkbox">Only show highlighted</label>
+  <input type="checkbox" id="filter" data-bind="checked: isFilteredByHighlighted" />
+</div>
+</script>
+
+<script type="text/html" id="volunteer">
+  <article data-bind="css: highlighted">
+    <header class="volunteer__header">
+      <div class="highlight-item">
+        <label class="highlight-item__label" data-bind="attr: { for: id }">Highlight</label>
+        <input class="highlight-item__checkbox" type="checkbox" data-bind="checked: isHighlighted, attr: { id: id }" />
+      </div>
+      <h1 class="h2 volunteer__heading"><span data-bind="html:person.firstName"></span> <span data-bind="html:person.lastName"></span></h1>
+    </header>
+    <dl class="key-value-pair volunteer__details-list">
+      <dt class="key-value-pair__key">Description</dt>
+      <dd class="key-value-pair__value" data-bind="html:description"></dd>
+      <dt class="key-value-pair__key">Additional Info</dt>
+      <dd class="key-value-pair__value" data-bind="html:additionalInfo"></dd>
+      <dt class="key-value-pair__key">Postcode</dt>
+      <dd class="key-value-pair__value" data-bind="text:person.postcode"></dd>
+      <dt class="key-value-pair__key">Posted on</dt>
+      <dd class="key-value-pair__value" data-bind="text:creationDate"></dd>
+      <dt class="key-value-pair__key">Email</dt>
+      <dd class="key-value-pair__value" data-bind="text:person.email"></dd>
+      <dt class="key-value-pair__key">Telephone</dt>
+      <dd class="key-value-pair__value" data-bind="text:person.telephone"></dd>
+    </dl>
+    <a data-bind="attr: { href: contactUrl }" class="btn btn--primary volunteer__contact-btn"><span class="btn__text">Contact</span></a>
+  </article>
+</script>

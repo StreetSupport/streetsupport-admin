@@ -42,6 +42,7 @@ module.exports = {
     charterPledges: p('charter-pledges'),
     actionGroups: p('action-groups'),
     volunteers: p('volunteers'),
+    offersOfItems: p('offers-of-items'),
     contactVolunteer: p('contact-volunteer'),
     mailingList: p('mailing-list')
   },
