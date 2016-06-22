@@ -5,12 +5,15 @@ const browser = require('../../browser')
 const cookies = require('../../cookies')
 const BaseViewModel = require('../BaseViewModel')
 const ko = require('knockout')
+const moment = require('moment')
 
 function Member (data) {
   this.id = ko.observable(data.id)
   this.name = ko.observable(data.firstName + ' ' + data.lastName)
   this.email = ko.observable(data.email)
   this.type = ko.observable(data.memberType)
+  this.creationDateTime = ko.observable(data.creationDateTime)
+  this.joinDate = ko.observable(moment(data.creationDateTime).format('DD/MM/YY'))
 }
 
 function ListMembers () {
@@ -49,7 +52,14 @@ function ListMembers () {
     ajax
       .get(endpoint, headers)
       .then(function (result) {
-        self.allMembers(result.data.map((m) => new Member(m)))
+        const members = result.data
+          .map((m) => new Member(m))
+          .sort((a, b) => {
+            if (a.creationDateTime() < b.creationDateTime()) return 1
+            if (b.creationDateTime() > a.creationDateTime()) return -1
+            return 0
+          })
+        self.allMembers(members)
         self.members(self.allMembers())
         self.memberTypes(getUniqueMemberTypes(result.data))
         browser.loaded()
