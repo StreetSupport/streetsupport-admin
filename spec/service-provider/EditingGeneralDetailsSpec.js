@@ -68,11 +68,11 @@ describe('Edit Service Provider General Details', () => {
 
       model.serviceProvider().description('new description')
       model.serviceProvider().shortDescription('new short description')
-      model.serviceProvider().isTagA(true)
-      model.serviceProvider().isTagB(true)
-      model.serviceProvider().isTagC(true)
-      model.serviceProvider().isTagD(false)
-      model.serviceProvider().isTagE(false)
+      model.serviceProvider().tags()[0].isSelected(true)
+      model.serviceProvider().tags()[1].isSelected(true)
+      model.serviceProvider().tags()[2].isSelected(true)
+      model.serviceProvider().tags()[3].isSelected(false)
+      model.serviceProvider().tags()[4].isSelected(false)
 
       model.saveGeneralDetails()
     })

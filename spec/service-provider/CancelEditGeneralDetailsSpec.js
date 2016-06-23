@@ -9,6 +9,7 @@ const ajax = require('../../src/js/ajax')
 const browser = require('../../src/js/browser')
 const cookies = require('../../src/js/cookies')
 const getUrlParameter = require('../../src/js/get-url-parameter')
+const spTags = require('../../src/js/serviceProviderTags')
 
 describe('Cancel Edit Service Provider General Details', () => {
   const Model = require('../../src/js/models/ServiceProvider')
@@ -29,11 +30,14 @@ describe('Cancel Edit Service Provider General Details', () => {
     sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
     sinon.stub(browser, 'loading')
     sinon.stub(browser, 'loaded')
+    sinon.stub(spTags, 'all').returns(['Tag A', 'Tag B', 'Tag C', 'Tag D', 'Tag E'])
 
     model = new Model()
     model.editGeneralDetails()
 
+    model.serviceProvider().shortDescription('some new short description')
     model.serviceProvider().description('some new description')
+    model.serviceProvider().tags()[0].isSelected(false)
 
     model.cancelEditGeneralDetails()
   })
@@ -44,14 +48,27 @@ describe('Cancel Edit Service Provider General Details', () => {
     getUrlParameter.parameter.restore()
     browser.loading.restore()
     browser.loaded.restore()
+    spTags.all.restore()
   })
 
   it('should reset isEditingGeneralDetails to false', () => {
     expect(model.isEditingGeneralDetails()).toBeFalsy()
   })
 
+  it('should restore short description to its previous value', () => {
+    expect(model.serviceProvider().shortDescription()).toEqual('initial short description')
+  })
+
   it('should restore description to its previous value', () => {
     expect(model.serviceProvider().description()).toEqual('initial description')
+  })
+
+  it('should restore tags to previous values', () => {
+    expect(model.serviceProvider().tags()[0].isSelected()).toBeTruthy()
+    expect(model.serviceProvider().tags()[1].isSelected()).toBeFalsy()
+    expect(model.serviceProvider().tags()[2].isSelected()).toBeTruthy()
+    expect(model.serviceProvider().tags()[3].isSelected()).toBeTruthy()
+    expect(model.serviceProvider().tags()[4].isSelected()).toBeFalsy()
   })
 })
 
@@ -59,8 +76,10 @@ const coffee4Craig = () => {
   return {
     'key': 'coffee4craig',
     'name': 'Coffee 4 Craig',
+    'shortDescription': 'initial short description',
     'description': 'initial description',
     'addresses': [],
-    'providedServices': []
+    'providedServices': [],
+    'tags': ['tag-a', 'tag-c', 'tag-d']
   }
 }

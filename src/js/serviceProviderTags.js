@@ -9,9 +9,6 @@ function all () {
 function urlEncoded (t) {
   return t.replace(/ /g, '-').toLowerCase()
 }
-function tagFlag (t) {
-  return 'is' + t.replace(/ /g, '')
-}
 function isTagged (selectedTags, t) {
   return selectedTags !== undefined &&
   selectedTags.indexOf(urlEncoded(t)) >= 0
@@ -19,7 +16,6 @@ function isTagged (selectedTags, t) {
 
 module.exports = {
   all: all,
-  tagFlag: tagFlag,
   isTagged: isTagged,
   urlEncoded: urlEncoded
 }

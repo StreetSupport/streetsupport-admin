@@ -98,15 +98,20 @@ describe('Show Service Provider', () => {
   })
 
   it('- Should have initial collection of available tags', () => {
-    expect(Object.keys(model.allTags).length).toEqual(5)
+    expect(Object.keys(model.serviceProvider().tags()).length).toEqual(5)
+    expect(model.serviceProvider().tags()[0].name).toEqual('Tag A')
+    expect(model.serviceProvider().tags()[1].name).toEqual('Tag B')
+    expect(model.serviceProvider().tags()[2].name).toEqual('Tag C')
+    expect(model.serviceProvider().tags()[3].name).toEqual('Tag D')
+    expect(model.serviceProvider().tags()[4].name).toEqual('Tag E')
   })
 
   it('- Should set flags for each available tag', () => {
-    expect(model.serviceProvider().isTagA()).toBeTruthy()
-    expect(model.serviceProvider().isTagB()).toBeFalsy()
-    expect(model.serviceProvider().isTagC()).toBeTruthy()
-    expect(model.serviceProvider().isTagD()).toBeTruthy()
-    expect(model.serviceProvider().isTagE()).toBeFalsy()
+    expect(model.serviceProvider().tags()[0].isSelected()).toBeTruthy()
+    expect(model.serviceProvider().tags()[1].isSelected()).toBeFalsy()
+    expect(model.serviceProvider().tags()[2].isSelected()).toBeTruthy()
+    expect(model.serviceProvider().tags()[3].isSelected()).toBeTruthy()
+    expect(model.serviceProvider().tags()[4].isSelected()).toBeFalsy()
   })
 })
 

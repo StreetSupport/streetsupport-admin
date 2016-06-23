@@ -27,10 +27,15 @@ function ServiceProvider (data) {
   self.addresses = ko.observableArray(data.addresses.map((a) => new Address(a)))
   self.addresses().forEach((a) => a.addListener(self))
 
-  spTags.all()
-    .forEach((t) => {
-      self[spTags.tagFlag(t)] = ko.observable(spTags.isTagged(data.tags, t))
-    })
+  self.tags = ko.observableArray(
+    spTags.all()
+      .map((t) => {
+        return {
+          name: t,
+          isSelected: ko.observable(spTags.isTagged(data.tags, t))
+        }
+      })
+  )
 
   data.providedServices.forEach((s) => { s.serviceProviderId = data.key })
   self.services = ko.observableArray(data.providedServices.map((s) => new Service(s)))
@@ -85,7 +90,6 @@ function ServiceProviderDetails () {
   self.isEditingGeneralDetails = ko.observable(false)
   self.isEditingContactDetails = ko.observable(false)
   self.message = ko.observable('')
-  self.allTags = spTags.all()
 
   self.init = function () {
     browser.loading()
@@ -118,9 +122,9 @@ function ServiceProviderDetails () {
       const sp = self.serviceProvider()
 
       const tagsToCsv = () => {
-        return spTags.all()
-          .filter((t) => sp[spTags.tagFlag(t)]() === true)
-          .map((m) => spTags.urlEncoded(m))
+        return sp.tags()
+          .filter((t) => t.isSelected() === true)
+          .map((m) => spTags.urlEncoded(m.name))
       }
       const payload = {
         'Description': sp.description(),
@@ -168,8 +172,9 @@ function ServiceProviderDetails () {
   }
 
   self.restoreViewModel = function () {
+    self.serviceProvider().shortDescription(self.initialServiceProvider().shortDescription())
     self.serviceProvider().description(self.initialServiceProvider().description())
-
+    self.serviceProvider().tags(self.initialServiceProvider().tags())
     self.serviceProvider().telephone(self.initialServiceProvider().telephone())
     self.serviceProvider().email(self.initialServiceProvider().email())
     self.serviceProvider().website(self.initialServiceProvider().website())
