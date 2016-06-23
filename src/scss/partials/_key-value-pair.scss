@@ -2,13 +2,6 @@
   @include cf();
   & > * { text-align: left; padding-bottom: 10px; }
 
-  &__key {
-    clear: left;
-    font-weight: bold;
-    @include mq($from: m) {
-      @include span(3 of 12);
-    }
-  }
   &__value {
     margin: 0px;
     overflow: hidden;
@@ -20,6 +13,21 @@
     .split__element--admin-panel & {
       @include mq($from: m) {
         @include span(1 of 1);
+      }
+    }
+  }
+  &__key {
+    clear: left;
+    font-weight: bold;
+    @include mq($from: m) {
+      @include span(6 of 12);
+    }
+
+    &--inline {
+      @include span(6 of 12);
+
+      & + * {
+        width: auto!important;
       }
     }
   }

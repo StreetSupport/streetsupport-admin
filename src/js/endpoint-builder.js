@@ -45,6 +45,11 @@ function EndpointBuilder () {
     return self
   }
 
+  self.offersOfItems = (offerOfItemsId) => {
+    self.updateBaseResource(endpoints.offersOfItems, offerOfItemsId)
+    return self
+  }
+
   self.charterPledges = (pledgeId) => {
     self.updateBaseResource(endpoints.charterPledges, pledgeId)
     return self

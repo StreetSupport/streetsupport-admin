@@ -9,6 +9,7 @@ const ajax = require('../../src/js/ajax')
 const endpoints = require('../../src/js/api-endpoints')
 const browser = require('../../src/js/browser')
 const cookies = require('../../src/js/cookies')
+const spTags = require('../../src/js/serviceProviderTags')
 const getUrlParameter = require('../../src/js/get-url-parameter')
 
 describe('Edit Service Provider General Details', () => {
@@ -30,6 +31,7 @@ describe('Edit Service Provider General Details', () => {
     sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
     sinon.stub(browser, 'loading')
     sinon.stub(browser, 'loaded')
+    sinon.stub(spTags, 'all').returns(['Tag A', 'Tag B', 'Tag C', 'Tag D', 'Tag E'])
 
     model = new Model()
 
@@ -42,6 +44,7 @@ describe('Edit Service Provider General Details', () => {
     getUrlParameter.parameter.restore()
     browser.loaded.restore()
     browser.loading.restore()
+    spTags.all.restore()
   })
 
   it('should set isEditingGeneralDetails to true', () => {
@@ -65,6 +68,11 @@ describe('Edit Service Provider General Details', () => {
 
       model.serviceProvider().description('new description')
       model.serviceProvider().shortDescription('new short description')
+      model.serviceProvider().tags()[0].isSelected(true)
+      model.serviceProvider().tags()[1].isSelected(true)
+      model.serviceProvider().tags()[2].isSelected(true)
+      model.serviceProvider().tags()[3].isSelected(false)
+      model.serviceProvider().tags()[4].isSelected(false)
 
       model.saveGeneralDetails()
     })
@@ -81,7 +89,8 @@ describe('Edit Service Provider General Details', () => {
       }
       var payload = {
         'Description': 'new description',
-        'ShortDescription': 'new short description'
+        'ShortDescription': 'new short description',
+        'Tags': ['tag-a', 'tag-b', 'tag-c']
       }
       var apiCalledWithExpectedArgs = stubbedPutApi.withArgs(endpoint, headers, payload).calledOnce
       expect(apiCalledWithExpectedArgs).toBeTruthy()
@@ -161,6 +170,7 @@ function coffee4Craig () {
     'name': 'Coffee 4 Craig',
     'description': 'initial description',
     'addresses': [],
-    'providedServices': []
+    'providedServices': [],
+    'tags': ['tag-a', 'tag-c', 'tag-d']
   }
 }

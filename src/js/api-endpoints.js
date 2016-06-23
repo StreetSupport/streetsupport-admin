@@ -19,6 +19,7 @@ module.exports = {
   sessions: p('/v1/sessions'),
   resetPassword: p('/v1/reset-password-applications'),
   volunteers: p('/v1/volunteer-enquiries'),
+  offersOfItems: p('/v1/offers-of-items'),
   charterPledges: p('/v1/charter-supporters'),
   actionGroups: p('/v1/action-groups/members'),
   mailingListMembers: p('/v1/mailing-list-members')
