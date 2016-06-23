@@ -9,6 +9,7 @@ var Service = require('./Service')
 var Need = require('./Need')
 var ko = require('knockout')
 var BaseViewModel = require('./BaseViewModel')
+var spTags = require('../serviceProviderTags')
 
 function ServiceProvider (data) {
   var self = this
@@ -25,6 +26,11 @@ function ServiceProvider (data) {
   data.addresses.forEach((a) => { a.serviceProviderId = data.key })
   self.addresses = ko.observableArray(data.addresses.map((a) => new Address(a)))
   self.addresses().forEach((a) => a.addListener(self))
+
+  spTags.all()
+    .forEach((t) => {
+      self[spTags.tagFlag(t)] = ko.observable(spTags.isTagged(data.tags, t))
+    })
 
   data.providedServices.forEach((s) => { s.serviceProviderId = data.key })
   self.services = ko.observableArray(data.providedServices.map((s) => new Service(s)))
@@ -79,6 +85,7 @@ function ServiceProviderDetails () {
   self.isEditingGeneralDetails = ko.observable(false)
   self.isEditingContactDetails = ko.observable(false)
   self.message = ko.observable('')
+  self.allTags = spTags.all()
 
   self.init = function () {
     browser.loading()
@@ -108,12 +115,21 @@ function ServiceProviderDetails () {
 
   self.saveGeneralDetails = function () {
     if (self.isEditingGeneralDetails()) {
+      const sp = self.serviceProvider()
+
+      const tagsToCsv = () => {
+        return spTags.all()
+          .filter((t) => sp[spTags.tagFlag(t)]() === true)
+          .map((m) => spTags.urlEncoded(m))
+      }
+      const payload = {
+        'Description': sp.description(),
+        'ShortDescription': sp.shortDescription(),
+        'Tags': tagsToCsv()
+      }
       ajax.put(self.endpointBuilder.serviceProviders(getUrlParameter.parameter('key')).generalInformation().build(),
         self.headers(cookies.get('session-token')),
-        {
-          'Description': self.serviceProvider().description(),
-          'ShortDescription': self.serviceProvider().shortDescription()
-        }
+        payload
         ).then(function (result) {
           self.clearErrors()
           self.isEditingGeneralDetails(false)

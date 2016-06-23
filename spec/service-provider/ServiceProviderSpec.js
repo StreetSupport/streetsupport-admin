@@ -10,6 +10,7 @@ var endpoints = require('../../src/js/api-endpoints')
 var browser = require('../../src/js/browser')
 var cookies = require('../../src/js/cookies')
 var getUrlParameter = require('../../src/js/get-url-parameter')
+var spTags = require('../../src/js/serviceProviderTags')
 
 describe('Show Service Provider', () => {
   var Model = require('../../src/js/models/ServiceProvider')
@@ -31,6 +32,7 @@ describe('Show Service Provider', () => {
     sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
     sinon.stub(browser, 'loading')
     sinon.stub(browser, 'loaded')
+    sinon.stub(spTags, 'all').returns(['Tag A', 'Tag B', 'Tag C', 'Tag D', 'Tag E'])
 
     model = new Model()
   })
@@ -41,6 +43,7 @@ describe('Show Service Provider', () => {
     getUrlParameter.parameter.restore()
     browser.loading.restore()
     browser.loaded.restore()
+    spTags.all.restore()
   })
 
   it('should retrieve service provider from api with session token', () => {
@@ -92,6 +95,18 @@ describe('Show Service Provider', () => {
 
   it('should set link to manage needs', () => {
     expect(model.serviceProvider().addNeedUrl).toEqual('/add-service-provider-need.html?providerId=coffee4craig')
+  })
+
+  it('- Should have initial collection of available tags', () => {
+    expect(Object.keys(model.allTags).length).toEqual(5)
+  })
+
+  it('- Should set flags for each available tag', () => {
+    expect(model.serviceProvider().isTagA()).toBeTruthy()
+    expect(model.serviceProvider().isTagB()).toBeFalsy()
+    expect(model.serviceProvider().isTagC()).toBeTruthy()
+    expect(model.serviceProvider().isTagD()).toBeTruthy()
+    expect(model.serviceProvider().isTagE()).toBeFalsy()
   })
 })
 
@@ -156,6 +171,7 @@ function coffee4Craig () {
       'id': '56ca227f92855621e8d60318',
       'description': 'some new description.',
       'serviceProviderId': 'coffee4craig'
-    }]
+    }],
+    'tags': ['tag-a', 'tag-c', 'tag-d']
   }
 }
