@@ -31,19 +31,19 @@ nosubnav: true
 
 <script type="text/html" id="serviceProvider-template">
 <article class="stacked-list__item stacked-list__item--service-providers">
-    <header class="stacked-list__header">
-      <h2 class="stacked-list__heading"><a data-bind="attr: { 'href': url, 'title': name }, html: name"></a></h2>
-      <span data-bind="text: verifiedLabel, css: verifiedLabelClass"></span>
-      <span data-bind="text: publishedLabel, css: publishedLabelClass"></span>
-    </header>
-    <button data-bind="click: $parent.toggleVerified" class="stacked-list__button btn btn--info">
-      <span data-bind="text: toggleVerificationButtonLabel" class="btn__text btn__text--dashboard"></span>
-    </button>
-    <button data-bind="click: $parent.togglePublished" class="stacked-list__button btn btn--info">
-      <span data-bind="text: togglePublishButtonLabel" class="btn__text btn__text--dashboard"></span>
-    </button>
-    <a data-bind="attr: { href: newUserUrl }" class="stacked-list__button btn btn--primary">
-      <span class="btn__text btn__text--dashboard">New User</span>
-    </a>
+  <header class="stacked-list__header">
+    <h2 class="stacked-list__heading"><a data-bind="attr: { 'href': url, 'title': name }, html: name"></a></h2>
+    <span data-bind="text: verifiedLabel, css: verifiedLabelClass"></span>
+    <span data-bind="text: publishedLabel, css: publishedLabelClass"></span>
+  </header>
+  <button data-bind="click: $parent.toggleVerified" class="stacked-list__button btn btn--info">
+    <span data-bind="text: toggleVerificationButtonLabel" class="btn__text btn__text--dashboard"></span>
+  </button>
+  <button data-bind="click: $parent.togglePublished" class="stacked-list__button btn btn--info">
+    <span data-bind="text: togglePublishButtonLabel" class="btn__text btn__text--dashboard"></span>
+  </button>
+  <a data-bind="attr: { href: newUserUrl }" class="stacked-list__button btn btn--primary">
+    <span class="btn__text btn__text--dashboard">New User</span>
+  </a>
 </article>
 </script>
