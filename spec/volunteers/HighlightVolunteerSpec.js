@@ -9,9 +9,9 @@ var ajax = require('../../src/js/ajax')
 var endpoints = require('../../src/js/api-endpoints')
 var browser = require('../../src/js/browser')
 var cookies = require('../../src/js/cookies')
-var Model = require('../../src/js/models/offers-of-items/ListModel')
+var Model = require('../../src/js/models/volunteers/ListVolunteersModel')
 
-describe('Highlight Offers', () => {
+describe('Highlight Volunteers', () => {
   var model
   var headers = {
     'content-type': 'application/json',
@@ -19,18 +19,20 @@ describe('Highlight Offers', () => {
   }
 
   beforeEach(() => {
-    var getPromise = {
-      then: function (success, error) {
-        success({
-          'status': 'ok',
-          'data': getData()
-        })
+    var getVolunteersPromise = () => {
+      return {
+        then: function (success, error) {
+          success({
+            'status': 'ok',
+            'data': volunteerData()
+          })
+        }
       }
     }
 
     sinon.stub(ajax, 'get')
-      .withArgs(endpoints.offersOfItems, headers)
-      .returns(getPromise)
+      .withArgs(endpoints.volunteers, headers)
+      .returns(getVolunteersPromise())
 
     sinon.stub(cookies, 'get')
       .withArgs('session-token')
@@ -40,8 +42,8 @@ describe('Highlight Offers', () => {
     sinon.stub(browser, 'loaded')
 
     model = new Model()
-    model.offers()[1].isHighlighted(true)
-    model.offers()[2].isHighlighted(true)
+    model.volunteers()[1].isHighlighted(true)
+    model.volunteers()[3].isHighlighted(true)
     model.filterByHighlighted()
   })
 
@@ -53,8 +55,8 @@ describe('Highlight Offers', () => {
   })
 
   it('- Should set volunteer class as highlighted', () => {
-    expect(model.offers()[1].highlighted()).toEqual('volunteer volunteer--highlighted')
-    expect(model.offers()[2].highlighted()).toEqual('volunteer volunteer--highlighted')
+    expect(model.volunteers()[1].highlighted()).toEqual('volunteer volunteer--highlighted')
+    expect(model.volunteers()[3].highlighted()).toEqual('volunteer volunteer--highlighted')
   })
 
   describe('- Filter', () => {
@@ -63,7 +65,7 @@ describe('Highlight Offers', () => {
     })
 
     it('- Should filter results by those highlighted', () => {
-      expect(model.offers().length).toEqual(2)
+      expect(model.volunteers().length).toEqual(2)
     })
 
     describe('- Then Un-filter', () => {
@@ -74,58 +76,98 @@ describe('Highlight Offers', () => {
       })
 
       it('- Should show all again', () => {
-        expect(model.offers().length).toEqual(getData().length)
+        expect(model.volunteers().length).toEqual(4)
       })
     })
   })
 
-  describe('- Un-highlight offer', () => {
+  describe('- Un-highlight volunteer', () => {
     beforeEach(() => {
-      model.offers()[1].isHighlighted(false)
+      model.volunteers()[1].isHighlighted(false)
     })
 
     it('- Should reset volunteer class', () => {
-      expect(model.offers()[1].highlighted()).toEqual('volunteer')
+      expect(model.volunteers()[1].highlighted()).toEqual('volunteer')
     })
   })
 })
 
-var getData = () => {
+var volunteerData = () => {
   return [{
-    'id': '56f2867701ad122cd0eb5b2f',
+    'id': 'js',
     'person': {
       'firstName': 'Jon',
       'lastName': 'Snow',
-      'telephone': 'js_telephone',
-      'email': 'jon.snow@nightswatch.com',
-      'postcode': 'castle-black'
+      'telephone': 'js_tel',
+      'email': 'jon.snow@nightswatch.net',
+      'postcode': 'the wall'
     },
-    'description': 'ice, lots of ice',
-    'additionalInfo': 'may be traces of ginger',
+    'skillsAndExperience': {
+      'description': 'knowing nothing'
+    },
+    'availability': {
+      'description': 'when not looking after sam'
+    },
+    'resources': {
+      'description': 'longclaw, sword of mormont'
+    },
     'creationDate': '2016-03-23T12:05:11.0420000Z'
   }, {
-    'id': '571dd1fcd021fb2890259127',
+    'id': 'rs',
     'person': {
-      'firstName': 'Robert',
-      'lastName': 'Baratheon',
-      'telephone': 'rb_telephone',
-      'email': 'robbo@baratheon.com',
-      'postcode': 'M3 4BD'
+      'firstName': 'Robb',
+      'lastName': 'Stark',
+      'telephone': 'rs_tel',
+      'email': 'robb.stark@winterfell.com',
+      'postcode': 'great keep'
     },
-    'description': 'description A',
-    'additionalInfo': 'additional information A',
-    'creationDate': '2016-04-25T08:14:52.7170000Z'
+    'skillsAndExperience': {
+      'description': 'war'
+    },
+    'availability': {
+      'description': 'when not avenging his father'
+    },
+    'resources': {
+      'description': 'ice, sword of winterfell'
+    },
+    'creationDate': '2016-03-23T12:05:11.0420000Z'
   }, {
-    'id': '570542130a4f951fb8abe4b9',
+    'id': 'ss',
     'person': {
       'firstName': 'Sansa',
       'lastName': 'Stark',
-      'telephone': 'ss_telephone',
-      'email': 'sansa@winterfell.com',
-      'postcode': 'the-eyrie'
+      'telephone': 'ss_tel',
+      'email': 'sansa.stark@winterfell.com',
+      'postcode': 'redkeep'
     },
-    'description': 'description A',
-    'additionalInfo': 'additional information A',
-    'creationDate': '2016-04-06T17:06:27.1830000Z'
+    'skillsAndExperience': {
+      'description': 'having a thoroughly bad time'
+    },
+    'availability': {
+      'description': 'when not being abused'
+    },
+    'resources': {
+      'description': 'hope'
+    },
+    'creationDate': '2016-03-23T12:05:11.0420000Z'
+  }, {
+    'id': 'rb',
+    'person': {
+      'firstName': 'Robert',
+      'lastName': 'Baratheon',
+      'telephone': 'rb_tel',
+      'email': 'robert.baratheon@kingslanding.com',
+      'postcode': 'redkeep'
+    },
+    'skillsAndExperience': {
+      'description': 'eating and whoring'
+    },
+    'availability': {
+      'description': 'when not eating and whoring'
+    },
+    'resources': {
+      'description': 'endless wine'
+    },
+    'creationDate': '2016-03-23T12:05:11.0420000Z'
   }]
 }
