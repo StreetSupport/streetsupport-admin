@@ -20,7 +20,7 @@ nosubnav: true
     <div class="block__content form">
       {{> form-feedback}}
       <article>
-        <section>
+        <section class="block__section">
           <h3>Category</h3>
           <dl class="key-value-pair">
             <dt class="key-value-pair__key">Category</dt>
@@ -43,12 +43,12 @@ nosubnav: true
             </ul>
           </dd>
         </section>
-        <section>
+        <section class="block__section">
           <h3>Service Details</h3>
           <dl>
             <dt class="key-value-pair__key">Description</dt>
             <dd class="key-value-pair__value">
-              <textarea data-bind="textInput: info" class="form__input--textarea"></textarea>
+              <textarea data-bind="textInput: info" class="form__input form__input--multiline"></textarea>
             </dd>
             <dt class="key-value-pair__key">Target Audience - eg: "lgbt, under 25s"</dt>
             <dd class="key-value-pair__value">
@@ -56,13 +56,13 @@ nosubnav: true
             </dd>
           </dl>
         </section>
-        <section>
+        <section class="block__section">
           <h3>Location</h3>
 	        <p>Enter a location for this service, either by selecting an existing address, or entering new details. For outreach services with no fixed address, enter a description in the field below.</p>
           <dl class="key-value-pair">
             <dt class="key-value-pair__key">Outreach Locations Description</dt>
             <dd class="key-value-pair__value">
-              <textarea data-bind="textInput: locationDescription" class="form__input--textarea"></textarea>
+              <textarea data-bind="textInput: locationDescription" class="form__input form__input--multiline"></textarea>
             </dd>
           </dl>
           <h3>Use Existing Address</h3>
@@ -79,10 +79,10 @@ nosubnav: true
             </dd>
           </dl>
         </section>
-        <div data-bind="with: address" />
+        <section data-bind="with: address" />
           {{> address}}
           {{> opening-times}}
-        </div>
+        </section>
         <button data-bind="click: save" class="btn btn--primary"><span class="btn__text">save</span></button>
       </article>
     </div>

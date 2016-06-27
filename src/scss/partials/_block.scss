@@ -23,6 +23,10 @@
     color: $brand-d;
   }
 
+  &__section {
+    @include cf();
+  }
+
   &__content {
     @include cf();
 

@@ -9,6 +9,7 @@ var Service = require('./Service')
 var Need = require('./Need')
 var ko = require('knockout')
 var BaseViewModel = require('./BaseViewModel')
+var spTags = require('../serviceProviderTags')
 
 function ServiceProvider (data) {
   var self = this
@@ -25,6 +26,16 @@ function ServiceProvider (data) {
   data.addresses.forEach((a) => { a.serviceProviderId = data.key })
   self.addresses = ko.observableArray(data.addresses.map((a) => new Address(a)))
   self.addresses().forEach((a) => a.addListener(self))
+
+  self.tags = ko.observableArray(
+    spTags.all()
+      .map((t) => {
+        return {
+          name: t,
+          isSelected: ko.observable(spTags.isTagged(data.tags, t))
+        }
+      })
+  )
 
   data.providedServices.forEach((s) => { s.serviceProviderId = data.key })
   self.services = ko.observableArray(data.providedServices.map((s) => new Service(s)))
@@ -108,12 +119,21 @@ function ServiceProviderDetails () {
 
   self.saveGeneralDetails = function () {
     if (self.isEditingGeneralDetails()) {
+      const sp = self.serviceProvider()
+
+      const tagsToCsv = () => {
+        return sp.tags()
+          .filter((t) => t.isSelected() === true)
+          .map((m) => spTags.urlEncoded(m.name))
+      }
+      const payload = {
+        'Description': sp.description(),
+        'ShortDescription': sp.shortDescription(),
+        'Tags': tagsToCsv()
+      }
       ajax.put(self.endpointBuilder.serviceProviders(getUrlParameter.parameter('key')).generalInformation().build(),
         self.headers(cookies.get('session-token')),
-        {
-          'Description': self.serviceProvider().description(),
-          'ShortDescription': self.serviceProvider().shortDescription()
-        }
+        payload
         ).then(function (result) {
           self.clearErrors()
           self.isEditingGeneralDetails(false)
@@ -152,8 +172,9 @@ function ServiceProviderDetails () {
   }
 
   self.restoreViewModel = function () {
+    self.serviceProvider().shortDescription(self.initialServiceProvider().shortDescription())
     self.serviceProvider().description(self.initialServiceProvider().description())
-
+    self.serviceProvider().tags(self.initialServiceProvider().tags())
     self.serviceProvider().telephone(self.initialServiceProvider().telephone())
     self.serviceProvider().email(self.initialServiceProvider().email())
     self.serviceProvider().website(self.initialServiceProvider().website())

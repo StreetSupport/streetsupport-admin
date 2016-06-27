@@ -54,6 +54,20 @@ nosubnav: true
                 <textarea data-bind="textInput: description" class="form__input form__input--textarea" rows="7"></textarea>
                 <!-- /ko -->
               </dd>
+              <dt class="key-value-pair__key">Tags</dt>
+              <dd class="key-value-pair__value">
+                <dl class="key-value-pair" data-bind="foreach: tags">
+                  <dt class="key-value-pair__key key-value-pair__key--inline" data-bind="text: name"></dt>
+                  <!-- ko ifnot: $root.isEditingGeneralDetails -->
+                  <dd class="key-value-pair__value" data-bind="text: isSelected"></dd>
+                  <!-- /ko -->
+                  <!-- ko if: $root.isEditingGeneralDetails -->
+                  <dd class="key-value-pair__value">
+                    <input type="checkbox" data-bind="checked: isSelected" />
+                  </dd>
+                  <!-- /ko -->
+                </dl>
+              </dd>
             </dl>
           </section>
 
