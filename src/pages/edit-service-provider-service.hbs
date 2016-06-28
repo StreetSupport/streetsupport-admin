@@ -8,7 +8,7 @@ page: editServiceProviderService
 nosubnav: true
 ---
 
-<div class="block block--highlight">
+<div class="block block--highlight admin-header">
   <div class="container block__inner">
     <header>
       <h1>Edit Service</h1>
@@ -25,7 +25,7 @@ nosubnav: true
           <dl class="key-value-pair">
             <dt class="key-value-pair__key">Description</dt>
             <dd class="key-value-pair__value">
-              <textarea data-bind="textInput: info" class="form__input--textarea"></textarea>
+              <textarea data-bind="textInput: info" class="form__input form__input--multiline"></textarea>
             </dd>
             <dt class="key-value-pair__key">Target Audience</dt>
             <dd class="key-value-pair__value">
@@ -38,7 +38,7 @@ nosubnav: true
           <dl>
             <dt class="key-value-pair__key">Location</dt>
             <dd class="key-value-pair__value">
-              <textarea data-bind="textInput: locationDescription" class="form__input--textarea"></textarea>
+              <textarea data-bind="textInput: locationDescription" class="form__input form__input--multiline"></textarea>
             </dd>
           </dl>
         </section>
