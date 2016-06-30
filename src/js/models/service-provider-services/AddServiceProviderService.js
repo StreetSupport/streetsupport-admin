@@ -86,9 +86,6 @@ function AddServiceProviderService () {
         'Postcode': self.address().postcode()
       }
 
-      console.log(endpoint)
-      console.log(payload)
-
       ajax.post(endpoint, self.headers(cookies.get('session-token')), payload)
       .then(function (result) {
         browser.redirect(adminUrls.serviceProviders + '?key=' + getUrlParameter.parameter('providerId'))
