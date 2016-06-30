@@ -55,7 +55,7 @@ function AddServiceProviderService () {
     self.address(address)
   }
 
-  self.save = function () {
+  self.saveService = function () {
     var endpoint = self.endpointBuilder.serviceProviders(getUrlParameter.parameter('providerId')).services().build()
 
     var tags = []
