@@ -55,7 +55,7 @@ function AddServiceProviderService () {
     self.address(address)
   }
 
-  self.save = function () {
+  self.saveService = function () {
     var endpoint = self.endpointBuilder.serviceProviders(getUrlParameter.parameter('providerId')).services().build()
 
     var tags = []
@@ -85,6 +85,9 @@ function AddServiceProviderService () {
         'City': self.address().city(),
         'Postcode': self.address().postcode()
       }
+
+      console.log(endpoint)
+      console.log(payload)
 
       ajax.post(endpoint, self.headers(cookies.get('session-token')), payload)
       .then(function (result) {
