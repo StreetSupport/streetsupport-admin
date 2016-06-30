@@ -203,7 +203,7 @@ describe('Save new Service', () => {
       model.preselectedAddress(model.addresses()[0])
       model.prefillAddress()
 
-      model.save()
+      model.saveService()
     })
 
     afterEach(() => {

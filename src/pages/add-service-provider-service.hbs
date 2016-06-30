@@ -79,11 +79,11 @@ nosubnav: true
             </dd>
           </dl>
         </section>
-        <section data-bind="with: address" />
+        <section data-bind="with: address">
           {{> address}}
           {{> opening-times}}
         </section>
-        <button data-bind="click: save" class="btn btn--primary"><span class="btn__text">save</span></button>
+        <button data-bind="click: saveService" class="btn btn--primary"><span class="btn__text">save</span></button>
       </article>
     </div>
   </div>
