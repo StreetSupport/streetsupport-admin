@@ -23,9 +23,13 @@ function VerifyUser () {
     ajax
       .post(endpoint, self.headers(cookies.get('session-token')), payload)
       .then(function (result) {
-        self.message('User verified. You can now log in.')
-        self.clearErrors()
-        self.userCreated(true)
+        if (result.statusCode === 201) {
+          self.message('User verified. You can now log in.')
+          self.clearErrors()
+          self.userCreated(true)
+        } else {
+          self.showErrors(result)
+        }
         browser.loaded()
       }, function (error) {
         self.handleError(error)

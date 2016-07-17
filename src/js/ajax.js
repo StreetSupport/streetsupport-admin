@@ -68,6 +68,7 @@ var makeRequest = function (options) {
   }
 
   req.onload = function () {
+    console.log(this)
     if (this.status === 201) {
       deferred.resolve({
         'status': 'created',
@@ -77,6 +78,12 @@ var makeRequest = function (options) {
     } else if (this.status === 200) {
       deferred.resolve({
         'status': 'ok',
+        'statusCode': this.status,
+        'data': parseResponseText(this)
+      })
+    } else if (this.status === 400) {
+      deferred.resolve({
+        'status': 'badrequest',
         'statusCode': this.status,
         'data': parseResponseText(this)
       })
