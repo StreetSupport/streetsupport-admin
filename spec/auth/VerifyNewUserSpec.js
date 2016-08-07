@@ -31,12 +31,12 @@ describe('Verify New User', () => {
   })
 
   describe('Save', () => {
-    var stubbedApi
+    let stubbedApi = null
     beforeEach(() => {
       let fakeResolved = {
         then: function (success, _) {
           success({
-            'status': 201
+            'statusCode': 201
           })
         }
       }
@@ -83,12 +83,12 @@ describe('Verify New User', () => {
   describe('Save fail', () => {
     beforeEach(() => {
       let fakeResolved = {
-        then: (_, error) => {
-          error({
-            'status': 400,
-            'response': JSON.stringify({
+        then: (result, error) => {
+          result({
+            'statusCode': 400,
+            'data': {
               'messages': ['returned error message 1', 'returned error message 2']
-            })
+            }
           })
         }
       }
@@ -111,6 +111,10 @@ describe('Verify New User', () => {
     it('set errors in message', () => {
       expect(model.errors()[0]).toEqual('returned error message 1')
       expect(model.errors()[1]).toEqual('returned error message 2')
+    })
+
+    it('should set userCreated to false', () => {
+      expect(model.userCreated()).toBeFalsy()
     })
   })
 })
