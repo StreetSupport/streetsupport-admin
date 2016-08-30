@@ -6,6 +6,7 @@ var browser = require('../browser')
 var getUrlParameter = require('../get-url-parameter')
 var Address = require('./Address')
 var Service = require('./Service')
+var GroupedService = require('./GroupedService')
 var Need = require('./Need')
 var ko = require('knockout')
 var BaseViewModel = require('./BaseViewModel')
@@ -46,6 +47,8 @@ function ServiceProvider (data) {
     ? needs.map((n) => new Need(n))
     : []
   }
+
+  self.groupedServices = ko.observableArray(data.groupedServices.map((s) => new GroupedService(s)))
 
   self.needs = ko.observableArray(buildNeeds(data.needs))
   self.needs().forEach((s) => s.addListener(self))

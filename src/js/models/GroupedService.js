@@ -12,21 +12,20 @@ function Service (data) {
   var self = this
   self.serviceProviderId = data.serviceProviderId
   self.id = ko.observable(data.key)
-
-  self.name = data.name
+  self.name = data.categoryName
   self.info = ko.observable(data.info)
   self.locationDescription = ko.observable(data.locationDescription)
 
   var tags = data.tags !== null ? data.tags.join(', ') : ''
 
   self.tags = ko.observable(tags)
-  //self.openingTimes = ko.observableArray(data.openingTimes.map((ot) => new OpeningTime(ot)))
+  self.openingTimes = ko.observableArray([]) //data.openingTimes.map((ot) => new OpeningTime(ot)))
   self.address = new Address(data.address)
 
   self.savedName = ko.observable(data.name)
   self.savedInfo = ko.observable(data.info)
   self.savedTags = ko.observable(tags)
-  //self.savedOpeningTimes = ko.observableArray(data.openingTimes.map((ot) => new OpeningTime(ot)))
+  self.savedOpeningTimes = ko.observableArray([]) //data.openingTimes.map((ot) => new OpeningTime(ot)))
   self.savedAddress = new Address(data.address)
 
   self.isEditing = ko.observable(false)
@@ -58,7 +57,7 @@ function Service (data) {
     })
     self.openingTimes(restoredOpeningTimes)
 
-    self.address.cancel()
+    // self.address.cancel()
   }
 
   self.newOpeningTime = function () {

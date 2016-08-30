@@ -83,6 +83,74 @@ function coffee4Craig () {
       'city': null,
       'postcode': 'M1 1AF'
     }],
+
+    'groupedServices': [
+      {
+        'id': '57bdb2c58705422ecc65724f',
+        'categoryId': 'services',
+        'categoryName': 'Personal Services',
+        'categorySynopsis': null,
+        'info': null,
+        'tags': null,
+        'location': null,
+        'openingTimes': null,
+        'serviceProviderId': null,
+        'serviceProviderName': null,
+        'isPublished': false,
+        'subCategories': [
+          {
+            'id': 'haircut',
+            'name': 'Haircuts'
+          }
+        ]
+      },
+      {
+        'id': '57bdb2c58705422ecc657250',
+        'categoryId': 'items',
+        'categoryName': 'Personal Items',
+        'categorySynopsis': null,
+        'info': null,
+        'tags': null,
+        'location': null,
+        'openingTimes': null,
+        'serviceProviderId': null,
+        'serviceProviderName': null,
+        'isPublished': false,
+        'subCategories': [
+          {
+            'id': 'clothes',
+            'name': 'Clothes'
+          },
+          {
+            'id': 'towels',
+            'name': 'Towels'
+          }
+        ]
+      },
+      {
+        'id': '57bdb2c58705422ecc657253',
+        'categoryId': 'support',
+        'categoryName': 'Support',
+        'categorySynopsis': null,
+        'info': null,
+        'tags': null,
+        'location': null,
+        'openingTimes': null,
+        'serviceProviderId': null,
+        'serviceProviderName': null,
+        'isPublished': false,
+        'subCategories': [
+          {
+            'id': 'lgbt',
+            'name': 'LGBT support'
+          },
+          {
+            'id': 'housing',
+            'name': 'Housing support'
+          }
+        ]
+      }
+    ],
     'providedServices': [{
       'serviceProviderId': 'coffee4craig',
       'key': '1324',

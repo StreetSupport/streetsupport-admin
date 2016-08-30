@@ -77,8 +77,16 @@ describe('Show Service Provider', () => {
     expect(model.serviceProvider().addresses()[0].serviceProviderId).toEqual('coffee4craig')
   })
 
+  it('should set services', () => {
+    expect(model.serviceProvider().services().length).toEqual(1)
+  })
+
   it('should set services\' service provider id', () => {
     expect(model.serviceProvider().services()[0].serviceProviderId).toEqual('coffee4craig')
+  })
+
+  it('should set grouped services', () => {
+    expect(model.serviceProvider().groupedServices().length).toEqual(3)
   })
 
   it('should set needs\' service provider id', () => {
@@ -147,6 +155,73 @@ function coffee4Craig () {
       'city': null,
       'postcode': 'M1 1AF'
     }],
+    'groupedServices': [
+      {
+        'id': '57bdb2c58705422ecc65724f',
+        'categoryId': 'services',
+        'categoryName': 'Personal Services',
+        'categorySynopsis': null,
+        'info': null,
+        'tags': null,
+        'location': null,
+        'openingTimes': null,
+        'serviceProviderId': null,
+        'serviceProviderName': null,
+        'isPublished': false,
+        'subCategories': [
+          {
+            'id': 'haircut',
+            'name': 'Haircuts'
+          }
+        ]
+      },
+      {
+        'id': '57bdb2c58705422ecc657250',
+        'categoryId': 'items',
+        'categoryName': 'Personal Items',
+        'categorySynopsis': null,
+        'info': null,
+        'tags': null,
+        'location': null,
+        'openingTimes': null,
+        'serviceProviderId': null,
+        'serviceProviderName': null,
+        'isPublished': false,
+        'subCategories': [
+          {
+            'id': 'clothes',
+            'name': 'Clothes'
+          },
+          {
+            'id': 'towels',
+            'name': 'Towels'
+          }
+        ]
+      },
+      {
+        'id': '57bdb2c58705422ecc657253',
+        'categoryId': 'support',
+        'categoryName': 'Support',
+        'categorySynopsis': null,
+        'info': null,
+        'tags': null,
+        'location': null,
+        'openingTimes': null,
+        'serviceProviderId': null,
+        'serviceProviderName': null,
+        'isPublished': false,
+        'subCategories': [
+          {
+            'id': 'lgbt',
+            'name': 'LGBT support'
+          },
+          {
+            'id': 'housing',
+            'name': 'Housing support'
+          }
+        ]
+      }
+    ],
     'providedServices': [{
       'key': '569d2b468705432268b65c75',
       'name': 'Meals',

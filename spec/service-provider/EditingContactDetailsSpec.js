@@ -147,6 +147,7 @@ function coffee4Craig () {
     'facebook': 'https://www.facebook.com/Coffee4Craig/?fref=ts',
     'twitter': '@Coffee4Craig',
     'addresses': [],
+    'groupedServices': [],
     'providedServices': []
   }
 }

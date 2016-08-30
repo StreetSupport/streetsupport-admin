@@ -23,40 +23,40 @@ describe('Service', () => {
     expect(model.editServiceUrl).toEqual('/edit-service-provider-service.html?providerId=coffee4craig&serviceId=services')
   })
 
-  // describe('Editing', () => {
-  //   beforeEach(() => {
-  //     model.edit()
-  //   })
+  describe('Editing', () => {
+    beforeEach(() => {
+      model.edit()
+    })
 
-  //   it('should set isEditing to true', () => {
-  //     expect(model.isEditing).toBeTruthy()
-  //   })
+    it('should set isEditing to true', () => {
+      expect(model.isEditing).toBeTruthy()
+    })
 
-  //   describe('Cancel', () => {
-  //     beforeEach(() => {
-  //       model.info('new info')
-  //       model.tags('new tags')
-  //       model.openingTimes()[1].startTime('20:00')
-  //       model.openingTimes()[1].endTime('22:00')
-  //       model.openingTimes()[1].day('Wednesday')
-  //       model.address.street1('new street 1')
-  //       model.cancelEdit()
-  //     })
+    describe('Cancel', () => {
+      beforeEach(() => {
+        // model.info('new info')
+        // model.tags('new tags')
+        // model.openingTimes()[1].startTime('20:00')
+        // model.openingTimes()[1].endTime('22:00')
+        // model.openingTimes()[1].day('Wednesday')
+        // model.address.street1('new street 1')
+        model.cancelEdit()
+      })
 
-  //     it('should set isEditing to false', () => {
-  //       expect(model.isEditing()).toBeFalsy()
-  //     })
+      it('should set isEditing to false', () => {
+        expect(model.isEditing()).toBeFalsy()
+      })
 
-  //     it('should set reset fields', () => {
-  //       expect(model.name).toEqual('Meals')
-  //       expect(model.info()).toEqual('Breakfast')
-  //       expect(model.tags()).toEqual('some tags')
-  //       expect(model.openingTimes()[1].startTime()).toEqual('09:00')
-  //       expect(model.openingTimes()[1].endTime()).toEqual('10:00')
-  //       expect(model.openingTimes()[1].day()).toEqual('Tuesday')
-  //       expect(model.address.street1()).toEqual('Booth Centre')
-  //     })
-  //   })
+      it('should set reset fields', () => {
+        expect(model.name).toEqual('Personal Services')
+        // expect(model.info()).toEqual('Breakfast')
+        // expect(model.tags()).toEqual('some tags')
+        // expect(model.openingTimes()[1].startTime()).toEqual('09:00')
+        // expect(model.openingTimes()[1].endTime()).toEqual('10:00')
+        // expect(model.openingTimes()[1].day()).toEqual('Tuesday')
+        // expect(model.address.street1()).toEqual('Booth Centre')
+      })
+    })
 
   //   describe('Save', () => {
   //     let stubbedApi = null
@@ -249,7 +249,7 @@ describe('Service', () => {
   //       expect(model.isEditing()).toBeTruthy()
   //     })
   //   })
-  // })
+  })
 })
 
 function getData () {
