@@ -11,23 +11,26 @@ var BaseViewModel = require('./BaseViewModel')
 var adminUrls = require('../admin-urls')
 
 function Address (data) {
+  if (data === undefined) return
+
   var self = this
   self.endpoints = new Endpoints()
 
   self.serviceProviderId = data.serviceProviderId
 
   self.key = ko.observable(data.key)
-  self.savedStreet1 = ko.observable(htmlEncode.htmlDecode(data.street))
-  self.savedStreet2 = ko.observable(htmlEncode.htmlDecode(data.street1))
-  self.savedStreet3 = ko.observable(htmlEncode.htmlDecode(data.street2))
-  self.savedStreet4 = ko.observable(htmlEncode.htmlDecode(data.street3))
+
+  self.savedStreet1 = ko.observable(htmlEncode.htmlDecode(data.streetLine1))
+  self.savedStreet2 = ko.observable(htmlEncode.htmlDecode(data.streetLine2))
+  self.savedStreet3 = ko.observable(htmlEncode.htmlDecode(data.streetLine3))
+  self.savedStreet4 = ko.observable(htmlEncode.htmlDecode(data.streetLine4))
   self.savedCity = ko.observable(htmlEncode.htmlDecode(data.city))
   self.savedPostcode = ko.observable(data.postcode)
 
-  self.street1 = ko.observable(htmlEncode.htmlDecode(data.street))
-  self.street2 = ko.observable(htmlEncode.htmlDecode(data.street1))
-  self.street3 = ko.observable(htmlEncode.htmlDecode(data.street2))
-  self.street4 = ko.observable(htmlEncode.htmlDecode(data.street3))
+  self.street1 = ko.observable(htmlEncode.htmlDecode(data.streetLine1))
+  self.street2 = ko.observable(htmlEncode.htmlDecode(data.streetLine2))
+  self.street3 = ko.observable(htmlEncode.htmlDecode(data.streetLine3))
+  self.street4 = ko.observable(htmlEncode.htmlDecode(data.streetLine4))
   self.city = ko.observable(htmlEncode.htmlDecode(data.city))
   self.postcode = ko.observable(data.postcode)
 

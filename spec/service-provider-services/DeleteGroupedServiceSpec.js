@@ -56,8 +56,24 @@ function getData () {
     'categorySynopsis': null,
     'info': null,
     'tags': null,
-    'location': null,
-    'openingTimes': null,
+    'location': {
+      'description': '',
+      'streetLine1': 'Flat 713',
+      'streetLine2': '37 Potato Wharf',
+      'streetLine3': '',
+      'streetLine4': '',
+      'city': 'Manchester',
+      'postcode': 'M3 4BD',
+      'latitude': 53.4755361548836,
+      'longitude': -2.25848699844466
+    },
+    'openingTimes': [
+      {
+        'startTime': '10:00',
+        'endTime': '18:00',
+        'day': 'Tuesday'
+      }
+    ],
     'serviceProviderId': 'coffee4craig',
     'isPublished': false,
     'subCategories': [

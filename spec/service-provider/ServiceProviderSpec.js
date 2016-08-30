@@ -163,10 +163,26 @@ function coffee4Craig () {
         'categorySynopsis': null,
         'info': null,
         'tags': null,
-        'location': null,
-        'openingTimes': null,
-        'serviceProviderId': null,
-        'serviceProviderName': null,
+        'location': {
+          'description': '',
+          'streetLine1': 'Flat 713',
+          'streetLine2': '37 Potato Wharf',
+          'streetLine3': '',
+          'streetLine4': '',
+          'city': 'Manchester',
+          'postcode': 'M3 4BD',
+          'latitude': 53.4755361548836,
+          'longitude': -2.25848699844466
+        },
+        'openingTimes': [
+          {
+            'startTime': '10:00',
+            'endTime': '18:00',
+            'day': 'Tuesday'
+          }
+        ],
+        'serviceProviderId': 'vince-test-provider',
+        'serviceProviderName': 'Vince Test Provider',
         'isPublished': false,
         'subCategories': [
           {
@@ -182,8 +198,24 @@ function coffee4Craig () {
         'categorySynopsis': null,
         'info': null,
         'tags': null,
-        'location': null,
-        'openingTimes': null,
+        'location': {
+          'description': '',
+          'streetLine1': 'Flat 713',
+          'streetLine2': '37 Potato Wharf',
+          'streetLine3': '',
+          'streetLine4': '',
+          'city': 'Manchester',
+          'postcode': 'M3 4BD',
+          'latitude': 53.4755361548836,
+          'longitude': -2.25848699844466
+        },
+        'openingTimes': [
+          {
+            'startTime': '10:00',
+            'endTime': '18:00',
+            'day': 'Tuesday'
+          }
+        ],
         'serviceProviderId': null,
         'serviceProviderName': null,
         'isPublished': false,
@@ -205,8 +237,24 @@ function coffee4Craig () {
         'categorySynopsis': null,
         'info': null,
         'tags': null,
-        'location': null,
-        'openingTimes': null,
+        'location': {
+          'description': '',
+          'streetLine1': 'Flat 713',
+          'streetLine2': '37 Potato Wharf',
+          'streetLine3': '',
+          'streetLine4': '',
+          'city': 'Manchester',
+          'postcode': 'M3 4BD',
+          'latitude': 53.4755361548836,
+          'longitude': -2.25848699844466
+        },
+        'openingTimes': [
+          {
+            'startTime': '10:00',
+            'endTime': '18:00',
+            'day': 'Tuesday'
+          }
+        ],
         'serviceProviderId': null,
         'serviceProviderName': null,
         'isPublished': false,

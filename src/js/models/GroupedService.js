@@ -4,7 +4,7 @@ var Endpoints = require('../endpoint-builder')
 var getUrlParameter = require('../get-url-parameter')
 var cookies = require('../cookies')
 var OpeningTime = require('./OpeningTime')
-var Address = require('./Address')
+var Address = require('./GroupedServiceAddress')
 var BaseViewModel = require('./BaseViewModel')
 var adminUrls = require('../admin-urls')
 
@@ -15,19 +15,19 @@ function Service (data) {
   self.name = data.categoryName
   self.categoryId = data.categoryId
   self.info = ko.observable(data.info)
-  self.locationDescription = ko.observable(data.locationDescription)
+  self.locationDescription = ko.observable(data.location.description)
 
   var tags = data.tags !== null ? data.tags.join(', ') : ''
 
   self.tags = ko.observable(tags)
-  self.openingTimes = ko.observableArray([]) //data.openingTimes.map((ot) => new OpeningTime(ot)))
-  self.address = new Address(data.address)
+  self.openingTimes = ko.observableArray(data.openingTimes.map((ot) => new OpeningTime(ot)))
+  self.address = new Address(data.location)
 
   self.savedName = ko.observable(data.name)
   self.savedInfo = ko.observable(data.info)
   self.savedTags = ko.observable(tags)
-  self.savedOpeningTimes = ko.observableArray([]) //data.openingTimes.map((ot) => new OpeningTime(ot)))
-  self.savedAddress = new Address(data.address)
+  self.savedOpeningTimes = ko.observableArray(data.openingTimes.map((ot) => new OpeningTime(ot)))
+  self.savedAddress = new Address(data.location)
 
   self.isEditing = ko.observable(false)
   self.message = ko.observable()
@@ -86,6 +86,8 @@ function Service (data) {
     var endpoint = self.endpointBuilder.serviceProviders(self.serviceProviderId).services(self.id()).build()
     var tags = []
     if (self.tags().length > 0) tags = self.tags().split(',').map((t) => t.trim())
+
+    console.log(self.address)
 
     var model = {
       'Info': self.info(),
