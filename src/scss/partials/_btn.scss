@@ -13,6 +13,7 @@
   margin-top: 20px;
 
   &:hover {
+    cursor: pointer;
     .btn__text {
       box-shadow: none;
     }
