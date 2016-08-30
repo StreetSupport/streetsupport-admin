@@ -11,8 +11,9 @@ var adminUrls = require('../admin-urls')
 function Service (data) {
   var self = this
   self.serviceProviderId = data.serviceProviderId
-  self.id = ko.observable(data.key)
+  self.id = ko.observable(data.id)
   self.name = data.categoryName
+  self.categoryId = data.categoryId
   self.info = ko.observable(data.info)
   self.locationDescription = ko.observable(data.locationDescription)
 
