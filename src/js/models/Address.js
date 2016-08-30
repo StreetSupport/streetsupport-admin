@@ -11,6 +11,8 @@ var BaseViewModel = require('./BaseViewModel')
 var adminUrls = require('../admin-urls')
 
 function Address (data) {
+  if (data === undefined) return
+
   var self = this
   self.endpoints = new Endpoints()
 
