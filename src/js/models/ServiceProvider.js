@@ -49,6 +49,7 @@ function ServiceProvider (data) {
   }
 
   self.groupedServices = ko.observableArray(data.groupedServices.map((s) => new GroupedService(s)))
+  self.groupedServices().forEach((s) => s.addListener(self))
 
   self.needs = ko.observableArray(buildNeeds(data.needs))
   self.needs().forEach((s) => s.addListener(self))
@@ -75,6 +76,14 @@ function ServiceProvider (data) {
     }
     var remainingServices = self.services().filter((s) => notDeleted(s))
     self.services(remainingServices)
+  }
+
+  self.deleteGroupedService = function (deletedService) {
+    var notDeleted = function (service) {
+      return service.id() !== deletedService.id()
+    }
+    var remainingServices = self.groupedServices().filter((s) => notDeleted(s))
+    self.groupedServices(remainingServices)
   }
 
   self.deleteNeed = function (deletedNeed) {
