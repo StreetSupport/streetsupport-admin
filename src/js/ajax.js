@@ -68,7 +68,6 @@ var makeRequest = function (options) {
   }
 
   req.onload = function () {
-    console.log(this)
     if (this.status === 201) {
       deferred.resolve({
         'status': 'created',
