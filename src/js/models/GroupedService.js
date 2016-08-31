@@ -16,11 +16,14 @@ function Service (data) {
   self.categoryId = data.categoryId
   self.info = ko.observable(data.info)
   self.locationDescription = ko.observable(data.location.description)
+  self.subCategories = ko.observableArray()
 
   var tags = data.tags !== null ? data.tags.join(', ') : ''
 
   self.tags = ko.observable(tags)
+
   self.openingTimes = ko.observableArray(data.openingTimes.map((ot) => new OpeningTime(ot)))
+
   self.address = new Address(data.location)
 
   self.savedName = ko.observable(data.name)
@@ -57,8 +60,6 @@ function Service (data) {
       })
     })
     self.openingTimes(restoredOpeningTimes)
-
-    // self.address.cancel()
   }
 
   self.newOpeningTime = function () {
@@ -84,14 +85,12 @@ function Service (data) {
 
   self.save = function () {
     var endpoint = self.endpointBuilder.serviceProviders(self.serviceProviderId).services(self.id()).build()
+
     var tags = []
     if (self.tags().length > 0) tags = self.tags().split(',').map((t) => t.trim())
 
-    console.log(self.address)
-
     var model = {
       'Info': self.info(),
-      'LocationDescription': self.locationDescription(),
       'Tags': tags,
       'OpeningTimes': self.openingTimes().map((openingTime) => {
         return {
@@ -100,14 +99,14 @@ function Service (data) {
           'Day': openingTime.day()
         }
       }),
-      'Address': {
-        'Street1': self.address.street1(),
-        'Street2': self.address.street2(),
-        'Street3': self.address.street3(),
-        'Street4': self.address.street4(),
-        'City': self.address.city(),
-        'Postcode': self.address.postcode()
-      }
+      'LocationDescription': self.locationDescription(),
+      'Street1': self.address.street1(),
+      'Street2': self.address.street2(),
+      'Street3': self.address.street3(),
+      'Street4': self.address.street4(),
+      'City': self.address.city(),
+      'Postcode': self.address.postcode(),
+      'SubCategories': self.subCategories().filter((sc) => sc.isSelected()).map((sc) => sc.id())
     }
 
     ajax.put(endpoint,

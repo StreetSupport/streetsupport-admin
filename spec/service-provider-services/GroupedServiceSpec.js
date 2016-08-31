@@ -5,6 +5,7 @@ global describe, beforeEach, afterEach, it, expect
 
 'use strict'
 
+const ko = require('knockout')
 const sinon = require('sinon')
 const ajax = require('../../src/js/ajax')
 const endpoints = require('../../src/js/api-endpoints')
@@ -24,231 +25,177 @@ describe('Service', () => {
   })
 
   describe('Editing', () => {
-    beforeEach(() => {
-      model.edit()
-    })
+    describe('Save', () => {
+      let stubbedApi = null
 
-    it('should set isEditing to true', () => {
-      expect(model.isEditing).toBeTruthy()
-    })
-
-    describe('Cancel', () => {
       beforeEach(() => {
-        // model.info('new info')
-        // model.tags('new tags')
-        // model.openingTimes()[1].startTime('20:00')
-        // model.openingTimes()[1].endTime('22:00')
-        // model.openingTimes()[1].day('Wednesday')
-        // model.address.street1('new street 1')
-        model.cancelEdit()
+        const fakeResolved = {
+          then: function (success, error) {
+            success({
+              'status': 200,
+              'data': getData()
+            })
+          }
+        }
+
+        stubbedApi = sinon.stub(ajax, 'put').returns(fakeResolved)
+        sinon.stub(cookies, 'get').returns('stored-session-token')
+        sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
+
+        model.info('new info')
+        model.tags('new tags, tag 2')
+        model.openingTimes()[0].startTime('20:00')
+        model.openingTimes()[0].endTime('22:00')
+        model.openingTimes()[0].day('Wednesday')
+        model.address.street1('new street 1')
+        model.address.street2('new street 2')
+        model.address.street3('new street 3')
+        model.address.street4('new street 4')
+        model.address.city('new city')
+        model.address.postcode('new postcode')
+        model.subCategories()[0] = {
+          id: ko.observable('subcat1'),
+          isSelected: ko.observable(false)
+        }
+        model.subCategories()[1] = {
+          id: ko.observable('subcat2'),
+          isSelected: ko.observable(true)
+        }
+
+        model.save()
       })
 
-      it('should set isEditing to false', () => {
-        expect(model.isEditing()).toBeFalsy()
+      afterEach(() => {
+        ajax.put.restore()
+        cookies.get.restore()
+        getUrlParameter.parameter.restore()
       })
 
-      it('should set reset fields', () => {
-        expect(model.name).toEqual('Personal Services')
-        // expect(model.info()).toEqual('Breakfast')
-        // expect(model.tags()).toEqual('some tags')
-        // expect(model.openingTimes()[1].startTime()).toEqual('09:00')
-        // expect(model.openingTimes()[1].endTime()).toEqual('10:00')
-        // expect(model.openingTimes()[1].day()).toEqual('Tuesday')
-        // expect(model.address.street1()).toEqual('Booth Centre')
+      it('should put service details with new to api with session token', () => {
+        var endpoint = endpoints.getServiceProviders + '/coffee4craig/services/57bdb2c58705422ecc65724f'
+
+        var headers = {
+          'content-type': 'application/json',
+          'session-token': 'stored-session-token'
+        }
+        var payload = {
+          'Info': 'new info',
+          'Tags': [
+            'new tags',
+            'tag 2'
+          ],
+          'OpeningTimes': [
+            {
+              'StartTime': '20:00',
+              'EndTime': '22:00',
+              'Day': 'Wednesday'
+            }
+          ],
+          'LocationDescription': '',
+          'Street1': 'new street 1',
+          'Street2': 'new street 2',
+          'Street3': 'new street 3',
+          'Street4': 'new street 4',
+          'City': 'new city',
+          'Postcode': 'new postcode',
+          SubCategories: ['subcat2']
+        }
+
+        var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, headers, payload).calledOnce
+        expect(apiCalledWithExpectedArgs).toBeTruthy()
       })
     })
 
-  //   describe('Save', () => {
-  //     let stubbedApi = null
+    describe('Save with empty tags', () => {
+      let stubbedApi = null
 
-  //     beforeEach(() => {
-  //       const fakeResolved = {
-  //         then: function (success, error) {
-  //           success({
-  //             'status': 200,
-  //             'data': getData()
-  //           })
-  //         }
-  //       }
+      beforeEach(() => {
+        const fakeResolved = {
+          then: function (success, error) {
+            success({
+              'status': 200,
+              'data': getData()
+            })
+          }
+        }
 
-  //       stubbedApi = sinon.stub(ajax, 'put').returns(fakeResolved)
-  //       sinon.stub(cookies, 'get').returns('stored-session-token')
-  //       sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
+        stubbedApi = sinon.stub(ajax, 'put').returns(fakeResolved)
+        sinon.stub(cookies, 'get').returns('stored-session-token')
+        sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
 
-  //       model.info('new info')
-  //       model.tags('new tags, tag 2')
-  //       model.openingTimes()[1].startTime('20:00')
-  //       model.openingTimes()[1].endTime('22:00')
-  //       model.openingTimes()[1].day('Wednesday')
-  //       model.address.street1('new street 1')
-  //       model.address.street2('new street 2')
-  //       model.address.street3('new street 3')
-  //       model.address.street4('new street 4')
-  //       model.address.city('new city')
-  //       model.address.postcode('new postcode')
+        model.tags('')
 
-  //       model.save()
-  //     })
+        model.save()
+      })
 
-  //     afterEach(() => {
-  //       ajax.put.restore()
-  //       cookies.get.restore()
-  //       getUrlParameter.parameter.restore()
-  //     })
+      afterEach(() => {
+        ajax.put.restore()
+        cookies.get.restore()
+        getUrlParameter.parameter.restore()
+      })
 
-  //     it('should put service details with new to api with session token', () => {
-  //       var endpoint = endpoints.getServiceProviders + '/coffee4craig/services/569d2b468705432268b65c75'
-  //       var headers = {
-  //         'content-type': 'application/json',
-  //         'session-token': 'stored-session-token'
-  //       }
-  //       var payload = {
-  //         'Info': 'new info',
-  //         'LocationDescription': undefined,
-  //         'Tags': ['new tags', 'tag 2'],
-  //         'OpeningTimes': [{
-  //           'StartTime': '09:00',
-  //           'EndTime': '10:00',
-  //           'Day': 'Monday'
-  //         }, {
-  //           'StartTime': '20:00',
-  //           'EndTime': '22:00',
-  //           'Day': 'Wednesday'
-  //         }],
-  //         'Address': {
-  //           'Street1': 'new street 1',
-  //           'Street2': 'new street 2',
-  //           'Street3': 'new street 3',
-  //           'Street4': 'new street 4',
-  //           'City': 'new city',
-  //           'Postcode': 'new postcode'
-  //         }
-  //       }
+      it('should put service details with new to api with session token', () => {
+        var endpoint = endpoints.getServiceProviders + '/coffee4craig/services/57bdb2c58705422ecc65724f'
+        var headers = {
+          'content-type': 'application/json',
+          'session-token': 'stored-session-token'
+        }
+        var payload = {
+          'Info': 'info',
+          'Tags': [],
+          'OpeningTimes': [{
+            'StartTime': '10:00',
+            'EndTime': '18:00',
+            'Day': 'Tuesday'
+          }],
+          'LocationDescription': '',
+          'Street1': 'street 1',
+          'Street2': 'street 2',
+          'Street3': '',
+          'Street4': '',
+          'City': 'Manchester',
+          'Postcode': 'M1 3FY',
+          'SubCategories': []
+        }
 
-  //       var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, headers, payload).calledOnce
-  //       expect(apiCalledWithExpectedArgs).toBeTruthy()
-  //     })
+        var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, headers, payload).calledOnce
+        expect(apiCalledWithExpectedArgs).toBeTruthy()
+      })
+    })
 
-  //     it('should set isEditing to false', () => {
-  //       expect(model.isEditing()).toBeFalsy()
-  //     })
+    describe('Save Fail', () => {
+      beforeEach(() => {
+        const fakeResolved = {
+          then: function (success, error) {
+            error({
+              'status': 400,
+              'response': JSON.stringify({
+                'messages': ['returned error message 1', 'returned error message 2']
+              })
+            })
+          }
+        }
 
-  //     describe('Edit again and Cancel', () => {
-  //       beforeEach(() => {
-  //         model.edit()
-  //         model.info('different info')
-  //         model.cancelEdit()
-  //       })
+        sinon.stub(ajax, 'put').returns(fakeResolved)
+        sinon.stub(cookies, 'get').returns('stored-session-token')
+        sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
 
-  //       it('should set isEditing to false', () => {
-  //         expect(model.isEditing()).toBeFalsy()
-  //       })
+        model.info('new info')
 
-  //       it('should set reset fields', () => {
-  //         expect(model.info()).toEqual('Breakfast')
-  //       })
-  //     })
-  //   })
+        model.save()
+      })
 
-  //   describe('Save with empty tags', () => {
-  //     let stubbedApi = null
+      afterEach(() => {
+        ajax.put.restore()
+        cookies.get.restore()
+        getUrlParameter.parameter.restore()
+      })
 
-  //     beforeEach(() => {
-  //       const fakeResolved = {
-  //         then: function (success, error) {
-  //           success({
-  //             'status': 200,
-  //             'data': getData()
-  //           })
-  //         }
-  //       }
-
-  //       stubbedApi = sinon.stub(ajax, 'put').returns(fakeResolved)
-  //       sinon.stub(cookies, 'get').returns('stored-session-token')
-  //       sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
-
-  //       model.tags('')
-
-  //       model.save()
-  //     })
-
-  //     afterEach(() => {
-  //       ajax.put.restore()
-  //       cookies.get.restore()
-  //       getUrlParameter.parameter.restore()
-  //     })
-
-  //     it('should put service details with new to api with session token', () => {
-  //       var endpoint = endpoints.getServiceProviders + '/coffee4craig/services/569d2b468705432268b65c75'
-  //       var headers = {
-  //         'content-type': 'application/json',
-  //         'session-token': 'stored-session-token'
-  //       }
-  //       var payload = {
-  //         'Info': 'Breakfast',
-  //         'LocationDescription': undefined,
-  //         'Tags': [],
-  //         'OpeningTimes': [{
-  //           'StartTime': '09:00',
-  //           'EndTime': '10:00',
-  //           'Day': 'Monday'
-  //         }, {
-  //           'StartTime': '09:00',
-  //           'EndTime': '10:00',
-  //           'Day': 'Tuesday'
-  //         }],
-  //         'Address': {
-  //           'Street1': 'Booth Centre',
-  //           'Street2': '',
-  //           'Street3': 'Edward Holt House',
-  //           'Street4': 'Pimblett Street',
-  //           'City': 'Manchester',
-  //           'Postcode': 'M3 1FU'
-  //         }
-  //       }
-
-  //       var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, headers, payload).calledOnce
-  //       expect(apiCalledWithExpectedArgs).toBeTruthy()
-  //     })
-  //   })
-
-  //   describe('Save Fail', () => {
-  //     beforeEach(() => {
-  //       const fakeResolved = {
-  //         then: function (success, error) {
-  //           error({
-  //             'status': 400,
-  //             'response': JSON.stringify({
-  //               'messages': ['returned error message 1', 'returned error message 2']
-  //             })
-  //           })
-  //         }
-  //       }
-
-  //       sinon.stub(ajax, 'put').returns(fakeResolved)
-  //       sinon.stub(cookies, 'get').returns('stored-session-token')
-  //       sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
-
-  //       model.info('new info')
-
-  //       model.save()
-  //     })
-
-  //     afterEach(() => {
-  //       ajax.put.restore()
-  //       cookies.get.restore()
-  //       getUrlParameter.parameter.restore()
-  //     })
-
-  //     it('should set message as joined error messages', () => {
-  //       expect(model.errors()[0]).toEqual('returned error message 1')
-  //       expect(model.errors()[1]).toEqual('returned error message 2')
-  //     })
-
-  //     it('should keep isEditing as true', () => {
-  //       expect(model.isEditing()).toBeTruthy()
-  //     })
-  //   })
+      it('should set message as joined error messages', () => {
+        expect(model.errors()[0]).toEqual('returned error message 1')
+        expect(model.errors()[1]).toEqual('returned error message 2')
+      })
+    })
   })
 })
 
@@ -258,16 +205,16 @@ function getData () {
     'categoryId': 'services',
     'categoryName': 'Personal Services',
     'categorySynopsis': null,
-    'info': null,
+    'info': 'info',
     'tags': null,
     'location': {
       'description': '',
-      'streetLine1': 'Flat 713',
-      'streetLine2': '37 Potato Wharf',
+      'streetLine1': 'street 1',
+      'streetLine2': 'street 2',
       'streetLine3': '',
       'streetLine4': '',
       'city': 'Manchester',
-      'postcode': 'M3 4BD',
+      'postcode': 'M1 3FY',
       'latitude': 53.4755361548836,
       'longitude': -2.25848699844466
     },

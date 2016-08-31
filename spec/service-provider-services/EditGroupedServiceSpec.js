@@ -19,8 +19,17 @@ describe('Edit Service', () => {
   let stubbedUrlParams = null
   let stubbedBrowser = null
 
+  let headers = {
+    'content-type': 'application/json',
+    'session-token': 'stored-session-token'
+  }
+  let payload = {}
+
+  let serviceEndpoint = endpoints.getServiceProviders + '/coffee4craig/services/57bdb2c58705422ecc657228'
+  let categoryEndpoint = endpoints.getServiceCategories
+
   beforeEach(() => {
-    let fakeResolved = {
+    let serviceDataResolution = {
       then: (success, _) => {
         success({
           'status': 200,
@@ -28,8 +37,18 @@ describe('Edit Service', () => {
         })
       }
     }
+    let categoryDataResolution = {
+      then: (success, _) => {
+        success({
+          'status': 200,
+          'data': categoryData()
+        })
+      }
+    }
 
-    stubbedApi = sinon.stub(ajax, 'get').returns(fakeResolved)
+    stubbedApi = sinon.stub(ajax, 'get')
+    stubbedApi.withArgs(serviceEndpoint, headers, payload).returns(serviceDataResolution)
+    stubbedApi.withArgs(categoryEndpoint, headers, payload).returns(categoryDataResolution)
     stubbedBrowser = sinon.stub(browser, 'redirect')
     sinon.stub(cookies, 'get').returns('stored-session-token')
     stubbedUrlParams = sinon.stub(getUrlParameter, 'parameter')
@@ -51,18 +70,17 @@ describe('Edit Service', () => {
   })
 
   it('should request for service', () => {
-    var endpoint = endpoints.getServiceProviders + '/coffee4craig/services/57bdb2c58705422ecc657228'
-    var headers = {
-      'content-type': 'application/json',
-      'session-token': 'stored-session-token'
-    }
-    var payload = {}
-    var apiCalled = stubbedApi.withArgs(endpoint, headers, payload).calledOnce
+    var apiCalled = stubbedApi.withArgs(serviceEndpoint, headers, payload).calledOnce
+    expect(apiCalled).toBeTruthy()
+  })
+
+  it('should request for categories', () => {
+    var apiCalled = stubbedApi.withArgs(categoryEndpoint, headers, payload).calledOnce
     expect(apiCalled).toBeTruthy()
   })
 
   it('should set serviceProviderId on Service', () => {
-    expect(model.service().serviceProviderId).toEqual('coffee4craig')
+    expect(model.service().serviceProviderId).toEqual('vince-test-provider')
   })
 
   it('should set name on Service', () => {
@@ -79,6 +97,26 @@ describe('Edit Service', () => {
 
   it('should set opening times end time on Service', () => {
     expect(model.service().openingTimes()[0].endTime()).toEqual('18:00')
+  })
+
+  it('- should set categories', () => {
+    expect(model.service().subCategories().length).toEqual(5)
+  })
+
+  it('- should set category id', () => {
+    expect(model.service().subCategories()[0].id()).toEqual('laundry')
+  })
+
+  it('- should set category name', () => {
+    expect(model.service().subCategories()[0].name()).toEqual('Laundry')
+  })
+
+  it('- should set category isSelected', () => {
+    expect(model.service().subCategories()[0].isSelected()).toBeFalsy()
+    expect(model.service().subCategories()[1].isSelected()).toBeFalsy()
+    expect(model.service().subCategories()[2].isSelected()).toBeFalsy()
+    expect(model.service().subCategories()[3].isSelected()).toBeTruthy()
+    expect(model.service().subCategories()[4].isSelected()).toBeTruthy()
   })
 
   describe('Save', () => {
@@ -106,6 +144,46 @@ describe('Edit Service', () => {
     })
   })
 })
+
+function categoryData () {
+  return [
+    {
+      'key': 'items',
+      'sortOrder': 0,
+      'name': 'Personal Items',
+      'synopsis': 'Haircuts, laundry, showers, religious services ...',
+      'subCategories': [
+        {
+          'key': 'laundry',
+          'name': 'Laundry',
+          'synopsis': 'Clothes washing service'
+        },
+        {
+          'key': 'shower',
+          'name': 'Showers',
+          'synopsis': 'Hot showers'
+        },
+        {
+          'key': 'haircut',
+          'name': 'Haircuts',
+          'synopsis': 'Haircuts'
+        },
+        {
+          'key': 'blankets',
+          'name': 'Blankets',
+          'synopsis': 'Blankets'
+        },
+        {
+          'key': 'clothes',
+          'name': 'Clothes',
+          'synopsis': 'Clothes'
+        }
+      ],
+      'documentCreationDate': '2015-12-17T12:18:00.1650000Z',
+      'documentModifiedDate': '2015-12-17T12:18:00.1650000Z'
+      }
+  ]
+}
 
 function serviceData () {
   return {
