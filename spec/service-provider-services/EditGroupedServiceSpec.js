@@ -181,7 +181,7 @@ function categoryData () {
       ],
       'documentCreationDate': '2015-12-17T12:18:00.1650000Z',
       'documentModifiedDate': '2015-12-17T12:18:00.1650000Z'
-      }
+    }
   ]
 }
 
