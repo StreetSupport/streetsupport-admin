@@ -145,8 +145,8 @@ nosubnav: true
               </a>
             </header>
             <div data-bind="foreach: addresses">
-              <article class="key-value-pair location">
-                <address data-bind="html: formatted" class="key-value-pair__key"></address>
+              <article class="key-value-pair location service-provider__item">
+                <h3 data-bind="html: formatted" class="key-value-pair__key"></h3>
                 <a data-bind="attr: { 'href': editAddressUrl }" title="edit location" class="btn btn--info">
                   <span class="btn__text">Edit</span>
                 </a>
@@ -163,7 +163,7 @@ nosubnav: true
               <span class="btn__text">Add</span>
             </a>
             <div data-bind="foreach: groupedServices">
-              <article class="service-provider__service">
+              <article class="service-provider__item">
                 <h3 data-bind="text: name"></h3>
                 <a data-bind="attr: { 'href': editServiceUrl }" title="edit service" class="btn btn--info">
                   <span class="btn__text">Edit</span>
@@ -183,7 +183,7 @@ nosubnav: true
               <span class="btn__text">Add</span>
             </a>
             <div data-bind="foreach: needs">
-              <article>
+              <article class="service-provider__item">
                 <h3 data-bind="html: description"></h3>
                 <a data-bind="attr: { 'href': editNeedUrl }" title="edit need" class="btn btn--info">
                   <span class="btn__text">Edit</span>
