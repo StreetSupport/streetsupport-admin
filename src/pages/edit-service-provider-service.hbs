@@ -20,6 +20,21 @@ nosubnav: true
     <div class="block__content form">
       <form class="form" data-bind="with: service">
         {{> form-feedback}}
+        <section class="block__section">
+          <h3>Category</h3>
+          <dl class="key-value-pair">
+            <dt class="key-value-pair__key">Category</dt>
+            <dd class="key-value-pair__value" data-bind="text: name"></dd>
+          <dt class="key-value-pair__key">Sub Categories</dt>
+          <dd class="key-value-pair__value">
+            <ul data-bind="foreach: subCategories" class="form__checkbox-container">
+              <li>
+                <input type="checkbox" data-bind="attr: { name: name, id: name, value: id }, checked: isSelected" class="form__checkbox" />
+                <label data-bind="text: name, attr: { for: name }" class="form__checkbox-label"></label>
+              </li>
+            </ul>
+          </dd>
+        </section>
         <section>
           <h3>Service Details</h3>
           <dl class="key-value-pair">

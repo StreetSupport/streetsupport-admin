@@ -73,6 +73,7 @@ function coffee4Craig () {
     'facebook': 'initial facebook',
     'twitter': 'initial twitter',
     'addresses': [],
+    'groupedServices': [],
     'providedServices': []
   }
 }
