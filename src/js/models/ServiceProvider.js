@@ -44,8 +44,8 @@ function ServiceProvider (data) {
 
   var buildNeeds = function (needs) {
     return needs !== undefined && needs !== null
-    ? needs.map((n) => new Need(n))
-    : []
+      ? needs.map((n) => new Need(n))
+      : []
   }
 
   self.groupedServices = ko.observableArray(data.groupedServices.map((s) => new GroupedService(s)))
