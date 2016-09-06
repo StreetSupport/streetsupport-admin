@@ -31,8 +31,8 @@ function Service (data) {
   self.message = ko.observable()
   self.endpoints = new Endpoints()
   self.listeners = ko.observableArray()
-
-  self.editServiceUrl = adminUrls.serviceProviderServicesEdit + '?providerId=' + data.serviceProviderId + '&serviceId=' + data.categoryId
+console.log(data)
+  self.editServiceUrl = adminUrls.serviceProviderServicesEdit + '?providerId=' + data.serviceProviderId + '&serviceId=' + data.id
 
   self.newOpeningTime = function () {
     var openingTimes = self.openingTimes()
