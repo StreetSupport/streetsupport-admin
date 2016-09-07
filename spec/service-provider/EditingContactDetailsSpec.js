@@ -19,7 +19,7 @@ describe('Edit Service Provider Contact Information', () => {
     let fakeResolved = {
       then: function (success, error) {
         success({
-          'status': 200,
+          'statusCode': 200,
           'data': coffee4Craig()
         })
       }
@@ -55,7 +55,7 @@ describe('Edit Service Provider Contact Information', () => {
       let fakeResolved = {
         then: (success, _) => {
           success({
-            'status': 200,
+            'statusCode': 200,
             'data': {}
           })
         }
@@ -104,9 +104,9 @@ describe('Edit Service Provider Contact Information', () => {
         then: (_, error) => {
           error({
             'status': 400,
-            'response': JSON.stringify({
+            'data': {
               'messages': ['returned error message 1', 'returned error message 2']
-            })
+            }
           })
         }
       }

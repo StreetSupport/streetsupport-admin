@@ -176,7 +176,12 @@ function ServiceProviderDetails () {
           'Twitter': self.serviceProvider().twitter()
         }
         ).then(function (result) {
-          self.isEditingContactDetails(false)
+          if (result.statusCode === 200) {
+            self.isEditingContactDetails(false)
+            self.clearErrors()
+          } else {
+            self.handleError(result)
+          }
         }, function (error) {
           self.handleError(error)
         })

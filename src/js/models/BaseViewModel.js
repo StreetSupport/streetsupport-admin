@@ -25,7 +25,11 @@ function BaseViewModel () {
   }
 
   self.setErrors = function (error) { // deprecated
-    self.errors(JSON.parse(error.response).messages)
+    if (error.response !== undefined) {
+      self.errors(JSON.parse(error.response).messages)
+    } else {
+      self.errors(error.data.messages)
+    }
   }
 
   self.showErrors = function (error) {
