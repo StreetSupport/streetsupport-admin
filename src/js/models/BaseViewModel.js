@@ -37,11 +37,12 @@ function BaseViewModel () {
   }
 
   self.handleError = function (error) {
-    if (error.status === 401 || error.status === 403) {
+    if (error.statusCode === 401 || error.statusCode === 403) {
       browser.redirect(adminUrls.redirector)
     } else {
       self.message('')
       self.setErrors(error)
+      browser.scrollTo('.form-feedback')
     }
   }
 

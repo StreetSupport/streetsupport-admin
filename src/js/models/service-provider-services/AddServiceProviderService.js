@@ -88,7 +88,11 @@ function AddServiceProviderService () {
 
       ajax.post(endpoint, self.headers(cookies.get('session-token')), payload)
       .then(function (result) {
-        browser.redirect(adminUrls.serviceProviders + '?key=' + getUrlParameter.parameter('providerId'))
+        if (result.statusCode === 201) {
+          browser.redirect(adminUrls.serviceProviders + '?key=' + getUrlParameter.parameter('providerId'))
+        } else {
+          self.handleError(result)
+        }
       },
       function (error) {
         self.handleError(error)

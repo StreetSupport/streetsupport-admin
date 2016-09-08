@@ -44,6 +44,20 @@ let setOnHistoryPop = (onPopCallback) => {
   }
 }
 
+let scrollTo = function (selector) {
+  let findPos = (obj) => {
+    var curtop = 0
+    if (obj.offsetParent) {
+      do {
+        curtop += obj.offsetTop
+      } while (obj === obj.offsetParent)
+      return [curtop]
+    }
+  }
+  let element = document.querySelector(selector)
+  window.scroll(0, findPos(element))
+}
+
 module.exports = {
   redirect: redirect,
   loading: loading,
@@ -51,5 +65,6 @@ module.exports = {
   trackEvent: trackEvent,
   pushHistory: pushHistory,
   popHistory: popHistory,
-  setOnHistoryPop: setOnHistoryPop
+  setOnHistoryPop: setOnHistoryPop,
+  scrollTo: scrollTo
 }

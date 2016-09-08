@@ -30,6 +30,7 @@ describe('Edit Service Provider Contact Information', () => {
     sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
     sinon.stub(browser, 'loading')
     sinon.stub(browser, 'loaded')
+    sinon.stub(browser, 'scrollTo')
 
     model = new Model()
 
@@ -42,6 +43,7 @@ describe('Edit Service Provider Contact Information', () => {
     getUrlParameter.parameter.restore()
     browser.loaded.restore()
     browser.loading.restore()
+    browser.scrollTo.restore()
   })
 
   it('should set isEditingContactDetails to true', () => {

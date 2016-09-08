@@ -147,10 +147,12 @@ function ServiceProviderDetails () {
         self.headers(cookies.get('session-token')),
         payload
         ).then(function (result) {
-          self.clearErrors()
-          self.isEditingGeneralDetails(false)
-        }, function (error) {
-          self.handleError(error)
+          if (result.statusCode === 200) {
+            self.isEditingGeneralDetails(false)
+            self.clearErrors()
+          } else {
+            self.handleError(result)
+          }
         })
     }
   }
