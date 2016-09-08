@@ -62,6 +62,7 @@ function AddServiceProviderService () {
     if (self.targetAudience().length > 0) tags = self.targetAudience().split(',').map((t) => t.trim())
     if (self.category() === undefined) {
       self.errors(['Please select a category.'])
+      browser.scrollTo('.form-feedback')
     } else {
       var payload = {
         'Info': self.info(),
