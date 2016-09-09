@@ -75,7 +75,11 @@ function Need (data) {
         self.headers(cookies.get('session-token')),
         model
       ).then(function (result) {
-        self.listeners().forEach((l) => l.saveNeed(self))
+        if (result.statusCode === 201) {
+          self.listeners().forEach((l) => l.saveNeed(self))
+        } else {
+          self.handleError(result)
+        }
       }, function (error) {
         self.handleError(error)
       })
@@ -85,7 +89,11 @@ function Need (data) {
         self.headers(cookies.get('session-token')),
         model
       ).then(function (result) {
-        self.listeners().forEach((l) => l.saveNeed(self))
+        if (result.statusCode === 200) {
+          self.listeners().forEach((l) => l.saveNeed(self))
+        } else {
+          self.handleError(result)
+        }
       }, function (error) {
         self.handleError(error)
       })
