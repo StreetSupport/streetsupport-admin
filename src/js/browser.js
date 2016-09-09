@@ -18,11 +18,17 @@ let getLoader = () => {
   return loaderAnim
 }
 
-let loading = () => {
+let getBody = () => {
+  return document.getElementsByTagName('body')[0]
+}
+
+var loading = function () {
+  getBody().className += ' page-loading'
   getLoader().spin(document.getElementById('spin'))
 }
 
-let loaded = () => {
+var loaded = function () {
+  getBody().className = getBody().className.replace('page-loading', '')
   getLoader().stop()
 }
 
