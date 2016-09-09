@@ -24,7 +24,7 @@ describe('Add individual Need', () => {
     let fakeGetResolution = {
       then: function (success, error) {
         success({
-          'status': 200,
+          'statusCode': 200,
           'data': coffee4CraigAddresses()
         })
       }
@@ -102,7 +102,7 @@ describe('Add individual Need', () => {
       let fakeResolved = {
         then: (success, _) => {
           success({
-            'status': 200,
+            'statusCode': 201,
             'data': {}
           })
         }
