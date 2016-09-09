@@ -30,7 +30,7 @@ function EditServiceProviderAddress () {
         var address = new Address(result.data)
         address.addListener(self)
         self.address(address)
-        browser.loading()
+        browser.loaded()
       },
       function (error) {
         self.handleError(error)

@@ -82,7 +82,7 @@ describe('Address', () => {
         let fakeResolved = {
           then: (success, _) => {
             success({
-              'status': 200,
+              'statusCode': 200,
               'data': getAddressData()
             })
           }
@@ -166,9 +166,9 @@ describe('Address', () => {
     describe('Save Fail', () => {
       beforeEach(() => {
         let fakeResolved = {
-          then: (_, error) => {
-            error({
-              'status': 400,
+          then: (result, error) => {
+            result({
+              'statusCode': 400,
               'response': JSON.stringify({
                 'messages': ['returned error message 1', 'returned error message 2']
               })

@@ -36,7 +36,7 @@ describe('Add individual Address', () => {
       let fakeResolved = {
         then: (success, _) => {
           success({
-            'status': 200,
+            'statusCode': 201,
             'data': {}
           })
         }
