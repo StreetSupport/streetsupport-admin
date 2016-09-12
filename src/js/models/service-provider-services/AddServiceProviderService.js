@@ -101,6 +101,12 @@ function AddServiceProviderService () {
     }
   }
 
+  self.dataLoaded = () => {
+    if (self.addresses().length > 0 && self.categories().length > 0) {
+      browser.loaded()
+    }
+  }
+
   self.init = function () {
     browser.loading()
 
@@ -108,6 +114,8 @@ function AddServiceProviderService () {
     ajax.get(serviceProviderEndpoint, self.headers(cookies.get('session-token')), {})
     .then(function (result) {
       self.addresses(result.data.addresses.map((a) => new Address(a)))
+
+      self.dataLoaded()
     },
     function (error) {
       self.handleError(error)
@@ -117,6 +125,8 @@ function AddServiceProviderService () {
     ajax.get(categoriesEndpoint, self.headers(cookies.get('session-token')), {})
     .then(function (result) {
       self.categories(result.data)
+
+      self.dataLoaded()
     },
     function (error) {
       self.handleError(error)
