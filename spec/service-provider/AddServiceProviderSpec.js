@@ -14,18 +14,37 @@ let cookies = require('../../src/js/cookies')
 describe('Add Service Provider', () => {
   let Model = require('../../src/js/models/AddServiceProvider')
   let model = null
+  let browserLoading = null
+  let browserLoaded = null
+  let ajaxGet = null
 
   beforeEach(() => {
-    sinon.stub(browser, 'loading')
-    sinon.stub(browser, 'loaded')
+    ajaxGet = sinon
+      .stub(ajax, 'get')
+      .withArgs(endpoints.cities)
+      .returns({
+        then: (success, _) => {
+          success({
+            'statusCode': 200,
+            'data': cityData
+          })
+        }
+      })
+    browserLoading = sinon.stub(browser, 'loading')
+    browserLoaded = sinon.stub(browser, 'loaded')
     sinon.stub(browser, 'scrollTo')
     model = new Model()
   })
 
   afterEach(() => {
+    ajax.get.restore()
     browser.loading.restore()
     browser.loaded.restore()
     browser.scrollTo.restore()
+  })
+
+  it('should notify user it is loading', () => {
+    expect(browserLoading.calledOnce).toBeTruthy()
   })
 
   it('should start with Name empty', () => {
@@ -36,6 +55,22 @@ describe('Add Service Provider', () => {
     expect(model.hasErrors()).toBeFalsy()
   })
 
+  it('should set cities', () => {
+    expect(model.cities().length).toEqual(2)
+  })
+
+  it('should set city id', () => {
+    expect(model.cities()[1].Id).toEqual('leeds')
+  })
+
+  it('should set city name', () => {
+    expect(model.cities()[1].Name).toEqual('Leeds')
+  })
+
+  it('should notify user it has loaded', () => {
+    expect(browserLoaded.calledAfter(ajaxGet)).toBeTruthy()
+  })
+
   describe('Save', () => {
     var stubbedApi
     let stubbedBrowser = null
@@ -44,7 +79,7 @@ describe('Add Service Provider', () => {
       let fakeResolved = {
         then: (success, _) => {
           success({
-            'status': 201
+            'statusCode': 201
           })
         }
       }
@@ -54,6 +89,7 @@ describe('Add Service Provider', () => {
       stubbedBrowser = sinon.stub(browser, 'redirect')
 
       model.name('New Service Provider')
+      model.cityId('manchester')
       model.save()
     })
 
@@ -70,7 +106,8 @@ describe('Add Service Provider', () => {
         'session-token': 'stored-session-token'
       }
       var payload = {
-        'Name': 'New Service Provider'
+        'Name': 'New Service Provider',
+        'AssociatedCity': 'manchester'
       }
       var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, headers, payload).calledOnce
       expect(apiCalledWithExpectedArgs).toBeTruthy()
@@ -85,12 +122,12 @@ describe('Add Service Provider', () => {
     var stubbedBrowser
     beforeEach(() => {
       let fakeResolved = {
-        then: (_, error) => {
-          error({
-            'status': 400,
-            'response': JSON.stringify({
+        then: (result, _) => {
+          result({
+            'statusCode': 400,
+            'data': {
               'messages': ['returned error message 1', 'returned error message 2']
-            })
+            }
           })
         }
       }
@@ -119,3 +156,18 @@ describe('Add Service Provider', () => {
     })
   })
 })
+
+let cityData = [
+  {
+    Id: 'manchester',
+    Name: 'Manchester',
+    Longitude: -2.24455696347558,
+    Latitude: 53.4792777155671
+  },
+  {
+    Id: 'leeds',
+    Name: 'Leeds',
+    Longitude: -1.54511238485298,
+    Latitude: 53.7954906003838
+  }
+]

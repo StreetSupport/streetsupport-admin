@@ -13,6 +13,7 @@ nosubnav: true
     <div data-bind="with: serviceProvider">
       <header>
         <h1 data-bind="html: name"></h1>
+        <p data-bind="text: city"></p>
         <a data-claims="superadmin" href="dashboard.html" class="btn btn--info">
           <span class="btn__text">Back to dashboard</span>
         </a>
@@ -52,6 +53,24 @@ nosubnav: true
                 <!-- /ko -->
                 <!-- ko if: $parent.isEditingGeneralDetails -->
                 <textarea data-bind="textInput: description" class="form__input form__input--textarea" rows="7"></textarea>
+                <!-- /ko -->
+              </dd>
+              <dt class="key-value-pair__key">Donation Url</dt>
+              <dd class="key-value-pair__value">
+                <!-- ko ifnot: $parent.isEditingGeneralDetails -->
+                <span data-bind="html: donationUrl"></span>
+                <!-- /ko -->
+                <!-- ko if: $parent.isEditingGeneralDetails -->
+                <input type="text" data-bind="textInput: donationUrl" class="form__input form__input" />
+                <!-- /ko -->
+              </dd>
+              <dt class="key-value-pair__key">Donation Description</dt>
+              <dd class="key-value-pair__value">
+                <!-- ko ifnot: $parent.isEditingGeneralDetails -->
+                <span data-bind="html: donationDescription"></span>
+                <!-- /ko -->
+                <!-- ko if: $parent.isEditingGeneralDetails -->
+                <textarea data-bind="textInput: donationDescription" class="form__input form__input--textarea" rows="7"></textarea>
                 <!-- /ko -->
               </dd>
               <dt class="key-value-pair__key">Tags</dt>
