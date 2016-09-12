@@ -16,6 +16,7 @@ function ServiceProvider (data) {
   var self = this
 
   self.key = ko.observable(data.key)
+  self.city = ko.observable(data.associatedCityId)
   self.name = ko.observable(data.name)
   self.shortDescription = ko.observable(htmlEncode.htmlDecode(data.shortDescription))
   self.description = ko.observable(htmlEncode.htmlDecode(data.description))
