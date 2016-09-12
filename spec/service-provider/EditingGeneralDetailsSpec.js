@@ -68,6 +68,8 @@ describe('Edit Service Provider General Details', () => {
 
       stubbedPutApi = sinon.stub(ajax, 'put').returns(fakeResolved)
 
+      model.serviceProvider().donationUrl('http://donate-here.com')
+      model.serviceProvider().donationDescription('donation description')
       model.serviceProvider().description('new description')
       model.serviceProvider().shortDescription('new short description')
       model.serviceProvider().tags()[0].isSelected(true)
@@ -90,6 +92,8 @@ describe('Edit Service Provider General Details', () => {
         'session-token': 'stored-session-token'
       }
       var payload = {
+        'DonationUrl': 'http://donate-here.com',
+        'DonationDescription': 'donation description',
         'Description': 'new description',
         'ShortDescription': 'new short description',
         'Tags': ['tag-a', 'tag-b', 'tag-c']

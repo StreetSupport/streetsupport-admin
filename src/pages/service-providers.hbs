@@ -54,6 +54,24 @@ nosubnav: true
                 <textarea data-bind="textInput: description" class="form__input form__input--textarea" rows="7"></textarea>
                 <!-- /ko -->
               </dd>
+              <dt class="key-value-pair__key">Donation Url</dt>
+              <dd class="key-value-pair__value">
+                <!-- ko ifnot: $parent.isEditingGeneralDetails -->
+                <span data-bind="html: donationUrl"></span>
+                <!-- /ko -->
+                <!-- ko if: $parent.isEditingGeneralDetails -->
+                <input type="text" data-bind="textInput: donationUrl" class="form__input form__input" />
+                <!-- /ko -->
+              </dd>
+              <dt class="key-value-pair__key">Donation Description</dt>
+              <dd class="key-value-pair__value">
+                <!-- ko ifnot: $parent.isEditingGeneralDetails -->
+                <span data-bind="html: donationDescription"></span>
+                <!-- /ko -->
+                <!-- ko if: $parent.isEditingGeneralDetails -->
+                <textarea data-bind="textInput: donationDescription" class="form__input form__input--textarea" rows="7"></textarea>
+                <!-- /ko -->
+              </dd>
               <dt class="key-value-pair__key">Tags</dt>
               <dd class="key-value-pair__value">
                 <dl class="key-value-pair" data-bind="foreach: tags">

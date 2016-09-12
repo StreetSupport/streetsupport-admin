@@ -70,6 +70,14 @@ describe('Cancel Edit Service Provider General Details', () => {
     expect(model.serviceProvider().tags()[3].isSelected()).toBeTruthy()
     expect(model.serviceProvider().tags()[4].isSelected()).toBeFalsy()
   })
+
+  it('should restore donation url to its previous value', () => {
+    expect(model.serviceProvider().donationUrl()).toEqual('http://initial-donation.com')
+  })
+
+  it('should restore donation description to its previous value', () => {
+    expect(model.serviceProvider().donationDescription()).toEqual('initial donation description')
+  })
 })
 
 const coffee4Craig = () => {
@@ -78,6 +86,8 @@ const coffee4Craig = () => {
     'name': 'Coffee 4 Craig',
     'shortDescription': 'initial short description',
     'description': 'initial description',
+    'donationUrl': 'http://initial-donation.com',
+    'donationDescription': 'initial donation description',
     'addresses': [],
     'groupedServices': [],
     'providedServices': [],
