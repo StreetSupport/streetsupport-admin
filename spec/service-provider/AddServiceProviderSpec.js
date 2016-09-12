@@ -21,6 +21,7 @@ describe('Add Service Provider', () => {
   beforeEach(() => {
     ajaxGet = sinon
       .stub(ajax, 'get')
+      .withArgs(endpoints.cities)
       .returns({
         then: (success, _) => {
           success({
@@ -78,7 +79,7 @@ describe('Add Service Provider', () => {
       let fakeResolved = {
         then: (success, _) => {
           success({
-            'status': 201
+            'statusCode': 201
           })
         }
       }
@@ -88,6 +89,7 @@ describe('Add Service Provider', () => {
       stubbedBrowser = sinon.stub(browser, 'redirect')
 
       model.name('New Service Provider')
+      model.cityId('manchester')
       model.save()
     })
 
@@ -104,7 +106,8 @@ describe('Add Service Provider', () => {
         'session-token': 'stored-session-token'
       }
       var payload = {
-        'Name': 'New Service Provider'
+        'Name': 'New Service Provider',
+        'AssociatedCity': 'manchester'
       }
       var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, headers, payload).calledOnce
       expect(apiCalledWithExpectedArgs).toBeTruthy()
@@ -119,12 +122,12 @@ describe('Add Service Provider', () => {
     var stubbedBrowser
     beforeEach(() => {
       let fakeResolved = {
-        then: (_, error) => {
-          error({
-            'status': 400,
-            'response': JSON.stringify({
+        then: (result, _) => {
+          result({
+            'statusCode': 400,
+            'data': {
               'messages': ['returned error message 1', 'returned error message 2']
-            })
+            }
           })
         }
       }
