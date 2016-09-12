@@ -7,8 +7,8 @@ var BaseViewModel = require('./BaseViewModel')
 
 function AddServiceProvider () {
   var self = this
-
   self.name = ko.observable('')
+  self.cities = ko.observableArray()
 
   self.save = function () {
     browser.loading()
@@ -24,6 +24,20 @@ function AddServiceProvider () {
         self.handleError(error)
       })
   }
+
+  self.init = () => {
+    browser.loading()
+    ajax
+      .get(self.endpointBuilder.cities().build())
+      .then((result) => {
+        self.cities(result.data)
+        browser.loaded()
+      }, (error) => {
+        self.handleError(error)
+      })
+  }
+
+  self.init()
 }
 
 AddServiceProvider.prototype = new BaseViewModel()

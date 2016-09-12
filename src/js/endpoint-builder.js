@@ -83,6 +83,12 @@ function EndpointBuilder () {
     return self
   }
 
+  self.cities = (cityId) => {
+    self.childResource = endpoints.cities
+    self.childResourceId = cityId
+    return self
+  }
+
   self.isVerified = () => {
     self.childResource = 'is-verified'
     return self

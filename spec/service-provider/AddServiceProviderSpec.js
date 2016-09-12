@@ -14,18 +14,36 @@ let cookies = require('../../src/js/cookies')
 describe('Add Service Provider', () => {
   let Model = require('../../src/js/models/AddServiceProvider')
   let model = null
+  let browserLoading = null
+  let browserLoaded = null
+  let ajaxGet = null
 
   beforeEach(() => {
-    sinon.stub(browser, 'loading')
-    sinon.stub(browser, 'loaded')
+    ajaxGet = sinon
+      .stub(ajax, 'get')
+      .returns({
+        then: (success, _) => {
+          success({
+            'statusCode': 200,
+            'data': cityData
+          })
+        }
+      })
+    browserLoading = sinon.stub(browser, 'loading')
+    browserLoaded = sinon.stub(browser, 'loaded')
     sinon.stub(browser, 'scrollTo')
     model = new Model()
   })
 
   afterEach(() => {
+    ajax.get.restore()
     browser.loading.restore()
     browser.loaded.restore()
     browser.scrollTo.restore()
+  })
+
+  it('should notify user it is loading', () => {
+    expect(browserLoading.calledOnce).toBeTruthy()
   })
 
   it('should start with Name empty', () => {
@@ -34,6 +52,22 @@ describe('Add Service Provider', () => {
 
   it('should start with errors false', () => {
     expect(model.hasErrors()).toBeFalsy()
+  })
+
+  it('should set cities', () => {
+    expect(model.cities().length).toEqual(2)
+  })
+
+  it('should set city id', () => {
+    expect(model.cities()[1].Id).toEqual('leeds')
+  })
+
+  it('should set city name', () => {
+    expect(model.cities()[1].Name).toEqual('Leeds')
+  })
+
+  it('should notify user it has loaded', () => {
+    expect(browserLoaded.calledAfter(ajaxGet)).toBeTruthy()
   })
 
   describe('Save', () => {
@@ -119,3 +153,18 @@ describe('Add Service Provider', () => {
     })
   })
 })
+
+let cityData = [
+  {
+    Id: 'manchester',
+    Name: 'Manchester',
+    Longitude: -2.24455696347558,
+    Latitude: 53.4792777155671
+  },
+  {
+    Id: 'leeds',
+    Name: 'Leeds',
+    Longitude: -1.54511238485298,
+    Latitude: 53.7954906003838
+  }
+]
