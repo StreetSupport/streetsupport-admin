@@ -125,10 +125,14 @@ function Address (data) {
         self.headers(cookies.get('session-token')),
         model
       ).then(function (result) {
-        self.isEditing(false)
-        self.key(result.data.key)
-        self.setFields()
-        self.listeners().forEach((listener) => listener.saveAddress(self))
+        if (result.statusCode === 201) {
+          self.isEditing(false)
+          self.key(result.data.key)
+          self.setFields()
+          self.listeners().forEach((listener) => listener.saveAddress(self))
+        } else {
+          self.handleError(result)
+        }
       }, function (error) {
         self.handleError(error)
       })
@@ -137,9 +141,13 @@ function Address (data) {
         self.headers(cookies.get('session-token')),
         model
       ).then(function (result) {
-        self.isEditing(false)
-        self.setFields()
-        self.listeners().forEach((listener) => listener.saveAddress(self))
+        if (result.statusCode === 200) {
+          self.isEditing(false)
+          self.setFields()
+          self.listeners().forEach((listener) => listener.saveAddress(self))
+        } else {
+          self.handleError(result)
+        }
       }, function (error) {
         self.handleError(error)
       })

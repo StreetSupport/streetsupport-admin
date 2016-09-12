@@ -62,6 +62,7 @@ function AddServiceProviderService () {
     if (self.targetAudience().length > 0) tags = self.targetAudience().split(',').map((t) => t.trim())
     if (self.category() === undefined) {
       self.errors(['Please select a category.'])
+      browser.scrollTo('.form-feedback')
     } else {
       var payload = {
         'Info': self.info(),
@@ -88,7 +89,11 @@ function AddServiceProviderService () {
 
       ajax.post(endpoint, self.headers(cookies.get('session-token')), payload)
       .then(function (result) {
-        browser.redirect(adminUrls.serviceProviders + '?key=' + getUrlParameter.parameter('providerId'))
+        if (result.statusCode === 201) {
+          browser.redirect(adminUrls.serviceProviders + '?key=' + getUrlParameter.parameter('providerId'))
+        } else {
+          self.handleError(result)
+        }
       },
       function (error) {
         self.handleError(error)

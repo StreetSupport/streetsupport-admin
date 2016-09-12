@@ -18,12 +18,14 @@ describe('Add Service Provider', () => {
   beforeEach(() => {
     sinon.stub(browser, 'loading')
     sinon.stub(browser, 'loaded')
+    sinon.stub(browser, 'scrollTo')
     model = new Model()
   })
 
   afterEach(() => {
     browser.loading.restore()
     browser.loaded.restore()
+    browser.scrollTo.restore()
   })
 
   it('should start with Name empty', () => {

@@ -18,11 +18,17 @@ let getLoader = () => {
   return loaderAnim
 }
 
-let loading = () => {
+let getBody = () => {
+  return document.getElementsByTagName('body')[0]
+}
+
+var loading = function () {
+  getBody().className += ' page-loading'
   getLoader().spin(document.getElementById('spin'))
 }
 
-let loaded = () => {
+var loaded = function () {
+  getBody().className = getBody().className.replace('page-loading', '')
   getLoader().stop()
 }
 
@@ -44,6 +50,20 @@ let setOnHistoryPop = (onPopCallback) => {
   }
 }
 
+let scrollTo = function (selector) {
+  let findPos = (obj) => {
+    var curtop = 0
+    if (obj.offsetParent) {
+      do {
+        curtop += obj.offsetTop
+      } while (obj === obj.offsetParent)
+      return [curtop]
+    }
+  }
+  let element = document.querySelector(selector)
+  window.scroll(0, findPos(element))
+}
+
 module.exports = {
   redirect: redirect,
   loading: loading,
@@ -51,5 +71,6 @@ module.exports = {
   trackEvent: trackEvent,
   pushHistory: pushHistory,
   popHistory: popHistory,
-  setOnHistoryPop: setOnHistoryPop
+  setOnHistoryPop: setOnHistoryPop,
+  scrollTo: scrollTo
 }

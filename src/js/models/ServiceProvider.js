@@ -147,10 +147,12 @@ function ServiceProviderDetails () {
         self.headers(cookies.get('session-token')),
         payload
         ).then(function (result) {
-          self.clearErrors()
-          self.isEditingGeneralDetails(false)
-        }, function (error) {
-          self.handleError(error)
+          if (result.statusCode === 200) {
+            self.isEditingGeneralDetails(false)
+            self.clearErrors()
+          } else {
+            self.handleError(result)
+          }
         })
     }
   }
@@ -176,7 +178,12 @@ function ServiceProviderDetails () {
           'Twitter': self.serviceProvider().twitter()
         }
         ).then(function (result) {
-          self.isEditingContactDetails(false)
+          if (result.statusCode === 200) {
+            self.isEditingContactDetails(false)
+            self.clearErrors()
+          } else {
+            self.handleError(result)
+          }
         }, function (error) {
           self.handleError(error)
         })

@@ -25,7 +25,11 @@ function BaseViewModel () {
   }
 
   self.setErrors = function (error) { // deprecated
-    self.errors(JSON.parse(error.response).messages)
+    if (error.response !== undefined) {
+      self.errors(JSON.parse(error.response).messages)
+    } else {
+      self.errors(error.data.messages)
+    }
   }
 
   self.showErrors = function (error) {
@@ -33,11 +37,12 @@ function BaseViewModel () {
   }
 
   self.handleError = function (error) {
-    if (error.status === 401 || error.status === 403) {
+    if (error.statusCode === 401 || error.statusCode === 403) {
       browser.redirect(adminUrls.redirector)
     } else {
       self.message('')
       self.setErrors(error)
+      browser.scrollTo('.form-feedback')
     }
   }
 

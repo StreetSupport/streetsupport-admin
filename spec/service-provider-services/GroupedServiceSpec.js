@@ -8,11 +8,12 @@ global describe, beforeEach, afterEach, it, expect
 const ko = require('knockout')
 const sinon = require('sinon')
 const ajax = require('../../src/js/ajax')
+const browser = require('../../src/js/browser')
 const endpoints = require('../../src/js/api-endpoints')
 const cookies = require('../../src/js/cookies')
 const getUrlParameter = require('../../src/js/get-url-parameter')
 
-describe('Service', () => {
+describe('Grouped Service', () => {
   const Model = require('../../src/js/models/GroupedService')
   let model = null
 
@@ -32,7 +33,7 @@ describe('Service', () => {
         const fakeResolved = {
           then: function (success, error) {
             success({
-              'status': 200,
+              'statusCode': 200,
               'data': getData()
             })
           }
@@ -113,12 +114,13 @@ describe('Service', () => {
         const fakeResolved = {
           then: function (success, error) {
             success({
-              'status': 200,
+              'statusCode': 200,
               'data': getData()
             })
           }
         }
 
+        sinon.stub(browser, 'scrollTo')
         stubbedApi = sinon.stub(ajax, 'put').returns(fakeResolved)
         sinon.stub(cookies, 'get').returns('stored-session-token')
         sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
@@ -130,6 +132,7 @@ describe('Service', () => {
 
       afterEach(() => {
         ajax.put.restore()
+        browser.scrollTo.restore()
         cookies.get.restore()
         getUrlParameter.parameter.restore()
       })
@@ -167,16 +170,17 @@ describe('Service', () => {
       beforeEach(() => {
         const fakeResolved = {
           then: function (success, error) {
-            error({
-              'status': 400,
-              'response': JSON.stringify({
+            success({
+              'statusCode': 400,
+              'data': {
                 'messages': ['returned error message 1', 'returned error message 2']
-              })
+              }
             })
           }
         }
 
         sinon.stub(ajax, 'put').returns(fakeResolved)
+        sinon.stub(browser, 'scrollTo')
         sinon.stub(cookies, 'get').returns('stored-session-token')
         sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
 
@@ -187,6 +191,7 @@ describe('Service', () => {
 
       afterEach(() => {
         ajax.put.restore()
+        browser.scrollTo.restore()
         cookies.get.restore()
         getUrlParameter.parameter.restore()
       })

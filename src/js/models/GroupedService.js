@@ -84,9 +84,13 @@ function Service (data) {
       self.headers(cookies.get('session-token')),
       model
     ).then(function (result) {
-      self.listeners().forEach((l) => l.serviceSaved(self))
+      if (result.statusCode === 200) {
+        self.listeners().forEach((l) => l.serviceSaved(self))
+      } else {
+        self.handleError(result)
+      }
     }, function (error) {
-      self.handleError(error)
+      self.handleServerError(error)
     })
   }
 
