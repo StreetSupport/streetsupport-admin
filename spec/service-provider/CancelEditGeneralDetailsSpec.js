@@ -79,6 +79,7 @@ const coffee4Craig = () => {
     'shortDescription': 'initial short description',
     'description': 'initial description',
     'addresses': [],
+    'groupedServices': [],
     'providedServices': [],
     'tags': ['tag-a', 'tag-c', 'tag-d']
   }

@@ -170,6 +170,7 @@ function coffee4Craig () {
     'name': 'Coffee 4 Craig',
     'description': 'initial description',
     'addresses': [],
+    'groupedServices': [],
     'providedServices': [],
     'tags': ['tag-a', 'tag-c', 'tag-d']
   }

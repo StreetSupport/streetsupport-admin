@@ -31,7 +31,7 @@ describe('Show Service Provider', () => {
     sinon.stub(browser, 'loaded')
 
     model = new Model()
-    model.serviceProvider().services()[0].deleteService()
+    model.serviceProvider().groupedServices()[0].deleteService()
   })
 
   afterEach(() => {
@@ -44,11 +44,11 @@ describe('Show Service Provider', () => {
   })
 
   it('should remove Service from collection', () => {
-    expect(model.serviceProvider().services().length).toEqual(1)
+    expect(model.serviceProvider().groupedServices().length).toEqual(1)
   })
 
   it('should keep expected address', () => {
-    expect(model.serviceProvider().services()[0].id()).toEqual('5678')
+    expect(model.serviceProvider().groupedServices()[0].id()).toEqual('57bdb2c58705422ecc657250')
   })
 })
 
@@ -156,45 +156,6 @@ function coffee4Craig () {
           {
             'id': 'towels',
             'name': 'Towels'
-          }
-        ]
-      },
-      {
-        'id': '57bdb2c58705422ecc657253',
-        'categoryId': 'support',
-        'categoryName': 'Support',
-        'categorySynopsis': null,
-        'info': null,
-        'tags': null,
-        'location': {
-          'description': '',
-          'streetLine1': 'Flat 713',
-          'streetLine2': '37 Potato Wharf',
-          'streetLine3': '',
-          'streetLine4': '',
-          'city': 'Manchester',
-          'postcode': 'M3 4BD',
-          'latitude': 53.4755361548836,
-          'longitude': -2.25848699844466
-        },
-        'openingTimes': [
-          {
-            'startTime': '10:00',
-            'endTime': '18:00',
-            'day': 'Tuesday'
-          }
-        ],
-        'serviceProviderId': null,
-        'serviceProviderName': null,
-        'isPublished': false,
-        'subCategories': [
-          {
-            'id': 'lgbt',
-            'name': 'LGBT support'
-          },
-          {
-            'id': 'housing',
-            'name': 'Housing support'
           }
         ]
       }

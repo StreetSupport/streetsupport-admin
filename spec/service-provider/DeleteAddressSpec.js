@@ -83,6 +83,7 @@ function coffee4Craig () {
       'city': null,
       'postcode': 'M1 1AF'
     }],
+    'groupedServices': [],
     'providedServices': []
   }
 }
