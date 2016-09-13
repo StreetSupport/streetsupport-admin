@@ -13,7 +13,8 @@ nosubnav: true
     <div data-bind="with: serviceProvider">
       <header>
         <h1 data-bind="html: name"></h1>
-        <a href="dashboard.html" class="btn btn--info">
+        <p data-bind="text: city"></p>
+        <a data-claims="superadmin" href="dashboard.html" class="btn btn--info">
           <span class="btn__text">Back to dashboard</span>
         </a>
       </header>
@@ -52,6 +53,24 @@ nosubnav: true
                 <!-- /ko -->
                 <!-- ko if: $parent.isEditingGeneralDetails -->
                 <textarea data-bind="textInput: description" class="form__input form__input--textarea" rows="7"></textarea>
+                <!-- /ko -->
+              </dd>
+              <dt class="key-value-pair__key">Donation Url</dt>
+              <dd class="key-value-pair__value">
+                <!-- ko ifnot: $parent.isEditingGeneralDetails -->
+                <span data-bind="html: donationUrl"></span>
+                <!-- /ko -->
+                <!-- ko if: $parent.isEditingGeneralDetails -->
+                <input type="text" data-bind="textInput: donationUrl" class="form__input form__input" />
+                <!-- /ko -->
+              </dd>
+              <dt class="key-value-pair__key">Donation Description</dt>
+              <dd class="key-value-pair__value">
+                <!-- ko ifnot: $parent.isEditingGeneralDetails -->
+                <span data-bind="html: donationDescription"></span>
+                <!-- /ko -->
+                <!-- ko if: $parent.isEditingGeneralDetails -->
+                <textarea data-bind="textInput: donationDescription" class="form__input form__input--textarea" rows="7"></textarea>
                 <!-- /ko -->
               </dd>
               <dt class="key-value-pair__key">Tags</dt>
@@ -145,8 +164,8 @@ nosubnav: true
               </a>
             </header>
             <div data-bind="foreach: addresses">
-              <article class="key-value-pair location">
-                <address data-bind="html: formatted" class="key-value-pair__key"></address>
+              <article class="key-value-pair location service-provider__item">
+                <h3 data-bind="html: formatted" class="key-value-pair__key"></h3>
                 <a data-bind="attr: { 'href': editAddressUrl }" title="edit location" class="btn btn--info">
                   <span class="btn__text">Edit</span>
                 </a>
@@ -163,7 +182,7 @@ nosubnav: true
               <span class="btn__text">Add</span>
             </a>
             <div data-bind="foreach: groupedServices">
-              <article class="service-provider__service">
+              <article class="service-provider__item">
                 <h3 data-bind="text: name"></h3>
                 <a data-bind="attr: { 'href': editServiceUrl }" title="edit service" class="btn btn--info">
                   <span class="btn__text">Edit</span>
@@ -183,7 +202,7 @@ nosubnav: true
               <span class="btn__text">Add</span>
             </a>
             <div data-bind="foreach: needs">
-              <article>
+              <article class="service-provider__item">
                 <h3 data-bind="html: description"></h3>
                 <a data-bind="attr: { 'href': editNeedUrl }" title="edit need" class="btn btn--info">
                   <span class="btn__text">Edit</span>

@@ -61,6 +61,10 @@ describe('Show Service Provider', () => {
     expect(model.serviceProvider().key()).toEqual('coffee4craig')
   })
 
+  it('should set associated City', () => {
+    expect(model.serviceProvider().city()).toEqual('manchester')
+  })
+
   it('should set decoded provider short description', () => {
     expect(model.serviceProvider().shortDescription()).toEqual('St Mary\'s Centre provides a range of services for anyone who has been raped or sexually assaulted')
   })
@@ -127,6 +131,7 @@ function coffee4Craig () {
   return {
     'key': 'coffee4craig',
     'name': 'Coffee 4 Craig',
+    'associatedCityId': 'manchester',
     'isVerified': false,
     'isPublished': true,
     'shortDescription': 'St Mary&#39;s Centre provides a range of services for anyone who has been raped or sexually assaulted',

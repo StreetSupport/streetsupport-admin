@@ -15,14 +15,14 @@ let disableForbiddenLinks = () => {
   claims = claims.toLowerCase()
 
   if (claims !== 'superadmin') {
-    let navLinks = document.querySelectorAll('.nav__item a')
+    let claimsLinks = document.querySelectorAll('[data-claims*="admin"]')
 
-    for (let i = 0; i < navLinks.length; ++i) {
-      let requiredClaims = navLinks[i].getAttribute('data-claims')
+    for (let i = 0; i < claimsLinks.length; ++i) {
+      let requiredClaims = claimsLinks[i].getAttribute('data-claims')
       if (requiredClaims !== null) {
         requiredClaims = requiredClaims.split(',')
         for (let j = 0; j < requiredClaims.length; ++j) {
-          if (claims.indexOf(requiredClaims[j]) < 0) navLinks[i].parentNode.className += ' hide'
+          if (claims.indexOf(requiredClaims[j]) < 0) claimsLinks[i].parentNode.className += ' hide'
         }
       }
     }

@@ -184,7 +184,7 @@ describe('Save new Service', () => {
       let savePromise = {
         then: function (success, error) {
           success({
-            'status': 200,
+            'statusCode': 201,
             'data': 'wang'
           })
         }

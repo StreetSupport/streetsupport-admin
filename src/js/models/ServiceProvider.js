@@ -16,6 +16,7 @@ function ServiceProvider (data) {
   var self = this
 
   self.key = ko.observable(data.key)
+  self.city = ko.observable(data.associatedCityId)
   self.name = ko.observable(data.name)
   self.shortDescription = ko.observable(htmlEncode.htmlDecode(data.shortDescription))
   self.description = ko.observable(htmlEncode.htmlDecode(data.description))
@@ -27,6 +28,8 @@ function ServiceProvider (data) {
   data.addresses.forEach((a) => { a.serviceProviderId = data.key })
   self.addresses = ko.observableArray(data.addresses.map((a) => new Address(a)))
   self.addresses().forEach((a) => a.addListener(self))
+  self.donationUrl = ko.observable(data.donationUrl)
+  self.donationDescription = ko.observable(data.donationDescription)
 
   self.tags = ko.observableArray(
     spTags.all()
@@ -141,16 +144,20 @@ function ServiceProviderDetails () {
       const payload = {
         'Description': sp.description(),
         'ShortDescription': sp.shortDescription(),
-        'Tags': tagsToCsv()
+        'Tags': tagsToCsv(),
+        'DonationUrl': sp.donationUrl(),
+        'DonationDescription': sp.donationDescription()
       }
       ajax.put(self.endpointBuilder.serviceProviders(getUrlParameter.parameter('key')).generalInformation().build(),
         self.headers(cookies.get('session-token')),
         payload
         ).then(function (result) {
-          self.clearErrors()
-          self.isEditingGeneralDetails(false)
-        }, function (error) {
-          self.handleError(error)
+          if (result.statusCode === 200) {
+            self.isEditingGeneralDetails(false)
+            self.clearErrors()
+          } else {
+            self.handleError(result)
+          }
         })
     }
   }
@@ -176,7 +183,12 @@ function ServiceProviderDetails () {
           'Twitter': self.serviceProvider().twitter()
         }
         ).then(function (result) {
-          self.isEditingContactDetails(false)
+          if (result.statusCode === 200) {
+            self.isEditingContactDetails(false)
+            self.clearErrors()
+          } else {
+            self.handleError(result)
+          }
         }, function (error) {
           self.handleError(error)
         })
@@ -192,6 +204,8 @@ function ServiceProviderDetails () {
     self.serviceProvider().website(self.initialServiceProvider().website())
     self.serviceProvider().facebook(self.initialServiceProvider().facebook())
     self.serviceProvider().twitter(self.initialServiceProvider().twitter())
+    self.serviceProvider().donationUrl(self.initialServiceProvider().donationUrl())
+    self.serviceProvider().donationDescription(self.initialServiceProvider().donationDescription())
   }
 
   self.init()

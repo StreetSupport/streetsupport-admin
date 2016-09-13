@@ -28,7 +28,7 @@ describe('Save brand new Address', () => {
       let fakeResolved = {
         then: function (success, error) {
           success({
-            'status': 200,
+            'statusCode': 201,
             'data': {
               'key': 230680
             }
@@ -143,7 +143,7 @@ describe('Save new Address as part of collection', () => {
       let fakeResolved = {
         then: function (success, error) {
           success({
-            'status': 200,
+            'statusCode': 201,
             'data': {
               'key': 230680
             }

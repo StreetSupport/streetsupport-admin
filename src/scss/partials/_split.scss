@@ -28,13 +28,17 @@
     }
 
     .split--single & {
-      float: left!important;
+      @include mq($from: m) {
+        float: left!important;
+      }
     }
 
     &--admin-panel {
-      @include span(6 of 12);
-      margin-bottom: -99999px!important;
-      padding-bottom: 99999px;
+      @include mq($from: m) {
+        @include span(6 of 12);
+        margin-bottom: -99999px!important;
+        padding-bottom: 99999px;
+      }
       padding-left: 1rem;
       padding-right: 1rem;
       background: #eee;
@@ -73,7 +77,7 @@
           font-style: normal;
           font-weight: bold;
         }
-        &.service-provider__service {
+        &.service-provider__item {
           h3 {
             width: 12em;
           }

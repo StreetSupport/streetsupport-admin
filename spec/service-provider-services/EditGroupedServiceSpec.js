@@ -124,7 +124,7 @@ describe('Edit Service', () => {
       let fakeResolved = {
         then: (success, _) => {
           success({
-            'status': 200,
+            'statusCode': 200,
             'data': serviceData()
           })
         }

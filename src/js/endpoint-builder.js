@@ -65,6 +65,11 @@ function EndpointBuilder () {
     return self
   }
 
+  self.cities = (cityId) => {
+    self.updateBaseResource(endpoints.cities, cityId)
+    return self
+  }
+
   self.addresses = (addressId) => {
     self.childResource = 'addresses'
     self.childResourceId = addressId

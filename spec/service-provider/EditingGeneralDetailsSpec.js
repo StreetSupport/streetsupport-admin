@@ -20,7 +20,7 @@ describe('Edit Service Provider General Details', () => {
     let fakeResolved = {
       then: (success, _) => {
         success({
-          'status': 200,
+          'statusCode': 200,
           'data': coffee4Craig()
         })
       }
@@ -31,6 +31,7 @@ describe('Edit Service Provider General Details', () => {
     sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
     sinon.stub(browser, 'loading')
     sinon.stub(browser, 'loaded')
+    sinon.stub(browser, 'scrollTo')
     sinon.stub(spTags, 'all').returns(['Tag A', 'Tag B', 'Tag C', 'Tag D', 'Tag E'])
 
     model = new Model()
@@ -44,6 +45,7 @@ describe('Edit Service Provider General Details', () => {
     getUrlParameter.parameter.restore()
     browser.loaded.restore()
     browser.loading.restore()
+    browser.scrollTo.restore()
     spTags.all.restore()
   })
 
@@ -58,7 +60,7 @@ describe('Edit Service Provider General Details', () => {
       let fakeResolved = {
         then: (success, _) => {
           success({
-            'status': 200,
+            'statusCode': 200,
             'data': {}
           })
         }
@@ -66,6 +68,8 @@ describe('Edit Service Provider General Details', () => {
 
       stubbedPutApi = sinon.stub(ajax, 'put').returns(fakeResolved)
 
+      model.serviceProvider().donationUrl('http://donate-here.com')
+      model.serviceProvider().donationDescription('donation description')
       model.serviceProvider().description('new description')
       model.serviceProvider().shortDescription('new short description')
       model.serviceProvider().tags()[0].isSelected(true)
@@ -88,6 +92,8 @@ describe('Edit Service Provider General Details', () => {
         'session-token': 'stored-session-token'
       }
       var payload = {
+        'DonationUrl': 'http://donate-here.com',
+        'DonationDescription': 'donation description',
         'Description': 'new description',
         'ShortDescription': 'new short description',
         'Tags': ['tag-a', 'tag-b', 'tag-c']
@@ -104,9 +110,9 @@ describe('Edit Service Provider General Details', () => {
   describe('Invalid submission', () => {
     beforeEach(() => {
       const fakeResolved = {
-        then: (_, error) => {
-          error({
-            'status': 400,
+        then: (result, _) => {
+          result({
+            'statusCode': 400,
             'response': JSON.stringify({
               'messages': ['returned error message 1', 'returned error message 2']
             })
@@ -139,7 +145,7 @@ describe('Edit Service Provider General Details', () => {
       let fakeResolved = {
         then: (success, _) => {
           success({
-            'status': 200,
+            'statusCode': 200,
             'data': {}
           })
         }

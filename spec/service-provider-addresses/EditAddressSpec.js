@@ -22,7 +22,7 @@ describe('Edit individual Address', () => {
     let fakeResolved = {
       then: function (success, error) {
         success({
-          'status': 200,
+          'statusCode': 200,
           'data': addressData()
         })
       }
@@ -89,7 +89,7 @@ describe('Edit individual Address', () => {
       let fakeResolved = {
         then: function (success, error) {
           success({
-            'status': 200,
+            'statusCode': 200,
             'data': {}
           })
         }

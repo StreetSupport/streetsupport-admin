@@ -28,7 +28,7 @@ describe('Editing Service Provider Need', () => {
       return {
         then: function (success, error) {
           success({
-            'status': 200,
+            'statusCode': 200,
             'data': needData()
           })
         }
@@ -125,7 +125,7 @@ describe('Editing Service Provider Need', () => {
         return {
           then: function (success, error) {
             success({
-              'status': 200
+              'statusCode': 200
             })
           }
         }
