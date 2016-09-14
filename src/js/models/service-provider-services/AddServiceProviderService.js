@@ -28,8 +28,13 @@ function AddServiceProviderService () {
   self.category = ko.observable()
   self.subCategories = ko.observableArray()
 
-  self.addresses = ko.observableArray()
   self.preselectedAddress = ko.observable()
+  self.hasAddresses = ko.computed(function () {
+    if (self.addresses === undefined) return false
+    console.log(self.addresses)
+    if (self.addresses().length === 0) return false
+    return true
+  }, self)
 
   self.address = ko.observable(new Address({}))
 
@@ -102,7 +107,7 @@ function AddServiceProviderService () {
   }
 
   self.dataLoaded = () => {
-    if (self.addresses().length > 0 && self.categories().length > 0) {
+    if (self.addresses !== undefined && self.categories().length > 0) {
       browser.loaded()
     }
   }
@@ -113,7 +118,7 @@ function AddServiceProviderService () {
     var serviceProviderEndpoint = self.endpointBuilder.serviceProviders(getUrlParameter.parameter('providerId')).build()
     ajax.get(serviceProviderEndpoint, self.headers(cookies.get('session-token')), {})
     .then(function (result) {
-      self.addresses(result.data.addresses.map((a) => new Address(a)))
+      self.addresses = ko.observableArray(result.data.addresses.map((a) => new Address(a)))
 
       self.dataLoaded()
     },

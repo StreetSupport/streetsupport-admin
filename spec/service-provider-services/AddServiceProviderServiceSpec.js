@@ -12,7 +12,7 @@ var getUrlParameter = require('../../src/js/get-url-parameter')
 var browser = require('../../src/js/browser')
 var adminUrls = require('../../src/js/admin-urls')
 
-describe('Save new Service', () => {
+describe('Add Service Provider Service', () => {
   var Model = require('../../src/js/models/service-provider-services/AddServiceProviderService')
   var model
   var stubbedApi
