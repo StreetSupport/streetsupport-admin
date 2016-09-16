@@ -1,0 +1,40 @@
+.openingTimes {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.openingTimes__item {
+  @include cf();
+}
+
+.openingTimes__day {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  @include mq($from: s) {
+    margin-bottom: 0px;
+    @include span(1 of 4);
+  }
+}
+
+.openingTimes__time {
+  margin-bottom: 10px;
+  margin-left: 0;
+  @include mq($from: s) {
+    margin-top: 10px;
+    margin-bottom: 0px;
+    @include span(1 of 4);
+  }
+}
+
+.openingTimes__buttons {
+  margin-left: 0;
+  @include mq($from: s) {
+    @include span(1 of 4);
+    @include last();
+  }
+
+  .btn {
+    margin: 0;
+  }
+}
