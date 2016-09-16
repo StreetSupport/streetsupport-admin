@@ -13,24 +13,39 @@
   margin-bottom: 10px;
   @include mq($from: s) {
     margin-bottom: 0px;
-    @include span(1 of 4);
+    @include span(1 of 3);
+  }
+  @include mq($from: m) {
+    @include span(1 of 5);
   }
 }
 
 .openingTimes__time {
   margin-bottom: 10px;
   margin-left: 0;
-  @include mq($from: s) {
+  @include mq($from: s, $until: m) {
     margin-top: 10px;
     margin-bottom: 0px;
-    @include span(1 of 4);
+    @include span(1 of 3);
+    &:last-of-type {
+      @include last();
+    }
+  }
+  @include mq($from: m) {
+    margin-top: 10px;
+    margin-bottom: 0px;
+    @include span(1 of 5);
   }
 }
 
 .openingTimes__buttons {
   margin-left: 0;
-  @include mq($from: s) {
-    @include span(1 of 4);
+  @include mq($from: s, $until: m) {
+    padding-top: 10px;
+    clear: both;
+  }
+  @include mq($from: m) {
+    @include span(2 of 5);
     @include last();
   }
 
