@@ -6,7 +6,7 @@ global describe, beforeEach, it, expect
 
 let ko = require('knockout')
 
-describe('Remove Opening Time', () => {
+describe('Duplicate Opening Time', () => {
   let Model = require('../../src/js/models/Address')
   let model = null
 
@@ -14,18 +14,18 @@ describe('Remove Opening Time', () => {
     model = new Model(getAddressData())
 
     model.edit()
-    model.removeOpeningTime({
+    model.duplicateOpeningTime({
       'startTime': ko.observable('10:00'),
       'endTime': ko.observable('16:30'),
       'day': ko.observable('Monday')
     })
   })
 
-  it('should remove passed openingTimes', () => {
-    expect(model.openingTimes().length).toEqual(2)
-    expect(model.openingTimes()[1].day()).toEqual('Tuesday')
-    expect(model.openingTimes()[1].startTime()).toEqual('10:00')
-    expect(model.openingTimes()[1].endTime()).toEqual('16:30')
+  it('- should duplicate passed openingTimes', () => {
+    expect(model.openingTimes().length).toEqual(3)
+    expect(model.openingTimes()[2].day()).toEqual('Monday')
+    expect(model.openingTimes()[2].startTime()).toEqual('10:00')
+    expect(model.openingTimes()[2].endTime()).toEqual('16:30')
   })
 })
 
@@ -39,10 +39,6 @@ function getAddressData () {
     'city': 'Manchester',
     'postcode': 'M4 5JD',
     'openingTimes': [{
-      'startTime': '10:00',
-      'endTime': '16:30',
-      'day': 'Monday'
-    }, {
       'startTime': '10:00',
       'endTime': '16:30',
       'day': 'Monday'
