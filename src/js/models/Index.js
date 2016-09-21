@@ -15,17 +15,15 @@ function Index () {
 
     var success = (result) => {
       var authClaims = result.data.authClaims
-      if (authClaims.indexOf('SuperAdmin') > -1) {
+      let adminForClaim = authClaims.filter((a) => a.indexOf(adminForPrefix) === 0)
+      if (adminForClaim.length > 0) {
+        let providerKey = adminForClaim[0].substring(adminForPrefix.length)
+        var destination = adminUrls.serviceProviders + '?key=' + providerKey
+        browser.redirect(destination)
+      } else if (authClaims.indexOf('SuperAdmin') > -1) {
         browser.redirect(adminUrls.dashboard)
       } else if (authClaims.indexOf('CharterAdmin') > -1) {
         browser.redirect(adminUrls.charter)
-      } else {
-        let adminForClaim = authClaims.filter((a) => a.indexOf(adminForPrefix) === 0)
-        if (adminForClaim.length > 0) {
-          let providerKey = adminForClaim[0].substring(adminForPrefix.length)
-          var destination = adminUrls.serviceProviders + '?key=' + providerKey
-          browser.redirect(destination)
-        }
       }
     }
 
