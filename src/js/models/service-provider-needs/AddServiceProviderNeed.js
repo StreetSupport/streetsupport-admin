@@ -21,9 +21,15 @@ function AddServiceProviderNeed () {
   var addressEndpoint = self.endpointBuilder.serviceProviders(getUrlParameter.parameter('providerId')).addresses().build()
   ajax.get(addressEndpoint, self.headers(cookies.get('session-token')))
     .then(function (result) {
+      let getPostcode = () => {
+        if (result.data.addresses !== undefined && result.data.addresses.length > 0) {
+          return result.data.addresses[0].postcode
+        }
+        return ''
+      }
       var need = new Need({
         'serviceProviderId': getUrlParameter.parameter('providerId'),
-        'postcode': result.data.addresses[0].postcode
+        'postcode': getPostcode()
       })
       need.addListener(self)
       self.need(need)
