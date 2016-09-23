@@ -28,10 +28,11 @@ function AddServiceProviderService () {
   self.category = ko.observable()
   self.subCategories = ko.observableArray()
 
+  self.addresses = ko.observableArray()
+
   self.preselectedAddress = ko.observable()
   self.hasAddresses = ko.computed(function () {
     if (self.addresses === undefined) return false
-    console.log(self.addresses)
     if (self.addresses().length === 0) return false
     return true
   }, self)
@@ -106,8 +107,11 @@ function AddServiceProviderService () {
     }
   }
 
+  self.addressesLoaded = false
+  self.categoriesLoaded = false
+
   self.dataLoaded = () => {
-    if (self.addresses !== undefined && self.categories().length > 0) {
+    if (self.addressesLoaded && self.categoriesLoaded) {
       browser.loaded()
     }
   }
@@ -118,8 +122,10 @@ function AddServiceProviderService () {
     var serviceProviderEndpoint = self.endpointBuilder.serviceProviders(getUrlParameter.parameter('providerId')).build()
     ajax.get(serviceProviderEndpoint, self.headers(cookies.get('session-token')), {})
     .then(function (result) {
-      self.addresses = ko.observableArray(result.data.addresses.map((a) => new Address(a)))
-
+      let addresses = result.data.addresses
+        .map((a) => new Address(a))
+      self.addresses(addresses)
+      self.addressesLoaded = true
       self.dataLoaded()
     },
     function (error) {
@@ -130,7 +136,7 @@ function AddServiceProviderService () {
     ajax.get(categoriesEndpoint, self.headers(cookies.get('session-token')), {})
     .then(function (result) {
       self.categories(result.data)
-
+      self.categoriesLoaded = true
       self.dataLoaded()
     },
     function (error) {
