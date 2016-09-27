@@ -24,6 +24,18 @@ function EditServiceProviderService () {
 
   self.service = ko.observable()
 
+  self.allSubCatsSelected = ko.observable(false)
+
+  const toggleAllSubCats = (isSelected) => {
+    for (let i = 0; i < self.service().subCategories().length; i++) {
+      self.service().subCategories()[i].isSelected(isSelected)
+    }
+  }
+
+  self.allSubCatsSelected.subscribe((newValue) => {
+    toggleAllSubCats(newValue)
+  })
+
   self.init = function () {
     browser.loading()
 

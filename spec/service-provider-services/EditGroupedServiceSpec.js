@@ -119,6 +119,28 @@ describe('Edit Service', () => {
     expect(model.service().subCategories()[4].isSelected()).toBeTruthy()
   })
 
+  describe('select all subcategories', () => {
+    beforeEach(() => {
+      model.allSubCatsSelected(true)
+    })
+
+    it('- should select all subcats', () => {
+      let totalSelected = model.service().subCategories().filter((sc) => sc.isSelected()).length
+      expect(totalSelected).toEqual(model.service().subCategories().length)
+    })
+
+    describe('...then de-select all subcategories', () => {
+      beforeEach(() => {
+        model.allSubCatsSelected(false)
+      })
+
+      it('- should de-select all subcats', () => {
+        let totalSelected = model.service().subCategories().filter((sc) => sc.isSelected()).length
+        expect(totalSelected).toEqual(0)
+      })
+    })
+  })
+
   describe('Save', () => {
     beforeEach(() => {
       let fakeResolved = {
