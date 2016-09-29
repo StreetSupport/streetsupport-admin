@@ -31,7 +31,7 @@ function Need (data) {
   self.reason = ko.observable(htmlEncode.htmlDecode(data.reason))
   self.moreInfoUrl = ko.observable(data.moreInfoUrl)
   self.postcode = ko.observable(data.postcode)
-  self.instructions = ko.observable(data.instructions)
+  self.instructions = ko.observable(htmlEncode.htmlDecode(data.instructions))
   self.email = ko.observable(data.email)
   self.donationAmountInPounds = ko.observable(data.donationAmountInPounds)
   self.donationUrl = ko.observable(data.donationUrl)
