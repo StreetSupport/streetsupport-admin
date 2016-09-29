@@ -39,8 +39,21 @@ function AddServiceProviderService () {
 
   self.address = ko.observable(new Address({}))
 
+  self.allSubCatsSelected = ko.observable(false)
+
+  const toggleAllSubCats = (isSelected) => {
+    for (let i = 0; i < self.subCategories().length; i++) {
+      self.subCategories()[i].isSelected(isSelected)
+    }
+  }
+
+  self.allSubCatsSelected.subscribe((newValue) => {
+    toggleAllSubCats(newValue)
+  })
+
   self.setAvailableSubCategories = function () {
     self.subCategories(self.category().subCategories.map((sc) => new SubCat(sc.key, sc.name)))
+    self.allSubCatsSelected(false)
   }
 
   self.prefillAddress = function () {

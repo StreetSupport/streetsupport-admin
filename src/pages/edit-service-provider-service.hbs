@@ -27,6 +27,12 @@ nosubnav: true
             <dd class="key-value-pair__value" data-bind="text: name"></dd>
           <dt class="key-value-pair__key">Sub Categories</dt>
           <dd class="key-value-pair__value">
+            <span data-bind="with: $parent">
+              <label data-bind="attr: { for: 'selectAllSubCats' }" class="form__checkbox-label">Select All Sub Categories</label>
+              <input type="checkbox" name="selectAllSubCats" data-bind="checked: allSubCatsSelected" class="form__checkbox" />
+            </span>
+          </dd>
+          <dd class="key-value-pair__value">
             <ul data-bind="foreach: subCategories" class="form__checkbox-container">
               <li>
                 <input type="checkbox" data-bind="attr: { name: name, id: name, value: id }, checked: isSelected" class="form__checkbox" />
