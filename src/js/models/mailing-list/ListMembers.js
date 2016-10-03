@@ -14,6 +14,7 @@ function Member (data) {
   this.type = ko.observable(data.memberType)
   this.creationDateTime = ko.observable(data.creationDateTime)
   this.joinDate = ko.observable(moment(data.creationDateTime).format('DD/MM/YY'))
+  this.org = ko.observable(data.organisation)
 }
 
 function ListMembers () {
