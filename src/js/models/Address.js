@@ -90,13 +90,33 @@ function Address (data) {
     self.openingTimes(openingTimes)
   }
 
+  self.duplicateOpeningTime = (source) => {
+    let orig = self.openingTimes()
+    orig.push(new OpeningTime({
+      day: source.day(),
+      startTime: source.startTime(),
+      endTime: source.endTime()
+    }))
+    self.openingTimes(orig)
+  }
+
   self.removeOpeningTime = function (openingTimeToRemove) {
-    var openingTimeHasChanged = function (o) {
+    var openingTimeDifferent = function (o) {
       return o.day() !== openingTimeToRemove.day() ||
         o.startTime() !== openingTimeToRemove.startTime() ||
         o.endTime() !== openingTimeToRemove.endTime()
     }
-    var remaining = self.openingTimes().filter((o) => openingTimeHasChanged(o))
+    var remaining = []
+    let hasAlreadyRemovedItem = false
+
+    for (let i = 0; i < self.openingTimes().length; i++) {
+      let curr = self.openingTimes()[i]
+      if (openingTimeDifferent(curr) || hasAlreadyRemovedItem) {
+        remaining.push(curr)
+      } else {
+        hasAlreadyRemovedItem = true
+      }
+    }
 
     self.openingTimes(remaining)
   }

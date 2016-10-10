@@ -131,6 +131,44 @@ describe('Add Service Provider Service', () => {
     it('should set subCategory isSelected to false', () => {
       expect(model.subCategories()[0].isSelected()).toBeFalsy()
     })
+
+    describe('select all subcategories', () => {
+      beforeEach(() => {
+        model.allSubCatsSelected(true)
+      })
+
+      it('- should select all subcats', () => {
+        let totalSelected = model.subCategories().filter((sc) => sc.isSelected()).length
+        expect(totalSelected).toEqual(model.subCategories().length)
+      })
+
+      describe('...then de-select all subcategories', () => {
+        beforeEach(() => {
+          model.allSubCatsSelected(false)
+        })
+
+        it('- should de-select all subcats', () => {
+          let totalSelected = model.subCategories().filter((sc) => sc.isSelected()).length
+          expect(totalSelected).toEqual(0)
+        })
+      })
+
+      describe('...then change main category', () => {
+        beforeEach(() => {
+          model.category(model.categories()[1])
+          model.setAvailableSubCategories()
+        })
+
+        it('- should de-select select all subcats', () => {
+          expect(model.allSubCatsSelected()).toBeFalsy()
+        })
+
+        it('- should de-select all subcats', () => {
+          let totalSelected = model.subCategories().filter((sc) => sc.isSelected()).length
+          expect(totalSelected).toEqual(0)
+        })
+      })
+    })
   })
 
   describe('select existing address', () => {
