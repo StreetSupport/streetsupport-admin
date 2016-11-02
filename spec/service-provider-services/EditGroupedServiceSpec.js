@@ -87,6 +87,10 @@ describe('Edit Service', () => {
     expect(model.service().name).toEqual('Personal Items')
   })
 
+  it('should set info on Service', () => {
+    expect(model.service().info()).toEqual('St George\'s Crypt offers')
+  })
+
   it('should set location description on Service', () => {
     expect(model.service().locationDescription()).toEqual('location description')
   })
@@ -213,7 +217,7 @@ function serviceData () {
     'categoryId': 'items',
     'categoryName': 'Personal Items',
     'categorySynopsis': 'Clothes, blankets, shoes, sleeping bags, and disposable goods including toiletries and sanitary products',
-    'info': 'test description',
+    'info': 'St George&#39;s Crypt offers',
     'tags': [
       'lesbians'
     ],
