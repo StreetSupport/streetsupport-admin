@@ -24,7 +24,10 @@ function ServiceProvider (sp) {
 function DashboardModel () {
   var self = this
 
+  self.allServiceProviders = ko.observableArray()
   self.serviceProviders = ko.observableArray()
+  self.cityFilter = ko.observable()
+  self.availableCities = ko.observableArray()
 
   self.init = function () {
     browser.loading()
@@ -33,7 +36,13 @@ function DashboardModel () {
       self.headers(cookies.get('session-token')),
       {})
     .then(function (result) {
+      self.allServiceProviders(self.mapServiceProviders(result.data))
       self.serviceProviders(self.mapServiceProviders(result.data))
+
+      self.availableCities(result.data
+        .map((sp) => sp.associatedCityId)
+        .filter((e, i, a) => { return a.indexOf(e) === i }))
+
       browser.loaded()
     },
     function (error) {
@@ -98,6 +107,15 @@ function DashboardModel () {
     })
 
     self.serviceProviders(updatedSPs)
+  }
+
+  self.filter = () => {
+    let filtered = self.allServiceProviders()
+    if (self.cityFilter() !== undefined) {
+      filtered = self.allServiceProviders()
+        .filter((sp) => sp.cityId === self.cityFilter())
+    }
+    self.serviceProviders(filtered)
   }
 
   self.init()

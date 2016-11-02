@@ -127,4 +127,29 @@ describe('Service Providers', () => {
     expect(dashboard.serviceProviders()[0].publishedLabelClass()).toEqual('status status--false')
     expect(dashboard.serviceProviders()[1].publishedLabelClass()).toEqual('status status--true')
   })
+
+  it('- should set available cities', () => {
+    expect(dashboard.availableCities().length).toEqual(3)
+  })
+
+  describe('- filter by city', () => {
+    beforeEach(() => {
+      dashboard.filter('leeds')
+    })
+
+    it('- should filter to providers in leeds', () => {
+      expect(dashboard.serviceProviders().length).toEqual(1)
+      expect(dashboard.serviceProviders()[0].key).toEqual('booth-centre')
+    })
+  })
+
+  describe('- view all', () => {
+    beforeEach(() => {
+      dashboard.filter('')
+    })
+
+    it('- should show all providers', () => {
+      expect(dashboard.serviceProviders().length).toEqual(3)
+    })
+  })
 })
