@@ -1,6 +1,7 @@
 'use strict'
 
 var ko = require('knockout')
+var htmlencode = require('htmlencode')
 var ajax = require('../ajax')
 var Endpoints = require('../endpoint-builder')
 var getUrlParameter = require('../get-url-parameter')
@@ -22,7 +23,7 @@ function Service (data) {
   self.id = ko.observable(data.id)
   self.name = data.categoryName
   self.categoryId = data.categoryId
-  self.info = ko.observable(data.info)
+  self.info = ko.observable(htmlencode.htmlDecode(data.info))
   self.locationDescription = ko.observable(data.location.description)
   self.subCategories = ko.observableArray()
   self.tags = ko.observable(buildTags(data.tags))
