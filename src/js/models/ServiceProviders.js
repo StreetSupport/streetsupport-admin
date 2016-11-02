@@ -10,6 +10,7 @@ function ServiceProvider (sp) {
   this.name = sp.name
   this.url = adminUrls.serviceProviders + '?key=' + sp.key
   this.newUserUrl = adminUrls.userAdd + '?key=' + sp.key
+  this.cityId = sp.associatedCityId
   this.isVerified = ko.observable(sp.isVerified)
   this.isPublished = ko.observable(sp.isPublished)
   this.verifiedLabel = ko.computed(function () { return this.isVerified() ? 'verified' : 'under review' }, this)

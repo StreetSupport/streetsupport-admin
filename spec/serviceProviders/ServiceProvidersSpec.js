@@ -28,19 +28,22 @@ describe('Service Providers', () => {
               'key': 'albert-kennedy-trust',
               'name': 'Albert Kennedy Trust',
               'isVerified': false,
-              'isPublished': false
+              'isPublished': false,
+              'associatedCityId': 'manchester'
             },
             {
               'key': 'booth-centre',
               'name': 'Booth Centre',
               'isVerified': true,
-              'isPublished': true
+              'isPublished': true,
+              'associatedCityId': 'leeds'
             },
             {
               'key': 'coffee4craig',
               'name': 'Coffee4Craig',
               'isVerified': false,
-              'isPublished': true
+              'isPublished': true,
+              'associatedCityId': 'brighton'
             }
           ]
         })
@@ -89,6 +92,12 @@ describe('Service Providers', () => {
     expect(dashboard.serviceProviders()[0].key).toEqual('albert-kennedy-trust')
     expect(dashboard.serviceProviders()[1].key).toEqual('booth-centre')
     expect(dashboard.serviceProviders()[2].key).toEqual('coffee4craig')
+  })
+
+  it('should sort service provider by city id', () => {
+    expect(dashboard.serviceProviders()[0].cityId).toEqual('manchester')
+    expect(dashboard.serviceProviders()[1].cityId).toEqual('leeds')
+    expect(dashboard.serviceProviders()[2].cityId).toEqual('brighton')
   })
 
   it('should set service provider url', () => {
