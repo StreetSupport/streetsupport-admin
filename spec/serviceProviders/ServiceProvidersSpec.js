@@ -134,10 +134,11 @@ describe('Service Providers', () => {
 
   describe('- filter by city', () => {
     beforeEach(() => {
-      dashboard.filter('leeds')
+      dashboard.cityFilter('leeds')
+      dashboard.filter()
     })
 
-    it('- should filter to providers in leeds', () => {
+    it('- should filter to providers in selected city', () => {
       expect(dashboard.serviceProviders().length).toEqual(1)
       expect(dashboard.serviceProviders()[0].key).toEqual('booth-centre')
     })
@@ -145,7 +146,7 @@ describe('Service Providers', () => {
 
   describe('- view all', () => {
     beforeEach(() => {
-      dashboard.filter('')
+      dashboard.filter()
     })
 
     it('- should show all providers', () => {
