@@ -30,7 +30,13 @@ describe('Cancel Edit Service Provider General Details', () => {
     sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
     sinon.stub(browser, 'loading')
     sinon.stub(browser, 'loaded')
-    sinon.stub(spTags, 'all').returns(['Tag A', 'Tag B', 'Tag C', 'Tag D', 'Tag E'])
+    sinon.stub(spTags, 'all').returns([
+      { id: 'tag-a', name: 'Tag A' },
+      { id: 'tag-b', name: 'Tag B' },
+      { id: 'tag-c', name: 'Tag C' },
+      { id: 'tag-d', name: 'Tag D' },
+      { id: 'tag-e', name: 'Tag E' }
+    ])
 
     model = new Model()
     model.editGeneralDetails()
