@@ -27,7 +27,18 @@ function DashboardModel () {
   self.allServiceProviders = ko.observableArray()
   self.serviceProviders = ko.observableArray()
   self.cityFilter = ko.observable()
+  self.isVerifiedFilter = ko.observable()
   self.availableCities = ko.observableArray()
+  self.availableStatuses = ko.observableArray([
+    {
+      value: true,
+      text: 'verified'
+    },
+    {
+      value: false,
+      text: 'un-verified'
+    }
+  ])
 
   self.init = function () {
     browser.loading()
@@ -109,11 +120,20 @@ function DashboardModel () {
     self.serviceProviders(updatedSPs)
   }
 
-  self.filter = () => {
+  self.filterByCity = () => {
     let filtered = self.allServiceProviders()
     if (self.cityFilter() !== undefined) {
       filtered = self.allServiceProviders()
         .filter((sp) => sp.cityId === self.cityFilter())
+    }
+    self.serviceProviders(filtered)
+  }
+
+  self.filterByVerified = () => {
+    let filtered = self.allServiceProviders()
+    if (self.isVerifiedFilter() !== undefined) {
+      filtered = self.allServiceProviders()
+        .filter((sp) => Boolean(sp.isVerified()) === Boolean(self.isVerifiedFilter())) // filter is set as string
     }
     self.serviceProviders(filtered)
   }
