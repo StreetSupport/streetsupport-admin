@@ -35,7 +35,8 @@ function ServiceProvider (data) {
     spTags.all()
       .map((t) => {
         return {
-          name: t,
+          id: t.id,
+          name: t.name,
           isSelected: ko.observable(spTags.isTagged(data.tags, t))
         }
       })
@@ -139,7 +140,7 @@ function ServiceProviderDetails () {
       const tagsToCsv = () => {
         return sp.tags()
           .filter((t) => t.isSelected() === true)
-          .map((m) => spTags.urlEncoded(m.name))
+          .map((m) => m.id)
       }
       const payload = {
         'Description': sp.description(),
