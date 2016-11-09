@@ -1,0 +1,71 @@
+---
+title: Users - Street Support Admin
+description: Street Support - Making it easier to help homeless people in Manchester
+layout: default.hbs
+permalink: false
+jsBundle: users
+page: users
+nosubnav: true
+---
+
+<div class="block block--highlight">
+  <div class="container block__inner">
+    <header>
+      <h1>Users</h1>
+    </header>
+  </div>
+</div>
+<div class="block block--main-body">
+  <div class="container block__inner">
+    <div class="block__content">
+      <h2>Unverified Users</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Email</th>
+            <th>Claims</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody data-bind="template: { name: 'unverified-users-tmpl', foreach: unverifiedUsers }"></tbody>
+      </table>
+      <h2>Verified Users</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Claims</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody data-bind="template: { name: 'verified-users-tmpl', foreach: verifiedUsers }"></tbody>
+      </table>
+      {{> loading-spinner}}
+    </div>
+  </div>
+</div>
+
+<script type="text/html" id="unverified-users-tmpl">
+  <tr>
+    <td data-bind="text: email"></td>
+    <td data-bind="html: claims"></td>
+    <td>
+      <!-- ko if: showResendButton() -->
+      <button class="btn btn--primary" data-bind="click: resendInvite">
+        <span class="btn__text">Resend Invite</span>
+      </button>
+      <!-- /ko -->
+    </td>
+  </tr>
+</script>
+
+
+<script type="text/html" id="verified-users-tmpl">
+  <tr>
+    <td data-bind="html: username"></td>
+    <td data-bind="text: email"></td>
+    <td data-bind="html: claims"></td>
+    <td></td>
+  </tr>
+</script>

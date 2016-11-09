@@ -44,7 +44,8 @@ module.exports = {
     volunteers: p('volunteers'),
     offersOfItems: p('offers-of-items'),
     contactVolunteer: p('contact-volunteer'),
-    mailingList: p('mailing-list')
+    mailingList: p('mailing-list'),
+    users: p('users')
   },
   output: {
     path: path.join(__dirname, '/_dist/assets/js/'),
