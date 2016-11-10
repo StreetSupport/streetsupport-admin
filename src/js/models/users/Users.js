@@ -32,6 +32,8 @@ function User (data) {
     ajax
       .put(endpoint, headers, data)
       .then((result) => {
+        self.verificationExpiryDate(moment().add(30, 'days').format('DD/MM/YY'))
+        console.log(self.verificationExpiryDate())
         browser.loaded()
       }, (_) => {
         browser.redirect(adminUrls.fiveHundred)
