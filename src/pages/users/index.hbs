@@ -41,7 +41,7 @@ nosubnav: true
         </thead>
         <tbody data-bind="template: { name: 'verified-users-tmpl', foreach: verifiedUsers }"></tbody>
       </table>
-      {{> loading-spinner}}
+      {{> loading-spinner }}
     </div>
   </div>
 </div>
@@ -51,11 +51,9 @@ nosubnav: true
     <td data-bind="text: email"></td>
     <td data-bind="html: claims"></td>
     <td>
-      <!-- ko if: showResendButton() -->
-      <button class="btn btn--primary" data-bind="click: resendInvite">
+      <button class="btn btn--primary" data-bind="click: resendInvite, visible: showResendButton">
         <span class="btn__text">Resend Invite</span>
       </button>
-      <!-- /ko -->
     </td>
   </tr>
 </script>

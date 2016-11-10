@@ -14,10 +14,10 @@ function User (data) {
   self.username = ko.observable(data.userName)
   self.email = ko.observable(data.email)
   self.claims = ko.observable(data.claims)
-  self.verificationExpiryDate = ko.observable(moment(data.verificationExpiryDate).format('DD/MM/YY'))
+  self.verificationExpiryDate = ko.observable(data.verificationExpiryDate)
   self.showResendButton = ko.computed(() => {
     var now = moment()
-    var expiryDate = moment(data.verificationExpiryDate)
+    var expiryDate = moment(self.verificationExpiryDate())
     var diff = now.diff(expiryDate)
     return diff > 0
   }, self)
@@ -32,8 +32,7 @@ function User (data) {
     ajax
       .put(endpoint, headers, data)
       .then((result) => {
-        self.verificationExpiryDate(moment().add(30, 'days').format('DD/MM/YY'))
-        console.log(self.verificationExpiryDate())
+        self.verificationExpiryDate(moment().add(30, 'days').format())
         browser.loaded()
       }, (_) => {
         browser.redirect(adminUrls.fiveHundred)
@@ -67,7 +66,6 @@ function ListUsers () {
             return 0
           })
         self.allUsers(users)
-        console.log(self.allUsers())
         self.unverifiedUsers(self.allUsers().filter((u) => u.username() === null))
         self.verifiedUsers(self.allUsers().filter((u) => u.username() !== null))
         browser.loaded()
@@ -82,5 +80,3 @@ function ListUsers () {
 ListUsers.prototype = new BaseViewModel()
 
 module.exports = ListUsers
-
-//
