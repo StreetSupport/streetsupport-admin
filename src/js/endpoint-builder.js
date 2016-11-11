@@ -60,6 +60,11 @@ function EndpointBuilder () {
     return self
   }
 
+  self.users = () => {
+    self.updateBaseResource(endpoints.users)
+    return self
+  }
+
   self.actionGroups = (groupId) => {
     self.updateBaseResource(endpoints.actionGroups, groupId)
     return self

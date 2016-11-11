@@ -27,6 +27,7 @@ function Service (data) {
   self.locationDescription = ko.observable(data.location.description)
   self.subCategories = ko.observableArray()
   self.tags = ko.observable(buildTags(data.tags))
+  self.subCatList = ko.observable(buildTags(data.subCategories.map((sc) => sc.name)))
   self.openingTimes = ko.observableArray(data.openingTimes.map((ot) => new OpeningTime(ot)))
   self.address = new Address(data.location)
   self.message = ko.observable()
