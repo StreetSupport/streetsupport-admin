@@ -22,6 +22,8 @@ function Index () {
         browser.redirect(destination)
       } else if (authClaims.indexOf('SuperAdmin') > -1) {
         browser.redirect(adminUrls.dashboard)
+      } else if (authClaims.indexOf('CityAdmin') > -1) {
+        browser.redirect(adminUrls.dashboard)
       } else if (authClaims.indexOf('CharterAdmin') > -1) {
         browser.redirect(adminUrls.charter)
       }

@@ -16,7 +16,8 @@ let Volunteer = function (data) {
     lastName: data.person.lastName,
     email: data.person.email,
     telephone: data.person.telephone,
-    postcode: data.person.postcode
+    postcode: data.person.postcode,
+    city: data.person.city
   }
   self.skillsAndExperience = {
     description: data.skillsAndExperience.description
@@ -45,6 +46,8 @@ var ListVolunteersModel = function () {
   self.volunteers = ko.observableArray()
   self.searchTerm = ko.observable()
   self.isFilteredByHighlighted = ko.observable(false)
+  self.cityFilter = ko.observable()
+  self.availableCities = ko.observableArray()
 
   self.search = () => {
     if (self.searchTerm() === undefined || self.searchTerm().length < 3) {
@@ -113,10 +116,26 @@ var ListVolunteersModel = function () {
 
         self.allVolunteers(volunteers)
         self.volunteers(volunteers)
+
+        self.availableCities(volunteers
+          .map((v) => v.person.city)
+          .filter((e, i, a) => { return a.indexOf(e) === i })
+          .filter((c) => c !== null)
+        )
+
         browser.loaded()
       }, function (error) {
         self.handleServerError(error)
       })
+  }
+
+  self.filterByCity = () => {
+    let filtered = self.allVolunteers()
+    if (self.cityFilter() !== undefined) {
+      filtered = self.allVolunteers()
+        .filter((sp) => sp.person.city === self.cityFilter())
+    }
+    self.volunteers(filtered)
   }
 
   self.init()

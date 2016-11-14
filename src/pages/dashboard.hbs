@@ -12,9 +12,26 @@ nosubnav: true
   <div class="container block__inner">
     <header>
       <h1>Service Providers</h1>
+
       <a href="add-service-provider.html" class="btn btn--info">
         <span class="btn__text">Add Service Provider</span>
       </a>
+      <div class="form__field-item form__field-item--full-width">
+        <label for="ffilterByCityilter" class="form__label">Filter by city:</label>
+        <select class="form__input form__input--medium" name="filterByCity" data-bind="options: availableCities,
+                          value: cityFilter,
+                          optionsCaption: 'All',
+                          event: { change: filterByCity }"></select>
+      </div>
+      <div class="form__field-item form__field-item--full-width">
+        <label for="filterByVerified" class="form__label">Filter by Status:</label>
+        <select class="form__input form__input--medium" name="filterByVerified" data-bind="options: availableStatuses,
+                          value: isVerifiedFilter,
+                          optionsText: 'text',
+                          optionsValue: 'value',
+                          optionsCaption: 'All',
+                          event: { change: filterByVerified }"></select>
+      </div>
     </header>
   </div>
 </div>
@@ -23,7 +40,7 @@ nosubnav: true
     <div class="block__content">
       {{> form-feedback}}
       <section class="block__content" data-bind="template: { name: 'serviceProvider-template', foreach: serviceProviders }" class="stacked-list">
-  </section>
+      </section>
       {{> loading-spinner}}
     </div>
   </div>

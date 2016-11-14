@@ -28,19 +28,22 @@ describe('Service Providers', () => {
               'key': 'albert-kennedy-trust',
               'name': 'Albert Kennedy Trust',
               'isVerified': false,
-              'isPublished': false
+              'isPublished': false,
+              'associatedCityId': 'manchester'
             },
             {
               'key': 'booth-centre',
               'name': 'Booth Centre',
               'isVerified': true,
-              'isPublished': true
+              'isPublished': true,
+              'associatedCityId': 'leeds'
             },
             {
               'key': 'coffee4craig',
               'name': 'Coffee4Craig',
               'isVerified': false,
-              'isPublished': true
+              'isPublished': true,
+              'associatedCityId': 'brighton'
             }
           ]
         })
@@ -91,6 +94,12 @@ describe('Service Providers', () => {
     expect(dashboard.serviceProviders()[2].key).toEqual('coffee4craig')
   })
 
+  it('should sort service provider by city id', () => {
+    expect(dashboard.serviceProviders()[0].cityId).toEqual('manchester')
+    expect(dashboard.serviceProviders()[1].cityId).toEqual('leeds')
+    expect(dashboard.serviceProviders()[2].cityId).toEqual('brighton')
+  })
+
   it('should set service provider url', () => {
     expect(dashboard.serviceProviders()[0].url).toEqual(adminurls.serviceProviders + '?key=albert-kennedy-trust')
   })
@@ -117,5 +126,53 @@ describe('Service Providers', () => {
   it('should have publishedLabelClass based on the providers publication status', () => {
     expect(dashboard.serviceProviders()[0].publishedLabelClass()).toEqual('status status--false')
     expect(dashboard.serviceProviders()[1].publishedLabelClass()).toEqual('status status--true')
+  })
+
+  it('- should set available cities', () => {
+    expect(dashboard.availableCities().length).toEqual(3)
+  })
+
+  describe('- filter by city', () => {
+    beforeEach(() => {
+      dashboard.cityFilter('leeds')
+      dashboard.filterByCity()
+    })
+
+    it('- should filter to providers in selected city', () => {
+      expect(dashboard.serviceProviders().length).toEqual(1)
+      expect(dashboard.serviceProviders()[0].key).toEqual('booth-centre')
+    })
+  })
+
+  describe('- view all', () => {
+    beforeEach(() => {
+      dashboard.filterByCity()
+    })
+
+    it('- should show all providers', () => {
+      expect(dashboard.serviceProviders().length).toEqual(3)
+    })
+  })
+
+  describe('- filter by status', () => {
+    beforeEach(() => {
+      dashboard.isVerifiedFilter('true')
+      dashboard.filterByVerified()
+    })
+
+    it('- should filter to providers with selected status', () => {
+      expect(dashboard.serviceProviders().length).toEqual(1)
+      expect(dashboard.serviceProviders()[0].key).toEqual('booth-centre')
+    })
+  })
+
+  describe('- view all', () => {
+    beforeEach(() => {
+      dashboard.filterByVerified()
+    })
+
+    it('- should show all providers', () => {
+      expect(dashboard.serviceProviders().length).toEqual(3)
+    })
   })
 })

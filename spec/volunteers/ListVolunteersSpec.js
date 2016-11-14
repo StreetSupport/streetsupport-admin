@@ -84,6 +84,32 @@ describe('List Volunteers', () => {
   it('should show user then that is loaded', () => {
     expect(browserLoadedStub.calledAfter(ajaxGetStub)).toBeTruthy()
   })
+
+  it('should set available cities', () => {
+    expect(model.availableCities().length).toEqual(2)
+  })
+
+  describe('- filter by city', () => {
+    beforeEach(() => {
+      model.cityFilter('manchester')
+      model.filterByCity()
+    })
+
+    it('- should filter to volunteers with selected city', () => {
+      expect(model.volunteers().length).toEqual(1)
+      expect(model.volunteers()[0].person.email).toEqual('vince.lee@polyhatsoftware.co.uk')
+    })
+  })
+
+  describe('- view all', () => {
+    beforeEach(() => {
+      model.cityFilter()
+    })
+
+    it('- should show all volunteers', () => {
+      expect(model.volunteers().length).toEqual(3)
+    })
+  })
 })
 
 var volunteerData = () => {
@@ -94,6 +120,7 @@ var volunteerData = () => {
       'lastName': 'Lee',
       'telephone': '01234567890',
       'email': 'vince.lee@polyhatsoftware.co.uk',
+      'city': 'manchester',
       'postcode': 'M3 4BD'
     },
     'skillsAndExperience': {
@@ -113,6 +140,7 @@ var volunteerData = () => {
       'lastName': 'Lee',
       'telephone': '',
       'email': 'vslee888+ncc@gmail.com',
+      'city': 'leeds',
       'postcode': 'M3 4BD'
     },
     'skillsAndExperience': {
@@ -132,6 +160,7 @@ var volunteerData = () => {
       'lastName': 'Lee',
       'telephone': '',
       'email': 'vslee888+060416@gmail.com',
+      'city': null,
       'postcode': 'M1 2JB'
     },
     'skillsAndExperience': {

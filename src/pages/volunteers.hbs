@@ -33,6 +33,13 @@ nosubnav: true
   <input type="text" data-bind="textInput: searchTerm, onkeyup: search" class="form__input form__input--medium" />
 </div>
 <div class="form__field-item form__field-item--full-width">
+  <label for="ffilterByCityilter" class="form__label">Filter by city:</label>
+  <select class="form__input form__input--medium" name="filterByCity" data-bind="options: availableCities,
+                    value: cityFilter,
+                    optionsCaption: 'All',
+                    event: { change: filterByCity }"></select>
+</div>
+<div class="form__field-item form__field-item--full-width">
   <label for="filter" class="form__label form__label--checkbox">Only show highlighted</label>
   <input type="checkbox" id="filter" data-bind="checked: isFilteredByHighlighted" />
 </div>
@@ -54,6 +61,8 @@ nosubnav: true
       <dd class="key-value-pair__value" data-bind="html:resources.description"></dd>
       <dt class="key-value-pair__key">Availability</dt>
       <dd class="key-value-pair__value" data-bind="html:availability.description"></dd>
+      <dt class="key-value-pair__key">City</dt>
+      <dd class="key-value-pair__value" data-bind="text:person.city"></dd>
       <dt class="key-value-pair__key">Postcode</dt>
       <dd class="key-value-pair__value" data-bind="text:person.postcode"></dd>
       <dt class="key-value-pair__key">Posted on</dt>
