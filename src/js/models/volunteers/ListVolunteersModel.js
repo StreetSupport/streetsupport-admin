@@ -121,6 +121,7 @@ var ListVolunteersModel = function () {
           .map((v) => v.person.city)
           .filter((e, i, a) => { return a.indexOf(e) === i })
           .filter((c) => c !== null)
+          .filter((c) => c.length > 0)
         )
 
         browser.loaded()

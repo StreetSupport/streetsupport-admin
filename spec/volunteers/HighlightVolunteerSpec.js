@@ -100,6 +100,7 @@ var volunteerData = () => {
       'lastName': 'Snow',
       'telephone': 'js_tel',
       'email': 'jon.snow@nightswatch.net',
+      'city': 'leeds',
       'postcode': 'the wall'
     },
     'skillsAndExperience': {
@@ -119,6 +120,7 @@ var volunteerData = () => {
       'lastName': 'Stark',
       'telephone': 'rs_tel',
       'email': 'robb.stark@winterfell.com',
+      'city': 'leeds',
       'postcode': 'great keep'
     },
     'skillsAndExperience': {
@@ -138,6 +140,7 @@ var volunteerData = () => {
       'lastName': 'Stark',
       'telephone': 'ss_tel',
       'email': 'sansa.stark@winterfell.com',
+      'city': 'leeds',
       'postcode': 'redkeep'
     },
     'skillsAndExperience': {
@@ -157,6 +160,7 @@ var volunteerData = () => {
       'lastName': 'Baratheon',
       'telephone': 'rb_tel',
       'email': 'robert.baratheon@kingslanding.com',
+      'city': 'leeds',
       'postcode': 'redkeep'
     },
     'skillsAndExperience': {
