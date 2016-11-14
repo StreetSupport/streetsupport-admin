@@ -1,43 +1,11 @@
 'use strict'
 
 var ajax = require('../../ajax')
-var adminUrls = require('../../admin-urls')
 var browser = require('../../browser')
 var cookies = require('../../cookies')
 var BaseViewModel = require('../BaseViewModel')
 var ko = require('knockout')
-var moment = require('moment')
-
-let Volunteer = function (data) {
-  let self = this
-  self.id = data.id
-  self.person = {
-    firstName: data.person.firstName,
-    lastName: data.person.lastName,
-    email: data.person.email,
-    telephone: data.person.telephone,
-    postcode: data.person.postcode,
-    city: data.person.city
-  }
-  self.skillsAndExperience = {
-    description: data.skillsAndExperience.description
-  }
-  self.availability = {
-    description: data.availability.description
-  }
-  self.resources = {
-    description: data.resources.description
-  }
-
-  self.contactUrl = adminUrls.contactVolunteer + '?id=' + data.id
-  self.creationDate = moment(data.creationDate).format('DD/MM/YY')
-  self.isHighlighted = ko.observable(false)
-  self.highlighted = ko.computed(() => {
-    return self.isHighlighted()
-      ? 'volunteer volunteer--highlighted'
-      : 'volunteer'
-  }, self)
-}
+var Volunteer = require('./Volunteer')
 
 var ListVolunteersModel = function () {
   var self = this

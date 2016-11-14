@@ -52,26 +52,31 @@ nosubnav: true
         <label class="highlight-item__label" data-bind="attr: { for: id }">Highlight</label>
         <input class="highlight-item__checkbox" type="checkbox" data-bind="checked: isHighlighted, attr: { id: id }" />
       </div>
-      <h1 class="h2 volunteer__heading"><span data-bind="html:person.firstName"></span> <span data-bind="html:person.lastName"></span></h1>
+      <h1 class="h2 volunteer__heading">
+        <span data-bind="html:person.firstName"></span>
+        <span data-bind="html:person.lastName"></span>
+      </h1>
+      <h2 class="h3 volunteer__sub-heading">
+        <span data-bind="text: person.postcode"></span>
+        <span data-bind="text: creationDate"></span>
+      </h2>
     </header>
-    <dl class="key-value-pair volunteer__details-list">
-      <dt class="key-value-pair__key">Skills and Experience</dt>
-      <dd class="key-value-pair__value" data-bind="html:skillsAndExperience.description"></dd>
-      <dt class="key-value-pair__key">Resources</dt>
-      <dd class="key-value-pair__value" data-bind="html:resources.description"></dd>
-      <dt class="key-value-pair__key">Availability</dt>
-      <dd class="key-value-pair__value" data-bind="html:availability.description"></dd>
-      <dt class="key-value-pair__key">City</dt>
-      <dd class="key-value-pair__value" data-bind="text:person.city"></dd>
-      <dt class="key-value-pair__key">Postcode</dt>
-      <dd class="key-value-pair__value" data-bind="text:person.postcode"></dd>
-      <dt class="key-value-pair__key">Posted on</dt>
-      <dd class="key-value-pair__value" data-bind="text:creationDate"></dd>
-      <dt class="key-value-pair__key">Email</dt>
-      <dd class="key-value-pair__value" data-bind="text:person.email"></dd>
-      <dt class="key-value-pair__key">Telephone</dt>
-      <dd class="key-value-pair__value" data-bind="text:person.telephone"></dd>
-    </dl>
-    <a data-bind="attr: { href: contactUrl }" class="btn btn--primary volunteer__contact-btn"><span class="btn__text">Contact</span></a>
+    <section class="key-value-pair volunteer__details-list">
+      <div class="volunteer__details-item">
+        <h3>Skills/Experience</h3>
+        <p data-bind="html:skillsAndExperience.description"></p>
+      </div>
+      <div class="volunteer__details-item">
+        <h3>Resources</h3>
+        <p data-bind="html:resources.description"></p>
+      </div>
+      <div class="volunteer__details-item">
+        <h3>Availability</h3>
+        <p data-bind="html:availability.description"></p>
+      </div>
+    </section>
+    <section class="volunteer__actions">
+      <a data-bind="attr: { href: contactUrl }" class="btn btn--primary"><span class="btn__text">Contact</span></a>
+    </section>
   </article>
 </script>

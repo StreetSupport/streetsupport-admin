@@ -10,8 +10,13 @@ nosubnav: true
 
 <div class="block block--highlight admin-header">
   <div class="container block__inner">
-    <header>
-      <h1>Contact Volunteer</h1>
+    <header data-bind="with: volunteer">
+      <h1>Contact <span data-bind="text: person.firstName"></span>
+        <span data-bind="text: person.lastName"></span>
+      <!-- ko if: person.telephone -->
+        (<span data-bind="text: person.telephone"></span>)
+      <!-- /ko -->
+      </h1>
     </header>
   </div>
 </div>
@@ -26,13 +31,18 @@ nosubnav: true
       <!-- /ko -->
       <!-- ko ifnot: isFormSubmitSuccessful -->
       <form class="form" data-bind="submit: submit">
-        <p>Please enter your message to this volunteer below, including details on how they should contact you.</p>
+        <p>To email this volunteer, please tick the "send as email" checkbox, and enter your message in the text area.</p>
+        <p>If you have contacted the volunteer in some other way, please leave some notes regarding your conversation as a record of your contact.</p>
         <p>* denotes a required field.</p>
         <fieldset class="form__fieldset" data-bind="with: formModel">
           <legend class="h2 form__fieldset-title">Contact Volunteer</legend>
           <ul class="form__field-list">
             <li class="form__field-item form__field-item--full">
-              <label class="form__label" for="message">Message *</label>
+              <label class="form__label--checkbox" for="message">Send as email</label>
+              <input type="checkbox" data-bind="checked: isAnEmail" />
+            </li>
+            <li class="form__field-item form__field-item--full">
+              <label class="form__label" for="message">Message/Notes *</label>
               <textarea class="form__input form__input--textarea" id="message" data-bind="value: message"></textarea>
             </li>
           </ul>
