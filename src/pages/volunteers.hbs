@@ -77,6 +77,22 @@ nosubnav: true
     </section>
     <section class="volunteer__actions">
       <a data-bind="attr: { href: contactUrl }" class="btn btn--primary"><span class="btn__text">Contact</span></a>
+      <button class="btn btn--info" data-bind="click: getContactHistory"><span class="btn__text">View Contact Log</span></button>
+    </section>
+    <section>
+    <!-- ko if: hasRetrievedContactHistory() -->
+      <!-- ko if: hasContactHistory() -->
+        <ul data-bind="foreach: contactHistory" class="volunteer-contact-history">
+          <li class="volunteer-contact-history__item">
+            <p data-bind="text: message"></p>
+            <p><span data-bind="text: createdBy"></span> - <span data-bind="text: createdDate"></span></p>
+          </li>
+        </ul>
+      <!-- /ko -->
+      <!-- ko ifnot: hasContactHistory() -->
+        <p>No history available</p>
+      <!-- /ko -->
+    <!-- /ko -->
     </section>
   </article>
 </script>
