@@ -80,7 +80,7 @@ var ListVolunteersModel = function () {
             if (a.creationDate > b.creationDate) return -1
             return 0
           })
-          .map((v) => new Volunteer(v))
+          .map((v) => new Volunteer(v, self))
 
         self.allVolunteers(volunteers)
         self.volunteers(volunteers)
@@ -105,6 +105,13 @@ var ListVolunteersModel = function () {
         .filter((sp) => sp.person.city === self.cityFilter())
     }
     self.volunteers(filtered)
+  }
+
+  self.archived = (id) => {
+    self.allVolunteers(self.allVolunteers()
+      .filter(v => v.id !== id))
+    self.volunteers(self.volunteers()
+      .filter(v => v.id !== id))
   }
 
   self.init()

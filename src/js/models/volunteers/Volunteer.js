@@ -10,9 +10,10 @@ const BaseViewModel = require('../../models/BaseViewModel')
 const moment = require('moment')
 const ko = require('knockout')
 
-const Volunteer = function (data) {
+const Volunteer = function (data, listener) {
   let self = this
   self.id = data.id
+  self.listener = listener
   self.person = {
     firstName: data.person.firstName,
     lastName: data.person.lastName,
@@ -64,6 +65,20 @@ const Volunteer = function (data) {
         browser.loaded()
       }, (_) => {
         browser.redirect(adminUrls.fiveHundred)
+      })
+  }
+
+  self.archive = () => {
+    browser.loading()
+
+    ajax
+      .patch(
+        endpoints.volunteers + '/' + self.id + '/is-archived',
+        self.headers(cookies.get('session-token')),
+        {})
+      .then((result) => {
+        self.listener.archived(self.id)
+        browser.loaded()
       })
   }
 }
