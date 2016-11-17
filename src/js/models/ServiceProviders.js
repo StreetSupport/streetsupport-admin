@@ -40,6 +40,16 @@ function DashboardModel () {
       text: 'un-verified'
     }
   ])
+  self.availablePublishedStates = ko.observableArray([
+    {
+      value: true,
+      text: 'published'
+    },
+    {
+      value: false,
+      text: 'un-published'
+    }
+  ])
 
   self.init = function () {
     browser.loading()
