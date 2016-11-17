@@ -32,6 +32,20 @@ var put = function (url, headers, data) {
   }).promise
 }
 
+var patch = function (url, headers, data) {
+  if (Object.keys(headers).length === 0) {
+    headers = {
+      'content-type': 'application/json'
+    }
+  }
+  return makeRequest({
+    method: 'PATCH',
+    url: url,
+    headers: headers,
+    data: data
+  }).promise
+}
+
 var get = function (url, headers) {
   return makeRequest({
     method: 'GET',
@@ -114,6 +128,7 @@ var makeRequest = function (options) {
 module.exports = {
   get: get,
   post: post,
+  patch: patch,
   put: put,
   delete: _delete
 }

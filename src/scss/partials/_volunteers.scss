@@ -17,21 +17,28 @@
     margin: 0;
   }
 
-  &__contact-btn {
-    position: absolute;
-    z-index: 200;
-    margin-top: 0;
-    right: 20px;
-    bottom: 0;
-    @include mq($from: m) {
-      margin: 0;
-      bottom: 30px;
-    }
+  &__sub-heading {
+    clear: both;
   }
 
   &__details-list {
     @include cf();
     margin-bottom: 10px;
+  }
+
+  &__details-item {
+    @include mq($from: m) {
+      @include span(1 of 3);
+
+      &:last-child {
+        @include last();
+      }
+    }
+  }
+
+  &__actions {
+    @include cf();
+    text-align: right;
   }
 }
 

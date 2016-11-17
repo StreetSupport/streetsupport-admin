@@ -1,43 +1,11 @@
 'use strict'
 
 var ajax = require('../../ajax')
-var adminUrls = require('../../admin-urls')
 var browser = require('../../browser')
 var cookies = require('../../cookies')
 var BaseViewModel = require('../BaseViewModel')
 var ko = require('knockout')
-var moment = require('moment')
-
-let Volunteer = function (data) {
-  let self = this
-  self.id = data.id
-  self.person = {
-    firstName: data.person.firstName,
-    lastName: data.person.lastName,
-    email: data.person.email,
-    telephone: data.person.telephone,
-    postcode: data.person.postcode,
-    city: data.person.city
-  }
-  self.skillsAndExperience = {
-    description: data.skillsAndExperience.description
-  }
-  self.availability = {
-    description: data.availability.description
-  }
-  self.resources = {
-    description: data.resources.description
-  }
-
-  self.contactUrl = adminUrls.contactVolunteer + '?id=' + data.id
-  self.creationDate = moment(data.creationDate).format('DD/MM/YY')
-  self.isHighlighted = ko.observable(false)
-  self.highlighted = ko.computed(() => {
-    return self.isHighlighted()
-      ? 'volunteer volunteer--highlighted'
-      : 'volunteer'
-  }, self)
-}
+var Volunteer = require('./Volunteer')
 
 var ListVolunteersModel = function () {
   var self = this
@@ -112,7 +80,7 @@ var ListVolunteersModel = function () {
             if (a.creationDate > b.creationDate) return -1
             return 0
           })
-          .map((v) => new Volunteer(v))
+          .map((v) => new Volunteer(v, self))
 
         self.allVolunteers(volunteers)
         self.volunteers(volunteers)
@@ -121,6 +89,7 @@ var ListVolunteersModel = function () {
           .map((v) => v.person.city)
           .filter((e, i, a) => { return a.indexOf(e) === i })
           .filter((c) => c !== null)
+          .filter((c) => c.length > 0)
         )
 
         browser.loaded()
@@ -136,6 +105,13 @@ var ListVolunteersModel = function () {
         .filter((sp) => sp.person.city === self.cityFilter())
     }
     self.volunteers(filtered)
+  }
+
+  self.archived = (id) => {
+    self.allVolunteers(self.allVolunteers()
+      .filter(v => v.id !== id))
+    self.volunteers(self.volunteers()
+      .filter(v => v.id !== id))
   }
 
   self.init()
