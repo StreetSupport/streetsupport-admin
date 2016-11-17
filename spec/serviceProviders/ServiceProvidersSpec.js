@@ -135,7 +135,7 @@ describe('Service Providers', () => {
   describe('- filter by city', () => {
     beforeEach(() => {
       dashboard.cityFilter('leeds')
-      dashboard.filterByCity()
+      dashboard.filter()
     })
 
     it('- should filter to providers in selected city', () => {
@@ -144,20 +144,10 @@ describe('Service Providers', () => {
     })
   })
 
-  describe('- view all', () => {
-    beforeEach(() => {
-      dashboard.filterByCity()
-    })
-
-    it('- should show all providers', () => {
-      expect(dashboard.serviceProviders().length).toEqual(3)
-    })
-  })
-
   describe('- filter by status', () => {
     beforeEach(() => {
       dashboard.isVerifiedFilter('true')
-      dashboard.filterByVerified()
+      dashboard.filter()
     })
 
     it('- should filter to providers with selected status', () => {
@@ -166,13 +156,38 @@ describe('Service Providers', () => {
     })
   })
 
+  describe('- filter by published', () => {
+    beforeEach(() => {
+      dashboard.isPublishedFilter('true')
+      dashboard.filter()
+    })
+
+    it('- should filter to providers with selected status', () => {
+      expect(dashboard.serviceProviders().length).toEqual(2)
+      expect(dashboard.serviceProviders()[0].key).toEqual('booth-centre')
+    })
+  })
+
   describe('- view all', () => {
     beforeEach(() => {
-      dashboard.filterByVerified()
+      dashboard.filter()
     })
 
     it('- should show all providers', () => {
       expect(dashboard.serviceProviders().length).toEqual(3)
+    })
+  })
+
+  describe('- filter by all', () => {
+    beforeEach(() => {
+      dashboard.isVerifiedFilter('true')
+      dashboard.cityFilter('manchester')
+      dashboard.isPublishedFilter('true')
+      dashboard.filter()
+    })
+
+    it('- should filter to providers', () => {
+      expect(dashboard.serviceProviders().length).toEqual(0)
     })
   })
 })
