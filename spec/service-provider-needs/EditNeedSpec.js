@@ -146,7 +146,8 @@ describe('Editing Service Provider Need', () => {
           'Email': 'email',
           'DonationAmountInPounds': 1,
           'DonationUrl': 'http://www.donationUrl.com',
-          'Keywords': [ 'keywordA', 'keywordB', 'keywordC' ]
+          'Keywords': [ 'keywordA', 'keywordB', 'keywordC' ],
+          'CustomMessage': 'custom message'
         }
       ).returns(fakePutResolution())
 
@@ -181,6 +182,7 @@ function needData () {
     'email': 'email',
     'donationAmountInPounds': 1,
     'donationUrl': 'http://www.donationUrl.com',
-    'keywords': [ 'keywordA', 'keywordB', 'keywordC' ]
+    'keywords': [ 'keywordA', 'keywordB', 'keywordC' ],
+    'customMessage': 'custom message'
   }
 }
