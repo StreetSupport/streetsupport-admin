@@ -64,7 +64,7 @@ describe('List Volunteers', () => {
   })
 
   it('should set volunteers', () => {
-    expect(model.volunteers().length).toEqual(3)
+    expect(model.volunteers().length).toEqual(4)
   })
 
   it('should order by creationDate', () => {
@@ -107,7 +107,7 @@ describe('List Volunteers', () => {
     })
 
     it('- should show all volunteers', () => {
-      expect(model.volunteers().length).toEqual(3)
+      expect(model.volunteers().length).toEqual(4)
     })
   })
 })
@@ -173,5 +173,25 @@ var volunteerData = () => {
       'description': '&lt;scr&lt;script&gt;ipt&gt;alert(document.cookie)&lt;/script&gt;'
     },
     'creationDate': '2016-04-06T17:06:27.1830000Z'
+  }, {
+    'id': '970542130a4f951fb8abe4b9',
+    'person': {
+      'firstName': 'Vince',
+      'lastName': 'Lee',
+      'telephone': '',
+      'email': 'vslee888+060416@gmail.com',
+      'city': '',
+      'postcode': 'M1 2JB'
+    },
+    'skillsAndExperience': {
+      'description': '&lt;script&gt;alert(&#39;xss!&#39;);&lt;/script&gt;'
+    },
+    'availability': {
+      'description': '&quot;%3cscript%3ealert(document.cookie)%3c/script%3e'
+    },
+    'resources': {
+      'description': '&lt;scr&lt;script&gt;ipt&gt;alert(document.cookie)&lt;/script&gt;'
+    },
+    'creationDate': '2015-04-06T17:06:27.1830000Z'
   }]
 }
