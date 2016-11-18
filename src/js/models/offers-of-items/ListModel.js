@@ -4,12 +4,14 @@ var ajax = require('../../ajax')
 var adminUrls = require('../../admin-urls')
 var browser = require('../../browser')
 var cookies = require('../../cookies')
+const endpoints = require('../../api-endpoints')
 var BaseViewModel = require('../BaseViewModel')
 var ko = require('knockout')
 var moment = require('moment')
 
-let Volunteer = function (data) {
+let Volunteer = function (data, listener) {
   let self = this
+  self.listener = listener
   self.id = data.id
   self.person = {
     firstName: data.person.firstName,
@@ -29,7 +31,27 @@ let Volunteer = function (data) {
       ? 'volunteer volunteer--highlighted'
       : 'volunteer'
   }, self)
+
+  self.contactHistory = ko.observableArray()
+  self.hasContactHistory = ko.observable(false)
+  self.hasRetrievedContactHistory = ko.observable(false)
+
+  self.archive = () => {
+    browser.loading()
+
+    ajax
+      .patch(
+        endpoints.offersOfItems + '/' + self.id + '/is-archived',
+        self.headers(cookies.get('session-token')),
+        {})
+      .then((result) => {
+        self.listener.archived(self.id)
+        browser.loaded()
+      })
+  }
 }
+
+Volunteer.prototype = new BaseViewModel()
 
 var ListModel = function () {
   var self = this
@@ -86,6 +108,11 @@ var ListModel = function () {
 
   self.isFilteredByHighlighted.subscribe(() => self.filterByHighlighted(), self)
 
+  self.archived = (id) => {
+    self.offers(self.offers()
+      .filter(v => v.id !== id))
+  }
+
   self.init = () => {
     browser.loading()
 
@@ -101,7 +128,7 @@ var ListModel = function () {
             if (a.creationDate > b.creationDate) return -1
             return 0
           })
-          .map((v) => new Volunteer(v))
+          .map((v) => new Volunteer(v, self))
 
         self.allVolunteers(volunteers)
         self.offers(volunteers)
