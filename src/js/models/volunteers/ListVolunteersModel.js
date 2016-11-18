@@ -109,9 +109,9 @@ var ListVolunteersModel = function () {
 
   self.archived = (id) => {
     self.allVolunteers(self.allVolunteers()
-      .filter(v => v.id !== id))
+      .filter((v) => v.id !== id))
     self.volunteers(self.volunteers()
-      .filter(v => v.id !== id))
+      .filter((v) => v.id !== id))
   }
 
   self.init()

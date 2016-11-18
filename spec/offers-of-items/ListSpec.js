@@ -72,7 +72,7 @@ describe('List Offers', () => {
   })
 
   it('should set url to contact volunteer', () => {
-    expect(model.offers()[1].contactUrl).toEqual(adminUrls.contactVolunteer + '?id=570542130a4f951fb8abe4b9')
+    expect(model.offers()[1].contactUrl).toEqual(adminUrls.contactAboutOffer + '?id=570542130a4f951fb8abe4b9')
   })
 
   it('should format creationDate', () => {
