@@ -24,7 +24,7 @@ function Service (data) {
   self.name = data.categoryName
   self.categoryId = data.categoryId
   self.info = ko.observable(htmlencode.htmlDecode(data.info))
-  self.locationDescription = ko.observable(data.location.description)
+  self.locationDescription = ko.observable(htmlencode.htmlDecode(data.location.description))
   self.subCategories = ko.observableArray()
   self.tags = ko.observable(buildTags(data.tags))
   self.subCatList = ko.observable(buildTags(data.subCategories.map((sc) => sc.name)))
