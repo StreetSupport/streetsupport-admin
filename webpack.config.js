@@ -44,6 +44,7 @@ module.exports = {
     volunteers: p('volunteers'),
     offersOfItems: p('offers-of-items'),
     contactVolunteer: p('contact-volunteer'),
+    contactAboutOffer: p('contact-about-offer'),
     mailingList: p('mailing-list'),
     users: p('users')
   },

@@ -120,6 +120,7 @@ describe('Add individual Need', () => {
       model.need().donationAmountInPounds(123.45)
       model.need().donationUrl('http://donatehere.com')
       model.need().keywords(' keywordA, keywordB ,keywordC ')
+      model.need().customMessage('custom message')
 
       model.need().save()
     })
@@ -145,7 +146,8 @@ describe('Add individual Need', () => {
         'Email': 'test@test.com',
         'DonationAmountInPounds': 123.45,
         'DonationUrl': 'http://donatehere.com',
-        'Keywords': [ 'keywordA', 'keywordB', 'keywordC' ]
+        'Keywords': [ 'keywordA', 'keywordB', 'keywordC' ],
+        'CustomMessage': 'custom message'
       }
       var postAsExpected = ajaxStub.withArgs(endpoint, headers, payload).calledOnce
       expect(postAsExpected).toBeTruthy()

@@ -28,7 +28,14 @@
 
   &__details-item {
     @include mq($from: m) {
+
+      &--2 {
+      @include span(1 of 2);
+      }
+
+      &--3 {
       @include span(1 of 3);
+      }
 
       &:last-child {
         @include last();

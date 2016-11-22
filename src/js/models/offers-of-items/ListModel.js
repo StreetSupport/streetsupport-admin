@@ -1,35 +1,11 @@
 'use strict'
 
 var ajax = require('../../ajax')
-var adminUrls = require('../../admin-urls')
 var browser = require('../../browser')
 var cookies = require('../../cookies')
 var BaseViewModel = require('../BaseViewModel')
+var ItemOfferer = require('./ItemOfferer')
 var ko = require('knockout')
-var moment = require('moment')
-
-let Volunteer = function (data) {
-  let self = this
-  self.id = data.id
-  self.person = {
-    firstName: data.person.firstName,
-    lastName: data.person.lastName,
-    email: data.person.email,
-    telephone: data.person.telephone,
-    postcode: data.person.postcode
-  }
-  self.description = data.description
-  self.additionalInfo = data.additionalInfo
-
-  self.contactUrl = adminUrls.contactVolunteer + '?id=' + data.id
-  self.creationDate = moment(data.creationDate).format('DD/MM/YY')
-  self.isHighlighted = ko.observable(false)
-  self.highlighted = ko.computed(() => {
-    return self.isHighlighted()
-      ? 'volunteer volunteer--highlighted'
-      : 'volunteer'
-  }, self)
-}
 
 var ListModel = function () {
   var self = this
@@ -86,6 +62,11 @@ var ListModel = function () {
 
   self.isFilteredByHighlighted.subscribe(() => self.filterByHighlighted(), self)
 
+  self.archived = (id) => {
+    self.offers(self.offers()
+      .filter((v) => v.id !== id))
+  }
+
   self.init = () => {
     browser.loading()
 
@@ -101,7 +82,7 @@ var ListModel = function () {
             if (a.creationDate > b.creationDate) return -1
             return 0
           })
-          .map((v) => new Volunteer(v))
+          .map((v) => new ItemOfferer(v, self))
 
         self.allVolunteers(volunteers)
         self.offers(volunteers)
