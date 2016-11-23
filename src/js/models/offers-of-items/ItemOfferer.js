@@ -9,6 +9,14 @@ var browser = require('../../browser')
 var BaseViewModel = require('../BaseViewModel')
 
 let ItemOfferer = function (data, listener) {
+  const truncate = (text, maxLength, suffix) => {
+    if (text.length < maxLength) {
+      return text
+    }
+
+    return text.substring(0, maxLength) + suffix
+  }
+
   let self = this
   self.listener = listener
   self.id = data.id
@@ -21,6 +29,8 @@ let ItemOfferer = function (data, listener) {
   }
   self.description = data.description
   self.additionalInfo = data.additionalInfo
+  self.shortDescription = truncate(data.description, 150, '&hellip;')
+  self.shortAdditionalInfo = truncate(data.additionalInfo, 150, '&hellip;')
 
   self.contactUrl = adminUrls.contactAboutOffer + '?id=' + data.id
   self.creationDate = moment(data.creationDate).format('DD/MM/YY')

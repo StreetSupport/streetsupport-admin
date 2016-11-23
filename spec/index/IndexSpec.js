@@ -10,6 +10,7 @@ var endpoints = require('../../src/js/api-endpoints')
 var adminurls = require('../../src/js/admin-urls')
 var browser = require('../../src/js/browser')
 var cookies = require('../../src/js/cookies')
+var querystring = require('../../src/js/get-url-parameter')
 
 describe('Index', () => {
   var Model = require('../../src/js/models/Index')
@@ -59,6 +60,7 @@ describe('Index', () => {
 
     describe('as Super Admin', () => {
       beforeEach(() => {
+        sinon.stub(querystring, 'parameter')
         let resolved = {
           then: function (success, error) {
             success({
@@ -72,6 +74,10 @@ describe('Index', () => {
 
         stubbedApi.returns(resolved)
         model = new Model()
+      })
+
+      afterEach(() => {
+        querystring.parameter.restore()
       })
 
       it('should check if session still valid', () => {
@@ -93,6 +99,7 @@ describe('Index', () => {
 
     describe('Admin For', () => {
       beforeEach(() => {
+        sinon.stub(querystring, 'parameter')
         let resolved = {
           then: (success, _) => {
             success({
@@ -106,6 +113,10 @@ describe('Index', () => {
 
         stubbedApi.returns(resolved)
         model = new Model()
+      })
+
+      afterEach(() => {
+        querystring.parameter.restore()
       })
 
       it('should check if session still valid', () => {
@@ -127,6 +138,7 @@ describe('Index', () => {
 
     describe('Charter Admin', () => {
       beforeEach(() => {
+        sinon.stub(querystring, 'parameter')
         let resolved = {
           then: function (success, error) {
             success({
@@ -142,6 +154,10 @@ describe('Index', () => {
         model = new Model()
       })
 
+      afterEach(() => {
+        querystring.parameter.restore()
+      })
+
       it('should check if session still valid', () => {
         var apiCalled = stubbedApi.withArgs(endpoints.sessions,
           {
@@ -154,6 +170,94 @@ describe('Index', () => {
       })
 
       it('should redirect to charter page', () => {
+        var browserRedirectedWithExpectedUrl = stubbedBrowser.withArgs(adminurls.charter).calledOnce
+        expect(browserRedirectedWithExpectedUrl).toBeTruthy()
+      })
+    })
+
+    describe('- with redirect url', () => {
+      beforeEach(() => {
+        sinon.stub(querystring, 'parameter')
+          .returns('https://admin.streetsupport.net/previous-url/')
+        sinon.stub(browser, 'origin')
+          .returns('https://admin.streetsupport.net')
+
+        let resolved = {
+          then: function (success, error) {
+            success({
+              'status': 200,
+              'data': {
+                'authClaims': [ 'CharterAdmin' ]
+              }
+            })
+          }
+        }
+
+        stubbedApi.returns(resolved)
+        model = new Model()
+      })
+
+      afterEach(() => {
+        querystring.parameter.restore()
+        browser.origin.restore()
+      })
+
+      it('should check if session still valid', () => {
+        var apiCalled = stubbedApi.withArgs(endpoints.sessions,
+          {
+            'content-type': 'application/json',
+            'session-token': 'stored-session-token'
+          },
+          {}).calledOnce
+
+        expect(apiCalled).toBeTruthy()
+      })
+
+      it('should redirect to redirect url', () => {
+        var browserRedirectedWithExpectedUrl = stubbedBrowser.withArgs('https://admin.streetsupport.net/previous-url/').calledOnce
+        expect(browserRedirectedWithExpectedUrl).toBeTruthy()
+      })
+    })
+
+    describe('- with invalid redirect url', () => {
+      beforeEach(() => {
+        sinon.stub(querystring, 'parameter')
+          .returns('https://haxx0rz.l337/phishing/')
+        sinon.stub(browser, 'origin')
+          .returns('https://admin.streetsupport.net')
+
+        let resolved = {
+          then: function (success, error) {
+            success({
+              'status': 200,
+              'data': {
+                'authClaims': [ 'CharterAdmin' ]
+              }
+            })
+          }
+        }
+
+        stubbedApi.returns(resolved)
+        model = new Model()
+      })
+
+      afterEach(() => {
+        querystring.parameter.restore()
+        browser.origin.restore()
+      })
+
+      it('should check if session still valid', () => {
+        var apiCalled = stubbedApi.withArgs(endpoints.sessions,
+          {
+            'content-type': 'application/json',
+            'session-token': 'stored-session-token'
+          },
+          {}).calledOnce
+
+        expect(apiCalled).toBeTruthy()
+      })
+
+      it('should redirect to relevant home page', () => {
         var browserRedirectedWithExpectedUrl = stubbedBrowser.withArgs(adminurls.charter).calledOnce
         expect(browserRedirectedWithExpectedUrl).toBeTruthy()
       })
