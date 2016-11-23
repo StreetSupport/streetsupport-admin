@@ -45,22 +45,46 @@ nosubnav: true
         <label class="highlight-item__label" data-bind="attr: { for: id }">Highlight</label>
         <input class="highlight-item__checkbox" type="checkbox" data-bind="checked: isHighlighted, attr: { id: id }" />
       </div>
-      <h1 class="h2 volunteer__heading"><span data-bind="html:person.firstName"></span> <span data-bind="html:person.lastName"></span></h1>
+      <h1 class="h2 volunteer__heading">
+        <span data-bind="html:person.firstName"></span>
+        <span data-bind="html:person.lastName"></span>
+      </h1>
+      <h2 class="h3 volunteer__sub-heading">
+        <span data-bind="text: person.postcode"></span>
+        <span data-bind="text: creationDate"></span>
+      </h2>
     </header>
-    <dl class="key-value-pair volunteer__details-list">
-      <dt class="key-value-pair__key">Description</dt>
-      <dd class="key-value-pair__value" data-bind="html:description"></dd>
-      <dt class="key-value-pair__key">Additional Info</dt>
-      <dd class="key-value-pair__value" data-bind="html:additionalInfo"></dd>
-      <dt class="key-value-pair__key">Postcode</dt>
-      <dd class="key-value-pair__value" data-bind="text:person.postcode"></dd>
-      <dt class="key-value-pair__key">Posted on</dt>
-      <dd class="key-value-pair__value" data-bind="text:creationDate"></dd>
-      <dt class="key-value-pair__key">Email</dt>
-      <dd class="key-value-pair__value" data-bind="text:person.email"></dd>
-      <dt class="key-value-pair__key">Telephone</dt>
-      <dd class="key-value-pair__value" data-bind="text:person.telephone"></dd>
-    </dl>
-    <a data-bind="attr: { href: contactUrl }" class="btn btn--primary volunteer__contact-btn"><span class="btn__text">Contact</span></a>
+
+    <section class="key-value-pair volunteer__details-list">
+      <div class="volunteer__details-item volunteer__details-item--2">
+        <h3>Description</h3>
+        <p data-bind="html:description"></p>
+      </div>
+      <div class="volunteer__details-item volunteer__details-item--2">
+        <h3>Additional Info</h3>
+        <p data-bind="html:additionalInfo"></p>
+      </div>
+    </section>
+    <section class="volunteer__actions">
+      <a data-bind="attr: { href: contactUrl }" class="btn btn--primary volunteer__contact-btn"><span class="btn__text">Contact</span></a>
+      <button class="btn btn--info" data-bind="click: getContactHistory"><span class="btn__text">View Contact Log</span></button>
+      <button class="btn btn--warning" data-bind="click: archive"><span class="btn__text">Archive</span></button>
+    </section>
+
+    <section>
+    <!-- ko if: hasRetrievedContactHistory() -->
+      <!-- ko if: hasContactHistory() -->
+        <ul data-bind="foreach: contactHistory" class="volunteer-contact-history">
+          <li class="volunteer-contact-history__item">
+            <p data-bind="text: message"></p>
+            <p><span data-bind="text: createdBy"></span> - <span data-bind="text: createdDate"></span></p>
+          </li>
+        </ul>
+      <!-- /ko -->
+      <!-- ko ifnot: hasContactHistory() -->
+        <p>No history available</p>
+      <!-- /ko -->
+    <!-- /ko -->
+    </section>
   </article>
 </script>

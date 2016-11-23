@@ -21,7 +21,7 @@ nosubnav: true
         <select class="form__input form__input--medium" name="filterByCity" data-bind="options: availableCities,
                           value: cityFilter,
                           optionsCaption: 'All',
-                          event: { change: filterByCity }"></select>
+                          event: { change: filter }"></select>
       </div>
       <div class="form__field-item form__field-item--full-width">
         <label for="filterByVerified" class="form__label">Filter by Status:</label>
@@ -30,7 +30,16 @@ nosubnav: true
                           optionsText: 'text',
                           optionsValue: 'value',
                           optionsCaption: 'All',
-                          event: { change: filterByVerified }"></select>
+                          event: { change: filter }"></select>
+      </div>
+      <div class="form__field-item form__field-item--full-width">
+        <label for="filterByPublished" class="form__label">Filter by Published:</label>
+        <select class="form__input form__input--medium" name="filterByPublished" data-bind="options: availablePublishedStates,
+                          value: isPublishedFilter,
+                          optionsText: 'text',
+                          optionsValue: 'value',
+                          optionsCaption: 'All',
+                          event: { change: filter }"></select>
       </div>
     </header>
   </div>

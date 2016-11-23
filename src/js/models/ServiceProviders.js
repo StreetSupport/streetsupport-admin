@@ -28,6 +28,7 @@ function DashboardModel () {
   self.serviceProviders = ko.observableArray()
   self.cityFilter = ko.observable()
   self.isVerifiedFilter = ko.observable()
+  self.isPublishedFilter = ko.observable()
   self.availableCities = ko.observableArray()
   self.availableStatuses = ko.observableArray([
     {
@@ -37,6 +38,16 @@ function DashboardModel () {
     {
       value: false,
       text: 'un-verified'
+    }
+  ])
+  self.availablePublishedStates = ko.observableArray([
+    {
+      value: true,
+      text: 'published'
+    },
+    {
+      value: false,
+      text: 'un-published'
     }
   ])
 
@@ -120,20 +131,19 @@ function DashboardModel () {
     self.serviceProviders(updatedSPs)
   }
 
-  self.filterByCity = () => {
-    let filtered = self.allServiceProviders()
-    if (self.cityFilter() !== undefined) {
-      filtered = self.allServiceProviders()
-        .filter((sp) => sp.cityId === self.cityFilter())
-    }
-    self.serviceProviders(filtered)
-  }
-
-  self.filterByVerified = () => {
+  self.filter = () => {
     let filtered = self.allServiceProviders()
     if (self.isVerifiedFilter() !== undefined) {
-      filtered = self.allServiceProviders()
+      filtered = filtered
         .filter((sp) => Boolean(sp.isVerified()) === Boolean(self.isVerifiedFilter())) // filter is set as string
+    }
+    if (self.cityFilter() !== undefined) {
+      filtered = filtered
+        .filter((sp) => sp.cityId === self.cityFilter())
+    }
+    if (self.isPublishedFilter() !== undefined) {
+      filtered = filtered
+        .filter((sp) => Boolean(sp.isPublished()) === Boolean(self.isPublishedFilter())) // filter is set as string
     }
     self.serviceProviders(filtered)
   }
