@@ -22,6 +22,18 @@ nosubnav: true
 </div>
 <div class="block">
   <div class="container block__inner">
+    <div class="block__content" data-bind="with: volunteer">
+      <h2>Offer Description</h2>
+      <p data-bind="text: description"></p>
+      <!-- ko if: additionalInfo -->
+      <h3>Additional Info</h3>
+      <p data-bind="text: additionalInfo"></p>
+      <!-- /ko -->
+    </div>
+  </div>
+</div>
+<div class="block">
+  <div class="container block__inner">
     <div class="block__content">
       <!-- ko if: isFormSubmitSuccessful -->
         <!-- ko template: { name: 'form-submit-success-template' } --><!-- /ko -->
@@ -31,11 +43,11 @@ nosubnav: true
       <!-- /ko -->
       <!-- ko ifnot: isFormSubmitSuccessful -->
       <form class="form" data-bind="submit: submit">
+        <legend class="h2 form__fieldset-title">Contact About Offer</legend>
         <p>To email the person offering this item, please tick the "send as email" checkbox, and enter your message in the text area.</p>
         <p>If you have contacted the person in some other way, please leave some notes regarding your conversation as a record of your contact.</p>
         <p>* denotes a required field.</p>
         <fieldset class="form__fieldset" data-bind="with: formModel">
-          <legend class="h2 form__fieldset-title">Contact About Offer</legend>
           <ul class="form__field-list">
             <li class="form__field-item form__field-item--full">
               <label class="form__label--checkbox" for="message">Send as email</label>

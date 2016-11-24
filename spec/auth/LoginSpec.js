@@ -9,6 +9,7 @@ let ajax = require('../../src/js/ajax')
 let endpoints = require('../../src/js/api-endpoints')
 let adminurls = require('../../src/js/admin-urls')
 let browser = require('../../src/js/browser')
+let querystring = require('../../src/js/get-url-parameter')
 let cookies = require('../../src/js/cookies')
 
 describe('Login', () => {
@@ -49,6 +50,8 @@ describe('Login', () => {
       stubbedApi.returns(fakeResolved)
       stubbedBrowser = sinon.stub(browser, 'redirect')
 
+      sinon.stub(querystring, 'parameter')
+
       mockCookies = sinon.mock(cookies)
       mockCookies.expects('set').once().withArgs('session-token', 'returnedSessionToken')
       mockCookies.expects('set').once().withArgs('auth-claims', [ 'SuperAdmin', 'claimB' ])
@@ -63,6 +66,7 @@ describe('Login', () => {
       ajax.post.restore()
       browser.redirect.restore()
       mockCookies.restore()
+      querystring.parameter.restore()
     })
 
     it('should save session token to cookie', () => {
@@ -94,6 +98,57 @@ describe('Login', () => {
 
     it('should redirect browser to index', () => {
       var browserRedirectedWithExpectedUrl = stubbedBrowser.withArgs(adminurls.redirector).calledOnce
+      expect(browserRedirectedWithExpectedUrl).toBeTruthy()
+    })
+  })
+
+  describe('Submit with redirect url', () => {
+    var mockCookies
+    let stubbedApi = null
+    let stubbedBrowser = null
+
+    beforeEach(() => {
+      let fakeResolved = {
+        then: function (success, error) {
+          success({
+            'status': 201,
+            'data': {
+              'sessionToken': 'returnedSessionToken',
+              'authClaims': [ 'SuperAdmin', 'claimB' ]
+            }
+          })
+        }
+      }
+
+      stubbedApi = sinon.stub(ajax, 'post')
+      stubbedApi.returns(fakeResolved)
+      stubbedBrowser = sinon.stub(browser, 'redirect')
+      sinon.stub(querystring, 'parameter')
+      .withArgs('redirectUrl')
+      .returns('https://admin.streetsupport.net/previous-url/')
+
+      mockCookies = sinon.mock(cookies)
+      mockCookies.expects('set').once().withArgs('session-token', 'returnedSessionToken')
+      mockCookies.expects('set').once().withArgs('auth-claims', [ 'SuperAdmin', 'claimB' ])
+
+      login.username('username')
+      login.password('password')
+
+      login.submit()
+    })
+
+    afterEach(() => {
+      ajax.post.restore()
+      browser.redirect.restore()
+      mockCookies.restore()
+      querystring.parameter.restore()
+    })
+
+    it('should redirect browser to index with redirect url', () => {
+      var expectedUrl = '/index.html?redirectUrl=https://admin.streetsupport.net/previous-url/'
+      var browserRedirectedWithExpectedUrl = stubbedBrowser
+        .withArgs(expectedUrl)
+        .calledOnce
       expect(browserRedirectedWithExpectedUrl).toBeTruthy()
     })
   })

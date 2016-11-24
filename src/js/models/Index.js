@@ -4,6 +4,7 @@ var cookies = require('../cookies')
 var browser = require('../browser')
 var adminUrls = require('../admin-urls')
 var ajax = require('../ajax')
+var querystring = require('../get-url-parameter')
 var BaseViewModel = require('./BaseViewModel')
 
 function Index () {
@@ -14,9 +15,13 @@ function Index () {
     var adminForPrefix = 'AdminFor:'
 
     var success = (result) => {
-      var authClaims = result.data.authClaims
+      let redirectUrl = querystring.parameter('redirectUrl')
+      let authClaims = result.data.authClaims
       let adminForClaim = authClaims.filter((a) => a.indexOf(adminForPrefix) === 0)
-      if (adminForClaim.length > 0) {
+
+      if (redirectUrl !== undefined && redirectUrl.indexOf(browser.origin()) === 0) {
+        browser.redirect(redirectUrl)
+      } else if (adminForClaim.length > 0) {
         let providerKey = adminForClaim[0].substring(adminForPrefix.length)
         var destination = adminUrls.serviceProviders + '?key=' + providerKey
         browser.redirect(destination)
