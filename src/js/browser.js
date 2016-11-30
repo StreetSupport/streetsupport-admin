@@ -5,9 +5,14 @@ global ga, history, window
 'use strict'
 
 let Spinner = require('spin.js')
+let adminUrls = require('./admin-urls')
 
 let redirect = (url) => {
-  window.location = url
+  if (url === adminUrls.login) {
+    window.location.href = adminUrls.login + '?redirectUrl=' + window.location.href
+  } else {
+    window.location.href = url
+  }
 }
 
 let loaderAnim
@@ -64,6 +69,10 @@ let scrollTo = function (selector) {
   window.scroll(0, findPos(element))
 }
 
+let origin = () => {
+  return window.location.origin
+}
+
 module.exports = {
   redirect: redirect,
   loading: loading,
@@ -72,5 +81,6 @@ module.exports = {
   pushHistory: pushHistory,
   popHistory: popHistory,
   setOnHistoryPop: setOnHistoryPop,
-  scrollTo: scrollTo
+  scrollTo: scrollTo,
+  origin: origin
 }

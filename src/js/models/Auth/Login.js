@@ -4,6 +4,7 @@ var browser = require('../../browser')
 var cookies = require('../../cookies')
 var ko = require('knockout')
 var BaseViewModel = require('../BaseViewModel')
+var querystring = require('../../get-url-parameter')
 
 function LoginModel () {
   var self = this
@@ -35,7 +36,12 @@ function LoginModel () {
         } else {
           cookies.set('session-token', result.data.sessionToken)
           cookies.set('auth-claims', result.data.authClaims)
-          browser.redirect(adminUrls.redirector)
+
+          let redirectUrl = querystring.parameter('redirectUrl')
+          let url = redirectUrl !== undefined
+            ? adminUrls.redirector + '?redirectUrl=' + redirectUrl
+            : adminUrls.redirector
+          browser.redirect(url)
         }
       }, function (error) {
         self.handleServerError(error)
