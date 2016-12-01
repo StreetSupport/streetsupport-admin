@@ -25,5 +25,6 @@ module.exports = {
   contactVolunteer: s('/contact-volunteer'),
   contactAboutOffer: '/offers-of-items/contact/',
   actionGroups: '/action-groups/',
-  charter: s('/charter-pledges')
+  charter: s('/charter-pledges'),
+  serviceProviderNeedCategoriesEdit: s('/edit-service-provider-need-categories')
 }

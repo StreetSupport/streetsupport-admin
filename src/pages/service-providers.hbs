@@ -201,8 +201,12 @@ nosubnav: true
         <div class="split split--single split--admin-panel">
           <section class="split__element split__element--admin-panel">
             <h2>Needs</h2>
+            <p data-bind="text: needCatList"></p>
+            <a data-bind="attr: { 'href': editNeedCategoriesUrl }" title="edit need categories" class="btn btn--info">
+              <span class="btn__text">Edit Categories</span>
+            </a>
             <a data-bind="attr: { 'href': addNeedUrl }" title="add need" class="btn btn--primary">
-              <span class="btn__text">Add</span>
+              <span class="btn__text">Add Need</span>
             </a>
             <div data-bind="foreach: needs">
               <article class="service-provider__item">
