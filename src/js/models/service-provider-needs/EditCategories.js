@@ -1,5 +1,7 @@
 import ajax from '../../ajax'
 import browser from '../../browser'
+import cookies from '../../cookies'
+import BaseViewModel from '../BaseViewModel'
 import endpoints from '../../api-endpoints'
 import querystring from '../../get-url-parameter'
 import ko from 'knockout'
@@ -7,6 +9,10 @@ import ko from 'knockout'
 const Model = function () {
   const self = this
   self.categories = ko.observableArray()
+  self.isSubmitted = ko.observable(false)
+  self.isSuccessful = ko.observable(false)
+
+
 
   const dataReceived = () => {
     if (self.allCategories === undefined ||
@@ -16,7 +22,7 @@ const Model = function () {
       return {
         key: c.key,
         value: c.value,
-        isChecked: self.providerCategories.indexOf(c.key) >= 0
+        isChecked: ko.observable(self.providerCategories.indexOf(c.key) >= 0)
       }
     })))
 
@@ -47,6 +53,23 @@ const Model = function () {
       })
   }
 
+  self.save = () => {
+    browser.loading()
+    const providerId = querystring.parameter('providerId')
+    const endpoint = endpoints.getServiceProviders + '/' + providerId + '/needs/categories'
+    const payload = self.categories()
+      .filter((c) => c.isChecked())
+      .map((c) => c.key)
+    ajax.post(endpoint, self.headers(cookies.get('session-token')), payload)
+      .then((result) => {
+        self.isSubmitted(true)
+        self.isSuccessful(true)
+        browser.loaded()
+      }, (_) => {
+        browser.redirect('/500')
+      })
+  }
+
   self.init = () => {
     browser.loading()
     getCategories()
@@ -55,5 +78,7 @@ const Model = function () {
 
   self.init()
 }
+
+Model.prototype = new BaseViewModel()
 
 module.exports = Model

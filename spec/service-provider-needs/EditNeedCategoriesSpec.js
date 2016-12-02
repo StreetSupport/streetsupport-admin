@@ -6,6 +6,7 @@ global describe, beforeEach, afterEach, it, expect
 
 import sinon from 'sinon'
 import ajax from '../../src/js/ajax'
+import cookies from '../../src/js/cookies'
 import endpoints from '../../src/js/api-endpoints'
 import browser from '../../src/js/browser'
 import getUrlParameter from '../../src/js/get-url-parameter'
@@ -73,9 +74,61 @@ describe('Editing Service Provider Need Categories', () => {
   })
 
   it('- Should set ticked categories', () => {
-    expect(model.categories().filter((c) => !c.isChecked).length).toEqual(8)
-    expect(model.categories().filter((c) => c.key === 'food-and-drink')).toBeTruthy()
-    expect(model.categories().filter((c) => c.key === 'services')).toBeTruthy()
+    expect(model.categories().filter((c) => !c.isChecked()).length).toEqual(8)
+    expect(model.categories().filter((c) => c.key === 'food-and-drink')[0].isChecked()).toBeTruthy()
+    expect(model.categories().filter((c) => c.key === 'services')[0].isChecked()).toBeTruthy()
+  })
+
+  describe('- Save', () => {
+    let ajaxPostStub = null
+
+    beforeEach(() => {
+      browserLoadingStub.reset()
+      browserLoadedStub.reset()
+      sinon.stub(cookies, 'get').returns('saved-session-token')
+
+      ajaxPostStub = sinon
+        .stub(ajax, 'post')
+        .returns({
+          then: function (success, error) {
+            success({
+              'statusCode': 200
+            })
+          }
+        })
+
+      model.categories()[0].isChecked(false) // food and drink
+      model.categories()[1].isChecked(true) // toiletries
+      model.save()
+    })
+
+    afterEach(() => {
+      cookies.get.restore()
+      ajax.post.restore()
+    })
+
+    it('- Should show user it is loading', () => {
+      expect(browserLoadingStub.calledBefore(ajaxPostStub)).toBeTruthy()
+    })
+
+    it('- Should post selected categories to api', () => {
+      const endpoint = endpoints.getServiceProviders + '/albert-kennedy-trust/needs/categories'
+      const headers = {
+        'content-type': 'application/json',
+        'session-token': 'saved-session-token'
+      }
+      const payload = [ 'toiletries', 'services' ]
+      expect(ajaxPostStub
+        .withArgs(endpoint, headers, payload)
+        .calledAfter(browserLoadingStub)
+      ).toBeTruthy()
+      expect(model.isSubmitted()).toBeTruthy()
+      expect(model.isSuccessful()).toBeTruthy()
+    })
+
+    it('- Should notify user it has loaded', () => {
+      expect(browserLoadedStub.calledAfter(ajaxPostStub)).toBeTruthy()
+    })
   })
 })
 

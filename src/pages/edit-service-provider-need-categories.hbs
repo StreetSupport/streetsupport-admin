@@ -21,6 +21,11 @@ nosubnav: true
     <div class="block__content form">
       <article>
         {{> form-feedback }}
+        <!-- ko if: isSubmitted -->
+        <!-- ko if: isSuccessful -->
+        <p>Need categories updated.</p>
+        <!-- /ko -->
+        <!-- /ko -->
         <ul data-bind="foreach: categories">
           <li>
             <label data-bind="attr: { for: key }">
