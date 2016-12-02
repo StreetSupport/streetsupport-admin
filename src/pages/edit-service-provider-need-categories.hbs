@@ -21,6 +21,14 @@ nosubnav: true
     <div class="block__content form">
       <article>
         {{> form-feedback }}
+        <ul data-bind="foreach: categories">
+          <li>
+            <label data-bind="attr: { for: key }">
+              <input type="checkbox" data-bind="attr: { name: key, id: key, value: key }, checked: isChecked" />
+              <span data-bind="text: value"></span>
+            </label>
+          </li>
+        </ul>
         <button data-bind="click: save" class="btn btn--primary"><span class="btn__text">save</span></button>
       </article>
     </div>
