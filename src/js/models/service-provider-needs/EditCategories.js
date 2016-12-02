@@ -12,8 +12,6 @@ const Model = function () {
   self.isSubmitted = ko.observable(false)
   self.isSuccessful = ko.observable(false)
 
-
-
   const dataReceived = () => {
     if (self.allCategories === undefined ||
         self.providerCategories === undefined) return
@@ -60,7 +58,7 @@ const Model = function () {
     const payload = self.categories()
       .filter((c) => c.isChecked())
       .map((c) => c.key)
-    ajax.post(endpoint, self.headers(cookies.get('session-token')), payload)
+    ajax.put(endpoint, self.headers(cookies.get('session-token')), payload)
       .then((result) => {
         self.isSubmitted(true)
         self.isSuccessful(true)

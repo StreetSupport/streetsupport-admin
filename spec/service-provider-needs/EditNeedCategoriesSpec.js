@@ -80,15 +80,15 @@ describe('Editing Service Provider Need Categories', () => {
   })
 
   describe('- Save', () => {
-    let ajaxPostStub = null
+    let ajaxPutStub = null
 
     beforeEach(() => {
       browserLoadingStub.reset()
       browserLoadedStub.reset()
       sinon.stub(cookies, 'get').returns('saved-session-token')
 
-      ajaxPostStub = sinon
-        .stub(ajax, 'post')
+      ajaxPutStub = sinon
+        .stub(ajax, 'put')
         .returns({
           then: function (success, error) {
             success({
@@ -104,11 +104,11 @@ describe('Editing Service Provider Need Categories', () => {
 
     afterEach(() => {
       cookies.get.restore()
-      ajax.post.restore()
+      ajax.put.restore()
     })
 
     it('- Should show user it is loading', () => {
-      expect(browserLoadingStub.calledBefore(ajaxPostStub)).toBeTruthy()
+      expect(browserLoadingStub.calledBefore(ajaxPutStub)).toBeTruthy()
     })
 
     it('- Should post selected categories to api', () => {
@@ -118,7 +118,7 @@ describe('Editing Service Provider Need Categories', () => {
         'session-token': 'saved-session-token'
       }
       const payload = [ 'toiletries', 'services' ]
-      expect(ajaxPostStub
+      expect(ajaxPutStub
         .withArgs(endpoint, headers, payload)
         .calledAfter(browserLoadingStub)
       ).toBeTruthy()
@@ -127,7 +127,7 @@ describe('Editing Service Provider Need Categories', () => {
     })
 
     it('- Should notify user it has loaded', () => {
-      expect(browserLoadedStub.calledAfter(ajaxPostStub)).toBeTruthy()
+      expect(browserLoadedStub.calledAfter(ajaxPutStub)).toBeTruthy()
     })
   })
 })
