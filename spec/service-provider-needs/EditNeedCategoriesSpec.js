@@ -5,6 +5,7 @@ global describe, beforeEach, afterEach, it, expect
 'use strict'
 
 import sinon from 'sinon'
+import adminUrls from '../../src/js/admin-urls'
 import ajax from '../../src/js/ajax'
 import cookies from '../../src/js/cookies'
 import endpoints from '../../src/js/api-endpoints'
@@ -34,8 +35,13 @@ describe('Editing Service Provider Need Categories', () => {
           })
         }
       })
+    sinon.stub(cookies, 'get').returns('saved-session-token')
+    const headers = {
+      'content-type': 'application/json',
+      'session-token': 'saved-session-token'
+    }
     ajaxGetStub
-      .withArgs(endpoints.getServiceProviders + '/albert-kennedy-trust')
+      .withArgs(endpoints.getServiceProviders + '/albert-kennedy-trust', headers)
       .returns({
         then: function (success, error) {
           success({
@@ -57,6 +63,7 @@ describe('Editing Service Provider Need Categories', () => {
     getUrlParameter.parameter.restore()
     browser.loading.restore()
     browser.loaded.restore()
+    cookies.get.restore()
   })
 
   it('- Should notify user it is loading', () => {
@@ -79,13 +86,16 @@ describe('Editing Service Provider Need Categories', () => {
     expect(model.categories().filter((c) => c.key === 'services')[0].isChecked()).toBeTruthy()
   })
 
+  it('- Should set back link', () => {
+    expect(model.backUrl()).toEqual(adminUrls.serviceProviders + '?key=albert-kennedy-trust')
+  })
+
   describe('- Save', () => {
     let ajaxPutStub = null
 
     beforeEach(() => {
       browserLoadingStub.reset()
       browserLoadedStub.reset()
-      sinon.stub(cookies, 'get').returns('saved-session-token')
 
       ajaxPutStub = sinon
         .stub(ajax, 'put')
@@ -103,7 +113,6 @@ describe('Editing Service Provider Need Categories', () => {
     })
 
     afterEach(() => {
-      cookies.get.restore()
       ajax.put.restore()
     })
 
