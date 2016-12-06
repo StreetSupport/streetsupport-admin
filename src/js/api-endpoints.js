@@ -24,5 +24,6 @@ module.exports = {
   charterPledges: p('/v1/charter-supporters'),
   actionGroups: p('/v1/action-groups/members'),
   mailingListMembers: p('/v1/mailing-list-members'),
-  cities: p('/v1/cities')
+  cities: p('/v1/cities'),
+  needCategories: p('/v1/service-provider-needs/categories/')
 }

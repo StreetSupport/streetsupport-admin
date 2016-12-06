@@ -184,6 +184,7 @@ function coffee4Craig () {
     'addresses': [],
     'groupedServices': [],
     'providedServices': [],
-    'tags': ['tag-a', 'tag-c', 'tag-d']
+    'tags': ['tag-a', 'tag-c', 'tag-d'],
+    'needCategories': ['cat a', 'cat b']
   }
 }
