@@ -10,7 +10,7 @@ var endpoints = require('../../src/js/api-endpoints')
 var browser = require('../../src/js/browser')
 var cookies = require('../../src/js/cookies')
 
-describe('VerifiedServiceProviders', () => {
+describe('PublishedServiceProviders', () => {
   var Dashboard = require('../../src/js/models/ServiceProviders')
   var dashboard
 
@@ -19,18 +19,22 @@ describe('VerifiedServiceProviders', () => {
       then: function (success, error) {
         success({
           'status': 200,
-          'data': [
-            {
-              'key': 'albert-kennedy-trust',
-              'name': 'Albert Kennedy Trust',
-              'isPublished': true
-            },
-            {
-              'key': 'coffee4craig',
-              'name': 'Coffee4Craig',
-              'isPublished': false
+          'data': {
+            embedded: {
+              items: [
+                {
+                  'key': 'albert-kennedy-trust',
+                  'name': 'Albert Kennedy Trust',
+                  'isPublished': true
+                },
+                {
+                  'key': 'coffee4craig',
+                  'name': 'Coffee4Craig',
+                  'isPublished': false
+                }
+              ]
             }
-          ]
+          }
         })
       }
     }
