@@ -19,19 +19,25 @@ describe('VerifiedServiceProviders', () => {
       then: function (success, error) {
         success({
           'status': 200,
-          'data': [
-            {
-              'key': 'albert-kennedy-trust',
-              'name': 'Albert Kennedy Trust',
-              'isVerified': true,
-              'isPublished': false
-            },
-            {
-              'key': 'coffee4craig',
-              'name': 'Coffee4Craig',
-              'isVerified': false
+          'data': {
+            'embedded': {
+              'items': [
+                {
+                  'key': 'albert-kennedy-trust',
+                  'name': 'Albert Kennedy Trust',
+                  'isVerified': true,
+                  'isPublished': false,
+                  'associatedCityId': 'manchester'
+                },
+                {
+                  'key': 'coffee4craig',
+                  'name': 'Coffee4Craig',
+                  'isVerified': false,
+                  'associatedCityId': 'manchester'
+                }
+              ]
             }
-          ]
+          }
         })
       }
     }

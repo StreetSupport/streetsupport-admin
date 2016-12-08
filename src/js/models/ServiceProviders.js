@@ -54,14 +54,14 @@ function DashboardModel () {
   self.init = function () {
     browser.loading()
     ajax
-    .get(self.endpointBuilder.serviceProviders().build(),
+    .get(self.endpointBuilder.serviceProvidersHAL().build(),
       self.headers(cookies.get('session-token')),
       {})
     .then(function (result) {
-      self.allServiceProviders(self.mapServiceProviders(result.data))
-      self.serviceProviders(self.mapServiceProviders(result.data))
+      self.allServiceProviders(self.mapServiceProviders(result.data.embedded.items))
+      self.serviceProviders(self.mapServiceProviders(result.data.embedded.items))
 
-      self.availableCities(result.data
+      self.availableCities(result.data.embedded.items
         .map((sp) => sp.associatedCityId)
         .filter((e, i, a) => { return a.indexOf(e) === i }))
 

@@ -13,6 +13,7 @@ function p (addr) {
 
 module.exports = {
   getServiceProviders: p('/v1/all-service-providers'),
+  getServiceProvidersHAL: p('/v2/all-service-providers'),
   getServiceCategories: p('/v2/service-categories'),
   users: p('/v1/users'),
   verifiedUsers: p('/v1/verified-users'),

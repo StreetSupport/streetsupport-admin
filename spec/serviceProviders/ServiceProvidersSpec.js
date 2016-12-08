@@ -23,29 +23,33 @@ describe('Service Providers', () => {
       then: function (success, error) {
         success({
           'status': 200,
-          'data': [
-            {
-              'key': 'albert-kennedy-trust',
-              'name': 'Albert Kennedy Trust',
-              'isVerified': false,
-              'isPublished': false,
-              'associatedCityId': 'manchester'
-            },
-            {
-              'key': 'booth-centre',
-              'name': 'Booth Centre',
-              'isVerified': true,
-              'isPublished': true,
-              'associatedCityId': 'leeds'
-            },
-            {
-              'key': 'coffee4craig',
-              'name': 'Coffee4Craig',
-              'isVerified': false,
-              'isPublished': true,
-              'associatedCityId': 'brighton'
+          'data': {
+            embedded: {
+              items: [
+                {
+                  'key': 'albert-kennedy-trust',
+                  'name': 'Albert Kennedy Trust',
+                  'isVerified': false,
+                  'isPublished': false,
+                  'associatedCityId': 'manchester'
+                },
+                {
+                  'key': 'booth-centre',
+                  'name': 'Booth Centre',
+                  'isVerified': true,
+                  'isPublished': true,
+                  'associatedCityId': 'leeds'
+                },
+                {
+                  'key': 'coffee4craig',
+                  'name': 'Coffee4Craig',
+                  'isVerified': false,
+                  'isPublished': true,
+                  'associatedCityId': 'brighton'
+                }
+              ]
             }
-          ]
+          }
         })
       }
     }
@@ -70,7 +74,7 @@ describe('Service Providers', () => {
   })
 
   it('should retrieve service providers from api with session token', () => {
-    var endpoint = endpoints.getServiceProviders
+    var endpoint = endpoints.getServiceProvidersHAL
     var headers = {
       'content-type': 'application/json',
       'session-token': 'stored-session-token'
