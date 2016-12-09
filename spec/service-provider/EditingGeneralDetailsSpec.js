@@ -59,6 +59,10 @@ describe('Edit Service Provider General Details', () => {
     expect(model.isEditingGeneralDetails).toBeTruthy()
   })
 
+  it('should htmlencode donation description', () => {
+    expect(model.serviceProvider().donationDescription()).toEqual('Every Donation to AKT delivers help where it\'s most needed.')
+  })
+
   describe('Save', () => {
     var stubbedPutApi
 
@@ -185,6 +189,7 @@ function coffee4Craig () {
     'groupedServices': [],
     'providedServices': [],
     'tags': ['tag-a', 'tag-c', 'tag-d'],
-    'needCategories': ['cat a', 'cat b']
+    'needCategories': ['cat a', 'cat b'],
+    'donationDescription': 'Every Donation to AKT delivers help where it&#39;s most needed.'
   }
 }

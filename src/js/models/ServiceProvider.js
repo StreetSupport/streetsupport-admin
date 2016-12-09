@@ -29,7 +29,7 @@ function ServiceProvider (data) {
   self.addresses = ko.observableArray(data.addresses.map((a) => new Address(a)))
   self.addresses().forEach((a) => a.addListener(self))
   self.donationUrl = ko.observable(data.donationUrl)
-  self.donationDescription = ko.observable(data.donationDescription)
+  self.donationDescription = ko.observable(htmlEncode.htmlDecode(data.donationDescription))
 
   self.tags = ko.observableArray(
     spTags.all()
