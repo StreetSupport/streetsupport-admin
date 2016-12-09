@@ -214,7 +214,7 @@ nosubnav: true
             <button data-bind="click: $parent.saveDonationDetails" class="btn btn--primary"><span class="btn__text">save</span></button>
             <!-- /ko -->
             <dl class="key-value-pair">
-              <dt class="key-value-pair__key">Donation Url</dt>
+              <dt class="key-value-pair__key">Donate Money Url</dt>
               <dd class="key-value-pair__value">
                 <!-- ko ifnot: $parent.isEditingDonationDetails -->
                 <span data-bind="html: donationUrl"></span>
@@ -223,7 +223,7 @@ nosubnav: true
                 <input type="text" data-bind="textInput: donationUrl" class="form__input form__input" />
                 <!-- /ko -->
               </dd>
-              <dt class="key-value-pair__key">Donation Description</dt>
+              <dt class="key-value-pair__key">Donate Money Description</dt>
               <dd class="key-value-pair__value">
                 <!-- ko ifnot: $parent.isEditingDonationDetails -->
                 <span data-bind="html: donationDescription"></span>
