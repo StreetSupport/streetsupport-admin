@@ -183,10 +183,6 @@ nosubnav: true
         <div class="split split--admin-panel">
           <section class="split__element split__element--admin-panel">
             <h2>Needs</h2>
-            <p data-bind="text: needCatList"></p>
-            <a data-bind="attr: { 'href': editNeedCategoriesUrl }" title="edit need categories" class="btn btn--info">
-              <span class="btn__text">Edit Categories</span>
-            </a>
             <a data-bind="attr: { 'href': addNeedUrl }" title="add need" class="btn btn--primary">
               <span class="btn__text">Add Need</span>
             </a>
@@ -206,13 +202,11 @@ nosubnav: true
           </section>
           <section class="split__element split__element--admin-panel">
             <h2>Donations</h2>
-            <!-- ko ifnot: $parent.isEditingDonationDetails -->
-            <button data-bind="click: $parent.editDonationDetails" class="btn btn--info"><span class="btn__text">edit</span></button>
-            <!-- /ko -->
-            <!-- ko if: $parent.isEditingDonationDetails -->
-            <button data-bind="click: $parent.cancelEditDonationDetails" class="btn btn--indifferent"><span class="btn__text">cancel</span></button>
-            <button data-bind="click: $parent.saveDonationDetails" class="btn btn--primary"><span class="btn__text">save</span></button>
-            <!-- /ko -->
+            <h3>Items accepted</h3>
+            <p data-bind="text: needCatList"></p>
+            <a data-bind="attr: { 'href': editNeedCategoriesUrl }" title="edit need categories" class="btn btn--info">
+              <span class="btn__text">Edit Items accepted</span>
+            </a>
             <dl class="key-value-pair">
               <dt class="key-value-pair__key">Donate Money Url</dt>
               <dd class="key-value-pair__value">
@@ -233,6 +227,13 @@ nosubnav: true
                 <!-- /ko -->
               </dd>
             </dl>
+            <!-- ko ifnot: $parent.isEditingDonationDetails -->
+            <button data-bind="click: $parent.editDonationDetails" class="btn btn--info"><span class="btn__text">edit</span></button>
+            <!-- /ko -->
+            <!-- ko if: $parent.isEditingDonationDetails -->
+            <button data-bind="click: $parent.cancelEditDonationDetails" class="btn btn--indifferent"><span class="btn__text">cancel</span></button>
+            <button data-bind="click: $parent.saveDonationDetails" class="btn btn--primary"><span class="btn__text">save</span></button>
+            <!-- /ko -->
           </section>
         </div>
 
