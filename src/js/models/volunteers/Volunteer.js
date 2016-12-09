@@ -68,6 +68,10 @@ const Volunteer = function (data, listener) {
       })
   }
 
+  self.hideContactHistory = () => {
+    self.hasRetrievedContactHistory(false)
+  }
+
   self.archive = () => {
     browser.loading()
 

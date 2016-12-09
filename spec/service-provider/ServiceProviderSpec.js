@@ -131,6 +131,10 @@ describe('Show Service Provider', () => {
     expect(model.serviceProvider().tags()[3].isSelected()).toBeTruthy()
     expect(model.serviceProvider().tags()[4].isSelected()).toBeFalsy()
   })
+
+  it('- Should set need categories', () => {
+    expect(model.serviceProvider().needCatList()).toEqual('cat a, cat b')
+  })
 })
 
 function coffee4Craig () {
@@ -149,6 +153,7 @@ function coffee4Craig () {
     'website': 'http://www.coffee4craig.com/',
     'facebook': 'https://www.facebook.com/Coffee4Craig/?fref=ts',
     'twitter': '@Coffee4Craig',
+    'needCategories': ['cat a', 'cat b'],
     'addresses': [{
       'key': '1234',
       'street': '7-11 Lancaster Rd',
