@@ -109,6 +109,7 @@ function ServiceProviderDetails () {
   self.serviceProvider = ko.observable()
   self.isEditingGeneralDetails = ko.observable(false)
   self.isEditingContactDetails = ko.observable(false)
+  self.isEditingDonationDetails = ko.observable(false)
   self.message = ko.observable('')
 
   self.init = function () {
@@ -146,12 +147,11 @@ function ServiceProviderDetails () {
           .filter((t) => t.isSelected() === true)
           .map((m) => m.id)
       }
+
       const payload = {
         'Description': sp.description(),
         'ShortDescription': sp.shortDescription(),
-        'Tags': tagsToCsv(),
-        'DonationUrl': sp.donationUrl(),
-        'DonationDescription': sp.donationDescription()
+        'Tags': tagsToCsv()
       }
       ajax.put(self.endpointBuilder.serviceProviders(getUrlParameter.parameter('key')).generalInformation().build(),
         self.headers(cookies.get('session-token')),
@@ -196,6 +196,38 @@ function ServiceProviderDetails () {
           }
         }, function (error) {
           self.handleError(error)
+        })
+    }
+  }
+
+  self.editDonationDetails = function () {
+    self.isEditingDonationDetails(true)
+  }
+
+  self.cancelEditDonationDetails = function () {
+    self.isEditingDonationDetails(false)
+    self.restoreViewModel()
+  }
+
+  self.saveDonationDetails = function () {
+    if (self.isEditingDonationDetails()) {
+      const sp = self.serviceProvider()
+
+      const payload = {
+        'DonationUrl': sp.donationUrl(),
+        'DonationDescription': sp.donationDescription()
+      }
+      const endpoint = self.endpointBuilder.serviceProviders(getUrlParameter.parameter('key')).donationInformation().build()
+      ajax.put(endpoint,
+        self.headers(cookies.get('session-token')),
+        payload
+        ).then(function (result) {
+          if (result.statusCode === 200) {
+            self.isEditingDonationDetails(false)
+            self.clearErrors()
+          } else {
+            self.handleError(result)
+          }
         })
     }
   }

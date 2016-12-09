@@ -12,7 +12,7 @@ const cookies = require('../../src/js/cookies')
 const spTags = require('../../src/js/serviceProviderTags')
 const getUrlParameter = require('../../src/js/get-url-parameter')
 
-describe('Edit Service Provider General Details', () => {
+describe('Edit Service Provider Donation Details', () => {
   const Model = require('../../src/js/models/ServiceProvider')
   let model = null
 
@@ -32,17 +32,10 @@ describe('Edit Service Provider General Details', () => {
     sinon.stub(browser, 'loading')
     sinon.stub(browser, 'loaded')
     sinon.stub(browser, 'scrollTo')
-    sinon.stub(spTags, 'all').returns([
-      { id: 'tag-a', name: 'Tag A' },
-      { id: 'tag-b', name: 'Tag B' },
-      { id: 'tag-c', name: 'Tag C' },
-      { id: 'tag-d', name: 'Tag D' },
-      { id: 'tag-e', name: 'Tag E' }
-    ])
 
     model = new Model()
 
-    model.editGeneralDetails()
+    model.editDonationDetails()
   })
 
   afterEach(() => {
@@ -52,11 +45,14 @@ describe('Edit Service Provider General Details', () => {
     browser.loaded.restore()
     browser.loading.restore()
     browser.scrollTo.restore()
-    spTags.all.restore()
   })
 
-  it('should set isEditingGeneralDetails to true', () => {
-    expect(model.isEditingGeneralDetails).toBeTruthy()
+  it('should set isEditingDonationDetails to true', () => {
+    expect(model.isEditingDonationDetails).toBeTruthy()
+  })
+
+  it('should htmlencode donation description', () => {
+    expect(model.serviceProvider().donationDescription()).toEqual('Every Donation to AKT delivers help where it\'s most needed.')
   })
 
   describe('Save', () => {
@@ -74,38 +70,32 @@ describe('Edit Service Provider General Details', () => {
 
       stubbedPutApi = sinon.stub(ajax, 'put').returns(fakeResolved)
 
-      model.serviceProvider().description('new description')
-      model.serviceProvider().shortDescription('new short description')
-      model.serviceProvider().tags()[0].isSelected(true)
-      model.serviceProvider().tags()[1].isSelected(true)
-      model.serviceProvider().tags()[2].isSelected(true)
-      model.serviceProvider().tags()[3].isSelected(false)
-      model.serviceProvider().tags()[4].isSelected(false)
+      model.serviceProvider().donationUrl('http://donate-here.com')
+      model.serviceProvider().donationDescription('donation description')
 
-      model.saveGeneralDetails()
+      model.saveDonationDetails()
     })
 
     afterEach(() => {
       ajax.put.restore()
     })
 
-    it('should put service provider general details to api with session token', () => {
-      var endpoint = endpoints.getServiceProviders + '/coffee4craig/general-information'
+    it('should put service provider Donation details to api with session token', () => {
+      var endpoint = endpoints.getServiceProviders + '/coffee4craig/donation-information'
       var headers = {
         'content-type': 'application/json',
         'session-token': 'stored-session-token'
       }
       var payload = {
-        'Description': 'new description',
-        'ShortDescription': 'new short description',
-        'Tags': ['tag-a', 'tag-b', 'tag-c']
+        'DonationUrl': 'http://donate-here.com',
+        'DonationDescription': 'donation description'
       }
       var apiCalledWithExpectedArgs = stubbedPutApi.withArgs(endpoint, headers, payload).calledOnce
       expect(apiCalledWithExpectedArgs).toBeTruthy()
     })
 
-    it('should set isEditingGeneralDetails to false', () => {
-      expect(model.isEditingGeneralDetails()).toBeFalsy()
+    it('should set isEditingDonationDetails to false', () => {
+      expect(model.isEditingDonationDetails()).toBeFalsy()
     })
   })
 
@@ -126,7 +116,7 @@ describe('Edit Service Provider General Details', () => {
 
       model.serviceProvider().description('new description')
 
-      model.saveGeneralDetails()
+      model.saveDonationDetails()
     })
 
     afterEach(() => {
@@ -137,8 +127,8 @@ describe('Edit Service Provider General Details', () => {
       expect(model.errors()[1]).toEqual('returned error message 2')
     })
 
-    it('should keep isEditingGeneralDetails as true', () => {
-      expect(model.isEditingGeneralDetails()).toBeTruthy()
+    it('should keep isEditingDonationDetails as true', () => {
+      expect(model.isEditingDonationDetails()).toBeTruthy()
     })
   })
 
@@ -159,7 +149,7 @@ describe('Edit Service Provider General Details', () => {
       model.serviceProvider().description('new description')
       model.serviceProvider().shortDescription('new short description')
 
-      model.saveGeneralDetails()
+      model.saveDonationDetails()
     })
 
     afterEach(() => {
