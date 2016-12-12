@@ -226,6 +226,24 @@ nosubnav: true
                 <textarea data-bind="textInput: donationDescription" class="form__input form__input--textarea" rows="7"></textarea>
                 <!-- /ko -->
               </dd>
+              <dt class="key-value-pair__key">Donate Items Url</dt>
+              <dd class="key-value-pair__value">
+                <!-- ko ifnot: $parent.isEditingDonationDetails -->
+                <span data-bind="html: itemsDonationUrl"></span>
+                <!-- /ko -->
+                <!-- ko if: $parent.isEditingDonationDetails -->
+                <input type="text" data-bind="textInput: itemsDonationUrl" class="form__input form__input" />
+                <!-- /ko -->
+              </dd>
+              <dt class="key-value-pair__key">Donate Items Description</dt>
+              <dd class="key-value-pair__value">
+                <!-- ko ifnot: $parent.isEditingDonationDetails -->
+                <span data-bind="html: itemsDonationDescription"></span>
+                <!-- /ko -->
+                <!-- ko if: $parent.isEditingDonationDetails -->
+                <textarea data-bind="textInput: itemsDonationDescription" class="form__input form__input--textarea" rows="7"></textarea>
+                <!-- /ko -->
+              </dd>
             </dl>
             <!-- ko ifnot: $parent.isEditingDonationDetails -->
             <button data-bind="click: $parent.editDonationDetails" class="btn btn--info"><span class="btn__text">edit</span></button>

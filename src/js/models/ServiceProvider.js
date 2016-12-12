@@ -30,6 +30,8 @@ function ServiceProvider (data) {
   self.addresses().forEach((a) => a.addListener(self))
   self.donationUrl = ko.observable(data.donationUrl)
   self.donationDescription = ko.observable(htmlEncode.htmlDecode(data.donationDescription))
+  self.itemsDonationUrl = ko.observable(data.itemsDonationUrl)
+  self.itemsDonationDescription = ko.observable(htmlEncode.htmlDecode(data.itemsDonationDescription))
 
   self.tags = ko.observableArray(
     spTags.all()
@@ -215,7 +217,9 @@ function ServiceProviderDetails () {
 
       const payload = {
         'DonationUrl': sp.donationUrl(),
-        'DonationDescription': sp.donationDescription()
+        'DonationDescription': sp.donationDescription(),
+        'ItemsDonationUrl': sp.itemsDonationUrl(),
+        'ItemsDonationDescription': sp.itemsDonationDescription()
       }
       const endpoint = self.endpointBuilder.serviceProviders(getUrlParameter.parameter('key')).donationInformation().build()
       ajax.put(endpoint,

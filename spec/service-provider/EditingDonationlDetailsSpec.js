@@ -9,7 +9,6 @@ const ajax = require('../../src/js/ajax')
 const endpoints = require('../../src/js/api-endpoints')
 const browser = require('../../src/js/browser')
 const cookies = require('../../src/js/cookies')
-const spTags = require('../../src/js/serviceProviderTags')
 const getUrlParameter = require('../../src/js/get-url-parameter')
 
 describe('Edit Service Provider Donation Details', () => {
@@ -73,6 +72,9 @@ describe('Edit Service Provider Donation Details', () => {
       model.serviceProvider().donationUrl('http://donate-here.com')
       model.serviceProvider().donationDescription('donation description')
 
+      model.serviceProvider().itemsDonationUrl('http://item-donate-here.com')
+      model.serviceProvider().itemsDonationDescription('item donation description')
+
       model.saveDonationDetails()
     })
 
@@ -88,7 +90,9 @@ describe('Edit Service Provider Donation Details', () => {
       }
       var payload = {
         'DonationUrl': 'http://donate-here.com',
-        'DonationDescription': 'donation description'
+        'DonationDescription': 'donation description',
+        'ItemsDonationUrl': 'http://item-donate-here.com',
+        'ItemsDonationDescription': 'item donation description'
       }
       var apiCalledWithExpectedArgs = stubbedPutApi.withArgs(endpoint, headers, payload).calledOnce
       expect(apiCalledWithExpectedArgs).toBeTruthy()
