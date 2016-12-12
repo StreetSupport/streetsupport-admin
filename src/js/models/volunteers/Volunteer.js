@@ -57,7 +57,7 @@ const Volunteer = function (data, listener) {
         let items = result.data.embedded.items
         items.forEach((i) => {
           i.message = htmlEncode.htmlDecode(i.message)
-          i.createdDate = moment(i.createdDate).format('hh:mm DD/MM/YY')
+          i.createdDate = moment(i.creationDate).format('hh:mm DD/MM/YY')
         })
         self.contactHistory(result.data.embedded.items)
         self.hasContactHistory(result.data.embedded.items.length > 0)

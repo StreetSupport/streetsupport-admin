@@ -113,6 +113,11 @@ function EndpointBuilder () {
     return self
   }
 
+  self.donationInformation = () => {
+    self.childResource = 'donation-information'
+    return self
+  }
+
   self.contactDetails = () => {
     self.childResource = 'contact-details'
     return self
