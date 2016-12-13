@@ -44,7 +44,9 @@ module.exports = {
     volunteers: p('volunteers'),
     offersOfItems: p('offers-of-items'),
     contactVolunteer: p('contact-volunteer'),
+    shareVolunteer: p('share-volunteer'),
     contactAboutOffer: p('contact-about-offer'),
+    shareOffer: p('share-offer'),
     mailingList: p('mailing-list'),
     users: p('users'),
     editServiceProviderNeedCategories: p('edit-service-provider-need-categories')

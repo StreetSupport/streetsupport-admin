@@ -1,0 +1,72 @@
+---
+title: Share Offer - Street Support Admin
+description: Street Support - Making it easier to help homeless people in Manchester
+layout: default.hbs
+permalink: false
+jsBundle: shareOffer
+page: shareOffer
+nosubnav: true
+---
+
+<div class="block block--highlight admin-header">
+  <div class="container block__inner">
+    <header>
+      <h1>Share Offer</h1>
+    </header>
+  </div>
+</div>
+<div class="block">
+  <div class="container block__inner">
+    <div class="block__content">
+      <!-- ko if: isFormSubmitSuccessful -->
+        <!-- ko template: { name: 'form-submit-success-template' } --><!-- /ko -->
+      <!-- /ko -->
+      <!-- ko if: isFormSubmitFailure -->
+        <!-- ko template: { name: 'form-submit-failure-template' } --><!-- /ko -->
+      <!-- /ko -->
+      <!-- ko ifnot: isFormSubmitSuccessful -->
+      <form class="form" data-bind="submit: submit">
+        <p>Share this offer with another organisation by selecting them from the drop down menu</p>
+        <a href="/offers-of-items" class="btn btn--info">
+          <span class="btn__text">Back to Offers</a>
+        </a>
+        <fieldset class="form__fieldset">
+          <legend class="h2 form__fieldset-title">Share Offer</legend>
+          <ul class="form__field-list">
+            <li class="form__field-item form__field-item--full">
+              <label class="form__label--checkbox" for="org"></label>
+              <select data-bind="options: organisations,
+                optionsText: function (item) {
+                return item.name
+              },
+              value: selectedOrgId,
+              optionsCaption: '-- please select --'" class="form__input"></select>
+            </li>
+          </ul>
+        </fieldset>
+        <button type="submit" class="btn btn--primary form__submit" data-bind="click: submit">
+          <span class="btn__text">Submit</span>
+        </button>
+      </form>
+      <!-- /ko -->
+    </div>
+  </div>
+</div>
+
+{{> loading-spinner}}
+<script type="text/html" id="contact-form">
+</script>
+
+<script type="text/html" id="form-submit-success-template">
+  <h2>Your message has been sent</h2>
+   <a href="/offers-of-items" class="btn btn--info">
+    <span class="btn__text">Back to Offers</a>
+  </a>
+</script>
+
+<script type="text/html" id="form-submit-failure-template">
+  <h2>There was a problem with your submission:</h2>
+  <ul data-bind="foreach: errors">
+    <li data-bind="text: $data"></li>
+  </ul>
+</script>

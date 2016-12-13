@@ -79,6 +79,11 @@ nosubnav: true
       <a data-bind="attr: { href: contactUrl }" class="btn btn--primary"><span class="btn__text">Contact</span></a>
       <button class="btn btn--info" data-bind="click: getContactHistory"><span class="btn__text">View Contact Log</span></button>
       <button class="btn btn--warning" data-bind="click: archive"><span class="btn__text">Archive</span></button>
+      <!-- ko if: canShare() -->
+      <a class="btn btn--indifferent" data-bind="attr: {href: shareUrl}">
+        <span class="btn__text">Share</span>
+      </a>
+      <!-- /ko -->
     </section>
     <section>
     <!-- ko if: hasRetrievedContactHistory() -->

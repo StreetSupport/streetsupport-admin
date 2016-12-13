@@ -77,6 +77,10 @@ describe('List Volunteers', () => {
     expect(model.volunteers()[1].contactUrl).toEqual(adminUrls.contactVolunteer + '?id=570542130a4f951fb8abe4b9')
   })
 
+  it('should set url to share volunteer', () => {
+    expect(model.volunteers()[1].shareUrl).toEqual(adminUrls.shareVolunteer + '?id=570542130a4f951fb8abe4b9')
+  })
+
   it('should format creationDate', () => {
     expect(model.volunteers()[1].creationDate).toEqual('06/04/16')
   })

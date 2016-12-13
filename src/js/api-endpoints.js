@@ -13,6 +13,7 @@ function p (addr) {
 
 module.exports = {
   getServiceProviders: p('/v1/all-service-providers'),
+  getPublishedServiceProviders: p('/v2/service-providers'),
   getServiceProvidersHAL: p('/v2/all-service-providers'),
   getServiceCategories: p('/v2/service-categories'),
   users: p('/v1/users'),
@@ -26,5 +27,6 @@ module.exports = {
   actionGroups: p('/v1/action-groups/members'),
   mailingListMembers: p('/v1/mailing-list-members'),
   cities: p('/v1/cities'),
-  needCategories: p('/v1/service-provider-needs/categories/')
+  needCategories: p('/v1/service-provider-needs/categories/'),
+  shareVolunteer: p('/v1/volunteer-shares')
 }
