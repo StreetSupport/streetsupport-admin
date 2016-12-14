@@ -85,6 +85,11 @@ function EndpointBuilder () {
     return self
   }
 
+  self.needTweetMessage = () => {
+    self.updateBaseResource(endpoints.needTweetMessage)
+    return self
+  }
+
   self.addresses = (addressId) => {
     self.childResource = 'addresses'
     self.childResourceId = addressId

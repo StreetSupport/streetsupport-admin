@@ -28,5 +28,6 @@ module.exports = {
   mailingListMembers: p('/v1/mailing-list-members'),
   cities: p('/v1/cities'),
   needCategories: p('/v1/service-provider-needs/categories/'),
-  shareVolunteer: p('/v1/volunteer-shares')
+  shareVolunteer: p('/v1/volunteer-shares'),
+  needTweetMessage: p('/v1/need-twitter-message')
 }
