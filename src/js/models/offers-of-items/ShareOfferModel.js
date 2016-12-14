@@ -63,12 +63,10 @@ var ShareOfferModel = function () {
       ajax
         .get(getOrgsEndpoint, headers)
         .then((res) => {
-          console.log(res)
           self.organisations(res.data.map((o) => ({
             'id': o.key,
             'name': htmlencode.htmlDecode(o.name)
           })))
-          console.log(self.organisations())
 
           browser.loaded()
         }, () => {
