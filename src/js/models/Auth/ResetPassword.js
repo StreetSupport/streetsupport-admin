@@ -13,26 +13,34 @@ function ResetPasswordModel () {
   self.isSubmissionSuccessful = ko.observable(false)
   self.isSubmitting = false
 
+  const submitForm = () => {
+    browser.loading()
+    self.isSubmitting = true
+    self.message('Loading, please wait')
+    ajax.put(
+      self.endpointBuilder.resetPassword(urlParams.parameter('id')).build(),
+      self.headers(cookies.get('session-token')),
+      {
+        'Password': self.password()
+      })
+    .then(function (result) {
+      browser.loaded()
+      self.isSubmitting = false
+      if (result.statusCode === 200) {
+        self.isSubmissionSuccessful(true)
+      } else {
+        self.handleError(result)
+      }
+    }, (err) => {
+      self.handleServerError(err)
+    })
+  }
+
   self.submit = function () {
     var self = this
     if (!self.isSubmitting) {
       if (self.password() === self.password2()) {
-        browser.loading()
-        self.isSubmitting = true
-        self.message('Loading, please wait')
-        ajax.put(
-          self.endpointBuilder.resetPassword(urlParams.parameter('id')).build(),
-          self.headers(cookies.get('session-token')),
-          {
-            'Password': self.password()
-          })
-        .then(function (result) {
-          self.isSubmissionSuccessful(true)
-          browser.loaded()
-        }, function (error) {
-          self.handleError(error)
-          self.isSubmitting = false
-        })
+        submitForm()
       } else {
         self.errors(['Passwords must match.'])
       }

@@ -15,6 +15,11 @@ function EndpointBuilder () {
     return self
   }
 
+  self.publishedOrgs = (cityId) => {
+    self.updateBaseResource(endpoints.getPublishedServiceProviders, cityId)
+    return self
+  }
+
   self.serviceProvidersHAL = (providerId) => {
     self.updateBaseResource(endpoints.getServiceProvidersHAL, providerId)
     return self
@@ -77,6 +82,11 @@ function EndpointBuilder () {
 
   self.cities = (cityId) => {
     self.updateBaseResource(endpoints.cities, cityId)
+    return self
+  }
+
+  self.needTweetMessage = () => {
+    self.updateBaseResource(endpoints.needTweetMessage)
     return self
   }
 

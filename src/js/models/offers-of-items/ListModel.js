@@ -72,7 +72,6 @@ var ListModel = function () {
 
     const endpoint = self.endpointBuilder.offersOfItems().build()
     const headers = self.headers(cookies.get('session-token'))
-
     ajax
       .get(endpoint, headers)
       .then(function (success) {

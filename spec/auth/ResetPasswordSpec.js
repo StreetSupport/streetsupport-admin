@@ -16,14 +16,20 @@ describe('Reset Password', () => {
   var model
 
   beforeEach(() => {
+    sinon.stub(browser, 'scrollTo')
     sinon.stub(browser, 'loading')
     sinon.stub(browser, 'loaded')
+    sinon.stub(cookies, 'get').withArgs('session-token').returns('storedSessionToken')
+    sinon.stub(getParams, 'parameter').returns('verificationCode')
     model = new Model()
   })
 
   afterEach(() => {
+    browser.scrollTo.restore()
     browser.loading.restore()
     browser.loaded.restore()
+    cookies.get.restore()
+    getParams.parameter.restore()
   })
 
   it('should set password as empty', () => {
@@ -41,14 +47,12 @@ describe('Reset Password', () => {
       let putResolved = {
         then: (success, _) => {
           success({
-            'status': 201
+            'statusCode': 200
           })
         }
       }
 
       stubbedApiPut = sinon.stub(ajax, 'put').returns(putResolved)
-      sinon.stub(cookies, 'get').withArgs('session-token').returns('storedSessionToken')
-      sinon.stub(getParams, 'parameter').returns('verificationCode')
 
       model.password('MyNewPassword!')
       model.password2('MyNewPassword!')
@@ -57,8 +61,6 @@ describe('Reset Password', () => {
 
     afterEach(() => {
       ajax.put.restore()
-      cookies.get.restore()
-      getParams.parameter.restore()
     })
 
     it('should put password to api', () => {
@@ -104,6 +106,37 @@ describe('Reset Password', () => {
 
     it('should set errors', () => {
       expect(model.errors()[0]).toEqual('Passwords must match.')
+    })
+  })
+
+  describe('Errors from server', () => {
+    beforeEach(() => {
+      let putResolved = {
+        then: (success, _) => {
+          success({
+            'statusCode': 400,
+            'data': {'messages': ['Your password strength is insufficient.']}
+          })
+        }
+      }
+
+      sinon.stub(ajax, 'put').returns(putResolved)
+
+      model.password('test')
+      model.password2('test')
+      model.submit()
+    })
+
+    afterEach(() => {
+      ajax.put.restore()
+    })
+
+    it('should not set isSubmissionSuccessful to true', () => {
+      expect(model.isSubmissionSuccessful()).toBeFalsy()
+    })
+
+    it('should set errors', () => {
+      expect(model.errors()[0]).toEqual('Your password strength is insufficient.')
     })
   })
 })

@@ -179,7 +179,8 @@ var getData = () => {
       'lastName': 'Snow',
       'telephone': 'js_telephone',
       'email': 'jon.snow@nightswatch.com',
-      'postcode': 'castle-black'
+      'postcode': 'castle-black',
+      'city': 'Westeros'
     },
     'description': 'ice, lots of ice',
     'additionalInfo': 'may be traces of ginger',
@@ -191,7 +192,8 @@ var getData = () => {
       'lastName': 'Baratheon',
       'telephone': 'rb_telephone',
       'email': 'robbo@baratheon.com',
-      'postcode': 'M3 4BD'
+      'postcode': 'M3 4BD',
+      'city': 'Westeros'
     },
     'description': 'description A',
     'additionalInfo': 'additional information A',
@@ -203,7 +205,8 @@ var getData = () => {
       'lastName': 'Stark',
       'telephone': 'ss_telephone',
       'email': 'sansa@winterfell.com',
-      'postcode': 'the-eyrie'
+      'postcode': 'the-eyrie',
+      'city': 'Westeros'
     },
     'description': 'description A',
     'additionalInfo': 'additional information A',

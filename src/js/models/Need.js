@@ -44,8 +44,24 @@ function Need (data) {
 
   self.editNeedUrl = adminUrls.serviceProviderNeedsEdit + '?providerId=' + self.serviceProviderId + '&needId=' + self.id()
 
+  self.derivedTweet = ko.observable()
+
+  self.description.subscribe((newValue) => {
+    if (newValue.length > 5) {
+      const tweetUrl = self.endpointBuilder.needTweetMessage().build()
+      const endpoint = `${tweetUrl}?providerId=${self.serviceProviderId}&needDescription=${self.description()}`
+      const headers = self.headers(cookies.get('session-token'))
+
+      ajax
+        .get(endpoint, headers)
+        .then((result) => {
+          self.derivedTweet(result.data)
+        })
+    }
+  })
+
   self.deleteNeed = function () {
-    var endpoint = self.endpointBuilder.serviceProviders(getUrlParameter.parameter('key')).needs(self.id()).build()
+    var endpoint = `${self.endpointBuilder.serviceProviders(getUrlParameter.parameter('key')).needs(self.id()).build()}`
     ajax.delete(endpoint, self.headers(cookies.get('session-token')))
     .then(function (result) {
       self.listeners().forEach((l) => l.deleteNeed(self))
