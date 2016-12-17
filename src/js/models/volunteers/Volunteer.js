@@ -9,6 +9,7 @@ const htmlEncode = require('htmlencode')
 const BaseViewModel = require('../../models/BaseViewModel')
 const moment = require('moment')
 const ko = require('knockout')
+require('knockout.validation') // No variable here is deliberate!
 
 const Volunteer = function (data, listener) {
   let self = this
@@ -33,6 +34,7 @@ const Volunteer = function (data, listener) {
   }
 
   self.contactUrl = adminUrls.contactVolunteer + '?id=' + data.id
+  self.shareUrl = adminUrls.shareVolunteer + '?id=' + data.id
   self.creationDate = moment(data.creationDate).format('DD/MM/YY')
   self.isHighlighted = ko.observable(false)
   self.highlighted = ko.computed(() => {
@@ -40,24 +42,31 @@ const Volunteer = function (data, listener) {
       ? 'volunteer volunteer--highlighted'
       : 'volunteer'
   }, self)
+  self.canShare = ko.computed(function () {
+    return self.person.city !== null && self.person.city.length > 0
+  }, self)
 
   self.contactHistory = ko.observableArray()
   self.hasContactHistory = ko.observable(false)
   self.hasRetrievedContactHistory = ko.observable(false)
 
+  self.haveSentEmail = ko.observable(false)
+  self.shareByEmailFormModel = ko.validatedObservable({
+    email: ko.observable().extend({ email: true, required: true })
+  })
+  self.fieldErrors = ko.validation.group(self.shareByEmailFormModel)
+
   self.getContactHistory = () => {
     browser.loading()
 
     ajax
-      .get(
-        endpoints.volunteers + '/' + self.id + '/contact-requests',
-        self.headers(cookies.get('session-token')),
-        {})
+      .get(endpoints.volunteers + '/' + self.id + '/contact-requests',
+        self.headers(cookies.get('session-token')))
       .then((result) => {
         let items = result.data.embedded.items
         items.forEach((i) => {
           i.message = htmlEncode.htmlDecode(i.message)
-          i.createdDate = moment(i.createdDate).format('hh:mm DD/MM/YY')
+          i.createdDate = moment(i.creationDate).format('hh:mm DD/MM/YY')
         })
         self.contactHistory(result.data.embedded.items)
         self.hasContactHistory(result.data.embedded.items.length > 0)
@@ -74,7 +83,6 @@ const Volunteer = function (data, listener) {
 
   self.archive = () => {
     browser.loading()
-
     ajax
       .patch(
         endpoints.volunteers + '/' + self.id + '/is-archived',

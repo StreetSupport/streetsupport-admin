@@ -25,7 +25,8 @@ let ItemOfferer = function (data, listener) {
     lastName: data.person.lastName,
     email: data.person.email,
     telephone: data.person.telephone,
-    postcode: data.person.postcode
+    postcode: data.person.postcode,
+    city: data.person.city
   }
   self.description = data.description
   self.additionalInfo = data.additionalInfo
@@ -44,6 +45,11 @@ let ItemOfferer = function (data, listener) {
   self.contactHistory = ko.observableArray()
   self.hasContactHistory = ko.observable(false)
   self.hasRetrievedContactHistory = ko.observable(false)
+
+  self.canShare = ko.computed(function () {
+    return self.person.city !== null && self.person.city.length > 0
+  }, self)
+  self.shareUrl = adminUrls.shareOffer + '?id=' + data.id
 
   self.getContactHistory = () => {
     browser.loading()

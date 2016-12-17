@@ -92,7 +92,8 @@ var getData = () => {
       'lastName': 'Lee',
       'telephone': '01234567890',
       'email': 'vince.lee@polyhatsoftware.co.uk',
-      'postcode': 'M3 4BD'
+      'postcode': 'M3 4BD',
+      'city': 'Westeros'
     },
     'description': 'description A',
     'additionalInfo': 'additional information A',
@@ -104,7 +105,8 @@ var getData = () => {
       'lastName': 'Lee',
       'telephone': '',
       'email': 'vslee888+ncc@gmail.com',
-      'postcode': 'M3 4BD'
+      'postcode': 'M3 4BD',
+      'city': 'Westeros'
     },
     'description': 'description A',
     'additionalInfo': 'additional information A',
@@ -116,7 +118,8 @@ var getData = () => {
       'lastName': 'Lee',
       'telephone': '',
       'email': 'vslee888+060416@gmail.com',
-      'postcode': 'M1 2JB'
+      'postcode': 'M1 2JB',
+      'city': 'Westeros'
     },
     'description': 'description A',
     'additionalInfo': 'additional information A',

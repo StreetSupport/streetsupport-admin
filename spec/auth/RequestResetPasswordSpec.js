@@ -36,7 +36,7 @@ describe('Reset Password', () => {
       let postResolved = {
         then: (success, _) => {
           success({
-            'status': 201
+            'statusCode': 201
           })
         }
       }

@@ -15,6 +15,11 @@ function EndpointBuilder () {
     return self
   }
 
+  self.publishedOrgs = (cityId) => {
+    self.updateBaseResource(endpoints.getPublishedServiceProviders, cityId)
+    return self
+  }
+
   self.serviceProvidersHAL = (providerId) => {
     self.updateBaseResource(endpoints.getServiceProvidersHAL, providerId)
     return self
@@ -80,6 +85,11 @@ function EndpointBuilder () {
     return self
   }
 
+  self.needTweetMessage = () => {
+    self.updateBaseResource(endpoints.needTweetMessage)
+    return self
+  }
+
   self.addresses = (addressId) => {
     self.childResource = 'addresses'
     self.childResourceId = addressId
@@ -110,6 +120,11 @@ function EndpointBuilder () {
 
   self.generalInformation = () => {
     self.childResource = 'general-information'
+    return self
+  }
+
+  self.donationInformation = () => {
+    self.childResource = 'donation-information'
     return self
   }
 

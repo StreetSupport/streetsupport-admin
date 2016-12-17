@@ -15,13 +15,15 @@ var getUrlParameter = require('../../src/js/get-url-parameter')
 describe('Add individual Need', () => {
   var Model = require('../../src/js/models/service-provider-needs/AddServiceProviderNeed')
   var model
+  let ajaxGetStub = null
 
   beforeEach(() => {
     sinon.stub(browser, 'loading')
     sinon.stub(browser, 'loaded')
-    sinon.stub(getUrlParameter, 'parameter').withArgs('providerId').returns('coffee4craig')
+    sinon.stub(getUrlParameter, 'parameter')
+    .withArgs('providerId').returns('coffee4craig')
 
-    let fakeGetResolution = {
+    let getAddressesResolution = {
       then: function (success, error) {
         success({
           'statusCode': 200,
@@ -30,13 +32,35 @@ describe('Add individual Need', () => {
       }
     }
     sinon.stub(cookies, 'get').returns('saved-session-token')
-    sinon.stub(ajax, 'get').withArgs(
+    ajaxGetStub = sinon.stub(ajax, 'get')
+    ajaxGetStub.withArgs(
       endpoints.getServiceProviders + '/coffee4craig/addresses',
       {
         'content-type': 'application/json',
         'session-token': 'saved-session-token'
       }
-    ).returns(fakeGetResolution)
+    ).returns(getAddressesResolution)
+
+    let getDerivedTweetResolution = () => {
+      return {
+        then: function (success, error) {
+          success({
+            'statusCode': 200,
+            'data': 'returned derived tweet'
+          })
+        }
+      }
+    }
+    const endpoint = endpoints.needTweetMessage + '?providerId=coffee4craig&needDescription=new description'
+    const headers = {
+      'content-type': 'application/json',
+      'session-token': 'saved-session-token'
+    }
+    ajaxGetStub.withArgs(
+      endpoint,
+      headers
+    ).returns(getDerivedTweetResolution())
+
     model = new Model()
   })
 
@@ -81,6 +105,26 @@ describe('Add individual Need', () => {
 
     it('should set isPeopleOrThings to true', () => {
       expect(model.need().isPeopleOrThings()).toBeTruthy()
+    })
+  })
+
+  describe('selecting Items', () => {
+    beforeEach(() => {
+      model.need().type('items')
+    })
+
+    it('should set isPeopleOrThings to true', () => {
+      expect(model.need().isPeopleOrThings()).toBeTruthy()
+    })
+  })
+
+  describe('update description', () => {
+    beforeEach(() => {
+      model.need().description('new description')
+    })
+
+    it('- should update derived tweet', () => {
+      expect(model.need().derivedTweet()).toEqual('returned derived tweet')
     })
   })
 
