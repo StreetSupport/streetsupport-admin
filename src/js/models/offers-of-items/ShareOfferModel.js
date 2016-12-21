@@ -21,6 +21,28 @@ var ShareOfferModel = function () {
   self.apiErrors = ko.observableArray()
   self.offer = ko.observable()
 
+  const authClaims = cookies.get('auth-claims')
+
+  self.canShowBroadcastOffer = ko.observable(authClaims === 'SuperAdmin' || authClaims.startsWith('CityAdmin'))
+
+  self.broadcastToOrgs = () => {
+    browser.loading()
+    var endpoint = self.endpointBuilder.offersOfItems(getUrlParam.parameter('id')).build() + '/broadcast'
+    ajax
+      .post(endpoint, headers)
+      .then(function (res) {
+        browser.loaded()
+        if (res.status === 'error') {
+          self.isFormSubmitFailure(true)
+          self.showErrors(res)
+        } else {
+          self.isFormSubmitSuccessful(true)
+        }
+      }, function (res) {
+        self.handleServerError(res)
+      })
+  }
+
   ko.validation.init({
     insertMessages: true,
     decorateInputElement: true,
