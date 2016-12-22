@@ -1,4 +1,5 @@
 const ajax = require('../../../ajax')
+const browser = require('../../../browser')
 const cookies = require('../../../cookies')
 const querystring = require('../../../get-url-parameter')
 import BaseViewModel from '../../BaseViewModel'
@@ -14,6 +15,7 @@ const ListModel = function () {
   }, self)
 
   self.init = () => {
+    browser.loading()
     self.needId = querystring.parameter('needId')
     const endpoint = self.endpointBuilder.needOffers(self.needId).build()
     ajax
@@ -27,6 +29,7 @@ const ListModel = function () {
             o.createdOn = moment(o.documentCreationDate).format('DD/MM/YY')
           })
         self.offers(result.data.helpOffers)
+      browser.loaded()
       }, (error) => {
         self.handleServerError(error)
       })
