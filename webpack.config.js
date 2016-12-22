@@ -37,6 +37,7 @@ module.exports = {
     editServiceProviderService: p('edit-service-provider-service'),
     addServiceProviderNeed: p('add-service-provider-need'),
     editServiceProviderNeed: p('edit-service-provider-need'),
+    needResponses: p('provider-need-responses'),
     addUser: p('add-user'),
     verifyNewUser: p('verify-new-user'),
     charterPledges: p('charter-pledges'),

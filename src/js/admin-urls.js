@@ -28,5 +28,6 @@ module.exports = {
   shareOffer: '/offers-of-items/share',
   actionGroups: '/action-groups/',
   charter: s('/charter-pledges'),
-  serviceProviderNeedCategoriesEdit: s('/edit-service-provider-need-categories')
+  serviceProviderNeedCategoriesEdit: s('/edit-service-provider-need-categories'),
+  needOffers: '/needs/responses'
 }
