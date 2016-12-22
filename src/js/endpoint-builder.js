@@ -108,6 +108,11 @@ function EndpointBuilder () {
     return self
   }
 
+  self.needOffers = (needId) => {
+    self.updateBaseResource(endpoints.needOffers, needId)
+    return self
+  }
+
   self.isVerified = () => {
     self.childResource = 'is-verified'
     return self

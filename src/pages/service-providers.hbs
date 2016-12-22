@@ -189,7 +189,9 @@ nosubnav: true
             <div data-bind="foreach: needs">
               <article class="service-provider__item">
                 <div class="service-provider__item-title">
-                  <h3 data-bind="html: description"></h3>
+                  <h3>
+                    <a data-bind="attr: { href: viewOffersUrl }, html: description"></a>
+                  </h3>
                 </div>
                 <a data-bind="attr: { 'href': editNeedUrl }" title="edit need" class="btn btn--info">
                   <span class="btn__text">Edit</span>
