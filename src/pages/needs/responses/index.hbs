@@ -25,7 +25,7 @@ nosubnav: true
       <div data-bind="foreach: offers">
         <blockquote>
           <p data-bind="html: message"></p>
-          <footer><a data-bind="attr: { href: emailLink }, text: email"></a></footer>
+          <p><a data-bind="attr: { href: emailLink }, text: email"></a> <span data-bind="text: createdOn"></span><p>
         </blockquote>
       </div>
       <!-- /ko -->

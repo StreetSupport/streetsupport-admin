@@ -3,6 +3,7 @@ const cookies = require('../../../cookies')
 const querystring = require('../../../get-url-parameter')
 import BaseViewModel from '../../BaseViewModel'
 const ko = require('knockout')
+const moment = require('moment')
 
 const ListModel = function () {
   const self = this
@@ -23,6 +24,7 @@ const ListModel = function () {
         offers
           .forEach((o) => {
             o.emailLink = `mailto:${o.email}?subject=Thanks for your offer to help with '${result.data.need.description}' via Street Support!`
+            o.createdOn = moment(o.documentCreationDate).format('DD/MM/YY')
           })
         self.offers(result.data.helpOffers)
       }, (error) => {
