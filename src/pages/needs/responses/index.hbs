@@ -21,17 +21,25 @@ nosubnav: true
   <div class="container block__inner">
     <div class="block__content">
       <!-- ko if: hasOffers -->
-      <h2>Offers received</h2>
-      <div data-bind="foreach: offers">
-        <blockquote>
-          <p data-bind="html: message"></p>
-          <p><a data-bind="attr: { href: emailLink }, text: email"></a> <span data-bind="text: createdOn"></span><p>
-        </blockquote>
-      </div>
+        <!-- ko template: { name: 'show-offers-template' } --><!-- /ko -->
       <!-- /ko -->
       <!-- ko ifnot: hasOffers -->
-      <p>No offers to help received yet.</p>
+        <!-- ko template: { name: 'no-offers-template' } --><!-- /ko -->
       <!-- /ko -->
     </div>
   </div>
 </div>
+
+<script type="text/html" id="show-offers-template">
+  <h2>Offers received</h2>
+  <div data-bind="foreach: offers">
+    <blockquote>
+      <p data-bind="html: message"></p>
+      <p><a data-bind="attr: { href: emailLink }, text: email"></a> <span data-bind="text: createdOn"></span><p>
+    </blockquote>
+  </div>
+</script>
+
+<script type="text/html" id="no-offers-template">
+  <p>No offers to help received yet.</p>
+</script>
