@@ -1,0 +1,45 @@
+---
+title: Offers to Help - Street Support Admin
+description: Street Support - Making it easier to help homeless people in Manchester
+layout: default.hbs
+permalink: false
+jsBundle: needResponses
+page: needResponses
+nosubnav: true
+---
+
+<div class="block block--highlight admin-header">
+  <div class="container block__inner">
+      <header data-bind="with: need">
+        <h1>Responses to Need '<span data-bind="html: description"></span>'</h1>
+        <p data-bind="html: reason"></p>
+      </header>
+    </div>
+  </div>
+</div>
+<div class="block">
+  <div class="container block__inner">
+    <div class="block__content">
+      <!-- ko if: hasOffers -->
+        <!-- ko template: { name: 'show-offers-template' } --><!-- /ko -->
+      <!-- /ko -->
+      <!-- ko ifnot: hasOffers -->
+        <!-- ko template: { name: 'no-offers-template' } --><!-- /ko -->
+      <!-- /ko -->
+    </div>
+  </div>
+</div>
+
+<script type="text/html" id="show-offers-template">
+  <h2>Offers received</h2>
+  <div data-bind="foreach: offers">
+    <blockquote>
+      <p data-bind="html: message"></p>
+      <p><a data-bind="attr: { href: emailLink }, text: email"></a> <span data-bind="text: createdOn"></span><p>
+    </blockquote>
+  </div>
+</script>
+
+<script type="text/html" id="no-offers-template">
+  <p>No offers to help received yet.</p>
+</script>

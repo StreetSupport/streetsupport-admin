@@ -12,7 +12,6 @@ import browserSync from 'browser-sync'
 import sourcemaps from 'gulp-sourcemaps'
 import sass from 'gulp-sass'
 import postcss from 'gulp-postcss'
-import eyeglass from 'eyeglass'
 const sassOptions = {} // put whatever eyeglass and node-sass options you need here.
 
 // Postcss output modules
@@ -49,7 +48,7 @@ gulp.task('scss', () => {
   return gulp.src(config.paths.scss + '**/*.scss')
   .pipe(gulpif(argv.debug === true, debug({title: 'CSS Processed:'})))
   .pipe(gulpif(!argv.production, sourcemaps.init())) // Sourcemaps if there is no production flag
-  .pipe(sass(eyeglass(sassOptions)).on('error', sass.logError))
+  .pipe(sass().on('error', sass.logError))
   .pipe(postcss(output))
   .pipe(gulpif(!argv.production, sourcemaps.write('.'))) // Sourcemaps if there is no production flag
   .pipe(gulp.dest(config.paths.buildAssets + 'css'))

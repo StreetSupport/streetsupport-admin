@@ -44,6 +44,8 @@ function Need (data) {
 
   self.editNeedUrl = adminUrls.serviceProviderNeedsEdit + '?providerId=' + self.serviceProviderId + '&needId=' + self.id()
 
+  self.viewOffersUrl = `${adminUrls.needOffers}?needId=${self.id()}`
+
   self.derivedTweet = ko.observable()
 
   self.description.subscribe((newValue) => {

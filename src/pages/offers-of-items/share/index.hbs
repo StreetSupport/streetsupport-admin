@@ -25,13 +25,19 @@ nosubnav: true
         <!-- ko template: { name: 'form-submit-failure-template' } --><!-- /ko -->
       <!-- /ko -->
       <!-- ko ifnot: isFormSubmitSuccessful -->
+      <a href="/offers-of-items" class="btn btn--info">
+        <span class="btn__text">Back to Offers</a>
+      </a>
+
+      <!-- ko if: canShowBroadcastOffer -->
+      <button class="btn btn--primary" data-bind="click: broadcastToOrgs">
+        <span class="btn__text">Send to all matching organisations</span>
+      </button>
+      <!-- /ko -->
       <form class="form" data-bind="submit: submit">
-        <p>Share this offer with another organisation by selecting them from the drop down menu</p>
-        <a href="/offers-of-items" class="btn btn--info">
-          <span class="btn__text">Back to Offers</a>
-        </a>
         <fieldset class="form__fieldset">
-          <legend class="h2 form__fieldset-title">Share Offer</legend>
+          <legend class="h2 form__fieldset-title">Share Offer with Organisation</legend>
+          <p>Share this offer with another organisation by selecting them from the drop down menu</p>
           <ul class="form__field-list">
             <li class="form__field-item form__field-item--full">
               <label class="form__label--checkbox" for="org"></label>

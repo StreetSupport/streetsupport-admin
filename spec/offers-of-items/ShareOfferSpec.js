@@ -16,6 +16,7 @@ describe('Share Offer', () => {
   var model
   var ajaxPostStub
   var ajaxGetStub
+  let cookieStub = null
   var browserLoadingStub
   var browserLoadedStub
 
@@ -51,9 +52,15 @@ describe('Share Offer', () => {
         }
       })
 
-    sinon.stub(cookies, 'get')
+    cookieStub = sinon.stub(cookies, 'get')
+
+    cookieStub
       .withArgs('session-token')
       .returns('stored-session-token')
+
+    cookieStub
+      .withArgs('auth-claims')
+      .returns('SuperAdmin')
 
     sinon.stub(getUrlParam, 'parameter').withArgs('id').returns('56d0362c928556085cc569b3')
 
@@ -76,7 +83,11 @@ describe('Share Offer', () => {
     expect(model.organisations().length).toEqual(2)
   })
 
-  describe('- submit', () => {
+  it('- should show broadcast button', () => {
+    expect(model.canShowBroadcastOffer()).toBeTruthy()
+  })
+
+  describe('- share to single organisations', () => {
     beforeEach(() => {
       browserLoadingStub.reset()
       browserLoadedStub.reset()
@@ -102,6 +113,37 @@ describe('Share Offer', () => {
         'OrgId': 'coffee4craig'
       }
       var posted = ajaxPostStub.withArgs(endpoint, headers, payload).calledOnce
+      expect(posted).toBeTruthy()
+    })
+
+    it('should notify user it has loaded', () => {
+      expect(browserLoadedStub.calledAfter(ajaxPostStub)).toBeTruthy()
+    })
+
+    it('should set isFormSubmitSuccessful to true', () => {
+      expect(model.isFormSubmitSuccessful()).toBeTruthy()
+    })
+  })
+
+  describe('- share to all matching organisations', () => {
+    beforeEach(() => {
+      browserLoadingStub.reset()
+      browserLoadedStub.reset()
+
+      model.broadcastToOrgs()
+    })
+
+    it('should notify user it is loading', () => {
+      expect(browserLoadingStub.calledOnce).toBeTruthy()
+    })
+
+    it('should post to api', () => {
+      var endpoint = endpoints.offersOfItems + '/56d0362c928556085cc569b3/broadcast'
+      var headers = {
+        'content-type': 'application/json',
+        'session-token': 'stored-session-token'
+      }
+      var posted = ajaxPostStub.withArgs(endpoint, headers).calledOnce
       expect(posted).toBeTruthy()
     })
 
