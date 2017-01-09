@@ -85,6 +85,11 @@ function EndpointBuilder () {
     return self
   }
 
+  self.impactUpdates = (id) => {
+    self.updateBaseResource(endpoints.impactUpdates, id)
+    return self
+  }
+
   self.needTweetMessage = () => {
     self.updateBaseResource(endpoints.needTweetMessage)
     return self
