@@ -2,7 +2,6 @@ let ko = require('knockout')
 let ajax = require('../../ajax')
 let browser = require('../../browser')
 let BaseViewModel = require('../BaseViewModel')
-var htmlencode = require('htmlencode')
 let Update = require('./Update')
 
 function ListImpactUpdates () {
@@ -17,6 +16,12 @@ function ListImpactUpdates () {
     retrieveUpdates()
   }
 
+  self.updateAmended = () => {
+    self.message('Update amended')
+    browser.loading()
+    retrieveUpdates()
+  }
+
   self.updateDeleted = () => {
     browser.loading()
     retrieveUpdates()
@@ -27,8 +32,8 @@ function ListImpactUpdates () {
     ajax
       .get(self.endpointBuilder.cities().build())
       .then((result) => {
-        browser.loaded()
         self.cities(result.data)
+        retrieveUpdates()
       }, () => {
         self.handleServerError()
       })
@@ -41,7 +46,6 @@ function ListImpactUpdates () {
         browser.loaded()
         const updates = result.data.embedded.items
           .map((u) => new Update(self, u))
-          console.log(updates)
         self.impactUpdates(updates)
       }, () => {
         self.handleServerError()
@@ -50,7 +54,6 @@ function ListImpactUpdates () {
 
   self.init = () => {
     populateCities()
-    retrieveUpdates()
   }
 
   self.init()
