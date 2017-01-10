@@ -193,7 +193,7 @@
       padding: 5px 0;
 
       @include mq($from: m) {
-        padding: 10px 30px;
+        padding: 10px 15px;
         color: $brand-k;
         transition: background-color 150ms linear;
 
