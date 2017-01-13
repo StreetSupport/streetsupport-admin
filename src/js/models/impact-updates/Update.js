@@ -6,7 +6,10 @@ let cookies = require('../../cookies')
 var htmlencode = require('htmlencode')
 var marked = require('marked')
 
-function Update (listener, data = { content: '', displayDate: '01/01/2017' }) {
+const today = new Date()
+const defaultDisplayDate = `${today.getDate()}/${today.getMonth() + 1}/${today.getFullYear()}`
+
+function Update (listener, data = { content: '', displayDate: defaultDisplayDate }) {
   var self = this
 
   self.listener = listener
