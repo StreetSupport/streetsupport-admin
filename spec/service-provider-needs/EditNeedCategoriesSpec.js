@@ -75,6 +75,10 @@ describe('Editing Service Provider Need Categories', () => {
     expect(model.categories().length).toEqual(10)
   })
 
+  it('- Should sort categories alphabetically', () => {
+    expect(model.categories()[0].key).toEqual('bedding')
+  })
+
   it('- Should notify user it is loaded', () => {
     expect(browserLoadedStub.calledAfter(browserLoadingStub)).toBeTruthy()
     expect(browserLoadedStub.calledAfter(ajaxGetStub)).toBeTruthy()
@@ -107,8 +111,8 @@ describe('Editing Service Provider Need Categories', () => {
           }
         })
 
-      model.categories()[0].isChecked(false) // food and drink
-      model.categories()[1].isChecked(true) // toiletries
+      model.categories()[4].isChecked(false) // food-and-drink
+      model.categories()[1].isChecked(true) // cleaning-materials
       model.save()
     })
 
@@ -126,7 +130,7 @@ describe('Editing Service Provider Need Categories', () => {
         'content-type': 'application/json',
         'session-token': 'saved-session-token'
       }
-      const payload = [ 'toiletries', 'services' ]
+      const payload = [ 'cleaning-materials', 'services' ]
       expect(ajaxPutStub
         .withArgs(endpoint, headers, payload)
         .calledAfter(browserLoadingStub)

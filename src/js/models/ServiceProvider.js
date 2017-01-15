@@ -60,7 +60,12 @@ function ServiceProvider (data) {
   self.needs = ko.observableArray(buildNeeds(data.needs))
   self.needs().forEach((s) => s.addListener(self))
 
-  self.needCatList = ko.observable(data.needCategories !== undefined ? data.needCategories.join(', ') : '')
+  self.needCatList = ko.observable(data.needCategories !== undefined ? data.needCategories
+          .sort((a, b) => {
+            if (a.value > b.value) return 1
+            if (a.value < b.value) return -1
+            return 0
+          }).join(', ') : '')
 
   self.editNeedCategoriesUrl = adminUrls.serviceProviderNeedCategoriesEdit + '?providerId=' + data.key
 
