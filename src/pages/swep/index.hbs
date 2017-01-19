@@ -17,6 +17,14 @@ nosubnav: true
 <div class="block block--main-body">
   <div class="container block__inner">
     <div class="block__content form">
+      <dl data-bind="foreach: cities">
+        <dt data-bind="text: name"></dt>
+        <dd>
+          <button data-bind="attr: { class: buttonClass }">
+            <span class="btn__text" data-bind="text: buttonText, click: toggleSwepAvailability"></span>
+          </button>
+        </dd>
+      </dl>
     </div>
   </div>
 </div>

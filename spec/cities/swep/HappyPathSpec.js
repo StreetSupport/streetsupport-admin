@@ -57,6 +57,11 @@ describe('SWEP Availabilty', () => {
     expect(browserLoadedStub.calledAfter(ajaxGetStub)).toBeTruthy()
   })
 
+  it('- Should set toggle button text', () => {
+    expect(sut.cities()[0].buttonText()).toEqual('Set Unavailable')
+    expect(sut.cities()[1].buttonText()).toEqual('Set Available')
+  })
+
   describe('- Toggle swep availability', () => {
     let ajaxPatchStub = null
 
@@ -104,6 +109,10 @@ describe('SWEP Availabilty', () => {
         .withArgs(endpoint, headers, data)
           .calledAfter(browserLoadingStub)
         expect(apiCalledAsExpected).toBeTruthy()
+      })
+
+      it('- Should toggle swepIsAvailable', () => {
+        expect(sut.cities()[0].swepIsAvailable()).toBeFalsy()
       })
 
       it('- Should notify user it has loaded', () => {

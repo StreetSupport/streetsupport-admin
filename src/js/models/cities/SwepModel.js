@@ -10,6 +10,17 @@ const City = function (data) {
   self.key = data.id
   self.name = data.name
   self.swepIsAvailable = ko.observable(data.swepIsAvailable)
+  self.buttonText = ko.computed(() => {
+    return self.swepIsAvailable()
+      ? 'Set Unavailable'
+      : 'Set Available'
+  }, self)
+
+  self.buttonClass = ko.computed(() => {
+    return self.swepIsAvailable()
+      ? 'btn btn--warning'
+      : 'btn btn--primary'
+  }, self)
 
   self.toggleSwepAvailability = () => {
     browser.loading()
@@ -23,10 +34,12 @@ const City = function (data) {
     ajax
       .patch(endpoint, headers, data)
       .then((result) => {
+        browser.loaded()
         if (result.statusCode !== 200) {
           self.handleError(result)
+        } else {
+          self.swepIsAvailable(!self.swepIsAvailable())
         }
-        browser.loaded()
       }, (_) => {
         self.handleServerError()
       })
