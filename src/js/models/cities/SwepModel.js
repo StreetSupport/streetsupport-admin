@@ -23,6 +23,9 @@ const City = function (data) {
     ajax
       .patch(endpoint, headers, data)
       .then((result) => {
+        if (result.statusCode !== 200) {
+          self.handleError(result)
+        }
         browser.loaded()
       }, (_) => {
         self.handleServerError()

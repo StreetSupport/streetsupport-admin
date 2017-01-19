@@ -2,6 +2,7 @@
 
 const sinon = require('sinon')
 const ajax = require('../../../src/js/ajax')
+const adminUrls = require('../../../src/js/admin-urls')
 const endpoints = require('../../../src/js/api-endpoints')
 const browser = require('../../../src/js/browser')
 const cookies = require('../../../src/js/cookies')
@@ -63,19 +64,7 @@ describe('SWEP Availabilty', () => {
       browserLoadingStub.reset()
       browserLoadedStub.reset()
 
-      ajaxPatchStub = sinon
-        .stub(ajax, 'patch')
-        .returns({
-          then: function (success, error) {
-            success({
-              'status': 'ok'
-            })
-          }
-        })
-
       sinon.stub(cookies, 'get').returns('stored-session-token')
-
-      sut.cities()[0].toggleSwepAvailability()
     })
 
     afterEach(() => {
@@ -83,27 +72,93 @@ describe('SWEP Availabilty', () => {
       cookies.get.restore()
     })
 
-    it('- Should notify user it is loading', () => {
-      expect(browserLoadingStub.calledOnce).toBeTruthy()
+    describe('- Ok', () => {
+      beforeEach(() => {
+        ajaxPatchStub = sinon
+          .stub(ajax, 'patch')
+          .returns({
+            then: function (success, error) {
+              success({
+                'statusCode': 200
+              })
+            }
+          })
+
+        sut.cities()[0].toggleSwepAvailability()
+      })
+
+      it('- Should notify user it is loading', () => {
+        expect(browserLoadingStub.calledOnce).toBeTruthy()
+      })
+
+      it('- Should patch to api', () => {
+        const endpoint = `${endpoints.cities}/manchester/swep-status`
+        const headers = {
+          'content-type': 'application/json',
+          'session-token': 'stored-session-token'
+        }
+        const data = {
+          isAvailable: false
+        }
+        const apiCalledAsExpected = ajaxPatchStub
+        .withArgs(endpoint, headers, data)
+          .calledAfter(browserLoadingStub)
+        expect(apiCalledAsExpected).toBeTruthy()
+      })
+
+      it('- Should notify user it has loaded', () => {
+        expect(browserLoadedStub.calledAfter(ajaxPatchStub)).toBeTruthy()
+      })
     })
 
-    it('- Should patch to api', () => {
-      const endpoint = `${endpoints.cities}/manchester/swep-status`
-      const headers = {
-        'content-type': 'application/json',
-        'session-token': 'stored-session-token'
-      }
-      const data = {
-        isAvailable: false
-      }
-      const apiCalledAsExpected = ajaxPatchStub
-      .withArgs(endpoint, headers, data)
-        .calledAfter(browserLoadingStub)
-      expect(apiCalledAsExpected).toBeTruthy()
-    })
+    describe('- Server rejects request', () => {
+      let browserRedirect = null
+      beforeEach(() => {
+        ajaxPatchStub = sinon
+          .stub(ajax, 'patch')
+          .returns({
+            then: function (success, error) {
+              success({
+                'statusCode': 403
+              })
+            }
+          })
 
-    it('- Should notify user it has loaded', () => {
-      expect(browserLoadedStub.calledAfter(ajaxPatchStub)).toBeTruthy()
+        browserRedirect = sinon.stub(browser, 'redirect')
+
+        sut.cities()[0].toggleSwepAvailability()
+      })
+
+      afterEach(() => {
+        browser.redirect.restore()
+      })
+
+      it('- Should notify user it is loading', () => {
+        expect(browserLoadingStub.calledOnce).toBeTruthy()
+      })
+
+      it('- Should patch to api', () => {
+        const endpoint = `${endpoints.cities}/manchester/swep-status`
+        const headers = {
+          'content-type': 'application/json',
+          'session-token': 'stored-session-token'
+        }
+        const data = {
+          isAvailable: false
+        }
+        const apiCalledAsExpected = ajaxPatchStub
+        .withArgs(endpoint, headers, data)
+          .calledAfter(browserLoadingStub)
+        expect(apiCalledAsExpected).toBeTruthy()
+      })
+
+      it('- Should notify user it has loaded', () => {
+        expect(browserLoadedStub.calledAfter(ajaxPatchStub)).toBeTruthy()
+      })
+
+      it('- Should redirect user to login', () => {
+        expect(browserRedirect.withArgs(adminUrls.redirector).calledOnce).toBeTruthy()
+      })
     })
   })
 })
