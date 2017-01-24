@@ -29,7 +29,7 @@ const ListModel = function () {
             o.createdOn = moment(o.documentCreationDate).format('DD/MM/YY')
           })
         self.offers(result.data.helpOffers)
-      browser.loaded()
+        browser.loaded()
       }, (error) => {
         self.handleServerError(error)
       })

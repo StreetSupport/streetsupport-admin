@@ -1,0 +1,31 @@
+---
+title: Severe Weather Emergency Accomodation Provision - Street Support
+description: Street support makes it easier to help homeless people. Here is more information about how it works.
+layout: default.hbs
+permalink: false
+jsBundle: swep
+nosubnav: true
+---
+
+<div class="block block--highlight admin-header">
+  <div class="container block__inner">
+    <header>
+    <h1>Severe Weather Emergency Accomodation Provision</h1>
+    </header>
+  </div>
+</div>
+<div class="block block--main-body">
+  <div class="container block__inner">
+    <div class="block__content form">
+      <dl data-bind="foreach: cities">
+        <dt data-bind="text: name"></dt>
+        <dd>
+          <button data-bind="attr: { class: buttonClass }">
+            <span class="btn__text" data-bind="text: buttonText, click: toggleSwepAvailability"></span>
+          </button>
+        </dd>
+      </dl>
+    </div>
+  </div>
+</div>
+{{> loading-spinner}}

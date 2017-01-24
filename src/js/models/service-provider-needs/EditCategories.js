@@ -32,7 +32,13 @@ const Model = function () {
     ajax
       .get(endpoints.needCategories)
       .then((result) => {
-        self.allCategories = ko.observableArray(result.data)
+        const sorted = result.data
+          .sort((a, b) => {
+            if (a.value > b.value) return 1
+            if (a.value < b.value) return -1
+            return 0
+          })
+        self.allCategories = ko.observableArray(sorted)
         dataReceived()
       }, (_) => {
         browser.redirect('/500')

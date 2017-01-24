@@ -160,9 +160,15 @@ describe('Share Offer', () => {
 var offer = {
   'id': '584f3ef2c538cc1b70438ea4',
   'person': {
-    'firstName': 'Linda', 'lastName': 'Gago', 'telephone': '01204796102',
-    'email': 'lindatucker@ntlworld.com', 'postcode': 'BL4 9PY',
-    'city': 'manchester' }, 'description': 'Coats jackets hats scarfs gloves socks', 'additionalInfo': 'About 10 of each item above , a small collection from friends and relatives ', 'creationDate': '2016-12-13T00:21:06.8230000Z' }
+    'firstName': 'Linda',
+    'lastName': 'Gago',
+    'telephone': '01204796102',
+    'email': 'lindatucker@ntlworld.com',
+    'postcode': 'BL4 9PY',
+    'city': 'manchester' },
+  'description': 'Coats jackets hats scarfs gloves socks',
+  'additionalInfo': 'About 10 of each item above , a small collection from friends and relatives ',
+  'creationDate': '2016-12-13T00:21:06.8230000Z' }
 
 var orgs = [
   {

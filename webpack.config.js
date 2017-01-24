@@ -50,7 +50,9 @@ module.exports = {
     shareOffer: p('share-offer'),
     mailingList: p('mailing-list'),
     users: p('users'),
-    editServiceProviderNeedCategories: p('edit-service-provider-need-categories')
+    editServiceProviderNeedCategories: p('edit-service-provider-need-categories'),
+    impactupdates: p('impact-updates'),
+    swep: p('swep')
   },
   output: {
     path: path.join(__dirname, '/_dist/assets/js/'),
