@@ -4,11 +4,13 @@ const ajax = require('../../ajax')
 const browser = require('../../browser')
 const cookies = require('../../cookies')
 const BaseViewModel = require('../BaseViewModel')
+const nav = require('../../nav')
 
 const City = function (data) {
   const self = this
   self.key = data.id
   self.name = data.name
+  self.userClaims = ko.observable(`cityadminfor:${data.id}`)
   self.swepIsAvailable = ko.observable(data.swepIsAvailable)
   self.buttonText = ko.computed(() => {
     return self.swepIsAvailable()
@@ -18,11 +20,12 @@ const City = function (data) {
 
   self.buttonClass = ko.computed(() => {
     return self.swepIsAvailable()
-      ? 'btn btn--warning'
-      : 'btn btn--primary'
+      ? 'swep-list__button btn btn--warning'
+      : 'swep-list__button btn btn--primary'
   }, self)
 
   self.toggleSwepAvailability = () => {
+    console.log('toggle')
     browser.loading()
 
     const endpoint = `${self.endpointBuilder.cities().build()}/${self.key}/swep-status`
@@ -62,6 +65,7 @@ const Swep = function () {
         const cities = result.data
           .map((c) => new City(c))
         self.cities(cities)
+        nav.disableForbiddenLinks()
       }, (_) => {
         self.handleServerError()
       })
