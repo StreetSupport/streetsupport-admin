@@ -5,7 +5,6 @@ var openElement = '.js-nav-open'
 var closeElement = '.js-nav-close'
 var overlayElement = '.js-nav-overlay'
 var activeClass = 'is-active'
-var el = document.querySelectorAll('.js-nav-container, .js-nav-push, .js-nav-overlay, html, body')
 
 const disableForbiddenLinks = () => {
   const getUserClaims = () => {
@@ -28,8 +27,11 @@ const disableForbiddenLinks = () => {
 
     let claimsLinks = document.querySelectorAll('[data-claims*="admin"]')
 
+    console.log(claimsLinks)
+
     for (let i = 0; i < claimsLinks.length; ++i) {
       let requiredClaims = claimsLinks[i].getAttribute('data-claims')
+      console.log({userClaims, requiredClaims})
       if (!hasClaim(userClaims, requiredClaims)) { claimsLinks[i].parentNode.className += ' hide' }
     }
   }
@@ -58,12 +60,14 @@ var init = function () {
 }
 
 var open = function () {
+  var el = document.querySelectorAll('.js-nav-container, .js-nav-push, .js-nav-overlay, html, body')
   for (let i = 0; i < el.length; ++i) {
     el[i].classList.add(activeClass)
   }
 }
 
 var close = function () {
+  var el = document.querySelectorAll('.js-nav-container, .js-nav-push, .js-nav-overlay, html, body')
   for (let i = 0; i < el.length; ++i) {
     el[i].classList.remove(activeClass)
   }
@@ -72,5 +76,6 @@ var close = function () {
 module.exports = {
   init: init,
   open: open,
-  close: close
+  close: close,
+  disableForbiddenLinks: disableForbiddenLinks
 }

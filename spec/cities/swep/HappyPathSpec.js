@@ -6,6 +6,7 @@ const adminUrls = require('../../../src/js/admin-urls')
 const endpoints = require('../../../src/js/api-endpoints')
 const browser = require('../../../src/js/browser')
 const cookies = require('../../../src/js/cookies')
+const nav = require('../../../src/js/nav')
 const Model = require('../../../src/js/models/cities/SwepModel')
 
 describe('SWEP Availabilty', () => {
@@ -17,6 +18,7 @@ describe('SWEP Availabilty', () => {
   beforeEach(() => {
     browserLoadingStub = sinon.stub(browser, 'loading')
     browserLoadedStub = sinon.stub(browser, 'loaded')
+    sinon.stub(nav, 'disableForbiddenLinks')
 
     ajaxGetStub = sinon
       .stub(ajax, 'get')
@@ -39,6 +41,7 @@ describe('SWEP Availabilty', () => {
     ajax.get.restore()
     browser.loading.restore()
     browser.loaded.restore()
+    nav.disableForbiddenLinks.restore()
   })
 
   it('- Should notify user it is loading', () => {
@@ -60,6 +63,10 @@ describe('SWEP Availabilty', () => {
   it('- Should set toggle button text', () => {
     expect(sut.cities()[0].buttonText()).toEqual('Set Unavailable')
     expect(sut.cities()[1].buttonText()).toEqual('Set Available')
+  })
+
+  it('- Should set claims for city', () => {
+    expect(sut.cities()[0].userClaims()).toEqual('cityadminfor:manchester')
   })
 
   describe('- Toggle swep availability', () => {
