@@ -52,7 +52,8 @@ module.exports = {
     users: p('users'),
     editServiceProviderNeedCategories: p('edit-service-provider-need-categories'),
     impactupdates: p('impact-updates'),
-    swep: p('swep')
+    swep: p('swep'),
+    tempAccom: p('temp-accom')
   },
   output: {
     path: path.join(__dirname, '/_dist/assets/js/'),
