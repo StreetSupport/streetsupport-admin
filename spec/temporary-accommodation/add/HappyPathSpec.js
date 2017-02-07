@@ -12,55 +12,99 @@ const endpoints = require(`${jsRoot}api-endpoints`)
 const browser = require(`${jsRoot}browser`)
 const cookies = require(`${jsRoot}cookies`)
 
-describe('Temporary Accommodation Listing', () => {
+describe('Temporary Accommodation - Add', () => {
   const Model = require(`${jsRoot}models/temporary-accommodation/add`)
   let sut = null
   let browserLoadingStub = null
-  let ajaxGetStub = null
+  let browserLoadedStub = null
 
   beforeEach(() => {
-    ajaxGetStub = sinon
-      .stub(ajax, 'get')
-      .withArgs(endpoints.temporaryAccommodation)
-      .returns({
-        then: function (success, error) {
-          success({
-            'statusCode': 200,
-          'data': {
-              embedded: {
-                items: [
-                  {
-                    'key': 'albert-kennedy-trust',
-                    'name': 'Albert Kennedy Trust',
-                    'isPublished': true
-                  },
-                  {
-                    'key': 'coffee4craig',
-                    'name': 'Coffee4Craig',
-                    'isPublished': false
-                  }
-                ]
-              }
-            }
-          })
-        }
-      })
     browserLoadingStub = sinon.stub(browser, 'loading')
-
+    browserLoadedStub = sinon.stub(browser, 'loaded')
+    
     sut = new Model()
     sut.init()
   })
 
   afterEach(() => {
-    ajax.get.restore()
     browser.loading.restore()
+    browser.loaded.restore()
   })
 
-  it('- should show user it is loading', () => {
-    expect(browserLoadingStub.calledOnce).toBeTruthy()
-  })
+  describe('- submit', () => {
+    let ajaxPostStub = null
 
-  it('- should get accom listing', () => {
-    expect(ajaxGetStub.calledAfter(browserLoadingStub)).toBeTruthy()
+    beforeEach(() => {
+      browserLoadingStub.reset()
+      browserLoadedStub.reset()
+
+      sinon.stub(cookies, 'get').withArgs('session-token').returns('stored-session-token')
+
+      ajaxPostStub = sinon.stub(ajax, 'post')
+        .returns({
+          then: function (success, error) {
+            success({
+              'statusCode': 201,
+              'data': 'newId'
+            })
+          }
+        })
+
+      sut.formFields().name('name')
+      sut.formFields().additionalInfo('additional-info')
+      sut.formFields().email('email')
+      sut.formFields().telephone('telephone')
+      sut.formFields().addressLine1('address line 1')
+      sut.formFields().addressLine2('address line 2')
+      sut.formFields().addressLine3('address line 3')
+      sut.formFields().city('manchester')
+      sut.formFields().postcode('postcode')
+
+      sut.save()
+    })
+
+    afterEach(() => {
+      ajax.post.restore()
+      cookies.get.restore()
+    })
+
+    it('- should show user it is loading', () => {
+      expect(browserLoadingStub.calledOnce).toBeTruthy()
+    })
+
+    it('- should post form data to api', () => {
+      const endpoint = endpoints.temporaryAccommodation
+      const payload = {
+        'Name': 'name',
+        'AdditionalInfo': 'additional-info',
+        'Email': 'email',
+        'Telephone': 'telephone',
+        'AddressLine1': 'address line 1',
+        'AddressLine2': 'address line 2',
+        'AddressLine3': 'address line 3',
+        'City': 'manchester',
+        'Postcode': 'postcode'
+      }
+      const headers = {
+        'content-type': 'application/json',
+        'session-token': 'stored-session-token'
+      }
+      const calledAsExpected = ajaxPostStub
+        .withArgs(endpoint, payload, headers)
+        .calledOnce
+      expect(calledAsExpected).toBeTruthy()
+    })
+
+    it('- should show user it has loaded', () => {
+      expect(browserLoadedStub.calledAfter(ajaxPostStub)).toBeTruthy()
+    })
+
+    it('- should hide form', () => {
+      expect(sut.formSubmitted()).toBeTruthy()
+    })
+
+    it('- should show success message', () => {
+      expect(sut.formSubmissionSuccessful()).toBeTruthy()
+    })
   })
 })

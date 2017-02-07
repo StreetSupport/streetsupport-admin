@@ -10,7 +10,6 @@ const jsRoot = '../../../src/js/'
 const ajax = require(`${jsRoot}ajax`)
 const endpoints = require(`${jsRoot}api-endpoints`)
 const browser = require(`${jsRoot}browser`)
-const cookies = require(`${jsRoot}cookies`)
 
 describe('Temporary Accommodation Listing', () => {
   const Model = require(`${jsRoot}models/temporary-accommodation/list`)
@@ -26,7 +25,7 @@ describe('Temporary Accommodation Listing', () => {
         then: function (success, error) {
           success({
             'statusCode': 200,
-          'data': {
+            'data': {
               embedded: {
                 items: [
                   {
