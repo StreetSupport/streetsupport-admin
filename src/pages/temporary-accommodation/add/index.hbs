@@ -31,7 +31,7 @@ nosubnav: true
           </dd>
           <dt class="key-value-pair__key">Additional Info</dt>
           <dd class="key-value-pair__value">
-            <texarea data-bind="textInput: additionalInfo" type="text" class="form__input form__input--textarea"></texarea>
+            <textarea data-bind="textInput: additionalInfo" class="form__input form__input--multiline"></textarea>
           </dd>
           <dt class="key-value-pair__key">Email</dt>
           <dd class="key-value-pair__value">
@@ -65,9 +65,12 @@ nosubnav: true
             <input data-bind="textInput: postcode" type="text" class="form__input" />
           </dd>
         </dl>
-        <button data-bind="click: $parent.save" class="btn btn--primary"><span class="btn__text">save</span></button>
+        <button data-bind="click: $parent.save" class="btn btn--primary"><span class="btn__text">Save</span></button>
       </article>
     </div>
+    <!-- /ko -->
+    <!-- ko if: formSubmissionSuccessful -->
+    <p>Thank you for adding this entry.</p>
     <!-- /ko -->
   </div>
 </div>

@@ -45,8 +45,9 @@ function Model () {
     const headers = self.headers(cookies.get('session-token'))
 
     ajax
-      .post(endpoint, payload, headers)
+      .post(endpoint, headers, payload)
       .then((result) => {
+        console.log(result)
         self.formSubmitted(true)
         self.formSubmissionSuccessful(true)
         browser.loaded()
