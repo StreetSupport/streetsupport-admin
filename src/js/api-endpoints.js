@@ -31,5 +31,6 @@ module.exports = {
   shareVolunteer: p('/v1/volunteer-shares'),
   needTweetMessage: p('/v1/need-twitter-message'),
   needOffers: p('/v1/service-provider-needs'),
-  impactUpdates: p('/v1/impact-updates')
+  impactUpdates: p('/v1/impact-updates'),
+  temporaryAccommodation: p('/v1/temporary-accommodation/')
 }
