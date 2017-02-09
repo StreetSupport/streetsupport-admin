@@ -1,0 +1,27 @@
+---
+title: Temporary Accommodation - Street Support
+description: Street support makes it easier to help homeless people. Here is more information about how it works.
+layout: default.hbs
+permalink: false
+jsBundle: tempAccomEdit
+nosubnav: true
+---
+
+<div class="block block--highlight admin-header">
+  <div class="container block__inner">
+    <header>
+      <h1>Edit Temporary Accommodation</h1>
+      <a href="/temporary-accommodation" class="btn btn--info">
+        <span class="btn__text">Back to listing</span>
+      </a>
+    </header>
+  </div>
+</div>
+<div class="block block--main-body">
+  <div class="container block__inner">
+    <div class="block__content form">
+      {{> form-feedback}}
+    </div>
+  </div>
+</div>
+{{> loading-spinner}}
