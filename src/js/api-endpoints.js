@@ -12,6 +12,7 @@ function p (addr) {
 }
 
 module.exports = {
+  prefix: p,
   getServiceProviders: p('/v1/all-service-providers'),
   getPublishedServiceProviders: p('/v2/service-providers'),
   getServiceProvidersHAL: p('/v2/all-service-providers'),
@@ -32,5 +33,5 @@ module.exports = {
   needTweetMessage: p('/v1/need-twitter-message'),
   needOffers: p('/v1/service-provider-needs'),
   impactUpdates: p('/v1/impact-updates'),
-  temporaryAccommodation: p('/v1/temporary-accommodation/')
+  temporaryAccommodation: p('/v1/temporary-accommodation')
 }

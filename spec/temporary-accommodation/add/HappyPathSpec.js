@@ -11,6 +11,7 @@ const ajax = require(`${jsRoot}ajax`)
 const endpoints = require(`${jsRoot}api-endpoints`)
 const browser = require(`${jsRoot}browser`)
 const cookies = require(`${jsRoot}cookies`)
+const validation = require(`${jsRoot}validation`)
 
 describe('Temporary Accommodation - Add', () => {
   const Model = require(`${jsRoot}models/temporary-accommodation/add`)
@@ -37,6 +38,7 @@ describe('Temporary Accommodation - Add', () => {
     beforeEach(() => {
       browserLoadingStub.reset()
       browserLoadedStub.reset()
+      sinon.stub(validation, 'showErrors')
 
       sinon.stub(cookies, 'get').withArgs('session-token').returns('stored-session-token')
 
@@ -52,7 +54,7 @@ describe('Temporary Accommodation - Add', () => {
 
       sut.formFields().name('name')
       sut.formFields().additionalInfo('additional-info')
-      sut.formFields().email('email')
+      sut.formFields().email('test@email.com')
       sut.formFields().telephone('telephone')
       sut.formFields().addressLine1('address line 1')
       sut.formFields().addressLine2('address line 2')
@@ -66,6 +68,7 @@ describe('Temporary Accommodation - Add', () => {
     afterEach(() => {
       ajax.post.restore()
       cookies.get.restore()
+      validation.showErrors.restore()
     })
 
     it('- should show user it is loading', () => {
@@ -77,7 +80,7 @@ describe('Temporary Accommodation - Add', () => {
       const payload = {
         'Name': 'name',
         'AdditionalInfo': 'additional-info',
-        'Email': 'email',
+        'Email': 'test@email.com',
         'Telephone': 'telephone',
         'AddressLine1': 'address line 1',
         'AddressLine2': 'address line 2',
@@ -91,7 +94,7 @@ describe('Temporary Accommodation - Add', () => {
       }
       const calledAsExpected = ajaxPostStub
         .withArgs(endpoint, headers, payload)
-        .calledOnce
+        .calledAfter(browserLoadingStub)
       expect(calledAsExpected).toBeTruthy()
     })
 

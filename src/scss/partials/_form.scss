@@ -114,3 +114,10 @@
 label {
   cursor: pointer;
 }
+
+.validationMessage {
+  color: red;
+  font-weight: bold;
+  display: block;
+  text-align: right;
+}

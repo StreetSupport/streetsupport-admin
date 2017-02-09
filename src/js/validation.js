@@ -14,10 +14,23 @@ var getValidationGroup = function (koValidation, formModel) {
 
 var showErrors = function (koValidationGroup) {
   koValidationGroup.showAllMessages()
+  const validationMessages = document.querySelectorAll('.validationMessage')
+  validationMessages[0].previousSibling.focus()
+}
+
+const buildPayload = function (koFormFields) {
+  const payload = {}
+  Object.keys(koFormFields)
+    .forEach((k) => {
+      const key = `${k.charAt(0).toUpperCase()}${k.substr(1)}`
+      payload[key] = koFormFields[k]()
+    })
+  return payload
 }
 
 module.exports = {
   initialise: initialise,
   getValidationGroup: getValidationGroup,
-  showErrors: showErrors
+  showErrors: showErrors,
+  buildPayload: buildPayload
 }

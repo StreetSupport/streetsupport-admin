@@ -1,48 +1,43 @@
 const ajax = require('../../ajax')
-const endpoints = require('../../api-endpoints')
 const BaseViewModel = require('../../models/BaseViewModel')
 const browser = require('../../browser')
 const cookies = require('../../cookies')
+const endpoints = require('../../api-endpoints')
+const validation = require('../../validation')
+
+require('knockout.validation') // No variable here is deliberate!
 
 const ko = require('knockout')
 
 function Model () {
   const self = this
 
-  self.formFields = ko.observable({
-    name: ko.observable(),
-    additionalInfo: ko.observable(),
-    email: ko.observable(),
+  self.formFields = ko.validatedObservable({
+    name: ko.observable().extend({ required: true }),
+    additionalInfo: ko.observable().extend({ required: true }),
+    email: ko.observable().extend({ email: true }),
     telephone: ko.observable(),
-    addressLine1: ko.observable(),
+    addressLine1: ko.observable().extend({ required: true }),
     addressLine2: ko.observable(),
     addressLine3: ko.observable(),
-    city: ko.observable(),
-    postcode: ko.observable()
+    city: ko.observable().extend({ required: true }),
+    postcode: ko.observable().extend({ required: true })
   })
 
   self.formSubmitted = ko.observable(false)
   self.formSubmissionSuccessful = ko.observable(false)
 
   self.init = () => {
+    validation.initialise(ko.validation)
+    self.fieldErrors = validation.getValidationGroup(ko.validation, self.formFields)
   }
 
-  self.save = () => {
-    browser.loading()
-
+  self.postData = () => {
     const endpoint = endpoints.temporaryAccommodation
-    const payload = {
-      'Name': self.formFields().name(),
-      'AdditionalInfo': self.formFields().additionalInfo(),
-      'Email': self.formFields().email(),
-      'Telephone': self.formFields().telephone(),
-      'AddressLine1': self.formFields().addressLine1(),
-      'AddressLine2': self.formFields().addressLine2(),
-      'AddressLine3': self.formFields().addressLine3(),
-      'City': self.formFields().city(),
-      'Postcode': self.formFields().postcode()
-    }
+    const payload = validation.buildPayload(self.formFields())
     const headers = self.headers(cookies.get('session-token'))
+
+    browser.loading()
 
     ajax
       .post(endpoint, headers, payload)
@@ -53,6 +48,14 @@ function Model () {
       }, () => {
 
       })
+  }
+
+  self.save = () => {
+    if (self.formFields.isValid()) {
+      self.postData()
+    } else {
+      validation.showErrors(self.fieldErrors)
+    }
   }
 }
 
