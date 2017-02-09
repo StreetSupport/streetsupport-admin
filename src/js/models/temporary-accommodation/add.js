@@ -47,7 +47,6 @@ function Model () {
     ajax
       .post(endpoint, headers, payload)
       .then((result) => {
-        console.log(result)
         self.formSubmitted(true)
         self.formSubmissionSuccessful(true)
         browser.loaded()

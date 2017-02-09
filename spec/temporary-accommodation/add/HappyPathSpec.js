@@ -21,7 +21,7 @@ describe('Temporary Accommodation - Add', () => {
   beforeEach(() => {
     browserLoadingStub = sinon.stub(browser, 'loading')
     browserLoadedStub = sinon.stub(browser, 'loaded')
-    
+
     sut = new Model()
     sut.init()
   })
@@ -90,7 +90,7 @@ describe('Temporary Accommodation - Add', () => {
         'session-token': 'stored-session-token'
       }
       const calledAsExpected = ajaxPostStub
-        .withArgs(endpoint, payload, headers)
+        .withArgs(endpoint, headers, payload)
         .calledOnce
       expect(calledAsExpected).toBeTruthy()
     })
