@@ -26,6 +26,7 @@ function Model () {
 
   self.formSubmitted = ko.observable(false)
   self.formSubmissionSuccessful = ko.observable(false)
+  self.formSubmissionNotSuccessful = ko.observable(false)
 
   self.init = () => {
     validation.initialise(ko.validation)
@@ -38,15 +39,23 @@ function Model () {
     const headers = self.headers(cookies.get('session-token'))
 
     browser.loading()
+    self.formSubmitted(true)
+    self.formSubmissionNotSuccessful(false)
 
     ajax
       .post(endpoint, headers, payload)
       .then((result) => {
-        self.formSubmitted(true)
-        self.formSubmissionSuccessful(true)
         browser.loaded()
-      }, () => {
 
+        if (result.statusCode === 201) {
+          self.formSubmissionSuccessful(true)
+        } else {
+          self.formSubmitted(false)
+          self.formSubmissionNotSuccessful(true)
+          self.handleError(result)
+        }
+      }, () => {
+        self.handleServerError()
       })
   }
 
@@ -56,6 +65,14 @@ function Model () {
     } else {
       validation.showErrors(self.fieldErrors)
     }
+  }
+
+  self.reset = () => {
+    const formFieldKeys = Object.keys(self.formFields())
+    formFieldKeys
+      .forEach((k) => {
+        self.formFields()[k]('')
+      })
   }
 }
 

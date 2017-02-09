@@ -13,7 +13,7 @@ const browser = require(`${jsRoot}browser`)
 const cookies = require(`${jsRoot}cookies`)
 const validation = require(`${jsRoot}validation`)
 
-describe('Temporary Accommodation - Add', () => {
+describe('Temporary Accommodation - add - server returns bad request', () => {
   const Model = require(`${jsRoot}models/temporary-accommodation/add`)
   let sut = null
   let browserLoadingStub = null
@@ -22,6 +22,7 @@ describe('Temporary Accommodation - Add', () => {
   beforeEach(() => {
     browserLoadingStub = sinon.stub(browser, 'loading')
     browserLoadedStub = sinon.stub(browser, 'loaded')
+    sinon.stub(browser, 'scrollTo')
 
     sut = new Model()
     sut.init()
@@ -30,6 +31,7 @@ describe('Temporary Accommodation - Add', () => {
   afterEach(() => {
     browser.loading.restore()
     browser.loaded.restore()
+    browser.scrollTo.restore()
   })
 
   describe('- submit', () => {
@@ -46,8 +48,13 @@ describe('Temporary Accommodation - Add', () => {
         .returns({
           then: function (success, error) {
             success({
-              'statusCode': 201,
-              'data': 'newId'
+              'statusCode': 400,
+              'data': {
+                messages: [
+                  'error 1',
+                  'error 2'
+                ]
+              }
             })
           }
         })
@@ -102,26 +109,18 @@ describe('Temporary Accommodation - Add', () => {
       expect(browserLoadedStub.calledAfter(ajaxPostStub)).toBeTruthy()
     })
 
-    it('- should hide form', () => {
-      expect(sut.formSubmitted()).toBeTruthy()
+    it('- should not hide form', () => {
+      expect(sut.formSubmitted()).toBeFalsy()
+      expect(sut.formSubmissionNotSuccessful()).toBeTruthy()
     })
 
-    it('- should show success message', () => {
-      expect(sut.formSubmissionSuccessful()).toBeTruthy()
+    it('- should not show success message', () => {
+      expect(sut.formSubmissionSuccessful()).toBeFalsy()
     })
 
-    describe('- add new', () => {
-      beforeEach(() => {
-        sut.reset()
-      })
-
-      it('- should reset the form', () => {
-        const formFieldKeys = Object.keys(sut.formFields())
-        formFieldKeys
-          .forEach((k) => {
-            expect(sut.formFields()[k]()).toEqual('')
-          })
-      })
+    it('- should show errors', () => {
+      expect(sut.errors().length).toEqual(2)
+      expect(sut.errors()[1]).toEqual('error 2')
     })
   })
 })
