@@ -5,9 +5,8 @@ const cookies = require('../../cookies')
 const endpoints = require('../../api-endpoints')
 const validation = require('../../validation')
 
-require('knockout.validation') // No variable here is deliberate!
-
 const ko = require('knockout')
+require('knockout.validation') // No variable here is deliberate!
 
 function Model () {
   const self = this
@@ -73,6 +72,9 @@ function Model () {
       .forEach((k) => {
         self.formFields()[k]('')
       })
+    self.formSubmitted(false)
+    self.formSubmissionSuccessful(false)
+    self.formSubmissionNotSuccessful(false)
   }
 }
 

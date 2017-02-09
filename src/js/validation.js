@@ -1,11 +1,13 @@
+const options = {
+  insertMessages: true,
+  decorateInputElement: true,
+  parseInputAttributes: true,
+  errorMessageClass: 'form__error',
+  errorElementClass: 'form__input--error'
+}
+
 var initialise = function (koValidation) {
-  koValidation.init({
-    insertMessages: true,
-    decorateInputElement: true,
-    parseInputAttributes: true,
-    errorMessageClass: 'form__error',
-    errorElementClass: 'form__input--error'
-  }, true)
+  koValidation.init(options, true)
 }
 
 var getValidationGroup = function (koValidation, formModel) {
@@ -14,8 +16,15 @@ var getValidationGroup = function (koValidation, formModel) {
 
 var showErrors = function (koValidationGroup) {
   koValidationGroup.showAllMessages()
-  const validationMessages = document.querySelectorAll('.validationMessage')
-  validationMessages[0].previousSibling.focus()
+  const validationMessages = document.querySelectorAll(`.${options.errorMessageClass}`)
+  console.log(validationMessages)
+  for (const error of validationMessages) {
+    console.log(error.style.display)
+    if (error.style.display !== 'none') {
+      error.previousSibling.focus()
+      break
+    }
+  }
 }
 
 const buildPayload = function (koFormFields) {

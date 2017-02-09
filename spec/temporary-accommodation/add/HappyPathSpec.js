@@ -122,6 +122,15 @@ describe('Temporary Accommodation - Add', () => {
             expect(sut.formFields()[k]()).toEqual('')
           })
       })
+
+      it('- should show form', () => {
+        expect(sut.formSubmitted()).toBeFalsy()
+      })
+
+      it('- hide messages', () => {
+        expect(sut.formSubmissionSuccessful()).toBeFalsy()
+        expect(sut.formSubmissionNotSuccessful()).toBeFalsy()
+      })
     })
   })
 })
