@@ -5,15 +5,14 @@ global describe, beforeEach, afterEach, it, expect
 'use strict'
 
 const sinon = require('sinon')
-
-const jsRoot = '../../../src/js/'
+const jsRoot = '../../../../src/js/'
 const ajax = require(`${jsRoot}ajax`)
 const endpoints = require(`${jsRoot}api-endpoints`)
 const browser = require(`${jsRoot}browser`)
 const cookies = require(`${jsRoot}cookies`)
 const querystring = require(`${jsRoot}get-url-parameter`)
 
-const testData = require('./testData')
+const testData = require('../testData')
 
 describe('Temporary Accommodation - Edit', () => {
   const Model = require(`${jsRoot}models/temporary-accommodation/edit`)
