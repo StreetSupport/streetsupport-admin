@@ -16,6 +16,9 @@ function InlineEditableSubEntity (formFields, endpoint) {
 
   self.formFields = formFields
 
+  validation.initialise(ko.validation)
+  self.fieldErrors = validation.getValidationGroup(ko.validation, self.formFields)
+
   self.edit = () => {
     self.isEditable(true)
   }
@@ -47,7 +50,7 @@ function InlineEditableSubEntity (formFields, endpoint) {
     self.isEditable(false)
   }
 
-  self.save = () => {
+  self.patchData = () => {
     browser.loading()
     const headers = self.headers(cookies.get('session-token'))
     const payload = validation.buildPayload(self.formFields())
@@ -58,6 +61,14 @@ function InlineEditableSubEntity (formFields, endpoint) {
         self.updateRestoreState()
         browser.loaded()
       })
+  }
+
+  self.save = () => {
+    if (self.formFields.isValid()) {
+      self.patchData()
+    } else {
+      validation.showErrors(self.fieldErrors)
+    }
   }
 }
 

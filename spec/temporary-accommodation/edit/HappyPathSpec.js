@@ -12,7 +12,8 @@ const endpoints = require(`${jsRoot}api-endpoints`)
 const browser = require(`${jsRoot}browser`)
 const cookies = require(`${jsRoot}cookies`)
 const querystring = require(`${jsRoot}get-url-parameter`)
-const validation = require(`${jsRoot}validation`)
+
+const testData = require('./testData')
 
 describe('Temporary Accommodation - Edit', () => {
   const Model = require(`${jsRoot}models/temporary-accommodation/edit`)
@@ -31,12 +32,12 @@ describe('Temporary Accommodation - Edit', () => {
     browserLoadedStub = sinon.stub(browser, 'loaded')
     ajaxGetStub = sinon.stub(ajax, 'get')
     ajaxGetStub
-      .withArgs(`${endpoints.temporaryAccommodation}/${itemData.id}`, headers)
+      .withArgs(`${endpoints.temporaryAccommodation}/${testData.id}`, headers)
       .returns({
         then: function (success, error) {
           success({
             'statusCode': 200,
-            'data': itemData
+            'data': testData
           })
         }
       })
@@ -46,7 +47,7 @@ describe('Temporary Accommodation - Edit', () => {
 
     sinon.stub(querystring, 'parameter')
       .withArgs('id')
-      .returns(itemData.id)
+      .returns(testData.id)
 
     sut = new Model()
     sut.init()
@@ -90,7 +91,7 @@ describe('Temporary Accommodation - Edit', () => {
 
       sut.contactDetails().formFields().name('new name')
       sut.contactDetails().formFields().additionalInfo('new additionalInfo')
-      sut.contactDetails().formFields().email('new email')
+      sut.contactDetails().formFields().email('new-test@email.com')
       sut.contactDetails().formFields().telephone('new telephone')
     })
 
@@ -126,7 +127,7 @@ describe('Temporary Accommodation - Edit', () => {
       })
 
       it('- should patch new data', () => {
-        const endpoint = `${endpoints.temporaryAccommodation}/${itemData.id}/contact-information`
+        const endpoint = `${endpoints.temporaryAccommodation}/${testData.id}/contact-information`
         const headers = {
           'content-type': 'application/json',
           'session-token': 'stored-session-token'
@@ -134,7 +135,7 @@ describe('Temporary Accommodation - Edit', () => {
         const payload = {
           'Name': 'new name',
           'AdditionalInfo': 'new additionalInfo',
-          'Email': 'new email',
+          'Email': 'new-test@email.com',
           'Telephone': 'new telephone'
         }
         const patchAsExpected = ajaxPatchStub
@@ -155,7 +156,7 @@ describe('Temporary Accommodation - Edit', () => {
         beforeEach(() => {
           sut.contactDetails().formFields().name('another name')
           sut.contactDetails().formFields().additionalInfo('another additionalInfo')
-          sut.contactDetails().formFields().email('another email')
+          sut.contactDetails().formFields().email('another-email@test.com')
           sut.contactDetails().formFields().telephone('another telephone')
 
           sut.contactDetails().cancel()
@@ -168,7 +169,7 @@ describe('Temporary Accommodation - Edit', () => {
         it('- should reset fields', () => {
           expect(sut.contactDetails().formFields().name()).toEqual('new name')
           expect(sut.contactDetails().formFields().additionalInfo()).toEqual('new additionalInfo')
-          expect(sut.contactDetails().formFields().email()).toEqual('new email')
+          expect(sut.contactDetails().formFields().email()).toEqual('new-test@email.com')
           expect(sut.contactDetails().formFields().telephone()).toEqual('new telephone')
         })
       })
@@ -184,35 +185,11 @@ describe('Temporary Accommodation - Edit', () => {
       })
 
       it('- should reset fields', () => {
-        expect(sut.contactDetails().formFields().name()).toEqual(itemData.contactInformation.name)
-        expect(sut.contactDetails().formFields().additionalInfo()).toEqual(itemData.contactInformation.additionalInfo)
-        expect(sut.contactDetails().formFields().email()).toEqual(itemData.contactInformation.email)
-        expect(sut.contactDetails().formFields().telephone()).toEqual(itemData.contactInformation.telephone)
+        expect(sut.contactDetails().formFields().name()).toEqual(testData.contactInformation.name)
+        expect(sut.contactDetails().formFields().additionalInfo()).toEqual(testData.contactInformation.additionalInfo)
+        expect(sut.contactDetails().formFields().email()).toEqual(testData.contactInformation.email)
+        expect(sut.contactDetails().formFields().telephone()).toEqual(testData.contactInformation.telephone)
       })
     })
   })
 })
-
-const itemData = {
-  'contactInformation': {
-    'name': 'name',
-    'additionalInfo': 'additionalInfo',
-    'email': 'test@test.com',
-    'telephone': 'telephone'
-  },
-  'address': {
-    'street1': '1',
-    'street2': '2',
-    'street3': '3',
-    'city': 'city',
-    'postcode': 'm1 3fy',
-    'latitude': 0,
-    'longitude': 0,
-    'publicTransportInfo': '',
-    'nearestSupportProviderId': ''
-  },
-  'features': null,
-  'id': '589a08ad6a38c32e883f26df',
-  'documentCreationDate': '2017-02-07T17:49:33.2570000Z',
-  'documentModifiedDate': '2017-02-07T17:49:33.2570000Z'
-}
