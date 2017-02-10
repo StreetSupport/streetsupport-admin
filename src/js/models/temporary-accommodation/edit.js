@@ -13,7 +13,7 @@ function Model () {
   const id = querystring.parameter('id')
   const headers = self.headers(cookies.get('session-token'))
 
-  self.buildContactDetails = () => {
+  self.buildContactDetails = function () {
     const formFields = ko.validatedObservable({
       name: ko.observable().extend({ required: true }),
       additionalInfo: ko.observable().extend({ required: true }),
@@ -24,7 +24,7 @@ function Model () {
     return new InlineEditableSubEntity(formFields, endpoint)
   }
 
-  self.buildAddress = () => {
+  self.buildAddress = function () {
     const formFields = ko.validatedObservable({
       street1: ko.observable().extend({ required: true }),
       street2: ko.observable(),
@@ -35,6 +35,8 @@ function Model () {
       nearestSupportProviderId: ko.observable()
     })
     const endpoint = self.endpointBuilder.temporaryAccommodation(id).contactInformation().build()
+    console.log(formFields().street1())
+
     return new InlineEditableSubEntity(formFields, endpoint)
   }
 

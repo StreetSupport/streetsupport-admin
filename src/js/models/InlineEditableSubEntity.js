@@ -16,6 +16,7 @@ function InlineEditableSubEntity (formFields, endpoint) {
 
   self.formFields = formFields
 
+
   validation.initialise(ko.validation)
   self.fieldErrors = validation.getValidationGroup(ko.validation, self.formFields)
 
