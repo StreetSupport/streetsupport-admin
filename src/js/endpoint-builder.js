@@ -60,6 +60,11 @@ function EndpointBuilder () {
     return self
   }
 
+  self.temporaryAccommodation = (id) => {
+    self.updateBaseResource(endpoints.temporaryAccommodation, id)
+    return self
+  }
+
   self.charterPledges = (pledgeId) => {
     self.updateBaseResource(endpoints.charterPledges, pledgeId)
     return self
@@ -160,6 +165,11 @@ function EndpointBuilder () {
 
   self.deleted = () => {
     self.childResource = 'deleted'
+    return self
+  }
+
+  self.contactInformation = () => {
+    self.childResource = 'contact-information'
     return self
   }
 

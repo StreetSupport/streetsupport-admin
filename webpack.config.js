@@ -54,7 +54,8 @@ module.exports = {
     impactupdates: p('impact-updates'),
     swep: p('swep'),
     tempAccom: p('temp-accom'),
-    tempAccomAdd: p('temp-accom-add')
+    tempAccomAdd: p('temp-accom-add'),
+    tempAccomEdit: p('temp-accom-edit')
   },
   output: {
     path: path.join(__dirname, '/_dist/assets/js/'),
