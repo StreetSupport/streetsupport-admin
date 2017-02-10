@@ -8,33 +8,36 @@ const validation = require('../../validation')
 const ko = require('knockout')
 require('knockout.validation') // No variable here is deliberate!
 
-function ContactDetails (rootId, data) {
+function InlineEditableSubEntity (formFields, endpoint) {
   const self = this
 
-  self.rootId = rootId
-  self.originalData = data
+  self.originalData = {}
   self.isEditable = ko.observable(false)
+  self.patchEndpoint = endpoint
 
-  self.formFields = ko.validatedObservable({
-    name: ko.observable(data.name).extend({ required: true }),
-    additionalInfo: ko.observable(data.additionalInfo).extend({ required: true }),
-    email: ko.observable(data.email).extend({ email: true }),
-    telephone: ko.observable(data.telephone)
-  })
+  self.formFields = formFields
 
   self.edit = () => {
     self.isEditable(true)
   }
 
   self.resetData = () => {
-    Object.keys(data)
+    Object.keys(self.originalData)
       .forEach((k) => {
-        self.formFields()[k](data[k])
+        self.formFields()[k](self.originalData[k])
       })
   }
 
+  self.populateFormFields = (data) => {
+    Object.keys(self.formFields())
+      .forEach((k) => {
+        self.formFields()[k](data[k])
+      })
+    self.updateRestoreState()
+  }
+
   self.updateRestoreState = () => {
-    Object.keys(data)
+    Object.keys(self.formFields())
       .forEach((k) => {
         self.originalData[k] = self.formFields()[k]()
       })
@@ -47,11 +50,10 @@ function ContactDetails (rootId, data) {
 
   self.save = () => {
     browser.loading()
-    const endpoint = self.endpointBuilder.temporaryAccommodation(rootId).contactInformation().build()
     const headers = self.headers(cookies.get('session-token'))
     const payload = validation.buildPayload(self.formFields())
     ajax
-      .patch(endpoint, headers, payload)
+      .patch(self.patchEndpoint, headers, payload)
       .then((result) => {
         self.isEditable(false)
         self.updateRestoreState()
@@ -60,24 +62,32 @@ function ContactDetails (rootId, data) {
   }
 }
 
-ContactDetails.prototype = new BaseViewModel()
+InlineEditableSubEntity.prototype = new BaseViewModel()
 
 function Model () {
   const self = this
+  const id = querystring.parameter('id')
+  const headers = self.headers(cookies.get('session-token'))
 
-  self.contactDetails = ko.observable()
+  self.buildContactDetails = () => {
+    const formFields = ko.validatedObservable({
+      name: ko.observable().extend({ required: true }),
+      additionalInfo: ko.observable().extend({ required: true }),
+      email: ko.observable().extend({ email: true }),
+      telephone: ko.observable()
+    })
+    const endpoint = self.endpointBuilder.temporaryAccommodation(id).contactInformation().build()
+    return new InlineEditableSubEntity(formFields, endpoint)
+  }
+
+  self.contactDetails = ko.observable(self.buildContactDetails(id))
 
   self.init = () => {
-    const headers = self.headers(cookies.get('session-token'))
-    const id = querystring.parameter('id')
-
     browser.loading()
-
     ajax
       .get(self.endpointBuilder.temporaryAccommodation(id).build(), headers)
       .then((result) => {
-        self.contactDetails(new ContactDetails(id, result.data.contactInformation))
-
+        self.contactDetails().populateFormFields(result.data.contactInformation)
         browser.loaded()
       })
   }
