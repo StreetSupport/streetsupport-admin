@@ -8,7 +8,6 @@ const querystring = require('../../get-url-parameter')
 const ko = require('knockout')
 require('knockout.validation') // No variable here is deliberate!
 
-
 function Model () {
   const self = this
   const id = querystring.parameter('id')
@@ -25,7 +24,22 @@ function Model () {
     return new InlineEditableSubEntity(formFields, endpoint)
   }
 
+  self.buildAddress = () => {
+    const formFields = ko.validatedObservable({
+      street1: ko.observable().extend({ required: true }),
+      street2: ko.observable(),
+      street3: ko.observable(),
+      city: ko.observable(),
+      postcode: ko.observable(),
+      publicTransportInfo: ko.observable(),
+      nearestSupportProviderId: ko.observable()
+    })
+    const endpoint = self.endpointBuilder.temporaryAccommodation(id).contactInformation().build()
+    return new InlineEditableSubEntity(formFields, endpoint)
+  }
+
   self.contactDetails = ko.observable(self.buildContactDetails())
+  self.address = ko.observable(self.buildAddress())
 
   self.init = () => {
     browser.loading()
@@ -33,6 +47,7 @@ function Model () {
       .get(self.endpointBuilder.temporaryAccommodation(id).build(), headers)
       .then((result) => {
         self.contactDetails().populateFormFields(result.data.contactInformation)
+        self.address().populateFormFields(result.data.address)
         browser.loaded()
       })
   }

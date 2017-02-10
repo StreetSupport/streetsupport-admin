@@ -6,15 +6,15 @@ module.exports = {
     'telephone': 'telephone'
   },
   'address': {
-    'street1': '1',
-    'street2': '2',
-    'street3': '3',
+    'street1': 'street line 1',
+    'street2': 'street line 2',
+    'street3': 'street line 3',
     'city': 'city',
     'postcode': 'm1 3fy',
     'latitude': 0,
     'longitude': 0,
-    'publicTransportInfo': '',
-    'nearestSupportProviderId': ''
+    'publicTransportInfo': 'public transport info',
+    'nearestSupportProviderId': 'nearest support provider'
   },
   'features': null,
   'id': '589a08ad6a38c32e883f26df',

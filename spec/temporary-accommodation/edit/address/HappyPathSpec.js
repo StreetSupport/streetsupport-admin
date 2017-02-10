@@ -14,7 +14,7 @@ const querystring = require(`${jsRoot}get-url-parameter`)
 
 const testData = require('../testData')
 
-describe('Temporary Accommodation - Edit Contact Information', () => {
+describe('Temporary Accommodation - Edit Address', () => {
   const Model = require(`${jsRoot}models/temporary-accommodation/edit`)
   const headers = {
     'content-type': 'application/json',
@@ -64,20 +64,32 @@ describe('Temporary Accommodation - Edit Contact Information', () => {
     expect(browserLoadingStub.calledOnce).toBeTruthy()
   })
 
-  it('- should load contact information name', () => {
-    expect(sut.contactDetails().formFields().name()).toEqual('name')
+  it('- should load address line 1', () => {
+    expect(sut.address().formFields().street1()).toEqual('street line 1')
   })
 
-  it('- should load contact information additionalInfo', () => {
-    expect(sut.contactDetails().formFields().additionalInfo()).toEqual('additionalInfo')
+  it('- should load address line 2', () => {
+    expect(sut.address().formFields().street2()).toEqual('street line 2')
   })
 
-  it('- should load contact information email', () => {
-    expect(sut.contactDetails().formFields().email()).toEqual('test@test.com')
+  it('- should load address line 3', () => {
+    expect(sut.address().formFields().street3()).toEqual('street line 3')
   })
 
-  it('- should load contact information telephone', () => {
-    expect(sut.contactDetails().formFields().telephone()).toEqual('telephone')
+  it('- should load address city', () => {
+    expect(sut.address().formFields().city()).toEqual('city')
+  })
+
+  it('- should load address postcode', () => {
+    expect(sut.address().formFields().postcode()).toEqual('m1 3fy')
+  })
+
+  it('- should load address public transport info', () => {
+    expect(sut.address().formFields().publicTransportInfo()).toEqual('public transport info')
+  })
+
+  it('- should load address nearest support provider', () => {
+    expect(sut.address().formFields().nearestSupportProviderId()).toEqual('nearest support provider')
   })
 
   it('- should notify user it is loaded', () => {
