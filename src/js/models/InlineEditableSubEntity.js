@@ -26,6 +26,7 @@ function InlineEditableSubEntity (formFields, endpoint) {
   self.resetData = () => {
     Object.keys(self.originalData)
       .forEach((k) => {
+        self.formFields()[k]()
         self.formFields()[k](self.originalData[k])
       })
   }
@@ -33,9 +34,7 @@ function InlineEditableSubEntity (formFields, endpoint) {
   self.populateFormFields = (data) => {
     Object.keys(self.formFields())
       .forEach((k) => {
-        console.log(k, data[k])
         self.formFields()[k](data[k])
-        console.log(self.formFields()[k]())
       })
     self.updateRestoreState()
   }

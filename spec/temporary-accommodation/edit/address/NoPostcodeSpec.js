@@ -5,6 +5,7 @@ global describe, beforeEach, afterEach, it, expect
 'use strict'
 
 const sinon = require('sinon')
+
 const jsRoot = '../../../../src/js/'
 const ajax = require(`${jsRoot}ajax`)
 const endpoints = require(`${jsRoot}api-endpoints`)
@@ -15,7 +16,7 @@ const validation = require(`${jsRoot}validation`)
 
 const testData = require('../testData')
 
-describe('Temporary Accommodation - Edit Contact Information - no additional info set', () => {
+describe('Temporary Accommodation - Edit Address - no postcode set', () => {
   const Model = require(`${jsRoot}models/temporary-accommodation/edit`)
   const headers = {
     'content-type': 'application/json',
@@ -53,14 +54,16 @@ describe('Temporary Accommodation - Edit Contact Information - no additional inf
 
     ajaxPatchStub = sinon.stub(ajax, 'patch')
 
-    sut.contactDetails().edit()
+    sut.address().edit()
 
-    sut.contactDetails().formFields().name('new name')
-    sut.contactDetails().formFields().additionalInfo('')
-    sut.contactDetails().formFields().email('new-email@test.com')
-    sut.contactDetails().formFields().telephone('new telephone')
+    Object.keys(sut.address().formFields())
+      .forEach((k) => {
+        sut.address().formFields()[k](`new ${sut.address().formFields()[k]()}`)
+      })
 
-    sut.contactDetails().save()
+    sut.address().formFields().postcode('')
+
+    sut.address().save()
   })
 
   afterEach(() => {

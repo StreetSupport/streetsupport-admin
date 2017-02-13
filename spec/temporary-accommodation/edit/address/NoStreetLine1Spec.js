@@ -16,7 +16,7 @@ const validation = require(`${jsRoot}validation`)
 
 const testData = require('../testData')
 
-describe('Temporary Accommodation - Edit Contact Information - no name set', () => {
+describe('Temporary Accommodation - Edit Address - no street1 set', () => {
   const Model = require(`${jsRoot}models/temporary-accommodation/edit`)
   const headers = {
     'content-type': 'application/json',
@@ -54,14 +54,16 @@ describe('Temporary Accommodation - Edit Contact Information - no name set', () 
 
     ajaxPatchStub = sinon.stub(ajax, 'patch')
 
-    sut.contactDetails().edit()
+    sut.address().edit()
 
-    sut.contactDetails().formFields().name('')
-    sut.contactDetails().formFields().additionalInfo('new additionalInfo')
-    sut.contactDetails().formFields().email('new-email@test.com')
-    sut.contactDetails().formFields().telephone('new telephone')
+    Object.keys(sut.address().formFields())
+      .forEach((k) => {
+        sut.address().formFields()[k](`new ${sut.address().formFields()[k]()}`)
+      })
 
-    sut.contactDetails().save()
+    sut.address().formFields().street1('')
+
+    sut.address().save()
   })
 
   afterEach(() => {

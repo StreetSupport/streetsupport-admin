@@ -26,15 +26,14 @@ function Model () {
 
   self.buildAddress = function () {
     const formFields = ko.validatedObservable({
-      street1: ko.observable(),
+      street1: ko.observable().extend({ required: true }),
       street2: ko.observable(),
       street3: ko.observable(),
-      city: ko.observable(),
-      postcode: ko.observable(),
+      city: ko.observable().extend({ required: true }),
+      postcode: ko.observable().extend({ required: true }),
       publicTransportInfo: ko.observable(),
       nearestSupportProviderId: ko.observable()
     })
-    console.log('street1: ' + formFields().street1())
     const endpoint = self.endpointBuilder.temporaryAccommodation(id).address().build()
     return new InlineEditableSubEntity(formFields, endpoint)
   }

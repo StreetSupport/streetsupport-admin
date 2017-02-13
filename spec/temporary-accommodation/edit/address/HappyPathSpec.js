@@ -138,7 +138,6 @@ describe('Temporary Accommodation - Edit Address', () => {
       })
 
       it('- should patch new data', () => {
-        console.log(sut.address().formFields().street1())
         const endpoint = `${endpoints.temporaryAccommodation}/${testData.id}/address`
         const headers = {
           'content-type': 'application/json',
@@ -163,15 +162,15 @@ describe('Temporary Accommodation - Edit Address', () => {
         expect(browserLoadedStub.calledAfter(ajaxPatchStub)).toBeTruthy()
       })
 
-      it('- should set contact details to read only', () => {
-        expect(sut.contactDetails().isEditable()).toBeFalsy()
+      it('- should set address to read only', () => {
+        expect(sut.address().isEditable()).toBeFalsy()
       })
 
       describe('- edit again, then cancel', () => {
         beforeEach(() => {
           Object.keys(sut.address().formFields())
             .forEach((k) => {
-              sut.address().formFields()[k](`another ${sut.address().formFields()[k]}`)
+              sut.address().formFields()[k](`another ${sut.address().formFields()[k]()}`)
             })
 
           sut.address().cancel()
@@ -181,12 +180,12 @@ describe('Temporary Accommodation - Edit Address', () => {
           expect(sut.address().isEditable()).toBeFalsy()
         })
 
-        // it('- should reset fields', () => {
-        //   Object.keys(testData.address)
-        //     .forEach((k) => {
-        //       expect(sut.address().formFields()[k]()).toEqual(`new ${testData.address[k]}`)
-        //     })
-        // })
+        it('- should reset fields', () => {
+          Object.keys(sut.address().formFields())
+            .forEach((k) => {
+              expect(sut.address().formFields()[k]()).toEqual(`new ${testData.address[k]}`)
+            })
+        })
       })
     })
 
@@ -199,14 +198,12 @@ describe('Temporary Accommodation - Edit Address', () => {
         expect(sut.address().isEditable()).toBeFalsy()
       })
 
-      // it('- should reset fields', () => {
-      //   console.log(testData.address)
-      //   Object.keys(testData.address)
-      //     .forEach((k) => {
-      //       console.log(testData.address[k], sut.address().formFields()[k]())
-      //       expect(sut.address().formFields()[k]()).toEqual(testData.address[k])
-      //     })
-      // })
+      it('- should reset fields', () => {
+        Object.keys(sut.address().formFields())
+          .forEach((k) => {
+            expect(sut.address().formFields()[k]()).toEqual(testData.address[k])
+          })
+      })
     })
   })
 })
