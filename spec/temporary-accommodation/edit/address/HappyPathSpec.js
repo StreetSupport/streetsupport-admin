@@ -102,7 +102,7 @@ describe('Temporary Accommodation - Edit Address', () => {
 
       Object.keys(sut.address().formFields())
         .forEach((k) => {
-          sut.address().formFields()[k](`new ${sut.address().formFields()[k]}`)
+          sut.address().formFields()[k](`new ${sut.address().formFields()[k]()}`)
         })
     })
 
@@ -139,7 +139,7 @@ describe('Temporary Accommodation - Edit Address', () => {
 
       it('- should patch new data', () => {
         console.log(sut.address().formFields().street1())
-        const endpoint = `${endpoints.temporaryAccommodation}/${testData.id}/contact-information`
+        const endpoint = `${endpoints.temporaryAccommodation}/${testData.id}/address`
         const headers = {
           'content-type': 'application/json',
           'session-token': 'stored-session-token'

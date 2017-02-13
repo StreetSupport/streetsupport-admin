@@ -16,7 +16,6 @@ function InlineEditableSubEntity (formFields, endpoint) {
 
   self.formFields = formFields
 
-
   validation.initialise(ko.validation)
   self.fieldErrors = validation.getValidationGroup(ko.validation, self.formFields)
 
@@ -34,7 +33,9 @@ function InlineEditableSubEntity (formFields, endpoint) {
   self.populateFormFields = (data) => {
     Object.keys(self.formFields())
       .forEach((k) => {
+        console.log(k, data[k])
         self.formFields()[k](data[k])
+        console.log(self.formFields()[k]())
       })
     self.updateRestoreState()
   }
