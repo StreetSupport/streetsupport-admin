@@ -106,9 +106,13 @@ function EndpointBuilder () {
     return self
   }
 
-  self.address = (addressId) => {
+  self.address = () => {
     self.childResource = 'address'
-    self.childResourceId = addressId
+    return self
+  }
+
+  self.features = () => {
+    self.childResource = 'features'
     return self
   }
 

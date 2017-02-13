@@ -38,8 +38,37 @@ function Model () {
     return new InlineEditableSubEntity(formFields, endpoint)
   }
 
+  self.buildFeatures = function () {
+    const formFields = ko.validatedObservable({
+      acceptsHousingBenefit: ko.observable(),
+      acceptsPets: ko.observable(),
+      acceptsCouples: ko.observable(),
+      hasDisabledAccess: ko.observable(),
+      isSuitableForWomen: ko.observable(),
+      isSuitableForYoungPeople: ko.observable(),
+      hasSingleRooms: ko.observable(),
+      hasSharedRooms: ko.observable(),
+      hasShowerBathroomFacilities: ko.observable(),
+      hasAccessToKitchen: ko.observable(),
+      hasFlexibleMealTimes: ko.observable(),
+      hasLounge: ko.observable(),
+      providesCleanBedding: ko.observable(),
+      allowsVisitors: ko.observable(),
+      hasOnSiteManager: ko.observable(),
+      referenceReferralIsRequired: ko.observable(),
+      price: ko.observable().extend({ required: true }),
+      additionalFeatures: ko.observable(),
+      foodIsIncluded: ko.observable(),
+      availabilityOfMeals: ko.observable(),
+      featuresAvailableAtAdditionalCost: ko.observable()
+    })
+    const endpoint = self.endpointBuilder.temporaryAccommodation(id).features().build()
+    return new InlineEditableSubEntity(formFields, endpoint)
+  }
+
   self.contactDetails = ko.observable(self.buildContactDetails())
   self.address = ko.observable(self.buildAddress())
+  self.features = ko.observable(self.buildFeatures())
 
   self.init = () => {
     browser.loading()
@@ -48,6 +77,7 @@ function Model () {
       .then((result) => {
         self.contactDetails().populateFormFields(result.data.contactInformation)
         self.address().populateFormFields(result.data.address)
+        self.features().populateFormFields(result.data.features)
         browser.loaded()
       })
   }
