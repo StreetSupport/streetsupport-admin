@@ -6,15 +6,14 @@ global describe, beforeEach, afterEach, it, expect
 
 const sinon = require('sinon')
 
-const jsRoot = '../../../src/js/'
-const adminUrls = require(`${jsRoot}admin-urls`)
-const ajax = require(`${jsRoot}ajax`)
-const endpoints = require(`${jsRoot}api-endpoints`)
-const browser = require(`${jsRoot}browser`)
-const cookies = require(`${jsRoot}cookies`)
+const adminUrls = require(`../../../src/js/admin-urls`)
+const ajax = require(`../../../src/js/ajax`)
+const endpoints = require(`../../../src/js/api-endpoints`)
+const browser = require(`../../../src/js/browser`)
+const cookies = require(`../../../src/js/cookies`)
 
 describe('Temporary Accommodation Listing', () => {
-  const Model = require(`${jsRoot}models/temporary-accommodation/list`)
+  const Model = require(`../../../src/js/models/temporary-accommodation/list`)
   let sut = null
   let browserLoadingStub = null
   let browserLoadedStub = null
