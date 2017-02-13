@@ -11,9 +11,9 @@ const ajax = require(`../../../src/js/ajax`)
 const endpoints = require(`../../../src/js/api-endpoints`)
 const browser = require(`../../../src/js/browser`)
 const cookies = require(`../../../src/js/cookies`)
+const Model = require(`../../../src/js/models/temporary-accommodation/list`)
 
 describe('Temporary Accommodation Listing', () => {
-  const Model = require(`../../../src/js/models/temporary-accommodation/list`)
   let sut = null
   let browserLoadingStub = null
   let browserLoadedStub = null
