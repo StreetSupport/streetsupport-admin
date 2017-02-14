@@ -13,7 +13,7 @@ const cookies = require(`${jsRoot}cookies`)
 const querystring = require(`${jsRoot}get-url-parameter`)
 const validation = require(`${jsRoot}validation`)
 
-const testData = require('../testData')
+const { testData, serviceProviderData } = require('../testData')
 
 describe('Temporary Accommodation - Edit Contact Information - invalid email set', () => {
   const Model = require(`${jsRoot}models/temporary-accommodation/edit`)
@@ -23,18 +23,29 @@ describe('Temporary Accommodation - Edit Contact Information - invalid email set
   }
   let sut = null
   let validationStub = null
+  let ajaxGetStub = null
   let ajaxPatchStub = null
 
   beforeEach(() => {
     sinon.stub(browser, 'loading')
     sinon.stub(browser, 'loaded')
-    sinon.stub(ajax, 'get')
-      .withArgs(`${endpoints.temporaryAccommodation}/${testData.id}`, headers)
+    ajaxGetStub = sinon.stub(ajax, 'get')
+    ajaxGetStub.withArgs(`${endpoints.temporaryAccommodation}/${testData.id}`, headers)
       .returns({
         then: function (success, error) {
           success({
             'statusCode': 200,
             'data': testData
+          })
+        }
+      })
+    ajaxGetStub
+      .withArgs(`${endpoints.getPublishedServiceProviders}`, headers)
+      .returns({
+        then: function (success, error) {
+          success({
+            'statusCode': 200,
+            'data': serviceProviderData
           })
         }
       })

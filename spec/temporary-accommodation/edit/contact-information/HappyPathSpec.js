@@ -12,7 +12,7 @@ const browser = require(`${jsRoot}browser`)
 const cookies = require(`${jsRoot}cookies`)
 const querystring = require(`${jsRoot}get-url-parameter`)
 
-const testData = require('../testData')
+const { testData, serviceProviderData } = require('../testData')
 
 describe('Temporary Accommodation - Edit Contact Information', () => {
   const Model = require(`${jsRoot}models/temporary-accommodation/edit`)
@@ -37,6 +37,16 @@ describe('Temporary Accommodation - Edit Contact Information', () => {
           success({
             'statusCode': 200,
             'data': testData
+          })
+        }
+      })
+    ajaxGetStub
+      .withArgs(`${endpoints.getPublishedServiceProviders}`, headers)
+      .returns({
+        then: function (success, error) {
+          success({
+            'statusCode': 200,
+            'data': serviceProviderData
           })
         }
       })
@@ -81,7 +91,7 @@ describe('Temporary Accommodation - Edit Contact Information', () => {
   })
 
   it('- should notify user it is loaded', () => {
-    expect(browserLoadedStub.calledAfter(ajaxGetStub)).toBeTruthy()
+    expect(browserLoadedStub.called).toBeTruthy()
   })
 
   describe('- edit contact information', () => {

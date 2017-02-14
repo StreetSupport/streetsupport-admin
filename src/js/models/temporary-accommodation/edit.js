@@ -5,6 +5,7 @@ const cookies = require('../../cookies')
 const InlineEditableSubEntity = require('../../models/InlineEditableSubEntity')
 const querystring = require('../../get-url-parameter')
 
+const htmlEncode = require('htmlencode')
 const ko = require('knockout')
 require('knockout.validation') // No variable here is deliberate!
 
@@ -35,7 +36,7 @@ function Model () {
       nearestSupportProviderId: ko.observable()
     })
     const endpoint = self.endpointBuilder.temporaryAccommodation(id).address().build()
-    return new InlineEditableSubEntity(formFields, endpoint)
+    return new InlineEditableSubEntity(formFields, endpoint, [], [{ fieldId: 'nearestSupportProviderId', collection: 'serviceProviders' }])
   }
 
   self.buildFeatures = function () {
@@ -79,6 +80,26 @@ function Model () {
         self.address().populateFormFields(result.data.address)
         self.features().populateFormFields(result.data.features)
         browser.loaded()
+      })
+    ajax
+      .get(self.endpointBuilder.publishedOrgs().build(), headers)
+      .then((result) => {
+        self.address().serviceProviders(
+          result.data
+            .map((p) => {
+              return {
+                id: p.key,
+                name: htmlEncode.htmlDecode(p.name)
+              }
+            })
+            .sort((a, b) => {
+              if (a.name > b.name) return 1
+              if (a.name < b.name) return -1
+              return 0
+            })
+        )
+      }, () => {
+
       })
   }
 }

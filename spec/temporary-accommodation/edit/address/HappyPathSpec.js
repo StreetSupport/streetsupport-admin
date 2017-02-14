@@ -12,7 +12,7 @@ const browser = require(`${jsRoot}browser`)
 const cookies = require(`${jsRoot}cookies`)
 const querystring = require(`${jsRoot}get-url-parameter`)
 
-const testData = require('../testData')
+const { testData, serviceProviderData } = require('../testData')
 
 describe('Temporary Accommodation - Edit Address', () => {
   const Model = require(`${jsRoot}models/temporary-accommodation/edit`)
@@ -37,6 +37,16 @@ describe('Temporary Accommodation - Edit Address', () => {
           success({
             'statusCode': 200,
             'data': testData
+          })
+        }
+      })
+    ajaxGetStub
+      .withArgs(`${endpoints.getPublishedServiceProviders}`, headers)
+      .returns({
+        then: function (success, error) {
+          success({
+            'statusCode': 200,
+            'data': serviceProviderData
           })
         }
       })
@@ -89,11 +99,27 @@ describe('Temporary Accommodation - Edit Address', () => {
   })
 
   it('- should load address nearest support provider', () => {
-    expect(sut.address().formFields().nearestSupportProviderId()).toEqual('nearest support provider')
+    expect(sut.address().formFields().nearestSupportProviderId()).toEqual('albert-kennedy-trust')
+  })
+
+  it('- should load support providers', () => {
+    expect(sut.address().serviceProviders().length).toEqual(3)
+  })
+
+  it('- should set support providers id', () => {
+    expect(sut.address().serviceProviders()[2].id).toEqual('the-men-s-room')
+  })
+
+  it('- should set support providers name', () => {
+    expect(sut.address().serviceProviders()[2].name).toEqual(`The Men's Room`)
+  })
+
+  it('- should set selected support providers read only name', () => {
+    expect(sut.address().formFields().nearestSupportProviderIdReadOnly()).toEqual(`Albert Kennedy Trust`)
   })
 
   it('- should notify user it is loaded', () => {
-    expect(browserLoadedStub.calledAfter(ajaxGetStub)).toBeTruthy()
+    expect(browserLoadedStub.called).toBeTruthy()
   })
 
   describe('- edit address', () => {
@@ -101,6 +127,7 @@ describe('Temporary Accommodation - Edit Address', () => {
       sut.address().edit()
 
       Object.keys(sut.address().formFields())
+        .filter((k) => !k.endsWith('ReadOnly'))
         .forEach((k) => {
           sut.address().formFields()[k](`new ${sut.address().formFields()[k]()}`)
         })
@@ -150,7 +177,7 @@ describe('Temporary Accommodation - Edit Address', () => {
           'City': 'new city',
           'Postcode': 'new m1 3fy',
           'PublicTransportInfo': 'new public transport info',
-          'NearestSupportProviderId': 'new nearest support provider'
+          'NearestSupportProviderId': 'new albert-kennedy-trust'
         }
         const patchAsExpected = ajaxPatchStub
           .withArgs(endpoint, headers, payload)
@@ -169,6 +196,7 @@ describe('Temporary Accommodation - Edit Address', () => {
       describe('- edit again, then cancel', () => {
         beforeEach(() => {
           Object.keys(sut.address().formFields())
+            .filter((k) => !k.endsWith('ReadOnly'))
             .forEach((k) => {
               sut.address().formFields()[k](`another ${sut.address().formFields()[k]()}`)
             })
@@ -182,6 +210,7 @@ describe('Temporary Accommodation - Edit Address', () => {
 
         it('- should reset fields', () => {
           Object.keys(sut.address().formFields())
+            .filter((k) => !k.endsWith('ReadOnly'))
             .forEach((k) => {
               expect(sut.address().formFields()[k]()).toEqual(`new ${testData.address[k]}`)
             })
@@ -200,6 +229,7 @@ describe('Temporary Accommodation - Edit Address', () => {
 
       it('- should reset fields', () => {
         Object.keys(sut.address().formFields())
+          .filter((k) => !k.endsWith('ReadOnly'))
           .forEach((k) => {
             expect(sut.address().formFields()[k]()).toEqual(testData.address[k])
           })

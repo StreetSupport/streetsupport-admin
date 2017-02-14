@@ -141,10 +141,14 @@ nosubnav: true
               <dt class="key-value-pair__key">Nearest Support Provider</dt>
               <dd class="key-value-pair__value">
                 <!-- ko ifnot: $parent.isEditable -->
-                <span data-bind="html: nearestSupportProviderId"></span>
+                <span data-bind="html: nearestSupportProviderIdReadOnly"></span>
                 <!-- /ko -->
                 <!-- ko if: $parent.isEditable -->
-                <input type="text" data-bind="textInput: nearestSupportProviderId" class="form__input" />
+                <select data-bind="options: $parent.serviceProviders,
+                optionsValue: (item) => { return item.id },
+                optionsText: (item) => { return item.name },
+                value: nearestSupportProviderId,
+                optionsCaption: '-- please select --'" class="form__input"></select>
                 <!-- /ko -->
               </dd>
             </dl>

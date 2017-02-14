@@ -7,7 +7,7 @@ const browser = require('../browser')
 const cookies = require('../cookies')
 const validation = require('../validation')
 
-function InlineEditableSubEntity (formFields, endpoint, boolDiscFields = []) {
+function InlineEditableSubEntity (formFields, endpoint, boolDiscFields = [], dropdownFields = []) {
   const self = this
 
   self.booleanOrDiscretionaryDescriptions = [
@@ -26,6 +26,17 @@ function InlineEditableSubEntity (formFields, endpoint, boolDiscFields = []) {
     .forEach((f) => {
       self.formFields()[`${f}ReadOnly`] = ko.computed(() => {
         return self.booleanOrDiscretionaryDescriptions[self.formFields()[f]()]
+      }, self)
+    })
+  self.dropdownFields = dropdownFields
+  dropdownFields
+    .forEach((f) => {
+      self[`${f.collection}`] = ko.observableArray()
+      self.formFields()[`${f.fieldId}ReadOnly`] = ko.computed(() => {
+        const match = self[`${f.collection}`]().find((i) => i.id === self.formFields()[`${f.fieldId}`]())
+        return match
+          ? match.name
+          : ''
       }, self)
     })
 
