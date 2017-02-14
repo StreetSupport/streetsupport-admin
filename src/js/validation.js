@@ -29,8 +29,10 @@ const buildPayload = function (koFormFields) {
   const payload = {}
   Object.keys(koFormFields)
     .forEach((k) => {
-      const key = `${k.charAt(0).toUpperCase()}${k.substr(1)}`
-      payload[key] = koFormFields[k]()
+      if (!k.endsWith('ReadOnly')) {
+        const key = `${k.charAt(0).toUpperCase()}${k.substr(1)}`
+        payload[key] = koFormFields[k]()
+      }
     })
   return payload
 }

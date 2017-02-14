@@ -67,8 +67,17 @@ describe('Temporary Accommodation - Edit Features', () => {
   it('- should load features', () => {
     Object.keys(testData.features)
       .forEach((k) => {
-        expect(sut.features().formFields()[k]()).toEqual(testData.features[k])
+        if (sut.features().boolDiscFields && sut.features().boolDiscFields.includes(k)) {
+          expect(sut.features().formFields()[k]()).toEqual(`${testData.features[k]}`)
+        } else {
+          expect(sut.features().formFields()[k]()).toEqual(testData.features[k])
+        }
       })
+  })
+
+  it('- should set boolean/discretionary read only value', () => {
+    expect(sut.features().formFields().acceptsPetsReadOnly()).toEqual('Ask Landlord')
+    expect(sut.features().formFields().acceptsCouplesReadOnly()).toEqual('Ask Landlord')
   })
 
   describe('- edit features', () => {
@@ -188,6 +197,7 @@ describe('Temporary Accommodation - Edit Features', () => {
         it('- should reset fields', () => {
           expect(sut.features().formFields().acceptsHousingBenefit()).toEqual(false)
           expect(sut.features().formFields().acceptsPets()).toEqual(1)
+          expect(sut.features().formFields().acceptsPetsReadOnly()).toEqual('Yes')
           expect(sut.features().formFields().acceptsCouples()).toEqual(1)
           expect(sut.features().formFields().hasDisabledAccess()).toEqual(false)
           expect(sut.features().formFields().isSuitableForWomen()).toEqual(false)
@@ -223,7 +233,13 @@ describe('Temporary Accommodation - Edit Features', () => {
       it('- should reset fields', () => {
         Object.keys(sut.features().formFields())
           .forEach((k) => {
-            expect(sut.features().formFields()[k]()).toEqual(testData.features[k])
+            if (k.endsWith('ReadOnly')) {
+              expect(sut.features().formFields()[k]()).toEqual('Ask Landlord')
+            } else if (sut.features().boolDiscFields && sut.features().boolDiscFields.includes(k)) {
+              expect(sut.features().formFields()[k]()).toEqual(`${testData.features[k]}`)
+            } else {
+              expect(sut.features().formFields()[k]()).toEqual(testData.features[k])
+            }
           })
       })
     })

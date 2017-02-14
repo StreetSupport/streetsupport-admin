@@ -7,14 +7,27 @@ const browser = require('../browser')
 const cookies = require('../cookies')
 const validation = require('../validation')
 
-function InlineEditableSubEntity (formFields, endpoint) {
+function InlineEditableSubEntity (formFields, endpoint, boolDiscFields = []) {
   const self = this
+
+  self.booleanOrDiscretionaryDescriptions = [
+    'No',
+    'Yes',
+    'Ask Landlord'
+  ]
 
   self.originalData = {}
   self.isEditable = ko.observable(false)
   self.patchEndpoint = endpoint
 
   self.formFields = formFields
+  self.boolDiscFields = boolDiscFields
+  boolDiscFields
+    .forEach((f) => {
+      self.formFields()[`${f}ReadOnly`] = ko.computed(() => {
+        return self.booleanOrDiscretionaryDescriptions[self.formFields()[f]()]
+      }, self)
+    })
 
   validation.initialise(ko.validation)
   self.fieldErrors = validation.getValidationGroup(ko.validation, self.formFields)
@@ -26,15 +39,22 @@ function InlineEditableSubEntity (formFields, endpoint) {
   self.resetData = () => {
     Object.keys(self.originalData)
       .forEach((k) => {
-        self.formFields()[k]()
-        self.formFields()[k](self.originalData[k])
+        try {
+          self.formFields()[k](self.originalData[k])
+        } catch (e) {}
       })
   }
 
   self.populateFormFields = (data) => {
     Object.keys(self.formFields())
       .forEach((k) => {
-        self.formFields()[k](data[k])
+        try {
+          if (boolDiscFields.includes(k)) {
+            self.formFields()[k](`${data[k]}`)
+          } else {
+            self.formFields()[k](data[k])
+          }
+        } catch (e) {}
       })
     self.updateRestoreState()
   }
