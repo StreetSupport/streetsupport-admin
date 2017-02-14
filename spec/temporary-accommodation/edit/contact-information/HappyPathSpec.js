@@ -126,7 +126,7 @@ describe('Temporary Accommodation - Edit Contact Information', () => {
       })
 
       it('- should patch new data', () => {
-        const endpoint = `${endpoints.temporaryAccommodation}/${testData.id}/contact-information`
+        const endpoint = `${endpoints.temporaryAccommodation}/${testData.id}/contact-details`
         const headers = {
           'content-type': 'application/json',
           'session-token': 'stored-session-token'

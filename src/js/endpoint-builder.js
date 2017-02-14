@@ -179,7 +179,7 @@ function EndpointBuilder () {
   }
 
   self.contactInformation = () => {
-    self.childResource = 'contact-information'
+    self.childResource = 'contact-details'
     return self
   }
 

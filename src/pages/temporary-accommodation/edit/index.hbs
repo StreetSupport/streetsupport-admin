@@ -21,6 +21,352 @@ nosubnav: true
   <div class="container block__inner">
     <div class="block__content form">
       {{> form-feedback}}
+
+      <div class="">
+        <section class="" data-bind="with: contactDetails">
+          <h2>General Details</h2>
+            <!-- ko ifnot: isEditable -->
+            <button data-bind="click: edit" class="btn btn--info"><span class="btn__text">edit</span></button>
+            <!-- /ko -->
+            <!-- ko if: isEditable -->
+            <button data-bind="click: cancel" class="btn btn--indifferent"><span class="btn__text">cancel</span></button>
+            <button data-bind="click: save" class="btn btn--primary"><span class="btn__text">save</span></button>
+            <!-- /ko -->
+            <dl class="key-value-pair" data-bind="with: formFields">
+              <dt class="key-value-pair__key">Contact Name</dt>
+              <dd class="key-value-pair__value">
+                <!-- ko ifnot: $parent.isEditable -->
+                <span data-bind="html: name"></span>
+                <!-- /ko -->
+                <!-- ko if: $parent.isEditable -->
+                <input type="text" required data-bind="textInput: name" class="form__input" />
+                <!-- /ko -->
+              </dd>
+              <dt class="key-value-pair__key">General Information</dt>
+              <dd class="key-value-pair__value">
+                <!-- ko ifnot: $parent.isEditable -->
+                <span data-bind="html: additionalInfo"></span>
+                <!-- /ko -->
+                <!-- ko if: $parent.isEditable -->
+                <textarea data-bind="textInput: additionalInfo" class="form__input form__input--textarea"></textarea>
+                <!-- /ko -->
+              </dd>
+              <dt class="key-value-pair__key">Email</dt>
+              <dd class="key-value-pair__value">
+                <!-- ko ifnot: $parent.isEditable -->
+                <span data-bind="html: email"></span>
+                <!-- /ko -->
+                <!-- ko if: $parent.isEditable -->
+                <input type="email" data-bind="textInput: email" class="form__input" />
+                <!-- /ko -->
+              </dd>
+              <dt class="key-value-pair__key">Telephone</dt>
+              <dd class="key-value-pair__value">
+                <!-- ko ifnot: $parent.isEditable -->
+                <span data-bind="html: telephone"></span>
+                <!-- /ko -->
+                <!-- ko if: $parent.isEditable -->
+                <input type="text" data-bind="textInput: telephone" class="form__input" />
+                <!-- /ko -->
+              </dd>
+            </dl>
+        </section>
+      </div>
+
+      <div class="split split--admin-panel">
+        <section class="split__element split__element--admin-panel" data-bind="with: address">
+          <h2>Location</h2>
+            <!-- ko ifnot: isEditable -->
+            <button data-bind="click: edit" class="btn btn--info"><span class="btn__text">edit</span></button>
+            <!-- /ko -->
+            <!-- ko if: isEditable -->
+            <button data-bind="click: cancel" class="btn btn--indifferent"><span class="btn__text">cancel</span></button>
+            <button data-bind="click: save" class="btn btn--primary"><span class="btn__text">save</span></button>
+            <!-- /ko -->
+            <dl class="key-value-pair" data-bind="with: formFields">
+              <dt class="key-value-pair__key">Street 1</dt>
+              <dd class="key-value-pair__value">
+                <!-- ko ifnot: $parent.isEditable -->
+                <span data-bind="html: street1"></span>
+                <!-- /ko -->
+                <!-- ko if: $parent.isEditable -->
+                <input type="text" required data-bind="textInput: street1" class="form__input" />
+                <!-- /ko -->
+              </dd>
+              <dt class="key-value-pair__key">Street 2</dt>
+              <dd class="key-value-pair__value">
+                <!-- ko ifnot: $parent.isEditable -->
+                <span data-bind="html: street2"></span>
+                <!-- /ko -->
+                <!-- ko if: $parent.isEditable -->
+                <input type="text" data-bind="textInput: street2" class="form__input" />
+                <!-- /ko -->
+              </dd>
+              <dt class="key-value-pair__key">Street 3</dt>
+              <dd class="key-value-pair__value">
+                <!-- ko ifnot: $parent.isEditable -->
+                <span data-bind="html: street3"></span>
+                <!-- /ko -->
+                <!-- ko if: $parent.isEditable -->
+                <input type="text" data-bind="textInput: street3" class="form__input" />
+                <!-- /ko -->
+              </dd>
+              <dt class="key-value-pair__key">City</dt>
+              <dd class="key-value-pair__value">
+                <!-- ko ifnot: $parent.isEditable -->
+                <span data-bind="html: city"></span>
+                <!-- /ko -->
+                <!-- ko if: $parent.isEditable -->
+                <input type="text" data-bind="textInput: city" class="form__input" />
+                <!-- /ko -->
+              </dd>
+              <dt class="key-value-pair__key">Postcode</dt>
+              <dd class="key-value-pair__value">
+                <!-- ko ifnot: $parent.isEditable -->
+                <span data-bind="html: postcode"></span>
+                <!-- /ko -->
+                <!-- ko if: $parent.isEditable -->
+                <input type="text" data-bind="textInput: postcode" class="form__input" />
+                <!-- /ko -->
+              </dd>
+              <dt class="key-value-pair__key">Public Transport</dt>
+              <dd class="key-value-pair__value">
+                <!-- ko ifnot: $parent.isEditable -->
+                <span data-bind="html: publicTransportInfo"></span>
+                <!-- /ko -->
+                <!-- ko if: $parent.isEditable -->
+                <textarea data-bind="textInput: publicTransportInfo" class="form__input form__input--textarea"></textarea>
+                <!-- /ko -->
+              </dd>
+              <dt class="key-value-pair__key">Nearest Support Provider</dt>
+              <dd class="key-value-pair__value">
+                <!-- ko ifnot: $parent.isEditable -->
+                <span data-bind="html: nearestSupportProviderId"></span>
+                <!-- /ko -->
+                <!-- ko if: $parent.isEditable -->
+                <input type="text" data-bind="textInput: nearestSupportProviderId" class="form__input" />
+                <!-- /ko -->
+              </dd>
+            </dl>
+        </section>
+
+        <section class="split__element split__element--admin-panel" data-bind="with: features">
+          <h2>Features</h2>
+            <!-- ko ifnot: isEditable -->
+            <button data-bind="click: edit" class="btn btn--info"><span class="btn__text">edit</span></button>
+            <!-- /ko -->
+            <!-- ko if: isEditable -->
+            <button data-bind="click: cancel" class="btn btn--indifferent"><span class="btn__text">cancel</span></button>
+            <button data-bind="click: save" class="btn btn--primary"><span class="btn__text">save</span></button>
+            <!-- /ko -->
+            <dl class="key-value-pair" data-bind="with: formFields">
+              <dt class="key-value-pair__key key-value-pair__key--inline">Accepts Housing Benefit</dt>
+              <dd class="key-value-pair__value">
+                <!-- ko ifnot: $parent.isEditable -->
+                <span data-bind="html: acceptsHousingBenefit"></span>
+                <!-- /ko -->
+                <!-- ko if: $parent.isEditable -->
+                <input type="checkbox" data-bind="checked: acceptsHousingBenefit" class="" />
+                <!-- /ko -->
+              </dd>
+              <dt class="key-value-pair__key key-value-pair__key--inline">Accepts Pets</dt>
+              <dd class="key-value-pair__value">
+                <!-- ko ifnot: $parent.isEditable -->
+                <span data-bind="html: acceptsPetsReadOnly"></span>
+                <!-- /ko -->
+                <!-- ko if: $parent.isEditable -->
+                <label>
+                <input type="radio" value="0" data-bind="checked: acceptsPets" class="" />
+                No</label>
+                <label>
+                <input type="radio" value="1" data-bind="checked: acceptsPets" class="" />
+                Yes</label>
+                <label>
+                <input type="radio" value="2" data-bind="checked: acceptsPets" class="" />
+                Ask Landlord</label>
+                <!-- /ko -->
+              </dd>
+              <dt class="key-value-pair__key key-value-pair__key--inline">Accepts Couples</dt>
+              <dd class="key-value-pair__value">
+                <!-- ko ifnot: $parent.isEditable -->
+                <span data-bind="html: acceptsCouplesReadOnly"></span>
+                <!-- /ko -->
+                <!-- ko if: $parent.isEditable -->
+                <label>
+                <input type="radio" value="0" data-bind="checked: acceptsCouples" class="" />
+                No</label>
+                <label>
+                <input type="radio" value="1" data-bind="checked: acceptsCouples" class="" />
+                Yes</label>
+                <label>
+                <input type="radio" value="2" data-bind="checked: acceptsCouples" class="" />
+                Ask Landlord</label>
+                <!-- /ko -->
+              </dd>
+              <dt class="key-value-pair__key key-value-pair__key--inline">Disabled Access</dt>
+              <dd class="key-value-pair__value">
+                <!-- ko ifnot: $parent.isEditable -->
+                <span data-bind="html: hasDisabledAccess"></span>
+                <!-- /ko -->
+                <!-- ko if: $parent.isEditable -->
+                <input type="checkbox" data-bind="checked: hasDisabledAccess" class="" />
+                <!-- /ko -->
+              </dd>
+              <dt class="key-value-pair__key key-value-pair__key--inline">Suitable for Women</dt>
+              <dd class="key-value-pair__value">
+                <!-- ko ifnot: $parent.isEditable -->
+                <span data-bind="html: isSuitableForWomen"></span>
+                <!-- /ko -->
+                <!-- ko if: $parent.isEditable -->
+                <input type="checkbox" data-bind="checked: isSuitableForWomen" class="" />
+                <!-- /ko -->
+              </dd>
+              <dt class="key-value-pair__key key-value-pair__key--inline">Suitable for Young People</dt>
+              <dd class="key-value-pair__value">
+                <!-- ko ifnot: $parent.isEditable -->
+                <span data-bind="html: isSuitableForYoungPeople"></span>
+                <!-- /ko -->
+                <!-- ko if: $parent.isEditable -->
+                <input type="checkbox" data-bind="checked: isSuitableForYoungPeople" class="" />
+                <!-- /ko -->
+              </dd>
+              <dt class="key-value-pair__key key-value-pair__key--inline">Single Rooms</dt>
+              <dd class="key-value-pair__value">
+                <!-- ko ifnot: $parent.isEditable -->
+                <span data-bind="html: hasSingleRooms"></span>
+                <!-- /ko -->
+                <!-- ko if: $parent.isEditable -->
+                <input type="checkbox" data-bind="checked: hasSingleRooms" class="" />
+                <!-- /ko -->
+              </dd>
+              <dt class="key-value-pair__key key-value-pair__key--inline">Shared Rooms</dt>
+              <dd class="key-value-pair__value">
+                <!-- ko ifnot: $parent.isEditable -->
+                <span data-bind="html: hasSharedRooms"></span>
+                <!-- /ko -->
+                <!-- ko if: $parent.isEditable -->
+                <input type="checkbox" data-bind="checked: hasSharedRooms" class="" />
+                <!-- /ko -->
+              </dd>
+              <dt class="key-value-pair__key key-value-pair__key--inline">Shower/Bathroom Facilities</dt>
+              <dd class="key-value-pair__value">
+                <!-- ko ifnot: $parent.isEditable -->
+                <span data-bind="html: hasShowerBathroomFacilities"></span>
+                <!-- /ko -->
+                <!-- ko if: $parent.isEditable -->
+                <input type="checkbox" data-bind="checked: hasShowerBathroomFacilities" class="" />
+                <!-- /ko -->
+              </dd>
+              <dt class="key-value-pair__key key-value-pair__key--inline">Access to Kitchen</dt>
+              <dd class="key-value-pair__value">
+                <!-- ko ifnot: $parent.isEditable -->
+                <span data-bind="html: hasAccessToKitchen"></span>
+                <!-- /ko -->
+                <!-- ko if: $parent.isEditable -->
+                <input type="checkbox" data-bind="checked: hasAccessToKitchen" class="" />
+                <!-- /ko -->
+              </dd>
+              <dt class="key-value-pair__key key-value-pair__key--inline">Flexible Meal Times</dt>
+              <dd class="key-value-pair__value">
+                <!-- ko ifnot: $parent.isEditable -->
+                <span data-bind="html: hasFlexibleMealTimes"></span>
+                <!-- /ko -->
+                <!-- ko if: $parent.isEditable -->
+                <input type="checkbox" data-bind="checked: hasFlexibleMealTimes" class="" />
+                <!-- /ko -->
+              </dd>
+              <dt class="key-value-pair__key">Meal Availability</dt>
+              <dd class="key-value-pair__value">
+                <!-- ko ifnot: $parent.isEditable -->
+                <span data-bind="html: availabilityOfMeals"></span>
+                <!-- /ko -->
+                <!-- ko if: $parent.isEditable -->
+                <textarea data-bind="textInput: availabilityOfMeals" class="form__input form__input--textarea"></textarea>
+                <!-- /ko -->
+              </dd>
+              <dt class="key-value-pair__key key-value-pair__key--inline">Lounge</dt>
+              <dd class="key-value-pair__value">
+                <!-- ko ifnot: $parent.isEditable -->
+                <span data-bind="html: hasLounge"></span>
+                <!-- /ko -->
+                <!-- ko if: $parent.isEditable -->
+                <input type="checkbox" data-bind="checked: hasLounge" class="" />
+                <!-- /ko -->
+              </dd>
+              <dt class="key-value-pair__key key-value-pair__key--inline">Provides Clean Bedding</dt>
+              <dd class="key-value-pair__value">
+                <!-- ko ifnot: $parent.isEditable -->
+                <span data-bind="html: providesCleanBedding"></span>
+                <!-- /ko -->
+                <!-- ko if: $parent.isEditable -->
+                <input type="checkbox" data-bind="checked: providesCleanBedding" class="" />
+                <!-- /ko -->
+              </dd>
+              <dt class="key-value-pair__key key-value-pair__key--inline">Allows Visitors</dt>
+              <dd class="key-value-pair__value">
+                <!-- ko ifnot: $parent.isEditable -->
+                <span data-bind="html: allowsVisitors"></span>
+                <!-- /ko -->
+                <!-- ko if: $parent.isEditable -->
+                <input type="checkbox" data-bind="checked: allowsVisitors" class="" />
+                <!-- /ko -->
+              </dd>
+              <dt class="key-value-pair__key key-value-pair__key--inline">On-site Manager</dt>
+              <dd class="key-value-pair__value">
+                <!-- ko ifnot: $parent.isEditable -->
+                <span data-bind="html: hasOnSiteManager"></span>
+                <!-- /ko -->
+                <!-- ko if: $parent.isEditable -->
+                <input type="checkbox" data-bind="checked: hasOnSiteManager" class="" />
+                <!-- /ko -->
+              </dd>
+              <dt class="key-value-pair__key key-value-pair__key--inline">Reference/Referral Required</dt>
+              <dd class="key-value-pair__value">
+                <!-- ko ifnot: $parent.isEditable -->
+                <span data-bind="html: referenceReferralIsRequired"></span>
+                <!-- /ko -->
+                <!-- ko if: $parent.isEditable -->
+                <input type="checkbox" data-bind="checked: referenceReferralIsRequired" class="" />
+                <!-- /ko -->
+              </dd>
+              <dt class="key-value-pair__key key-value-pair__key--inline">Price (£ p/w)</dt>
+              <dd class="key-value-pair__value">
+                <!-- ko ifnot: $parent.isEditable -->
+                <span data-bind="html: price"></span>
+                <!-- /ko -->
+                <!-- ko if: $parent.isEditable -->
+                <input type="number" min="0.00" placeholder="10.00" data-bind="textInput: price" class="form__input" />
+                <!-- /ko -->
+              </dd>
+              <dt class="key-value-pair__key key-value-pair__key--inline">Food Included</dt>
+              <dd class="key-value-pair__value">
+                <!-- ko ifnot: $parent.isEditable -->
+                <span data-bind="html: foodIsIncluded"></span>
+                <!-- /ko -->
+                <!-- ko if: $parent.isEditable -->
+                <input type="checkbox" data-bind="checked: foodIsIncluded" class="" />
+                <!-- /ko -->
+              </dd>
+              <dt class="key-value-pair__key">Additional Features</dt>
+              <dd class="key-value-pair__value">
+                <!-- ko ifnot: $parent.isEditable -->
+                <span data-bind="html: additionalFeatures"></span>
+                <!-- /ko -->
+                <!-- ko if: $parent.isEditable -->
+                <textarea data-bind="textInput: additionalFeatures" class="form__input form__input--textarea"></textarea>
+                <!-- /ko -->
+              </dd>
+              <dt class="key-value-pair__key">Other Features for Additional Cost</dt>
+              <dd class="key-value-pair__value">
+                <!-- ko ifnot: $parent.isEditable -->
+                <span data-bind="html: featuresAvailableAtAdditionalCost"></span>
+                <!-- /ko -->
+                <!-- ko if: $parent.isEditable -->
+                <textarea data-bind="textInput: featuresAvailableAtAdditionalCost" class="form__input form__input--textarea"></textarea>
+                <!-- /ko -->
+              </dd>
+            </dl>
+        </section>
     </div>
   </div>
 </div>

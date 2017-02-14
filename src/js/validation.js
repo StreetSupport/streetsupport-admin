@@ -17,9 +17,7 @@ var getValidationGroup = function (koValidation, formModel) {
 var showErrors = function (koValidationGroup) {
   koValidationGroup.showAllMessages()
   const validationMessages = document.querySelectorAll(`.${options.errorMessageClass}`)
-  console.log(validationMessages)
   for (const error of validationMessages) {
-    console.log(error.style.display)
     if (error.style.display !== 'none') {
       error.previousSibling.focus()
       break

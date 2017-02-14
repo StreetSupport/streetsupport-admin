@@ -38,10 +38,20 @@ function Model () {
     return new InlineEditableSubEntity(formFields, endpoint)
   }
 
+  self.booleanOrDiscretionaryDescriptions = [
+    'No',
+    'Yes',
+    'Ask Landlord'
+  ]
+
   self.buildFeatures = function () {
     const formFields = ko.validatedObservable({
       acceptsHousingBenefit: ko.observable(),
       acceptsPets: ko.observable(),
+      acceptsPetsReadOnly: ko.computed(() => {
+        console.log(self.features().formFields().acceptsPets())
+        return self.booleanOrDiscretionaryDescriptions[self.features().formFields().acceptsPets()]
+      }, self),
       acceptsCouples: ko.observable(),
       hasDisabledAccess: ko.observable(),
       isSuitableForWomen: ko.observable(),
