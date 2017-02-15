@@ -25,7 +25,6 @@ const City = function (data) {
   }, self)
 
   self.toggleSwepAvailability = () => {
-    console.log('toggle')
     browser.loading()
 
     const endpoint = `${self.endpointBuilder.cities().build()}/${self.key}/swep-status`
