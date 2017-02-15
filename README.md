@@ -8,6 +8,7 @@ Please work in the `develop` branch first, and use feature branches for signific
 
 ## Build Status
 
+* vulnerabilities - [![Known Vulnerabilities](https://snyk.io/test/github/StreetSupport/streetsupport-admin/8c0ef3ed832677243eda9456bf78e024c9519994/badge.svg)](https://snyk.io/test/github/StreetSupport/streetsupport-admin/8c0ef3ed832677243eda9456bf78e024c9519994)
 * develop - [![Build Status](https://travis-ci.org/StreetSupport/streetsupport-admin.svg?branch=develop)](https://travis-ci.org/StreetSupport/streetsupport-admin)
 * staging - [![Build Status](https://travis-ci.org/StreetSupport/streetsupport-admin.svg?branch=uat)](https://travis-ci.org/StreetSupport/streetsupport-admin)
 * release - [![Build Status](https://travis-ci.org/StreetSupport/streetsupport-admin.svg?branch=release)](https://travis-ci.org/StreetSupport/streetsupport-admin)
