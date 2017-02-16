@@ -20,20 +20,18 @@ describe('PublishedServiceProviders', () => {
         success({
           'status': 200,
           'data': {
-            embedded: {
-              items: [
-                {
-                  'key': 'albert-kennedy-trust',
-                  'name': 'Albert Kennedy Trust',
-                  'isPublished': true
-                },
-                {
-                  'key': 'coffee4craig',
-                  'name': 'Coffee4Craig',
-                  'isPublished': false
-                }
-              ]
-            }
+            items: [
+              {
+                'key': 'albert-kennedy-trust',
+                'name': 'Albert Kennedy Trust',
+                'isPublished': true
+              },
+              {
+                'key': 'coffee4craig',
+                'name': 'Coffee4Craig',
+                'isPublished': false
+              }
+            ]
           }
         })
       }

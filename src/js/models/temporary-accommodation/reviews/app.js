@@ -33,7 +33,7 @@ function ListAndAdd () {
       .get(self.endpointBuilder.temporaryAccommodation(id).reviews().build())
       .then((result) => {
         browser.loaded()
-        const items = result.data.embedded.items
+        const items = result.data.items
           .map((u) => new Item(self, u))
         self.item(items)
       }, () => {

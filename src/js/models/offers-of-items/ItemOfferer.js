@@ -60,13 +60,13 @@ let ItemOfferer = function (data, listener) {
         self.headers(cookies.get('session-token')),
         {})
       .then((result) => {
-        let items = result.data.embedded.items
+        let items = result.data.items
         items.forEach((i) => {
           i.message = htmlEncode.htmlDecode(i.message)
           i.createdDate = moment(i.createdDate).format('hh:mm DD/MM/YY')
         })
-        self.contactHistory(result.data.embedded.items)
-        self.hasContactHistory(result.data.embedded.items.length > 0)
+        self.contactHistory(result.data.items)
+        self.hasContactHistory(result.data.items.length > 0)
         self.hasRetrievedContactHistory(true)
         browser.loaded()
       }, (_) => {
