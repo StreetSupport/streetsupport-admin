@@ -1,8 +1,8 @@
 let ko = require('knockout')
-let ajax = require('../../ajax')
-let BaseViewModel = require('../BaseViewModel')
-let browser = require('../../browser')
-let cookies = require('../../cookies')
+let ajax = require('../../../ajax')
+let BaseViewModel = require('../../BaseViewModel')
+let browser = require('../../../browser')
+let cookies = require('../../../cookies')
 var htmlencode = require('htmlencode')
 var marked = require('marked')
 

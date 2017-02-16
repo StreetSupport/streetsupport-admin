@@ -1,8 +1,8 @@
 let ko = require('knockout')
-let ajax = require('../../ajax')
-let browser = require('../../browser')
-let querystring = require('../../get-url-parameter')
-let BaseViewModel = require('../BaseViewModel')
+let ajax = require('../../../ajax')
+let browser = require('../../../browser')
+let querystring = require('../../../get-url-parameter')
+let BaseViewModel = require('../../BaseViewModel')
 let Item = require('./Item')
 
 function ListAndAdd () {
