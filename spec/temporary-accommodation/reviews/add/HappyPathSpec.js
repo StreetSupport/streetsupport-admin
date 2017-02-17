@@ -12,8 +12,9 @@ const browser = require(`../../../../src/js/browser`)
 const cookies = require(`../../../../src/js/cookies`)
 const querystring = require(`../../../../src/js/get-url-parameter`)
 const Model = require(`../../../../src/js/models/temporary-accommodation/reviews/app`)
+import { testData } from '../testData'
 
-describe('Temporary Accommodation Listing', () => {
+describe('Temporary Accommodation Listing - Add', () => {
   let sut = null
   let browserLoadingStub = null
   let browserLoadedStub = null
@@ -25,16 +26,16 @@ describe('Temporary Accommodation Listing', () => {
   }
 
   beforeEach(() => {
-    sinon.stub(querystring, 'parameter').withArgs('id').returns(accomData.id)
+    sinon.stub(querystring, 'parameter').withArgs('id').returns(testData.id)
 
     sinon
       .stub(ajax, 'get')
-      .withArgs(`${endpoints.prefix(accomData.links.self)}?expand=reviews`, headers)
+      .withArgs(`${endpoints.prefix(testData.links.self)}?expand=reviews`, headers)
       .returns({
         then: function (success, error) {
           success({
             'statusCode': 200,
-            'data': accomData
+            'data': testData
           })
         }
       })
@@ -93,7 +94,7 @@ describe('Temporary Accommodation Listing', () => {
   })
 
   it('- should post new review data', () => {
-    const endpoint = `${endpoints.temporaryAccommodation}/${accomData.id}/reviews`
+    const endpoint = `${endpoints.temporaryAccommodation}/${testData.id}/reviews`
     const payload = {
       HasCentralHeating: 2,
       HasHotWater: 2,
@@ -132,56 +133,6 @@ describe('Temporary Accommodation Listing', () => {
   })
 
   it('- should retain temporary accommodation id', () => {
-    expect(sut.items()[0].formFields().temporaryAccommodationIdReadOnly()).toEqual(accomData.id)
+    expect(sut.items()[0].formFields().temporaryAccommodationIdReadOnly()).toEqual(testData.id)
   })
 })
-
-const accomData = {
-  'links': {
-    'self': '/v1/temporary-accommodation/58a2df876a38c33d389e00e8'
-  },
-  'embedded': {
-    'reviews': []
-  },
-  'id': '58a2df876a38c33d389e00e8',
-  'contactInformation': {
-    'name': 'Vince Test',
-    'additionalInfo': 'Vince test description',
-    'email': 'test@test.com',
-    'telephone': '0123456789'
-  },
-  'address': {
-    'street1': 'test 1',
-    'street2': null,
-    'street3': null,
-    'city': 'manchester',
-    'postcode': 'M3 4BD',
-    'latitude': 53.4755361548836,
-    'longitude': -2.25848699844466,
-    'publicTransportInfo': 'get a bus',
-    'nearestSupportProviderId': 'self-help'
-  },
-  'features': {
-    'acceptsHousingBenefit': false,
-    'acceptsPets': 1,
-    'acceptsCouples': 2,
-    'hasDisabledAccess': true,
-    'isSuitableForWomen': true,
-    'isSuitableForYoungPeople': true,
-    'hasSingleRooms': false,
-    'hasSharedRooms': false,
-    'hasShowerBathroomFacilities': false,
-    'hasAccessToKitchen': false,
-    'hasFlexibleMealTimes': true,
-    'hasLounge': false,
-    'providesCleanBedding': false,
-    'allowsVisitors': false,
-    'hasOnSiteManager': false,
-    'referenceReferralIsRequired': false,
-    'price': 0,
-    'additionalFeatures': 'seswe3ww',
-    'foodIsIncluded': false,
-    'availabilityOfMeals': null,
-    'featuresAvailableAtAdditionalCost': null
-  }
-}

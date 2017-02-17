@@ -13,32 +13,31 @@ function ListAndAdd () {
 
   self.buildFormFields = (data = {}) => {
     return ko.validatedObservable({
-      idReadOnly: ko.observable(data.Id),
-      temporaryAccommodationIdReadOnly: ko.observable(data.TemporaryAccommodationId),
-      hasCentralHeating: ko.observable(data.HasCentralHeating),
-      hasHotWater: ko.observable(data.HasHotWater),
-      hasElectricity: ko.observable(data.HasElectricity),
-      hasLockOnRoom: ko.observable(data.HasLockOnRoom),
-      hasLockOnFrontDoor: ko.observable(data.HasLockOnFrontDoor),
-      hasAggressiveTenants: ko.observable(data.HasAggressiveTenants),
-      hasExcessiveNoise: ko.observable(data.HasExcessiveNoise),
-      foodRating: ko.observable(data.FoodRating),
-      cleanlinessRating: ko.observable(data.CleanlinessRating),
-      staffHelpfulnessRating: ko.observable(data.StaffHelpfulnessRating),
-      staffSupportivenessRating: ko.observable(data.StaffSupportivenessRating),
-      staffDealingWithProblemsRating: ko.observable(data.StaffDealingWithProblemsRating),
-      staffTimelinessWithIssuesRating: ko.observable(data.StaffTimelinessWithIssuesRating)
+      idReadOnly: ko.observable(data.id),
+      temporaryAccommodationIdReadOnly: ko.observable(data.temporaryAccommodationId),
+      hasCentralHeating: ko.observable(data.hasCentralHeating),
+      hasHotWater: ko.observable(data.hasHotWater),
+      hasElectricity: ko.observable(data.hasElectricity),
+      hasLockOnRoom: ko.observable(data.hasLockOnRoom),
+      hasLockOnFrontDoor: ko.observable(data.hasLockOnFrontDoor),
+      hasAggressiveTenants: ko.observable(data.hasAggressiveTenants),
+      hasExcessiveNoise: ko.observable(data.hasExcessiveNoise),
+      foodRating: ko.observable(data.foodRating),
+      cleanlinessRating: ko.observable(data.cleanlinessRating),
+      staffHelpfulnessRating: ko.observable(data.staffHelpfulnessRating),
+      staffSupportivenessRating: ko.observable(data.staffSupportivenessRating),
+      staffDealingWithProblemsRating: ko.observable(data.staffDealingWithProblemsRating),
+      staffTimelinessWithIssuesRating: ko.observable(data.staffTimelinessWithIssuesRating)
     })
   }
   self.buildEndpoints = () => {
     return {
-      save: (item) => `${item.endpointBuilder.temporaryAccommodation(item.formFields().temporaryAccommodationIdReadOnly()).build()}/reviews`
+      save: (item) => `${item.endpointBuilder.temporaryAccommodation(item.formFields().temporaryAccommodationIdReadOnly()).build()}/reviews`,
+      delete: (item) => `${item.endpointBuilder.temporaryAccommodation(item.formFields().temporaryAccommodationIdReadOnly()).build()}/reviews/${item.formFields().idReadOnly()}`
     }
   }
 
-  self.impactUpdates = ko.observableArray()
   self.newItem = ko.observable(new Item(self, self.buildFormFields(), self.buildEndpoints()))
-
   self.items = ko.observableArray()
 
   self.itemCreated = (item) => {
@@ -47,12 +46,12 @@ function ListAndAdd () {
     Object.keys(item.formFields())
       .filter((k) => !k.endsWith('ReadOnly'))
       .forEach((k) => {
-        formFields[`${k.charAt(0).toUpperCase()}${k.substr(1)}`] = item.formFields()[k]()
+        formFields[k] = item.formFields()[k]()
       })
     Object.keys(item.formFields())
       .filter((k) => k.endsWith('ReadOnly'))
       .forEach((k) => {
-        formFields[`${k.charAt(0).toUpperCase()}${k.substr(1)}`.replace('ReadOnly', '')] = item.formFields()[k]()
+        formFields[k.replace('ReadOnly', '')] = item.formFields()[k]()
       })
     self.items().unshift(new Item(self, self.buildFormFields(formFields), self.buildEndpoints()))
   }
@@ -61,8 +60,11 @@ function ListAndAdd () {
     self.message('Item amended')
   }
 
-  self.itemDeleted = () => {
+  self.itemDeleted = (item) => {
     self.message('Item removed')
+    const newItems = self.items()
+      .filter((i) => i.formFields().idReadOnly() !== item.formFields().idReadOnly())
+    self.items(newItems)
   }
 
   const retrieveItems = () => {

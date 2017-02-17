@@ -28,50 +28,41 @@ nosubnav: true
             {{> forms/booleanInsufficient fieldTitle="Hot Water" dataFieldName="hasHotWater" }}
             {{> forms/booleanInsufficient fieldTitle="Electricity" dataFieldName="hasElectricity" }}
           </dl>
+          <h3>How secure do you feel in the property?</h3>
+          <dl class="key-value-pair">
+            {{> forms/boolean fieldTitle="Lock on room" dataFieldName="hasLockOnRoom" }}
+            {{> forms/boolean fieldTitle="Lock on front door" dataFieldName="hasLockOnFrontDoor" }}
+          </dl>
+          <h3>How are the other tenants?</h3>
+          <dl class="key-value-pair">
+            {{> forms/boolean fieldTitle="Are other tenants aggressive or threatening?" dataFieldName="hasAggressiveTenants" }}
+            {{> forms/boolean fieldTitle="Is there excessive noise and knocking on doors?" dataFieldName="hasExcessiveNoise" }}
+          </dl>
+          <h3>How would you rate the following?</h3>
+          <dl class="key-value-pair">
+            {{> forms/fiveStarRating fieldTitle="Food" dataFieldName="foodRating" }}
+            {{> forms/fiveStarRating fieldTitle="Cleanliness" dataFieldName="cleanlinessRating" }}
+          </dl>
+          <h3>How would you rate the staff?</h3>
+          <dl class="key-value-pair">
+            {{> forms/fiveStarRating fieldTitle="Friendly and helpful" dataFieldName="staffHelpfulnessRating" }}
+            {{> forms/fiveStarRating fieldTitle="Welcoming and supportive" dataFieldName="staffSupportivenessRating" }}
+            {{> forms/fiveStarRating fieldTitle="Approachable when there is a problem/complaint" dataFieldName="staffDealingWithProblemsRating" }}
+            {{> forms/fiveStarRating fieldTitle="Address maintenance issues in a timely manner" dataFieldName="staffTimelinessWithIssuesRating" }}
+          </dl>
         </div>
         <button data-bind="click: save" class="btn btn--primary"><span class="btn__text">save</span></button>
       </article>
     </div>
-    {{!--<div class="block__content">
-      <h2>Previous Updates</h2>
-      <div data-bind="foreach: impactUpdates">
+    <div class="block__content">
+      <h2>Previous Reviews</h2>
+      <div data-bind="foreach: items">
         <article>
-          <!-- ko if: isEditing() -->
-          <dl class="key-value-pair">
-            <dt class="key-value-pair__key">Content</dt>
-            <dd class="key-value-pair__value">
-              <textarea data-bind="textInput: updateContent" class="form__input form__input--textarea"></textarea>
-            </dd>
-            <dt class="key-value-pair__key">Display Date (optional)</dt>
-            <dd class="key-value-pair__value">
-              <input type="number" min="1" max="31" data-bind="textInput: displayDateDay" class="form__input form__input--short" placeholder="dd" />
-              <input type="number" min="1" max="12" data-bind="textInput: displayDateMonth" class="form__input form__input--short" placeholder="mm" />
-              <input type="number" min="2016" max="2018" data-bind="textInput: displayDateYear" class="form__input form__input--short" placeholder="yyyy" />
-            </dd>
-              <dt class="key-value-pair__key">Associated City (optional)</dt>
-              <dd class="key-value-pair__value">
-                <select data-bind="options: $parent.cities,
-                  optionsValue: 'id',
-                  optionsText: function (city) {
-                    return city.name
-                  },
-                  value: cityId,
-                  optionsCaption: '-- please select --'" class="form__input"></select>
-            </dd>
-          </dl>
-          <button data-bind="click: update" class="btn btn--primary"><span class="btn__text">update</span></button>
-          <button data-bind="click: cancelEditing" class="btn btn--indifferent"><span class="btn__text">cancel</span></button>
-          <!-- /ko -->
-          <!-- ko ifnot: isEditing() -->
-          <div data-bind="html: updateContentForDisplay"></div>
-          <p data-bind="text: displayDate"></p>
-          <p data-bind="text: cityId"></p>
-          <button data-bind="click: enableEditing" class="btn btn--primary"><span class="btn__text">edit</span></button>
-          <button data-bind="click: deleteUpdate" class="btn btn--warning"><span class="btn__text">delete</span></button>
-          <!-- /ko -->
+          <p data-bind="text: documentCreationDate"></p>
+          <button data-bind="click: deleteItem" class="btn btn--warning"><span class="btn__text">delete</span></button>
         </article>
       </div>
-    </div>--}}
+    </div>
   </div>
 </div>
 {{> loading-spinner}}

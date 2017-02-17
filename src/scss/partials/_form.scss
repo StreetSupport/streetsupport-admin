@@ -51,7 +51,11 @@
 .form__label--checkbox {
   display: inline;
   margin-right: 1em;
-  width: 100%;
+}
+
+.form__label--radio {
+  display: inline;
+  margin-right: 1em;
 }
 
 .form__checkbox-container {

@@ -19,8 +19,8 @@ function Item (listener, formFields, endpoints) {
       })
   }
 
-  self.deleteUpdate = () => {
-    const endpoint = self.endpointBuilder.impactUpdates(self.id()).build()
+  self.deleteItem = () => {
+    const endpoint = endpoints.delete(self)
     const headers = self.headers(cookies.get('session-token'))
     browser.loading()
     ajax
@@ -28,7 +28,7 @@ function Item (listener, formFields, endpoints) {
       .then((result) => {
         browser.loaded()
         if (result.statusCode === 200) {
-          listener.itemDeleted()
+          listener.itemDeleted(self)
         } else {
           self.handleError(result.data)
         }
