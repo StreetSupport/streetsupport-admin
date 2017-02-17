@@ -10,43 +10,29 @@ nosubnav: true
 <div class="block block--highlight admin-header">
   <div class="container block__inner">
     <header>
-    <h1>Impact Updates</h1>
+    <h1>Reviews</h1>
+    <p>* address</p>
     </header>
   </div>
 </div>
 <div class="block block--main-body">
   <div class="container block__inner">
     <div class="block__content form">
-      <h2>Add New Update</h2>
+      <h2>Add New Review</h2>
       {{> form-feedback}}
-      <article data-bind="with: newUpdate">
-        <dl class="key-value-pair">
-          <dt class="key-value-pair__key">Content</dt>
-          <dd class="key-value-pair__value">
-            <textarea data-bind="textInput: updateContent" class="form__input form__input--textarea"></textarea>
-          </dd>
-          <dt class="key-value-pair__key">Display Date (optional)</dt>
-          <dd class="key-value-pair__value">
-            <input type="number" min="1" max="31" data-bind="textInput: displayDateDay" class="form__input form__input--short" placeholder="dd" />
-            <input type="number" min="1" max="12" data-bind="textInput: displayDateMonth" class="form__input form__input--short" placeholder="mm" />
-            <input type="number" min="2016" max="2018" data-bind="textInput: displayDateYear" class="form__input form__input--short" placeholder="yyyy" />
-          </dd>
+      <article data-bind="with: newItem">
+        <div data-bind="with: formFields">
+          <h3>Do you have access to working basic facilities?</h3>
           <dl class="key-value-pair">
-            <dt class="key-value-pair__key">Associated City (optional)</dt>
-            <dd class="key-value-pair__value">
-              <select data-bind="options: $parent.cities,
-                optionsValue: 'id',
-                optionsText: function (city) {
-                  return city.name
-                },
-                value: cityId,
-                optionsCaption: '-- please select --'" class="form__input"></select>
-          </dd>
-        </dl>
+            {{> forms/booleanInsufficient fieldTitle="Central Heating" dataFieldName="hasCentralHeating" }}
+            {{> forms/booleanInsufficient fieldTitle="Hot Water" dataFieldName="hasHotWater" }}
+            {{> forms/booleanInsufficient fieldTitle="Electricity" dataFieldName="hasElectricity" }}
+          </dl>
+        </div>
         <button data-bind="click: save" class="btn btn--primary"><span class="btn__text">save</span></button>
       </article>
     </div>
-    <div class="block__content">
+    {{!--<div class="block__content">
       <h2>Previous Updates</h2>
       <div data-bind="foreach: impactUpdates">
         <article>
@@ -85,7 +71,7 @@ nosubnav: true
           <!-- /ko -->
         </article>
       </div>
-    </div>
+    </div>--}}
   </div>
 </div>
 {{> loading-spinner}}

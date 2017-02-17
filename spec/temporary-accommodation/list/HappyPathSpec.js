@@ -74,6 +74,10 @@ describe('Temporary Accommodation Listing', () => {
     expect(sut.entries()[0].editUrl).toEqual(`${adminUrls.temporaryAccommodation}/edit?id=${accomData.items[0].id}`)
   })
 
+  it('- should set reviews url', () => {
+    expect(sut.entries()[0].reviewsUrl).toEqual(`${adminUrls.temporaryAccommodation}/reviews?id=${accomData.items[0].id}`)
+  })
+
   it('- should display load more button', () => {
     expect(sut.canLoadMore()).toBeTruthy()
   })

@@ -1,39 +1,22 @@
-let ko = require('knockout')
 let ajax = require('../../../ajax')
 let BaseViewModel = require('../../BaseViewModel')
 let browser = require('../../../browser')
 let cookies = require('../../../cookies')
-var htmlencode = require('htmlencode')
-var marked = require('marked')
+let validation = require('../../../validation')
 
-const today = new Date()
-const defaultDisplayDate = `${today.getDate()}/${today.getMonth() + 1}/${today.getFullYear()}`
-
-function Update (listener, data = { content: '', displayDate: defaultDisplayDate }) {
+function Item (listener, formFields, endpoints) {
   var self = this
 
   self.listener = listener
-
-  const [day, month, year] = data.displayDate.split('/')
-
-  self.id = ko.observable(data.id)
-  self.updateContent = ko.observable(htmlencode.htmlDecode(data.content))
-  self.updateContentForDisplay = ko.computed(() => {
-    return marked(self.updateContent())
-  }, self)
-  self.displayDateDay = ko.observable(day)
-  self.displayDateMonth = ko.observable(month)
-  self.displayDateYear = ko.observable(year)
-  self.displayDate = ko.observable(data.displayDate)
-  self.cityId = ko.observable(data.cityId)
-  self.isEditing = ko.observable(false)
+  self.formFields = formFields
+  self.endpoints = endpoints
 
   self.clear = () => {
-    self.updateContent('')
-    self.displayDateDay('01')
-    self.displayDateMonth('01')
-    self.displayDateYear('2017')
-    self.cityId('')
+    Object.keys(self.formFields())
+      .filter((k) => !k.endsWith('ReadOnly'))
+      .forEach((k) => {
+        self.formFields()[k](null)
+      })
   }
 
   self.deleteUpdate = () => {
@@ -72,7 +55,7 @@ function Update (listener, data = { content: '', displayDate: defaultDisplayDate
     }
     browser.loading()
     ajax
-      .put(endpoint, headers, data)
+      .put()
       .then((result) => {
         browser.loaded()
         if (result.statusCode === 200) {
@@ -88,20 +71,15 @@ function Update (listener, data = { content: '', displayDate: defaultDisplayDate
   }
 
   self.save = () => {
-    const endpoint = self.endpointBuilder.impactUpdates().build()
     const headers = self.headers(cookies.get('session-token'))
-    const data = {
-      DisplayDate: new Date(self.displayDateYear(), self.displayDateMonth() - 1, self.displayDateDay()),
-      Content: self.updateContent(),
-      CityId: self.cityId()
-    }
     browser.loading()
     ajax
-      .post(endpoint, headers, data)
+      .post(self.endpoints.save(self), headers, validation.buildPayload(self.formFields()))
       .then((result) => {
         browser.loaded()
         if (result.statusCode === 201) {
-          listener.itemCreated()
+          self.formFields().idReadOnly(result.data.id)
+          listener.itemCreated(self)
           self.clear()
         } else {
           self.handleError(result)
@@ -112,6 +90,6 @@ function Update (listener, data = { content: '', displayDate: defaultDisplayDate
   }
 }
 
-Update.prototype = new BaseViewModel()
+Item.prototype = new BaseViewModel()
 
-module.exports = Update
+module.exports = Item

@@ -26,6 +26,7 @@ function Lister () {
         formatted
           .forEach((i) => {
             i.editUrl = `${adminUrls.temporaryAccommodation}/edit?id=${i.id}`
+            i.reviewsUrl = `${adminUrls.temporaryAccommodation}/reviews?id=${i.id}`
           })
         const newEntries = [...self.entries(), ...formatted]
         self.entries(newEntries)
