@@ -11,7 +11,7 @@ nosubnav: true
   <div class="container block__inner">
     <header>
     <h1>Reviews</h1>
-    <p>* address</p>
+    <p data-bind="text: address"></p>
     <a href="/temporary-accommodation/" class="btn btn--info">
       <span class="btn__text">Back to listing</span>
     </a>
@@ -69,6 +69,7 @@ nosubnav: true
       <div data-bind="foreach: items">
         <article data-bind="with: formFields">
           <p data-bind="text: documentCreationDateReadOnly"></p>
+          <p data-bind="text: body"></p>
           <button data-bind="click: $parent.deleteItem" class="btn btn--warning"><span class="btn__text">delete</span></button>
         </article>
       </div>

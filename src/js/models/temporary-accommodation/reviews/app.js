@@ -71,6 +71,7 @@ function ListAndAdd () {
   }
 
   self.newItem = ko.observable(new Item(self, self.buildFormFields(), self.buildEndpoints()))
+  self.address = ko.observable()
   self.items = ko.observableArray()
 
   self.itemCreated = (item) => {
@@ -118,6 +119,10 @@ function ListAndAdd () {
           .map((r) => new Item(self, self.buildFormFields(r), self.buildEndpoints()))
         self.items(items)
         self.newItem().formFields().temporaryAccommodationIdReadOnly(result.data.id)
+        const address = [result.data.address.street1, result.data.address.street2, result.data.address.street3, result.data.address.city, result.data.address.postcode]
+          .filter((l) => l != null)
+          .join(', ')
+        self.address(address)
       }, () => {
         self.handleServerError()
       })

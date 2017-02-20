@@ -70,4 +70,8 @@ describe('Temporary Accommodation Listing', () => {
   it('- should set review\'s creation date', () => {
     expect(sut.items()[0].formFields().documentCreationDateReadOnly()).toEqual('2017-02-17')
   })
+
+  it('- should set accom\'s address', () => {
+    expect(sut.address()).toEqual('test 1, manchester, M3 4BD')
+  })
 })
