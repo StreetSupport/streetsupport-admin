@@ -85,6 +85,7 @@ describe('Temporary Accommodation Listing - Add', () => {
     expect(sut.newItem().formFields().staffSupportivenessRating()).toEqual('1')
     expect(sut.newItem().formFields().staffDealingWithProblemsRating()).toEqual('1')
     expect(sut.newItem().formFields().staffTimelinessWithIssuesRating()).toEqual('1')
+    expect(sut.newItem().formFields().canBeDisplayedPublically()).toEqual(false)
   })
 
   describe('- add new', () => {
@@ -105,6 +106,10 @@ describe('Temporary Accommodation Listing - Add', () => {
       sut.newItem().formFields().staffSupportivenessRating(4)
       sut.newItem().formFields().staffDealingWithProblemsRating(5)
       sut.newItem().formFields().staffTimelinessWithIssuesRating(3)
+      sut.newItem().formFields().canBeDisplayedPublically(true)
+      sut.newItem().formFields().reviewerName('reviewer name')
+      sut.newItem().formFields().reviewerContactDetails('reviewer contact details')
+      sut.newItem().formFields().body('review body')
 
       sut.newItem().save()
     })
@@ -128,7 +133,11 @@ describe('Temporary Accommodation Listing - Add', () => {
         StaffHelpfulnessRating: 3,
         StaffSupportivenessRating: 4,
         StaffDealingWithProblemsRating: 5,
-        StaffTimelinessWithIssuesRating: 3
+        StaffTimelinessWithIssuesRating: 3,
+        CanBeDisplayedPublically: true,
+        ReviewerName: 'reviewer name',
+        ReviewerContactDetails: 'reviewer contact details',
+        Body: 'review body'
       }
       const postCalledAsExpected = ajaxPostStub
         .withArgs(endpoint, headers, payload)
@@ -155,6 +164,10 @@ describe('Temporary Accommodation Listing - Add', () => {
       expect(sut.newItem().formFields().staffSupportivenessRating()).toEqual('1')
       expect(sut.newItem().formFields().staffDealingWithProblemsRating()).toEqual('1')
       expect(sut.newItem().formFields().staffTimelinessWithIssuesRating()).toEqual('1')
+      expect(sut.newItem().formFields().canBeDisplayedPublically()).toEqual(false)
+      expect(sut.newItem().formFields().reviewerName()).toEqual('')
+      expect(sut.newItem().formFields().reviewerContactDetails()).toEqual('')
+      expect(sut.newItem().formFields().body()).toEqual('')
     })
 
     it('- should add new item to top of collection', () => {

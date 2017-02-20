@@ -27,7 +27,11 @@ function ListAndAdd () {
     staffHelpfulnessRating: '1',
     staffSupportivenessRating: '1',
     staffDealingWithProblemsRating: '1',
-    staffTimelinessWithIssuesRating: '1'
+    staffTimelinessWithIssuesRating: '1',
+    canBeDisplayedPublically: false,
+    reviewerName: '',
+    reviewerContactDetails: '',
+    body: ''
   }
 
   self.buildFormFields = (data = defaultNewItem) => {
@@ -51,7 +55,11 @@ function ListAndAdd () {
       staffHelpfulnessRating: ko.observable(data.staffHelpfulnessRating),
       staffSupportivenessRating: ko.observable(data.staffSupportivenessRating),
       staffDealingWithProblemsRating: ko.observable(data.staffDealingWithProblemsRating),
-      staffTimelinessWithIssuesRating: ko.observable(data.staffTimelinessWithIssuesRating)
+      staffTimelinessWithIssuesRating: ko.observable(data.staffTimelinessWithIssuesRating),
+      canBeDisplayedPublically: ko.observable(data.canBeDisplayedPublically),
+      reviewerName: ko.observable(data.reviewerName),
+      reviewerContactDetails: ko.observable(data.reviewerContactDetails),
+      body: ko.observable(data.body)
     })
     return model
   }

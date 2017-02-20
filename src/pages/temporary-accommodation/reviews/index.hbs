@@ -53,6 +53,13 @@ nosubnav: true
             {{> forms/fiveStarRating fieldTitle="Approachable when there is a problem/complaint" dataFieldName="staffDealingWithProblemsRating" }}
             {{> forms/fiveStarRating fieldTitle="Address maintenance issues in a timely manner" dataFieldName="staffTimelinessWithIssuesRating" }}
           </dl>
+          <h3>Your review</h3>
+          <dl class="key-value-pair">
+            {{> forms/textArea fieldTitle="Review body" dataFieldName="body" }}
+            {{> forms/textField fieldTitle="Reviewer Name" dataFieldName="reviewerName" }}
+            {{> forms/textField fieldTitle="Reviewer Contact Details" dataFieldName="reviewerContactDetails" }}
+            {{> forms/boolean fieldTitle="Can this review be displayed publically?" dataFieldName="canBeDisplayedPublically" }}
+          </dl>
         </div>
         <button data-bind="click: save" class="btn btn--primary"><span class="btn__text">save</span></button>
       </article>
