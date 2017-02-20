@@ -59,25 +59,6 @@ describe('Temporary Accommodation Listing - Add', () => {
 
     sut = new Model()
     sut.init()
-
-    browser.loading.reset()
-    browser.loaded.reset()
-
-    sut.newItem().formFields().hasCentralHeating(2)
-    sut.newItem().formFields().hasHotWater(2)
-    sut.newItem().formFields().hasElectricity(2)
-    sut.newItem().formFields().hasLockOnRoom(true)
-    sut.newItem().formFields().hasLockOnFrontDoor(true)
-    sut.newItem().formFields().hasAggressiveTenants(true)
-    sut.newItem().formFields().hasExcessiveNoise(true)
-    sut.newItem().formFields().foodRating(1)
-    sut.newItem().formFields().cleanlinessRating(2)
-    sut.newItem().formFields().staffHelpfulnessRating(3)
-    sut.newItem().formFields().staffSupportivenessRating(4)
-    sut.newItem().formFields().staffDealingWithProblemsRating(5)
-    sut.newItem().formFields().staffTimelinessWithIssuesRating(1)
-
-    sut.newItem().save()
   })
 
   afterEach(() => {
@@ -89,50 +70,100 @@ describe('Temporary Accommodation Listing - Add', () => {
     querystring.parameter.restore()
   })
 
-  it('- should show user it is loading', () => {
-    expect(browserLoadingStub.calledOnce).toBeTruthy()
+  it(' - should set defaults', () => {
+    expect(sut.newItem().formFields().idReadOnly()).toEqual(null)
+    expect(sut.newItem().formFields().hasCentralHeating()).toEqual('0')
+    expect(sut.newItem().formFields().hasHotWater()).toEqual('0')
+    expect(sut.newItem().formFields().hasElectricity()).toEqual('0')
+    expect(sut.newItem().formFields().hasLockOnRoom()).toEqual(false)
+    expect(sut.newItem().formFields().hasLockOnFrontDoor()).toEqual(false)
+    expect(sut.newItem().formFields().hasAggressiveTenants()).toEqual(false)
+    expect(sut.newItem().formFields().hasExcessiveNoise()).toEqual(false)
+    expect(sut.newItem().formFields().foodRating()).toEqual('1')
+    expect(sut.newItem().formFields().cleanlinessRating()).toEqual('1')
+    expect(sut.newItem().formFields().staffHelpfulnessRating()).toEqual('1')
+    expect(sut.newItem().formFields().staffSupportivenessRating()).toEqual('1')
+    expect(sut.newItem().formFields().staffDealingWithProblemsRating()).toEqual('1')
+    expect(sut.newItem().formFields().staffTimelinessWithIssuesRating()).toEqual('1')
   })
 
-  it('- should post new review data', () => {
-    const endpoint = `${endpoints.temporaryAccommodation}/${testData.id}/reviews`
-    const payload = {
-      HasCentralHeating: 2,
-      HasHotWater: 2,
-      HasElectricity: 2,
-      FoodRating: 1,
-      HasLockOnRoom: true,
-      HasLockOnFrontDoor: true,
-      HasAggressiveTenants: true,
-      HasExcessiveNoise: true,
-      CleanlinessRating: 2,
-      StaffHelpfulnessRating: 3,
-      StaffSupportivenessRating: 4,
-      StaffDealingWithProblemsRating: 5,
-      StaffTimelinessWithIssuesRating: 1
-    }
-    const postCalledAsExpected = ajaxPostStub
-      .withArgs(endpoint, headers, payload)
-      .calledAfter(browserLoadingStub)
-    expect(postCalledAsExpected).toBeTruthy()
-  })
+  describe('- add new', () => {
+    beforeEach(() => {
+      browser.loading.reset()
+      browser.loaded.reset()
 
-  it('- should show user it has loaded', () => {
-    expect(browserLoadedStub.calledAfter(ajaxPostStub)).toBeTruthy()
-  })
+      sut.newItem().formFields().hasCentralHeating(2)
+      sut.newItem().formFields().hasHotWater(2)
+      sut.newItem().formFields().hasElectricity(2)
+      sut.newItem().formFields().hasLockOnRoom(true)
+      sut.newItem().formFields().hasLockOnFrontDoor(true)
+      sut.newItem().formFields().hasAggressiveTenants(true)
+      sut.newItem().formFields().hasExcessiveNoise(true)
+      sut.newItem().formFields().foodRating(3)
+      sut.newItem().formFields().cleanlinessRating(2)
+      sut.newItem().formFields().staffHelpfulnessRating(3)
+      sut.newItem().formFields().staffSupportivenessRating(4)
+      sut.newItem().formFields().staffDealingWithProblemsRating(5)
+      sut.newItem().formFields().staffTimelinessWithIssuesRating(3)
 
-  it('- should reset new item form', () => {
-    Object.keys(sut.newItem().formFields())
-      .filter((k) => !k.endsWith('ReadOnly'))
-      .forEach((k) => {
-        expect(sut.newItem().formFields()[k]()).toEqual(null)
-      })
-  })
+      sut.newItem().save()
+    })
 
-  it('- should add new item to top of collection', () => {
-    expect(sut.items()[0].formFields().idReadOnly()).toEqual('new-review-id')
-  })
+    it('- should show user it is loading', () => {
+      expect(browserLoadingStub.calledOnce).toBeTruthy()
+    })
 
-  it('- should retain temporary accommodation id', () => {
-    expect(sut.items()[0].formFields().temporaryAccommodationIdReadOnly()).toEqual(testData.id)
+    it('- should post new review data', () => {
+      const endpoint = `${endpoints.temporaryAccommodation}/${testData.id}/reviews`
+      const payload = {
+        HasCentralHeating: 2,
+        HasHotWater: 2,
+        HasElectricity: 2,
+        FoodRating: 3,
+        HasLockOnRoom: true,
+        HasLockOnFrontDoor: true,
+        HasAggressiveTenants: true,
+        HasExcessiveNoise: true,
+        CleanlinessRating: 2,
+        StaffHelpfulnessRating: 3,
+        StaffSupportivenessRating: 4,
+        StaffDealingWithProblemsRating: 5,
+        StaffTimelinessWithIssuesRating: 3
+      }
+      const postCalledAsExpected = ajaxPostStub
+        .withArgs(endpoint, headers, payload)
+        .calledAfter(browserLoadingStub)
+      expect(postCalledAsExpected).toBeTruthy()
+    })
+
+    it('- should show user it has loaded', () => {
+      expect(browserLoadedStub.calledAfter(ajaxPostStub)).toBeTruthy()
+    })
+
+    it('- should reset new item form', () => {
+      expect(sut.newItem().formFields().idReadOnly()).toEqual(null)
+      expect(sut.newItem().formFields().hasCentralHeating()).toEqual('0')
+      expect(sut.newItem().formFields().hasHotWater()).toEqual('0')
+      expect(sut.newItem().formFields().hasElectricity()).toEqual('0')
+      expect(sut.newItem().formFields().hasLockOnRoom()).toEqual(false)
+      expect(sut.newItem().formFields().hasLockOnFrontDoor()).toEqual(false)
+      expect(sut.newItem().formFields().hasAggressiveTenants()).toEqual(false)
+      expect(sut.newItem().formFields().hasExcessiveNoise()).toEqual(false)
+      expect(sut.newItem().formFields().foodRating()).toEqual('1')
+      expect(sut.newItem().formFields().cleanlinessRating()).toEqual('1')
+      expect(sut.newItem().formFields().staffHelpfulnessRating()).toEqual('1')
+      expect(sut.newItem().formFields().staffSupportivenessRating()).toEqual('1')
+      expect(sut.newItem().formFields().staffDealingWithProblemsRating()).toEqual('1')
+      expect(sut.newItem().formFields().staffTimelinessWithIssuesRating()).toEqual('1')
+    })
+
+    it('- should add new item to top of collection', () => {
+      expect(sut.items().length).toEqual(3)
+      expect(sut.items()[0].formFields().idReadOnly()).toEqual('new-review-id')
+    })
+
+    it('- should retain temporary accommodation id', () => {
+      expect(sut.items()[0].formFields().temporaryAccommodationIdReadOnly()).toEqual(testData.id)
+    })
   })
 })

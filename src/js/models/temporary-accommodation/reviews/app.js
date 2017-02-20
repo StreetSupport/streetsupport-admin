@@ -11,10 +11,34 @@ let Item = require('./Item')
 function ListAndAdd () {
   let self = this
 
-  self.buildFormFields = (data = {}) => {
-    return ko.validatedObservable({
+  const defaultNewItem = {
+    id: null,
+    temporaryAccommodationId: querystring.parameter('id'),
+    documentCreationDate: new Date().toISOString(),
+    hasCentralHeating: '0',
+    hasHotWater: '0',
+    hasElectricity: '0',
+    hasLockOnRoom: false,
+    hasLockOnFrontDoor: false,
+    hasAggressiveTenants: false,
+    hasExcessiveNoise: false,
+    foodRating: '1',
+    cleanlinessRating: '1',
+    staffHelpfulnessRating: '1',
+    staffSupportivenessRating: '1',
+    staffDealingWithProblemsRating: '1',
+    staffTimelinessWithIssuesRating: '1'
+  }
+
+  self.buildFormFields = (data = defaultNewItem) => {
+    const formattedCreationDate = data.documentCreationDate !== undefined
+      ? data.documentCreationDate.split('T')[0]
+      : ''
+
+    const model = ko.validatedObservable({
       idReadOnly: ko.observable(data.id),
       temporaryAccommodationIdReadOnly: ko.observable(data.temporaryAccommodationId),
+      documentCreationDateReadOnly: ko.observable(formattedCreationDate),
       hasCentralHeating: ko.observable(data.hasCentralHeating),
       hasHotWater: ko.observable(data.hasHotWater),
       hasElectricity: ko.observable(data.hasElectricity),
@@ -29,6 +53,7 @@ function ListAndAdd () {
       staffDealingWithProblemsRating: ko.observable(data.staffDealingWithProblemsRating),
       staffTimelinessWithIssuesRating: ko.observable(data.staffTimelinessWithIssuesRating)
     })
+    return model
   }
   self.buildEndpoints = () => {
     return {
@@ -53,7 +78,11 @@ function ListAndAdd () {
       .forEach((k) => {
         formFields[k.replace('ReadOnly', '')] = item.formFields()[k]()
       })
-    self.items().unshift(new Item(self, self.buildFormFields(formFields), self.buildEndpoints()))
+    const newItem = new Item(self, self.buildFormFields(formFields), self.buildEndpoints())
+    const newItems = self.items()
+    newItems.unshift(newItem)
+    self.items(newItems)
+    self.newItem(new Item(self, self.buildFormFields(), self.buildEndpoints()))
   }
 
   self.itemAmended = () => {
