@@ -13,7 +13,8 @@ function Model () {
 
   self.formFields = ko.validatedObservable({
     name: ko.observable().extend({ required: true }),
-    additionalInfo: ko.observable().extend({ required: true }),
+    description: ko.observable(),
+    contactName: ko.observable(),
     email: ko.observable().extend({ email: true }),
     telephone: ko.observable(),
     addressLine1: ko.observable().extend({ required: true }),

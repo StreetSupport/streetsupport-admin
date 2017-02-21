@@ -33,24 +33,8 @@ nosubnav: true
             <button data-bind="click: save" class="btn btn--primary"><span class="btn__text">save</span></button>
             <!-- /ko -->
             <dl class="key-value-pair" data-bind="with: formFields">
-              <dt class="key-value-pair__key">Contact Name</dt>
-              <dd class="key-value-pair__value">
-                <!-- ko ifnot: $parent.isEditable -->
-                <span data-bind="html: name"></span>
-                <!-- /ko -->
-                <!-- ko if: $parent.isEditable -->
-                <input type="text" required data-bind="textInput: name" class="form__input" />
-                <!-- /ko -->
-              </dd>
-              <dt class="key-value-pair__key">General Information</dt>
-              <dd class="key-value-pair__value">
-                <!-- ko ifnot: $parent.isEditable -->
-                <span data-bind="html: additionalInfo"></span>
-                <!-- /ko -->
-                <!-- ko if: $parent.isEditable -->
-                <textarea data-bind="textInput: additionalInfo" class="form__input form__input--textarea"></textarea>
-                <!-- /ko -->
-              </dd>
+              {{> forms/inline/textField fieldTitle="Contact Name" dataFieldName="name" }}
+              {{> forms/inline/textArea fieldTitle="Additional Info" dataFieldName="additionalInfo" }}
               <dt class="key-value-pair__key">Email</dt>
               <dd class="key-value-pair__value">
                 <!-- ko ifnot: $parent.isEditable -->

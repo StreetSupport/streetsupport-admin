@@ -48,6 +48,10 @@ export const testData = {
   },
   'id': '58a2df876a38c33d389e00e8',
   'temporaryAccommodationId': null,
+  'generalInfo': {
+    'name': 'test accommodation',
+    'description': 'test description'
+  },
   'contactInformation': {
     'name': 'Vince Test',
     'additionalInfo': 'Vince test description',

@@ -37,39 +37,6 @@ function Item (listener, formFields, endpoints) {
       })
   }
 
-  self.enableEditing = () => {
-    self.isEditing(true)
-  }
-
-  self.cancelEditing = () => {
-    self.isEditing(false)
-  }
-
-  self.update = () => {
-    const endpoint = self.endpointBuilder.impactUpdates(self.id()).build()
-    const headers = self.headers(cookies.get('session-token'))
-    const data = {
-      DisplayDate: new Date(self.displayDateYear(), self.displayDateMonth() - 1, self.displayDateDay()),
-      Content: self.updateContent(),
-      CityId: self.cityId()
-    }
-    browser.loading()
-    ajax
-      .put()
-      .then((result) => {
-        browser.loaded()
-        if (result.statusCode === 200) {
-          self.isEditing(false)
-          listener.itemAmended()
-          self.clear()
-        } else {
-          self.handleError(result)
-        }
-      }, () => {
-        self.handleServerError()
-      })
-  }
-
   self.save = () => {
     const headers = self.headers(cookies.get('session-token'))
     browser.loading()
