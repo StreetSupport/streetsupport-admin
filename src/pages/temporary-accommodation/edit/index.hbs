@@ -22,9 +22,23 @@ nosubnav: true
     <div class="block__content form">
       {{> form-feedback}}
 
-      <div class="">
-        <section class="" data-bind="with: contactDetails">
+      <div class="split split--admin-panel">
+        <section class="split__element split__element--admin-panel" data-bind="with: generalDetails">
           <h2>General Details</h2>
+            <!-- ko ifnot: isEditable -->
+            <button data-bind="click: edit" class="btn btn--info"><span class="btn__text">edit</span></button>
+            <!-- /ko -->
+            <!-- ko if: isEditable -->
+            <button data-bind="click: cancel" class="btn btn--indifferent"><span class="btn__text">cancel</span></button>
+            <button data-bind="click: save" class="btn btn--primary"><span class="btn__text">save</span></button>
+            <!-- /ko -->
+            <dl class="key-value-pair" data-bind="with: formFields">
+              {{> forms/inline/textField fieldTitle="Name" dataFieldName="name" }}
+              {{> forms/inline/textArea fieldTitle="Description" dataFieldName="description" }}
+            </dl>
+        </section>
+        <section class="split__element split__element--admin-panel" data-bind="with: contactDetails">
+          <h2>Contact Details</h2>
             <!-- ko ifnot: isEditable -->
             <button data-bind="click: edit" class="btn btn--info"><span class="btn__text">edit</span></button>
             <!-- /ko -->
@@ -35,24 +49,8 @@ nosubnav: true
             <dl class="key-value-pair" data-bind="with: formFields">
               {{> forms/inline/textField fieldTitle="Contact Name" dataFieldName="name" }}
               {{> forms/inline/textArea fieldTitle="Additional Info" dataFieldName="additionalInfo" }}
-              <dt class="key-value-pair__key">Email</dt>
-              <dd class="key-value-pair__value">
-                <!-- ko ifnot: $parent.isEditable -->
-                <span data-bind="html: email"></span>
-                <!-- /ko -->
-                <!-- ko if: $parent.isEditable -->
-                <input type="email" data-bind="textInput: email" class="form__input" />
-                <!-- /ko -->
-              </dd>
-              <dt class="key-value-pair__key">Telephone</dt>
-              <dd class="key-value-pair__value">
-                <!-- ko ifnot: $parent.isEditable -->
-                <span data-bind="html: telephone"></span>
-                <!-- /ko -->
-                <!-- ko if: $parent.isEditable -->
-                <input type="text" data-bind="textInput: telephone" class="form__input" />
-                <!-- /ko -->
-              </dd>
+              {{> forms/inline/emailField fieldTitle="Email" dataFieldName="email" }}
+              {{> forms/inline/textField fieldTitle="Telephone" dataFieldName="telephone" }}
             </dl>
         </section>
       </div>
