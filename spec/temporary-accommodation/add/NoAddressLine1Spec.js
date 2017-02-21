@@ -37,7 +37,7 @@ describe('Temporary Accommodation - Add - No Address Line 1', () => {
     sut = new Model()
     sut.init()
 
-    sut.formFields().additionalInfo('additional-info')
+    sut.formFields().description('description')
     sut.formFields().email('test@email.com')
     sut.formFields().telephone('telephone')
     sut.formFields().addressLine2('address line 2')

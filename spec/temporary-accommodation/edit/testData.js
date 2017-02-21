@@ -1,7 +1,11 @@
 module.exports = {
   testData: {
-    'contactInformation': {
+    'generalInfo': {
       'name': 'name',
+      'description': 'description'
+    },
+    'contactInformation': {
+      'name': 'Vince Test',
       'additionalInfo': 'additionalInfo',
       'email': 'test@test.com',
       'telephone': 'telephone'
@@ -19,6 +23,7 @@ module.exports = {
     },
     'features': {
       'acceptsHousingBenefit': true,
+      'acceptsNoHousingBenefitWithServiceProviderSupport': true,
       'acceptsPets': 2,
       'acceptsCouples': 2,
       'hasDisabledAccess': true,

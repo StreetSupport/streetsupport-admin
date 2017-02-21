@@ -14,10 +14,19 @@ function Model () {
   const id = querystring.parameter('id')
   const headers = self.headers(cookies.get('session-token'))
 
+  self.buildGeneralDetails = () => {
+    const formFields = ko.validatedObservable({
+      name: ko.observable().extend({ required: true }),
+      description: ko.observable()
+    })
+    const endpoint = self.endpointBuilder.temporaryAccommodation(id).generalDetails().build()
+    return new InlineEditableSubEntity(formFields, endpoint)
+  }
+
   self.buildContactDetails = function () {
     const formFields = ko.validatedObservable({
       name: ko.observable().extend({ required: true }),
-      additionalInfo: ko.observable().extend({ required: true }),
+      additionalInfo: ko.observable(),
       email: ko.observable().extend({ email: true }),
       telephone: ko.observable()
     })
@@ -42,6 +51,7 @@ function Model () {
   self.buildFeatures = function () {
     const formFields = ko.validatedObservable({
       acceptsHousingBenefit: ko.observable(),
+      acceptsNoHousingBenefitWithServiceProviderSupport: ko.observable(),
       acceptsPets: ko.observable(),
       acceptsCouples: ko.observable(),
       hasDisabledAccess: ko.observable(),
@@ -67,6 +77,7 @@ function Model () {
     return new InlineEditableSubEntity(formFields, endpoint, ['acceptsPets', 'acceptsCouples'])
   }
 
+  self.generalDetails = ko.observable(self.buildGeneralDetails())
   self.contactDetails = ko.observable(self.buildContactDetails())
   self.address = ko.observable(self.buildAddress())
   self.features = ko.observable(self.buildFeatures())
@@ -76,6 +87,7 @@ function Model () {
     ajax
       .get(self.endpointBuilder.temporaryAccommodation(id).build(), headers)
       .then((result) => {
+        self.generalDetails().populateFormFields(result.data.generalInfo)
         self.contactDetails().populateFormFields(result.data.contactInformation)
         self.address().populateFormFields(result.data.address)
         self.features().populateFormFields(result.data.features)

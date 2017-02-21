@@ -183,6 +183,11 @@ function EndpointBuilder () {
     return self
   }
 
+  self.generalDetails = () => {
+    self.childResource = 'general-details'
+    return self
+  }
+
   self.build = () => {
     var uri = self.baseResource
     if (self.baseResourceId !== undefined) {

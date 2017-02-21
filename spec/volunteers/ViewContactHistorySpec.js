@@ -72,16 +72,14 @@ const historyData = {
     'prev': null,
     'self': '/v1/volunteer-enquiries/5762bc74da4f8a0be43c6b87/contact-requests?index=0'
   },
-  'embedded': {
-    'items': [
-      {
-        'message': 'Hi Hannah. &#10;&#10;I have just come across your information in the volunteer database on Street Support. It is fantastic that you have offered to help with your skills and experience. Have you any involvement with MASH? I am sure they would welcome your support: mash.org.uk. &#10;&#10;Also, might you be interested in joining any of the charter action groups? https://charter.streetsupport.net/join-action-group/.&#10;&#10;Sorry there has been a big delay in getting back to you. We are really pleased that since the charter launch there has been loads of activity, and with a very small core team we are just catching up.&#10;&#10;Thanks again,&#10;Viv&#10;Street Support',
-        'sentAsEmail': false,
-        'createdBy': 'streetsupport-admin',
-        'createdDate': '2016-06-23T17:00:34.8400000Z'
-      }
-    ]
-  },
+  'items': [
+    {
+      'message': 'Hi Hannah. &#10;&#10;I have just come across your information in the volunteer database on Street Support. It is fantastic that you have offered to help with your skills and experience. Have you any involvement with MASH? I am sure they would welcome your support: mash.org.uk. &#10;&#10;Also, might you be interested in joining any of the charter action groups? https://charter.streetsupport.net/join-action-group/.&#10;&#10;Sorry there has been a big delay in getting back to you. We are really pleased that since the charter launch there has been loads of activity, and with a very small core team we are just catching up.&#10;&#10;Thanks again,&#10;Viv&#10;Street Support',
+      'sentAsEmail': false,
+      'createdBy': 'streetsupport-admin',
+      'createdDate': '2016-06-23T17:00:34.8400000Z'
+    }
+  ],
   'total': 1
 }
 

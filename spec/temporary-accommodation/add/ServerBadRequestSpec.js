@@ -60,7 +60,8 @@ describe('Temporary Accommodation - add - server returns bad request', () => {
         })
 
       sut.formFields().name('name')
-      sut.formFields().additionalInfo('additional-info')
+      sut.formFields().contactName('contact name')
+      sut.formFields().description('description')
       sut.formFields().email('test@email.com')
       sut.formFields().telephone('telephone')
       sut.formFields().addressLine1('address line 1')
@@ -86,7 +87,8 @@ describe('Temporary Accommodation - add - server returns bad request', () => {
       const endpoint = endpoints.temporaryAccommodation
       const payload = {
         'Name': 'name',
-        'AdditionalInfo': 'additional-info',
+        'ContactName': 'contact name',
+        'Description': 'description',
         'Email': 'test@email.com',
         'Telephone': 'telephone',
         'AddressLine1': 'address line 1',

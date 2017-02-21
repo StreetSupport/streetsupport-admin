@@ -24,31 +24,29 @@ describe('Service Providers', () => {
         success({
           'status': 200,
           'data': {
-            embedded: {
-              items: [
-                {
-                  'key': 'albert-kennedy-trust',
-                  'name': 'Albert Kennedy Trust',
-                  'isVerified': false,
-                  'isPublished': false,
-                  'associatedCityId': 'manchester'
-                },
-                {
-                  'key': 'booth-centre',
-                  'name': 'Booth Centre',
-                  'isVerified': true,
-                  'isPublished': true,
-                  'associatedCityId': 'leeds'
-                },
-                {
-                  'key': 'coffee4craig',
-                  'name': 'Coffee4Craig',
-                  'isVerified': false,
-                  'isPublished': true,
-                  'associatedCityId': 'brighton'
-                }
-              ]
-            }
+            items: [
+              {
+                'key': 'albert-kennedy-trust',
+                'name': 'Albert Kennedy Trust',
+                'isVerified': false,
+                'isPublished': false,
+                'associatedCityId': 'manchester'
+              },
+              {
+                'key': 'booth-centre',
+                'name': 'Booth Centre',
+                'isVerified': true,
+                'isPublished': true,
+                'associatedCityId': 'leeds'
+              },
+              {
+                'key': 'coffee4craig',
+                'name': 'Coffee4Craig',
+                'isVerified': false,
+                'isPublished': true,
+                'associatedCityId': 'brighton'
+              }
+            ]
           }
         })
       }

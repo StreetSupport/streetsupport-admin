@@ -38,7 +38,7 @@ describe('Temporary Accommodation - Add - Invalid Email', () => {
     sut.init()
 
     sut.formFields().name('name')
-    sut.formFields().additionalInfo('additional info')
+    sut.formFields().description('additional info')
     sut.formFields().email('email')
     sut.formFields().telephone('telephone')
     sut.formFields().addressLine1('address line 1')

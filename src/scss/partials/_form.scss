@@ -51,7 +51,16 @@
 .form__label--checkbox {
   display: inline;
   margin-right: 1em;
-  width: 100%;
+}
+
+.form__label--checkbox-container {
+  padding: 10px 0;
+  display: block;
+}
+
+.form__label--radio {
+  display: inline;
+  margin-right: 1em;
 }
 
 .form__checkbox-container {
@@ -113,4 +122,10 @@
 
 label {
   cursor: pointer;
+}
+
+input[type="checkbox"],
+input[type="radio"], {
+  cursor: pointer;
+  padding: 5px;
 }

@@ -23,47 +23,24 @@ nosubnav: true
     <div class="block__content form">
       {{> form-feedback}}
       <article data-bind="with: formFields">
+        <h3>General Info</h3>
+        <dl class="key-value-pair">
+          {{> forms/textField fieldTitle="Name" dataFieldName="name" }}
+          {{> forms/textArea fieldTitle="Description" dataFieldName="description" }}
+        </dl>
         <h3>Contact Details</h3>
         <dl class="key-value-pair">
-          <dt class="key-value-pair__key">Name</dt>
-          <dd class="key-value-pair__value form__field-item">
-            <input data-bind="textInput: name" type="text" class="form__input" />
-          </dd>
-          <dt class="key-value-pair__key">Additional Info</dt>
-          <dd class="key-value-pair__value form__field-item">
-            <textarea data-bind="textInput: additionalInfo" class="form__input form__input--multiline"></textarea>
-          </dd>
-          <dt class="key-value-pair__key">Email</dt>
-          <dd class="key-value-pair__value form__field-item">
-            <input data-bind="textInput: email" type="email" class="form__input" />
-          </dd>
-          <dt class="key-value-pair__key">Telephone</dt>
-          <dd class="key-value-pair__value form__field-item">
-            <input data-bind="textInput: telephone" type="text" class="form__input" />
-          </dd>
+          {{> forms/textField fieldTitle="Name" dataFieldName="contactName" }}
+          {{> forms/emailField fieldTitle="Email" dataFieldName="email" }}
+          {{> forms/textField fieldTitle="Telephone" dataFieldName="telephone" }}
         </dl>
         <h3>Location Details</h3>
         <dl class="key-value-pair">
-          <dt class="key-value-pair__key">Street Line 1</dt>
-          <dd class="key-value-pair__value form__field-item">
-            <input data-bind="textInput:addressLine1" type="text" class="form__input" />
-          </dd>
-          <dt class="key-value-pair__key">Street Line 2</dt>
-          <dd class="key-value-pair__value form__field-item">
-            <input data-bind="textInput:addressLine2" type="text" class="form__input" />
-          </dd>
-          <dt class="key-value-pair__key">Street Line 3</dt>
-          <dd class="key-value-pair__value form__field-item">
-            <input data-bind="textInput:addressLine3" type="text" class="form__input" />
-          </dd>
-          <dt class="key-value-pair__key">City</dt>
-          <dd class="key-value-pair__value form__field-item">
-            <input data-bind="textInput:city" type="text" class="form__input" />
-          </dd>
-          <dt class="key-value-pair__key">Postcode</dt>
-          <dd class="key-value-pair__value form__field-item">
-            <input data-bind="textInput: postcode" type="text" class="form__input" />
-          </dd>
+          {{> forms/textField fieldTitle="Street Line 1" dataFieldName="addressLine1" }}
+          {{> forms/textField fieldTitle="Street Line 2" dataFieldName="addressLine2" }}
+          {{> forms/textField fieldTitle="Street Line 3" dataFieldName="addressLine3" }}
+          {{> forms/textField fieldTitle="City" dataFieldName="city" }}
+          {{> forms/textField fieldTitle="Postcode" dataFieldName="postcode" }}
         </dl>
         <button data-bind="click: $parent.save" class="btn btn--primary"><span class="btn__text">Save</span></button>
       </article>
