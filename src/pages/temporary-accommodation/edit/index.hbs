@@ -66,60 +66,12 @@ nosubnav: true
             <button data-bind="click: save" class="btn btn--primary"><span class="btn__text">save</span></button>
             <!-- /ko -->
             <dl class="key-value-pair" data-bind="with: formFields">
-              <dt class="key-value-pair__key">Street 1</dt>
-              <dd class="key-value-pair__value">
-                <!-- ko ifnot: $parent.isEditable -->
-                <span data-bind="html: street1"></span>
-                <!-- /ko -->
-                <!-- ko if: $parent.isEditable -->
-                <input type="text" required data-bind="textInput: street1" class="form__input" />
-                <!-- /ko -->
-              </dd>
-              <dt class="key-value-pair__key">Street 2</dt>
-              <dd class="key-value-pair__value">
-                <!-- ko ifnot: $parent.isEditable -->
-                <span data-bind="html: street2"></span>
-                <!-- /ko -->
-                <!-- ko if: $parent.isEditable -->
-                <input type="text" data-bind="textInput: street2" class="form__input" />
-                <!-- /ko -->
-              </dd>
-              <dt class="key-value-pair__key">Street 3</dt>
-              <dd class="key-value-pair__value">
-                <!-- ko ifnot: $parent.isEditable -->
-                <span data-bind="html: street3"></span>
-                <!-- /ko -->
-                <!-- ko if: $parent.isEditable -->
-                <input type="text" data-bind="textInput: street3" class="form__input" />
-                <!-- /ko -->
-              </dd>
-              <dt class="key-value-pair__key">City</dt>
-              <dd class="key-value-pair__value">
-                <!-- ko ifnot: $parent.isEditable -->
-                <span data-bind="html: city"></span>
-                <!-- /ko -->
-                <!-- ko if: $parent.isEditable -->
-                <input type="text" data-bind="textInput: city" class="form__input" />
-                <!-- /ko -->
-              </dd>
-              <dt class="key-value-pair__key">Postcode</dt>
-              <dd class="key-value-pair__value">
-                <!-- ko ifnot: $parent.isEditable -->
-                <span data-bind="html: postcode"></span>
-                <!-- /ko -->
-                <!-- ko if: $parent.isEditable -->
-                <input type="text" data-bind="textInput: postcode" class="form__input" />
-                <!-- /ko -->
-              </dd>
-              <dt class="key-value-pair__key">Public Transport</dt>
-              <dd class="key-value-pair__value">
-                <!-- ko ifnot: $parent.isEditable -->
-                <span data-bind="html: publicTransportInfo"></span>
-                <!-- /ko -->
-                <!-- ko if: $parent.isEditable -->
-                <textarea data-bind="textInput: publicTransportInfo" class="form__input form__input--textarea"></textarea>
-                <!-- /ko -->
-              </dd>
+              {{> forms/inline/textField fieldTitle="Street 1" dataFieldName="street1" }}
+              {{> forms/inline/textField fieldTitle="Street 2" dataFieldName="street2" }}
+              {{> forms/inline/textField fieldTitle="Street 3" dataFieldName="street3" }}
+              {{> forms/inline/textField fieldTitle="City" dataFieldName="city" }}
+              {{> forms/inline/textField fieldTitle="Postcode" dataFieldName="postcode" }}
+              {{> forms/inline/textArea fieldTitle="Public Transport" dataFieldName="publicTransportInfo" }}
               <dt class="key-value-pair__key">Nearest Support Provider</dt>
               <dd class="key-value-pair__value">
                 <!-- ko ifnot: $parent.isEditable -->
@@ -146,15 +98,8 @@ nosubnav: true
             <button data-bind="click: save" class="btn btn--primary"><span class="btn__text">save</span></button>
             <!-- /ko -->
             <dl class="key-value-pair" data-bind="with: formFields">
-              <dt class="key-value-pair__key key-value-pair__key--inline">Accepts Housing Benefit</dt>
-              <dd class="key-value-pair__value">
-                <!-- ko ifnot: $parent.isEditable -->
-                <span data-bind="html: acceptsHousingBenefit"></span>
-                <!-- /ko -->
-                <!-- ko if: $parent.isEditable -->
-                <input type="checkbox" data-bind="checked: acceptsHousingBenefit" class="" />
-                <!-- /ko -->
-              </dd>
+              {{> forms/inline/boolean fieldTitle="Accepts Housing Benefit" dataFieldName="acceptsHousingBenefit" }}
+
               <dt class="key-value-pair__key key-value-pair__key--inline">Accepts Pets</dt>
               <dd class="key-value-pair__value">
                 <!-- ko ifnot: $parent.isEditable -->
