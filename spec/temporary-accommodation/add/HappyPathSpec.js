@@ -121,7 +121,7 @@ describe('Temporary Accommodation - Add', () => {
         const formFieldKeys = Object.keys(sut.formFields())
         formFieldKeys
           .forEach((k) => {
-            expect(sut.formFields()[k]()).toEqual('')
+            expect(sut.formFields()[k]()).toEqual(null)
           })
       })
 

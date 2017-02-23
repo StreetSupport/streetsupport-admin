@@ -71,7 +71,7 @@ function Model () {
     const formFieldKeys = Object.keys(self.formFields())
     formFieldKeys
       .forEach((k) => {
-        self.formFields()[k]('')
+        self.formFields()[k](null)
       })
     self.formSubmitted(false)
     self.formSubmissionSuccessful(false)
