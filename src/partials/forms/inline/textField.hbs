@@ -1,9 +1,9 @@
-<dt class="key-value-pair__key">{{ fieldTitle }}</dt>
+<dt class="key-value-pair__key key-value-pair__key--inline">{{ fieldTitle }}</dt>
 <dd class="key-value-pair__value">
   <!-- ko ifnot: $parent.isEditable -->
   <span data-bind="html: {{ dataFieldName }}"></span>
   <!-- /ko -->
   <!-- ko if: $parent.isEditable -->
-  <input type="text" required data-bind="textInput: {{ dataFieldName }}" class="form__input" />
+  <input type="text" data-bind="textInput: {{ dataFieldName }}" class="form__input {{ classModifier }}" />
   <!-- /ko -->
 </dd>

@@ -1,0 +1,17 @@
+<dt class="key-value-pair__key key-value-pair__key--inline">{{ fieldTitle }}</dt>
+<dd class="key-value-pair__value">
+  <!-- ko ifnot: $parent.isEditable -->
+  <span data-bind="html: {{ dataFieldName }}ReadOnly"></span>
+  <!-- /ko -->
+  <!-- ko if: $parent.isEditable -->
+  <label class="form__label form__label--radio">
+  <input type="radio" value="0" name="acceptsPets" data-bind="checked: {{ dataFieldName }}" class="" />
+  No</label>
+  <label class="form__label form__label--radio">
+  <input type="radio" value="1" name="{{ dataFieldName }}" data-bind="checked: {{ dataFieldName }}" class="" />
+  Yes</label>
+  <label class="form__label form__label--radio">
+  <input type="radio" value="2" name="{{ dataFieldName }}" data-bind="checked: {{ dataFieldName }}" class="" />
+  {{ thirdOptionLabel }}</label>
+  <!-- /ko -->
+</dd>

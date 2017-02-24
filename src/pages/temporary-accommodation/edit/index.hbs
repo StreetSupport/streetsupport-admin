@@ -99,203 +99,26 @@ nosubnav: true
             <!-- /ko -->
             <dl class="key-value-pair" data-bind="with: formFields">
               {{> forms/inline/boolean fieldTitle="Accepts Housing Benefit" dataFieldName="acceptsHousingBenefit" }}
-
-              <dt class="key-value-pair__key key-value-pair__key--inline">Accepts Pets</dt>
-              <dd class="key-value-pair__value">
-                <!-- ko ifnot: $parent.isEditable -->
-                <span data-bind="html: acceptsPetsReadOnly"></span>
-                <!-- /ko -->
-                <!-- ko if: $parent.isEditable -->
-                <label>
-                <input type="radio" value="0" name="acceptsPets" data-bind="checked: acceptsPets" class="" />
-                No</label>
-                <label>
-                <input type="radio" value="1" name="acceptsPets" data-bind="checked: acceptsPets" class="" />
-                Yes</label>
-                <label>
-                <input type="radio" value="2" name="acceptsPets" data-bind="checked: acceptsPets" class="" />
-                Ask Landlord</label>
-                <!-- /ko -->
-              </dd>
-              <dt class="key-value-pair__key key-value-pair__key--inline">Accepts Couples</dt>
-              <dd class="key-value-pair__value">
-                <!-- ko ifnot: $parent.isEditable -->
-                <span data-bind="html: acceptsCouplesReadOnly"></span>
-                <!-- /ko -->
-                <!-- ko if: $parent.isEditable -->
-                <label>
-                <input type="radio" value="0" name="acceptsCouples" data-bind="checked: acceptsCouples" class="" />
-                No</label>
-                <label>
-                <input type="radio" value="1" name="acceptsCouples" data-bind="checked: acceptsCouples" class="" />
-                Yes</label>
-                <label>
-                <input type="radio" value="2" name="acceptsCouples" data-bind="checked: acceptsCouples" class="" />
-                Ask Landlord</label>
-                <!-- /ko -->
-              </dd>
-              <dt class="key-value-pair__key key-value-pair__key--inline">Disabled Access</dt>
-              <dd class="key-value-pair__value">
-                <!-- ko ifnot: $parent.isEditable -->
-                <span data-bind="html: hasDisabledAccess"></span>
-                <!-- /ko -->
-                <!-- ko if: $parent.isEditable -->
-                <input type="checkbox" data-bind="checked: hasDisabledAccess" class="" />
-                <!-- /ko -->
-              </dd>
-              <dt class="key-value-pair__key key-value-pair__key--inline">Suitable for Women</dt>
-              <dd class="key-value-pair__value">
-                <!-- ko ifnot: $parent.isEditable -->
-                <span data-bind="html: isSuitableForWomen"></span>
-                <!-- /ko -->
-                <!-- ko if: $parent.isEditable -->
-                <input type="checkbox" data-bind="checked: isSuitableForWomen" class="" />
-                <!-- /ko -->
-              </dd>
-              <dt class="key-value-pair__key key-value-pair__key--inline">Suitable for Young People</dt>
-              <dd class="key-value-pair__value">
-                <!-- ko ifnot: $parent.isEditable -->
-                <span data-bind="html: isSuitableForYoungPeople"></span>
-                <!-- /ko -->
-                <!-- ko if: $parent.isEditable -->
-                <input type="checkbox" data-bind="checked: isSuitableForYoungPeople" class="" />
-                <!-- /ko -->
-              </dd>
-              <dt class="key-value-pair__key key-value-pair__key--inline">Single Rooms</dt>
-              <dd class="key-value-pair__value">
-                <!-- ko ifnot: $parent.isEditable -->
-                <span data-bind="html: hasSingleRooms"></span>
-                <!-- /ko -->
-                <!-- ko if: $parent.isEditable -->
-                <input type="checkbox" data-bind="checked: hasSingleRooms" class="" />
-                <!-- /ko -->
-              </dd>
-              <dt class="key-value-pair__key key-value-pair__key--inline">Shared Rooms</dt>
-              <dd class="key-value-pair__value">
-                <!-- ko ifnot: $parent.isEditable -->
-                <span data-bind="html: hasSharedRooms"></span>
-                <!-- /ko -->
-                <!-- ko if: $parent.isEditable -->
-                <input type="checkbox" data-bind="checked: hasSharedRooms" class="" />
-                <!-- /ko -->
-              </dd>
-              <dt class="key-value-pair__key key-value-pair__key--inline">Shower/Bathroom Facilities</dt>
-              <dd class="key-value-pair__value">
-                <!-- ko ifnot: $parent.isEditable -->
-                <span data-bind="html: hasShowerBathroomFacilities"></span>
-                <!-- /ko -->
-                <!-- ko if: $parent.isEditable -->
-                <input type="checkbox" data-bind="checked: hasShowerBathroomFacilities" class="" />
-                <!-- /ko -->
-              </dd>
-              <dt class="key-value-pair__key key-value-pair__key--inline">Access to Kitchen</dt>
-              <dd class="key-value-pair__value">
-                <!-- ko ifnot: $parent.isEditable -->
-                <span data-bind="html: hasAccessToKitchen"></span>
-                <!-- /ko -->
-                <!-- ko if: $parent.isEditable -->
-                <input type="checkbox" data-bind="checked: hasAccessToKitchen" class="" />
-                <!-- /ko -->
-              </dd>
-              <dt class="key-value-pair__key key-value-pair__key--inline">Flexible Meal Times</dt>
-              <dd class="key-value-pair__value">
-                <!-- ko ifnot: $parent.isEditable -->
-                <span data-bind="html: hasFlexibleMealTimes"></span>
-                <!-- /ko -->
-                <!-- ko if: $parent.isEditable -->
-                <input type="checkbox" data-bind="checked: hasFlexibleMealTimes" class="" />
-                <!-- /ko -->
-              </dd>
-              <dt class="key-value-pair__key">Meal Availability</dt>
-              <dd class="key-value-pair__value">
-                <!-- ko ifnot: $parent.isEditable -->
-                <span data-bind="html: availabilityOfMeals"></span>
-                <!-- /ko -->
-                <!-- ko if: $parent.isEditable -->
-                <textarea data-bind="textInput: availabilityOfMeals" class="form__input form__input--textarea"></textarea>
-                <!-- /ko -->
-              </dd>
-              <dt class="key-value-pair__key key-value-pair__key--inline">Lounge</dt>
-              <dd class="key-value-pair__value">
-                <!-- ko ifnot: $parent.isEditable -->
-                <span data-bind="html: hasLounge"></span>
-                <!-- /ko -->
-                <!-- ko if: $parent.isEditable -->
-                <input type="checkbox" data-bind="checked: hasLounge" class="" />
-                <!-- /ko -->
-              </dd>
-              <dt class="key-value-pair__key key-value-pair__key--inline">Provides Clean Bedding</dt>
-              <dd class="key-value-pair__value">
-                <!-- ko ifnot: $parent.isEditable -->
-                <span data-bind="html: providesCleanBedding"></span>
-                <!-- /ko -->
-                <!-- ko if: $parent.isEditable -->
-                <input type="checkbox" data-bind="checked: providesCleanBedding" class="" />
-                <!-- /ko -->
-              </dd>
-              <dt class="key-value-pair__key key-value-pair__key--inline">Allows Visitors</dt>
-              <dd class="key-value-pair__value">
-                <!-- ko ifnot: $parent.isEditable -->
-                <span data-bind="html: allowsVisitors"></span>
-                <!-- /ko -->
-                <!-- ko if: $parent.isEditable -->
-                <input type="checkbox" data-bind="checked: allowsVisitors" class="" />
-                <!-- /ko -->
-              </dd>
-              <dt class="key-value-pair__key key-value-pair__key--inline">On-site Manager</dt>
-              <dd class="key-value-pair__value">
-                <!-- ko ifnot: $parent.isEditable -->
-                <span data-bind="html: hasOnSiteManager"></span>
-                <!-- /ko -->
-                <!-- ko if: $parent.isEditable -->
-                <input type="checkbox" data-bind="checked: hasOnSiteManager" class="" />
-                <!-- /ko -->
-              </dd>
-              <dt class="key-value-pair__key key-value-pair__key--inline">Reference/Referral Required</dt>
-              <dd class="key-value-pair__value">
-                <!-- ko ifnot: $parent.isEditable -->
-                <span data-bind="html: referenceReferralIsRequired"></span>
-                <!-- /ko -->
-                <!-- ko if: $parent.isEditable -->
-                <input type="checkbox" data-bind="checked: referenceReferralIsRequired" class="" />
-                <!-- /ko -->
-              </dd>
-              <dt class="key-value-pair__key key-value-pair__key--inline">Price (£ p/w)</dt>
-              <dd class="key-value-pair__value">
-                <!-- ko ifnot: $parent.isEditable -->
-                <span data-bind="html: price"></span>
-                <!-- /ko -->
-                <!-- ko if: $parent.isEditable -->
-                <input type="number" min="0.00" placeholder="10.00" data-bind="textInput: price" class="form__input" />
-                <!-- /ko -->
-              </dd>
-              <dt class="key-value-pair__key key-value-pair__key--inline">Food Included</dt>
-              <dd class="key-value-pair__value">
-                <!-- ko ifnot: $parent.isEditable -->
-                <span data-bind="html: foodIsIncluded"></span>
-                <!-- /ko -->
-                <!-- ko if: $parent.isEditable -->
-                <input type="checkbox" data-bind="checked: foodIsIncluded" class="" />
-                <!-- /ko -->
-              </dd>
-              <dt class="key-value-pair__key">Additional Features</dt>
-              <dd class="key-value-pair__value">
-                <!-- ko ifnot: $parent.isEditable -->
-                <span data-bind="html: additionalFeatures"></span>
-                <!-- /ko -->
-                <!-- ko if: $parent.isEditable -->
-                <textarea data-bind="textInput: additionalFeatures" class="form__input form__input--textarea"></textarea>
-                <!-- /ko -->
-              </dd>
-              <dt class="key-value-pair__key">Other Features for Additional Cost</dt>
-              <dd class="key-value-pair__value">
-                <!-- ko ifnot: $parent.isEditable -->
-                <span data-bind="html: featuresAvailableAtAdditionalCost"></span>
-                <!-- /ko -->
-                <!-- ko if: $parent.isEditable -->
-                <textarea data-bind="textInput: featuresAvailableAtAdditionalCost" class="form__input form__input--textarea"></textarea>
-                <!-- /ko -->
-              </dd>
+              {{> forms/inline/booleanOrOther fieldTitle="Accepts Pets" dataFieldName="acceptsPets" thirdOptionLabel="Ask Landlord" }}
+              {{> forms/inline/booleanOrOther fieldTitle="Accepts Couples" dataFieldName="acceptsCouples" thirdOptionLabel="Ask Landlord" }}
+              {{> forms/inline/boolean fieldTitle="Disabled Access" dataFieldName="hasDisabledAccess" }}
+              {{> forms/inline/boolean fieldTitle="Suitable for Women" dataFieldName="isSuitableForWomen" }}
+              {{> forms/inline/boolean fieldTitle="Suitable for Young People" dataFieldName="isSuitableForYoungPeople" }}
+              {{> forms/inline/boolean fieldTitle="Single Rooms" dataFieldName="hasSingleRooms" }}
+              {{> forms/inline/boolean fieldTitle="Shared Rooms" dataFieldName="hasSharedRooms" }}
+              {{> forms/inline/boolean fieldTitle="Shower/Bathroom Facilities" dataFieldName="hasShowerBathroomFacilities" }}
+              {{> forms/inline/boolean fieldTitle="Access to Kitchen" dataFieldName="hasAccessToKitchen" }}
+              {{> forms/inline/boolean fieldTitle="Flexible Meal Times" dataFieldName="hasFlexibleMealTimes" }}
+              {{> forms/inline/boolean fieldTitle="Meal Availability" dataFieldName="availabilityOfMeals" }}
+              {{> forms/inline/boolean fieldTitle="Lounge" dataFieldName="hasLounge" }}
+              {{> forms/inline/boolean fieldTitle="Provides Clean Bedding" dataFieldName="providesCleanBedding" }}
+              {{> forms/inline/boolean fieldTitle="Allows Visitors" dataFieldName="allowsVisitors" }}
+              {{> forms/inline/boolean fieldTitle="On-site Manager" dataFieldName="hasOnSiteManager" }}
+              {{> forms/inline/boolean fieldTitle="Reference/Referral Required" dataFieldName="referenceReferralIsRequired" }}
+              {{> forms/inline/textField fieldTitle="Price (£ p/w)" dataFieldName="price" classModifier="" }}
+              {{> forms/inline/boolean fieldTitle="Food Included" dataFieldName="foodIsIncluded" }}
+              {{> forms/inline/textArea fieldTitle="Additional Features" dataFieldName="additionalFeatures" }}
+              {{> forms/inline/textArea fieldTitle="Other Features for Additional Cost" dataFieldName="featuresAvailableAtAdditionalCost" }}
             </dl>
         </section>
     </div>
