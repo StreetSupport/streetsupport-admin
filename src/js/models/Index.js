@@ -31,6 +31,8 @@ function Index () {
         browser.redirect(adminUrls.dashboard)
       } else if (authClaims.indexOf('CharterAdmin') > -1) {
         browser.redirect(adminUrls.charter)
+      } else if (authClaims.indexOf('TempAccomAdmin') > -1) {
+        browser.redirect(adminUrls.temporaryAccommodation)
       }
     }
 
