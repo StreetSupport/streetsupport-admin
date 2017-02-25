@@ -14,7 +14,7 @@ const querystring = require(`${jsRoot}get-url-parameter`)
 
 const { testData, serviceProviderData } = require('../testData')
 
-describe('Temporary Accommodation - Edit Contact Information', () => {
+describe('Temporary Accommodation - Edit General Information', () => {
   const Model = require(`${jsRoot}models/temporary-accommodation/edit`)
   const headers = {
     'content-type': 'application/json',
@@ -74,38 +74,28 @@ describe('Temporary Accommodation - Edit Contact Information', () => {
     expect(browserLoadingStub.calledOnce).toBeTruthy()
   })
 
-  it('- should load contact information name', () => {
-    expect(sut.contactDetails().formFields().name()).toEqual('Vince Test')
+  it('- should load name', () => {
+    expect(sut.generalDetails().formFields().name()).toEqual('name')
   })
 
-  it('- should load contact information additionalInfo', () => {
-    expect(sut.contactDetails().formFields().additionalInfo()).toEqual('additionalInfo')
-  })
-
-  it('- should load contact information email', () => {
-    expect(sut.contactDetails().formFields().email()).toEqual('test@test.com')
-  })
-
-  it('- should load contact information telephone', () => {
-    expect(sut.contactDetails().formFields().telephone()).toEqual('telephone')
+  it('- should load description', () => {
+    expect(sut.generalDetails().formFields().description()).toEqual('description')
   })
 
   it('- should notify user it is loaded', () => {
     expect(browserLoadedStub.called).toBeTruthy()
   })
 
-  describe('- edit contact information', () => {
+  describe('- edit general information', () => {
     beforeEach(() => {
-      sut.contactDetails().edit()
+      sut.generalDetails().edit()
 
-      sut.contactDetails().formFields().name('new name')
-      sut.contactDetails().formFields().additionalInfo('new additionalInfo')
-      sut.contactDetails().formFields().email('new-test@email.com')
-      sut.contactDetails().formFields().telephone('new telephone')
+      sut.generalDetails().formFields().name('new name')
+      sut.generalDetails().formFields().description('new description')
     })
 
     it('- should set isEditable to true', () => {
-      expect(sut.contactDetails().isEditable()).toBeTruthy()
+      expect(sut.generalDetails().isEditable()).toBeTruthy()
     })
 
     describe('- submit', () => {
@@ -124,7 +114,7 @@ describe('Temporary Accommodation - Edit Contact Information', () => {
             }
           })
 
-        sut.contactDetails().save()
+        sut.generalDetails().save()
       })
 
       afterEach(() => {
@@ -136,16 +126,14 @@ describe('Temporary Accommodation - Edit Contact Information', () => {
       })
 
       it('- should patch new data', () => {
-        const endpoint = `${endpoints.temporaryAccommodation}/${testData.id}/contact-details`
+        const endpoint = `${endpoints.temporaryAccommodation}/${testData.id}/general-details`
         const headers = {
           'content-type': 'application/json',
           'session-token': 'stored-session-token'
         }
         const payload = {
           'Name': 'new name',
-          'AdditionalInfo': 'new additionalInfo',
-          'Email': 'new-test@email.com',
-          'Telephone': 'new telephone'
+          'Description': 'new description'
         }
         const patchAsExpected = ajaxPatchStub
           .withArgs(endpoint, headers, payload)
@@ -157,47 +145,41 @@ describe('Temporary Accommodation - Edit Contact Information', () => {
         expect(browserLoadedStub.calledAfter(ajaxPatchStub)).toBeTruthy()
       })
 
-      it('- should set contact details to read only', () => {
-        expect(sut.contactDetails().isEditable()).toBeFalsy()
+      it('- should set general details to read only', () => {
+        expect(sut.generalDetails().isEditable()).toBeFalsy()
       })
 
       describe('- edit again, then cancel', () => {
         beforeEach(() => {
-          sut.contactDetails().formFields().name('another name')
-          sut.contactDetails().formFields().additionalInfo('another additionalInfo')
-          sut.contactDetails().formFields().email('another-email@test.com')
-          sut.contactDetails().formFields().telephone('another telephone')
+          sut.generalDetails().formFields().name('another contact name')
+          sut.generalDetails().formFields().description('another description')
 
-          sut.contactDetails().cancel()
+          sut.generalDetails().cancel()
         })
 
         it('- should set isEditable to false', () => {
-          expect(sut.contactDetails().isEditable()).toBeFalsy()
+          expect(sut.generalDetails().isEditable()).toBeFalsy()
         })
 
         it('- should reset fields', () => {
-          expect(sut.contactDetails().formFields().name()).toEqual('new name')
-          expect(sut.contactDetails().formFields().additionalInfo()).toEqual('new additionalInfo')
-          expect(sut.contactDetails().formFields().email()).toEqual('new-test@email.com')
-          expect(sut.contactDetails().formFields().telephone()).toEqual('new telephone')
+          expect(sut.generalDetails().formFields().name()).toEqual('new name')
+          expect(sut.generalDetails().formFields().description()).toEqual('new description')
         })
       })
     })
 
     describe('- cancel', () => {
       beforeEach(() => {
-        sut.contactDetails().cancel()
+        sut.generalDetails().cancel()
       })
 
       it('- should set isEditable to false', () => {
-        expect(sut.contactDetails().isEditable()).toBeFalsy()
+        expect(sut.generalDetails().isEditable()).toBeFalsy()
       })
 
       it('- should reset fields', () => {
-        expect(sut.contactDetails().formFields().name()).toEqual(testData.contactInformation.name)
-        expect(sut.contactDetails().formFields().additionalInfo()).toEqual(testData.contactInformation.additionalInfo)
-        expect(sut.contactDetails().formFields().email()).toEqual(testData.contactInformation.email)
-        expect(sut.contactDetails().formFields().telephone()).toEqual(testData.contactInformation.telephone)
+        expect(sut.generalDetails().formFields().name()).toEqual(testData.generalInfo.name)
+        expect(sut.generalDetails().formFields().description()).toEqual(testData.generalInfo.description)
       })
     })
   })

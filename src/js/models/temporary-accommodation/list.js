@@ -22,10 +22,11 @@ function Lister () {
     browser.loading()
     ajax.get(self.loadNextUrl, self.headers(cookies.get('session-token')))
       .then((result) => {
-        const formatted = result.data.embedded.items
+        const formatted = result.data.items
         formatted
           .forEach((i) => {
             i.editUrl = `${adminUrls.temporaryAccommodation}/edit?id=${i.id}`
+            i.reviewsUrl = `${adminUrls.temporaryAccommodation}/reviews?id=${i.id}`
           })
         const newEntries = [...self.entries(), ...formatted]
         self.entries(newEntries)

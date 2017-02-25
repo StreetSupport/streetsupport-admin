@@ -58,10 +58,10 @@ function DashboardModel () {
       self.headers(cookies.get('session-token')),
       {})
     .then(function (result) {
-      self.allServiceProviders(self.mapServiceProviders(result.data.embedded.items))
-      self.serviceProviders(self.mapServiceProviders(result.data.embedded.items))
+      self.allServiceProviders(self.mapServiceProviders(result.data.items))
+      self.serviceProviders(self.mapServiceProviders(result.data.items))
 
-      self.availableCities(result.data.embedded.items
+      self.availableCities(result.data.items
         .map((sp) => sp.associatedCityId)
         .filter((e, i, a) => { return a.indexOf(e) === i }))
 

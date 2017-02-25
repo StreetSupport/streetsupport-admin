@@ -63,13 +63,13 @@ const Volunteer = function (data, listener) {
       .get(endpoints.volunteers + '/' + self.id + '/contact-requests',
         self.headers(cookies.get('session-token')))
       .then((result) => {
-        let items = result.data.embedded.items
+        let items = result.data.items
         items.forEach((i) => {
           i.message = htmlEncode.htmlDecode(i.message)
           i.createdDate = moment(i.creationDate).format('hh:mm DD/MM/YY')
         })
-        self.contactHistory(result.data.embedded.items)
-        self.hasContactHistory(result.data.embedded.items.length > 0)
+        self.contactHistory(result.data.items)
+        self.hasContactHistory(result.data.items.length > 0)
         self.hasRetrievedContactHistory(true)
         browser.loaded()
       }, (_) => {

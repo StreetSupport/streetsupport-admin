@@ -147,6 +147,7 @@ describe('Temporary Accommodation - Edit Features', () => {
         }
         const payload = {
           'AcceptsHousingBenefit': false,
+          'AcceptsNoHousingBenefitWithServiceProviderSupport': false,
           'AcceptsPets': 1,
           'AcceptsCouples': 1,
           'HasDisabledAccess': false,
@@ -206,6 +207,7 @@ describe('Temporary Accommodation - Edit Features', () => {
 
         it('- should reset fields', () => {
           expect(sut.features().formFields().acceptsHousingBenefit()).toEqual(false)
+          expect(sut.features().formFields().acceptsNoHousingBenefitWithServiceProviderSupport()).toEqual(false)
           expect(sut.features().formFields().acceptsPets()).toEqual(1)
           expect(sut.features().formFields().acceptsPetsReadOnly()).toEqual('Yes')
           expect(sut.features().formFields().acceptsCouples()).toEqual(1)

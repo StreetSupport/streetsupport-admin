@@ -71,7 +71,11 @@ describe('Temporary Accommodation Listing', () => {
   })
 
   it('- should set edit url', () => {
-    expect(sut.entries()[0].editUrl).toEqual(`${adminUrls.temporaryAccommodation}/edit?id=${accomData.embedded.items[0].id}`)
+    expect(sut.entries()[0].editUrl).toEqual(`${adminUrls.temporaryAccommodation}/edit?id=${accomData.items[0].id}`)
+  })
+
+  it('- should set reviews url', () => {
+    expect(sut.entries()[0].reviewsUrl).toEqual(`${adminUrls.temporaryAccommodation}/reviews?id=${accomData.items[0].id}`)
   })
 
   it('- should display load more button', () => {
@@ -107,6 +111,72 @@ describe('Temporary Accommodation Listing', () => {
   })
 })
 
-const accomData = { 'links': { 'next': '/v1/temporary-accommodation?index=4', 'prev': null, 'self': '/v1/temporary-accommodation?index=0' }, 'embedded': { 'items': [{ 'id': '589a08ad6a38c32e883f26dg', 'name': 'test 1', 'additionalInfo': 'info', 'email': 'test@test.com', 'telephone': '234728934', 'street1': '1', 'city': 'city', 'postcode': 'm1 3fy', 'latitude': 0, 'longitude': 0 }, { 'id': '589a08ad6a38c32e883f26dh', 'name': 'test 2', 'additionalInfo': 'info', 'email': 'test@test.com', 'telephone': '234728934', 'street1': '1', 'city': 'city', 'postcode': 'm1 3fy', 'latitude': 0, 'longitude': 0 }, { 'id': '589a08ad6a38c32e883f26di', 'name': 'test 3', 'additionalInfo': 'info', 'email': 'test@test.com', 'telephone': '234728934', 'street1': '1', 'city': 'city', 'postcode': 'm1 3fy', 'latitude': 0, 'longitude': 0 }] }, 'total': 4 }
+const accomData = {
+  'links': {
+    'next': '/v1/temporary-accommodation?index=4',
+    'prev': null,
+    'self': '/v1/temporary-accommodation?index=0'
+  },
+  'items': [
+    {
+      'id': '589a08ad6a38c32e883f26dg',
+      'name': 'test1',
+      'additionalInfo': 'info',
+      'email': 'test@test.com',
+      'telephone': '234728934',
+      'street1': '1',
+      'city': 'city',
+      'postcode': 'm13fy',
+      'latitude': 0,
+      'longitude': 0
+    },
+    {
+      'id': '589a08ad6a38c32e883f26dh',
+      'name': 'test2',
+      'additionalInfo': 'info',
+      'email': 'test@test.com',
+      'telephone': '234728934',
+      'street1': '1',
+      'city': 'city',
+      'postcode': 'm13fy',
+      'latitude': 0,
+      'longitude': 0
+    },
+    {
+      'id': '589a08ad6a38c32e883f26di',
+      'name': 'test3',
+      'additionalInfo': 'info',
+      'email': 'test@test.com',
+      'telephone': '234728934',
+      'street1': '1',
+      'city': 'city',
+      'postcode': 'm13fy',
+      'latitude': 0,
+      'longitude': 0
+    }
+  ],
+  'total': 4
+}
 
-const accomData2 = { 'links': { 'next': null, 'prev': null, 'self': '/v1/temporary-accommodation?index=0' }, 'embedded': { 'items': [{ 'id': '589a08ad6a38c32e883f26dg', 'name': 'test 1', 'additionalInfo': 'info', 'email': 'test@test.com', 'telephone': '234728934', 'street1': '1', 'city': 'city', 'postcode': 'm1 3fy', 'latitude': 0, 'longitude': 0 }] }, 'total': 4 }
+const accomData2 = {
+  'links': {
+    'next': null,
+    'prev': null,
+    'self': '/v1/temporary-accommodation?index=0'
+  },
+  'items': [
+    {
+      'id': '589a08ad6a38c32e883f26dg',
+      'name': 'test1',
+      'additionalInfo': 'info',
+      'email': 'test@test.com',
+      'telephone': '234728934',
+      'street1': '1',
+      'city': 'city',
+      'postcode': 'm13fy',
+      'latitude': 0,
+      'longitude': 0
+    }
+  ],
+  'total': 4
+}

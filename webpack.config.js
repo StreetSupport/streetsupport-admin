@@ -55,7 +55,8 @@ module.exports = {
     swep: p('swep'),
     tempAccom: p('temp-accom'),
     tempAccomAdd: p('temp-accom-add'),
-    tempAccomEdit: p('temp-accom-edit')
+    tempAccomEdit: p('temp-accom-edit'),
+    tempAccomReviews: p('temp-accom-reviews')
   },
   output: {
     path: path.join(__dirname, '/_dist/assets/js/'),

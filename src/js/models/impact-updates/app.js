@@ -44,7 +44,7 @@ function ListImpactUpdates () {
       .get(self.endpointBuilder.impactUpdates().build())
       .then((result) => {
         browser.loaded()
-        const updates = result.data.embedded.items
+        const updates = result.data.items
           .map((u) => new Update(self, u))
         self.impactUpdates(updates)
       }, () => {
