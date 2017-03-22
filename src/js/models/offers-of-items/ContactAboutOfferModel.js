@@ -31,14 +31,10 @@ var ContactAboutOfferModel = function () {
 
   const headers = self.headers(cookies.get('session-token'))
 
-  self.submit = function () {
+  const sendRequest = function (payload) {
     if (self.formModel.isValid()) {
       browser.loading()
       var endpoint = self.endpointBuilder.offersOfItems(getUrlParam.parameter('id')).build() + '/contact-requests'
-      var payload = {
-        'Message': self.formModel().message(),
-        'ShouldSendEmail': self.formModel().isAnEmail()
-      }
       ajax
         .post(endpoint, headers, payload)
         .then(function (res) {
@@ -55,6 +51,22 @@ var ContactAboutOfferModel = function () {
     } else {
       self.fieldErrors.showAllMessages()
     }
+  }
+
+  self.sendEmail = function () {
+    const payload = {
+      'Message': self.formModel().message(),
+      'ShouldSendEmail': true
+    }
+    sendRequest(payload)
+  }
+
+  self.recordLog = function () {
+    const payload = {
+      'Message': self.formModel().message(),
+      'ShouldSendEmail': false
+    }
+    sendRequest(payload)
   }
 
   const getEndpoint = self.endpointBuilder.offersOfItems(getUrlParam.parameter('id')).build()
