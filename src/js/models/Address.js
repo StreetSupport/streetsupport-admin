@@ -23,6 +23,7 @@ function Address (data) {
   self.savedStreet4 = ko.observable(htmlEncode.htmlDecode(data.street3))
   self.savedCity = ko.observable(htmlEncode.htmlDecode(data.city))
   self.savedPostcode = ko.observable(data.postcode)
+  self.savedIsOpen247 = ko.observable(data.isOpen247)
 
   self.street1 = ko.observable(htmlEncode.htmlDecode(data.street))
   self.street2 = ko.observable(htmlEncode.htmlDecode(data.street1))
@@ -30,6 +31,7 @@ function Address (data) {
   self.street4 = ko.observable(htmlEncode.htmlDecode(data.street3))
   self.city = ko.observable(htmlEncode.htmlDecode(data.city))
   self.postcode = ko.observable(data.postcode)
+  self.isOpen247 = ko.observable(data.isOpen247 !== undefined ? data.isOpen247 : false)
 
   var buildOpeningTimes = function (openingTimesData) {
     var openingTimes = openingTimesData !== undefined && openingTimesData !== null
@@ -137,7 +139,8 @@ function Address (data) {
       'Street3': self.street4(),
       'City': self.city(),
       'Postcode': self.postcode(),
-      'OpeningTimes': self.openingTimes().map((openingTime) => mapOpeningTime(openingTime))
+      'OpeningTimes': self.openingTimes().map((openingTime) => mapOpeningTime(openingTime)),
+      'IsOpen247': self.isOpen247()
     }
 
     if (self.tempKey() !== undefined || self.key() === undefined) {
@@ -182,6 +185,7 @@ function Address (data) {
     self.street4(self.savedStreet4())
     self.city(self.savedCity())
     self.postcode(self.savedPostcode())
+    self.isOpen247(self.savedIsOpen247())
 
     let buildOpeningTime = function (ot) {
       return new OpeningTime({
@@ -203,6 +207,7 @@ function Address (data) {
     self.savedStreet4(self.street4())
     self.savedCity(self.city())
     self.savedPostcode(self.postcode())
+    self.savedIsOpen247(self.isOpen247())
   }
 
   self.addListener = function (listener) {

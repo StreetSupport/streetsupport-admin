@@ -64,7 +64,8 @@ function AddServiceProviderService () {
       street2: self.preselectedAddress().street3(),
       street3: self.preselectedAddress().street4(),
       city: self.preselectedAddress().city(),
-      postcode: self.preselectedAddress().postcode()
+      postcode: self.preselectedAddress().postcode(),
+      isOpen247: self.preselectedAddress().isOpen247()
     })
     address.openingTimes(self.preselectedAddress().openingTimes().map((ot) => new OpeningTime({
       day: ot.day(),
@@ -103,7 +104,8 @@ function AddServiceProviderService () {
         'Street3': self.address().street3(),
         'Street4': self.address().street4(),
         'City': self.address().city(),
-        'Postcode': self.address().postcode()
+        'Postcode': self.address().postcode(),
+        'IsOpen247': self.address().isOpen247()
       }
 
       ajax.post(endpoint, self.headers(cookies.get('session-token')), payload)

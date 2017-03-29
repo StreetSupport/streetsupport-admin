@@ -201,6 +201,10 @@ describe('Add Service Provider Service', () => {
       expect(model.address().postcode()).toEqual('M4 5JD')
     })
 
+    it('should set address open 247', () => {
+      expect(model.address().isOpen247()).toBeTruthy()
+    })
+
     it('should set opening time start time', () => {
       expect(model.address().openingTimes()[0].startTime()).toEqual('10:00')
     })
@@ -275,7 +279,8 @@ describe('Add Service Provider Service', () => {
         'Street3': 'street 3',
         'Street4': 'street 4',
         'City': 'Manchester',
-        'Postcode': 'M4 5JD'
+        'Postcode': 'M4 5JD',
+        'IsOpen247': true
       }
 
       var apiCalledWithExpectedArgs = stubbedPostApi.withArgs(endpoint, headers, payload).calledOnce
@@ -357,6 +362,7 @@ function addresses () {
       'street3': 'street 4',
       'city': 'Manchester',
       'postcode': 'M4 5JD',
+      'isOpen247': true,
       'openingTimes': [{
         'startTime': '10:00',
         'endTime': '16:30',
