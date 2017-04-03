@@ -41,6 +41,7 @@ describe('Cancel Edit Service Provider General Details', () => {
     model = new Model()
     model.editGeneralDetails()
 
+    model.serviceProvider().name('some new name')
     model.serviceProvider().shortDescription('some new short description')
     model.serviceProvider().description('some new description')
     model.serviceProvider().tags()[0].isSelected(false)
@@ -59,6 +60,10 @@ describe('Cancel Edit Service Provider General Details', () => {
 
   it('should reset isEditingGeneralDetails to false', () => {
     expect(model.isEditingGeneralDetails()).toBeFalsy()
+  })
+
+  it('should restore name to its previous value', () => {
+    expect(model.serviceProvider().name()).toEqual('Coffee 4 Craig')
   })
 
   it('should restore short description to its previous value', () => {
