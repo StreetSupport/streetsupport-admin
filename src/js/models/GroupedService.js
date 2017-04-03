@@ -45,6 +45,16 @@ function Service (data) {
     self.openingTimes(openingTimes)
   }
 
+  self.duplicateOpeningTime = (source) => {
+    let orig = self.openingTimes()
+    orig.push(new OpeningTime({
+      day: source.day(),
+      startTime: source.startTime(),
+      endTime: source.endTime()
+    }))
+    self.openingTimes(orig)
+  }
+
   self.removeOpeningTime = function (openingTimeToRemove) {
     var notToBeRemoved = function (o) {
       return o.day() !== openingTimeToRemove.day() ||
