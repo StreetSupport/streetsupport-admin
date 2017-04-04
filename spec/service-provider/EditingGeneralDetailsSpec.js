@@ -74,6 +74,7 @@ describe('Edit Service Provider General Details', () => {
 
       stubbedPutApi = sinon.stub(ajax, 'put').returns(fakeResolved)
 
+      model.serviceProvider().name('new name')
       model.serviceProvider().description('new description')
       model.serviceProvider().shortDescription('new short description')
       model.serviceProvider().tags()[0].isSelected(true)
@@ -96,6 +97,7 @@ describe('Edit Service Provider General Details', () => {
         'session-token': 'stored-session-token'
       }
       var payload = {
+        'Name': 'new name',
         'Description': 'new description',
         'ShortDescription': 'new short description',
         'Tags': ['tag-a', 'tag-b', 'tag-c']

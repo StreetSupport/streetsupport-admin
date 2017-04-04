@@ -37,6 +37,15 @@ nosubnav: true
             <button data-bind="click: $parent.saveGeneralDetails" class="btn btn--primary"><span class="btn__text">save</span></button>
             <!-- /ko -->
             <dl class="key-value-pair">
+              <dt class="key-value-pair__key">Name</dt>
+              <dd class="key-value-pair__value">
+                <!-- ko ifnot: $parent.isEditingGeneralDetails -->
+                <span data-bind="html: name"></span>
+                <!-- /ko -->
+                <!-- ko if: $parent.isEditingGeneralDetails -->
+                <input data-bind="textInput: name" class="form__input" />
+                <!-- /ko -->
+              </dd>
               <dt class="key-value-pair__key">Short Description</dt>
               <dd class="key-value-pair__value">
                 <!-- ko ifnot: $parent.isEditingGeneralDetails -->
