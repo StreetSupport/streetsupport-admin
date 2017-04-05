@@ -1,4 +1,6 @@
 <h3>Opening Times</h3>
+<label class="form__label form_label--checkbox-container">Is Open 24/7 <input type="checkbox" data-bind="checked: isOpen247" /></label>
+<!-- ko ifnot: isOpen247 -->
 <button data-bind="click: newOpeningTime" class="btn btn--info"><span class="btn__text">new</span></button>
 <ul data-bind="foreach: openingTimes" class="key-value-pair openingTimes">
   <li class="openingTimes__item">
@@ -14,3 +16,4 @@
     </divdd>
   </li>
 </ul>
+<!-- /ko -->

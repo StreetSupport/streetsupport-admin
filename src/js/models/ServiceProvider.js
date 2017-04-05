@@ -156,6 +156,7 @@ function ServiceProviderDetails () {
       }
 
       const payload = {
+        'Name': sp.name(),
         'Description': sp.description(),
         'ShortDescription': sp.shortDescription(),
         'Tags': tagsToCsv()
@@ -242,6 +243,7 @@ function ServiceProviderDetails () {
   }
 
   self.restoreViewModel = function () {
+    self.serviceProvider().name(self.initialServiceProvider().name())
     self.serviceProvider().shortDescription(self.initialServiceProvider().shortDescription())
     self.serviceProvider().description(self.initialServiceProvider().description())
     self.serviceProvider().tags(self.initialServiceProvider().tags())

@@ -127,6 +127,7 @@ describe('Address', () => {
           'Street3': 'new street4',
           'City': 'new city',
           'Postcode': 'new postcode',
+          'IsOpen247': false,
           'OpeningTimes': [{
             'startTime': '12:00',
             'endTime': '16:30',

@@ -48,14 +48,7 @@ describe('Save brand new Address', () => {
       model.street4('new street4')
       model.city('new city')
       model.postcode('new postcode')
-      model.newOpeningTime()
-      model.openingTimes()[0].startTime('12:00')
-      model.openingTimes()[0].endTime('16:30')
-      model.openingTimes()[0].day('Monday')
-      model.newOpeningTime()
-      model.openingTimes()[1].startTime('12:00')
-      model.openingTimes()[1].endTime('15:30')
-      model.openingTimes()[1].day('Tuesday')
+      model.isOpen247(true)
 
       model.save()
     })
@@ -81,18 +74,10 @@ describe('Save brand new Address', () => {
         'Street3': 'new street4',
         'City': 'new city',
         'Postcode': 'new postcode',
-        'OpeningTimes': [
-          {
-            'startTime': '12:00',
-            'endTime': '16:30',
-            'day': 'Monday'
-          }, {
-            'startTime': '12:00',
-            'endTime': '15:30',
-            'day': 'Tuesday'
-          }
-        ]
+        'OpeningTimes': [],
+        'IsOpen247': true
       }
+
       var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, headers, payload).calledOnce
       expect(apiCalledWithExpectedArgs).toBeTruthy()
     })
@@ -202,8 +187,10 @@ describe('Save new Address as part of collection', () => {
             'endTime': '15:30',
             'day': 'Tuesday'
           }
-        ]
+        ],
+        'IsOpen247': false
       }
+
       var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, headers, payload).calledOnce
       expect(apiCalledWithExpectedArgs).toBeTruthy()
     })

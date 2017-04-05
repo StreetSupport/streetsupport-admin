@@ -26,6 +26,7 @@ function Address (data) {
   self.savedStreet4 = ko.observable(htmlEncode.htmlDecode(data.streetLine4))
   self.savedCity = ko.observable(htmlEncode.htmlDecode(data.city))
   self.savedPostcode = ko.observable(data.postcode)
+  self.savedIsOpen247 = ko.observable(data.isOpen247 !== undefined ? data.isOpen247 : false)
 
   self.street1 = ko.observable(htmlEncode.htmlDecode(data.streetLine1))
   self.street2 = ko.observable(htmlEncode.htmlDecode(data.streetLine2))
@@ -33,6 +34,7 @@ function Address (data) {
   self.street4 = ko.observable(htmlEncode.htmlDecode(data.streetLine4))
   self.city = ko.observable(htmlEncode.htmlDecode(data.city))
   self.postcode = ko.observable(data.postcode)
+  self.isOpen247 = ko.observable(data.isOpen247 !== undefined ? data.isOpen247 : false)
 
   var buildOpeningTimes = function (openingTimesData) {
     var openingTimes = openingTimesData !== undefined && openingTimesData !== null
