@@ -196,8 +196,8 @@ let groupData = () => {
   return [{
     'actionGroup': {
       'id': '57166213e4b09686f6b2c886',
-      'name': 'Substandard Temporary Accommodation',
-      'synopsis': 'Improving sub-standard temporary accommodation (B&Bs)',
+      'name': 'Substandard Accommodation',
+      'synopsis': 'Improving sub-standard Accommodation (B&Bs)',
       'description': ''
     },
     'members': [{

@@ -1,7 +1,7 @@
 import '../common'
-require.ensure(['knockout', '../models/temporary-accommodation/edit'], (require) => {
+require.ensure(['knockout', '../models/accommodation/edit'], (require) => {
   const ko = require('knockout')
-  const Model = require('../models/temporary-accommodation/edit')
+  const Model = require('../models/accommodation/edit')
   const model = new Model()
   model.init()
   ko.applyBindings(model)
