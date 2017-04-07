@@ -11,7 +11,7 @@ const endpoints = require(`../../../../src/js/api-endpoints`)
 const browser = require(`../../../../src/js/browser`)
 const cookies = require(`../../../../src/js/cookies`)
 const querystring = require(`../../../../src/js/get-url-parameter`)
-const Model = require(`../../../../src/js/models/accommodation/reviews/app`)
+const Model = require(`../../../../src/js/models/accommodation/reviews/add`)
 import { testData } from '../testData'
 
 describe('Accommodation Listing - Add', () => {
@@ -85,7 +85,6 @@ describe('Accommodation Listing - Add', () => {
     expect(sut.newItem().formFields().staffSupportivenessRating()).toEqual('1')
     expect(sut.newItem().formFields().staffDealingWithProblemsRating()).toEqual('1')
     expect(sut.newItem().formFields().staffTimelinessWithIssuesRating()).toEqual('1')
-    expect(sut.newItem().formFields().canBeDisplayedPublically()).toEqual(false)
   })
 
   describe('- add new', () => {
@@ -106,10 +105,6 @@ describe('Accommodation Listing - Add', () => {
       sut.newItem().formFields().staffSupportivenessRating(4)
       sut.newItem().formFields().staffDealingWithProblemsRating(5)
       sut.newItem().formFields().staffTimelinessWithIssuesRating(3)
-      sut.newItem().formFields().canBeDisplayedPublically(true)
-      sut.newItem().formFields().reviewerName('reviewer name')
-      sut.newItem().formFields().reviewerContactDetails('reviewer contact details')
-      sut.newItem().formFields().body('review body')
 
       sut.newItem().save()
     })
@@ -133,11 +128,7 @@ describe('Accommodation Listing - Add', () => {
         StaffHelpfulnessRating: 3,
         StaffSupportivenessRating: 4,
         StaffDealingWithProblemsRating: 5,
-        StaffTimelinessWithIssuesRating: 3,
-        CanBeDisplayedPublically: true,
-        ReviewerName: 'reviewer name',
-        ReviewerContactDetails: 'reviewer contact details',
-        Body: 'review body'
+        StaffTimelinessWithIssuesRating: 3
       }
       const postCalledAsExpected = ajaxPostStub
         .withArgs(endpoint, headers, payload)
@@ -149,34 +140,57 @@ describe('Accommodation Listing - Add', () => {
       expect(browserLoadedStub.calledAfter(ajaxPostStub)).toBeTruthy()
     })
 
-    it('- should reset new item form', () => {
-      expect(sut.newItem().formFields().idReadOnly()).toEqual(null)
-      expect(sut.newItem().formFields().hasCentralHeating()).toEqual('0')
-      expect(sut.newItem().formFields().hasHotWater()).toEqual('0')
-      expect(sut.newItem().formFields().hasElectricity()).toEqual('0')
-      expect(sut.newItem().formFields().hasLockOnRoom()).toEqual(false)
-      expect(sut.newItem().formFields().hasLockOnFrontDoor()).toEqual(false)
-      expect(sut.newItem().formFields().hasAggressiveTenants()).toEqual(false)
-      expect(sut.newItem().formFields().hasExcessiveNoise()).toEqual(false)
-      expect(sut.newItem().formFields().foodRating()).toEqual('1')
-      expect(sut.newItem().formFields().cleanlinessRating()).toEqual('1')
-      expect(sut.newItem().formFields().staffHelpfulnessRating()).toEqual('1')
-      expect(sut.newItem().formFields().staffSupportivenessRating()).toEqual('1')
-      expect(sut.newItem().formFields().staffDealingWithProblemsRating()).toEqual('1')
-      expect(sut.newItem().formFields().staffTimelinessWithIssuesRating()).toEqual('1')
-      expect(sut.newItem().formFields().canBeDisplayedPublically()).toEqual(false)
-      expect(sut.newItem().formFields().reviewerName()).toEqual('')
-      expect(sut.newItem().formFields().reviewerContactDetails()).toEqual('')
-      expect(sut.newItem().formFields().body()).toEqual('')
+    it('- should set reviewIsCreated to true', () => {
+      expect(sut.reviewIsCreated()).toBeTruthy()
     })
 
-    it('- should add new item to top of collection', () => {
-      expect(sut.items().length).toEqual(3)
-      expect(sut.items()[0].formFields().idReadOnly()).toEqual('new-review-id')
-    })
+    describe('- add personal feedback', () => {
+      let ajaxPatchStub = null
 
-    it('- should retain Accommodation id', () => {
-      expect(sut.items()[0].formFields().temporaryAccommodationIdReadOnly()).toEqual(testData.id)
+      beforeEach(() => {
+        browserLoadingStub.reset()
+        browserLoadedStub.reset()
+
+        ajaxPatchStub = sinon
+          .stub(ajax, 'patch')
+          .returns({
+            then: function (success, error) {
+              success({
+                'statusCode': 200
+              })
+            }
+          })
+
+        sut.personalFeedback().formFields().canBeDisplayedPublically(true)
+        sut.personalFeedback().formFields().reviewerName('reviewer name')
+        sut.personalFeedback().formFields().reviewerContactDetails('reviewer contact details')
+        sut.personalFeedback().formFields().body('review body')
+
+        sut.personalFeedback().update()
+      })
+
+      afterEach(() => {
+        ajax.patch.restore()
+      })
+
+      it('- should patch to review', () => {
+        const endpoint = `${endpoints.temporaryAccommodation}/${testData.id}/reviews/new-review-id`
+        const payload = {
+          CanBeDisplayedPublically: true,
+          ReviewerName: 'reviewer name',
+          ReviewerContactDetails: 'reviewer contact details',
+          Body: 'review body'
+        }
+        const calledAsExpected = ajaxPatchStub
+          .withArgs(endpoint, headers, payload)
+          .calledAfter(browserLoadingStub)
+
+        expect(calledAsExpected).toBeTruthy()
+      })
+
+      it('- should show user it is loaded', () => {
+        expect(browserLoadedStub.calledAfter(ajaxPatchStub)).toBeTruthy()
+      })
     })
   })
 })

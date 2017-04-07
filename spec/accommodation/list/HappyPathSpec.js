@@ -74,8 +74,12 @@ describe('Accommodation Listing', () => {
     expect(sut.entries()[0].editUrl).toEqual(`${adminUrls.temporaryAccommodation}/edit?id=${accomData.items[0].id}`)
   })
 
-  it('- should set reviews url', () => {
-    expect(sut.entries()[0].reviewsUrl).toEqual(`${adminUrls.temporaryAccommodation}/reviews?id=${accomData.items[0].id}`)
+  it('- should set add reviews url', () => {
+    expect(sut.entries()[0].addReviewsUrl).toEqual(`${adminUrls.temporaryAccommodation}/reviews/add?id=${accomData.items[0].id}`)
+  })
+
+  it('- should set reviews listing url', () => {
+    expect(sut.entries()[0].reviewsListingUrl).toEqual(`${adminUrls.temporaryAccommodation}/reviews?id=${accomData.items[0].id}`)
   })
 
   it('- should display load more button', () => {

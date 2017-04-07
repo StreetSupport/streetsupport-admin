@@ -11,7 +11,7 @@ const endpoints = require(`../../../src/js/api-endpoints`)
 const browser = require(`../../../src/js/browser`)
 const cookies = require(`../../../src/js/cookies`)
 const querystring = require(`../../../src/js/get-url-parameter`)
-const Model = require(`../../../src/js/models/accommodation/reviews/app`)
+const Model = require(`../../../src/js/models/accommodation/reviews/list`)
 import { testData } from './testData'
 
 describe('Accommodation Listing', () => {

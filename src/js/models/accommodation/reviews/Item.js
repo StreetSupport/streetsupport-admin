@@ -37,6 +37,25 @@ function Item (listener, formFields, endpoints) {
       })
   }
 
+  self.update = () => {
+    browser.loading()
+    const endpoint = endpoints.update(self)
+    const payload = validation.buildPayload(self.formFields())
+    const headers = self.headers(cookies.get('session-token'))
+    ajax
+      .patch(endpoint, headers, payload)
+      .then((result) => {
+        browser.loaded()
+        if (result.statusCode === 200) {
+          listener.itemUpdated(self)
+        } else {
+          self.handleError(result.data)
+        }
+      }, () => {
+        self.handleServerError()
+      })
+  }
+
   self.save = () => {
     const headers = self.headers(cookies.get('session-token'))
     browser.loading()

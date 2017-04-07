@@ -8,7 +8,7 @@ let querystring = require('../../../get-url-parameter')
 let BaseViewModel = require('../../BaseViewModel')
 let Item = require('./Item')
 
-function ListAndAdd () {
+function Add () {
   let self = this
 
   const defaultNewItem = {
@@ -27,11 +27,7 @@ function ListAndAdd () {
     staffHelpfulnessRating: '1',
     staffSupportivenessRating: '1',
     staffDealingWithProblemsRating: '1',
-    staffTimelinessWithIssuesRating: '1',
-    canBeDisplayedPublically: false,
-    reviewerName: '',
-    reviewerContactDetails: '',
-    body: ''
+    staffTimelinessWithIssuesRating: '1'
   }
 
   self.buildFormFields = (data = defaultNewItem) => {
@@ -55,11 +51,7 @@ function ListAndAdd () {
       staffHelpfulnessRating: ko.observable(data.staffHelpfulnessRating),
       staffSupportivenessRating: ko.observable(data.staffSupportivenessRating),
       staffDealingWithProblemsRating: ko.observable(data.staffDealingWithProblemsRating),
-      staffTimelinessWithIssuesRating: ko.observable(data.staffTimelinessWithIssuesRating),
-      canBeDisplayedPublically: ko.observable(data.canBeDisplayedPublically),
-      reviewerName: ko.observable(data.reviewerName),
-      reviewerContactDetails: ko.observable(data.reviewerContactDetails),
-      body: ko.observable(data.body)
+      staffTimelinessWithIssuesRating: ko.observable(data.staffTimelinessWithIssuesRating)
     })
     return model
   }
@@ -70,39 +62,43 @@ function ListAndAdd () {
     }
   }
 
+  const defaultNewPersonalFeedback = {
+    canBeDisplayedPublically: false,
+    reviewerName: '',
+    reviewerContactDetails: '',
+    body: ''
+  }
+
+  self.buildPersonalFeedbackFormFields = (data = defaultNewPersonalFeedback) => {
+    const model = ko.validatedObservable({
+      idReadOnly: ko.observable(data.id),
+      temporaryAccommodationIdReadOnly: ko.observable(data.temporaryAccommodationId),
+      canBeDisplayedPublically: ko.observable(data.canBeDisplayedPublically),
+      reviewerName: ko.observable(data.reviewerName),
+      reviewerContactDetails: ko.observable(data.reviewerContactDetails),
+      body: ko.observable(data.body)
+    })
+    return model
+  }
+  self.buildPersonalFeedbackEndpoints = () => {
+    return {
+      update: (item) => `${item.endpointBuilder.temporaryAccommodation(item.formFields().temporaryAccommodationIdReadOnly()).build()}/reviews/${item.formFields().idReadOnly()}`
+    }
+  }
+
   self.newItem = ko.observable(new Item(self, self.buildFormFields(), self.buildEndpoints()))
+  self.personalFeedback = ko.observable(new Item(self, self.buildPersonalFeedbackFormFields(), self.buildPersonalFeedbackEndpoints()))
   self.address = ko.observable()
-  self.items = ko.observableArray()
+  self.reviewIsCreated = ko.observable(false)
 
   self.itemCreated = (item) => {
-    self.message('Item created')
-    const formFields = {}
-    Object.keys(item.formFields())
-      .filter((k) => !k.endsWith('ReadOnly'))
-      .forEach((k) => {
-        formFields[k] = item.formFields()[k]()
-      })
-    Object.keys(item.formFields())
-      .filter((k) => k.endsWith('ReadOnly'))
-      .forEach((k) => {
-        formFields[k.replace('ReadOnly', '')] = item.formFields()[k]()
-      })
-    const newItem = new Item(self, self.buildFormFields(formFields), self.buildEndpoints())
-    const newItems = self.items()
-    newItems.unshift(newItem)
-    self.items(newItems)
-    self.newItem(new Item(self, self.buildFormFields(), self.buildEndpoints()))
+    self.reviewIsCreated(true)
+    self.personalFeedback().formFields().idReadOnly(item.formFields().idReadOnly())
+    self.personalFeedback().formFields().temporaryAccommodationIdReadOnly(item.formFields().temporaryAccommodationIdReadOnly())
   }
 
-  self.itemAmended = () => {
-    self.message('Item amended')
-  }
-
-  self.itemDeleted = (item) => {
-    self.message('Item removed')
-    const newItems = self.items()
-      .filter((i) => i.formFields().idReadOnly() !== item.formFields().idReadOnly())
-    self.items(newItems)
+  self.itemUpdated = () => {
+    self.message('Item updated')
   }
 
   const retrieveItems = () => {
@@ -115,9 +111,6 @@ function ListAndAdd () {
       .then((result) => {
         browser.loaded()
 
-        const items = result.data.embedded.reviews
-          .map((r) => new Item(self, self.buildFormFields(r), self.buildEndpoints()))
-        self.items(items)
         self.newItem().formFields().temporaryAccommodationIdReadOnly(result.data.id)
         const address = [result.data.address.street1, result.data.address.street2, result.data.address.street3, result.data.address.city, result.data.address.postcode]
           .filter((l) => l != null)
@@ -135,6 +128,6 @@ function ListAndAdd () {
   self.init()
 }
 
-ListAndAdd.prototype = new BaseViewModel()
+Add.prototype = new BaseViewModel()
 
-module.exports = ListAndAdd
+module.exports = Add
