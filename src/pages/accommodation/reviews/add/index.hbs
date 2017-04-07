@@ -59,21 +59,26 @@ nosubnav: true
       </article>
       <!-- /ko -->
       <!-- ko if: reviewIsCreated -->
-      <article data-bind="with: personalFeedback">
-        <div data-bind="with: formFields">
-          <h3>Additional Comments (optional)</h3>
-          <dl class="key-value-pair">
-            {{> forms/textArea fieldTitle="Review body" dataFieldName="body" }}
-            {{> forms/textField fieldTitle="Reviewer Name" dataFieldName="reviewerName" }}
-            {{> forms/textField fieldTitle="Reviewer Contact Details" dataFieldName="reviewerContactDetails" }}
-            {{> forms/boolean fieldTitle="Can this review be displayed publically?" dataFieldName="canBeDisplayedPublically" }}
-          </dl>
-        </div>
-        <button data-bind="click: update" class="btn btn--primary"><span class="btn__text">save</span></button>
+        <!-- ko ifnot: personalFeedbackIsSent -->
+        <article data-bind="with: personalFeedback">
+          <div data-bind="with: formFields">
+            <h3>Additional Comments (optional)</h3>
+            <dl class="key-value-pair">
+              {{> forms/textArea fieldTitle="Review body" dataFieldName="body" }}
+              {{> forms/textField fieldTitle="Reviewer Name" dataFieldName="reviewerName" }}
+              {{> forms/textField fieldTitle="Reviewer Contact Details" dataFieldName="reviewerContactDetails" }}
+              {{> forms/boolean fieldTitle="Can this review be displayed publically?" dataFieldName="canBeDisplayedPublically" }}
+            </dl>
+          </div>
+          <button data-bind="click: update" class="btn btn--primary"><span class="btn__text">save</span></button>
+        </article>
+        <!-- /ko -->
+        <!-- ko if: personalFeedbackIsSent -->
+        
+        <!-- /ko -->
         <a href="/accommodation/" class="btn btn--info">
           <span class="btn__text">Back to listing</span>
         </a>
-      </article>
       <!-- /ko -->
     </div>
   </div>

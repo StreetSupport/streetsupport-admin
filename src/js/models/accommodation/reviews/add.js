@@ -90,6 +90,7 @@ function Add () {
   self.personalFeedback = ko.observable(new Item(self, self.buildPersonalFeedbackFormFields(), self.buildPersonalFeedbackEndpoints()))
   self.address = ko.observable()
   self.reviewIsCreated = ko.observable(false)
+  self.personalFeedbackIsSent = ko.observable(false)
 
   self.itemCreated = (item) => {
     self.reviewIsCreated(true)
@@ -98,7 +99,8 @@ function Add () {
   }
 
   self.itemUpdated = () => {
-    self.message('Item updated')
+    self.personalFeedbackIsSent(true)
+    self.message('Thank you for your feedback!')
   }
 
   const retrieveItems = () => {

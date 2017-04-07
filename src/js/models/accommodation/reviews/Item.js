@@ -46,7 +46,7 @@ function Item (listener, formFields, endpoints) {
       .patch(endpoint, headers, payload)
       .then((result) => {
         browser.loaded()
-        if (result.statusCode === 200) {
+        if (result.statusCode.toString().charAt(0) === '2') {
           listener.itemUpdated(self)
         } else {
           self.handleError(result.data)
