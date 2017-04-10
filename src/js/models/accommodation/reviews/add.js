@@ -22,12 +22,12 @@ function Add () {
     hasLockOnFrontDoor: false,
     hasAggressiveTenants: false,
     hasExcessiveNoise: false,
-    foodRating: '1',
-    cleanlinessRating: '1',
-    staffHelpfulnessRating: '1',
-    staffSupportivenessRating: '1',
-    staffDealingWithProblemsRating: '1',
-    staffTimelinessWithIssuesRating: '1'
+    foodRating: '0',
+    cleanlinessRating: '0',
+    staffHelpfulnessRating: '0',
+    staffSupportivenessRating: '0',
+    staffDealingWithProblemsRating: '0',
+    staffTimelinessWithIssuesRating: '0'
   }
 
   self.buildFormFields = (data = defaultNewItem) => {
