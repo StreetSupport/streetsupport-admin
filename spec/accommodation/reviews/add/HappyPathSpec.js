@@ -82,12 +82,12 @@ describe('Accommodation Listing - Add', () => {
     expect(sut.newItem().formFields().hasLockOnFrontDoor()).toEqual(false)
     expect(sut.newItem().formFields().hasAggressiveTenants()).toEqual(false)
     expect(sut.newItem().formFields().hasExcessiveNoise()).toEqual(false)
-    expect(sut.newItem().formFields().foodRating()).toEqual('1')
-    expect(sut.newItem().formFields().cleanlinessRating()).toEqual('1')
-    expect(sut.newItem().formFields().staffHelpfulnessRating()).toEqual('1')
-    expect(sut.newItem().formFields().staffSupportivenessRating()).toEqual('1')
-    expect(sut.newItem().formFields().staffDealingWithProblemsRating()).toEqual('1')
-    expect(sut.newItem().formFields().staffTimelinessWithIssuesRating()).toEqual('1')
+    expect(sut.newItem().formFields().foodRating()).toEqual('0')
+    expect(sut.newItem().formFields().cleanlinessRating()).toEqual('0')
+    expect(sut.newItem().formFields().staffHelpfulnessRating()).toEqual('0')
+    expect(sut.newItem().formFields().staffSupportivenessRating()).toEqual('0')
+    expect(sut.newItem().formFields().staffDealingWithProblemsRating()).toEqual('0')
+    expect(sut.newItem().formFields().staffTimelinessWithIssuesRating()).toEqual('0')
   })
 
   describe('- add new', () => {
