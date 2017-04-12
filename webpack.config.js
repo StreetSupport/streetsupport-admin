@@ -57,7 +57,8 @@ module.exports = {
     tempAccomAdd: p('accommodation-add'),
     tempAccomEdit: p('accommodation-edit'),
     tempAccomReviews: p('accommodation-reviews-add'),
-    accommodationReviews: p('accommodation-reviews')
+    accommodationReviews: p('accommodation-reviews'),
+    accommodationAppendPersonalFeedback: p('accommodation-reviews-edit')
   },
   output: {
     path: path.join(__dirname, '/_dist/assets/js/'),
