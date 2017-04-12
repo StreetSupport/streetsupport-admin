@@ -18,7 +18,6 @@ describe('Accommodation Listing - Add', () => {
   let sut = null
   let browserLoadingStub = null
   let browserLoadedStub = null
-  let browserRedirectStub = null
   let ajaxPostStub = null
 
   const headers = {
@@ -56,7 +55,6 @@ describe('Accommodation Listing - Add', () => {
 
     browserLoadingStub = sinon.stub(browser, 'loading')
     browserLoadedStub = sinon.stub(browser, 'loaded')
-    browserRedirectStub = sinon.stub(browser, 'redirect')
     sinon.stub(cookies, 'get').returns('stored-session-token')
 
     sut = new Model()
@@ -68,7 +66,6 @@ describe('Accommodation Listing - Add', () => {
     ajax.post.restore()
     browser.loading.restore()
     browser.loaded.restore()
-    browser.redirect.restore()
     cookies.get.restore()
     querystring.parameter.restore()
   })

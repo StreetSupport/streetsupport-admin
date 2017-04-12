@@ -5,6 +5,9 @@ const cookies = require('../../cookies')
 const endpoints = require('../../api-endpoints')
 const validation = require('../../validation')
 
+import { categories } from '../../../data/generated/service-categories'
+import { supportTypes } from '../../../data/generated/support-types'
+
 const ko = require('knockout')
 require('knockout.validation') // No variable here is deliberate!
 
@@ -14,6 +17,10 @@ function Model () {
   self.formFields = ko.validatedObservable({
     name: ko.observable().extend({ required: true }),
     description: ko.observable(),
+    isOpenAccess: ko.observable(false),
+    accommodationType: ko.observable(),
+    supportOffered: ko.observableArray(),
+    serviceProviderId: ko.observable(),
     contactName: ko.observable(),
     email: ko.observable().extend({ email: true }),
     telephone: ko.observable(),
@@ -23,6 +30,18 @@ function Model () {
     city: ko.observable().extend({ required: true }),
     postcode: ko.observable().extend({ required: true })
   })
+
+  self.accommodationTypes = ko.observableArray(categories
+    .find((sc) => sc.key === 'accom')
+    .subCategories)
+
+  self.supportTypes = ko.observableArray(supportTypes.map((t) => {
+    return {
+      'key': t.key,
+      'name': t.name,
+      'isSelected': false
+    }
+  }))
 
   self.formSubmitted = ko.observable(false)
   self.formSubmissionSuccessful = ko.observable(false)

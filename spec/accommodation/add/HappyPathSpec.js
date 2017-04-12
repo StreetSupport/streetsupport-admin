@@ -13,6 +13,9 @@ const browser = require(`${jsRoot}browser`)
 const cookies = require(`${jsRoot}cookies`)
 const validation = require(`${jsRoot}validation`)
 
+import { categories } from '../../../src/data/generated/service-categories'
+import { supportTypes } from '../../../src/data/generated/support-types'
+
 describe('Accommodation - Add', () => {
   const Model = require(`${jsRoot}models/accommodation/add`)
   let sut = null
@@ -30,6 +33,14 @@ describe('Accommodation - Add', () => {
   afterEach(() => {
     browser.loading.restore()
     browser.loaded.restore()
+  })
+
+  it('- it should set list of accom types', () => {
+    expect(sut.accommodationTypes().length).toEqual(categories.find((sc) => sc.key === 'accom').subCategories.length)
+  })
+
+  it('- should set a list of support types', () => {
+    expect(sut.supportTypes().length).toEqual(supportTypes.length)
   })
 
   describe('- submit', () => {
@@ -55,6 +66,10 @@ describe('Accommodation - Add', () => {
       sut.formFields().name('name')
       sut.formFields().contactName('contact name')
       sut.formFields().description('description')
+      sut.formFields().isOpenAccess(true)
+      sut.formFields().accommodationType('accommodation type')
+      sut.formFields().supportOffered(['support a', 'support b'])
+      sut.formFields().serviceProviderId('service-provider-id')
       sut.formFields().email('test@email.com')
       sut.formFields().telephone('telephone')
       sut.formFields().addressLine1('address line 1')
@@ -82,6 +97,10 @@ describe('Accommodation - Add', () => {
         'Name': 'name',
         'ContactName': 'contact name',
         'Description': 'description',
+        'IsOpenAccess': true,
+        'AccommodationType': 'accommodation type',
+        'SupportOffered': ['support a', 'support b'],
+        'ServiceProviderId': 'service-provider-id',
         'Email': 'test@email.com',
         'Telephone': 'telephone',
         'AddressLine1': 'address line 1',

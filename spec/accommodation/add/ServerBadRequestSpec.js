@@ -8,7 +8,6 @@ const sinon = require('sinon')
 
 const jsRoot = '../../../src/js/'
 const ajax = require(`${jsRoot}ajax`)
-const endpoints = require(`${jsRoot}api-endpoints`)
 const browser = require(`${jsRoot}browser`)
 const cookies = require(`${jsRoot}cookies`)
 const validation = require(`${jsRoot}validation`)
@@ -81,30 +80,6 @@ describe('Accommodation - add - server returns bad request', () => {
 
     it('- should show user it is loading', () => {
       expect(browserLoadingStub.calledOnce).toBeTruthy()
-    })
-
-    it('- should post form data to api', () => {
-      const endpoint = endpoints.temporaryAccommodation
-      const payload = {
-        'Name': 'name',
-        'ContactName': 'contact name',
-        'Description': 'description',
-        'Email': 'test@email.com',
-        'Telephone': 'telephone',
-        'AddressLine1': 'address line 1',
-        'AddressLine2': 'address line 2',
-        'AddressLine3': 'address line 3',
-        'City': 'manchester',
-        'Postcode': 'postcode'
-      }
-      const headers = {
-        'content-type': 'application/json',
-        'session-token': 'stored-session-token'
-      }
-      const calledAsExpected = ajaxPostStub
-        .withArgs(endpoint, headers, payload)
-        .calledAfter(browserLoadingStub)
-      expect(calledAsExpected).toBeTruthy()
     })
 
     it('- should show user it has loaded', () => {
