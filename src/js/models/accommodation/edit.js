@@ -9,6 +9,9 @@ const htmlEncode = require('htmlencode')
 const ko = require('knockout')
 require('knockout.validation') // No variable here is deliberate!
 
+import { categories } from '../../../data/generated/service-categories'
+import { supportTypes } from '../../../data/generated/support-types'
+
 function Model () {
   const self = this
   const id = querystring.parameter('id')
@@ -17,10 +20,27 @@ function Model () {
   self.buildGeneralDetails = () => {
     const formFields = ko.validatedObservable({
       name: ko.observable().extend({ required: true }),
-      description: ko.observable()
+      description: ko.observable(),
+      isOpenAccess: ko.observable(),
+      accommodationType: ko.observable(),
+      supportOffered: ko.observableArray(),
+      supportOfferedReadOnly: ko.observable()
     })
     const endpoint = self.endpointBuilder.temporaryAccommodation(id).generalDetails().build()
-    return new InlineEditableSubEntity(formFields, endpoint)
+    const model = new InlineEditableSubEntity(formFields, endpoint,
+      [],
+      [{ fieldId: 'accommodationType', collection: 'accommodationTypes' }],
+      [{
+        sourceField: 'supportOffered',
+        destField: 'supportOfferedReadOnly',
+        computation: (src) => {
+          return src.join(', ')
+        }
+      }]
+    )
+
+    model.supportTypes = ko.observableArray(supportTypes)
+    return model
   }
 
   self.buildContactDetails = function () {
@@ -91,6 +111,11 @@ function Model () {
         self.contactDetails().populateFormFields(result.data.contactInformation)
         self.address().populateFormFields(result.data.address)
         self.features().populateFormFields(result.data.features)
+
+        self.generalDetails().accommodationTypes = ko.observableArray(categories
+          .find((c) => c.key === 'accom')
+          .subCategories)
+
         browser.loaded()
       })
     ajax

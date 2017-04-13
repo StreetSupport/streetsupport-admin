@@ -2,7 +2,10 @@ module.exports = {
   testData: {
     'generalInfo': {
       'name': 'name',
-      'description': 'description'
+      'description': 'description',
+      'isOpenAccess': true,
+      'accommodationType': 'accommodation type',
+      'supportOffered': ['support a', 'support b']
     },
     'contactInformation': {
       'name': 'Vince Test',

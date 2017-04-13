@@ -35,6 +35,38 @@ nosubnav: true
             <dl class="key-value-pair" data-bind="with: formFields">
               {{> forms/inline/textField fieldTitle="Name" dataFieldName="name" }}
               {{> forms/inline/textArea fieldTitle="Description" dataFieldName="description" }}
+              {{> forms/inline/boolean fieldTitle="Open Access?" dataFieldName="isOpenAccess" }}
+              
+              <dt class="key-value-pair__key key-value-pair__key--inline">Accommodation Type</dt>
+              <dd class="key-value-pair__value">
+                <!-- ko ifnot: $parent.   isEditable -->
+                <span data-bind="html: accommodationType"></span>
+                <!-- /ko -->
+                <!-- ko if: $parent.    isEditable -->
+                <select data-bind="options: $parent.accommodationTypes,
+                    optionsValue: (item) => { console.log('wank'); return item.key },
+                    optionsText: (item) => { return item.name },
+                    value: accommodationType,
+                    optionsCaption: '-- please select --'" class="form__input"></select>
+                <!-- /ko -->
+              </dd>
+
+              <dt class="key-value-pair__key key-value-pair__key--inline">Support Provided</dt>
+              <!-- ko ifnot: $parent.   isEditable -->
+              <dd class="key-value-pair__value">
+                <span data-bind="html: supportOfferedReadOnly"></span>
+              </dd>
+              <!-- /ko -->
+              <!-- ko if: $parent.    isEditable -->
+              <dd class="key-value-pair__value" data-bind="foreach: $parent.supportTypes">
+                <label class="form__label form__label--checkbox-container">
+                  <span class="key-value-pair__key key-value-pair__key--inline" data-bind="text: name"></span>
+                  <span class="key-value-pair__value">
+                    <input type="checkbox" name="supportOffered" id="supportOffered" data-bind="checked: $parent.supportOffered, attr: { value: key }" class="" />
+                  </span>
+                </label>
+              </dd>
+              <!-- /ko -->
             </dl>
         </section>
         <section class="split__element split__element--admin-panel" data-bind="with: contactDetails">

@@ -5,7 +5,8 @@ global describe, beforeEach, afterEach, it, expect
 'use strict'
 
 const sinon = require('sinon')
-const jsRoot = '../../../../src/js/'
+const srcRoot = '../../../../src/'
+const jsRoot = `${srcRoot}js/`
 const ajax = require(`${jsRoot}ajax`)
 const endpoints = require(`${jsRoot}api-endpoints`)
 const browser = require(`${jsRoot}browser`)
@@ -13,6 +14,9 @@ const cookies = require(`${jsRoot}cookies`)
 const querystring = require(`${jsRoot}get-url-parameter`)
 
 const { testData, serviceProviderData } = require('../testData')
+
+import { categories } from '../../../../src/data/generated/service-categories'
+import { supportTypes } from '../../../../src/data/generated/support-types'
 
 describe('Accommodation - Edit General Information', () => {
   const Model = require(`${jsRoot}models/accommodation/edit`)
@@ -82,6 +86,19 @@ describe('Accommodation - Edit General Information', () => {
     expect(sut.generalDetails().formFields().description()).toEqual('description')
   })
 
+  it('- should have available accommodation types', () => {
+    expect(sut.generalDetails().accommodationTypes().length).toEqual(categories
+      .find((c) => c.key === 'accom').subCategories.length)
+  })
+
+  it('- should have available support types', () => {
+    expect(sut.generalDetails().supportTypes().length).toEqual(supportTypes.length)
+  })
+
+  it('- should set support types offered', () => {
+    expect(sut.generalDetails().formFields().supportOfferedReadOnly()).toEqual('support a, support b')
+  })
+
   it('- should notify user it is loaded', () => {
     expect(browserLoadedStub.called).toBeTruthy()
   })
@@ -92,6 +109,9 @@ describe('Accommodation - Edit General Information', () => {
 
       sut.generalDetails().formFields().name('new name')
       sut.generalDetails().formFields().description('new description')
+      sut.generalDetails().formFields().isOpenAccess(true)
+      sut.generalDetails().formFields().accommodationType('accommodation type')
+      sut.generalDetails().formFields().supportOffered(['support a', 'support b'])
     })
 
     it('- should set isEditable to true', () => {
@@ -131,9 +151,11 @@ describe('Accommodation - Edit General Information', () => {
           'content-type': 'application/json',
           'session-token': 'stored-session-token'
         }
-        const payload = {
-          'Name': 'new name',
-          'Description': 'new description'
+        const payload = { Name: 'new name',
+          Description: 'new description',
+          IsOpenAccess: true,
+          AccommodationType: 'accommodation type',
+          SupportOffered: [ 'support a', 'support b' ]
         }
         const patchAsExpected = ajaxPatchStub
           .withArgs(endpoint, headers, payload)

@@ -1,6 +1,6 @@
 import config from '../foley.json'
 import gulp from 'gulp'
-
+import fs from 'fs'
 import jeditor from 'gulp-json-editor'
 import request from 'request'
 import source from 'vinyl-source-stream'
@@ -37,6 +37,24 @@ gulp.task('service-categories', (callback) => {
     .pipe(gulp.dest('./'))
 })
 
+gulp.task('support-types', (callback) => {
+  const body = `export const supportTypes = [
+        { key: 'alcohol', name: 'Alcohol' },
+        { key: 'domestic violence', name: 'Domestic Violence' },
+        { key: 'mental health', name: 'Mental Health' },
+        { key: 'physical health', name: 'Physical Health' },
+        { key: 'substances', name: 'Substances' }
+      ]`
+
+  fs.writeFile(`${config.paths.generatedData}support-types.js`, body, function (err) {
+    if (err) {
+      return console.log(err)
+    }
+  })
+
+  return callback()
+})
+
 gulp.task('supported-cities', (callback) => {
   return request(endpoints.cities)
     .pipe(source(`${config.paths.generatedData}supported-cities.js`))
@@ -57,4 +75,4 @@ gulp.task('supported-cities', (callback) => {
     .pipe(gulp.dest('./'))
 })
 
-gulp.task('getLongTermData', ['service-categories', 'supported-cities'])
+gulp.task('getLongTermData', ['service-categories', 'supported-cities', 'support-types'])
