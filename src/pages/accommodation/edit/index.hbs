@@ -35,7 +35,7 @@ nosubnav: true
             <dl class="key-value-pair" data-bind="with: formFields">
               {{> forms/inline/textField fieldTitle="Name" dataFieldName="name" }}
               {{> forms/inline/textArea fieldTitle="Description" dataFieldName="description" }}
-              {{> forms/inline/boolean fieldTitle="Open Access?" dataFieldName="isOpenAccess" }}
+              {{> forms/inline/boolean fieldTitle="Open Access?" dataFieldName="isOpenAccess" claimsRequired="superadmin,orgadmin,cityadmin" }}
               
               <dt class="key-value-pair__key key-value-pair__key--inline">Accommodation Type</dt>
               <dd class="key-value-pair__value">
@@ -44,7 +44,7 @@ nosubnav: true
                 <!-- /ko -->
                 <!-- ko if: $parent.    isEditable -->
                 <select data-bind="options: $parent.accommodationTypes,
-                    optionsValue: (item) => { console.log('wank'); return item.key },
+                    optionsValue: (item) => { return item.key },
                     optionsText: (item) => { return item.name },
                     value: accommodationType,
                     optionsCaption: '-- please select --'" class="form__input"></select>

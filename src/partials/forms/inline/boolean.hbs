@@ -1,14 +1,16 @@
-<!-- ko ifnot: $parent.isEditable -->
-<dt class="key-value-pair__key key-value-pair__key--inline">{{ fieldTitle }}</dt>
-<dd class="key-value-pair__value">
-  <span data-bind="html: {{ dataFieldName }}"></span>
-</dd>
-<!-- /ko -->
-<!-- ko if: $parent.isEditable -->
-<label class="form__label form__label--checkbox-container">
-  <span class="key-value-pair__key key-value-pair__key--inline">{{ fieldTitle }}</span>
-  <span class="key-value-pair__value">
-    <input type="checkbox" name="{{ dataFieldName }}" data-bind="checked: {{ dataFieldName }}" class="" />
-  </span>
-</label>
-<!-- /ko -->
+<div data-claims="{{ claimsRequired }}">
+  <!-- ko ifnot: $parent.isEditable -->
+  <dt class="key-value-pair__key key-value-pair__key--inline">{{ fieldTitle }}</dt>
+  <dd class="key-value-pair__value">
+    <span data-bind="html: {{ dataFieldName }}"></span>
+  </dd>
+  <!-- /ko -->
+  <!-- ko if: $parent.isEditable -->
+  <label class="form__label form__label--checkbox-container">
+    <span class="key-value-pair__key key-value-pair__key--inline">{{ fieldTitle }}</span>
+    <span class="key-value-pair__value">
+      <input type="checkbox" name="{{ dataFieldName }}" data-bind="checked: {{ dataFieldName }}" class="" />
+    </span>
+  </label>
+  <!-- /ko -->
+</div>
