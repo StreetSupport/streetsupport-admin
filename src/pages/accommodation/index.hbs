@@ -1,0 +1,52 @@
+---
+title: Accommodation - Street Support
+description: Street support makes it easier to help homeless people. Here is more information about how it works.
+layout: default.hbs
+permalink: false
+jsBundle: tempAccom
+nosubnav: true
+---
+
+<div class="block block--highlight admin-header">
+  <div class="container block__inner">
+    <header>
+      <h1>Accommodation</h1>
+      <a href="/accommodation/add" class="btn btn--info">
+        <span class="btn__text">Add new entry</span>
+      </a>
+    </header>
+  </div>
+</div>
+<div class="block block--main-body">
+  <div class="container block__inner">
+    <!-- ko template: { name: 'entries-template' } --><!-- /ko -->
+  </div>
+</div>
+{{> loading-spinner}}
+
+<script type="text/html" id="entries-template">
+  <div class="block__content" data-bind="foreach:entries">
+    <article>
+      <header>
+        <h1 class="h2" data-bind="html: name"></h1>
+        <p data-bind="text: additionalInfo"></p>
+      </header>
+      <p><span data-bind="text: street1"></span>, <span data-bind="text: city"></span>. <span data-bind="text: postcode"></span></p>
+      <a data-bind="attr: { href: editUrl }" class="btn btn--primary">
+        <span class="btn__text">edit</a>
+      </a>
+      <a data-bind="attr: { href: addReviewsUrl }" class="btn btn--info">
+        <span class="btn__text">add feedback</a>
+      </a>
+      <a data-bind="attr: { href: reviewsListingUrl }" class="btn btn--info">
+        <span class="btn__text">view past feedback</a>
+      </a>
+    </article>
+  </div>
+
+  <!-- ko if: canLoadMore -->
+  <button class="btn btn--primary">
+    <span class="btn__text">Load more</span>
+  </button>
+  <!-- /ko -->
+</script>

@@ -1,0 +1,159 @@
+---
+title: Accommodation - Street Support
+description: Street support makes it easier to help homeless people. Here is more information about how it works.
+layout: default.hbs
+permalink: false
+jsBundle: tempAccomEdit
+nosubnav: true
+---
+
+<div class="block block--highlight admin-header">
+  <div class="container block__inner">
+    <header>
+      <h1>Edit Accommodation</h1>
+      <a href="/accommodation" class="btn btn--info">
+        <span class="btn__text">Back to listing</span>
+      </a>
+    </header>
+  </div>
+</div>
+<div class="block block--main-body">
+  <div class="container block__inner">
+    <div class="block__content form">
+      {{> form-feedback}}
+
+      <div class="split split--admin-panel">
+        <section class="split__element split__element--admin-panel" data-bind="with: generalDetails">
+          <h2>General Details</h2>
+            <!-- ko ifnot: isEditable -->
+            <button data-bind="click: edit" class="btn btn--info"><span class="btn__text">edit</span></button>
+            <!-- /ko -->
+            <!-- ko if: isEditable -->
+            <button data-bind="click: cancel" class="btn btn--indifferent"><span class="btn__text">cancel</span></button>
+            <button data-bind="click: save" class="btn btn--primary"><span class="btn__text">save</span></button>
+            <!-- /ko -->
+            <dl class="key-value-pair" data-bind="with: formFields">
+              {{> forms/inline/textField fieldTitle="Name" dataFieldName="name" }}
+              {{> forms/inline/textArea fieldTitle="Description" dataFieldName="description" }}
+              {{> forms/inline/boolean fieldTitle="Open Access?" dataFieldName="isOpenAccess" claimsRequired="superadmin,orgadmin,cityadmin" }}
+              
+              <dt class="key-value-pair__key key-value-pair__key--inline">Accommodation Type</dt>
+              <dd class="key-value-pair__value">
+                <!-- ko ifnot: $parent.   isEditable -->
+                <span data-bind="html: accommodationType"></span>
+                <!-- /ko -->
+                <!-- ko if: $parent.    isEditable -->
+                <select data-bind="options: $parent.accommodationTypes,
+                    optionsValue: (item) => { return item.key },
+                    optionsText: (item) => { return item.name },
+                    value: accommodationType,
+                    optionsCaption: '-- please select --'" class="form__input"></select>
+                <!-- /ko -->
+              </dd>
+
+              <dt class="key-value-pair__key key-value-pair__key--inline">Support Provided</dt>
+              <!-- ko ifnot: $parent.   isEditable -->
+              <dd class="key-value-pair__value">
+                <span data-bind="html: supportOfferedReadOnly"></span>
+              </dd>
+              <!-- /ko -->
+              <!-- ko if: $parent.    isEditable -->
+              <dd class="key-value-pair__value" data-bind="foreach: $parent.supportTypes">
+                <label class="form__label form__label--checkbox-container">
+                  <span class="key-value-pair__key key-value-pair__key--inline" data-bind="text: name"></span>
+                  <span class="key-value-pair__value">
+                    <input type="checkbox" name="supportOffered" id="supportOffered" data-bind="checked: $parent.supportOffered, attr: { value: key }" class="" />
+                  </span>
+                </label>
+              </dd>
+              <!-- /ko -->
+            </dl>
+        </section>
+        <section class="split__element split__element--admin-panel" data-bind="with: contactDetails">
+          <h2>Contact Details</h2>
+            <!-- ko ifnot: isEditable -->
+            <button data-bind="click: edit" class="btn btn--info"><span class="btn__text">edit</span></button>
+            <!-- /ko -->
+            <!-- ko if: isEditable -->
+            <button data-bind="click: cancel" class="btn btn--indifferent"><span class="btn__text">cancel</span></button>
+            <button data-bind="click: save" class="btn btn--primary"><span class="btn__text">save</span></button>
+            <!-- /ko -->
+            <dl class="key-value-pair" data-bind="with: formFields">
+              {{> forms/inline/textField fieldTitle="Contact Name" dataFieldName="name" }}
+              {{> forms/inline/textArea fieldTitle="Additional Info" dataFieldName="additionalInfo" }}
+              {{> forms/inline/emailField fieldTitle="Email" dataFieldName="email" }}
+              {{> forms/inline/textField fieldTitle="Telephone" dataFieldName="telephone" }}
+            </dl>
+        </section>
+      </div>
+
+      <div class="split split--admin-panel">
+        <section class="split__element split__element--admin-panel" data-bind="with: address">
+          <h2>Location</h2>
+            <!-- ko ifnot: isEditable -->
+            <button data-bind="click: edit" class="btn btn--info"><span class="btn__text">edit</span></button>
+            <!-- /ko -->
+            <!-- ko if: isEditable -->
+            <button data-bind="click: cancel" class="btn btn--indifferent"><span class="btn__text">cancel</span></button>
+            <button data-bind="click: save" class="btn btn--primary"><span class="btn__text">save</span></button>
+            <!-- /ko -->
+            <dl class="key-value-pair" data-bind="with: formFields">
+              {{> forms/inline/textField fieldTitle="Street 1" dataFieldName="street1" }}
+              {{> forms/inline/textField fieldTitle="Street 2" dataFieldName="street2" }}
+              {{> forms/inline/textField fieldTitle="Street 3" dataFieldName="street3" }}
+              {{> forms/inline/textField fieldTitle="City" dataFieldName="city" }}
+              {{> forms/inline/textField fieldTitle="Postcode" dataFieldName="postcode" }}
+              {{> forms/inline/textArea fieldTitle="Public Transport" dataFieldName="publicTransportInfo" }}
+              <dt class="key-value-pair__key">Nearest Support Provider</dt>
+              <dd class="key-value-pair__value">
+                <!-- ko ifnot: $parent.isEditable -->
+                <span data-bind="html: nearestSupportProviderIdReadOnly"></span>
+                <!-- /ko -->
+                <!-- ko if: $parent.isEditable -->
+                <select data-bind="options: $parent.serviceProviders,
+                optionsValue: (item) => { return item.id },
+                optionsText: (item) => { return item.name },
+                value: nearestSupportProviderId,
+                optionsCaption: '-- please select --'" class="form__input"></select>
+                <!-- /ko -->
+              </dd>
+            </dl>
+        </section>
+
+        <section class="split__element split__element--admin-panel" data-bind="with: features">
+          <h2>Features</h2>
+            <!-- ko ifnot: isEditable -->
+            <button data-bind="click: edit" class="btn btn--info"><span class="btn__text">edit</span></button>
+            <!-- /ko -->
+            <!-- ko if: isEditable -->
+            <button data-bind="click: cancel" class="btn btn--indifferent"><span class="btn__text">cancel</span></button>
+            <button data-bind="click: save" class="btn btn--primary"><span class="btn__text">save</span></button>
+            <!-- /ko -->
+            <dl class="key-value-pair" data-bind="with: formFields">
+              {{> forms/inline/boolean fieldTitle="Accepts Housing Benefit" dataFieldName="acceptsHousingBenefit" }}
+              {{> forms/inline/booleanOrOther fieldTitle="Accepts Pets" dataFieldName="acceptsPets" thirdOptionLabel="Ask Landlord" }}
+              {{> forms/inline/booleanOrOther fieldTitle="Accepts Couples" dataFieldName="acceptsCouples" thirdOptionLabel="Ask Landlord" }}
+              {{> forms/inline/boolean fieldTitle="Disabled Access" dataFieldName="hasDisabledAccess" }}
+              {{> forms/inline/boolean fieldTitle="Suitable for Women" dataFieldName="isSuitableForWomen" }}
+              {{> forms/inline/boolean fieldTitle="Suitable for Young People" dataFieldName="isSuitableForYoungPeople" }}
+              {{> forms/inline/boolean fieldTitle="Single Rooms" dataFieldName="hasSingleRooms" }}
+              {{> forms/inline/boolean fieldTitle="Shared Rooms" dataFieldName="hasSharedRooms" }}
+              {{> forms/inline/boolean fieldTitle="Shower/Bathroom Facilities" dataFieldName="hasShowerBathroomFacilities" }}
+              {{> forms/inline/boolean fieldTitle="Access to Kitchen" dataFieldName="hasAccessToKitchen" }}
+              {{> forms/inline/boolean fieldTitle="Flexible Meal Times" dataFieldName="hasFlexibleMealTimes" }}
+              {{> forms/inline/boolean fieldTitle="Meal Availability" dataFieldName="availabilityOfMeals" }}
+              {{> forms/inline/boolean fieldTitle="Lounge" dataFieldName="hasLounge" }}
+              {{> forms/inline/boolean fieldTitle="Provides Clean Bedding" dataFieldName="providesCleanBedding" }}
+              {{> forms/inline/boolean fieldTitle="Allows Visitors" dataFieldName="allowsVisitors" }}
+              {{> forms/inline/boolean fieldTitle="On-site Manager" dataFieldName="hasOnSiteManager" }}
+              {{> forms/inline/boolean fieldTitle="Reference/Referral Required" dataFieldName="referenceReferralIsRequired" }}
+              {{> forms/inline/textField fieldTitle="Price (£ p/w)" dataFieldName="price" classModifier="" }}
+              {{> forms/inline/boolean fieldTitle="Food Included" dataFieldName="foodIsIncluded" }}
+              {{> forms/inline/textArea fieldTitle="Additional Features" dataFieldName="additionalFeatures" }}
+              {{> forms/inline/textArea fieldTitle="Other Features for Additional Cost" dataFieldName="featuresAvailableAtAdditionalCost" }}
+            </dl>
+        </section>
+    </div>
+  </div>
+</div>
+{{> loading-spinner}}

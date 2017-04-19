@@ -299,7 +299,7 @@ function categories () {
     'key': 'accom',
     'sortOrder': 90,
     'name': 'Accommodation',
-    'synopsis': 'Permanent and temporary accomodation.',
+    'synopsis': 'Permanent and Accomodation.',
     'subCategories': [{
       'key': 'emergency',
       'name': 'Emergency',

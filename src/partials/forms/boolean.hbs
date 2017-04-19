@@ -1,6 +1,6 @@
-<label class="form__label form__label--checkbox-container">
+<label class="form__label form__label--checkbox-container" data-claims="{{ claimsRequired }}">
   <span class="key-value-pair__key key-value-pair__key--inline">{{ fieldTitle }}</span>
   <span class="key-value-pair__value">
-    <input type="checkbox" name="{{ dataFieldName }}" data-bind="checked: {{ dataFieldName }}" class="" />
+    <input type="checkbox" name="{{ dataFieldName }}" data-bind="checked: {{ dataFieldName }}" />
   </span>
 </label>

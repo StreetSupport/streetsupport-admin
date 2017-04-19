@@ -1,0 +1,86 @@
+---
+title: Accommodation Feedback - Street Support
+description: Street support makes it easier to help homeless people. Here is more information about how it works.
+layout: default.hbs
+permalink: false
+jsBundle: tempAccomReviews
+nosubnav: true
+---
+
+<div class="block block--highlight admin-header">
+  <div class="container block__inner">
+    <header>
+    <h1>Feedback</h1>
+    <p data-bind="text: address"></p>
+    <a href="/accommodation/" class="btn btn--info">
+      <span class="btn__text">Back to listing</span>
+    </a>
+    </header>
+  </div>
+</div>
+<div class="block block--main-body">
+  <div class="container block__inner">
+    <div class="block__content form">
+      <h2>Add New Feedback</h2>
+      {{> form-feedback}}
+      <!-- ko ifnot: reviewIsCreated -->
+      <article data-bind="with: newItem">
+        <div data-bind="with: formFields">
+          <h3>Do you have access to working basic facilities?</h3>
+          <dl class="key-value-pair">
+            {{> forms/booleanInsufficient fieldTitle="Central Heating" dataFieldName="hasCentralHeating" }}
+            {{> forms/booleanInsufficient fieldTitle="Hot Water" dataFieldName="hasHotWater" }}
+            {{> forms/booleanInsufficient fieldTitle="Electricity" dataFieldName="hasElectricity" }}
+          </dl>
+          <h3>How secure do you feel in the property?</h3>
+          <dl class="key-value-pair">
+            {{> forms/boolean fieldTitle="Lock on room" dataFieldName="hasLockOnRoom" }}
+            {{> forms/boolean fieldTitle="Lock on front door" dataFieldName="hasLockOnFrontDoor" }}
+          </dl>
+          <h3>How are the other tenants?</h3>
+          <dl class="key-value-pair">
+            {{> forms/boolean fieldTitle="Are other tenants aggressive or threatening?" dataFieldName="hasAggressiveTenants" }}
+            {{> forms/boolean fieldTitle="Is there excessive noise and knocking on doors?" dataFieldName="hasExcessiveNoise" }}
+          </dl>
+          <h3>How would you rate the following?</h3>
+          <dl class="key-value-pair">
+            {{> forms/fiveStarRating fieldTitle="Food" dataFieldName="foodRating" }}
+            {{> forms/fiveStarRating fieldTitle="Cleanliness" dataFieldName="cleanlinessRating" }}
+          </dl>
+          <h3>How would you rate the staff?</h3>
+          <dl class="key-value-pair">
+            {{> forms/fiveStarRating fieldTitle="Friendly and helpful" dataFieldName="staffHelpfulnessRating" }}
+            {{> forms/fiveStarRating fieldTitle="Welcoming and supportive" dataFieldName="staffSupportivenessRating" }}
+            {{> forms/fiveStarRating fieldTitle="Approachable when there is a problem/complaint" dataFieldName="staffDealingWithProblemsRating" }}
+            {{> forms/fiveStarRating fieldTitle="Address maintenance issues in a timely manner" dataFieldName="staffTimelinessWithIssuesRating" }}
+          </dl>
+        </div>
+        <button data-bind="click: save" class="btn btn--primary"><span class="btn__text">save</span></button>
+      </article>
+      <!-- /ko -->
+      <!-- ko if: reviewIsCreated -->
+        <!-- ko ifnot: personalFeedbackIsSent -->
+        <article data-bind="with: personalFeedback">
+          <div data-bind="with: formFields">
+            <h3>Additional Comments (optional)</h3>
+            <dl class="key-value-pair">
+              {{> forms/textArea fieldTitle="Review body" dataFieldName="body" }}
+              {{> forms/textField fieldTitle="Reviewer Name" dataFieldName="reviewerName" }}
+              {{> forms/textField fieldTitle="Reviewer Contact Details" dataFieldName="reviewerContactDetails" }}
+              {{> forms/boolean fieldTitle="Can this review be displayed publically?" dataFieldName="canBeDisplayedPublically" }}
+            </dl>
+          </div>
+          <button data-bind="click: update" class="btn btn--primary"><span class="btn__text">save</span></button>
+        </article>
+        <!-- /ko -->
+        <!-- ko if: personalFeedbackIsSent -->
+        
+        <!-- /ko -->
+        <a href="/accommodation/" class="btn btn--info">
+          <span class="btn__text">Back to listing</span>
+        </a>
+      <!-- /ko -->
+    </div>
+  </div>
+</div>
+{{> loading-spinner}}

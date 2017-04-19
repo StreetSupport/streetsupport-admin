@@ -1,0 +1,73 @@
+---
+title: Accommodation - Street Support
+description: Street support makes it easier to help homeless people. Here is more information about how it works.
+layout: default.hbs
+permalink: false
+jsBundle: tempAccomAdd
+nosubnav: true
+---
+
+<div class="block block--highlight admin-header">
+  <div class="container block__inner">
+    <header>
+      <h1>Add Accommodation entry</h1>
+      <a href="/accommodation" class="btn btn--info">
+        <span class="btn__text">Back to listing</span>
+      </a>
+    </header>
+  </div>
+</div>
+<div class="block block--main-body">
+  <div class="container block__inner">
+    <!-- ko ifnot: formSubmitted -->
+    <div class="block__content form">
+      {{> form-feedback}}
+      <article data-bind="with: formFields">
+        <h3>General Info</h3>
+        <dl class="key-value-pair">
+          {{> forms/textField fieldTitle="Name" dataFieldName="name" }}
+          {{> forms/textArea fieldTitle="Description" dataFieldName="description" }}
+            {{> forms/boolean fieldTitle="Open Access?" dataFieldName="isOpenAccess" claimsRequired="superadmin,orgadmin,cityadmin" }}
+          <dt class="key-value-pair__key">Acommodation Type</dt>
+          <dd class="key-value-pair__value form__field-item">
+            <select data-bind="options: $parent.accommodationTypes,
+                optionsValue: (item) => { return item.key },
+                optionsText: (item) => { return item.name },
+                value: accommodationType,
+                optionsCaption: '-- please select --'" class="form__input"></select>
+          </dd>
+          <dt class="key-value-pair__key">Support Provided</dt>
+          <dd class="key-value-pair__value form__field-item" data-bind="foreach: $parent.supportTypes">
+            <label class="form__label form__label--checkbox-container">
+              <span class="key-value-pair__key key-value-pair__key--inline" data-bind="text: name"></span>
+              <span class="key-value-pair__value">
+                <input type="checkbox" name="supportOffered" id="supportOffered" data-bind="checked: $parent.supportOffered, attr: { value: key }" class="" />
+              </span>
+            </label>
+          </dd>
+        </dl>
+        <h3>Contact Details</h3>
+        <dl class="key-value-pair">
+          {{> forms/textField fieldTitle="Name" dataFieldName="contactName" }}
+          {{> forms/emailField fieldTitle="Email" dataFieldName="email" }}
+          {{> forms/textField fieldTitle="Telephone" dataFieldName="telephone" }}
+        </dl>
+        <h3>Location Details</h3>
+        <dl class="key-value-pair">
+          {{> forms/textField fieldTitle="Street Line 1" dataFieldName="addressLine1" }}
+          {{> forms/textField fieldTitle="Street Line 2" dataFieldName="addressLine2" }}
+          {{> forms/textField fieldTitle="Street Line 3" dataFieldName="addressLine3" }}
+          {{> forms/textField fieldTitle="City" dataFieldName="city" }}
+          {{> forms/textField fieldTitle="Postcode" dataFieldName="postcode" }}
+        </dl>
+        <button data-bind="click: $parent.save" class="btn btn--primary"><span class="btn__text">Save</span></button>
+      </article>
+    </div>
+    <!-- /ko -->
+    <!-- ko if: formSubmissionSuccessful -->
+    <p>Thank you for adding this entry.</p>
+    <button data-bind="click: reset" class="btn btn--primary"><span class="btn__text">Add another</span></button>
+    <!-- /ko -->
+  </div>
+</div>
+{{> loading-spinner}}

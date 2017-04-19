@@ -7,7 +7,7 @@ const browser = require('../browser')
 const cookies = require('../cookies')
 const validation = require('../validation')
 
-function InlineEditableSubEntity (formFields, endpoint, boolDiscFields = [], dropdownFields = []) {
+function InlineEditableSubEntity (formFields, endpoint, boolDiscFields = [], dropdownFields = [], computedFields = []) {
   const self = this
 
   self.booleanOrDiscretionaryDescriptions = [
@@ -37,6 +37,12 @@ function InlineEditableSubEntity (formFields, endpoint, boolDiscFields = [], dro
         return match
           ? match.name
           : ''
+      }, self)
+    })
+  computedFields
+    .forEach((cf) => {
+      self.formFields()[cf.destField] = ko.computed(() => {
+        return cf.computation(self.formFields()[cf.sourceField]())
       }, self)
     })
 

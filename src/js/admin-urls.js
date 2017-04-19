@@ -30,5 +30,5 @@ module.exports = {
   charter: s('/charter-pledges'),
   serviceProviderNeedCategoriesEdit: s('/edit-service-provider-need-categories'),
   needOffers: '/needs/responses',
-  temporaryAccommodation: '/temporary-accommodation'
+  temporaryAccommodation: '/accommodation'
 }

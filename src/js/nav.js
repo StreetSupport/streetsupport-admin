@@ -29,7 +29,7 @@ const disableForbiddenLinks = () => {
 
     for (let i = 0; i < claimsLinks.length; ++i) {
       let requiredClaims = claimsLinks[i].getAttribute('data-claims')
-      if (!hasClaim(userClaims, requiredClaims)) { claimsLinks[i].parentNode.className += ' hide' }
+      if (!hasClaim(userClaims, requiredClaims)) { claimsLinks[i].classList.add('hide') }
     }
   }
 
