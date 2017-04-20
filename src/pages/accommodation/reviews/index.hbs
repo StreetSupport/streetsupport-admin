@@ -1,0 +1,34 @@
+---
+title: Accommodation Feedback - Street Support
+description: Street support makes it easier to help homeless people. Here is more information about how it works.
+layout: default.hbs
+permalink: false
+jsBundle: accommodationReviews
+nosubnav: true
+---
+
+<div class="block block--highlight admin-header">
+  <div class="container block__inner">
+    <header>
+    <h1>Previous Feedback</h1>
+    <p data-bind="text: address"></p>
+    <a href="/accommodation/" class="btn btn--info">
+      <span class="btn__text">Back to listing</span>
+    </a>
+    </header>
+  </div>
+</div>
+<div class="block block--main-body">
+  <div class="container block__inner">
+    <div class="block__content">
+      <div data-bind="foreach: items">
+        <article data-bind="with: formFields">
+          <p data-bind="text: documentCreationDateReadOnly"></p>
+          <p data-bind="text: body"></p>
+          <button data-bind="click: $parent.deleteItem" class="btn btn--warning"><span class="btn__text">delete</span></button>
+        </article>
+      </div>
+    </div>
+  </div>
+</div>
+{{> loading-spinner}}

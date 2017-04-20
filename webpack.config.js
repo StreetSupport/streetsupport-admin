@@ -53,10 +53,11 @@ module.exports = {
     editServiceProviderNeedCategories: p('edit-service-provider-need-categories'),
     impactupdates: p('impact-updates'),
     swep: p('swep'),
-    tempAccom: p('temp-accom'),
-    tempAccomAdd: p('temp-accom-add'),
-    tempAccomEdit: p('temp-accom-edit'),
-    tempAccomReviews: p('temp-accom-reviews')
+    tempAccom: p('accommodation'),
+    tempAccomAdd: p('accommodation-add'),
+    tempAccomEdit: p('accommodation-edit'),
+    tempAccomReviews: p('accommodation-reviews-add'),
+    accommodationReviews: p('accommodation-reviews')
   },
   output: {
     path: path.join(__dirname, '/_dist/assets/js/'),
