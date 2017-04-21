@@ -77,7 +77,7 @@ describe('Accommodation - Edit Features', () => {
   it('- should load features', () => {
     Object.keys(testData.features)
       .forEach((k) => {
-        if (sut.features().boolDiscFields && sut.features().boolDiscFields.includes(k)) {
+        if (k === 'acceptsPets' || k === 'acceptsCouples') {
           expect(sut.features().formFields()[k]()).toEqual(`${testData.features[k]}`)
         } else {
           expect(sut.features().formFields()[k]()).toEqual(testData.features[k])
@@ -247,7 +247,7 @@ describe('Accommodation - Edit Features', () => {
           .forEach((k) => {
             if (k.endsWith('ReadOnly')) {
               expect(sut.features().formFields()[k]()).toEqual('Ask Landlord')
-            } else if (sut.features().boolDiscFields && sut.features().boolDiscFields.includes(k)) {
+            } else if (k === 'acceptsPets' || k === 'acceptsCouples') {
               expect(sut.features().formFields()[k]()).toEqual(`${testData.features[k]}`)
             } else {
               expect(sut.features().formFields()[k]()).toEqual(testData.features[k])

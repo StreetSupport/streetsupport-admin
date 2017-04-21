@@ -24,21 +24,21 @@ function Model () {
       isOpenAccess: ko.observable(),
       isPubliclyVisible: ko.observable(),
       accommodationType: ko.observable(),
-      supportOffered: ko.observableArray(),
-      supportOfferedReadOnly: ko.observable()
+      supportOffered: ko.observableArray()
     })
     const endpoint = self.endpointBuilder.temporaryAccommodation(id).generalDetails().build()
-    const model = new InlineEditableSubEntity(formFields, endpoint,
-      [],
-      [{ fieldId: 'accommodationType', collection: 'accommodationTypes' }],
-      [{
+    const model = new InlineEditableSubEntity({
+      formFields: formFields,
+      patchEndpoint: endpoint,
+      dropdownFields: [{ fieldId: 'accommodationType', collection: 'accommodationTypes' }],
+      computedFields: [{
         sourceField: 'supportOffered',
         destField: 'supportOfferedReadOnly',
         computation: (src) => {
           return src.join(', ')
         }
       }]
-    )
+    })
 
     model.supportTypes = ko.observableArray(supportTypes)
     return model
@@ -52,7 +52,10 @@ function Model () {
       telephone: ko.observable()
     })
     const endpoint = self.endpointBuilder.temporaryAccommodation(id).contactInformation().build()
-    return new InlineEditableSubEntity(formFields, endpoint)
+    return new InlineEditableSubEntity({
+      formFields: formFields,
+      patchEndpoint: endpoint
+    })
   }
 
   self.buildAddress = function () {
@@ -66,7 +69,11 @@ function Model () {
       nearestSupportProviderId: ko.observable()
     })
     const endpoint = self.endpointBuilder.temporaryAccommodation(id).address().build()
-    return new InlineEditableSubEntity(formFields, endpoint, [], [{ fieldId: 'nearestSupportProviderId', collection: 'serviceProviders' }])
+    return new InlineEditableSubEntity({
+      formFields: formFields,
+      patchEndpoint: endpoint,
+      dropdownFields: [{ fieldId: 'nearestSupportProviderId', collection: 'serviceProviders' }]
+    })
   }
 
   self.buildFeatures = function () {
@@ -95,7 +102,11 @@ function Model () {
       featuresAvailableAtAdditionalCost: ko.observable()
     })
     const endpoint = self.endpointBuilder.temporaryAccommodation(id).features().build()
-    return new InlineEditableSubEntity(formFields, endpoint, ['acceptsPets', 'acceptsCouples'])
+    return new InlineEditableSubEntity({
+      formFields: formFields,
+      patchEndpoint: endpoint,
+      boolDiscFields: ['acceptsPets', 'acceptsCouples']
+    })
   }
 
   self.generalDetails = ko.observable(self.buildGeneralDetails())
