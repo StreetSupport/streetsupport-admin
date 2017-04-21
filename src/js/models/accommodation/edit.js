@@ -110,7 +110,16 @@ function Model () {
     return new InlineEditableSubEntity({
       formFields: formFields,
       patchEndpoint: endpoint,
-      boolDiscFields: ['acceptsPets', 'acceptsCouples']
+      boolDiscFields: ['acceptsPets', 'acceptsCouples'],
+      computedFields: [{
+        sourceField: 'additionalFeatures',
+        destField: 'additionalFeaturesReadOnly',
+        computation: parseMarkdown
+      }, {
+        sourceField: 'featuresAvailableAtAdditionalCost',
+        destField: 'featuresAvailableAtAdditionalCostReadOnly',
+        computation: parseMarkdown
+      }]
     })
   }
 
@@ -133,7 +142,13 @@ function Model () {
         })
         self.contactDetails().populateFormFields({ data: result.data.contactInformation })
         self.address().populateFormFields({ data: result.data.address })
-        self.features().populateFormFields({ data: result.data.features })
+        self.features().populateFormFields({
+          data: result.data.features,
+          preParseFields: [
+            { fieldId: 'additionalFeatures', cleanFunction: htmlEncode.htmlDecode },
+            { fieldId: 'featuresAvailableAtAdditionalCost', cleanFunction: htmlEncode.htmlDecode }
+          ]
+        })
 
         self.generalDetails().accommodationTypes = ko.observableArray(categories
           .find((c) => c.key === 'accom')

@@ -90,6 +90,14 @@ describe('Accommodation - Edit Features', () => {
     expect(sut.features().formFields().acceptsCouplesReadOnly()).toEqual('Ask Landlord')
   })
 
+  it('- should set additional features read only value', () => {
+    expect(sut.features().formFields().additionalFeaturesReadOnly()).toEqual('<p>additional features</p>\n')
+  })
+
+  it('- should set featuresAvailableAtAdditionalCost read only value', () => {
+    expect(sut.features().formFields().featuresAvailableAtAdditionalCostReadOnly()).toEqual('<p>features available at additional cost</p>\n')
+  })
+
   describe('- edit features', () => {
     beforeEach(() => {
       sut.contactDetails().edit()
@@ -245,7 +253,11 @@ describe('Accommodation - Edit Features', () => {
       it('- should reset fields', () => {
         Object.keys(sut.features().formFields())
           .forEach((k) => {
-            if (k.endsWith('ReadOnly')) {
+            if (k === 'additionalFeaturesReadOnly') {
+              expect(sut.features().formFields()[k]()).toEqual('<p>additional features</p>\n')
+            } else if (k === 'featuresAvailableAtAdditionalCostReadOnly') {
+              expect(sut.features().formFields()[k]()).toEqual('<p>features available at additional cost</p>\n')
+            } else if (k.endsWith('ReadOnly')) {
               expect(sut.features().formFields()[k]()).toEqual('Ask Landlord')
             } else if (k === 'acceptsPets' || k === 'acceptsCouples') {
               expect(sut.features().formFields()[k]()).toEqual(`${testData.features[k]}`)
