@@ -72,16 +72,28 @@ function InlineEditableSubEntity (configOverride = {}) {
       })
   }
 
-  self.populateFormFields = (data) => {
+  self.populateFormFields = (configOverride = {}) => {
+    const popConfig = {
+      data: {},
+      preParseFields: []
+    }
+    
+    for (let k in configOverride) popConfig[k] = configOverride[k]
+
     Object.keys(self.formFields())
       .forEach((k) => {
+        const preParseRule = popConfig.preParseFields.find((pp) => pp.fieldId === k)
         try {
           if (config.boolDiscFields.includes(k)) {
-            self.formFields()[k](`${data[k]}`)
+            self.formFields()[k](`${popConfig.data[k]}`)
+          } else if (preParseRule !== undefined) {
+            self.formFields()[k](preParseRule.cleanFunction(popConfig.data[k]))
           } else {
-            self.formFields()[k](data[k])
+            self.formFields()[k](popConfig.data[k])
           }
-        } catch (e) {}
+        } catch (e) {
+          // cannot write a value to a ko.computed
+        }
       })
     self.updateRestoreState()
   }

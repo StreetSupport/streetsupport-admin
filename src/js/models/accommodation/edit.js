@@ -8,6 +8,7 @@ const querystring = require('../../get-url-parameter')
 const htmlEncode = require('htmlencode')
 const ko = require('knockout')
 require('knockout.validation') // No variable here is deliberate!
+const marked = require('marked')
 
 import { categories } from '../../../data/generated/service-categories'
 import { supportTypes } from '../../../data/generated/support-types'
@@ -16,6 +17,8 @@ function Model () {
   const self = this
   const id = querystring.parameter('id')
   const headers = self.headers(cookies.get('session-token'))
+
+  const parseMarkdown = (src) => marked(htmlEncode.htmlDecode(src))
 
   self.buildGeneralDetails = () => {
     const formFields = ko.validatedObservable({
@@ -34,9 +37,11 @@ function Model () {
       computedFields: [{
         sourceField: 'supportOffered',
         destField: 'supportOfferedReadOnly',
-        computation: (src) => {
-          return src.join(', ')
-        }
+        computation: (src) => src.join(', ')
+      }, {
+        sourceField: 'description',
+        destField: 'descriptionReadOnly',
+        computation: parseMarkdown
       }]
     })
 
@@ -119,10 +124,16 @@ function Model () {
     ajax
       .get(self.endpointBuilder.temporaryAccommodation(id).build(), headers)
       .then((result) => {
-        self.generalDetails().populateFormFields(result.data.generalInfo)
-        self.contactDetails().populateFormFields(result.data.contactInformation)
-        self.address().populateFormFields(result.data.address)
-        self.features().populateFormFields(result.data.features)
+        self.generalDetails().populateFormFields({
+          data: result.data.generalInfo,
+          preParseFields: [
+            { fieldId: 'name', cleanFunction: htmlEncode.htmlDecode },
+            { fieldId: 'description', cleanFunction: htmlEncode.htmlDecode }
+          ]
+        })
+        self.contactDetails().populateFormFields({ data: result.data.contactInformation })
+        self.address().populateFormFields({ data: result.data.address })
+        self.features().populateFormFields({ data: result.data.features })
 
         self.generalDetails().accommodationTypes = ko.observableArray(categories
           .find((c) => c.key === 'accom')
