@@ -22,6 +22,7 @@ function Model () {
       name: ko.observable().extend({ required: true }),
       description: ko.observable(),
       isOpenAccess: ko.observable(),
+      isPubliclyVisible: ko.observable(),
       accommodationType: ko.observable(),
       supportOffered: ko.observableArray(),
       supportOfferedReadOnly: ko.observable()

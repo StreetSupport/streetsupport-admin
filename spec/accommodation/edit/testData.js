@@ -4,6 +4,7 @@ module.exports = {
       'name': 'name',
       'description': 'description',
       'isOpenAccess': true,
+      'isPubliclyVisible': false,
       'accommodationType': 'accommodation type',
       'supportOffered': ['support a', 'support b']
     },
