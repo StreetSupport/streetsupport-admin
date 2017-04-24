@@ -8,7 +8,6 @@ function LogoutModel () {
 
   var sessionToken = cookies.get('session-token')
   const endpoint = self.endpointBuilder.sessions(sessionToken).build()
-  console.log(endpoint)
 
   ajax.delete(endpoint,
     self.headers(sessionToken))

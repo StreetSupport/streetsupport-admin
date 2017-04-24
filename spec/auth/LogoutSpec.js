@@ -8,11 +8,13 @@ var sinon = require('sinon')
 var ajax = require('../../src/js/ajax')
 var endpoints = require('../../src/js/api-endpoints')
 var cookies = require('../../src/js/cookies')
+var nav = require('../../src/js/nav')
 
 describe('Logout', () => {
   var Model = require('../../src/js/models/Auth/Logout')
   var stubbedApi
   var stubbedUnsetCookies
+  let stubbedNavLinkDisabled = null
 
   beforeEach(() => {
     let fakeResolved = {
@@ -24,6 +26,7 @@ describe('Logout', () => {
       }
     }
 
+    stubbedNavLinkDisabled = sinon.stub(nav, 'disableForbiddenLinks')
     stubbedApi = sinon.stub(ajax, 'delete')
     stubbedApi.returns(fakeResolved)
 
@@ -34,6 +37,7 @@ describe('Logout', () => {
   })
 
   afterEach(() => {
+    nav.disableForbiddenLinks.restore()
     ajax.delete.restore()
     cookies.get.restore()
     cookies.unset.restore()
@@ -60,5 +64,8 @@ describe('Logout', () => {
   it('should unset auth claims', () => {
     var cookieSetCalled = stubbedUnsetCookies.withArgs('auth-claims').calledOnce
     expect(cookieSetCalled).toBeTruthy()
+  })
+  it('should disable nav link', () => {
+    expect(stubbedNavLinkDisabled.calledOnce).toBeTruthy()
   })
 })

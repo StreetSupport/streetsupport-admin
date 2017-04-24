@@ -77,7 +77,7 @@ function InlineEditableSubEntity (configOverride = {}) {
       data: {},
       preParseFields: []
     }
-    
+
     for (let k in configOverride) popConfig[k] = configOverride[k]
 
     Object.keys(self.formFields())
