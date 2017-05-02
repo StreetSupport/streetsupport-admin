@@ -86,6 +86,10 @@ describe('Accommodation - Edit General Information', () => {
     expect(sut.generalDetails().formFields().description()).toEqual('description')
   })
 
+  it('- should load descriptionReadOnly', () => {
+    expect(sut.generalDetails().formFields().descriptionReadOnly()).toEqual('<p>description</p>\n')
+  })
+
   it('- should have available accommodation types', () => {
     expect(sut.generalDetails().accommodationTypes().length).toEqual(categories
       .find((c) => c.key === 'accom').subCategories.length)
@@ -110,6 +114,7 @@ describe('Accommodation - Edit General Information', () => {
       sut.generalDetails().formFields().name('new name')
       sut.generalDetails().formFields().description('new description')
       sut.generalDetails().formFields().isOpenAccess(true)
+      sut.generalDetails().formFields().isPubliclyVisible(true)
       sut.generalDetails().formFields().accommodationType('accommodation type')
       sut.generalDetails().formFields().supportOffered(['support a', 'support b'])
     })
@@ -154,6 +159,7 @@ describe('Accommodation - Edit General Information', () => {
         const payload = { Name: 'new name',
           Description: 'new description',
           IsOpenAccess: true,
+          IsPubliclyVisible: true,
           AccommodationType: 'accommodation type',
           SupportOffered: [ 'support a', 'support b' ]
         }

@@ -77,7 +77,7 @@ describe('Accommodation - Edit Features', () => {
   it('- should load features', () => {
     Object.keys(testData.features)
       .forEach((k) => {
-        if (sut.features().boolDiscFields && sut.features().boolDiscFields.includes(k)) {
+        if (k === 'acceptsPets' || k === 'acceptsCouples') {
           expect(sut.features().formFields()[k]()).toEqual(`${testData.features[k]}`)
         } else {
           expect(sut.features().formFields()[k]()).toEqual(testData.features[k])
@@ -88,6 +88,14 @@ describe('Accommodation - Edit Features', () => {
   it('- should set boolean/discretionary read only value', () => {
     expect(sut.features().formFields().acceptsPetsReadOnly()).toEqual('Ask Landlord')
     expect(sut.features().formFields().acceptsCouplesReadOnly()).toEqual('Ask Landlord')
+  })
+
+  it('- should set additional features read only value', () => {
+    expect(sut.features().formFields().additionalFeaturesReadOnly()).toEqual('<p>additional features</p>\n')
+  })
+
+  it('- should set featuresAvailableAtAdditionalCost read only value', () => {
+    expect(sut.features().formFields().featuresAvailableAtAdditionalCostReadOnly()).toEqual('<p>features available at additional cost</p>\n')
   })
 
   describe('- edit features', () => {
@@ -245,9 +253,13 @@ describe('Accommodation - Edit Features', () => {
       it('- should reset fields', () => {
         Object.keys(sut.features().formFields())
           .forEach((k) => {
-            if (k.endsWith('ReadOnly')) {
+            if (k === 'additionalFeaturesReadOnly') {
+              expect(sut.features().formFields()[k]()).toEqual('<p>additional features</p>\n')
+            } else if (k === 'featuresAvailableAtAdditionalCostReadOnly') {
+              expect(sut.features().formFields()[k]()).toEqual('<p>features available at additional cost</p>\n')
+            } else if (k.endsWith('ReadOnly')) {
               expect(sut.features().formFields()[k]()).toEqual('Ask Landlord')
-            } else if (sut.features().boolDiscFields && sut.features().boolDiscFields.includes(k)) {
+            } else if (k === 'acceptsPets' || k === 'acceptsCouples') {
               expect(sut.features().formFields()[k]()).toEqual(`${testData.features[k]}`)
             } else {
               expect(sut.features().formFields()[k]()).toEqual(testData.features[k])

@@ -7,8 +7,18 @@ const browser = require('../browser')
 const cookies = require('../cookies')
 const validation = require('../validation')
 
-function InlineEditableSubEntity (formFields, endpoint, boolDiscFields = [], dropdownFields = [], computedFields = []) {
+function InlineEditableSubEntity (configOverride = {}) {
+  const config = {
+    formFields: [],
+    patchEndpoint: '',
+    boolDiscFields: [],
+    dropdownFields: [],
+    computedFields: []
+  }
+
   const self = this
+
+  for (let k in configOverride) config[k] = configOverride[k]
 
   self.booleanOrDiscretionaryDescriptions = [
     'No',
@@ -18,18 +28,17 @@ function InlineEditableSubEntity (formFields, endpoint, boolDiscFields = [], dro
 
   self.originalData = {}
   self.isEditable = ko.observable(false)
-  self.patchEndpoint = endpoint
+  self.patchEndpoint = config.patchEndpoint
 
-  self.formFields = formFields
-  self.boolDiscFields = boolDiscFields
-  boolDiscFields
+  self.formFields = config.formFields
+  config.boolDiscFields
     .forEach((f) => {
       self.formFields()[`${f}ReadOnly`] = ko.computed(() => {
         return self.booleanOrDiscretionaryDescriptions[self.formFields()[f]()]
       }, self)
     })
-  self.dropdownFields = dropdownFields
-  dropdownFields
+
+  config.dropdownFields
     .forEach((f) => {
       self[`${f.collection}`] = ko.observableArray()
       self.formFields()[`${f.fieldId}ReadOnly`] = ko.computed(() => {
@@ -39,7 +48,8 @@ function InlineEditableSubEntity (formFields, endpoint, boolDiscFields = [], dro
           : ''
       }, self)
     })
-  computedFields
+
+  config.computedFields
     .forEach((cf) => {
       self.formFields()[cf.destField] = ko.computed(() => {
         return cf.computation(self.formFields()[cf.sourceField]())
@@ -62,16 +72,28 @@ function InlineEditableSubEntity (formFields, endpoint, boolDiscFields = [], dro
       })
   }
 
-  self.populateFormFields = (data) => {
+  self.populateFormFields = (configOverride = {}) => {
+    const popConfig = {
+      data: {},
+      preParseFields: []
+    }
+
+    for (let k in configOverride) popConfig[k] = configOverride[k]
+
     Object.keys(self.formFields())
       .forEach((k) => {
+        const preParseRule = popConfig.preParseFields.find((pp) => pp.fieldId === k)
         try {
-          if (boolDiscFields.includes(k)) {
-            self.formFields()[k](`${data[k]}`)
+          if (config.boolDiscFields.includes(k)) {
+            self.formFields()[k](`${popConfig.data[k]}`)
+          } else if (preParseRule !== undefined) {
+            self.formFields()[k](preParseRule.cleanFunction(popConfig.data[k]))
           } else {
-            self.formFields()[k](data[k])
+            self.formFields()[k](popConfig.data[k])
           }
-        } catch (e) {}
+        } catch (e) {
+          // cannot write a value to a ko.computed
+        }
       })
     self.updateRestoreState()
   }

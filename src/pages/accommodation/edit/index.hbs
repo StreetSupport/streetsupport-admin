@@ -34,8 +34,9 @@ nosubnav: true
             <!-- /ko -->
             <dl class="key-value-pair" data-bind="with: formFields">
               {{> forms/inline/textField fieldTitle="Name" dataFieldName="name" }}
-              {{> forms/inline/textArea fieldTitle="Description" dataFieldName="description" }}
+              {{> forms/inline/textArea fieldTitle="Description" dataFieldName="description" readOnlyFieldName="descriptionReadOnly" }}
               {{> forms/inline/boolean fieldTitle="Open Access?" dataFieldName="isOpenAccess" claimsRequired="superadmin,orgadmin,cityadmin" }}
+              {{> forms/inline/boolean fieldTitle="Visible on website?" dataFieldName="isPubliclyVisible" }}
               
               <dt class="key-value-pair__key key-value-pair__key--inline">Accommodation Type</dt>
               <dd class="key-value-pair__value">
@@ -80,7 +81,7 @@ nosubnav: true
             <!-- /ko -->
             <dl class="key-value-pair" data-bind="with: formFields">
               {{> forms/inline/textField fieldTitle="Contact Name" dataFieldName="name" }}
-              {{> forms/inline/textArea fieldTitle="Additional Info" dataFieldName="additionalInfo" }}
+              {{> forms/inline/textArea fieldTitle="Additional Info" dataFieldName="additionalInfo" readOnlyFieldName="additionalInfo" }}
               {{> forms/inline/emailField fieldTitle="Email" dataFieldName="email" }}
               {{> forms/inline/textField fieldTitle="Telephone" dataFieldName="telephone" }}
             </dl>
@@ -103,7 +104,7 @@ nosubnav: true
               {{> forms/inline/textField fieldTitle="Street 3" dataFieldName="street3" }}
               {{> forms/inline/textField fieldTitle="City" dataFieldName="city" }}
               {{> forms/inline/textField fieldTitle="Postcode" dataFieldName="postcode" }}
-              {{> forms/inline/textArea fieldTitle="Public Transport" dataFieldName="publicTransportInfo" }}
+              {{> forms/inline/textArea fieldTitle="Public Transport" dataFieldName="publicTransportInfo" readOnlyFieldName="publicTransportInfo" }}
               <dt class="key-value-pair__key">Nearest Support Provider</dt>
               <dd class="key-value-pair__value">
                 <!-- ko ifnot: $parent.isEditable -->
@@ -149,8 +150,8 @@ nosubnav: true
               {{> forms/inline/boolean fieldTitle="Reference/Referral Required" dataFieldName="referenceReferralIsRequired" }}
               {{> forms/inline/textField fieldTitle="Price (£ p/w)" dataFieldName="price" classModifier="" }}
               {{> forms/inline/boolean fieldTitle="Food Included" dataFieldName="foodIsIncluded" }}
-              {{> forms/inline/textArea fieldTitle="Additional Features" dataFieldName="additionalFeatures" }}
-              {{> forms/inline/textArea fieldTitle="Other Features for Additional Cost" dataFieldName="featuresAvailableAtAdditionalCost" }}
+              {{> forms/inline/textArea fieldTitle="Additional Features" dataFieldName="additionalFeatures" readOnlyFieldName="additionalFeaturesReadOnly" }}
+              {{> forms/inline/textArea fieldTitle="Other Features for Additional Cost" dataFieldName="featuresAvailableAtAdditionalCost" readOnlyFieldName="featuresAvailableAtAdditionalCostReadOnly" }}
             </dl>
         </section>
     </div>

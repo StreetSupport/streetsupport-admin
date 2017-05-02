@@ -29,9 +29,9 @@ nosubnav: true
     <article>
       <header>
         <h1 class="h2" data-bind="html: name"></h1>
-        <p data-bind="text: additionalInfo"></p>
+        <p data-bind="html: additionalInfo"></p>
       </header>
-      <p><span data-bind="text: street1"></span>, <span data-bind="text: city"></span>. <span data-bind="text: postcode"></span></p>
+      <p><span data-bind="html: street1"></span>, <span data-bind="html: city"></span>. <span data-bind="html: postcode"></span></p>
       <a data-bind="attr: { href: editUrl }" class="btn btn--primary">
         <span class="btn__text">edit</a>
       </a>
