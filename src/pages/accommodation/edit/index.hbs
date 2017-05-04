@@ -34,6 +34,7 @@ nosubnav: true
             <!-- /ko -->
             <dl class="key-value-pair" data-bind="with: formFields">
               {{> forms/inline/textField fieldTitle="Name" dataFieldName="name" }}
+              {{> forms/inline/textArea fieldTitle="Synopsis" dataFieldName="synopsis" readOnlyFieldName="synopsisReadOnly" }}
               {{> forms/inline/textArea fieldTitle="Description" dataFieldName="description" readOnlyFieldName="descriptionReadOnly" }}
               {{> forms/inline/boolean fieldTitle="Open Access?" dataFieldName="isOpenAccess" claimsRequired="superadmin,orgadmin,cityadmin" }}
               {{> forms/inline/boolean fieldTitle="Visible on website?" dataFieldName="isPubliclyVisible" }}

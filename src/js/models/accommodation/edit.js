@@ -23,6 +23,7 @@ function Model () {
   self.buildGeneralDetails = () => {
     const formFields = ko.validatedObservable({
       name: ko.observable().extend({ required: true }),
+      synopsis: ko.observable(),
       description: ko.observable(),
       isOpenAccess: ko.observable(),
       isPubliclyVisible: ko.observable(),
@@ -41,6 +42,10 @@ function Model () {
       }, {
         sourceField: 'description',
         destField: 'descriptionReadOnly',
+        computation: parseMarkdown
+      }, {
+        sourceField: 'synopsis',
+        destField: 'synopsisReadOnly',
         computation: parseMarkdown
       }]
     })

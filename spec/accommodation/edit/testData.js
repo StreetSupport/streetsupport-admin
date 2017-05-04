@@ -2,6 +2,7 @@ module.exports = {
   testData: {
     'generalInfo': {
       'name': 'name',
+      'synopsis': 'synopsis',
       'description': 'description',
       'isOpenAccess': true,
       'isPubliclyVisible': false,

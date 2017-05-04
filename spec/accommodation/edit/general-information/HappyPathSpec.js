@@ -82,6 +82,14 @@ describe('Accommodation - Edit General Information', () => {
     expect(sut.generalDetails().formFields().name()).toEqual('name')
   })
 
+  it('- should load synopsis', () => {
+    expect(sut.generalDetails().formFields().synopsis()).toEqual('synopsis')
+  })
+
+  it('- should load synopsisReadOnly', () => {
+    expect(sut.generalDetails().formFields().synopsisReadOnly()).toEqual('<p>synopsis</p>\n')
+  })
+
   it('- should load description', () => {
     expect(sut.generalDetails().formFields().description()).toEqual('description')
   })
@@ -112,6 +120,7 @@ describe('Accommodation - Edit General Information', () => {
       sut.generalDetails().edit()
 
       sut.generalDetails().formFields().name('new name')
+      sut.generalDetails().formFields().synopsis('new synopsis')
       sut.generalDetails().formFields().description('new description')
       sut.generalDetails().formFields().isOpenAccess(true)
       sut.generalDetails().formFields().isPubliclyVisible(true)
@@ -157,6 +166,7 @@ describe('Accommodation - Edit General Information', () => {
           'session-token': 'stored-session-token'
         }
         const payload = { Name: 'new name',
+          Synopsis: 'new synopsis',
           Description: 'new description',
           IsOpenAccess: true,
           IsPubliclyVisible: true,
