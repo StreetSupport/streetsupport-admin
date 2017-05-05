@@ -23,7 +23,7 @@ function InlineEditableSubEntity (configOverride = {}) {
   self.booleanOrDiscretionaryDescriptions = [
     'No',
     'Yes',
-    'Ask Landlord'
+    'Don\'t Know/Ask'
   ]
 
   self.originalData = {}

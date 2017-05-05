@@ -115,7 +115,7 @@ function Model () {
     return new InlineEditableSubEntity({
       formFields: formFields,
       patchEndpoint: endpoint,
-      boolDiscFields: ['acceptsPets', 'acceptsCouples'],
+      boolDiscFields: ['acceptsHousingBenefit', 'acceptsPets', 'acceptsCouples', 'hasDisabledAccess', 'isSuitableForWomen', 'isSuitableForYoungPeople', 'hasSingleRooms', 'hasSharedRooms', 'hasShowerBathroomFacilities', 'hasAccessToKitchen', 'hasFlexibleMealTimes', 'hasLounge', 'providesCleanBedding', 'allowsVisitors', 'hasOnSiteManager', 'referenceReferralIsRequired', 'foodIsIncluded'],
       computedFields: [{
         sourceField: 'additionalFeatures',
         destField: 'additionalFeaturesReadOnly',

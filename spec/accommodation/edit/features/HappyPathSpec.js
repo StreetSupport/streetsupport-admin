@@ -75,9 +75,10 @@ describe('Accommodation - Edit Features', () => {
   })
 
   it('- should load features', () => {
+    const boolDiscFields = ['acceptsHousingBenefit', 'acceptsPets', 'acceptsCouples', 'hasDisabledAccess', 'isSuitableForWomen', 'isSuitableForYoungPeople', 'hasSingleRooms', 'hasSharedRooms', 'hasShowerBathroomFacilities', 'hasAccessToKitchen', 'hasFlexibleMealTimes', 'hasLounge', 'providesCleanBedding', 'allowsVisitors', 'hasOnSiteManager', 'referenceReferralIsRequired', 'foodIsIncluded']
     Object.keys(testData.features)
       .forEach((k) => {
-        if (k === 'acceptsPets' || k === 'acceptsCouples') {
+        if (boolDiscFields.includes(k)) {
           expect(sut.features().formFields()[k]()).toEqual(`${testData.features[k]}`)
         } else {
           expect(sut.features().formFields()[k]()).toEqual(testData.features[k])
@@ -154,26 +155,26 @@ describe('Accommodation - Edit Features', () => {
           'session-token': 'stored-session-token'
         }
         const payload = {
-          'AcceptsHousingBenefit': false,
-          'AcceptsNoHousingBenefitWithServiceProviderSupport': false,
+          'AcceptsHousingBenefit': 1,
+          'AcceptsNoHousingBenefitWithServiceProviderSupport': 1,
           'AcceptsPets': 1,
           'AcceptsCouples': 1,
-          'HasDisabledAccess': false,
-          'IsSuitableForWomen': false,
-          'IsSuitableForYoungPeople': false,
-          'HasSingleRooms': false,
-          'HasSharedRooms': false,
-          'HasShowerBathroomFacilities': false,
-          'HasAccessToKitchen': false,
-          'HasFlexibleMealTimes': false,
-          'HasLounge': false,
-          'ProvidesCleanBedding': false,
-          'AllowsVisitors': false,
-          'HasOnSiteManager': false,
-          'ReferenceReferralIsRequired': false,
+          'HasDisabledAccess': 1,
+          'IsSuitableForWomen': 1,
+          'IsSuitableForYoungPeople': 1,
+          'HasSingleRooms': 1,
+          'HasSharedRooms': 1,
+          'HasShowerBathroomFacilities': 1,
+          'HasAccessToKitchen': 1,
+          'HasFlexibleMealTimes': 1,
+          'HasLounge': 1,
+          'ProvidesCleanBedding': 1,
+          'AllowsVisitors': 1,
+          'HasOnSiteManager': 1,
+          'ReferenceReferralIsRequired': 1,
           'Price': 678.9,
           'AdditionalFeatures': 'new additional features',
-          'FoodIsIncluded': false,
+          'FoodIsIncluded': 1,
           'AvailabilityOfMeals': 'new availability of meals',
           'FeaturesAvailableAtAdditionalCost': 'new features available at additional cost'
         }
@@ -214,27 +215,27 @@ describe('Accommodation - Edit Features', () => {
         })
 
         it('- should reset fields', () => {
-          expect(sut.features().formFields().acceptsHousingBenefit()).toEqual(false)
-          expect(sut.features().formFields().acceptsNoHousingBenefitWithServiceProviderSupport()).toEqual(false)
+          expect(sut.features().formFields().acceptsHousingBenefit()).toEqual(1)
+          expect(sut.features().formFields().acceptsNoHousingBenefitWithServiceProviderSupport()).toEqual(1)
           expect(sut.features().formFields().acceptsPets()).toEqual(1)
           expect(sut.features().formFields().acceptsPetsReadOnly()).toEqual('Yes')
           expect(sut.features().formFields().acceptsCouples()).toEqual(1)
-          expect(sut.features().formFields().hasDisabledAccess()).toEqual(false)
-          expect(sut.features().formFields().isSuitableForWomen()).toEqual(false)
-          expect(sut.features().formFields().isSuitableForYoungPeople()).toEqual(false)
-          expect(sut.features().formFields().hasSingleRooms()).toEqual(false)
-          expect(sut.features().formFields().hasSharedRooms()).toEqual(false)
-          expect(sut.features().formFields().hasShowerBathroomFacilities()).toEqual(false)
-          expect(sut.features().formFields().hasAccessToKitchen()).toEqual(false)
-          expect(sut.features().formFields().hasFlexibleMealTimes()).toEqual(false)
-          expect(sut.features().formFields().hasLounge()).toEqual(false)
-          expect(sut.features().formFields().providesCleanBedding()).toEqual(false)
-          expect(sut.features().formFields().allowsVisitors()).toEqual(false)
-          expect(sut.features().formFields().hasOnSiteManager()).toEqual(false)
-          expect(sut.features().formFields().referenceReferralIsRequired()).toEqual(false)
+          expect(sut.features().formFields().hasDisabledAccess()).toEqual(1)
+          expect(sut.features().formFields().isSuitableForWomen()).toEqual(1)
+          expect(sut.features().formFields().isSuitableForYoungPeople()).toEqual(1)
+          expect(sut.features().formFields().hasSingleRooms()).toEqual(1)
+          expect(sut.features().formFields().hasSharedRooms()).toEqual(1)
+          expect(sut.features().formFields().hasShowerBathroomFacilities()).toEqual(1)
+          expect(sut.features().formFields().hasAccessToKitchen()).toEqual(1)
+          expect(sut.features().formFields().hasFlexibleMealTimes()).toEqual(1)
+          expect(sut.features().formFields().hasLounge()).toEqual(1)
+          expect(sut.features().formFields().providesCleanBedding()).toEqual(1)
+          expect(sut.features().formFields().allowsVisitors()).toEqual(1)
+          expect(sut.features().formFields().hasOnSiteManager()).toEqual(1)
+          expect(sut.features().formFields().referenceReferralIsRequired()).toEqual(1)
           expect(sut.features().formFields().price()).toEqual(678.9)
           expect(sut.features().formFields().additionalFeatures()).toEqual('new additional features')
-          expect(sut.features().formFields().foodIsIncluded()).toEqual(false)
+          expect(sut.features().formFields().foodIsIncluded()).toEqual(1)
           expect(sut.features().formFields().availabilityOfMeals()).toEqual('new availability of meals')
           expect(sut.features().formFields().featuresAvailableAtAdditionalCost()).toEqual('new features available at additional cost')
         })
@@ -251,6 +252,7 @@ describe('Accommodation - Edit Features', () => {
       })
 
       it('- should reset fields', () => {
+        const boolDiscFields = ['acceptsHousingBenefit', 'acceptsPets', 'acceptsCouples', 'hasDisabledAccess', 'isSuitableForWomen', 'isSuitableForYoungPeople', 'hasSingleRooms', 'hasSharedRooms', 'hasShowerBathroomFacilities', 'hasAccessToKitchen', 'hasFlexibleMealTimes', 'hasLounge', 'providesCleanBedding', 'allowsVisitors', 'hasOnSiteManager', 'referenceReferralIsRequired', 'foodIsIncluded']
         Object.keys(sut.features().formFields())
           .forEach((k) => {
             if (k === 'additionalFeaturesReadOnly') {
@@ -259,7 +261,7 @@ describe('Accommodation - Edit Features', () => {
               expect(sut.features().formFields()[k]()).toEqual('<p>features available at additional cost</p>\n')
             } else if (k.endsWith('ReadOnly')) {
               expect(sut.features().formFields()[k]()).toEqual('Ask Landlord')
-            } else if (k === 'acceptsPets' || k === 'acceptsCouples') {
+            } else if (boolDiscFields.includes(k)) {
               expect(sut.features().formFields()[k]()).toEqual(`${testData.features[k]}`)
             } else {
               expect(sut.features().formFields()[k]()).toEqual(testData.features[k])
