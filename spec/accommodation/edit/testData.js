@@ -42,6 +42,7 @@ module.exports = {
       'hasLounge': 2,
       'providesCleanBedding': 2,
       'allowsVisitors': 2,
+      'allowsChildren': 2,
       'hasOnSiteManager': 2,
       'referenceReferralIsRequired': 2,
       'price': 123.45,

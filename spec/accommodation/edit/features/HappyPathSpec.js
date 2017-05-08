@@ -75,7 +75,7 @@ describe('Accommodation - Edit Features', () => {
   })
 
   it('- should load features', () => {
-    const boolDiscFields = ['acceptsHousingBenefit', 'acceptsPets', 'acceptsCouples', 'hasDisabledAccess', 'isSuitableForWomen', 'isSuitableForYoungPeople', 'hasSingleRooms', 'hasSharedRooms', 'hasShowerBathroomFacilities', 'hasAccessToKitchen', 'hasFlexibleMealTimes', 'hasLounge', 'providesCleanBedding', 'allowsVisitors', 'hasOnSiteManager', 'referenceReferralIsRequired', 'foodIsIncluded']
+    const boolDiscFields = ['acceptsHousingBenefit', 'acceptsPets', 'acceptsCouples', 'hasDisabledAccess', 'isSuitableForWomen', 'isSuitableForYoungPeople', 'hasSingleRooms', 'hasSharedRooms', 'hasShowerBathroomFacilities', 'hasAccessToKitchen', 'hasFlexibleMealTimes', 'hasLounge', 'providesCleanBedding', 'allowsVisitors', 'allowsChildren', 'hasOnSiteManager', 'referenceReferralIsRequired', 'foodIsIncluded']
     Object.keys(testData.features)
       .forEach((k) => {
         if (boolDiscFields.includes(k)) {
@@ -170,6 +170,7 @@ describe('Accommodation - Edit Features', () => {
           'HasLounge': 1,
           'ProvidesCleanBedding': 1,
           'AllowsVisitors': 1,
+          'AllowsChildren': 1,
           'HasOnSiteManager': 1,
           'ReferenceReferralIsRequired': 1,
           'Price': 678.9,
@@ -231,6 +232,7 @@ describe('Accommodation - Edit Features', () => {
           expect(sut.features().formFields().hasLounge()).toEqual(1)
           expect(sut.features().formFields().providesCleanBedding()).toEqual(1)
           expect(sut.features().formFields().allowsVisitors()).toEqual(1)
+          expect(sut.features().formFields().allowsChildren()).toEqual(1)
           expect(sut.features().formFields().hasOnSiteManager()).toEqual(1)
           expect(sut.features().formFields().referenceReferralIsRequired()).toEqual(1)
           expect(sut.features().formFields().price()).toEqual(678.9)
@@ -252,7 +254,7 @@ describe('Accommodation - Edit Features', () => {
       })
 
       it('- should reset fields', () => {
-        const boolDiscFields = ['acceptsHousingBenefit', 'acceptsPets', 'acceptsCouples', 'hasDisabledAccess', 'isSuitableForWomen', 'isSuitableForYoungPeople', 'hasSingleRooms', 'hasSharedRooms', 'hasShowerBathroomFacilities', 'hasAccessToKitchen', 'hasFlexibleMealTimes', 'hasLounge', 'providesCleanBedding', 'allowsVisitors', 'hasOnSiteManager', 'referenceReferralIsRequired', 'foodIsIncluded']
+        const boolDiscFields = ['acceptsHousingBenefit', 'acceptsPets', 'acceptsCouples', 'hasDisabledAccess', 'isSuitableForWomen', 'isSuitableForYoungPeople', 'hasSingleRooms', 'hasSharedRooms', 'hasShowerBathroomFacilities', 'hasAccessToKitchen', 'hasFlexibleMealTimes', 'hasLounge', 'providesCleanBedding', 'allowsVisitors', 'allowsChildren', 'hasOnSiteManager', 'referenceReferralIsRequired', 'foodIsIncluded']
         Object.keys(sut.features().formFields())
           .forEach((k) => {
             if (k === 'additionalFeaturesReadOnly') {
