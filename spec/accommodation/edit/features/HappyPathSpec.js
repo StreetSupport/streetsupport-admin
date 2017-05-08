@@ -87,8 +87,8 @@ describe('Accommodation - Edit Features', () => {
   })
 
   it('- should set boolean/discretionary read only value', () => {
-    expect(sut.features().formFields().acceptsPetsReadOnly()).toEqual('Ask Landlord')
-    expect(sut.features().formFields().acceptsCouplesReadOnly()).toEqual('Ask Landlord')
+    expect(sut.features().formFields().acceptsPetsReadOnly()).toEqual('Don\'t Know/Ask')
+    expect(sut.features().formFields().acceptsCouplesReadOnly()).toEqual('Don\'t Know/Ask')
   })
 
   it('- should set additional features read only value', () => {
@@ -260,7 +260,7 @@ describe('Accommodation - Edit Features', () => {
             } else if (k === 'featuresAvailableAtAdditionalCostReadOnly') {
               expect(sut.features().formFields()[k]()).toEqual('<p>features available at additional cost</p>\n')
             } else if (k.endsWith('ReadOnly')) {
-              expect(sut.features().formFields()[k]()).toEqual('Ask Landlord')
+              expect(sut.features().formFields()[k]()).toEqual('Don\'t Know/Ask')
             } else if (boolDiscFields.includes(k)) {
               expect(sut.features().formFields()[k]()).toEqual(`${testData.features[k]}`)
             } else {
