@@ -7,19 +7,19 @@ export const cities = [{
   "isOpenToRegistrations": true,
   "isPublic": true
 }, {
-  "id": "leeds",
-  "findHelpId": "leeds",
-  "name": "Leeds",
-  "latitude": 53.7954906003838,
-  "longitude": -1.54511238485298,
-  "isOpenToRegistrations": true,
-  "isPublic": true
-}, {
   "id": "bournemouth",
   "findHelpId": "bournemouth",
   "name": "Bournemouth",
   "latitude": 50.7304553,
   "longitude": -1.9144711,
   "isOpenToRegistrations": false,
+  "isPublic": true
+}, {
+  "id": "leeds",
+  "findHelpId": "leeds",
+  "name": "Leeds",
+  "latitude": 53.7954906003838,
+  "longitude": -1.54511238485298,
+  "isOpenToRegistrations": true,
   "isPublic": true
 }]

@@ -65,6 +65,7 @@ describe('Accommodation - Add', () => {
 
       sut.formFields().name('name')
       sut.formFields().contactName('contact name')
+      sut.formFields().synopsis('synopsis')
       sut.formFields().description('description')
       sut.formFields().isOpenAccess(true)
       sut.formFields().accommodationType('accommodation type')
@@ -96,6 +97,7 @@ describe('Accommodation - Add', () => {
       const payload = {
         'Name': 'name',
         'ContactName': 'contact name',
+        'Synopsis': 'synopsis',
         'Description': 'description',
         'IsOpenAccess': true,
         'AccommodationType': 'accommodation type',
