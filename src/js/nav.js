@@ -1,5 +1,5 @@
 'use strict'
-var cookies = require('./cookies')
+var auth = require('./auth')
 
 var openElement = '.js-nav-open'
 var closeElement = '.js-nav-close'
@@ -7,18 +7,12 @@ var overlayElement = '.js-nav-overlay'
 var activeClass = 'is-active'
 
 const disableForbiddenLinks = () => {
-  const getUserClaims = () => {
-    let userClaims = cookies.get('auth-claims')
-    if (userClaims === undefined) userClaims = ''
-    return userClaims.toLowerCase()
-  }
-
   const disableRestrictedLinks = (userClaims, requiredClaims) => {
     const hasClaim = (userClaims, requiredClaims) => {
       if (requiredClaims === null) return false
       requiredClaims = requiredClaims.split(',')
       for (let j = 0; j < requiredClaims.length; ++j) {
-        if (userClaims.indexOf(requiredClaims[j]) >= 0) {
+        if (userClaims.includes(requiredClaims[j])) {
           return true
         }
       }
@@ -33,8 +27,7 @@ const disableForbiddenLinks = () => {
     }
   }
 
-  let userClaims = getUserClaims()
-  if (userClaims !== 'superadmin') disableRestrictedLinks(userClaims)
+  if (!auth.isSuperAdmin()) disableRestrictedLinks(auth.getUserClaims())
 }
 
 let initEventListeners = () => {

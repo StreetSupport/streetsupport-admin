@@ -1,5 +1,6 @@
 const ajax = require('../../ajax')
 const BaseViewModel = require('../../models/BaseViewModel')
+const auth = require('../../auth')
 const browser = require('../../browser')
 const cookies = require('../../cookies')
 const endpoints = require('../../api-endpoints')
@@ -21,7 +22,7 @@ function Model () {
     isOpenAccess: ko.observable(false),
     accommodationType: ko.observable(),
     supportOffered: ko.observableArray(),
-    serviceProviderId: ko.observable(),
+    serviceProviderId: ko.observable(auth.providerAdminFor()),
     contactName: ko.observable(),
     email: ko.observable().extend({ email: true }),
     telephone: ko.observable(),
@@ -54,11 +55,10 @@ function Model () {
   }
 
   self.postData = () => {
+    browser.loading()
     const endpoint = endpoints.temporaryAccommodation
     const payload = validation.buildPayload(self.formFields())
     const headers = self.headers(cookies.get('session-token'))
-
-    browser.loading()
     self.formSubmitted(true)
     self.formSubmissionNotSuccessful(false)
 

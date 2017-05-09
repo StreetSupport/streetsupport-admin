@@ -15,19 +15,20 @@ const validation = require(`${jsRoot}validation`)
 
 import { categories } from '../../../src/data/generated/service-categories'
 import { supportTypes } from '../../../src/data/generated/support-types'
+const auth = require(`${jsRoot}auth`)
 
-describe('Accommodation - Add', () => {
+describe('Accommodation - Add - org admin', () => {
   const Model = require(`${jsRoot}models/accommodation/add`)
   let sut = null
   let browserLoadingStub = null
   let browserLoadedStub = null
-  let cookieStub = null
 
   beforeEach(() => {
     browserLoadingStub = sinon.stub(browser, 'loading')
     browserLoadedStub = sinon.stub(browser, 'loaded')
-    cookieStub = sinon.stub(cookies, 'get')
-    cookieStub.withArgs('auth-claims').returns('superadmin')
+
+    sinon.stub(auth, 'providerAdminFor')
+      .returns('the-users-service-provider-id')
 
     sut = new Model()
     sut.init()
@@ -36,7 +37,7 @@ describe('Accommodation - Add', () => {
   afterEach(() => {
     browser.loading.restore()
     browser.loaded.restore()
-    cookies.get.restore()
+    auth.providerAdminFor.restore()
   })
 
   it('- it should set list of accom types', () => {
@@ -55,7 +56,7 @@ describe('Accommodation - Add', () => {
       browserLoadedStub.reset()
       sinon.stub(validation, 'showErrors')
 
-      cookieStub.withArgs('session-token').returns('stored-session-token')
+      sinon.stub(cookies, 'get').withArgs('session-token').returns('stored-session-token')
 
       ajaxPostStub = sinon.stub(ajax, 'post')
         .returns({
@@ -74,7 +75,6 @@ describe('Accommodation - Add', () => {
       sut.formFields().isOpenAccess(true)
       sut.formFields().accommodationType('accommodation type')
       sut.formFields().supportOffered(['support a', 'support b'])
-      sut.formFields().serviceProviderId('service-provider-id')
       sut.formFields().email('test@email.com')
       sut.formFields().telephone('telephone')
       sut.formFields().addressLine1('address line 1')
@@ -88,6 +88,7 @@ describe('Accommodation - Add', () => {
 
     afterEach(() => {
       ajax.post.restore()
+      cookies.get.restore()
       validation.showErrors.restore()
     })
 
@@ -105,7 +106,7 @@ describe('Accommodation - Add', () => {
         'IsOpenAccess': true,
         'AccommodationType': 'accommodation type',
         'SupportOffered': ['support a', 'support b'],
-        'ServiceProviderId': 'service-provider-id',
+        'ServiceProviderId': 'the-users-service-provider-id',
         'Email': 'test@email.com',
         'Telephone': 'telephone',
         'AddressLine1': 'address line 1',

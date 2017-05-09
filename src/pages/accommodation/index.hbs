@@ -34,12 +34,14 @@ nosubnav: true
       <a data-bind="attr: { href: editUrl }" class="btn btn--primary">
         <span class="btn__text">edit</a>
       </a>
-      <a data-bind="attr: { href: addReviewsUrl }" class="btn btn--info">
+      <!-- ko if: userCanSeeReviews -->
+      <a data-bind="attr: { href: addReviewsUrl }" data-claims="superadmin,tempaccomadmin" class="btn btn--info">
         <span class="btn__text">add feedback</a>
       </a>
-      <a data-bind="attr: { href: reviewsListingUrl }" class="btn btn--info">
+      <a data-bind="attr: { href: reviewsListingUrl }" data-claims="superadmin,tempaccomadmin" class="btn btn--info">
         <span class="btn__text">view past feedback</a>
       </a>
+      <!-- /ko -->
     </article>
   </div>
 
