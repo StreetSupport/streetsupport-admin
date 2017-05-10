@@ -28,6 +28,7 @@ function Model () {
       isOpenAccess: ko.observable(),
       isPubliclyVisible: ko.observable(),
       accommodationType: ko.observable(),
+      serviceProviderId: ko.observable(),
       supportOffered: ko.observableArray()
     })
     const endpoint = self.endpointBuilder.temporaryAccommodation(id).generalDetails().build()

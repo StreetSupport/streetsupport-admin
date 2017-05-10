@@ -7,6 +7,7 @@ module.exports = {
       'isOpenAccess': true,
       'isPubliclyVisible': false,
       'accommodationType': 'accommodation type',
+      'serviceProviderId': 'service-provider-id',
       'supportOffered': ['support a', 'support b']
     },
     'contactInformation': {

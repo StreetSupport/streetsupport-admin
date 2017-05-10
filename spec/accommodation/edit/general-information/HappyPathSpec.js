@@ -171,6 +171,7 @@ describe('Accommodation - Edit General Information', () => {
           IsOpenAccess: true,
           IsPubliclyVisible: true,
           AccommodationType: 'accommodation type',
+          ServiceProviderId: 'service-provider-id',
           SupportOffered: [ 'support a', 'support b' ]
         }
         const patchAsExpected = ajaxPatchStub
