@@ -26,6 +26,7 @@ nosubnav: true
         <h3>General Info</h3>
         <dl class="key-value-pair">
           {{> forms/textField fieldTitle="Name" dataFieldName="name" }}
+          {{> forms/textArea fieldTitle="Synopsis" dataFieldName="synopsis" }}
           {{> forms/textArea fieldTitle="Description" dataFieldName="description" }}
             {{> forms/boolean fieldTitle="Open Access?" dataFieldName="isOpenAccess" claimsRequired="superadmin,orgadmin,cityadmin" }}
           <dt class="key-value-pair__key">Acommodation Type</dt>

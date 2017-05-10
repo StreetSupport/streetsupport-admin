@@ -1,7 +1,7 @@
 <dt class="key-value-pair__key">{{ fieldTitle }}</dt>
 <dd class="key-value-pair__value">
   <!-- ko ifnot: $parent.isEditable -->
-  <span data-bind="html: {{ dataFieldName }}"></span>
+  <span data-bind="html: {{ readOnlyFieldName }}"></span>
   <!-- /ko -->
   <!-- ko if: $parent.isEditable -->
   <textarea data-bind="textInput: {{ dataFieldName }}" placeholder="{{placeHolderText}}" class="form__input form__input--textarea"></textarea>

@@ -8,6 +8,7 @@ const querystring = require('../../get-url-parameter')
 const htmlEncode = require('htmlencode')
 const ko = require('knockout')
 require('knockout.validation') // No variable here is deliberate!
+const marked = require('marked')
 
 import { categories } from '../../../data/generated/service-categories'
 import { supportTypes } from '../../../data/generated/support-types'
@@ -17,27 +18,37 @@ function Model () {
   const id = querystring.parameter('id')
   const headers = self.headers(cookies.get('session-token'))
 
+  const parseMarkdown = (src) => marked(htmlEncode.htmlDecode(src))
+
   self.buildGeneralDetails = () => {
     const formFields = ko.validatedObservable({
       name: ko.observable().extend({ required: true }),
+      synopsis: ko.observable(),
       description: ko.observable(),
       isOpenAccess: ko.observable(),
+      isPubliclyVisible: ko.observable(),
       accommodationType: ko.observable(),
-      supportOffered: ko.observableArray(),
-      supportOfferedReadOnly: ko.observable()
+      supportOffered: ko.observableArray()
     })
     const endpoint = self.endpointBuilder.temporaryAccommodation(id).generalDetails().build()
-    const model = new InlineEditableSubEntity(formFields, endpoint,
-      [],
-      [{ fieldId: 'accommodationType', collection: 'accommodationTypes' }],
-      [{
+    const model = new InlineEditableSubEntity({
+      formFields: formFields,
+      patchEndpoint: endpoint,
+      dropdownFields: [{ fieldId: 'accommodationType', collection: 'accommodationTypes' }],
+      computedFields: [{
         sourceField: 'supportOffered',
         destField: 'supportOfferedReadOnly',
-        computation: (src) => {
-          return src.join(', ')
-        }
+        computation: (src) => src.join(', ')
+      }, {
+        sourceField: 'description',
+        destField: 'descriptionReadOnly',
+        computation: parseMarkdown
+      }, {
+        sourceField: 'synopsis',
+        destField: 'synopsisReadOnly',
+        computation: parseMarkdown
       }]
-    )
+    })
 
     model.supportTypes = ko.observableArray(supportTypes)
     return model
@@ -51,7 +62,10 @@ function Model () {
       telephone: ko.observable()
     })
     const endpoint = self.endpointBuilder.temporaryAccommodation(id).contactInformation().build()
-    return new InlineEditableSubEntity(formFields, endpoint)
+    return new InlineEditableSubEntity({
+      formFields: formFields,
+      patchEndpoint: endpoint
+    })
   }
 
   self.buildAddress = function () {
@@ -65,7 +79,11 @@ function Model () {
       nearestSupportProviderId: ko.observable()
     })
     const endpoint = self.endpointBuilder.temporaryAccommodation(id).address().build()
-    return new InlineEditableSubEntity(formFields, endpoint, [], [{ fieldId: 'nearestSupportProviderId', collection: 'serviceProviders' }])
+    return new InlineEditableSubEntity({
+      formFields: formFields,
+      patchEndpoint: endpoint,
+      dropdownFields: [{ fieldId: 'nearestSupportProviderId', collection: 'serviceProviders' }]
+    })
   }
 
   self.buildFeatures = function () {
@@ -85,6 +103,7 @@ function Model () {
       hasLounge: ko.observable(),
       providesCleanBedding: ko.observable(),
       allowsVisitors: ko.observable(),
+      allowsChildren: ko.observable(),
       hasOnSiteManager: ko.observable(),
       referenceReferralIsRequired: ko.observable(),
       price: ko.observable().extend({ required: true }),
@@ -94,7 +113,20 @@ function Model () {
       featuresAvailableAtAdditionalCost: ko.observable()
     })
     const endpoint = self.endpointBuilder.temporaryAccommodation(id).features().build()
-    return new InlineEditableSubEntity(formFields, endpoint, ['acceptsPets', 'acceptsCouples'])
+    return new InlineEditableSubEntity({
+      formFields: formFields,
+      patchEndpoint: endpoint,
+      boolDiscFields: ['acceptsHousingBenefit', 'acceptsPets', 'acceptsCouples', 'hasDisabledAccess', 'isSuitableForWomen', 'isSuitableForYoungPeople', 'hasSingleRooms', 'hasSharedRooms', 'hasShowerBathroomFacilities', 'hasAccessToKitchen', 'hasFlexibleMealTimes', 'hasLounge', 'providesCleanBedding', 'allowsVisitors', 'allowsChildren', 'hasOnSiteManager', 'referenceReferralIsRequired', 'foodIsIncluded'],
+      computedFields: [{
+        sourceField: 'additionalFeatures',
+        destField: 'additionalFeaturesReadOnly',
+        computation: parseMarkdown
+      }, {
+        sourceField: 'featuresAvailableAtAdditionalCost',
+        destField: 'featuresAvailableAtAdditionalCostReadOnly',
+        computation: parseMarkdown
+      }]
+    })
   }
 
   self.generalDetails = ko.observable(self.buildGeneralDetails())
@@ -107,10 +139,22 @@ function Model () {
     ajax
       .get(self.endpointBuilder.temporaryAccommodation(id).build(), headers)
       .then((result) => {
-        self.generalDetails().populateFormFields(result.data.generalInfo)
-        self.contactDetails().populateFormFields(result.data.contactInformation)
-        self.address().populateFormFields(result.data.address)
-        self.features().populateFormFields(result.data.features)
+        self.generalDetails().populateFormFields({
+          data: result.data.generalInfo,
+          preParseFields: [
+            { fieldId: 'name', cleanFunction: htmlEncode.htmlDecode },
+            { fieldId: 'description', cleanFunction: htmlEncode.htmlDecode }
+          ]
+        })
+        self.contactDetails().populateFormFields({ data: result.data.contactInformation })
+        self.address().populateFormFields({ data: result.data.address })
+        self.features().populateFormFields({
+          data: result.data.features,
+          preParseFields: [
+            { fieldId: 'additionalFeatures', cleanFunction: htmlEncode.htmlDecode },
+            { fieldId: 'featuresAvailableAtAdditionalCost', cleanFunction: htmlEncode.htmlDecode }
+          ]
+        })
 
         self.generalDetails().accommodationTypes = ko.observableArray(categories
           .find((c) => c.key === 'accom')

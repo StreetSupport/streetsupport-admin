@@ -34,8 +34,10 @@ nosubnav: true
             <!-- /ko -->
             <dl class="key-value-pair" data-bind="with: formFields">
               {{> forms/inline/textField fieldTitle="Name" dataFieldName="name" }}
-              {{> forms/inline/textArea fieldTitle="Description" dataFieldName="description" }}
+              {{> forms/inline/textArea fieldTitle="Synopsis" dataFieldName="synopsis" readOnlyFieldName="synopsisReadOnly" }}
+              {{> forms/inline/textArea fieldTitle="Description" dataFieldName="description" readOnlyFieldName="descriptionReadOnly" }}
               {{> forms/inline/boolean fieldTitle="Open Access?" dataFieldName="isOpenAccess" claimsRequired="superadmin,orgadmin,cityadmin" }}
+              {{> forms/inline/boolean fieldTitle="Visible on website?" dataFieldName="isPubliclyVisible" }}
               
               <dt class="key-value-pair__key key-value-pair__key--inline">Accommodation Type</dt>
               <dd class="key-value-pair__value">
@@ -80,7 +82,7 @@ nosubnav: true
             <!-- /ko -->
             <dl class="key-value-pair" data-bind="with: formFields">
               {{> forms/inline/textField fieldTitle="Contact Name" dataFieldName="name" }}
-              {{> forms/inline/textArea fieldTitle="Additional Info" dataFieldName="additionalInfo" }}
+              {{> forms/inline/textArea fieldTitle="Additional Info" dataFieldName="additionalInfo" readOnlyFieldName="additionalInfo" }}
               {{> forms/inline/emailField fieldTitle="Email" dataFieldName="email" }}
               {{> forms/inline/textField fieldTitle="Telephone" dataFieldName="telephone" }}
             </dl>
@@ -103,7 +105,7 @@ nosubnav: true
               {{> forms/inline/textField fieldTitle="Street 3" dataFieldName="street3" }}
               {{> forms/inline/textField fieldTitle="City" dataFieldName="city" }}
               {{> forms/inline/textField fieldTitle="Postcode" dataFieldName="postcode" }}
-              {{> forms/inline/textArea fieldTitle="Public Transport" dataFieldName="publicTransportInfo" }}
+              {{> forms/inline/textArea fieldTitle="Public Transport" dataFieldName="publicTransportInfo" readOnlyFieldName="publicTransportInfo" }}
               <dt class="key-value-pair__key">Nearest Support Provider</dt>
               <dd class="key-value-pair__value">
                 <!-- ko ifnot: $parent.isEditable -->
@@ -130,27 +132,28 @@ nosubnav: true
             <button data-bind="click: save" class="btn btn--primary"><span class="btn__text">save</span></button>
             <!-- /ko -->
             <dl class="key-value-pair" data-bind="with: formFields">
-              {{> forms/inline/boolean fieldTitle="Accepts Housing Benefit" dataFieldName="acceptsHousingBenefit" }}
-              {{> forms/inline/booleanOrOther fieldTitle="Accepts Pets" dataFieldName="acceptsPets" thirdOptionLabel="Ask Landlord" }}
-              {{> forms/inline/booleanOrOther fieldTitle="Accepts Couples" dataFieldName="acceptsCouples" thirdOptionLabel="Ask Landlord" }}
-              {{> forms/inline/boolean fieldTitle="Disabled Access" dataFieldName="hasDisabledAccess" }}
-              {{> forms/inline/boolean fieldTitle="Suitable for Women" dataFieldName="isSuitableForWomen" }}
-              {{> forms/inline/boolean fieldTitle="Suitable for Young People" dataFieldName="isSuitableForYoungPeople" }}
-              {{> forms/inline/boolean fieldTitle="Single Rooms" dataFieldName="hasSingleRooms" }}
-              {{> forms/inline/boolean fieldTitle="Shared Rooms" dataFieldName="hasSharedRooms" }}
-              {{> forms/inline/boolean fieldTitle="Shower/Bathroom Facilities" dataFieldName="hasShowerBathroomFacilities" }}
-              {{> forms/inline/boolean fieldTitle="Access to Kitchen" dataFieldName="hasAccessToKitchen" }}
-              {{> forms/inline/boolean fieldTitle="Flexible Meal Times" dataFieldName="hasFlexibleMealTimes" }}
-              {{> forms/inline/boolean fieldTitle="Meal Availability" dataFieldName="availabilityOfMeals" }}
-              {{> forms/inline/boolean fieldTitle="Lounge" dataFieldName="hasLounge" }}
-              {{> forms/inline/boolean fieldTitle="Provides Clean Bedding" dataFieldName="providesCleanBedding" }}
-              {{> forms/inline/boolean fieldTitle="Allows Visitors" dataFieldName="allowsVisitors" }}
-              {{> forms/inline/boolean fieldTitle="On-site Manager" dataFieldName="hasOnSiteManager" }}
-              {{> forms/inline/boolean fieldTitle="Reference/Referral Required" dataFieldName="referenceReferralIsRequired" }}
+              {{> forms/inline/booleanOrOther fieldTitle="Accepts Housing Benefit" dataFieldName="acceptsHousingBenefit" thirdOptionLabel="Don't Know/Ask" }}
+              {{> forms/inline/booleanOrOther fieldTitle="Accepts Pets" dataFieldName="acceptsPets" thirdOptionLabel="Don't Know/Ask" }}
+              {{> forms/inline/booleanOrOther fieldTitle="Accepts Couples" dataFieldName="acceptsCouples" thirdOptionLabel="Don't Know/Ask" }}
+              {{> forms/inline/booleanOrOther fieldTitle="Disabled Access" dataFieldName="hasDisabledAccess" thirdOptionLabel="Don't Know/Ask" }}
+              {{> forms/inline/booleanOrOther fieldTitle="Suitable for Women" dataFieldName="isSuitableForWomen" thirdOptionLabel="Don't Know/Ask" }}
+              {{> forms/inline/booleanOrOther fieldTitle="Suitable for Young People" dataFieldName="isSuitableForYoungPeople" thirdOptionLabel="Don't Know/Ask" }}
+              {{> forms/inline/booleanOrOther fieldTitle="Single Rooms" dataFieldName="hasSingleRooms" thirdOptionLabel="Don't Know/Ask" }}
+              {{> forms/inline/booleanOrOther fieldTitle="Shared Rooms" dataFieldName="hasSharedRooms" thirdOptionLabel="Don't Know/Ask" }}
+              {{> forms/inline/booleanOrOther fieldTitle="Shower/Bathroom Facilities" dataFieldName="hasShowerBathroomFacilities" thirdOptionLabel="Don't Know/Ask" }}
+              {{> forms/inline/booleanOrOther fieldTitle="Access to Kitchen" dataFieldName="hasAccessToKitchen" thirdOptionLabel="Don't Know/Ask" }}
+              {{> forms/inline/booleanOrOther fieldTitle="Flexible Meal Times" dataFieldName="hasFlexibleMealTimes" thirdOptionLabel="Don't Know/Ask" }}
+              {{> forms/inline/textArea fieldTitle="Meal Availability" dataFieldName="availabilityOfMeals" }}
+              {{> forms/inline/booleanOrOther fieldTitle="Lounge" dataFieldName="hasLounge" thirdOptionLabel="Don't Know/Ask" }}
+              {{> forms/inline/booleanOrOther fieldTitle="Provides Clean Bedding" dataFieldName="providesCleanBedding" thirdOptionLabel="Don't Know/Ask" }}
+              {{> forms/inline/booleanOrOther fieldTitle="Allows Visitors" dataFieldName="allowsVisitors" thirdOptionLabel="Don't Know/Ask" }}
+              {{> forms/inline/booleanOrOther fieldTitle="Allows Dependent Children" dataFieldName="allowsChildren" thirdOptionLabel="Don't Know/Ask" }}
+              {{> forms/inline/booleanOrOther fieldTitle="On-site Manager" dataFieldName="hasOnSiteManager" thirdOptionLabel="Don't Know/Ask" }}
+              {{> forms/inline/booleanOrOther fieldTitle="Reference/Referral Required" dataFieldName="referenceReferralIsRequired" thirdOptionLabel="Don't Know/Ask" }}
               {{> forms/inline/textField fieldTitle="Price (£ p/w)" dataFieldName="price" classModifier="" }}
-              {{> forms/inline/boolean fieldTitle="Food Included" dataFieldName="foodIsIncluded" }}
-              {{> forms/inline/textArea fieldTitle="Additional Features" dataFieldName="additionalFeatures" }}
-              {{> forms/inline/textArea fieldTitle="Other Features for Additional Cost" dataFieldName="featuresAvailableAtAdditionalCost" }}
+              {{> forms/inline/booleanOrOther fieldTitle="Food Included" dataFieldName="foodIsIncluded" thirdOptionLabel="Don't Know/Ask" }}
+              {{> forms/inline/textArea fieldTitle="Additional Features" dataFieldName="additionalFeatures" readOnlyFieldName="additionalFeaturesReadOnly" }}
+              {{> forms/inline/textArea fieldTitle="Other Features for Additional Cost" dataFieldName="featuresAvailableAtAdditionalCost" readOnlyFieldName="featuresAvailableAtAdditionalCostReadOnly" }}
             </dl>
         </section>
     </div>

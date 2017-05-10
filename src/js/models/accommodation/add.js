@@ -16,6 +16,7 @@ function Model () {
 
   self.formFields = ko.validatedObservable({
     name: ko.observable().extend({ required: true }),
+    synopsis: ko.observable(),
     description: ko.observable(),
     isOpenAccess: ko.observable(false),
     accommodationType: ko.observable(),
