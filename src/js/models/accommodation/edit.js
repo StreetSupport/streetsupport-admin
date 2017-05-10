@@ -104,6 +104,7 @@ function Model () {
       hasLounge: ko.observable(),
       providesCleanBedding: ko.observable(),
       allowsVisitors: ko.observable(),
+      allowsChildren: ko.observable(),
       hasOnSiteManager: ko.observable(),
       referenceReferralIsRequired: ko.observable(),
       price: ko.observable().extend({ required: true }),
@@ -116,7 +117,7 @@ function Model () {
     return new InlineEditableSubEntity({
       formFields: formFields,
       patchEndpoint: endpoint,
-      boolDiscFields: ['acceptsPets', 'acceptsCouples'],
+      boolDiscFields: ['acceptsHousingBenefit', 'acceptsPets', 'acceptsCouples', 'hasDisabledAccess', 'isSuitableForWomen', 'isSuitableForYoungPeople', 'hasSingleRooms', 'hasSharedRooms', 'hasShowerBathroomFacilities', 'hasAccessToKitchen', 'hasFlexibleMealTimes', 'hasLounge', 'providesCleanBedding', 'allowsVisitors', 'allowsChildren', 'hasOnSiteManager', 'referenceReferralIsRequired', 'foodIsIncluded'],
       computedFields: [{
         sourceField: 'additionalFeatures',
         destField: 'additionalFeaturesReadOnly',
