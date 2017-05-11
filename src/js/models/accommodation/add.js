@@ -47,6 +47,7 @@ function Model () {
   self.formSubmitted = ko.observable(false)
   self.formSubmissionSuccessful = ko.observable(false)
   self.formSubmissionNotSuccessful = ko.observable(false)
+  self.editNewItemUrl = ko.observable()
 
   self.init = () => {
     validation.initialise(ko.validation)
@@ -69,6 +70,7 @@ function Model () {
 
         if (result.statusCode === 201) {
           self.formSubmissionSuccessful(true)
+          self.editNewItemUrl(`/accommodation/edit/?id=${result.data.id}`)
         } else {
           self.formSubmitted(false)
           self.formSubmissionNotSuccessful(true)

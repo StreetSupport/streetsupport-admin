@@ -25,7 +25,7 @@ describe('Accommodation - Add', () => {
   beforeEach(() => {
     browserLoadingStub = sinon.stub(browser, 'loading')
     browserLoadedStub = sinon.stub(browser, 'loaded')
-
+    
     sut = new Model()
     sut.init()
   })
@@ -58,7 +58,9 @@ describe('Accommodation - Add', () => {
           then: function (success, error) {
             success({
               'statusCode': 201,
-              'data': 'newId'
+              'data': {
+                id: 'newId'
+              }
             })
           }
         })
@@ -131,6 +133,10 @@ describe('Accommodation - Add', () => {
 
     it('- should show success message', () => {
       expect(sut.formSubmissionSuccessful()).toBeTruthy()
+    })
+
+    it('- should set edit created item url', () => {
+      expect(sut.editNewItemUrl()).toEqual(`/accommodation/edit/?id=newId`)
     })
 
     describe('- add new', () => {

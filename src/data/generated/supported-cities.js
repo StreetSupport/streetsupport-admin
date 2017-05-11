@@ -7,14 +7,6 @@ export const cities = [{
   "isOpenToRegistrations": true,
   "isPublic": true
 }, {
-  "id": "bournemouth",
-  "findHelpId": "bournemouth",
-  "name": "Bournemouth",
-  "latitude": 50.7304553,
-  "longitude": -1.9144711,
-  "isOpenToRegistrations": false,
-  "isPublic": true
-}, {
   "id": "leeds",
   "findHelpId": "leeds",
   "name": "Leeds",
@@ -22,4 +14,28 @@ export const cities = [{
   "longitude": -1.54511238485298,
   "isOpenToRegistrations": true,
   "isPublic": true
+}, {
+  "id": "bournemouth",
+  "findHelpId": "bournemouth",
+  "name": "Bournemouth",
+  "latitude": 50.7304553,
+  "longitude": -1.9144711,
+  "isOpenToRegistrations": true,
+  "isPublic": false
+}, {
+  "id": "liverpool",
+  "findHelpId": "liverpool",
+  "name": "Liverpool",
+  "latitude": 53.41058,
+  "longitude": -2.97794,
+  "isOpenToRegistrations": true,
+  "isPublic": false
+}, {
+  "id": "tameside",
+  "findHelpId": "tameside",
+  "name": "Tameside",
+  "latitude": 53.478245,
+  "longitude": -2.06862,
+  "isOpenToRegistrations": true,
+  "isPublic": false
 }]
