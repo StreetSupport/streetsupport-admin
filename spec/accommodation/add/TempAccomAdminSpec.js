@@ -15,23 +15,19 @@ const validation = require(`${jsRoot}validation`)
 
 import { categories } from '../../../src/data/generated/service-categories'
 import { supportTypes } from '../../../src/data/generated/support-types'
-const auth = require(`${jsRoot}auth`)
 
-describe('Accommodation - Add - org admin', () => {
+describe('Accommodation - Add as TempAccom Admin', () => {
   const Model = require(`${jsRoot}models/accommodation/add`)
   let sut = null
   let browserLoadingStub = null
   let browserLoadedStub = null
+  let cookieStub = null
 
   beforeEach(() => {
     browserLoadingStub = sinon.stub(browser, 'loading')
     browserLoadedStub = sinon.stub(browser, 'loaded')
-
-    sinon.stub(auth, 'providerAdminFor')
-      .returns('the-users-service-provider-id')
-
-    sinon.stub(auth, 'isSuperAdmin')
-      .returns(false)
+    cookieStub = sinon.stub(cookies, 'get')
+    cookieStub.withArgs('auth-claims').returns('tempaccomadmin')
 
     sut = new Model()
     sut.init()
@@ -40,8 +36,7 @@ describe('Accommodation - Add - org admin', () => {
   afterEach(() => {
     browser.loading.restore()
     browser.loaded.restore()
-    auth.providerAdminFor.restore()
-    auth.isSuperAdmin.restore()
+    cookies.get.restore()
   })
 
   it('- it should set list of accom types', () => {
@@ -60,7 +55,7 @@ describe('Accommodation - Add - org admin', () => {
       browserLoadedStub.reset()
       sinon.stub(validation, 'showErrors')
 
-      sinon.stub(cookies, 'get').withArgs('session-token').returns('stored-session-token')
+      cookieStub.withArgs('session-token').returns('stored-session-token')
 
       ajaxPostStub = sinon.stub(ajax, 'post')
         .returns({
@@ -79,6 +74,7 @@ describe('Accommodation - Add - org admin', () => {
       sut.formFields().isOpenAccess(true)
       sut.formFields().accommodationType('accommodation type')
       sut.formFields().supportOffered(['support a', 'support b'])
+      sut.formFields().serviceProviderId('service-provider-id')
       sut.formFields().email('test@email.com')
       sut.formFields().telephone('telephone')
       sut.formFields().addressLine1('address line 1')
@@ -92,7 +88,6 @@ describe('Accommodation - Add - org admin', () => {
 
     afterEach(() => {
       ajax.post.restore()
-      cookies.get.restore()
       validation.showErrors.restore()
     })
 
@@ -110,7 +105,7 @@ describe('Accommodation - Add - org admin', () => {
         'IsOpenAccess': true,
         'AccommodationType': 'accommodation type',
         'SupportOffered': ['support a', 'support b'],
-        'ServiceProviderId': 'the-users-service-provider-id',
+        'ServiceProviderId': 'service-provider-id',
         'Email': 'test@email.com',
         'Telephone': 'telephone',
         'AddressLine1': 'address line 1',

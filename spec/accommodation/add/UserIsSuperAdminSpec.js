@@ -15,25 +15,46 @@ const validation = require(`${jsRoot}validation`)
 
 import { categories } from '../../../src/data/generated/service-categories'
 import { supportTypes } from '../../../src/data/generated/support-types'
+const auth = require(`${jsRoot}auth`)
 
-describe('Accommodation - Add', () => {
+describe('Accommodation - Add - super admin', () => {
   const Model = require(`${jsRoot}models/accommodation/add`)
+  const headers = {
+    'content-type': 'application/json',
+    'session-token': 'stored-session-token'
+  }
   let sut = null
+  let ajaxGetStub = null
   let browserLoadingStub = null
   let browserLoadedStub = null
-  let cookieStub = null
 
   beforeEach(() => {
+    ajaxGetStub = sinon.stub(ajax, 'get')
+      .returns({
+        then: function (success, error) {
+          success({
+            'statusCode': 201,
+            'data': providerData
+          })
+        }
+      })
+
+    sinon.stub(auth, 'providerAdminFor').returns('')
+    sinon.stub(auth, 'isSuperAdmin').returns(true)
+
     browserLoadingStub = sinon.stub(browser, 'loading')
     browserLoadedStub = sinon.stub(browser, 'loaded')
-    cookieStub = sinon.stub(cookies, 'get')
-    cookieStub.withArgs('auth-claims').returns('superadmin')
+
+    sinon.stub(cookies, 'get').withArgs('session-token').returns('stored-session-token')
 
     sut = new Model()
     sut.init()
   })
 
   afterEach(() => {
+    ajax.get.restore()
+    auth.providerAdminFor.restore()
+    auth.isSuperAdmin.restore()
     browser.loading.restore()
     browser.loaded.restore()
     cookies.get.restore()
@@ -47,6 +68,17 @@ describe('Accommodation - Add', () => {
     expect(sut.supportTypes().length).toEqual(supportTypes.length)
   })
 
+  it('- should get service providers', () => {
+    const calledAsExpected = ajaxGetStub
+      .withArgs(endpoints.getServiceProvidersHAL, headers)
+      .calledOnce
+    expect(calledAsExpected).toBeTruthy()
+  })
+
+  it('- should set service providers', () => {
+    expect(sut.serviceProviders().length).toEqual(providerData.items.length)
+  })
+
   describe('- submit', () => {
     let ajaxPostStub = null
 
@@ -54,8 +86,6 @@ describe('Accommodation - Add', () => {
       browserLoadingStub.reset()
       browserLoadedStub.reset()
       sinon.stub(validation, 'showErrors')
-
-      cookieStub.withArgs('session-token').returns('stored-session-token')
 
       ajaxPostStub = sinon.stub(ajax, 'post')
         .returns({
@@ -74,7 +104,6 @@ describe('Accommodation - Add', () => {
       sut.formFields().isOpenAccess(true)
       sut.formFields().accommodationType('accommodation type')
       sut.formFields().supportOffered(['support a', 'support b'])
-      sut.formFields().serviceProviderId('service-provider-id')
       sut.formFields().email('test@email.com')
       sut.formFields().telephone('telephone')
       sut.formFields().addressLine1('address line 1')
@@ -82,6 +111,7 @@ describe('Accommodation - Add', () => {
       sut.formFields().addressLine3('address line 3')
       sut.formFields().city('manchester')
       sut.formFields().postcode('postcode')
+      sut.formFields().serviceProviderId('coffee4craig')
 
       sut.save()
     })
@@ -105,7 +135,7 @@ describe('Accommodation - Add', () => {
         'IsOpenAccess': true,
         'AccommodationType': 'accommodation type',
         'SupportOffered': ['support a', 'support b'],
-        'ServiceProviderId': 'service-provider-id',
+        'ServiceProviderId': 'coffee4craig',
         'Email': 'test@email.com',
         'Telephone': 'telephone',
         'AddressLine1': 'address line 1',
@@ -113,10 +143,6 @@ describe('Accommodation - Add', () => {
         'AddressLine3': 'address line 3',
         'City': 'manchester',
         'Postcode': 'postcode'
-      }
-      const headers = {
-        'content-type': 'application/json',
-        'session-token': 'stored-session-token'
       }
       const calledAsExpected = ajaxPostStub
         .withArgs(endpoint, headers, payload)
@@ -160,3 +186,12 @@ describe('Accommodation - Add', () => {
     })
   })
 })
+
+const providerData = { items: [
+  { key: 'provider-a', name: 'Provider A' },
+  { key: 'provider-b', name: 'Provider B' },
+  { key: 'provider-c', name: 'Provider C' },
+  { key: 'provider-d', name: 'Provider D' },
+  { key: 'provider-e', name: 'Provider E' },
+  { key: 'provider-f', name: 'Provider F' }
+]}
