@@ -26,9 +26,19 @@ nosubnav: true
         <h3>General Info</h3>
         <dl class="key-value-pair">
           {{> forms/textField fieldTitle="Name" dataFieldName="name" }}
+          <div data-claims="superadmin">
+            <dt class="key-value-pair__key">Service Provider</dt>
+            <dd class="key-value-pair__value form__field-item">
+              <select data-bind="options: $parent.serviceProviders,
+                  optionsValue: (item) => { return item.key },
+                  optionsText:  (item) => { return item.name },
+                  value: serviceProviderId,
+                  optionsCaption: '-- please select --'" class="form__input"></select>
+            </dd>
+          </div>
           {{> forms/textArea fieldTitle="Synopsis" dataFieldName="synopsis" }}
           {{> forms/textArea fieldTitle="Description" dataFieldName="description" }}
-            {{> forms/boolean fieldTitle="Open Access?" dataFieldName="isOpenAccess" claimsRequired="superadmin,orgadmin,cityadmin" }}
+          {{> forms/boolean fieldTitle="Open Access?" dataFieldName="isOpenAccess" claimsRequired="superadmin,orgadmin,cityadmin" }}
           <dt class="key-value-pair__key">Acommodation Type</dt>
           <dd class="key-value-pair__value form__field-item">
             <select data-bind="options: $parent.accommodationTypes,

@@ -1,7 +1,7 @@
 export const categories = [{
   "key": "support",
   "sortOrder": 100,
-  "name": "Advice",
+  "name": "Support",
   "subCategories": [{
     "key": "general",
     "name": "General support"
@@ -41,15 +41,6 @@ export const categories = [{
   }, {
     "key": "ex-offender",
     "name": "Ex-Offenders' support"
-  }, {
-    "key": "domestic-abuse",
-    "name": "Domestic Abuse"
-  }, {
-    "key": "refugees",
-    "name": "Refugees"
-  }, {
-    "key": "asylum-seekers",
-    "name": "Asylum Seekers"
   }]
 }, {
   "key": "accom",
@@ -60,7 +51,7 @@ export const categories = [{
     "name": "Emergency"
   }, {
     "key": "hostel",
-    "name": "Hostels"
+    "name": "Hostel"
   }, {
     "key": "hosted",
     "name": "Hosted"
@@ -76,12 +67,14 @@ export const categories = [{
   }, {
     "key": "shelter",
     "name": "Night shelter"
-  }, {
-    "key": "financial-support",
-    "name": "Financial support"
-  }, {
-    "key": "lettings-agencies",
-    "name": "Lettings Agencies"
+  }]
+}, {
+  "key": "meals",
+  "sortOrder": 80,
+  "name": "Meals",
+  "subCategories": [{
+    "key": "general",
+    "name": "Meals"
   }]
 }, {
   "key": "dropin",
@@ -92,16 +85,8 @@ export const categories = [{
     "name": "Drop-In"
   }]
 }, {
-  "key": "meals",
-  "sortOrder": 60,
-  "name": "Meals",
-  "subCategories": [{
-    "key": "general",
-    "name": "Meals"
-  }]
-}, {
   "key": "items",
-  "sortOrder": 50,
+  "sortOrder": 60,
   "name": "Personal Items",
   "subCategories": [{
     "key": "clothes",
@@ -142,7 +127,7 @@ export const categories = [{
   }]
 }, {
   "key": "services",
-  "sortOrder": 45,
+  "sortOrder": 50,
   "name": "Personal Services",
   "subCategories": [{
     "key": "laundry",
@@ -155,6 +140,14 @@ export const categories = [{
     "name": "Haircuts"
   }]
 }, {
+  "key": "foodbank",
+  "sortOrder": 45,
+  "name": "Food Banks",
+  "subCategories": [{
+    "key": "general",
+    "name": "Food Banks"
+  }]
+}, {
   "key": "medical",
   "sortOrder": 40,
   "name": "Medical Services",
@@ -165,28 +158,11 @@ export const categories = [{
     "key": "nurse",
     "name": "Practice Nurse"
   }, {
-    "key": "hospital",
-    "name": "Hospital"
-  }, {
     "key": "dentist",
     "name": "Dentist"
   }, {
-    "key": "drug-alcohol",
-    "name": "Drug and Alcohol Treatment"
-  }, {
     "key": "mental-health",
     "name": "Mental Health"
-  }, {
-    "key": "sexual",
-    "name": "Sexual Health"
-  }]
-}, {
-  "key": "foodbank",
-  "sortOrder": 30,
-  "name": "Food Banks",
-  "subCategories": [{
-    "key": "general",
-    "name": "Food Banks"
   }]
 }, {
   "key": "communications",
@@ -200,45 +176,39 @@ export const categories = [{
     "name": "Internet access"
   }]
 }, {
-  "key": "training",
-  "sortOrder": 15,
-  "name": "Training",
-  "subCategories": [{
-    "key": "general",
-    "name": "Training and workshops"
-  }, {
-    "key": "education",
-    "name": "Education"
-  }, {
-    "key": "volunteering",
-    "name": "Volunteering"
-  }]
-}, {
-  "key": "employment",
-  "sortOrder": 10,
-  "name": "Employment",
-  "subCategories": [{
-    "key": "jobs",
-    "name": "Job Opportunities"
-  }, {
-    "key": "jobclub",
-    "name": "Job Clubs"
-  }]
-}, {
   "key": "activities",
-  "sortOrder": 5,
+  "sortOrder": 15,
   "name": "Activities",
   "subCategories": [{
     "key": "arts",
     "name": "Arts"
   }, {
     "key": "sports",
-    "name": "Sport"
+    "name": "Sports"
   }, {
-    "key": "gardening",
-    "name": "Gardening"
+    "key": "other",
+    "name": "Other activities"
+  }]
+}, {
+  "key": "training",
+  "sortOrder": 10,
+  "name": "Training",
+  "subCategories": [{
+    "key": "general",
+    "name": "Training and workshops"
+  }]
+}, {
+  "key": "employment",
+  "sortOrder": 5,
+  "name": "Employment",
+  "subCategories": [{
+    "key": "paid",
+    "name": "Work opportunities"
   }, {
-    "key": "otheractivity",
-    "name": "Other Activities"
+    "key": "internships",
+    "name": "Internships"
+  }, {
+    "key": "volunteer",
+    "name": "Voluntary work opportunities"
   }]
 }]

@@ -24,6 +24,7 @@ describe('Accommodation - add - server returns bad request', () => {
     browserLoadedStub = sinon.stub(browser, 'loaded')
     sinon.stub(browser, 'scrollTo')
     sinon.stub(auth, 'providerAdminFor').returns('')
+    sinon.stub(auth, 'isSuperAdmin').returns(false)
 
     sut = new Model()
     sut.init()
@@ -31,6 +32,7 @@ describe('Accommodation - add - server returns bad request', () => {
 
   afterEach(() => {
     auth.providerAdminFor.restore()
+    auth.isSuperAdmin.restore()
     browser.loading.restore()
     browser.loaded.restore()
     browser.scrollTo.restore()
