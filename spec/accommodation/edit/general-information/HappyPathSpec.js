@@ -45,7 +45,7 @@ describe('Accommodation - Edit General Information', () => {
         }
       })
     ajaxGetStub
-      .withArgs(`${endpoints.getPublishedServiceProviders}`, headers)
+      .withArgs(`${endpoints.getServiceProvidersHAL}`, headers)
       .returns({
         then: function (success, error) {
           success({
@@ -109,6 +109,14 @@ describe('Accommodation - Edit General Information', () => {
 
   it('- should set support types offered', () => {
     expect(sut.generalDetails().formFields().supportOfferedReadOnly()).toEqual('support a, support b')
+  })
+
+  it('- should load service provider', () => {
+    expect(sut.generalDetails().formFields().serviceProviderId()).toEqual('service-provider-id')
+  })
+
+  it('- should load support providers', () => {
+    expect(sut.generalDetails().serviceProviders().length).toEqual(6)
   })
 
   it('- should notify user it is loaded', () => {

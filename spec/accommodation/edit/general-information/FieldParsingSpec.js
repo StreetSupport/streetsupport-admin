@@ -43,7 +43,7 @@ describe('Accommodation - Edit General Information - Field Parsing', () => {
         }
       })
     ajaxGetStub
-      .withArgs(`${endpoints.getPublishedServiceProviders}`, headers)
+      .withArgs(`${endpoints.getServiceProvidersHAL}`, headers)
       .returns({
         then: function (success, error) {
           success({

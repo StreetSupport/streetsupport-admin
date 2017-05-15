@@ -40,7 +40,7 @@ describe('Accommodation - Edit Contact Information - invalid email set', () => {
         }
       })
     ajaxGetStub
-      .withArgs(`${endpoints.getPublishedServiceProviders}`, headers)
+      .withArgs(`${endpoints.getServiceProvidersHAL}`, headers)
       .returns({
         then: function (success, error) {
           success({
