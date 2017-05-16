@@ -13,7 +13,7 @@ const getUserClaims = function () {
 
 const providerAdminFor = function () {
   const claims = getUserClaims()
-  const adminForClaim = claims.find((c) => c.startsWith('AdminFor:'))
+  const adminForClaim = claims.find((c) => c.startsWith('adminfor:'))
   return adminForClaim !== undefined ? adminForClaim.split(':')[1] : ''
 }
 
