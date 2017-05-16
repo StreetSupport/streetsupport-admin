@@ -79,6 +79,10 @@ describe('Accommodation - Add - super admin', () => {
     expect(sut.serviceProviders().length).toEqual(providerData.items.length)
   })
 
+  it('- should set is super admin', () => {
+    expect(sut.isSuperAdmin()).toBeTruthy()
+  })
+
   describe('- submit', () => {
     let ajaxPostStub = null
 

@@ -44,6 +44,8 @@ function Model () {
       'isSelected': false
     }
   }))
+
+  self.isSuperAdmin = ko.observable()
   self.serviceProviders = ko.observableArray()
   self.formSubmitted = ko.observable(false)
   self.formSubmissionSuccessful = ko.observable(false)
@@ -54,6 +56,7 @@ function Model () {
     validation.initialise(ko.validation)
     self.fieldErrors = validation.getValidationGroup(ko.validation, self.formFields)
     if (auth.isSuperAdmin()) {
+      self.isSuperAdmin(true)
       ajax
         .get(endpoints.getServiceProvidersHAL, self.headers(cookies.get('session-token')))
         .then((result) => {
