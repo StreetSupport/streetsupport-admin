@@ -44,7 +44,7 @@ describe('Accommodation - Edit Features', () => {
         }
       })
     ajaxGetStub
-      .withArgs(`${endpoints.getPublishedServiceProviders}`, headers)
+      .withArgs(`${endpoints.getServiceProvidersHAL}`, headers)
       .returns({
         then: function (success, error) {
           success({

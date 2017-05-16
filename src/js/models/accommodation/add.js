@@ -44,7 +44,7 @@ function Model () {
       'isSelected': false
     }
   }))
-
+  self.serviceProviders = ko.observableArray()
   self.formSubmitted = ko.observable(false)
   self.formSubmissionSuccessful = ko.observable(false)
   self.formSubmissionNotSuccessful = ko.observable(false)
@@ -53,6 +53,15 @@ function Model () {
   self.init = () => {
     validation.initialise(ko.validation)
     self.fieldErrors = validation.getValidationGroup(ko.validation, self.formFields)
+    if (auth.isSuperAdmin()) {
+      ajax
+        .get(endpoints.getServiceProvidersHAL, self.headers(cookies.get('session-token')))
+        .then((result) => {
+          self.serviceProviders(result.data.items)
+        }, () => {
+          self.handleServerError()
+        })
+    }
   }
 
   self.postData = () => {

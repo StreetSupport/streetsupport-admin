@@ -25,7 +25,7 @@ module.exports = {
       'latitude': 0,
       'longitude': 0,
       'publicTransportInfo': 'public transport info',
-      'nearestSupportProviderId': 'albert-kennedy-trust'
+      'nearestSupportProviderId': 'provider-b'
     },
     'features': {
       'acceptsHousingBenefit': 2,
@@ -56,9 +56,14 @@ module.exports = {
     'documentCreationDate': '2017-02-07T17:49:33.2570000Z',
     'documentModifiedDate': '2017-02-07T17:49:33.2570000Z'
   },
-  serviceProviderData: [
-    { 'key': 'albert-kennedy-trust', 'name': 'Albert Kennedy Trust' },
-    { 'key': 'coffee4craig', 'name': 'Coffee4Craig' },
-    { 'key': 'the-men-s-room', 'name': 'The Men&#39;s Room' }
-  ]
+  serviceProviderData: {
+    items: [
+      { key: 'provider-a', name: 'Provider A' },
+      { key: 'provider-b', name: 'Provider B' },
+      { key: 'provider-c', name: 'Provider C' },
+      { key: 'provider-d', name: 'Provider D' },
+      { key: 'provider-e', name: 'Provider E' },
+      { key: 'provider-f', name: 'Provider F' }
+    ]
+  }
 }

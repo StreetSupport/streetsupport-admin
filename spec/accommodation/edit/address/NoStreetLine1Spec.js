@@ -41,7 +41,7 @@ describe('Accommodation - Edit Address - no street1 set', () => {
         }
       })
     ajaxGetStub
-      .withArgs(`${endpoints.getPublishedServiceProviders}`, headers)
+      .withArgs(`${endpoints.getServiceProvidersHAL}`, headers)
       .returns({
         then: function (success, error) {
           success({

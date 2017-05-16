@@ -35,7 +35,10 @@ function Model () {
     const model = new InlineEditableSubEntity({
       formFields: formFields,
       patchEndpoint: endpoint,
-      dropdownFields: [{ fieldId: 'accommodationType', collection: 'accommodationTypes' }],
+      dropdownFields: [
+        { fieldId: 'accommodationType', collection: 'accommodationTypes' },
+        { fieldId: 'serviceProviderId', collection: 'serviceProviders' }
+      ],
       computedFields: [{
         sourceField: 'supportOffered',
         destField: 'supportOfferedReadOnly',
@@ -164,10 +167,9 @@ function Model () {
         browser.loaded()
       })
     ajax
-      .get(self.endpointBuilder.publishedOrgs().build(), headers)
+      .get(self.endpointBuilder.serviceProvidersHAL().build(), headers)
       .then((result) => {
-        self.address().serviceProviders(
-          result.data
+          const serviceProviders = result.data.items
             .map((p) => {
               return {
                 id: p.key,
@@ -179,7 +181,8 @@ function Model () {
               if (a.name < b.name) return -1
               return 0
             })
-        )
+        self.address().serviceProviders(serviceProviders)
+        self.generalDetails().serviceProviders(serviceProviders)
       }, () => {
 
       })
