@@ -15,7 +15,7 @@ var ContactVolunteerModel = function () {
   self.isFormSubmitFailure = ko.observable(false)
   self.formModel = ko.validatedObservable({
     message: ko.observable().extend({ required: true }),
-    isAnEmail: ko.observable()
+    isNotAnEmail: ko.observable()
   })
   self.fieldErrors = ko.validation.group(self.formModel)
   self.apiErrors = ko.observableArray()
@@ -37,7 +37,7 @@ var ContactVolunteerModel = function () {
       var endpoint = self.endpointBuilder.volunteers(getUrlParam.parameter('id')).build() + '/contact-requests'
       var payload = {
         'Message': self.formModel().message(),
-        'ShouldSendEmail': self.formModel().isAnEmail()
+        'ShouldSendEmail': !self.formModel().isNotAnEmail()
       }
       ajax
         .post(endpoint, headers, payload)
@@ -62,7 +62,7 @@ var ContactVolunteerModel = function () {
     .get(getEndpoint, headers)
     .then((res) => {
       self.volunteer(new Volunteer(res.data))
-      self.formModel().isAnEmail(self.volunteer().person.telephone.length === 0)
+      self.formModel().isNotAnEmail(self.volunteer().person.email.length === 0)
     }, () => {
 
     })
