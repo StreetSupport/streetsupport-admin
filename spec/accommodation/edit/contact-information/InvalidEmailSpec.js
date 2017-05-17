@@ -13,7 +13,7 @@ const cookies = require(`${jsRoot}cookies`)
 const querystring = require(`${jsRoot}get-url-parameter`)
 const validation = require(`${jsRoot}validation`)
 
-const { testData, serviceProviderData } = require('../testData')
+const { testData, publishedServiceProviderData } = require('../testData')
 
 describe('Accommodation - Edit Contact Information - invalid email set', () => {
   const Model = require(`${jsRoot}models/accommodation/edit`)
@@ -40,12 +40,12 @@ describe('Accommodation - Edit Contact Information - invalid email set', () => {
         }
       })
     ajaxGetStub
-      .withArgs(`${endpoints.getServiceProvidersHAL}`, headers)
+      .withArgs(`${endpoints.getPublishedServiceProviders}`, headers)
       .returns({
         then: function (success, error) {
           success({
             'statusCode': 200,
-            'data': serviceProviderData
+            'data': publishedServiceProviderData
           })
         }
       })

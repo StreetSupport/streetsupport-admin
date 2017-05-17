@@ -12,7 +12,7 @@ const browser = require(`${jsRoot}browser`)
 const cookies = require(`${jsRoot}cookies`)
 const querystring = require(`${jsRoot}get-url-parameter`)
 
-const { testData, serviceProviderData } = require('../testData')
+const { testData, publishedServiceProviderData } = require('../testData')
 
 describe('Accommodation - Edit Address', () => {
   const Model = require(`${jsRoot}models/accommodation/edit`)
@@ -41,12 +41,12 @@ describe('Accommodation - Edit Address', () => {
         }
       })
     ajaxGetStub
-      .withArgs(`${endpoints.getServiceProvidersHAL}`, headers)
+      .withArgs(`${endpoints.getPublishedServiceProviders}`, headers)
       .returns({
         then: function (success, error) {
           success({
             'statusCode': 200,
-            'data': serviceProviderData
+            'data': publishedServiceProviderData
           })
         }
       })

@@ -13,7 +13,7 @@ const browser = require(`${jsRoot}browser`)
 const cookies = require(`${jsRoot}cookies`)
 const querystring = require(`${jsRoot}get-url-parameter`)
 
-const { testData, serviceProviderData } = require('../testData')
+const { testData, publishedServiceProviderData } = require('../testData')
 
 import { categories } from '../../../../src/data/generated/service-categories'
 import { supportTypes } from '../../../../src/data/generated/support-types'
@@ -45,12 +45,12 @@ describe('Accommodation - Edit General Information', () => {
         }
       })
     ajaxGetStub
-      .withArgs(`${endpoints.getServiceProvidersHAL}`, headers)
+      .withArgs(`${endpoints.getPublishedServiceProviders}`, headers)
       .returns({
         then: function (success, error) {
           success({
             'statusCode': 200,
-            'data': serviceProviderData
+            'data': publishedServiceProviderData
           })
         }
       })
@@ -116,7 +116,7 @@ describe('Accommodation - Edit General Information', () => {
   })
 
   it('- should load support providers', () => {
-    expect(sut.generalDetails().serviceProviders().length).toEqual(6)
+    expect(sut.generalDetails().serviceProviders().length).toEqual(publishedServiceProviderData.length)
   })
 
   it('- should notify user it is loaded', () => {

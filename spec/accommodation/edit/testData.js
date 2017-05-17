@@ -56,7 +56,15 @@ module.exports = {
     'documentCreationDate': '2017-02-07T17:49:33.2570000Z',
     'documentModifiedDate': '2017-02-07T17:49:33.2570000Z'
   },
-  serviceProviderData: {
+  publishedServiceProviderData: [
+    { key: 'provider-a', name: 'Provider A' },
+    { key: 'provider-b', name: 'Provider B' },
+    { key: 'provider-c', name: 'Provider C' },
+    { key: 'provider-d', name: 'Provider D' },
+    { key: 'provider-e', name: 'Provider E' },
+    { key: 'provider-f', name: 'Provider F' }
+  ],
+  allServiceProviderData: {
     items: [
       { key: 'provider-a', name: 'Provider A' },
       { key: 'provider-b', name: 'Provider B' },
