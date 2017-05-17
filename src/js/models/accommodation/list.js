@@ -28,46 +28,33 @@ function Lister () {
 
   self.entries = ko.observableArray()
   self.canLoadMore = ko.observable(false)
-  self.loadNextUrl = endpoints.temporaryAccommodation
   self.cities = ko.observableArray(cities)
   self.selectedCityFilter = ko.observable()
+
+  let loadNextUrl = endpoints.temporaryAccommodation
+
+  const getEntriesSuccess = (result) => {
+    self.entries([...self.entries(), ...formatData(result.data.items)])
+    loadNextUrl = endpoints.prefix(result.data.links.next)
+    self.canLoadMore(result.data.links.next !== null)
+    browser.loaded()
+  }
 
   self.init = () => {
     self.loadNext()
   }
 
   self.selectedCityFilter.subscribe((newCityToFilterOn) => {
-    self.loadNextUrl = `${endpoints.temporaryAccommodation}?cityId=${newCityToFilterOn}&pageSize=2`
-
-    browser.loading()
-    ajax.get(self.loadNextUrl, self.headers(cookies.get('session-token')))
-      .then((result) => {
-        self.entries(formatData(result.data.items))
-
-        self.loadNextUrl = endpoints.prefix(result.data.links.next)
-
-        self.canLoadMore(result.data.links.next !== null)
-
-        browser.loaded()
-      }, () => {
-
-      })
+    loadNextUrl = `${endpoints.temporaryAccommodation}?cityId=${newCityToFilterOn}`
+    self.entries([])
+    self.loadNext()
   })
 
   self.loadNext = () => {
     browser.loading()
-    ajax.get(self.loadNextUrl, self.headers(cookies.get('session-token')))
-      .then((result) => {
-        const newEntries = [...self.entries(), ...formatData(result.data.items)]
-        self.entries(newEntries)
-
-        self.loadNextUrl = endpoints.prefix(result.data.links.next)
-
-        self.canLoadMore(result.data.links.next !== null)
-
-        browser.loaded()
-      }, () => {
-
+    ajax.get(loadNextUrl, self.headers(cookies.get('session-token')))
+      .then(getEntriesSuccess, (error) => {
+        self.handleServerError(error)
       })
   }
 }
