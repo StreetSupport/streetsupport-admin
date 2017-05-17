@@ -73,7 +73,6 @@ gulp.task('supported-cities', (callback) => {
     })))
     .pipe(replace('[', 'export const cities = ['))
     .pipe(gulp.dest('./'))
-  return callback()
 })
 
 gulp.task('getLongTermData', ['service-categories', 'supported-cities', 'support-types'])
