@@ -38,11 +38,11 @@ nosubnav: true
           <legend class="h2 form__fieldset-title">Contact Volunteer</legend>
           <ul class="form__field-list">
             <li class="form__field-item form__field-item--full">
-              <label class="form__label--checkbox" for="isNotAnEmail">If you have contacted the volunteer in some other way, please leave some notes regarding your conversation as a record of your contact, and tick the checkbox. <input id="isNotAnEmail" name="isNotAnEmail" type="checkbox" data-bind="checked: isNotAnEmail" /></label>
-            </li>
-            <li class="form__field-item form__field-item--full">
               <label class="form__label" for="message">Message/Notes</label>
               <textarea class="form__input form__input--textarea" id="message" data-bind="value: message" placeholder="required"></textarea>
+            </li>
+            <li class="form__field-item form__field-item--full">
+              <label class="form__label--checkbox" for="isNotAnEmail">If you have contacted the volunteer in some other way and don't want to send this message as an email, please tick the checkbox and we will save the message in the contact log. <input id="isNotAnEmail" name="isNotAnEmail" type="checkbox" data-bind="checked: isNotAnEmail" /></label>
             </li>
           </ul>
         </fieldset>
