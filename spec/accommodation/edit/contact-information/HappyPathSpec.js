@@ -12,7 +12,7 @@ const browser = require(`${jsRoot}browser`)
 const cookies = require(`${jsRoot}cookies`)
 const querystring = require(`${jsRoot}get-url-parameter`)
 
-const { testData, serviceProviderData } = require('../testData')
+const { testData, publishedServiceProviderData } = require('../testData')
 
 describe('Accommodation - Edit Contact Information', () => {
   const Model = require(`${jsRoot}models/accommodation/edit`)
@@ -46,7 +46,7 @@ describe('Accommodation - Edit Contact Information', () => {
         then: function (success, error) {
           success({
             'statusCode': 200,
-            'data': serviceProviderData
+            'data': publishedServiceProviderData
           })
         }
       })

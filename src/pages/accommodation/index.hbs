@@ -14,6 +14,14 @@ nosubnav: true
       <a href="/accommodation/add" class="btn btn--info">
         <span class="btn__text">Add new entry</span>
       </a>
+      <div class="form__field-item form__field-item--full-width">
+        <label for="ffilterByCityilter" class="form__label">Filter by city:</label>
+        <select class="form__input form__input--medium" name="filterByCity" data-bind="options: cities,
+          optionsValue: (item) => { return item.id },
+          optionsText: (item) => { return item.name },
+          value: selectedCityFilter,
+          optionsCaption: 'All'"></select>
+      </div>
     </header>
   </div>
 </div>
@@ -34,12 +42,14 @@ nosubnav: true
       <a data-bind="attr: { href: editUrl }" class="btn btn--primary">
         <span class="btn__text">edit</a>
       </a>
-      <a data-bind="attr: { href: addReviewsUrl }" class="btn btn--info">
+      <!-- ko if: userCanSeeReviews -->
+      <a data-bind="attr: { href: addReviewsUrl }" data-claims="superadmin,tempaccomadmin" class="btn btn--info">
         <span class="btn__text">add feedback</a>
       </a>
-      <a data-bind="attr: { href: reviewsListingUrl }" class="btn btn--info">
+      <a data-bind="attr: { href: reviewsListingUrl }" data-claims="superadmin,tempaccomadmin" class="btn btn--info">
         <span class="btn__text">view past feedback</a>
       </a>
+      <!-- /ko -->
     </article>
   </div>
 

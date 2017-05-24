@@ -1,4 +1,5 @@
 const ajax = require('../../ajax')
+const auth = require('../../auth')
 const BaseViewModel = require('../../models/BaseViewModel')
 const browser = require('../../browser')
 const cookies = require('../../cookies')
@@ -28,13 +29,17 @@ function Model () {
       isOpenAccess: ko.observable(),
       isPubliclyVisible: ko.observable(),
       accommodationType: ko.observable(),
+      serviceProviderId: ko.observable(),
       supportOffered: ko.observableArray()
     })
     const endpoint = self.endpointBuilder.temporaryAccommodation(id).generalDetails().build()
     const model = new InlineEditableSubEntity({
       formFields: formFields,
       patchEndpoint: endpoint,
-      dropdownFields: [{ fieldId: 'accommodationType', collection: 'accommodationTypes' }],
+      dropdownFields: [
+        { fieldId: 'accommodationType', collection: 'accommodationTypes' },
+        { fieldId: 'serviceProviderId', collection: 'serviceProviders' }
+      ],
       computedFields: [{
         sourceField: 'supportOffered',
         destField: 'supportOfferedReadOnly',
@@ -162,23 +167,32 @@ function Model () {
 
         browser.loaded()
       })
+
+    const publisherEndpoint = auth.isSuperAdmin()
+      ? self.endpointBuilder.serviceProvidersHAL().build()
+      : self.endpointBuilder.publishedOrgs().build()
+
+    const mapDataToKeyValues = auth.isSuperAdmin()
+      ? (result) => result.data.items
+      : (result) => result.data
+
     ajax
-      .get(self.endpointBuilder.publishedOrgs().build(), headers)
+      .get(publisherEndpoint, headers)
       .then((result) => {
-        self.address().serviceProviders(
-          result.data
-            .map((p) => {
-              return {
-                id: p.key,
-                name: htmlEncode.htmlDecode(p.name)
-              }
-            })
-            .sort((a, b) => {
-              if (a.name > b.name) return 1
-              if (a.name < b.name) return -1
-              return 0
-            })
-        )
+        const serviceProviders = mapDataToKeyValues(result)
+          .map((p) => {
+            return {
+              id: p.key,
+              name: htmlEncode.htmlDecode(p.name)
+            }
+          })
+          .sort((a, b) => {
+            if (a.name > b.name) return 1
+            if (a.name < b.name) return -1
+            return 0
+          })
+        self.address().serviceProviders(serviceProviders)
+        self.generalDetails().serviceProviders(serviceProviders)
       }, () => {
 
       })

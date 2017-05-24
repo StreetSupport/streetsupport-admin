@@ -12,7 +12,7 @@ const browser = require(`${jsRoot}browser`)
 const cookies = require(`${jsRoot}cookies`)
 const querystring = require(`${jsRoot}get-url-parameter`)
 
-const { testData, serviceProviderData } = require('../testData')
+const { testData, publishedServiceProviderData } = require('../testData')
 
 describe('Accommodation - Edit Address', () => {
   const Model = require(`${jsRoot}models/accommodation/edit`)
@@ -46,7 +46,7 @@ describe('Accommodation - Edit Address', () => {
         then: function (success, error) {
           success({
             'statusCode': 200,
-            'data': serviceProviderData
+            'data': publishedServiceProviderData
           })
         }
       })
@@ -99,23 +99,23 @@ describe('Accommodation - Edit Address', () => {
   })
 
   it('- should load address nearest support provider', () => {
-    expect(sut.address().formFields().nearestSupportProviderId()).toEqual('albert-kennedy-trust')
+    expect(sut.address().formFields().nearestSupportProviderId()).toEqual('provider-b')
   })
 
   it('- should load support providers', () => {
-    expect(sut.address().serviceProviders().length).toEqual(3)
+    expect(sut.address().serviceProviders().length).toEqual(6)
   })
 
   it('- should set support providers id', () => {
-    expect(sut.address().serviceProviders()[2].id).toEqual('the-men-s-room')
+    expect(sut.address().serviceProviders()[2].id).toEqual('provider-c')
   })
 
   it('- should set support providers name', () => {
-    expect(sut.address().serviceProviders()[2].name).toEqual(`The Men's Room`)
+    expect(sut.address().serviceProviders()[2].name).toEqual(`Provider C`)
   })
 
   it('- should set selected support providers read only name', () => {
-    expect(sut.address().formFields().nearestSupportProviderIdReadOnly()).toEqual(`Albert Kennedy Trust`)
+    expect(sut.address().formFields().nearestSupportProviderIdReadOnly()).toEqual(`Provider B`)
   })
 
   it('- should notify user it is loaded', () => {
@@ -177,7 +177,7 @@ describe('Accommodation - Edit Address', () => {
           'City': 'new city',
           'Postcode': 'new m1 3fy',
           'PublicTransportInfo': 'new public transport info',
-          'NearestSupportProviderId': 'new albert-kennedy-trust'
+          'NearestSupportProviderId': 'new provider-b'
         }
         const patchAsExpected = ajaxPatchStub
           .withArgs(endpoint, headers, payload)

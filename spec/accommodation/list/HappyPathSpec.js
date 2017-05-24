@@ -13,6 +13,8 @@ const browser = require(`../../../src/js/browser`)
 const cookies = require(`../../../src/js/cookies`)
 const Model = require(`../../../src/js/models/accommodation/list`)
 
+import { cities } from '../../../src/data/generated/supported-cities'
+
 describe('Accommodation Listing', () => {
   let sut = null
   let browserLoadingStub = null
@@ -20,13 +22,8 @@ describe('Accommodation Listing', () => {
   let ajaxGetStub = null
 
   beforeEach(() => {
-    const headers = {
-      'content-type': 'application/json',
-      'session-token': 'stored-session-token'
-    }
     ajaxGetStub = sinon
       .stub(ajax, 'get')
-      .withArgs(endpoints.temporaryAccommodation, headers)
       .returns({
         then: function (success, error) {
           success({
@@ -62,6 +59,10 @@ describe('Accommodation Listing', () => {
     expect(ajaxGetStub.withArgs(endpoints.temporaryAccommodation, headers).calledAfter(browserLoadingStub)).toBeTruthy()
   })
 
+  it('- should get cities', () => {
+    expect(sut.cities().length).toEqual(cities.length)
+  })
+
   it('- should show user it has loaded', () => {
     expect(browserLoadedStub.calledAfter(ajaxGetStub)).toBeTruthy()
   })
@@ -88,9 +89,13 @@ describe('Accommodation Listing', () => {
 
   describe('- Load more', () => {
     beforeEach(() => {
+      const headers = {
+        'content-type': 'application/json',
+        'session-token': 'stored-session-token'
+      }
       const endpoint = `${endpoints.temporaryAccommodation}?index=4`
       ajaxGetStub
-        .withArgs(endpoint)
+        .withArgs(endpoint, headers)
         .returns({
           then: function (success, error) {
             success({
@@ -99,6 +104,8 @@ describe('Accommodation Listing', () => {
             })
           }
         })
+
+      ajaxGetStub.reset()
       browserLoadingStub.reset()
       browserLoadedStub.reset()
 
@@ -111,6 +118,44 @@ describe('Accommodation Listing', () => {
 
     it('- should add the new items to the entries', () => {
       expect(sut.entries().length).toEqual(4)
+    })
+  })
+
+  describe('- by city', () => {
+    beforeEach(() => {
+      browserLoadingStub.reset()
+      browserLoadedStub.reset()
+
+      const endpoint = `${endpoints.temporaryAccommodation}?cityId=manchester`
+      const headers = {
+        'content-type': 'application/json',
+        'session-token': 'stored-session-token'
+      }
+
+      ajaxGetStub
+        .withArgs(endpoint, headers)
+        .returns({
+          then: function (success, error) {
+            success({
+              'statusCode': 200,
+              'data': mancAccomData
+            })
+          }
+        })
+
+      sut.selectedCityFilter('manchester')
+    })
+
+    it('- should show user it is loading', () => {
+      expect(browserLoadingStub.calledOnce).toBeTruthy()
+    })
+
+    it('- should replace current accommodation list', () => {
+      expect(sut.entries().length).toEqual(mancAccomData.items.length)
+    })
+
+    it('- should show user it has loaded', () => {
+      expect(browserLoadedStub.calledAfter(ajaxGetStub)).toBeTruthy()
     })
   })
 })
@@ -182,5 +227,41 @@ const accomData2 = {
       'longitude': 0
     }
   ],
-  'total': 4
+  'total': 1
+}
+
+
+const mancAccomData = {
+  'links': {
+    'next': null,
+    'prev': null,
+    'self': '/v1/accommodation?index=0'
+  },
+  'items': [
+    {
+      'id': '589a08ad6a38c32e883f26dg',
+      'name': 'test1',
+      'additionalInfo': 'info',
+      'email': 'test@test.com',
+      'telephone': '234728934',
+      'street1': '1',
+      'city': 'city',
+      'postcode': 'm13fy',
+      'latitude': 0,
+      'longitude': 0
+    },
+    {
+      'id': '589a08ad6a38c32e883f26dg',
+      'name': 'test1',
+      'additionalInfo': 'info',
+      'email': 'test@test.com',
+      'telephone': '234728934',
+      'street1': '1',
+      'city': 'city',
+      'postcode': 'm13fy',
+      'latitude': 0,
+      'longitude': 0
+    }
+  ],
+  'total': 2
 }

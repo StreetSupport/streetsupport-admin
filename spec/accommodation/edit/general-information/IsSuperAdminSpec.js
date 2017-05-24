@@ -5,33 +5,30 @@ global describe, beforeEach, afterEach, it, expect
 'use strict'
 
 const sinon = require('sinon')
-
-const jsRoot = '../../../../src/js/'
+const srcRoot = '../../../../src/'
+const jsRoot = `${srcRoot}js/`
 const ajax = require(`${jsRoot}ajax`)
 const endpoints = require(`${jsRoot}api-endpoints`)
 const browser = require(`${jsRoot}browser`)
 const cookies = require(`${jsRoot}cookies`)
 const querystring = require(`${jsRoot}get-url-parameter`)
-const validation = require(`${jsRoot}validation`)
 
-const { testData, publishedServiceProviderData } = require('../testData')
+const { testData, allServiceProviderData } = require('../testData')
 
-describe('Accommodation - Edit Contact Information - no name set', () => {
+describe('Accommodation - Edit General Information - as super admin', () => {
   const Model = require(`${jsRoot}models/accommodation/edit`)
   const headers = {
     'content-type': 'application/json',
     'session-token': 'stored-session-token'
   }
   let sut = null
-  let validationStub = null
+
   let ajaxGetStub = null
-  let ajaxPatchStub = null
 
   beforeEach(() => {
-    sinon.stub(browser, 'loading')
-    sinon.stub(browser, 'loaded')
     ajaxGetStub = sinon.stub(ajax, 'get')
-    ajaxGetStub.withArgs(`${endpoints.temporaryAccommodation}/${testData.id}`, headers)
+    ajaxGetStub
+      .withArgs(`${endpoints.temporaryAccommodation}/${testData.id}`, headers)
       .returns({
         then: function (success, error) {
           success({
@@ -41,20 +38,28 @@ describe('Accommodation - Edit Contact Information - no name set', () => {
         }
       })
     ajaxGetStub
-      .withArgs(`${endpoints.getPublishedServiceProviders}`, headers)
+      .withArgs(`${endpoints.getServiceProvidersHAL}`, headers)
       .returns({
         then: function (success, error) {
           success({
             'statusCode': 200,
-            'data': publishedServiceProviderData
+            'data': allServiceProviderData
           })
         }
       })
-    validationStub = sinon.stub(validation, 'showErrors')
 
-    sinon.stub(cookies, 'get')
+    sinon.stub(browser, 'loading')
+    sinon.stub(browser, 'loaded')
+    
+    const cookiesStub = sinon.stub(cookies, 'get')
+
+    cookiesStub
       .withArgs('session-token')
       .returns('stored-session-token')
+
+    cookiesStub
+      .withArgs('auth-claims')
+      .returns('SuperAdmin')
 
     sinon.stub(querystring, 'parameter')
       .withArgs('id')
@@ -62,17 +67,6 @@ describe('Accommodation - Edit Contact Information - no name set', () => {
 
     sut = new Model()
     sut.init()
-
-    ajaxPatchStub = sinon.stub(ajax, 'patch')
-
-    sut.contactDetails().edit()
-
-    sut.contactDetails().formFields().name('')
-    sut.contactDetails().formFields().additionalInfo('new additionalInfo')
-    sut.contactDetails().formFields().email('new-email@test.com')
-    sut.contactDetails().formFields().telephone('new telephone')
-
-    sut.contactDetails().save()
   })
 
   afterEach(() => {
@@ -81,15 +75,9 @@ describe('Accommodation - Edit Contact Information - no name set', () => {
     ajax.get.restore()
     cookies.get.restore()
     querystring.parameter.restore()
-    validation.showErrors.restore()
-    ajax.patch.restore()
   })
 
-  it('- should not patch new data', () => {
-    expect(ajaxPatchStub.called).toBeFalsy()
-  })
-
-  it('- should show errors', () => {
-    expect(validationStub.calledOnce).toBeTruthy()
+  it('- should load all service providers', () => {
+    expect(sut.generalDetails().serviceProviders().length).toEqual(allServiceProviderData.items.length)
   })
 })

@@ -17,7 +17,6 @@ const origTestData = require('../testData')
 const testData = JSON.parse(JSON.stringify(origTestData.testData))
 testData.features.additionalFeatures = '* fries&#10;* burgers&#10;* hotdogs'
 testData.features.featuresAvailableAtAdditionalCost = '* coke&#10;* sprite&#10;* fanta'
-const serviceProviderData = origTestData.serviceProviderData
 
 describe('Accommodation - Edit Features', () => {
   const Model = require(`${jsRoot}models/accommodation/edit`)
@@ -49,7 +48,7 @@ describe('Accommodation - Edit Features', () => {
         then: function (success, error) {
           success({
             'statusCode': 200,
-            'data': serviceProviderData
+            'data': origTestData.publishedServiceProviderData
           })
         }
       })

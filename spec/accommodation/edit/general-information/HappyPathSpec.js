@@ -13,7 +13,7 @@ const browser = require(`${jsRoot}browser`)
 const cookies = require(`${jsRoot}cookies`)
 const querystring = require(`${jsRoot}get-url-parameter`)
 
-const { testData, serviceProviderData } = require('../testData')
+const { testData, publishedServiceProviderData } = require('../testData')
 
 import { categories } from '../../../../src/data/generated/service-categories'
 import { supportTypes } from '../../../../src/data/generated/support-types'
@@ -50,7 +50,7 @@ describe('Accommodation - Edit General Information', () => {
         then: function (success, error) {
           success({
             'statusCode': 200,
-            'data': serviceProviderData
+            'data': publishedServiceProviderData
           })
         }
       })
@@ -109,6 +109,14 @@ describe('Accommodation - Edit General Information', () => {
 
   it('- should set support types offered', () => {
     expect(sut.generalDetails().formFields().supportOfferedReadOnly()).toEqual('support a, support b')
+  })
+
+  it('- should load service provider', () => {
+    expect(sut.generalDetails().formFields().serviceProviderId()).toEqual('service-provider-id')
+  })
+
+  it('- should load support providers', () => {
+    expect(sut.generalDetails().serviceProviders().length).toEqual(publishedServiceProviderData.length)
   })
 
   it('- should notify user it is loaded', () => {
@@ -171,6 +179,7 @@ describe('Accommodation - Edit General Information', () => {
           IsOpenAccess: true,
           IsPubliclyVisible: true,
           AccommodationType: 'accommodation type',
+          ServiceProviderId: 'service-provider-id',
           SupportOffered: [ 'support a', 'support b' ]
         }
         const patchAsExpected = ajaxPatchStub

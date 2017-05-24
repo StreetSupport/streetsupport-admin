@@ -18,7 +18,7 @@ const origTestData = require('../testData')
 const testData = JSON.parse(JSON.stringify(origTestData.testData))
 testData.generalInfo.name = 'bob&#39;s burgers'
 testData.generalInfo.description = 'bob&#39;s burgers&#10;&#10;* fries&#10;* burgers&#10;* hotdogs'
-const serviceProviderData = origTestData.serviceProviderData
+const serviceProviderData = origTestData.publishedServiceProviderData
 
 describe('Accommodation - Edit General Information - Field Parsing', () => {
   const Model = require(`${jsRoot}models/accommodation/edit`)

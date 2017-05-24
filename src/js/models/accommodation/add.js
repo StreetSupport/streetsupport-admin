@@ -1,5 +1,6 @@
 const ajax = require('../../ajax')
 const BaseViewModel = require('../../models/BaseViewModel')
+const auth = require('../../auth')
 const browser = require('../../browser')
 const cookies = require('../../cookies')
 const endpoints = require('../../api-endpoints')
@@ -21,7 +22,7 @@ function Model () {
     isOpenAccess: ko.observable(false),
     accommodationType: ko.observable(),
     supportOffered: ko.observableArray(),
-    serviceProviderId: ko.observable(),
+    serviceProviderId: ko.observable(auth.providerAdminFor()),
     contactName: ko.observable(),
     email: ko.observable().extend({ email: true }),
     telephone: ko.observable(),
@@ -44,6 +45,8 @@ function Model () {
     }
   }))
 
+  self.isSuperAdmin = ko.observable()
+  self.serviceProviders = ko.observableArray()
   self.formSubmitted = ko.observable(false)
   self.formSubmissionSuccessful = ko.observable(false)
   self.formSubmissionNotSuccessful = ko.observable(false)
@@ -52,14 +55,23 @@ function Model () {
   self.init = () => {
     validation.initialise(ko.validation)
     self.fieldErrors = validation.getValidationGroup(ko.validation, self.formFields)
+    if (auth.isSuperAdmin()) {
+      self.isSuperAdmin(true)
+      ajax
+        .get(endpoints.getServiceProvidersHAL, self.headers(cookies.get('session-token')))
+        .then((result) => {
+          self.serviceProviders(result.data.items)
+        }, () => {
+          self.handleServerError()
+        })
+    }
   }
 
   self.postData = () => {
+    browser.loading()
     const endpoint = endpoints.temporaryAccommodation
     const payload = validation.buildPayload(self.formFields())
     const headers = self.headers(cookies.get('session-token'))
-
-    browser.loading()
     self.formSubmitted(true)
     self.formSubmissionNotSuccessful(false)
 

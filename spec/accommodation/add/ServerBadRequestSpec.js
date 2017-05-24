@@ -11,6 +11,7 @@ const ajax = require(`${jsRoot}ajax`)
 const browser = require(`${jsRoot}browser`)
 const cookies = require(`${jsRoot}cookies`)
 const validation = require(`${jsRoot}validation`)
+const auth = require(`${jsRoot}auth`)
 
 describe('Accommodation - add - server returns bad request', () => {
   const Model = require(`${jsRoot}models/accommodation/add`)
@@ -22,12 +23,16 @@ describe('Accommodation - add - server returns bad request', () => {
     browserLoadingStub = sinon.stub(browser, 'loading')
     browserLoadedStub = sinon.stub(browser, 'loaded')
     sinon.stub(browser, 'scrollTo')
+    sinon.stub(auth, 'providerAdminFor').returns('')
+    sinon.stub(auth, 'isSuperAdmin').returns(false)
 
     sut = new Model()
     sut.init()
   })
 
   afterEach(() => {
+    auth.providerAdminFor.restore()
+    auth.isSuperAdmin.restore()
     browser.loading.restore()
     browser.loaded.restore()
     browser.scrollTo.restore()

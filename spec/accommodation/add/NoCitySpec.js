@@ -10,6 +10,7 @@ const jsRoot = '../../../src/js/'
 const ajax = require(`${jsRoot}ajax`)
 const cookies = require(`${jsRoot}cookies`)
 const validation = require(`${jsRoot}validation`)
+const auth = require(`${jsRoot}auth`)
 
 describe('Accommodation - Add - No City', () => {
   const Model = require(`${jsRoot}models/accommodation/add`)
@@ -21,6 +22,7 @@ describe('Accommodation - Add - No City', () => {
     sinon.stub(cookies, 'get')
       .withArgs('session-token')
       .returns('stored-session-token')
+    sinon.stub(auth, 'providerAdminFor')
 
     validationStub = sinon.stub(validation, 'showErrors')
 
@@ -49,6 +51,7 @@ describe('Accommodation - Add - No City', () => {
   })
 
   afterEach(() => {
+    auth.providerAdminFor.restore()
     ajax.post.restore()
     cookies.get.restore()
     validation.showErrors.restore()
