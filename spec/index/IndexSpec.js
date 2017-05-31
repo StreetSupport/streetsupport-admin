@@ -66,7 +66,7 @@ describe('Index', () => {
             success({
               'status': 200,
               'data': {
-                'authClaims': [ 'OrgAdmin', 'SuperAdmin' ]
+                'authClaims': [ 'SuperAdmin' ]
               }
             })
           }

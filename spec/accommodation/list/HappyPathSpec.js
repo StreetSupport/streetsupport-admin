@@ -230,7 +230,6 @@ const accomData2 = {
   'total': 1
 }
 
-
 const mancAccomData = {
   'links': {
     'next': null,
