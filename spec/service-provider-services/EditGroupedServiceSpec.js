@@ -107,6 +107,10 @@ describe('Edit Service', () => {
     expect(model.service().subCategories().length).toEqual(5)
   })
 
+  it('- should set telephone', () => {
+    expect(model.service().address.telephone()).toEqual('telephone')
+  })
+
   it('- should set category id', () => {
     expect(model.service().subCategories()[0].id()).toEqual('laundry')
   })
@@ -221,6 +225,7 @@ function serviceData () {
     'tags': [
       'lesbians'
     ],
+    'telephone': 'telephone',
     'location': {
       'description': 'location description',
       'streetLine1': 'street 1',

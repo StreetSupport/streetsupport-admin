@@ -1,27 +1,10 @@
 <h3>Location Details</h3>
 <dl class="key-value-pair">
-  <dt class="key-value-pair__key">Street Line 1</dt>
-  <dd class="key-value-pair__value">
-    <input data-bind="textInput: street1" type="text" class="form__input" />
-  </dd>
-  <dt class="key-value-pair__key">Street Line 2</dt>
-  <dd class="key-value-pair__value">
-    <input data-bind="textInput: street2" type="text" class="form__input" />
-  </dd>
-  <dt class="key-value-pair__key">Street Line 3</dt>
-  <dd class="key-value-pair__value">
-    <input data-bind="textInput: street3" type="text" class="form__input" />
-  </dd>
-  <dt class="key-value-pair__key">Street Line 4</dt>
-  <dd class="key-value-pair__value">
-    <input data-bind="textInput: street4" type="text" class="form__input" />
-  </dd>
-  <dt class="key-value-pair__key">City</dt>
-  <dd class="key-value-pair__value">
-    <input data-bind="textInput: city" type="text" class="form__input" />
-  </dd>
-  <dt class="key-value-pair__key">Postcode</dt>
-  <dd class="key-value-pair__value">
-    <input data-bind="textInput: postcode" type="text" class="form__input" />
-  </dd>
+  {{> forms/textField fieldTitle="Street Line 1" dataFieldName="street1" }}
+  {{> forms/textField fieldTitle="Street Line 2" dataFieldName="street2" }}
+  {{> forms/textField fieldTitle="Street Line 3" dataFieldName="street3" }}
+  {{> forms/textField fieldTitle="Street Line 4" dataFieldName="street4" }}
+  {{> forms/textField fieldTitle="City" dataFieldName="city" }}
+  {{> forms/textField fieldTitle="Postcode" dataFieldName="postcode" }}
+  {{> forms/textField fieldTitle="Telephone" dataFieldName="telephone" }}
 </dl>
