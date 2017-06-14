@@ -201,6 +201,10 @@ describe('Add Service Provider Service', () => {
       expect(model.address().postcode()).toEqual('M4 5JD')
     })
 
+    it('should set telephone', () => {
+      expect(model.address().telephone()).toEqual('telephone')
+    })
+
     it('should set address open 247', () => {
       expect(model.address().isOpen247()).toBeTruthy()
     })
@@ -280,6 +284,7 @@ describe('Add Service Provider Service', () => {
         'Street4': 'street 4',
         'City': 'Manchester',
         'Postcode': 'M4 5JD',
+        'Telephone': 'telephone',
         'IsOpen247': true
       }
 
@@ -362,6 +367,7 @@ function addresses () {
       'street3': 'street 4',
       'city': 'Manchester',
       'postcode': 'M4 5JD',
+      'telephone': 'telephone',
       'isOpen247': true,
       'openingTimes': [{
         'startTime': '10:00',
@@ -380,6 +386,7 @@ function addresses () {
       'street3': null,
       'city': 'Manchester',
       'postcode': 'M1 2FY',
+      'telephone': 'telephone 2',
       'openingTimes': [{
         'startTime': '10:00',
         'endTime': '16:30',

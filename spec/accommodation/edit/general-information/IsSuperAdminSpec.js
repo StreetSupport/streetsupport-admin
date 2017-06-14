@@ -50,7 +50,7 @@ describe('Accommodation - Edit General Information - as super admin', () => {
 
     sinon.stub(browser, 'loading')
     sinon.stub(browser, 'loaded')
-    
+
     const cookiesStub = sinon.stub(cookies, 'get')
 
     cookiesStub

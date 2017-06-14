@@ -52,6 +52,7 @@ describe('Address', () => {
         model.street4('new street4')
         model.city('new city')
         model.postcode('new postcode')
+        model.telephone('new telephone')
         model.openingTimes()[1].startTime('20:00')
         model.openingTimes()[1].endTime('22:00')
         model.openingTimes()[1].day('Wednesday')
@@ -69,6 +70,7 @@ describe('Address', () => {
         expect(model.street4()).toEqual('')
         expect(model.city()).toEqual('Manchester')
         expect(model.postcode()).toEqual('M4 5JD')
+        expect(model.telephone()).toEqual('')
         expect(model.openingTimes()[1].startTime()).toEqual('10:00')
         expect(model.openingTimes()[1].endTime()).toEqual('16:30')
         expect(model.openingTimes()[1].day()).toEqual('Tuesday')
@@ -98,6 +100,7 @@ describe('Address', () => {
         model.street4('new street4')
         model.city('new city')
         model.postcode('new postcode')
+        model.telephone('new telephone')
         model.openingTimes()[0].startTime('12:00')
         model.openingTimes()[0].endTime('16:30')
         model.openingTimes()[0].day('Monday')
@@ -128,6 +131,7 @@ describe('Address', () => {
           'City': 'new city',
           'Postcode': 'new postcode',
           'IsOpen247': false,
+          'Telephone': 'new telephone',
           'OpeningTimes': [{
             'startTime': '12:00',
             'endTime': '16:30',
@@ -216,6 +220,7 @@ function getAddressData () {
     'street3': null,
     'city': 'Manchester',
     'postcode': 'M4 5JD',
+    'telephone': '',
     'openingTimes': [{
       'startTime': '10:00',
       'endTime': '16:30',

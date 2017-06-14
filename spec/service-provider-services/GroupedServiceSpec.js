@@ -54,6 +54,7 @@ describe('Grouped Service', () => {
         model.address.street4('new street 4')
         model.address.city('new city')
         model.address.postcode('new postcode')
+        model.address.telephone('new telephone')
         model.isOpen247(true)
         model.subCategories()[0] = {
           id: ko.observable('subcat1'),
@@ -100,6 +101,7 @@ describe('Grouped Service', () => {
           'Street4': 'new street 4',
           'City': 'new city',
           'Postcode': 'new postcode',
+          'Telephone': 'new telephone',
           'IsOpen247': true,
           SubCategories: ['subcat2']
         }
@@ -160,6 +162,7 @@ describe('Grouped Service', () => {
           'Street4': '',
           'City': 'Manchester',
           'Postcode': 'M1 3FY',
+          'Telephone': 'telephone',
           'IsOpen247': false,
           'SubCategories': []
         }
@@ -215,6 +218,7 @@ function getData () {
     'categorySynopsis': null,
     'info': 'info',
     'tags': null,
+    'telephone': 'telephone',
     'location': {
       'description': '',
       'streetLine1': 'street 1',
