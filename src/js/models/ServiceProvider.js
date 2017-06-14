@@ -79,7 +79,14 @@ function ServiceProvider (data) {
   self.addNeedUrl = adminUrls.serviceProviderNeedsAdd + '?providerId=' + data.key
 
   self.verifyOrg = function () {
-    console.log('verify org')
+    ajax
+      .put(`${self.endpointBuilder.serviceProviders(self.key()).build()}/is-verified`,
+        self.headers(cookies.get('session-token')), { IsVerified: true })
+      .then((success) => {
+        self.isVerified(true)
+      }, (e) => {
+        browser.redirect(adminUrls.error)
+      })
   }
 
   self.deleteAddress = function (deletedAddress) {
@@ -114,6 +121,8 @@ function ServiceProvider (data) {
     self.needs(remainingNeeds)
   }
 }
+
+ServiceProvider.prototype = new BaseViewModel()
 
 function ServiceProviderDetails () {
   var self = this
