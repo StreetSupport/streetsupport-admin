@@ -67,6 +67,10 @@ describe('Show Service Provider', () => {
     expect(model.serviceProvider().key()).toEqual('coffee4craig')
   })
 
+  it('should set verified flag', () => {
+    expect(model.serviceProvider().isVerified()).toEqual(coffee4Craig().isVerified)
+  })
+
   it('should set associated City', () => {
     expect(model.serviceProvider().city()).toEqual('manchester')
   })

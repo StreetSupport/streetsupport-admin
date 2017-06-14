@@ -18,6 +18,7 @@ function ServiceProvider (data) {
   self.key = ko.observable(data.key)
   self.city = ko.observable(data.associatedCityId)
   self.name = ko.observable(data.name)
+  self.isVerified = ko.observable(data.isVerified)
   self.shortDescription = ko.observable(htmlEncode.htmlDecode(data.shortDescription))
   self.description = ko.observable(htmlEncode.htmlDecode(data.description))
   self.telephone = ko.observable(data.telephone)
@@ -76,6 +77,10 @@ function ServiceProvider (data) {
   self.amendServicesUrl = adminUrls.serviceProviderServices + '?providerId=' + data.key
 
   self.addNeedUrl = adminUrls.serviceProviderNeedsAdd + '?providerId=' + data.key
+
+  self.verifyOrg = function () {
+    console.log('verify org')
+  }
 
   self.deleteAddress = function (deletedAddress) {
     var notDeleted = function (address) {
