@@ -1,0 +1,25 @@
+.accom-review {
+  @include cf();
+}
+  
+.accom-review__title {
+  margin-bottom: 0;
+  font-weight: normal;
+  & > span {
+    font-weight: bold;
+  }
+  @include mq($from: m) {
+    margin-top: 34px;
+    @include span(6 of 8);
+  }
+}
+
+.accom-review__btn {
+  @include mq($from: m) {
+    @include span(1 of 8);
+    width: inherit;
+    &:last-of-type {
+      @include last();
+    }
+  }
+}

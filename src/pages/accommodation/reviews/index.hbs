@@ -21,11 +21,10 @@ nosubnav: true
 <div class="block block--main-body">
   <div class="container block__inner">
     <div class="block__content">
-      <div data-bind="foreach: items">
-        <article data-bind="with: formFields">
-          <p data-bind="text: documentCreationDateReadOnly"></p>
-          <p data-bind="text: body"></p>
-          <button data-bind="click: $parent.deleteItem" class="btn btn--warning"><span class="btn__text">delete</span></button>
+      <div data-bind="foreach: items" class="accom-reviews">
+        <article data-bind="with: formFields" class="accom-review">
+          <h1 class="h3 accom-review__title">Review date: <span data-bind="text: documentCreationDateReadOnly"></span></h1>
+          <button data-bind="click: $parent.deleteItem" class="btn btn--warning accom-review__btn"><span class="btn__text">delete</span></button>
         </article>
       </div>
     </div>
