@@ -37,8 +37,8 @@ nosubnav: true
           <h3>How secure do you feel in the property?</h3>
           <dl class="key-value-pair">
             {{> forms/fiveStarRating fieldTitle="How would you rate your feeling of security?" dataFieldName="feelingOfSecurityRating" lowRatingLabel="not secure" highRatingLabel="very secure" }}
-            {{> forms/boolean fieldTitle="Is there a lock on your room?" dataFieldName="hasLockOnRoom" }}
-            {{> forms/boolean fieldTitle="Is there a lock on the front door?" dataFieldName="hasLockOnFrontDoor" }}
+            {{> forms/booleanRadio fieldTitle="Is there a lock on your room?" dataFieldName="hasLockOnRoom" }}
+            {{> forms/booleanRadio fieldTitle="Is there a lock on the front door?" dataFieldName="hasLockOnFrontDoor" }}
             {{> forms/threeStarRating fieldTitle="Is there excessive noise and knocking on doors?" dataFieldName="noisyRating" }}
           </dl>
           <h3>How would you rate the property?</h3>
