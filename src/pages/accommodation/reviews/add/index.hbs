@@ -26,33 +26,37 @@ nosubnav: true
       <!-- ko ifnot: reviewIsCreated -->
       <article data-bind="with: newItem">
         <div data-bind="with: formFields">
-          <h3>Do you have access to working basic facilities?</h3>
+          <h3>Do you have access to basic facilities?</h3>
           <dl class="key-value-pair">
             {{> forms/booleanInsufficient fieldTitle="Central Heating" dataFieldName="hasCentralHeating" }}
             {{> forms/booleanInsufficient fieldTitle="Hot Water" dataFieldName="hasHotWater" }}
             {{> forms/booleanInsufficient fieldTitle="Electricity" dataFieldName="hasElectricity" }}
+            {{> forms/booleanInsufficient fieldTitle="Toilet" dataFieldName="hasToilet" }}
+            {{> forms/booleanInsufficient fieldTitle="Shower/Bath" dataFieldName="hasShowerBath" }}
           </dl>
           <h3>How secure do you feel in the property?</h3>
           <dl class="key-value-pair">
-            {{> forms/boolean fieldTitle="Lock on room" dataFieldName="hasLockOnRoom" }}
-            {{> forms/boolean fieldTitle="Lock on front door" dataFieldName="hasLockOnFrontDoor" }}
+            {{> forms/fiveStarRating fieldTitle="How would you rate your feeling of security?" dataFieldName="feelingOfSecurityRating" lowRatingLabel="not secure" highRatingLabel="very secure" }}
+            {{> forms/boolean fieldTitle="Is there a lock on your room?" dataFieldName="hasLockOnRoom" }}
+            {{> forms/boolean fieldTitle="Is there a lock on the front door?" dataFieldName="hasLockOnFrontDoor" }}
+            {{> forms/threeStarRating fieldTitle="Is there excessive noise and knocking on doors?" dataFieldName="noisyRating" }}
           </dl>
-          <h3>How are the other tenants?</h3>
-          <dl class="key-value-pair">
-            {{> forms/boolean fieldTitle="Are other tenants aggressive or threatening?" dataFieldName="hasAggressiveTenants" }}
-            {{> forms/boolean fieldTitle="Is there excessive noise and knocking on doors?" dataFieldName="hasExcessiveNoise" }}
-          </dl>
-          <h3>How would you rate the following?</h3>
+          <h3>How would you rate the property?</h3>
           <dl class="key-value-pair">
             {{> forms/fiveStarRating fieldTitle="Food" dataFieldName="foodRating" }}
             {{> forms/fiveStarRating fieldTitle="Cleanliness" dataFieldName="cleanlinessRating" }}
+            {{> forms/fiveStarRating fieldTitle="Condition of your room" dataFieldName="roomConditionRating" }}
           </dl>
           <h3>How would you rate the staff?</h3>
           <dl class="key-value-pair">
-            {{> forms/fiveStarRating fieldTitle="Friendly and helpful" dataFieldName="staffHelpfulnessRating" }}
-            {{> forms/fiveStarRating fieldTitle="Welcoming and supportive" dataFieldName="staffSupportivenessRating" }}
-            {{> forms/fiveStarRating fieldTitle="Approachable when there is a problem/complaint" dataFieldName="staffDealingWithProblemsRating" }}
-            {{> forms/fiveStarRating fieldTitle="Address maintenance issues in a timely manner" dataFieldName="staffTimelinessWithIssuesRating" }}
+            {{> forms/fiveStarRating fieldTitle="Friendly and welcoming" dataFieldName="staffFriendlinessRating" }}
+            {{> forms/fiveStarRating fieldTitle="Helpful and supportive" dataFieldName="staffSupportivenessRating" }}
+            {{> forms/fiveStarRating fieldTitle="Approachable when there is a complaint" dataFieldName="staffDealingWithProblemsRating" }}
+            {{> forms/fiveStarRating fieldTitle="Address maintenance issues in a reasonable time" dataFieldName="staffTimelinessWithIssuesRating" }}
+          </dl>
+          <h3>How would you rate this accommodation overall?</h3>
+          <dl class="key-value-pair">
+            {{> forms/fiveStarRating fieldTitle="Overall experience" dataFieldName="overallRating" }}
           </dl>
         </div>
         <button data-bind="click: save" class="btn btn--primary"><span class="btn__text">save</span></button>
