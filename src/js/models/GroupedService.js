@@ -30,6 +30,7 @@ function Service (data) {
   self.subCatList = ko.observable(buildTags(data.subCategories.map((sc) => sc.name)))
   self.isOpen247 = ko.observable(data.isOpen247 !== undefined ? data.isOpen247 : false)
   self.openingTimes = ko.observableArray(data.openingTimes.map((ot) => new OpeningTime(ot)))
+  data.location.telephone = data.telephone // telephone is not associated with address on edit
   self.address = new Address(data.location)
   self.message = ko.observable()
   self.endpoints = new Endpoints()
@@ -90,6 +91,7 @@ function Service (data) {
       'Street4': self.address.street4(),
       'City': self.address.city(),
       'Postcode': self.address.postcode(),
+      'Telephone': self.address.telephone(),
       'IsOpen247': self.isOpen247(),
       'SubCategories': self.subCategories().filter((sc) => sc.isSelected()).map((sc) => sc.id())
     }

@@ -1,42 +1,46 @@
 'use strict'
 
-var cookies = require('../cookies')
-var browser = require('../browser')
-var adminUrls = require('../admin-urls')
-var ajax = require('../ajax')
-var querystring = require('../get-url-parameter')
-var BaseViewModel = require('./BaseViewModel')
+const adminUrls = require('../admin-urls')
+const ajax = require('../ajax')
+const browser = require('../browser')
+const cookies = require('../cookies')
+const querystring = require('../get-url-parameter')
+const BaseViewModel = require('./BaseViewModel')
 
 function Index () {
-  var self = this
+  const self = this
   self.init = function () {
-    var sessionToken = cookies.get('session-token')
+    const sessionToken = cookies.get('session-token')
 
-    var adminForPrefix = 'AdminFor:'
+    const adminForPrefix = 'AdminFor:'
 
-    var success = (result) => {
-      let redirectUrl = querystring.parameter('redirectUrl')
-      let authClaims = result.data.authClaims
-      let adminForClaim = authClaims.filter((a) => a.indexOf(adminForPrefix) === 0)
+    const success = (result) => {
+      const redirectUrl = querystring.parameter('redirectUrl')
+      const authClaims = result.data.authClaims
+      const orgAdminForClaim = authClaims.find((a) => a.indexOf(adminForPrefix) === 0)
 
       if (redirectUrl !== undefined && redirectUrl.indexOf(browser.origin()) === 0) {
         browser.redirect(redirectUrl)
-      } else if (adminForClaim.length > 0) {
-        let providerKey = adminForClaim[0].substring(adminForPrefix.length)
-        var destination = adminUrls.serviceProviders + '?key=' + providerKey
+      } else if (orgAdminForClaim) {
+        const providerKey = orgAdminForClaim.substring(adminForPrefix.length)
+        const destination = adminUrls.serviceProviders + '?key=' + providerKey
         browser.redirect(destination)
-      } else if (authClaims.indexOf('SuperAdmin') > -1) {
+      } else if (authClaims.includes('SuperAdmin')) {
         browser.redirect(adminUrls.dashboard)
-      } else if (authClaims.indexOf('CityAdmin') > -1) {
+      } else if (authClaims.includes('CityAdmin')) {
         browser.redirect(adminUrls.dashboard)
-      } else if (authClaims.indexOf('CharterAdmin') > -1) {
+      } else if (authClaims.includes('CharterAdmin')) {
         browser.redirect(adminUrls.charter)
-      } else if (authClaims.indexOf('TempAccomAdmin') > -1) {
+      } else if (authClaims.includes('TempAccomAdmin')) {
         browser.redirect(adminUrls.temporaryAccommodation)
+      } else if (authClaims.includes('IndividualAccomAdmin')) {
+        const individualAccomAdminForPrefix = 'IndividualAccomAdminFor:'
+        const accomAdminForId = authClaims.find((a) => a.indexOf(individualAccomAdminForPrefix) === 0).substring(individualAccomAdminForPrefix.length)
+        browser.redirect(`${adminUrls.temporaryAccommodation}/edit/?id=${accomAdminForId}`)
       }
     }
 
-    var error = () => {
+    const error = () => {
       browser.redirect(adminUrls.login)
     }
 

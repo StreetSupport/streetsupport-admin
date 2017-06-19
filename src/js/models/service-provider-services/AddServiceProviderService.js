@@ -26,6 +26,7 @@ function AddServiceProviderService () {
 
   self.categories = ko.observableArray()
   self.category = ko.observable()
+  self.telephone = ko.observable()
   self.subCategories = ko.observableArray()
 
   self.addresses = ko.observableArray()
@@ -65,6 +66,7 @@ function AddServiceProviderService () {
       street3: self.preselectedAddress().street4(),
       city: self.preselectedAddress().city(),
       postcode: self.preselectedAddress().postcode(),
+      telephone: self.preselectedAddress().telephone(),
       isOpen247: self.preselectedAddress().isOpen247()
     })
     address.openingTimes(self.preselectedAddress().openingTimes().map((ot) => new OpeningTime({
@@ -72,6 +74,7 @@ function AddServiceProviderService () {
       startTime: ot.startTime(),
       endTime: ot.endTime()
     })))
+    self.telephone(self.preselectedAddress().telephone())
     self.address(address)
   }
 
@@ -105,6 +108,7 @@ function AddServiceProviderService () {
         'Street4': self.address().street4(),
         'City': self.address().city(),
         'Postcode': self.address().postcode(),
+        'Telephone': self.address().telephone(),
         'IsOpen247': self.address().isOpen247()
       }
 

@@ -48,6 +48,7 @@ describe('Save brand new Address', () => {
       model.street4('new street4')
       model.city('new city')
       model.postcode('new postcode')
+      model.telephone('new telephone')
       model.isOpen247(true)
 
       model.save()
@@ -74,6 +75,7 @@ describe('Save brand new Address', () => {
         'Street3': 'new street4',
         'City': 'new city',
         'Postcode': 'new postcode',
+        'Telephone': 'new telephone',
         'OpeningTimes': [],
         'IsOpen247': true
       }
@@ -146,6 +148,7 @@ describe('Save new Address as part of collection', () => {
       model.street4('new street4')
       model.city('new city')
       model.postcode('new postcode')
+      model.telephone('new telephone')
       model.newOpeningTime()
       model.openingTimes()[0].startTime('12:00')
       model.openingTimes()[0].endTime('16:30')
@@ -177,6 +180,7 @@ describe('Save new Address as part of collection', () => {
         'Street3': 'new street4',
         'City': 'new city',
         'Postcode': 'new postcode',
+        'Telephone': 'new telephone',
         'OpeningTimes': [
           {
             'startTime': '12:00',
