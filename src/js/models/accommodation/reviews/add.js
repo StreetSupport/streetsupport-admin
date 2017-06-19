@@ -11,26 +11,26 @@ let Item = require('./Item')
 function Add () {
   let self = this
 
-  const defaultNewItem = {
-    id: null,
-    temporaryAccommodationId: querystring.parameter('id'),
-    documentCreationDate: new Date().toISOString(),
-    hasCentralHeating: '0',
-    hasHotWater: '0',
-    hasElectricity: '0',
-    hasLockOnRoom: false,
-    hasLockOnFrontDoor: false,
-    hasAggressiveTenants: false,
-    hasExcessiveNoise: false,
-    foodRating: '0',
-    cleanlinessRating: '0',
-    staffHelpfulnessRating: '0',
-    staffSupportivenessRating: '0',
-    staffDealingWithProblemsRating: '0',
-    staffTimelinessWithIssuesRating: '0'
+  const createDefaultNewItem = () => {
+    const zeroFields = ['hasCentralHeating', 'hasHotWater', 'hasElectricity', 'hasToilet', 'hasShowerBath',
+      'feelingOfSecurityRating', 'noisyRating', 'foodRating', 'cleanlinessRating', 'roomConditionRating',
+      'staffFriendlinessRating', 'staffSupportivenessRating', 'staffDealingWithProblemsRating', 'staffTimelinessWithIssuesRating',
+      'overallRating']
+    const falseFields = ['hasLockOnRoom', 'hasLockOnFrontDoor', 'hasAggressiveTenants', 'hasExcessiveNoise']
+
+    const defaultNewItem = {
+      id: null,
+      temporaryAccommodationId: querystring.parameter('id'),
+      documentCreationDate: new Date().toISOString(),
+    }
+
+    zeroFields.forEach((f) => { defaultNewItem[f] = '0' })
+    falseFields.forEach((f) => { defaultNewItem[f] = false })
+
+    return defaultNewItem
   }
 
-  self.buildFormFields = (data = defaultNewItem) => {
+  self.buildFormFields = (data = createDefaultNewItem()) => {
     const formattedCreationDate = data.documentCreationDate !== undefined
       ? data.documentCreationDate.split('T')[0]
       : ''
@@ -42,16 +42,20 @@ function Add () {
       hasCentralHeating: ko.observable(data.hasCentralHeating),
       hasHotWater: ko.observable(data.hasHotWater),
       hasElectricity: ko.observable(data.hasElectricity),
+      hasToilet: ko.observable(data.hasToilet),
+      hasShowerBath: ko.observable(data.hasShowerBath),
       hasLockOnRoom: ko.observable(data.hasLockOnRoom),
+      feelingOfSecurityRating: ko.observable(data.feelingOfSecurityRating),
       hasLockOnFrontDoor: ko.observable(data.hasLockOnFrontDoor),
-      hasAggressiveTenants: ko.observable(data.hasAggressiveTenants),
-      hasExcessiveNoise: ko.observable(data.hasExcessiveNoise),
+      noisyRating: ko.observable(data.noisyRating),
       foodRating: ko.observable(data.foodRating),
       cleanlinessRating: ko.observable(data.cleanlinessRating),
-      staffHelpfulnessRating: ko.observable(data.staffHelpfulnessRating),
+      roomConditionRating: ko.observable(data.roomConditionRating),
+      staffFriendlinessRating: ko.observable(data.staffFriendlinessRating),
       staffSupportivenessRating: ko.observable(data.staffSupportivenessRating),
       staffDealingWithProblemsRating: ko.observable(data.staffDealingWithProblemsRating),
-      staffTimelinessWithIssuesRating: ko.observable(data.staffTimelinessWithIssuesRating)
+      staffTimelinessWithIssuesRating: ko.observable(data.staffTimelinessWithIssuesRating),
+      overallRating: ko.observable(data.overallRating)
     })
     return model
   }

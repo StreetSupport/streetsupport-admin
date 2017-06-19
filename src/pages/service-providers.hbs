@@ -13,11 +13,24 @@ nosubnav: true
     <div data-bind="with: serviceProvider">
       <header>
         <h1 data-bind="html: name"></h1>
-        <p data-bind="text: city"></p>
+        <p>Associated City: <span data-bind="text: city" class="h3"></span></p>
         <a data-claims="superadmin" href="dashboard.html" class="btn btn--info">
           <span class="btn__text">Back to dashboard</span>
         </a>
       </header>
+    </div>
+  </div>
+</div>
+<div class="block" data-claims="orgadmin">
+  <div class="container block__inner">
+    <div class="block__content" data-bind="with: serviceProvider">
+      <!-- ko ifnot: isVerified -->
+      <h1 class="h2">Your information is still under review</h1>
+      <p>Please confirm the information we have for your organisation is correct. This will remove the "information under review" label on your organisation's page.</p>
+      <button class="btn btn--info" data-bind="click: verifyOrg">
+        <span class="btn__text">Verify this information</span>
+      </button>
+      <!-- /ko -->
     </div>
   </div>
 </div>

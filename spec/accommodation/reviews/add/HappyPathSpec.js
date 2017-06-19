@@ -72,19 +72,27 @@ describe('Accommodation Listing - Add', () => {
 
   it(' - should set defaults', () => {
     expect(sut.newItem().formFields().idReadOnly()).toEqual(null)
+    
     expect(sut.newItem().formFields().hasCentralHeating()).toEqual('0')
     expect(sut.newItem().formFields().hasHotWater()).toEqual('0')
     expect(sut.newItem().formFields().hasElectricity()).toEqual('0')
+    expect(sut.newItem().formFields().hasToilet()).toEqual('0')
+    expect(sut.newItem().formFields().hasShowerBath()).toEqual('0')
+    expect(sut.newItem().formFields().noisyRating()).toEqual('0')
+
+    expect(sut.newItem().formFields().feelingOfSecurityRating()).toEqual('0')
     expect(sut.newItem().formFields().hasLockOnRoom()).toEqual(false)
     expect(sut.newItem().formFields().hasLockOnFrontDoor()).toEqual(false)
-    expect(sut.newItem().formFields().hasAggressiveTenants()).toEqual(false)
-    expect(sut.newItem().formFields().hasExcessiveNoise()).toEqual(false)
+
     expect(sut.newItem().formFields().foodRating()).toEqual('0')
     expect(sut.newItem().formFields().cleanlinessRating()).toEqual('0')
-    expect(sut.newItem().formFields().staffHelpfulnessRating()).toEqual('0')
+    expect(sut.newItem().formFields().roomConditionRating()).toEqual('0')
+
+    expect(sut.newItem().formFields().staffFriendlinessRating()).toEqual('0')
     expect(sut.newItem().formFields().staffSupportivenessRating()).toEqual('0')
     expect(sut.newItem().formFields().staffDealingWithProblemsRating()).toEqual('0')
     expect(sut.newItem().formFields().staffTimelinessWithIssuesRating()).toEqual('0')
+    expect(sut.newItem().formFields().overallRating()).toEqual('0')
   })
 
   describe('- add new', () => {
@@ -95,16 +103,23 @@ describe('Accommodation Listing - Add', () => {
       sut.newItem().formFields().hasCentralHeating(2)
       sut.newItem().formFields().hasHotWater(2)
       sut.newItem().formFields().hasElectricity(2)
+      sut.newItem().formFields().hasToilet(2)
+      sut.newItem().formFields().hasShowerBath(2)
+
+      sut.newItem().formFields().noisyRating(2)
+      sut.newItem().formFields().feelingOfSecurityRating(2)
       sut.newItem().formFields().hasLockOnRoom(true)
       sut.newItem().formFields().hasLockOnFrontDoor(true)
-      sut.newItem().formFields().hasAggressiveTenants(true)
-      sut.newItem().formFields().hasExcessiveNoise(true)
+
       sut.newItem().formFields().foodRating(3)
       sut.newItem().formFields().cleanlinessRating(2)
-      sut.newItem().formFields().staffHelpfulnessRating(3)
+      sut.newItem().formFields().roomConditionRating(2)
+      
+      sut.newItem().formFields().staffFriendlinessRating(3)
       sut.newItem().formFields().staffSupportivenessRating(4)
       sut.newItem().formFields().staffDealingWithProblemsRating(5)
       sut.newItem().formFields().staffTimelinessWithIssuesRating(3)
+      sut.newItem().formFields().overallRating(3)
 
       sut.newItem().save()
     })
@@ -119,16 +134,20 @@ describe('Accommodation Listing - Add', () => {
         HasCentralHeating: 2,
         HasHotWater: 2,
         HasElectricity: 2,
+        HasToilet: 2,
+        HasShowerBath: 2,
         FoodRating: 3,
+        FeelingOfSecurityRating: 2,
         HasLockOnRoom: true,
         HasLockOnFrontDoor: true,
-        HasAggressiveTenants: true,
-        HasExcessiveNoise: true,
+        NoisyRating: 2,
         CleanlinessRating: 2,
-        StaffHelpfulnessRating: 3,
+        RoomConditionRating: 2,
+        StaffFriendlinessRating: 3,
         StaffSupportivenessRating: 4,
         StaffDealingWithProblemsRating: 5,
-        StaffTimelinessWithIssuesRating: 3
+        StaffTimelinessWithIssuesRating: 3,
+        OverallRating: 3
       }
       const postCalledAsExpected = ajaxPostStub
         .withArgs(endpoint, headers, payload)
