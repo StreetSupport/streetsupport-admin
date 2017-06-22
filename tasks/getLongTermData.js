@@ -61,8 +61,8 @@ gulp.task('supported-cities', (callback) => {
     .pipe(streamify(jeditor(function (cities) {
       return cities.map(function (c) {
         return {
-          id: c.id,
-          findHelpId: c.id,
+          id: c.key,
+          findHelpId: c.key,
           name: c.name,
           latitude: c.latitude,
           longitude: c.longitude,
