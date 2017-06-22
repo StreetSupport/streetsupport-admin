@@ -1,12 +1,12 @@
 <dt class="key-value-pair__key key-value-pair__key--inline">{{ fieldTitle }}</dt>
 <dd class="key-value-pair__value">
   <label class="form__label form__label--radio">
-    <input type="radio" value="0" name="{{ dataFieldName }}" data-bind="checked: {{ dataFieldName }}" class="" />
+    <input type="radio" value="0" name="{{ dataFieldName }}" data-bind="checked: {{ dataFieldName }}, checkedValue: 0" {{#if disabled }} disabled {{/if}} class="" />
   No</label>
   <label class="form__label form__label--radio">
-    <input type="radio" value="1" name="{{ dataFieldName }}" data-bind="checked: {{ dataFieldName }}" class="" />
+    <input type="radio" value="1" name="{{ dataFieldName }}" data-bind="checked: {{ dataFieldName }}, checkedValue: 1" {{#if disabled }} disabled {{/if}} class="" />
   Yes</label>
   <label class="form__label form__label--radio">
-    <input type="radio" value="2" name="{{ dataFieldName }}" data-bind="checked: {{ dataFieldName }}" class="" />
+    <input type="radio" value="2" name="{{ dataFieldName }}" data-bind="checked: {{ dataFieldName }}, checkedValue: 2" {{#if disabled }} disabled {{/if}} class="" />
   Insufficient</label>
 </dd>

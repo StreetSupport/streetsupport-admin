@@ -12,10 +12,10 @@ var cookies = require('../../src/js/cookies')
 var getUrlParameter = require('../../src/js/get-url-parameter')
 var spTags = require('../../src/js/serviceProviderTags')
 
-describe('Show Service Provider', () => {
+describe('Service Provider - Verify', () => {
   var Model = require('../../src/js/models/ServiceProvider')
   var model
-  var stubbedApi
+  var stubbedPutApi
 
   beforeEach(() => {
     let fakeResolved = {
@@ -27,7 +27,16 @@ describe('Show Service Provider', () => {
       }
     }
 
-    stubbedApi = sinon.stub(ajax, 'get').returns(fakeResolved)
+    sinon.stub(ajax, 'get').returns(fakeResolved)
+    stubbedPutApi = sinon.stub(ajax, 'put')
+      .returns({
+        then: function (success, error) {
+          success({
+            'status': 200
+          })
+        }
+      })
+
     sinon.stub(cookies, 'get').returns('stored-session-token')
     sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
     sinon.stub(browser, 'loading')
@@ -41,10 +50,13 @@ describe('Show Service Provider', () => {
     ])
 
     model = new Model()
+
+    model.serviceProvider().verifyOrg()
   })
 
   afterEach(() => {
     ajax.get.restore()
+    ajax.put.restore()
     cookies.get.restore()
     getUrlParameter.parameter.restore()
     browser.loading.restore()
@@ -52,92 +64,22 @@ describe('Show Service Provider', () => {
     spTags.all.restore()
   })
 
-  it('should retrieve service provider from api with session token', () => {
-    var endpoint = endpoints.getServiceProviders + '/coffee4craig'
+  it('- should send inverse of current isVerified to api', () => {
+    var endpoint = endpoints.getServiceProviders + '/coffee4craig/is-verified'
+    var payload = {
+      'IsVerified': true
+    }
     var headers = {
       'content-type': 'application/json',
       'session-token': 'stored-session-token'
     }
-    var payload = {}
-    var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, headers, payload).calledOnce
+    var apiCalledWithExpectedArgs = stubbedPutApi.withArgs(endpoint, headers, payload).calledOnce
+
     expect(apiCalledWithExpectedArgs).toBeTruthy()
   })
 
-  it('should set service provider', () => {
-    expect(model.serviceProvider().key()).toEqual('coffee4craig')
-  })
-
-  it('should set verified flag', () => {
-    expect(model.serviceProvider().isVerified()).toEqual(coffee4Craig().isVerified)
-  })
-
-  it('should set associated City', () => {
-    expect(model.serviceProvider().city()).toEqual('manchester')
-  })
-
-  it('should set decoded provider short description', () => {
-    expect(model.serviceProvider().shortDescription()).toEqual('St Mary\'s Centre provides a range of services for anyone who has been raped or sexually assaulted')
-  })
-
-  it('should set decoded provider description', () => {
-    expect(model.serviceProvider().description()).toEqual('St Mary\'s Sexual Assault Referral Centre Coffee4Craig is a not-for-profit organisation set up to support, work with and be an all accepting approach to homelessness. ')
-  })
-
-  it('should set addresses', () => {
-    expect(model.serviceProvider().addresses().length).toEqual(2)
-  })
-
-  it('should set addresses\' service provider id', () => {
-    expect(model.serviceProvider().addresses()[0].serviceProviderId).toEqual('coffee4craig')
-  })
-
-  it('should set services', () => {
-    expect(model.serviceProvider().services().length).toEqual(1)
-  })
-
-  it('should set services\' service provider id', () => {
-    expect(model.serviceProvider().services()[0].serviceProviderId).toEqual('coffee4craig')
-  })
-
-  it('should set grouped services', () => {
-    expect(model.serviceProvider().groupedServices().length).toEqual(3)
-  })
-
-  it('should set needs\' service provider id', () => {
-    expect(model.serviceProvider().needs()[0].serviceProviderId).toEqual('coffee4craig')
-  })
-
-  it('should set link to add address', () => {
-    expect(model.serviceProvider().addAddressUrl).toEqual('/add-service-provider-address.html?providerId=coffee4craig')
-  })
-
-  it('should set link to manage services', () => {
-    expect(model.serviceProvider().addServiceUrl).toEqual('/add-service-provider-service.html?providerId=coffee4craig')
-  })
-
-  it('should set link to manage needs', () => {
-    expect(model.serviceProvider().addNeedUrl).toEqual('/add-service-provider-need.html?providerId=coffee4craig')
-  })
-
-  it('- Should have initial collection of available tags', () => {
-    expect(Object.keys(model.serviceProvider().tags()).length).toEqual(5)
-    expect(model.serviceProvider().tags()[0].name).toEqual('Tag A')
-    expect(model.serviceProvider().tags()[1].name).toEqual('Tag B')
-    expect(model.serviceProvider().tags()[2].name).toEqual('Tag C')
-    expect(model.serviceProvider().tags()[3].name).toEqual('Tag D')
-    expect(model.serviceProvider().tags()[4].name).toEqual('Tag E')
-  })
-
-  it('- Should set flags for each available tag', () => {
-    expect(model.serviceProvider().tags()[0].isSelected()).toBeTruthy()
-    expect(model.serviceProvider().tags()[1].isSelected()).toBeFalsy()
-    expect(model.serviceProvider().tags()[2].isSelected()).toBeTruthy()
-    expect(model.serviceProvider().tags()[3].isSelected()).toBeTruthy()
-    expect(model.serviceProvider().tags()[4].isSelected()).toBeFalsy()
-  })
-
-  it('- Should set need categories', () => {
-    expect(model.serviceProvider().needCatList()).toEqual('cat a, cat b')
+  it('- should invert isVerified', () => {
+    expect(model.serviceProvider().isVerified()).toBeTruthy()
   })
 })
 
