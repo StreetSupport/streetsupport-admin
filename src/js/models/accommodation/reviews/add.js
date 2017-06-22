@@ -23,13 +23,6 @@ function Add () {
     }
   }
 
-  const defaultNewPersonalFeedback = {
-    canBeDisplayedPublically: false,
-    reviewerName: '',
-    reviewerContactDetails: '',
-    body: ''
-  }
-
   self.buildPersonalFeedbackFormFields = (data = review.createDefaultNewFeedback()) => {
     const model = ko.validatedObservable(review.buildFeedback(data))
     return model

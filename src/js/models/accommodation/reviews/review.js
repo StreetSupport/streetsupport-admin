@@ -43,7 +43,7 @@ export const createDefaultNewItem = function (accomId) {
     documentCreationDate: new Date().toISOString()
   }
 
-  zeroFields.forEach((f) => { defaultNewItem[f] = '0' })
+  zeroFields.forEach((f) => { defaultNewItem[f] = 0 })
   falseFields.forEach((f) => { defaultNewItem[f] = false })
 
   return defaultNewItem
