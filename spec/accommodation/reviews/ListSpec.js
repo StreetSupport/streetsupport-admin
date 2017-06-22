@@ -13,8 +13,9 @@ const cookies = require(`../../../src/js/cookies`)
 const querystring = require(`../../../src/js/get-url-parameter`)
 const Model = require(`../../../src/js/models/accommodation/reviews/list`)
 import { testData } from './testData'
+const reviewUnderTest = testData.embedded.reviews[0]
 
-describe('Accommodation Listing', () => {
+describe('Accommodation Review Listing', () => {
   let sut = null
   let browserLoadingStub = null
   let browserLoadedStub = null
@@ -68,10 +69,19 @@ describe('Accommodation Listing', () => {
   })
 
   it('- should set review\'s creation date', () => {
-    expect(sut.items()[0].formFields().documentCreationDateReadOnly()).toEqual('2017-02-17')
+    expect(sut.items()[0].formFields().documentCreationDateReadOnly()).toEqual('2017-06-21')
   })
 
   it('- should set accom\'s address', () => {
     expect(sut.address()).toEqual('test 1, manchester, M3 4BD')
+  })
+
+  it('- should set review\'s details url', () => {
+    expect(sut.items()[0].formFields().detailsUrl()).toEqual(`details/?accom-id=${reviewUnderTest.temporaryAccommodationId}&id=${reviewUnderTest.id}`)
+  })
+  })
+
+  it('- should set hasReviews', () => {
+    expect(sut.hasReviews()).toBeTruthy()
   })
 })

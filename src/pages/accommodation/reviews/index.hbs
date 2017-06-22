@@ -10,23 +10,29 @@ nosubnav: true
 <div class="block block--highlight admin-header">
   <div class="container block__inner">
     <header>
-    <h1>Previous Feedback</h1>
-    <p data-bind="text: address"></p>
-    <a href="/accommodation/" class="btn btn--info">
-      <span class="btn__text">Back to listing</span>
-    </a>
+      <h1>Previous Feedback</h1>
+      <p data-bind="text: address"></p>
+      <a href="/accommodation/" class="btn btn--info">
+        <span class="btn__text">Back to listing</span>
+      </a>
     </header>
   </div>
 </div>
 <div class="block block--main-body">
   <div class="container block__inner">
     <div class="block__content">
+      <!-- ko if: hasReviews -->
       <div data-bind="foreach: items" class="accom-reviews">
         <article data-bind="with: formFields" class="accom-review">
           <h1 class="h3 accom-review__title">Review date: <span data-bind="text: documentCreationDateReadOnly"></span></h1>
+          <a data-bind="attr: { href: detailsUrl }" class="btn btn--primary accom-review__btn"><span class="btn__text">view</span></a>
           <button data-bind="click: $parent.deleteItem" class="btn btn--warning accom-review__btn"><span class="btn__text">delete</span></button>
         </article>
       </div>
+      <!-- /ko -->
+      <!-- ko ifnot: hasReviews -->
+      <p>There are no reviews for this accommodation.</p>
+      <!-- /ko -->
     </div>
   </div>
 </div>

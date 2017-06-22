@@ -8,56 +8,13 @@ let querystring = require('../../../get-url-parameter')
 let BaseViewModel = require('../../BaseViewModel')
 let Item = require('./Item')
 
+import * as review from './review'
+
 function Add () {
   let self = this
 
-  const createDefaultNewItem = () => {
-    const zeroFields = ['hasCentralHeating', 'hasHotWater', 'hasElectricity', 'hasToilet', 'hasShowerBath',
-      'feelingOfSecurityRating', 'noisyRating', 'foodRating', 'cleanlinessRating', 'roomConditionRating',
-      'staffFriendlinessRating', 'staffSupportivenessRating', 'staffDealingWithProblemsRating', 'staffTimelinessWithIssuesRating',
-      'overallRating']
-    const falseFields = ['hasLockOnRoom', 'hasLockOnFrontDoor', 'hasAggressiveTenants', 'hasExcessiveNoise']
-
-    const defaultNewItem = {
-      id: null,
-      temporaryAccommodationId: querystring.parameter('id'),
-      documentCreationDate: new Date().toISOString(),
-    }
-
-    zeroFields.forEach((f) => { defaultNewItem[f] = '0' })
-    falseFields.forEach((f) => { defaultNewItem[f] = false })
-
-    return defaultNewItem
-  }
-
-  self.buildFormFields = (data = createDefaultNewItem()) => {
-    const formattedCreationDate = data.documentCreationDate !== undefined
-      ? data.documentCreationDate.split('T')[0]
-      : ''
-
-    const model = ko.validatedObservable({
-      idReadOnly: ko.observable(data.id),
-      temporaryAccommodationIdReadOnly: ko.observable(data.temporaryAccommodationId),
-      documentCreationDateReadOnly: ko.observable(formattedCreationDate),
-      hasCentralHeating: ko.observable(data.hasCentralHeating),
-      hasHotWater: ko.observable(data.hasHotWater),
-      hasElectricity: ko.observable(data.hasElectricity),
-      hasToilet: ko.observable(data.hasToilet),
-      hasShowerBath: ko.observable(data.hasShowerBath),
-      hasLockOnRoom: ko.observable(data.hasLockOnRoom),
-      feelingOfSecurityRating: ko.observable(data.feelingOfSecurityRating),
-      hasLockOnFrontDoor: ko.observable(data.hasLockOnFrontDoor),
-      noisyRating: ko.observable(data.noisyRating),
-      foodRating: ko.observable(data.foodRating),
-      cleanlinessRating: ko.observable(data.cleanlinessRating),
-      roomConditionRating: ko.observable(data.roomConditionRating),
-      staffFriendlinessRating: ko.observable(data.staffFriendlinessRating),
-      staffSupportivenessRating: ko.observable(data.staffSupportivenessRating),
-      staffDealingWithProblemsRating: ko.observable(data.staffDealingWithProblemsRating),
-      staffTimelinessWithIssuesRating: ko.observable(data.staffTimelinessWithIssuesRating),
-      overallRating: ko.observable(data.overallRating)
-    })
-    return model
+  self.buildFormFields = (data = review.createDefaultNewItem(querystring.parameter('id'))) => {
+    return ko.validatedObservable(review.buildModel(data))
   }
   self.buildEndpoints = () => {
     return {
@@ -73,15 +30,8 @@ function Add () {
     body: ''
   }
 
-  self.buildPersonalFeedbackFormFields = (data = defaultNewPersonalFeedback) => {
-    const model = ko.validatedObservable({
-      idReadOnly: ko.observable(data.id),
-      temporaryAccommodationIdReadOnly: ko.observable(data.temporaryAccommodationId),
-      canBeDisplayedPublically: ko.observable(data.canBeDisplayedPublically),
-      reviewerName: ko.observable(data.reviewerName),
-      reviewerContactDetails: ko.observable(data.reviewerContactDetails),
-      body: ko.observable(data.body)
-    })
+  self.buildPersonalFeedbackFormFields = (data = review.createDefaultNewFeedback()) => {
+    const model = ko.validatedObservable(review.buildFeedback(data))
     return model
   }
   self.buildPersonalFeedbackEndpoints = () => {
@@ -110,7 +60,7 @@ function Add () {
   const retrieveItems = () => {
     browser.loading()
     const id = querystring.parameter('id')
-    const endpoint = `${self.endpointBuilder.temporaryAccommodation(id).build()}?expand=reviews`
+    const endpoint = `${self.endpointBuilder.temporaryAccommodation(id).build()}`
     const headers = self.headers(cookies.get('session-token'))
     ajax
       .get(endpoint, headers)

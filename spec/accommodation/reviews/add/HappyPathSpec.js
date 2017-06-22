@@ -30,7 +30,7 @@ describe('Accommodation Listing - Add', () => {
 
     sinon
       .stub(ajax, 'get')
-      .withArgs(`${endpoints.prefix(testData.links.self)}?expand=reviews`, headers)
+      .withArgs(`${endpoints.prefix(testData.links.self)}`, headers)
       .returns({
         then: function (success, error) {
           success({
@@ -72,7 +72,7 @@ describe('Accommodation Listing - Add', () => {
 
   it(' - should set defaults', () => {
     expect(sut.newItem().formFields().idReadOnly()).toEqual(null)
-    
+
     expect(sut.newItem().formFields().hasCentralHeating()).toEqual('0')
     expect(sut.newItem().formFields().hasHotWater()).toEqual('0')
     expect(sut.newItem().formFields().hasElectricity()).toEqual('0')
@@ -114,7 +114,7 @@ describe('Accommodation Listing - Add', () => {
       sut.newItem().formFields().foodRating(3)
       sut.newItem().formFields().cleanlinessRating(2)
       sut.newItem().formFields().roomConditionRating(2)
-      
+
       sut.newItem().formFields().staffFriendlinessRating(3)
       sut.newItem().formFields().staffSupportivenessRating(4)
       sut.newItem().formFields().staffDealingWithProblemsRating(5)

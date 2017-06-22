@@ -1,5 +1,5 @@
 <span class="key-value-pair__key key-value-pair__key--inline">{{ fieldTitle }}</span>
 <span class="key-value-pair__value">
-  <label class="form__label form__label--radio"><input type="radio" name="{{ dataFieldName }}" data-bind="checked: {{ dataFieldName }}, checkedValue:false" /> No</label>
-  <label class="form__label form__label--radio"><input type="radio" name="{{ dataFieldName }}" data-bind="checked: {{ dataFieldName }}, checkedValue:true" /> Yes</label>
+  <label class="form__label form__label--radio"><input type="radio" name="{{ dataFieldName }}" data-bind="checked: {{ dataFieldName }}, checkedValue:false" {{#if disabled }} disabled {{/if}} /> No</label>
+  <label class="form__label form__label--radio"><input type="radio" name="{{ dataFieldName }}" data-bind="checked: {{ dataFieldName }}, checkedValue:true" {{#if disabled }} disabled {{/if}} /> Yes</label>
 </span>
