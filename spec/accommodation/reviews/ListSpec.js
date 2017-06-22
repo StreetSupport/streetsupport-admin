@@ -79,7 +79,6 @@ describe('Accommodation Review Listing', () => {
   it('- should set review\'s details url', () => {
     expect(sut.items()[0].formFields().detailsUrl()).toEqual(`details/?accom-id=${reviewUnderTest.temporaryAccommodationId}&id=${reviewUnderTest.id}`)
   })
-  })
 
   it('- should set hasReviews', () => {
     expect(sut.hasReviews()).toBeTruthy()
