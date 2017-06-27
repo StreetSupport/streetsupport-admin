@@ -18,6 +18,7 @@ function ServiceProvider (data) {
   self.key = ko.observable(data.key)
   self.city = ko.observable(data.associatedCityId)
   self.name = ko.observable(data.name)
+  self.isVerified = ko.observable(data.isVerified)
   self.shortDescription = ko.observable(htmlEncode.htmlDecode(data.shortDescription))
   self.description = ko.observable(htmlEncode.htmlDecode(data.description))
   self.telephone = ko.observable(data.telephone)
@@ -77,6 +78,17 @@ function ServiceProvider (data) {
 
   self.addNeedUrl = adminUrls.serviceProviderNeedsAdd + '?providerId=' + data.key
 
+  self.verifyOrg = function () {
+    ajax
+      .put(`${self.endpointBuilder.serviceProviders(self.key()).build()}/is-verified`,
+        self.headers(cookies.get('session-token')), { IsVerified: true })
+      .then((success) => {
+        self.isVerified(true)
+      }, (e) => {
+        browser.redirect(adminUrls.error)
+      })
+  }
+
   self.deleteAddress = function (deletedAddress) {
     var notDeleted = function (address) {
       return address.key() !== deletedAddress.key()
@@ -109,6 +121,8 @@ function ServiceProvider (data) {
     self.needs(remainingNeeds)
   }
 }
+
+ServiceProvider.prototype = new BaseViewModel()
 
 function ServiceProviderDetails () {
   var self = this

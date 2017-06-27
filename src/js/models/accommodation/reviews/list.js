@@ -27,23 +27,7 @@ function List () {
       idReadOnly: ko.observable(data.id),
       temporaryAccommodationIdReadOnly: ko.observable(data.temporaryAccommodationId),
       documentCreationDateReadOnly: ko.observable(formattedCreationDate),
-      hasCentralHeating: ko.observable(data.hasCentralHeating),
-      hasHotWater: ko.observable(data.hasHotWater),
-      hasElectricity: ko.observable(data.hasElectricity),
-      hasLockOnRoom: ko.observable(data.hasLockOnRoom),
-      hasLockOnFrontDoor: ko.observable(data.hasLockOnFrontDoor),
-      hasAggressiveTenants: ko.observable(data.hasAggressiveTenants),
-      hasExcessiveNoise: ko.observable(data.hasExcessiveNoise),
-      foodRating: ko.observable(data.foodRating),
-      cleanlinessRating: ko.observable(data.cleanlinessRating),
-      staffHelpfulnessRating: ko.observable(data.staffHelpfulnessRating),
-      staffSupportivenessRating: ko.observable(data.staffSupportivenessRating),
-      staffDealingWithProblemsRating: ko.observable(data.staffDealingWithProblemsRating),
-      staffTimelinessWithIssuesRating: ko.observable(data.staffTimelinessWithIssuesRating),
-      canBeDisplayedPublically: ko.observable(data.canBeDisplayedPublically),
-      reviewerName: ko.observable(data.reviewerName),
-      reviewerContactDetails: ko.observable(data.reviewerContactDetails),
-      body: ko.observable(data.body)
+      detailsUrl: ko.observable(`details/?accom-id=${data.temporaryAccommodationId}&id=${data.id}`)
     })
     return model
   }
@@ -56,6 +40,9 @@ function List () {
 
   self.address = ko.observable()
   self.items = ko.observableArray()
+  self.hasReviews = ko.computed(() => {
+    return self.items().length > 0
+  }, self)
 
   const retrieveItems = () => {
     browser.loading()

@@ -8,52 +8,13 @@ let querystring = require('../../../get-url-parameter')
 let BaseViewModel = require('../../BaseViewModel')
 let Item = require('./Item')
 
+import * as review from './review'
+
 function Add () {
   let self = this
 
-  const defaultNewItem = {
-    id: null,
-    temporaryAccommodationId: querystring.parameter('id'),
-    documentCreationDate: new Date().toISOString(),
-    hasCentralHeating: '0',
-    hasHotWater: '0',
-    hasElectricity: '0',
-    hasLockOnRoom: false,
-    hasLockOnFrontDoor: false,
-    hasAggressiveTenants: false,
-    hasExcessiveNoise: false,
-    foodRating: '0',
-    cleanlinessRating: '0',
-    staffHelpfulnessRating: '0',
-    staffSupportivenessRating: '0',
-    staffDealingWithProblemsRating: '0',
-    staffTimelinessWithIssuesRating: '0'
-  }
-
-  self.buildFormFields = (data = defaultNewItem) => {
-    const formattedCreationDate = data.documentCreationDate !== undefined
-      ? data.documentCreationDate.split('T')[0]
-      : ''
-
-    const model = ko.validatedObservable({
-      idReadOnly: ko.observable(data.id),
-      temporaryAccommodationIdReadOnly: ko.observable(data.temporaryAccommodationId),
-      documentCreationDateReadOnly: ko.observable(formattedCreationDate),
-      hasCentralHeating: ko.observable(data.hasCentralHeating),
-      hasHotWater: ko.observable(data.hasHotWater),
-      hasElectricity: ko.observable(data.hasElectricity),
-      hasLockOnRoom: ko.observable(data.hasLockOnRoom),
-      hasLockOnFrontDoor: ko.observable(data.hasLockOnFrontDoor),
-      hasAggressiveTenants: ko.observable(data.hasAggressiveTenants),
-      hasExcessiveNoise: ko.observable(data.hasExcessiveNoise),
-      foodRating: ko.observable(data.foodRating),
-      cleanlinessRating: ko.observable(data.cleanlinessRating),
-      staffHelpfulnessRating: ko.observable(data.staffHelpfulnessRating),
-      staffSupportivenessRating: ko.observable(data.staffSupportivenessRating),
-      staffDealingWithProblemsRating: ko.observable(data.staffDealingWithProblemsRating),
-      staffTimelinessWithIssuesRating: ko.observable(data.staffTimelinessWithIssuesRating)
-    })
-    return model
+  self.buildFormFields = (data = review.createDefaultNewItem(querystring.parameter('id'))) => {
+    return ko.validatedObservable(review.buildModel(data))
   }
   self.buildEndpoints = () => {
     return {
@@ -62,22 +23,8 @@ function Add () {
     }
   }
 
-  const defaultNewPersonalFeedback = {
-    canBeDisplayedPublically: false,
-    reviewerName: '',
-    reviewerContactDetails: '',
-    body: ''
-  }
-
-  self.buildPersonalFeedbackFormFields = (data = defaultNewPersonalFeedback) => {
-    const model = ko.validatedObservable({
-      idReadOnly: ko.observable(data.id),
-      temporaryAccommodationIdReadOnly: ko.observable(data.temporaryAccommodationId),
-      canBeDisplayedPublically: ko.observable(data.canBeDisplayedPublically),
-      reviewerName: ko.observable(data.reviewerName),
-      reviewerContactDetails: ko.observable(data.reviewerContactDetails),
-      body: ko.observable(data.body)
-    })
+  self.buildPersonalFeedbackFormFields = (data = review.createDefaultNewFeedback()) => {
+    const model = ko.validatedObservable(review.buildFeedback(data))
     return model
   }
   self.buildPersonalFeedbackEndpoints = () => {
@@ -106,7 +53,7 @@ function Add () {
   const retrieveItems = () => {
     browser.loading()
     const id = querystring.parameter('id')
-    const endpoint = `${self.endpointBuilder.temporaryAccommodation(id).build()}?expand=reviews`
+    const endpoint = `${self.endpointBuilder.temporaryAccommodation(id).build()}`
     const headers = self.headers(cookies.get('session-token'))
     ajax
       .get(endpoint, headers)

@@ -1,20 +1,12 @@
 <dt class="key-value-pair__key key-value-pair__key--inline">{{ fieldTitle }}</dt>
 <dd class="key-value-pair__value">
-  <span class="form__rating-label">{{#if lowRatingLabel}}{{lowRatingLabel}}{{else}}very poor{{/if}}</span>
   <label class="form__label form__label--radio">
     <input type="radio" value="1" name="{{ dataFieldName }}" data-bind="checked: {{ dataFieldName }}, checkedValue: 1" {{#if disabled }} disabled {{/if}} class="" />
-  1</label>
-  <label class="form__label form__label--radio">
-    <input type="radio" value="2" name="{{ dataFieldName }}" data-bind="checked: {{ dataFieldName }}, checkedValue: 2" {{#if disabled }} disabled {{/if}} class="" />
-  2</label>
+  never</label>
   <label class="form__label form__label--radio">
     <input type="radio" value="3" name="{{ dataFieldName }}" data-bind="checked: {{ dataFieldName }}, checkedValue: 3" {{#if disabled }} disabled {{/if}} class="" />
-  3</label>
-  <label class="form__label form__label--radio">
-    <input type="radio" value="4" name="{{ dataFieldName }}" data-bind="checked: {{ dataFieldName }}, checkedValue: 4" {{#if disabled }} disabled {{/if}} class="" />
-  4</label>
+  sometimes</label>
   <label class="form__label form__label--radio">
     <input type="radio" value="5" name="{{ dataFieldName }}" data-bind="checked: {{ dataFieldName }}, checkedValue: 5" {{#if disabled }} disabled {{/if}} class="" />
-  5</label>
-  <span class="form__rating-label">{{#if highRatingLabel}}{{highRatingLabel}}{{else}}very good{{/if}}</span>
+  often</label>
 </dd>
