@@ -11,6 +11,8 @@ let adminurls = require('../../src/js/admin-urls')
 let browser = require('../../src/js/browser')
 let cookies = require('../../src/js/cookies')
 
+import { cities } from '../../src/data/generated/supported-cities'
+
 describe('Add Service Provider', () => {
   let Model = require('../../src/js/models/AddServiceProvider')
   let model = null
@@ -19,17 +21,6 @@ describe('Add Service Provider', () => {
   let ajaxGet = null
 
   beforeEach(() => {
-    ajaxGet = sinon
-      .stub(ajax, 'get')
-      .withArgs(endpoints.cities)
-      .returns({
-        then: (success, _) => {
-          success({
-            'statusCode': 200,
-            'data': cityData
-          })
-        }
-      })
     browserLoading = sinon.stub(browser, 'loading')
     browserLoaded = sinon.stub(browser, 'loaded')
     sinon.stub(browser, 'scrollTo')
@@ -37,14 +28,9 @@ describe('Add Service Provider', () => {
   })
 
   afterEach(() => {
-    ajax.get.restore()
     browser.loading.restore()
     browser.loaded.restore()
     browser.scrollTo.restore()
-  })
-
-  it('should notify user it is loading', () => {
-    expect(browserLoading.calledOnce).toBeTruthy()
   })
 
   it('should start with Name empty', () => {
@@ -56,19 +42,15 @@ describe('Add Service Provider', () => {
   })
 
   it('should set cities', () => {
-    expect(model.cities().length).toEqual(2)
+    expect(model.cities().length).toEqual(cities.length)
   })
 
   it('should set city id', () => {
-    expect(model.cities()[1].Id).toEqual('leeds')
+    expect(model.cities()[1].id).toEqual('liverpool')
   })
 
   it('should set city name', () => {
-    expect(model.cities()[1].Name).toEqual('Leeds')
-  })
-
-  it('should notify user it has loaded', () => {
-    expect(browserLoaded.calledAfter(ajaxGet)).toBeTruthy()
+    expect(model.cities()[1].name).toEqual('Liverpool')
   })
 
   describe('Save', () => {
@@ -156,18 +138,3 @@ describe('Add Service Provider', () => {
     })
   })
 })
-
-let cityData = [
-  {
-    Id: 'manchester',
-    Name: 'Manchester',
-    Longitude: -2.24455696347558,
-    Latitude: 53.4792777155671
-  },
-  {
-    Id: 'leeds',
-    Name: 'Leeds',
-    Longitude: -1.54511238485298,
-    Latitude: 53.7954906003838
-  }
-]
