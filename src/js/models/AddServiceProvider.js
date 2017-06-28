@@ -5,6 +5,8 @@ var cookies = require('../cookies')
 var browser = require('../browser')
 var BaseViewModel = require('./BaseViewModel')
 
+import { cities } from '../../data/generated/supported-cities'
+
 function AddServiceProvider () {
   var self = this
   self.name = ko.observable('')
@@ -32,20 +34,7 @@ function AddServiceProvider () {
       })
   }
 
-  self.init = () => {
-    browser.loading()
-    let endpoint = self.endpointBuilder.cities().build()
-    ajax
-      .get(endpoint)
-      .then((result) => {
-        self.cities(result.data)
-        browser.loaded()
-      }, (error) => {
-        self.handleError(error)
-      })
-  }
-
-  self.init()
+  self.cities(cities)
 }
 
 AddServiceProvider.prototype = new BaseViewModel()
