@@ -181,14 +181,14 @@ describe('SWEP Availabilty', () => {
 
 const cities = [
   {
-    'id': 'manchester',
+    'key': 'manchester',
     'name': 'Manchester',
     'latitude': 53.4792777155671,
     'longitude': -2.24455696347558,
     'swepIsAvailable': true
   },
   {
-    'id': 'leeds',
+    'key': 'leeds',
     'name': 'Leeds',
     'latitude': 53.7954906003838,
     'longitude': -1.54511238485298,

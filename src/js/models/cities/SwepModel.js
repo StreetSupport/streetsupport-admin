@@ -8,9 +8,9 @@ const nav = require('../../nav')
 
 const City = function (data) {
   const self = this
-  self.key = data.id
+  self.key = data.key
   self.name = data.name
-  self.userClaims = ko.observable(`cityadminfor:${data.id}`)
+  self.userClaims = ko.observable(`cityadminfor:${data.key}`)
   self.swepIsAvailable = ko.observable(data.swepIsAvailable)
   self.buttonText = ko.computed(() => {
     return self.swepIsAvailable()
