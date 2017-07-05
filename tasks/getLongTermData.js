@@ -43,7 +43,7 @@ gulp.task('support-types', (callback) => {
         { key: 'domestic violence', name: 'Domestic Violence' },
         { key: 'mental health', name: 'Mental Health' },
         { key: 'physical health', name: 'Physical Health' },
-        { key: 'substances', name: 'Substances' }
+        { key: 'substances', name: 'Drug Dependency' }
       ]`
 
   fs.writeFile(`${config.paths.generatedData}support-types.js`, body, function (err) {

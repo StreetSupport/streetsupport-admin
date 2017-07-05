@@ -14,6 +14,8 @@ const querystring = require(`${jsRoot}get-url-parameter`)
 
 const { testData, publishedServiceProviderData } = require('../testData')
 
+const boolDiscFields = ['acceptsPets', 'acceptsCouples', 'hasDisabledAccess', 'hasSingleRooms', 'hasSharedRooms', 'hasShowerBathroomFacilities', 'hasAccessToKitchen', 'hasFlexibleMealTimes', 'hasLounge', 'hasLaundryFacilities', 'providesCleanBedding', 'allowsVisitors']
+
 describe('Accommodation - Edit Features', () => {
   const Model = require(`${jsRoot}models/accommodation/edit`)
   const headers = {
@@ -75,7 +77,6 @@ describe('Accommodation - Edit Features', () => {
   })
 
   it('- should load features', () => {
-    const boolDiscFields = ['acceptsHousingBenefit', 'acceptsPets', 'acceptsCouples', 'hasDisabledAccess', 'isSuitableForWomen', 'isSuitableForYoungPeople', 'hasSingleRooms', 'hasSharedRooms', 'hasShowerBathroomFacilities', 'hasAccessToKitchen', 'hasFlexibleMealTimes', 'hasLounge', 'providesCleanBedding', 'allowsVisitors', 'allowsChildren', 'hasOnSiteManager', 'referenceReferralIsRequired', 'foodIsIncluded']
     Object.keys(testData.features)
       .forEach((k) => {
         if (boolDiscFields.includes(k)) {
@@ -88,20 +89,15 @@ describe('Accommodation - Edit Features', () => {
 
   it('- should set boolean/discretionary read only value', () => {
     expect(sut.features().formFields().acceptsPetsReadOnly()).toEqual('Don\'t Know/Ask')
-    expect(sut.features().formFields().acceptsCouplesReadOnly()).toEqual('Don\'t Know/Ask')
   })
 
   it('- should set additional features read only value', () => {
     expect(sut.features().formFields().additionalFeaturesReadOnly()).toEqual('<p>additional features</p>\n')
   })
 
-  it('- should set featuresAvailableAtAdditionalCost read only value', () => {
-    expect(sut.features().formFields().featuresAvailableAtAdditionalCostReadOnly()).toEqual('<p>features available at additional cost</p>\n')
-  })
-
   describe('- edit features', () => {
     beforeEach(() => {
-      sut.contactDetails().edit()
+      sut.features().edit()
 
       Object.keys(testData.features)
         .forEach((k) => {
@@ -118,7 +114,7 @@ describe('Accommodation - Edit Features', () => {
     })
 
     it('- should set isEditable to true', () => {
-      expect(sut.contactDetails().isEditable()).toBeTruthy()
+      expect(sut.features().isEditable()).toBeTruthy()
     })
 
     describe('- submit', () => {
@@ -155,29 +151,20 @@ describe('Accommodation - Edit Features', () => {
           'session-token': 'stored-session-token'
         }
         const payload = {
-          'AcceptsHousingBenefit': 1,
-          'AcceptsNoHousingBenefitWithServiceProviderSupport': 1,
           'AcceptsPets': 1,
           'AcceptsCouples': 1,
           'HasDisabledAccess': 1,
-          'IsSuitableForWomen': 1,
-          'IsSuitableForYoungPeople': 1,
           'HasSingleRooms': 1,
           'HasSharedRooms': 1,
           'HasShowerBathroomFacilities': 1,
           'HasAccessToKitchen': 1,
           'HasFlexibleMealTimes': 1,
           'HasLounge': 1,
+          'HasLaundryFacilities': 1,
           'ProvidesCleanBedding': 1,
           'AllowsVisitors': 1,
-          'AllowsChildren': 1,
-          'HasOnSiteManager': 1,
-          'ReferenceReferralIsRequired': 1,
-          'Price': 678.9,
           'AdditionalFeatures': 'new additional features',
-          'FoodIsIncluded': 1,
-          'AvailabilityOfMeals': 'new availability of meals',
-          'FeaturesAvailableAtAdditionalCost': 'new features available at additional cost'
+          'AvailabilityOfMeals': 'new availability of meals'
         }
         const patchAsExpected = ajaxPatchStub
           .withArgs(endpoint, headers, payload)
@@ -216,30 +203,20 @@ describe('Accommodation - Edit Features', () => {
         })
 
         it('- should reset fields', () => {
-          expect(sut.features().formFields().acceptsHousingBenefit()).toEqual(1)
-          expect(sut.features().formFields().acceptsNoHousingBenefitWithServiceProviderSupport()).toEqual(1)
           expect(sut.features().formFields().acceptsPets()).toEqual(1)
           expect(sut.features().formFields().acceptsPetsReadOnly()).toEqual('Yes')
-          expect(sut.features().formFields().acceptsCouples()).toEqual(1)
           expect(sut.features().formFields().hasDisabledAccess()).toEqual(1)
-          expect(sut.features().formFields().isSuitableForWomen()).toEqual(1)
-          expect(sut.features().formFields().isSuitableForYoungPeople()).toEqual(1)
           expect(sut.features().formFields().hasSingleRooms()).toEqual(1)
           expect(sut.features().formFields().hasSharedRooms()).toEqual(1)
           expect(sut.features().formFields().hasShowerBathroomFacilities()).toEqual(1)
           expect(sut.features().formFields().hasAccessToKitchen()).toEqual(1)
           expect(sut.features().formFields().hasFlexibleMealTimes()).toEqual(1)
           expect(sut.features().formFields().hasLounge()).toEqual(1)
+          expect(sut.features().formFields().hasLaundryFacilities()).toEqual(1)
           expect(sut.features().formFields().providesCleanBedding()).toEqual(1)
           expect(sut.features().formFields().allowsVisitors()).toEqual(1)
-          expect(sut.features().formFields().allowsChildren()).toEqual(1)
-          expect(sut.features().formFields().hasOnSiteManager()).toEqual(1)
-          expect(sut.features().formFields().referenceReferralIsRequired()).toEqual(1)
-          expect(sut.features().formFields().price()).toEqual(678.9)
           expect(sut.features().formFields().additionalFeatures()).toEqual('new additional features')
-          expect(sut.features().formFields().foodIsIncluded()).toEqual(1)
           expect(sut.features().formFields().availabilityOfMeals()).toEqual('new availability of meals')
-          expect(sut.features().formFields().featuresAvailableAtAdditionalCost()).toEqual('new features available at additional cost')
         })
       })
     })
@@ -254,13 +231,10 @@ describe('Accommodation - Edit Features', () => {
       })
 
       it('- should reset fields', () => {
-        const boolDiscFields = ['acceptsHousingBenefit', 'acceptsPets', 'acceptsCouples', 'hasDisabledAccess', 'isSuitableForWomen', 'isSuitableForYoungPeople', 'hasSingleRooms', 'hasSharedRooms', 'hasShowerBathroomFacilities', 'hasAccessToKitchen', 'hasFlexibleMealTimes', 'hasLounge', 'providesCleanBedding', 'allowsVisitors', 'allowsChildren', 'hasOnSiteManager', 'referenceReferralIsRequired', 'foodIsIncluded']
         Object.keys(sut.features().formFields())
           .forEach((k) => {
             if (k === 'additionalFeaturesReadOnly') {
               expect(sut.features().formFields()[k]()).toEqual('<p>additional features</p>\n')
-            } else if (k === 'featuresAvailableAtAdditionalCostReadOnly') {
-              expect(sut.features().formFields()[k]()).toEqual('<p>features available at additional cost</p>\n')
             } else if (k.endsWith('ReadOnly')) {
               expect(sut.features().formFields()[k]()).toEqual('Don\'t Know/Ask')
             } else if (boolDiscFields.includes(k)) {

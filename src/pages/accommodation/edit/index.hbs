@@ -25,13 +25,7 @@ nosubnav: true
       <div class="split split--admin-panel">
         <section class="split__element split__element--admin-panel" data-bind="with: generalDetails">
           <h2>General Details</h2>
-            <!-- ko ifnot: isEditable -->
-            <button data-bind="click: edit" class="btn btn--info"><span class="btn__text">edit</span></button>
-            <!-- /ko -->
-            <!-- ko if: isEditable -->
-            <button data-bind="click: cancel" class="btn btn--indifferent"><span class="btn__text">cancel</span></button>
-            <button data-bind="click: save" class="btn btn--primary"><span class="btn__text">save</span></button>
-            <!-- /ko -->
+            {{> forms/inline/editCancelSaveButtons }}
             <dl class="key-value-pair" data-bind="with: formFields">
               {{> forms/inline/textField fieldTitle="Name" dataFieldName="name" }}
               <div data-claims="superadmin">
@@ -49,8 +43,8 @@ nosubnav: true
                   <!-- /ko -->
                 </dd>
               </div>
-              {{> forms/inline/textArea fieldTitle="Synopsis" dataFieldName="synopsis" readOnlyFieldName="synopsisReadOnly" }}
-              {{> forms/inline/textArea fieldTitle="Description" dataFieldName="description" readOnlyFieldName="descriptionReadOnly" }}
+              {{> forms/inline/textArea fieldTitle="Short Description" dataFieldName="synopsis" readOnlyFieldName="synopsisReadOnly" }}
+              {{> forms/inline/textArea fieldTitle="Full Description" dataFieldName="description" readOnlyFieldName="descriptionReadOnly" }}
               {{> forms/inline/boolean fieldTitle="Open Access?" dataFieldName="isOpenAccess" claimsRequired="superadmin,orgadmin,cityadmin" }}
               {{> forms/inline/boolean fieldTitle="Visible on website?" dataFieldName="isPubliclyVisible" }}
               
@@ -67,34 +61,11 @@ nosubnav: true
                     optionsCaption: '-- please select --'" class="form__input"></select>
                 <!-- /ko -->
               </dd>
-
-              <dt class="key-value-pair__key key-value-pair__key--inline">Support Provided</dt>
-              <!-- ko ifnot: $parent.   isEditable -->
-              <dd class="key-value-pair__value">
-                <span data-bind="html: supportOfferedReadOnly"></span>
-              </dd>
-              <!-- /ko -->
-              <!-- ko if: $parent.    isEditable -->
-              <dd class="key-value-pair__value" data-bind="foreach: $parent.supportTypes">
-                <label class="form__label form__label--checkbox-container">
-                  <span class="key-value-pair__key key-value-pair__key--inline" data-bind="text: name"></span>
-                  <span class="key-value-pair__value">
-                    <input type="checkbox" name="supportOffered" id="supportOffered" data-bind="checked: $parent.supportOffered, attr: { value: key }" class="" />
-                  </span>
-                </label>
-              </dd>
-              <!-- /ko -->
             </dl>
         </section>
         <section class="split__element split__element--admin-panel" data-bind="with: contactDetails">
           <h2>Contact Details</h2>
-            <!-- ko ifnot: isEditable -->
-            <button data-bind="click: edit" class="btn btn--info"><span class="btn__text">edit</span></button>
-            <!-- /ko -->
-            <!-- ko if: isEditable -->
-            <button data-bind="click: cancel" class="btn btn--indifferent"><span class="btn__text">cancel</span></button>
-            <button data-bind="click: save" class="btn btn--primary"><span class="btn__text">save</span></button>
-            <!-- /ko -->
+            {{> forms/inline/editCancelSaveButtons }}
             <dl class="key-value-pair" data-bind="with: formFields">
               {{> forms/inline/textField fieldTitle="Contact Name" dataFieldName="name" }}
               {{> forms/inline/textArea fieldTitle="Additional Info" dataFieldName="additionalInfo" readOnlyFieldName="additionalInfo" }}
@@ -107,13 +78,7 @@ nosubnav: true
       <div class="split split--admin-panel">
         <section class="split__element split__element--admin-panel" data-bind="with: address">
           <h2>Location</h2>
-            <!-- ko ifnot: isEditable -->
-            <button data-bind="click: edit" class="btn btn--info"><span class="btn__text">edit</span></button>
-            <!-- /ko -->
-            <!-- ko if: isEditable -->
-            <button data-bind="click: cancel" class="btn btn--indifferent"><span class="btn__text">cancel</span></button>
-            <button data-bind="click: save" class="btn btn--primary"><span class="btn__text">save</span></button>
-            <!-- /ko -->
+            {{> forms/inline/editCancelSaveButtons }}
             <dl class="key-value-pair" data-bind="with: formFields">
               {{> forms/inline/textField fieldTitle="Street 1" dataFieldName="street1" }}
               {{> forms/inline/textField fieldTitle="Street 2" dataFieldName="street2" }}
@@ -139,38 +104,80 @@ nosubnav: true
 
         <section class="split__element split__element--admin-panel" data-bind="with: features">
           <h2>Features</h2>
-            <!-- ko ifnot: isEditable -->
-            <button data-bind="click: edit" class="btn btn--info"><span class="btn__text">edit</span></button>
-            <!-- /ko -->
-            <!-- ko if: isEditable -->
-            <button data-bind="click: cancel" class="btn btn--indifferent"><span class="btn__text">cancel</span></button>
-            <button data-bind="click: save" class="btn btn--primary"><span class="btn__text">save</span></button>
-            <!-- /ko -->
+            {{> forms/inline/editCancelSaveButtons }}
             <dl class="key-value-pair" data-bind="with: formFields">
-              {{> forms/inline/booleanOrOther fieldTitle="Accepts Housing Benefit" dataFieldName="acceptsHousingBenefit" thirdOptionLabel="Don't Know/Ask" }}
-              {{> forms/inline/booleanOrOther fieldTitle="Accepts Pets" dataFieldName="acceptsPets" thirdOptionLabel="Don't Know/Ask" }}
-              {{> forms/inline/booleanOrOther fieldTitle="Accepts Couples" dataFieldName="acceptsCouples" thirdOptionLabel="Don't Know/Ask" }}
-              {{> forms/inline/booleanOrOther fieldTitle="Disabled Access" dataFieldName="hasDisabledAccess" thirdOptionLabel="Don't Know/Ask" }}
-              {{> forms/inline/booleanOrOther fieldTitle="Suitable for Women" dataFieldName="isSuitableForWomen" thirdOptionLabel="Don't Know/Ask" }}
-              {{> forms/inline/booleanOrOther fieldTitle="Suitable for Young People" dataFieldName="isSuitableForYoungPeople" thirdOptionLabel="Don't Know/Ask" }}
               {{> forms/inline/booleanOrOther fieldTitle="Single Rooms" dataFieldName="hasSingleRooms" thirdOptionLabel="Don't Know/Ask" }}
               {{> forms/inline/booleanOrOther fieldTitle="Shared Rooms" dataFieldName="hasSharedRooms" thirdOptionLabel="Don't Know/Ask" }}
+              {{> forms/inline/booleanOrOther fieldTitle="Disabled Access" dataFieldName="hasDisabledAccess" thirdOptionLabel="Don't Know/Ask" }}
+              {{> forms/inline/booleanOrOther fieldTitle="Allows Pets" dataFieldName="acceptsPets" thirdOptionLabel="Don't Know/Ask" }}
+              {{> forms/inline/booleanOrOther fieldTitle="Allows Visitors" dataFieldName="allowsVisitors" thirdOptionLabel="Don't Know/Ask" }}
               {{> forms/inline/booleanOrOther fieldTitle="Shower/Bathroom Facilities" dataFieldName="hasShowerBathroomFacilities" thirdOptionLabel="Don't Know/Ask" }}
               {{> forms/inline/booleanOrOther fieldTitle="Access to Kitchen" dataFieldName="hasAccessToKitchen" thirdOptionLabel="Don't Know/Ask" }}
-              {{> forms/inline/booleanOrOther fieldTitle="Flexible Meal Times" dataFieldName="hasFlexibleMealTimes" thirdOptionLabel="Don't Know/Ask" }}
-              {{> forms/inline/textArea fieldTitle="Meal Availability" dataFieldName="availabilityOfMeals" }}
-              {{> forms/inline/booleanOrOther fieldTitle="Lounge" dataFieldName="hasLounge" thirdOptionLabel="Don't Know/Ask" }}
+              {{> forms/inline/booleanOrOther fieldTitle="Communal/Social Area" dataFieldName="hasLounge" thirdOptionLabel="Don't Know/Ask" }}
+              {{> forms/inline/booleanOrOther fieldTitle="Laundry Facilities" dataFieldName="hasLaundryFacilities" thirdOptionLabel="Don't Know/Ask" }}
               {{> forms/inline/booleanOrOther fieldTitle="Provides Clean Bedding" dataFieldName="providesCleanBedding" thirdOptionLabel="Don't Know/Ask" }}
-              {{> forms/inline/booleanOrOther fieldTitle="Allows Visitors" dataFieldName="allowsVisitors" thirdOptionLabel="Don't Know/Ask" }}
-              {{> forms/inline/booleanOrOther fieldTitle="Allows Dependent Children" dataFieldName="allowsChildren" thirdOptionLabel="Don't Know/Ask" }}
-              {{> forms/inline/booleanOrOther fieldTitle="On-site Manager" dataFieldName="hasOnSiteManager" thirdOptionLabel="Don't Know/Ask" }}
-              {{> forms/inline/booleanOrOther fieldTitle="Reference/Referral Required" dataFieldName="referenceReferralIsRequired" thirdOptionLabel="Don't Know/Ask" }}
-              {{> forms/inline/textField fieldTitle="Price (£ p/w)" dataFieldName="price" classModifier="" }}
-              {{> forms/inline/booleanOrOther fieldTitle="Food Included" dataFieldName="foodIsIncluded" thirdOptionLabel="Don't Know/Ask" }}
-              {{> forms/inline/textArea fieldTitle="Additional Features" dataFieldName="additionalFeatures" readOnlyFieldName="additionalFeaturesReadOnly" }}
-              {{> forms/inline/textArea fieldTitle="Other Features for Additional Cost" dataFieldName="featuresAvailableAtAdditionalCost" readOnlyFieldName="featuresAvailableAtAdditionalCostReadOnly" }}
+              {{> forms/inline/booleanOrOther fieldTitle="Flexible Meal Times" dataFieldName="hasFlexibleMealTimes" thirdOptionLabel="Don't Know/Ask" }}
+              {{> forms/inline/textArea fieldTitle="Additional Notes" dataFieldName="additionalFeatures" readOnlyFieldName="additionalFeaturesReadOnly" }}
             </dl>
         </section>
+      </div>
+
+      <div class="split split--admin-panel">
+        <section class="split__element split__element--admin-panel" data-bind="with: pricingAndRequirements">
+          <h2>Pricing and Requirements</h2>
+            {{> forms/inline/editCancelSaveButtons }}
+            <dl class="key-value-pair" data-bind="with: formFields">
+              {{> forms/inline/boolean fieldTitle="Requires a Referral?" dataFieldName="referralIsRequired" }}
+              {{> forms/inline/textArea fieldTitle="Referral Notes" dataFieldName="referralNotes" readOnlyFieldName="referralNotesReadOnly" }}
+              {{> forms/inline/textField fieldTitle="Price (£ p/w)" dataFieldName="price" }}
+              {{> forms/inline/booleanOrOther fieldTitle="Price includes food" dataFieldName="foodIsIncluded" thirdOptionLabel="Don't Know/Ask" }}
+              {{> forms/inline/textArea fieldTitle="Meals Available" dataFieldName="availabilityOfMeals" readOnlyFieldName="availabilityOfMealsReadOnly" }}
+              {{> forms/inline/textArea fieldTitle="Features available at additional cost" dataFieldName="featuresAvailableAtAdditionalCost" readOnlyFieldName="featuresAvailableAtAdditionalCostReadOnly" }}
+            </dl>
+        </section>
+
+        <section class="split__element split__element--admin-panel" data-bind="with: supportProvided">
+          <h2>Support Offered</h2>
+            {{> forms/inline/editCancelSaveButtons }}
+            <dl class="key-value-pair" data-bind="with: formFields">
+              {{> forms/inline/booleanOrOther fieldTitle="On-site Manager" dataFieldName="hasOnSiteManager" thirdOptionLabel="Don't Know/Ask" }}
+              {{> forms/inline/textArea fieldTitle="Support Notes" dataFieldName="supportInfo" readOnlyFieldName="supportInfoReadOnly" }}
+              <dt class="key-value-pair__key key-value-pair__key--inline">Support Provided</dt>
+              <!-- ko ifnot: $parent.isEditable -->
+              <dd class="key-value-pair__value">
+                <span data-bind="html: supportOfferedReadOnly"></span>
+              </dd>
+              <!-- /ko -->
+              <!-- ko if: $parent.isEditable -->
+              <dd class="key-value-pair__value" data-bind="foreach: $parent.supportTypes">
+                <label class="form__label form__label--checkbox-container">
+                  <span class="key-value-pair__key key-value-pair__key--inline" data-bind="text: name"></span>
+                  <span class="key-value-pair__value">
+                    <input type="checkbox" name="supportOffered" id="supportOffered" data-bind="checked: $parent.supportOffered, attr: { value: key }" class="" />
+                  </span>
+                </label>
+              </dd>
+              <!-- /ko -->
+            </dl>
+        </section>
+      </div>
+
+      <div class="split split--admin-panel">
+        <section class="split__element split__element--admin-panel" data-bind="with: residentCriteria">
+          <h2>Suitable For</h2>
+            {{> forms/inline/editCancelSaveButtons }}
+            <dl class="key-value-pair" data-bind="with: formFields">
+              {{> forms/inline/boolean fieldTitle="Men" dataFieldName="acceptsMen" }}
+              {{> forms/inline/boolean fieldTitle="Women" dataFieldName="acceptsWomen" }}
+              {{> forms/inline/boolean fieldTitle="Couples" dataFieldName="acceptsCouples" }}
+              {{> forms/inline/boolean fieldTitle="Same Couples" dataFieldName="acceptsSingleSexCouples" }}
+              {{> forms/inline/boolean fieldTitle="Young People" dataFieldName="acceptsYoungPeople" }}
+              {{> forms/inline/boolean fieldTitle="Families" dataFieldName="acceptsFamilies" }}
+              {{> forms/inline/boolean fieldTitle="Housing Benefit Claimants" dataFieldName="acceptsBenefitsClaimants" }}
+            </dl>
+        </section>
+        <section class="split__element split__element--admin-panel">&nbsp;</section>        
+      </div>
     </div>
   </div>
 </div>
