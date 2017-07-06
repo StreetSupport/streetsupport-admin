@@ -38,7 +38,7 @@ nosubnav: true
           <!-- /ko -->
           {{> forms/textArea fieldTitle="Short Summary" dataFieldName="synopsis" }}
           {{> forms/textArea fieldTitle="Full Description" dataFieldName="description" }}
-          {{> forms/boolean fieldTitle="Open Access?" dataFieldName="isOpenAccess" claimsRequired="superadmin,orgadmin,cityadmin" }}
+          {{> forms/boolean fieldTitle="Open Access? (No referral required)" dataFieldName="isOpenAccess" claimsRequired="superadmin,orgadmin,cityadmin" }}
           <dt class="key-value-pair__key">Acommodation Type</dt>
           <dd class="key-value-pair__value form__field-item">
             <select data-bind="options: $parent.accommodationTypes,
