@@ -1,0 +1,7 @@
+<!-- ko ifnot: isEditable -->
+<button data-bind="click: edit" class="btn btn--info"><span class="btn__text">edit</span></button>
+<!-- /ko -->
+<!-- ko if: isEditable -->
+<button data-bind="click: cancel" class="btn btn--indifferent"><span class="btn__text">cancel</span></button>
+<button data-bind="click: save" class="btn btn--primary"><span class="btn__text">save</span></button>
+<!-- /ko -->

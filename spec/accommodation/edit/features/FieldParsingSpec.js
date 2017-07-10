@@ -77,10 +77,4 @@ describe('Accommodation - Edit Features', () => {
 * burgers
 * hotdogs`)
   })
-
-  it('- should decode Additional Features at extra cost', () => {
-    expect(sut.features().formFields().featuresAvailableAtAdditionalCost()).toEqual(`* coke
-* sprite
-* fanta`)
-  })
 })
