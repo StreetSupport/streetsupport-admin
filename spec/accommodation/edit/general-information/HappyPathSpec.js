@@ -16,7 +16,6 @@ const querystring = require(`${jsRoot}get-url-parameter`)
 const { testData, publishedServiceProviderData } = require('../testData')
 
 import { categories } from '../../../../src/data/generated/service-categories'
-import { supportTypes } from '../../../../src/data/generated/support-types'
 
 describe('Accommodation - Edit General Information', () => {
   const Model = require(`${jsRoot}models/accommodation/edit`)
@@ -103,14 +102,6 @@ describe('Accommodation - Edit General Information', () => {
       .find((c) => c.key === 'accom').subCategories.length)
   })
 
-  it('- should have available support types', () => {
-    expect(sut.generalDetails().supportTypes().length).toEqual(supportTypes.length)
-  })
-
-  it('- should set support types offered', () => {
-    expect(sut.generalDetails().formFields().supportOfferedReadOnly()).toEqual('support a, support b')
-  })
-
   it('- should load service provider', () => {
     expect(sut.generalDetails().formFields().serviceProviderId()).toEqual('service-provider-id')
   })
@@ -133,7 +124,6 @@ describe('Accommodation - Edit General Information', () => {
       sut.generalDetails().formFields().isOpenAccess(true)
       sut.generalDetails().formFields().isPubliclyVisible(true)
       sut.generalDetails().formFields().accommodationType('accommodation type')
-      sut.generalDetails().formFields().supportOffered(['support a', 'support b'])
     })
 
     it('- should set isEditable to true', () => {
@@ -179,8 +169,7 @@ describe('Accommodation - Edit General Information', () => {
           IsOpenAccess: true,
           IsPubliclyVisible: true,
           AccommodationType: 'accommodation type',
-          ServiceProviderId: 'service-provider-id',
-          SupportOffered: [ 'support a', 'support b' ]
+          ServiceProviderId: 'service-provider-id'
         }
         const patchAsExpected = ajaxPatchStub
           .withArgs(endpoint, headers, payload)

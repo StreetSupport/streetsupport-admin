@@ -116,6 +116,21 @@ function EndpointBuilder () {
     return self
   }
 
+  self.pricingAndRequirements = () => {
+    self.childResource = 'pricing-and-requirements'
+    return self
+  }
+
+  self.supportProvided = () => {
+    self.childResource = 'support-offered'
+    return self
+  }
+
+  self.residentCriteria = () => {
+    self.childResource = 'residents-criteria'
+    return self
+  }
+
   self.services = (serviceId) => {
     self.childResource = 'services'
     self.childResourceId = serviceId

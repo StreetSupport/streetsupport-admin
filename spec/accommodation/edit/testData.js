@@ -7,8 +7,7 @@ module.exports = {
       'isOpenAccess': true,
       'isPubliclyVisible': false,
       'accommodationType': 'accommodation type',
-      'serviceProviderId': 'service-provider-id',
-      'supportOffered': ['support a', 'support b']
+      'serviceProviderId': 'service-provider-id'
     },
     'contactInformation': {
       'name': 'Vince Test',
@@ -28,13 +27,9 @@ module.exports = {
       'nearestSupportProviderId': 'provider-b'
     },
     'features': {
-      'acceptsHousingBenefit': 2,
-      'acceptsNoHousingBenefitWithServiceProviderSupport': 2,
       'acceptsPets': 2,
       'acceptsCouples': 2,
       'hasDisabledAccess': 2,
-      'isSuitableForWomen': 2,
-      'isSuitableForYoungPeople': 2,
       'hasSingleRooms': 2,
       'hasSharedRooms': 2,
       'hasShowerBathroomFacilities': 2,
@@ -43,14 +38,31 @@ module.exports = {
       'hasLounge': 2,
       'providesCleanBedding': 2,
       'allowsVisitors': 2,
-      'allowsChildren': 2,
-      'hasOnSiteManager': 2,
-      'referenceReferralIsRequired': 2,
-      'price': 123.45,
       'additionalFeatures': 'additional features',
+      'availabilityOfMeals': 'availability of meals',
+      'hasLaundryFacilities': 2
+    },
+    'pricingAndRequirements': {
+      'referralIsRequired': true,
+      'referralNotes': 'referral notes',
+      'price': 12.34,
       'foodIsIncluded': 2,
       'availabilityOfMeals': 'availability of meals',
       'featuresAvailableAtAdditionalCost': 'features available at additional cost'
+    },
+    'supportProvided': {
+      'hasOnSiteManager': 2,
+      'supportInfo': 'support info',
+      'supportOffered': [ 'support a', 'support b' ]
+    },
+    'residentCriteria': {
+      acceptsMen: true,
+      acceptsWomen: true,
+      acceptsCouples: true,
+      acceptsSingleSexCouples: true,
+      acceptsYoungPeople: true,
+      acceptsFamilies: true,
+      acceptsBenefitsClaimants: true
     },
     'id': '589a08ad6a38c32e883f26df',
     'documentCreationDate': '2017-02-07T17:49:33.2570000Z',

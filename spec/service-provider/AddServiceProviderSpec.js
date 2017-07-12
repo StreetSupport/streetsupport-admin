@@ -16,13 +16,10 @@ import { cities } from '../../src/data/generated/supported-cities'
 describe('Add Service Provider', () => {
   let Model = require('../../src/js/models/AddServiceProvider')
   let model = null
-  let browserLoading = null
-  let browserLoaded = null
-  let ajaxGet = null
 
   beforeEach(() => {
-    browserLoading = sinon.stub(browser, 'loading')
-    browserLoaded = sinon.stub(browser, 'loaded')
+    sinon.stub(browser, 'loading')
+    sinon.stub(browser, 'loaded')
     sinon.stub(browser, 'scrollTo')
     model = new Model()
   })
@@ -43,14 +40,6 @@ describe('Add Service Provider', () => {
 
   it('should set cities', () => {
     expect(model.cities().length).toEqual(cities.length)
-  })
-
-  it('should set city id', () => {
-    expect(model.cities()[1].id).toEqual('liverpool')
-  })
-
-  it('should set city name', () => {
-    expect(model.cities()[1].name).toEqual('Liverpool')
   })
 
   describe('Save', () => {
