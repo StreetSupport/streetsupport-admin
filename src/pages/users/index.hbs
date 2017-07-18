@@ -23,6 +23,7 @@ nosubnav: true
         <thead>
           <tr>
             <th>Email</th>
+            <th>Area</th>
             <th>Claims</th>
             <th></th>
           </tr>
@@ -35,6 +36,7 @@ nosubnav: true
           <tr>
             <th>Username</th>
             <th>Email</th>
+            <th>Area</th>
             <th>Claims</th>
             <th></th>
           </tr>
@@ -49,6 +51,7 @@ nosubnav: true
 <script type="text/html" id="unverified-users-tmpl">
   <tr>
     <td data-bind="text: email"></td>
+    <td data-bind="text: associatedAreaId"></td>
     <td data-bind="html: claims"></td>
     <td>
       <button class="btn btn--primary" data-bind="click: resendInvite, visible: showResendButton">
@@ -63,6 +66,7 @@ nosubnav: true
   <tr>
     <td data-bind="html: username"></td>
     <td data-bind="text: email"></td>
+    <td data-bind="text: associatedAreaId"></td>
     <td data-bind="html: claims"></td>
     <td></td>
   </tr>
