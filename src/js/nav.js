@@ -1,10 +1,10 @@
 'use strict'
-var auth = require('./auth')
+const auth = require('./auth')
 
-var openElement = '.js-nav-open'
-var closeElement = '.js-nav-close'
-var overlayElement = '.js-nav-overlay'
-var activeClass = 'is-active'
+const openElement = '.js-nav-open'
+const closeElement = '.js-nav-close'
+const overlayElement = '.js-nav-overlay'
+const activeClass = 'is-active'
 
 const disableForbiddenLinks = () => {
   const disableRestrictedLinks = (userClaims, requiredClaims) => {
@@ -19,18 +19,18 @@ const disableForbiddenLinks = () => {
       return false
     }
 
-    let claimsLinks = document.querySelectorAll('[data-claims*="admin"]')
-
+    const claimsLinks = document.querySelectorAll('[data-claims*="admin"]')
+    console.log(claimsLinks)
     for (let i = 0; i < claimsLinks.length; ++i) {
       let requiredClaims = claimsLinks[i].getAttribute('data-claims')
       if (!hasClaim(userClaims, requiredClaims)) { claimsLinks[i].classList.add('hide') }
     }
   }
 
-  if (!auth.isSuperAdmin()) disableRestrictedLinks(auth.getUserClaims())
+  disableRestrictedLinks(auth.getUserClaims())
 }
 
-let initEventListeners = () => {
+const initEventListeners = () => {
   document.querySelector(openElement).addEventListener('click', function (e) {
     open()
   })
@@ -44,19 +44,19 @@ let initEventListeners = () => {
   })
 }
 
-var init = function () {
+const init = function () {
   initEventListeners()
   disableForbiddenLinks()
 }
 
-var open = function () {
+const open = function () {
   var el = document.querySelectorAll('.js-nav-container, .js-nav-push, .js-nav-overlay, html, body')
   for (let i = 0; i < el.length; ++i) {
     el[i].classList.add(activeClass)
   }
 }
 
-var close = function () {
+const close = function () {
   var el = document.querySelectorAll('.js-nav-container, .js-nav-push, .js-nav-overlay, html, body')
   for (let i = 0; i < el.length; ++i) {
     el[i].classList.remove(activeClass)
