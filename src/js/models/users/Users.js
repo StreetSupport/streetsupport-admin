@@ -15,6 +15,7 @@ function User (data) {
   self.email = ko.observable(data.email)
   self.claims = ko.observable(data.claims)
   self.verificationExpiryDate = ko.observable(data.verificationExpiryDate)
+  self.associatedAreaId = ko.observable(data.associatedAreaId)
   self.showResendButton = ko.computed(() => {
     var now = moment()
     var expiryDate = moment(self.verificationExpiryDate())
