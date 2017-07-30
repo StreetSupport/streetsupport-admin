@@ -6,7 +6,7 @@ const cookies = require('../../cookies')
 const endpoints = require('../../api-endpoints')
 const validation = require('../../validation')
 
-import { categories } from '../../../data/generated/service-categories'
+import { categories } from '../../../data/generated/accommodation-categories'
 import { supportTypes } from '../../../data/generated/support-types'
 
 const ko = require('knockout')
@@ -33,9 +33,7 @@ function Model () {
     postcode: ko.observable().extend({ required: true })
   })
 
-  self.accommodationTypes = ko.observableArray(categories
-    .find((sc) => sc.key === 'accom')
-    .subCategories)
+  self.accommodationTypes = ko.observableArray(categories)
 
   self.supportTypes = ko.observableArray(supportTypes.map((t) => {
     return {

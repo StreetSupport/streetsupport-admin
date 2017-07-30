@@ -4,13 +4,15 @@ global describe, beforeEach, afterEach, it, expect
 
 'use strict'
 
-var sinon = require('sinon')
-var ajax = require('../../src/js/ajax')
-var endpoints = require('../../src/js/api-endpoints')
-var cookies = require('../../src/js/cookies')
-var getUrlParameter = require('../../src/js/get-url-parameter')
-var browser = require('../../src/js/browser')
-var adminUrls = require('../../src/js/admin-urls')
+const adminUrls = require('../../src/js/admin-urls')
+const ajax = require('../../src/js/ajax')
+const browser = require('../../src/js/browser')
+const cookies = require('../../src/js/cookies')
+const endpoints = require('../../src/js/api-endpoints')
+const getUrlParameter = require('../../src/js/get-url-parameter')
+const sinon = require('sinon')
+
+import { categories } from '../../src/data/generated/service-categories'
 
 describe('Add Service Provider Service', () => {
   var Model = require('../../src/js/models/service-provider-services/AddServiceProviderService')
@@ -72,17 +74,6 @@ describe('Add Service Provider Service', () => {
     getUrlParameter.parameter.restore()
   })
 
-  it('should request categories', () => {
-    var endpoint = endpoints.getServiceCategories
-    var headers = {
-      'content-type': 'application/json',
-      'session-token': 'stored-session-token'
-    }
-    var payload = {}
-    var apiCalled = stubbedApi.withArgs(endpoint, headers, payload).calledOnce
-    expect(apiCalled).toBeTruthy()
-  })
-
   it('should request for provider', () => {
     var endpoint = endpoints.getServiceProviders + '/coffee4craig'
     var headers = {
@@ -95,7 +86,7 @@ describe('Add Service Provider Service', () => {
   })
 
   it('should populate categories', () => {
-    expect(model.categories().length).toEqual(2)
+    expect(model.categories().length).toEqual(categories.length)
   })
 
   it('should populate addresses', () => {
@@ -117,15 +108,15 @@ describe('Add Service Provider Service', () => {
     })
 
     it('should set subCategories', () => {
-      expect(model.subCategories().length).toEqual(7)
+      expect(model.subCategories().length).toEqual(categories[0].subCategories.length)
     })
 
     it('should map subCategory key', () => {
-      expect(model.subCategories()[0].key).toEqual('emergency')
+      expect(model.subCategories()[0].key).toEqual(categories[0].subCategories[0].key)
     })
 
     it('should map subCategory name', () => {
-      expect(model.subCategories()[0].name).toEqual('Emergency')
+      expect(model.subCategories()[0].name).toEqual(categories[0].subCategories[0].name)
     })
 
     it('should set subCategory isSelected to false', () => {
@@ -267,8 +258,8 @@ describe('Add Service Provider Service', () => {
         'Info': 'new info',
         'LocationDescription': 'new location description',
         'Tags': ['tag a', 'tag b'],
-        'Category': 'accom',
-        'SubCategories': ['hostel', 'rented'],
+        'Category': categories[0].key,
+        'SubCategories': [categories[0].subCategories[1].key, categories[0].subCategories[3].key],
         'OpeningTimes': [{
           'StartTime': '10:00',
           'EndTime': '16:30',
@@ -298,62 +289,6 @@ describe('Add Service Provider Service', () => {
     })
   })
 })
-
-function categories () {
-  return [{
-    'key': 'accom',
-    'sortOrder': 90,
-    'name': 'Accommodation',
-    'synopsis': 'Permanent and Accomodation.',
-    'subCategories': [{
-      'key': 'emergency',
-      'name': 'Emergency',
-      'synopsis': 'Emergency accomodation'
-    }, {
-      'key': 'hostel',
-      'name': 'Hostel',
-      'synopsis': 'Hostel accomodation'
-    }, {
-      'key': 'hosted',
-      'name': 'Hosted',
-      'synopsis': 'Hosted accomodation'
-    }, {
-      'key': 'rented',
-      'name': 'Rented',
-      'synopsis': 'Rented accomodation in the private sector'
-    }, {
-      'key': 'supported',
-      'name': 'Supported',
-      'synopsis': 'Supported lodgings'
-    }, {
-      'key': 'social',
-      'name': 'Social Housing',
-      'synopsis': 'Social Housing'
-    }, {
-      'key': 'shelter',
-      'name': 'Night shelter',
-      'synopsis': 'Night shelter'
-    }],
-    'documentCreationDate': '2015-12-16T16:12:49.8370000Z',
-    'documentModifiedDate': '2015-12-16T16:12:49.8370000Z'
-  }, {
-    'key': 'communications',
-    'sortOrder': 0,
-    'name': 'Communications',
-    'synopsis': 'Internet and telephone access, and postal services.',
-    'subCategories': [{
-      'key': 'telephone',
-      'name': 'Telephone',
-      'synopsis': 'Free telephone use'
-    }, {
-      'key': 'internet',
-      'name': 'Internet access',
-      'synopsis': 'Internet access'
-    }],
-    'documentCreationDate': '2015-12-16T16:12:49.8370000Z',
-    'documentModifiedDate': '2015-12-16T16:12:49.8370000Z'
-  }]
-}
 
 function addresses () {
   return {

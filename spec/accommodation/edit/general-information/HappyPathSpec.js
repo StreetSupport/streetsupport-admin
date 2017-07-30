@@ -15,7 +15,7 @@ const querystring = require(`${jsRoot}get-url-parameter`)
 
 const { testData, publishedServiceProviderData } = require('../testData')
 
-import { categories } from '../../../../src/data/generated/service-categories'
+import { categories } from '../../../../src/data/generated/accommodation-categories'
 
 describe('Accommodation - Edit General Information', () => {
   const Model = require(`${jsRoot}models/accommodation/edit`)
@@ -98,8 +98,7 @@ describe('Accommodation - Edit General Information', () => {
   })
 
   it('- should have available accommodation types', () => {
-    expect(sut.generalDetails().accommodationTypes().length).toEqual(categories
-      .find((c) => c.key === 'accom').subCategories.length)
+    expect(sut.generalDetails().accommodationTypes().length).toEqual(categories.length)
   })
 
   it('- should load service provider', () => {
