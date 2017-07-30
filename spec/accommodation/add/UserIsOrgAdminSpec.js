@@ -13,7 +13,7 @@ const browser = require(`${jsRoot}browser`)
 const cookies = require(`${jsRoot}cookies`)
 const validation = require(`${jsRoot}validation`)
 
-import { categories } from '../../../src/data/generated/service-categories'
+import { categories } from '../../../src/data/generated/accommodation-categories'
 import { supportTypes } from '../../../src/data/generated/support-types'
 const auth = require(`${jsRoot}auth`)
 
@@ -45,7 +45,7 @@ describe('Accommodation - Add - org admin', () => {
   })
 
   it('- it should set list of accom types', () => {
-    expect(sut.accommodationTypes().length).toEqual(categories.find((sc) => sc.key === 'accom').subCategories.length)
+    expect(sut.accommodationTypes().length).toEqual(categories.length)
   })
 
   it('- should set a list of support types', () => {

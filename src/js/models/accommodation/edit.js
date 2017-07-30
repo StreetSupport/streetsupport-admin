@@ -11,7 +11,7 @@ const ko = require('knockout')
 require('knockout.validation') // No variable here is deliberate!
 const marked = require('marked')
 
-import { categories } from '../../../data/generated/service-categories'
+import { categories } from '../../../data/generated/accommodation-categories'
 import { supportTypes } from '../../../data/generated/support-types'
 
 function Model () {
@@ -241,9 +241,7 @@ function Model () {
           ]
         })
 
-        self.generalDetails().accommodationTypes = ko.observableArray(categories
-          .find((c) => c.key === 'accom')
-          .subCategories)
+        self.generalDetails().accommodationTypes = ko.observableArray(categories)
 
         browser.loaded()
       })

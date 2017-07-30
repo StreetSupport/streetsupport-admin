@@ -14,7 +14,7 @@ nosubnav: true
       <a href="/accommodation/add" class="btn btn--info">
         <span class="btn__text">Add new entry</span>
       </a>
-      <div class="form__field-item form__field-item--full-width">
+      <div class="form__field-item form__field-item--full-width" data-claims="superadmin">
         <label for="ffilterByCityilter" class="form__label">Filter by city:</label>
         <select class="form__input form__input--medium" name="filterByCity" data-bind="options: cities,
           optionsValue: (item) => { return item.id },

@@ -9,29 +9,50 @@ import replace from 'gulp-replace'
 
 const endpoints = require('../src/js/api-endpoints')
 
+const outputs = {
+  serviceCategories: 'service-categories.js',
+  accomCategories: 'accommodation-categories.js',
+  supportTypes: 'support-types.js',
+  supportedCities: 'supported-cities.js'
+}
+
 /* calls API and generates static data */
 gulp.task('service-categories', (callback) => {
   return request(endpoints.getServiceCategories)
-    .pipe(source(`${config.paths.generatedData}service-categories.js`))
+    .pipe(source(`${config.paths.generatedData}${outputs.serviceCategories}`))
     .pipe(streamify(jeditor(function (cats) {
-      return cats.map(function (c) {
-        return {
-          key: c.key,
-          sortOrder: c.sortOrder,
-          name: c.name,
-          subCategories: c.subCategories.map(function (sc) {
-            return {
-              key: sc.key,
-              name: sc.name
-            }
-          })
-        }
-      })
-      .sort((a, b) => {
-        if (a.sortOrder > b.sortOrder) return -1
-        if (a.sortOrder < b.sortOrder) return 1
-        return 0
-      })
+      return cats
+        .filter((c) => c.key !== 'accom') // don't include accommodation as a normal service category...
+        .map(function (c) {
+          return {
+            key: c.key,
+            sortOrder: c.sortOrder,
+            name: c.name,
+            subCategories: c.subCategories.map(function (sc) {
+              return {
+                key: sc.key,
+                name: sc.name
+              }
+            })
+          }
+        })
+        .sort((a, b) => {
+          if (a.sortOrder > b.sortOrder) return -1
+          if (a.sortOrder < b.sortOrder) return 1
+          return 0
+        })
+    })))
+    .pipe(replace(/^\[/, 'export const categories = ['))
+    .pipe(gulp.dest('./'))
+})
+
+gulp.task('accom-subcategories', (callback) => {
+  return request(endpoints.getServiceCategories)
+    .pipe(source(`${config.paths.generatedData}${outputs.accomCategories}`))
+    .pipe(streamify(jeditor(function (cats) {
+      return cats
+        .filter((c) => c.key === 'accom')[0]
+        .subCategories
     })))
     .pipe(replace(/^\[/, 'export const categories = ['))
     .pipe(gulp.dest('./'))
@@ -46,7 +67,7 @@ gulp.task('support-types', (callback) => {
         { key: 'substances', name: 'Drug Dependency' }
       ]`
 
-  fs.writeFile(`${config.paths.generatedData}support-types.js`, body, function (err) {
+  fs.writeFile(`${config.paths.generatedData}${outputs.supportTypes}`, body, function (err) {
     if (err) {
       return console.log(err)
     }
@@ -57,7 +78,7 @@ gulp.task('support-types', (callback) => {
 
 gulp.task('supported-cities', (callback) => {
   return request(endpoints.cities)
-    .pipe(source(`${config.paths.generatedData}supported-cities.js`))
+    .pipe(source(`${config.paths.generatedData}${outputs.supportedCities}`))
     .pipe(streamify(jeditor(function (cities) {
       return cities.map(function (c) {
         return {
@@ -75,4 +96,4 @@ gulp.task('supported-cities', (callback) => {
     .pipe(gulp.dest('./'))
 })
 
-gulp.task('getLongTermData', ['service-categories', 'supported-cities', 'support-types'])
+gulp.task('getLongTermData', ['service-categories', 'accom-subcategories', 'supported-cities', 'support-types'])
