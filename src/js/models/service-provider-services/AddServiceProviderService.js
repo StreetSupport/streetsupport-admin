@@ -1,14 +1,18 @@
 'use strict'
 
-var ko = require('knockout')
-var Address = require('../Address')
-var BaseViewModel = require('../BaseViewModel')
-var OpeningTime = require('../OpeningTime')
-var getUrlParameter = require('../../get-url-parameter')
-var cookies = require('../../cookies')
-var ajax = require('../../ajax')
-var browser = require('../../browser')
-var adminUrls = require('../../admin-urls')
+const ko = require('knockout')
+
+const Address = require('../Address')
+const BaseViewModel = require('../BaseViewModel')
+const OpeningTime = require('../OpeningTime')
+
+const adminUrls = require('../../admin-urls')
+const ajax = require('../../ajax')
+const browser = require('../../browser')
+const cookies = require('../../cookies')
+const getUrlParameter = require('../../get-url-parameter')
+
+import { categories } from '../../../data/generated/service-categories'
 
 function SubCat (key, name) {
   var self = this
@@ -126,15 +130,6 @@ function AddServiceProviderService () {
     }
   }
 
-  self.addressesLoaded = false
-  self.categoriesLoaded = false
-
-  self.dataLoaded = () => {
-    if (self.addressesLoaded && self.categoriesLoaded) {
-      browser.loaded()
-    }
-  }
-
   self.init = function () {
     browser.loading()
 
@@ -144,23 +139,13 @@ function AddServiceProviderService () {
       let addresses = result.data.addresses
         .map((a) => new Address(a))
       self.addresses(addresses)
-      self.addressesLoaded = true
-      self.dataLoaded()
+      browser.loaded()
     },
     function (error) {
       self.handleError(error)
     })
 
-    var categoriesEndpoint = self.endpointBuilder.categories().build()
-    ajax.get(categoriesEndpoint, self.headers(cookies.get('session-token')), {})
-    .then(function (result) {
-      self.categories(result.data)
-      self.categoriesLoaded = true
-      self.dataLoaded()
-    },
-    function (error) {
-      self.handleError(error)
-    })
+    self.categories(categories.filter((c) => c.key !== 'accom'))
   }
 
   self.init()
