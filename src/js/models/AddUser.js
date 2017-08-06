@@ -4,7 +4,6 @@ var cookies = require('../cookies')
 var getUrlParameter = require('../get-url-parameter')
 var browser = require('../browser')
 var BaseViewModel = require('./BaseViewModel')
-var adminurls = require('../admin-urls')
 
 function AddUser () {
   var self = this
@@ -21,11 +20,14 @@ function AddUser () {
     ajax
       .post(endpoint, self.headers(cookies.get('session-token')), payload)
       .then(function (result) {
-        self.message('User created.')
-        self.userCreated(true)
-        self.clearErrors()
+        if(result.statusCode === 201) {
+          self.message('User created.')
+          self.userCreated(true)
+          self.clearErrors()
+        } else {
+          self.handleError(result)
+        }
         browser.loaded()
-        browser.redirect(adminurls.dashboard)
       }, function (error) {
         self.handleError(error)
       })
