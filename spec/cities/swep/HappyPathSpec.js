@@ -20,6 +20,10 @@ describe('SWEP Availabilty', () => {
     browserLoadedStub = sinon.stub(browser, 'loaded')
     sinon.stub(nav, 'disableForbiddenLinks')
 
+    const cookieStub = sinon.stub(cookies, 'get')
+    cookieStub.withArgs('session-token').returns('stored-session-token')
+    cookieStub.withArgs('auth-claims').returns('SuperAdmin')
+
     ajaxGetStub = sinon
       .stub(ajax, 'get')
       .withArgs(endpoints.cities)
@@ -41,6 +45,7 @@ describe('SWEP Availabilty', () => {
     ajax.get.restore()
     browser.loading.restore()
     browser.loaded.restore()
+    cookies.get.restore()
     nav.disableForbiddenLinks.restore()
   })
 
@@ -75,13 +80,10 @@ describe('SWEP Availabilty', () => {
     beforeEach(() => {
       browserLoadingStub.reset()
       browserLoadedStub.reset()
-
-      sinon.stub(cookies, 'get').returns('stored-session-token')
     })
 
     afterEach(() => {
       ajax.patch.restore()
-      cookies.get.restore()
     })
 
     describe('- Ok', () => {
