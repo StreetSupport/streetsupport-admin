@@ -20,7 +20,6 @@ const disableForbiddenLinks = () => {
     }
 
     const claimsLinks = document.querySelectorAll('[data-claims*="admin"]')
-    console.log(claimsLinks)
     for (let i = 0; i < claimsLinks.length; ++i) {
       let requiredClaims = claimsLinks[i].getAttribute('data-claims')
       if (!hasClaim(userClaims, requiredClaims)) { claimsLinks[i].classList.add('hide') }

@@ -9,7 +9,7 @@ var marked = require('marked')
 const today = new Date()
 const defaultDisplayDate = `${today.getDate()}/${today.getMonth() + 1}/${today.getFullYear()}`
 
-function Update (listener, data = { content: '', displayDate: defaultDisplayDate }) {
+function Update (listener, cityId, data = { content: '', displayDate: defaultDisplayDate }) {
   var self = this
 
   self.listener = listener
@@ -25,7 +25,7 @@ function Update (listener, data = { content: '', displayDate: defaultDisplayDate
   self.displayDateMonth = ko.observable(month)
   self.displayDateYear = ko.observable(year)
   self.displayDate = ko.observable(data.displayDate)
-  self.cityId = ko.observable(data.cityId)
+  self.cityId = ko.observable(cityId ? cityId : data.cityId)
   self.isEditing = ko.observable(false)
 
   self.clear = () => {
