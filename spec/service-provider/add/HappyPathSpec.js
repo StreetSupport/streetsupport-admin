@@ -5,16 +5,16 @@ global describe, beforeEach, afterEach, it, expect
 'use strict'
 
 let sinon = require('sinon')
-let ajax = require('../../src/js/ajax')
-let endpoints = require('../../src/js/api-endpoints')
-let adminurls = require('../../src/js/admin-urls')
-let browser = require('../../src/js/browser')
-let cookies = require('../../src/js/cookies')
+let ajax = require('../../../src/js/ajax')
+let endpoints = require('../../../src/js/api-endpoints')
+let adminurls = require('../../../src/js/admin-urls')
+let browser = require('../../../src/js/browser')
+let cookies = require('../../../src/js/cookies')
 
-import { cities } from '../../src/data/generated/supported-cities'
+import { cities } from '../../../src/data/generated/supported-cities'
 
 describe('Add Service Provider', () => {
-  let Model = require('../../src/js/models/AddServiceProvider')
+  let Model = require('../../../src/js/models/AddServiceProvider')
   let model = null
 
   beforeEach(() => {
