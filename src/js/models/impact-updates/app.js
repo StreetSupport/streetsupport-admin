@@ -1,5 +1,6 @@
 let ko = require('knockout')
 let ajax = require('../../ajax')
+let auth = require('../../auth')
 let browser = require('../../browser')
 let BaseViewModel = require('../BaseViewModel')
 let Update = require('./Update')
@@ -8,7 +9,8 @@ function ListImpactUpdates () {
   let self = this
   self.cities = ko.observableArray()
   self.impactUpdates = ko.observableArray()
-  self.newUpdate = ko.observable(new Update(self))
+  self.newUpdate = ko.observable(new Update(self, auth.cityAdminFor()))
+  self.showCityDropDown = ko.observable(auth.isSuperAdmin())
 
   self.updateCreated = () => {
     self.message('Update created')
@@ -45,7 +47,7 @@ function ListImpactUpdates () {
       .then((result) => {
         browser.loaded()
         const updates = result.data.items
-          .map((u) => new Update(self, u))
+          .map((u) => new Update(self, auth.cityAdminFor(), u))
         self.impactUpdates(updates)
       }, () => {
         self.handleServerError()

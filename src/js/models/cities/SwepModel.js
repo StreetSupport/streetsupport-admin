@@ -1,6 +1,7 @@
 const ko = require('knockout')
 
 const ajax = require('../../ajax')
+const auth = require('../../auth')
 const browser = require('../../browser')
 const cookies = require('../../cookies')
 const BaseViewModel = require('../BaseViewModel')
@@ -50,6 +51,12 @@ const City = function (data) {
 
 City.prototype = new BaseViewModel()
 
+const filterCities = function (city) {
+  return auth.isCityAdmin()
+  ? city.key === auth.cityAdminFor()
+  : true
+}
+
 const Swep = function () {
   const self = this
 
@@ -62,6 +69,7 @@ const Swep = function () {
       .then((result) => {
         browser.loaded()
         const cities = result.data
+          .filter(filterCities)
           .map((c) => new City(c))
         self.cities(cities)
         nav.disableForbiddenLinks()

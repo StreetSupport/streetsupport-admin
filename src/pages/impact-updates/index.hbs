@@ -31,17 +31,18 @@ nosubnav: true
             <input type="number" min="1" max="12" data-bind="textInput: displayDateMonth" class="form__input form__input--short" placeholder="mm" />
             <input type="number" min="2016" max="2018" data-bind="textInput: displayDateYear" class="form__input form__input--short" placeholder="yyyy" />
           </dd>
-          <dl class="key-value-pair">
-            <dt class="key-value-pair__key">Associated City (optional)</dt>
-            <dd class="key-value-pair__value">
-              <select data-bind="options: $parent.cities,
-                optionsValue: 'id',
-                optionsText: function (city) {
-                  return city.name
-                },
-                value: cityId,
-                optionsCaption: '-- please select --'" class="form__input"></select>
+          <!-- ko if: $parent.showCityDropDown() -->
+          <dt class="key-value-pair__key">Associated City (optional)</dt>
+          <dd class="key-value-pair__value">
+            <select data-bind="options: $parent.cities,
+              optionsValue: 'id',
+              optionsText: function (city) {
+                return city.name
+              },
+              value: cityId,
+              optionsCaption: '-- please select --'" class="form__input"></select>
           </dd>
+          <!-- /ko -->
         </dl>
         <button data-bind="click: save" class="btn btn--primary"><span class="btn__text">save</span></button>
       </article>
@@ -62,16 +63,18 @@ nosubnav: true
               <input type="number" min="1" max="12" data-bind="textInput: displayDateMonth" class="form__input form__input--short" placeholder="mm" />
               <input type="number" min="2016" max="2018" data-bind="textInput: displayDateYear" class="form__input form__input--short" placeholder="yyyy" />
             </dd>
-              <dt class="key-value-pair__key">Associated City (optional)</dt>
-              <dd class="key-value-pair__value">
-                <select data-bind="options: $parent.cities,
-                  optionsValue: 'id',
-                  optionsText: function (city) {
-                    return city.name
-                  },
-                  value: cityId,
-                  optionsCaption: '-- please select --'" class="form__input"></select>
+          <!-- ko if: $parent.showCityDropDown() -->
+            <dt class="key-value-pair__key">Associated City (optional)</dt>
+            <dd class="key-value-pair__value">
+              <select data-bind="options: $parent.cities,
+                optionsValue: 'id',
+                optionsText: function (city) {
+                  return city.name
+                },
+                value: cityId,
+                optionsCaption: '-- please select --'" class="form__input"></select>
             </dd>
+            <!-- /ko -->
           </dl>
           <button data-bind="click: update" class="btn btn--primary"><span class="btn__text">update</span></button>
           <button data-bind="click: cancelEditing" class="btn btn--indifferent"><span class="btn__text">cancel</span></button>
