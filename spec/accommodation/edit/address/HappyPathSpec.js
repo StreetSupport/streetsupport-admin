@@ -171,13 +171,14 @@ describe('Accommodation - Edit Address', () => {
           'session-token': 'stored-session-token'
         }
         const payload = {
-          'Street1': 'new street line 1',
-          'Street2': 'new street line 2',
-          'Street3': 'new street line 3',
-          'City': 'new city',
-          'Postcode': 'new m1 3fy',
-          'PublicTransportInfo': 'new public transport info',
-          'NearestSupportProviderId': 'new provider-b'
+          Street1: 'new street line 1',
+          Street2: 'new street line 2',
+          Street3: 'new street line 3',
+          City: 'new city',
+          Postcode: 'new m1 3fy',
+          PublicTransportInfo: 'new public transport info',
+          NearestSupportProviderId: 'new provider-b',
+          AddressIsPubliclyHidden: 'new false'
         }
         const patchAsExpected = ajaxPatchStub
           .withArgs(endpoint, headers, payload)
