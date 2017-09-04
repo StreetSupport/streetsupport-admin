@@ -112,7 +112,8 @@ describe('Accommodation - Add as TempAccom Admin', () => {
         'AddressLine2': 'address line 2',
         'AddressLine3': 'address line 3',
         'City': 'manchester',
-        'Postcode': 'postcode'
+        'Postcode': 'postcode',
+        'AddressIsPubliclyHidden': false
       }
       const headers = {
         'content-type': 'application/json',
