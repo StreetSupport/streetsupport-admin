@@ -31,7 +31,7 @@ function Model () {
     addressLine3: ko.observable(),
     city: ko.observable().extend({ required: true }),
     postcode: ko.observable().extend({ required: true }),
-    addressIsPubliclyHidden: ko.observable(false),
+    addressIsPubliclyHidden: ko.observable(false)
   })
 
   self.accommodationTypes = ko.observableArray(categories)
