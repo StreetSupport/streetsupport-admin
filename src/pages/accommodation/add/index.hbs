@@ -71,6 +71,9 @@ nosubnav: true
           {{> forms/textField fieldTitle="City" dataFieldName="city" }}
           {{> forms/textField fieldTitle="Postcode" dataFieldName="postcode" }}
         </dl>
+
+        {{> forms/boolean fieldTitle="Hide address from public?" dataFieldName="addressIsPubliclyHidden" claimsRequired="superadmin,orgadmin,cityadmin" }}
+        
         <button data-bind="click: $parent.save" class="btn btn--primary"><span class="btn__text">Save</span></button>
       </article>
     </div>
