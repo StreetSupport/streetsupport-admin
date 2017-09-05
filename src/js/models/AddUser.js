@@ -20,7 +20,7 @@ function AddUser () {
     ajax
       .post(endpoint, self.headers(cookies.get('session-token')), payload)
       .then(function (result) {
-        if(result.statusCode === 201) {
+        if (result.statusCode === 201) {
           self.message('User created.')
           self.userCreated(true)
           self.clearErrors()

@@ -24,7 +24,8 @@ module.exports = {
       'latitude': 0,
       'longitude': 0,
       'publicTransportInfo': 'public transport info',
-      'nearestSupportProviderId': 'provider-b'
+      'nearestSupportProviderId': 'provider-b',
+      'addressIsPubliclyHidden': false
     },
     'features': {
       'acceptsPets': 2,
