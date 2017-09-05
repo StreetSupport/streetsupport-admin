@@ -12,7 +12,21 @@ nosubnav: true
   <div class="container block__inner">
     <header>
     <h1>Volunteers</h1>
-    <!-- ko template: { name: 'search' } --><!-- /ko -->
+    <div class="form__field-item form__field-item--full-width">
+      <label for="search" class="form__label">Search</label>
+      <input type="text" data-bind="textInput: searchTerm, onkeyup: search" class="form__input form__input--medium" />
+    </div>
+    <div class="form__field-item form__field-item--full-width" data-claims="superadmin">
+      <label for="ffilterByCityilter" class="form__label">Filter by city:</label>
+      <select class="form__input form__input--medium" name="filterByCity" data-bind="options: availableCities,
+                        value: cityFilter,
+                        optionsCaption: 'All',
+                        event: { change: filterByCity }"></select>
+    </div>
+    <div class="form__field-item form__field-item--full-width">
+      <label for="filter" class="form__label form__label--checkbox">Only show highlighted</label>
+      <input type="checkbox" id="filter" data-bind="checked: isFilteredByHighlighted" />
+    </div>
     </header>
   </div>
 </div>
@@ -26,24 +40,6 @@ nosubnav: true
   </div>
 </div>
 {{> loading-spinner}}
-
-<script type="text/html" id="search">
-<div class="form__field-item form__field-item--full-width">
-  <label for="search" class="form__label">Search</label>
-  <input type="text" data-bind="textInput: searchTerm, onkeyup: search" class="form__input form__input--medium" />
-</div>
-<div class="form__field-item form__field-item--full-width">
-  <label for="ffilterByCityilter" class="form__label">Filter by city:</label>
-  <select class="form__input form__input--medium" name="filterByCity" data-bind="options: availableCities,
-                    value: cityFilter,
-                    optionsCaption: 'All',
-                    event: { change: filterByCity }"></select>
-</div>
-<div class="form__field-item form__field-item--full-width">
-  <label for="filter" class="form__label form__label--checkbox">Only show highlighted</label>
-  <input type="checkbox" id="filter" data-bind="checked: isFilteredByHighlighted" />
-</div>
-</script>
 
 <script type="text/html" id="volunteer">
   <article data-bind="css: highlighted">

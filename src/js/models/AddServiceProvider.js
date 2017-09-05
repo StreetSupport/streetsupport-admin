@@ -1,34 +1,54 @@
-var ko = require('knockout')
-var ajax = require('../ajax')
-var adminUrls = require('../admin-urls')
-var cookies = require('../cookies')
-var browser = require('../browser')
-var BaseViewModel = require('./BaseViewModel')
+const ko = require('knockout')
+const ajax = require('../ajax')
+const auth = require('../auth')
+const adminUrls = require('../admin-urls')
+const cookies = require('../cookies')
+const browser = require('../browser')
+const BaseViewModel = require('./BaseViewModel')
 
 import { cities } from '../../data/generated/supported-cities'
 
 function AddServiceProvider () {
-  var self = this
+  const self = this
   self.name = ko.observable('')
   self.cityId = ko.observable()
   self.cities = ko.observableArray()
 
+  const buildPost = () => {
+    const cityId = auth.isCityAdmin()
+    ? auth.cityAdminFor()
+    : self.cityId()
+    const endpoint = self.endpointBuilder.serviceProviders().build()
+    const payload = {
+      'Name': self.name(),
+      'AssociatedCity': cityId
+    }
+
+    return {
+      endpoint,
+      headers: self.headers(cookies.get('session-token')),
+      payload
+    }
+  }
+
+  const handlePost = (result) => {
+    browser.loaded()
+    if (result.statusCode === 201) {
+      browser.redirect(adminUrls.dashboard)
+    } else {
+      self.handleError(result)
+    }
+  }
+
   self.save = function () {
     browser.loading()
-    var endpoint = self.endpointBuilder.serviceProviders().build()
-    var payload = {
-      'Name': self.name(),
-      'AssociatedCity': self.cityId()
-    }
+
+    const postParams = buildPost()
+
     ajax
-      .post(endpoint, self.headers(cookies.get('session-token')), payload)
+      .post(postParams.endpoint, postParams.headers, postParams.payload)
       .then(function (result) {
-        browser.loaded()
-        if (result.statusCode === 201) {
-          browser.redirect(adminUrls.dashboard)
-        } else {
-          self.handleError(result)
-        }
+        handlePost(result)
       }, function (error) {
         self.handleError(error)
       })

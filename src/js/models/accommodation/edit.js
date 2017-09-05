@@ -74,7 +74,8 @@ function Model () {
       city: ko.observable().extend({ required: true }),
       postcode: ko.observable().extend({ required: true }),
       publicTransportInfo: ko.observable(),
-      nearestSupportProviderId: ko.observable()
+      nearestSupportProviderId: ko.observable(),
+      addressIsPubliclyHidden: ko.observable()
     })
     const endpoint = self.endpointBuilder.temporaryAccommodation(id).address().build()
     return new InlineEditableSubEntity({
