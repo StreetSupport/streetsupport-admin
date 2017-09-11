@@ -85,6 +85,16 @@ Tests reside in the `/spec` directory, and are written using [Jasmine](https://j
 
 A number of happy paths are covered by automated browsers tests at: [https://github.com/StreetSupport/web-automated-testing](https://github.com/StreetSupport/web-automated-testing).
 
+### Logins
+
+With the `env` variable set to dev (1), you can use the following login credentials:
+
+* superadmin:StreetSupport! access all the things!
+* anaccomadmin:StreetSupport! an admin for an individual accommodation entry
+* mcradmin:StreetSupport! an admin for the manchester area
+* tempaccomadmin:StreetSupport! an admin for B&Bs reviews
+* orgadmin:StreetSupport! an admin for an individual organisation
+
 ### Styling
 
 CSS styling is written in Sass, based on [Susy](http://susy.oddbird.net/), in the [BEM](http://getbem.com/introduction/) style, and is auto-prefixed. Build with a mobile-first approach, using [sass-mq](https://github.com/sass-mq/sass-mq) for media queries.
