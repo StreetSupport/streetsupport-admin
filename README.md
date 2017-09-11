@@ -89,11 +89,11 @@ A number of happy paths are covered by automated browsers tests at: [https://git
 
 With the `env` variable set to dev (1), you can use the following login credentials:
 
-* superadmin:StreetSupport! access all the things!
-* anaccomadmin:StreetSupport! an admin for an individual accommodation entry
-* mcradmin:StreetSupport! an admin for the manchester area
-* tempaccomadmin:StreetSupport! an admin for B&Bs reviews
-* orgadmin:StreetSupport! an admin for an individual organisation
+* `superadmin:StreetSupport!` access all the things!
+* `anaccomadmin:StreetSupport!` an admin for an individual accommodation entry
+* `mcradmin:StreetSupport!` an admin for the manchester area
+* `tempaccomadmin:StreetSupport!` an admin for B&Bs reviews
+* `orgadmin:StreetSupport!` an admin for an individual organisation
 
 ### Styling
 
