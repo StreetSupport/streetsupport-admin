@@ -19,7 +19,13 @@ nosubnav: true
   <div class="container block__inner">
     <div class="block__content form">
       <!-- ko if: userCreated -->
-      <p><a href="login.html">Login now!</a></p>
+      <p>Thank you for verifying your account, you can now log in with your credentials, using the button below.</p>
+      <p>If you require any further help, please download our <a href="/docs/street-support-org-user-guide.pdf">user guide</a>, or contact us at <a href="mailto:dev@streetsupport.net">dev@streetsupport.net</a>.</p>
+      <p>
+        <a href="/login.html" class="btn btn--info btn--full">
+          <span class="btn__text">Login now!</span>
+        </a>
+      </p>
       <!-- /ko -->
       <!-- ko ifnot: userCreated -->
       <article>
