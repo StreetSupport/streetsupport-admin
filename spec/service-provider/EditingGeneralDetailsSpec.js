@@ -13,7 +13,7 @@ const spTags = require('../../src/js/serviceProviderTags')
 const getUrlParameter = require('../../src/js/get-url-parameter')
 
 describe('Edit Service Provider General Details', () => {
-  const Model = require('../../src/js/models/ServiceProvider')
+  const Model = require('../../src/js/models/service-providers/ServiceProviderDetails')
   let model = null
 
   beforeEach(() => {

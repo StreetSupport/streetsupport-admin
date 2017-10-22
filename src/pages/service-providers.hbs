@@ -71,7 +71,7 @@ nosubnav: true
               <dt class="key-value-pair__key">Description</dt>
               <dd class="key-value-pair__value">
                 <!-- ko ifnot: $parent.isEditingGeneralDetails -->
-                <span data-bind="html: description"></span>
+                <span data-bind="html: readOnlyDescription"></span>
                 <!-- /ko -->
                 <!-- ko if: $parent.isEditingGeneralDetails -->
                 <textarea data-bind="textInput: description" class="form__input form__input--textarea" rows="7"></textarea>

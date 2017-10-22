@@ -36,8 +36,8 @@ nosubnav: true
                   <!-- /ko -->
                   <!-- ko if: $parent.    isEditable -->
                   <select data-bind="options: $parent.serviceProviders,
-                  optionsValue: (item) => { return item.id },
-                  optionsText: (item) => { return item.name },
+                  optionsValue: function (item) { return item.id },
+                  optionsText:  function (item) { return item.name },
                   value: serviceProviderId,
                   optionsCaption: '-- please select --'" class="form__input"></select>
                   <!-- /ko -->
@@ -54,8 +54,8 @@ nosubnav: true
                 <!-- /ko -->
                 <!-- ko if: $parent.    isEditable -->
                 <select data-bind="options: $parent.accommodationTypes,
-                    optionsValue: (item) => { return item.key },
-                    optionsText: (item) => { return item.name },
+                    optionsValue: function (item) { return item.key },
+                    optionsText:  function (item) { return item.name },
                     value: accommodationType,
                     optionsCaption: '-- please select --'" class="form__input"></select>
                 <!-- /ko -->
@@ -93,8 +93,8 @@ nosubnav: true
                 <!-- /ko -->
                 <!-- ko if: $parent.isEditable -->
                 <select data-bind="options: $parent.serviceProviders,
-                optionsValue: (item) => { return item.id },
-                optionsText: (item) => { return item.name },
+                optionsValue: function (item) { return item.id },
+                optionsText:  function (item) { return item.name },
                 value: nearestSupportProviderId,
                 optionsCaption: '-- please select --'" class="form__input"></select>
                 <!-- /ko -->
