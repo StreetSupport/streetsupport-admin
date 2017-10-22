@@ -13,7 +13,7 @@ var getUrlParameter = require('../../src/js/get-url-parameter')
 var spTags = require('../../src/js/serviceProviderTags')
 
 describe('Service Provider - Verify', () => {
-  var Model = require('../../src/js/models/ServiceProvider')
+  var Model = require('../../src/js/models/service-providers/ServiceProviderDetails')
   var model
   var stubbedPutApi
 

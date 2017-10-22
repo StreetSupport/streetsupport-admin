@@ -13,7 +13,7 @@ var getUrlParameter = require('../../src/js/get-url-parameter')
 var spTags = require('../../src/js/serviceProviderTags')
 
 describe('Show Service Provider', () => {
-  var Model = require('../../src/js/models/ServiceProvider')
+  var Model = require('../../src/js/models/service-providers/ServiceProviderDetails')
   var model
   var stubbedApi
 
@@ -80,7 +80,11 @@ describe('Show Service Provider', () => {
   })
 
   it('should set decoded provider description', () => {
-    expect(model.serviceProvider().description()).toEqual('St Mary\'s Sexual Assault Referral Centre Coffee4Craig is a not-for-profit organisation set up to support, work with and be an all accepting approach to homelessness. ')
+    expect(model.serviceProvider().description()).toEqual(`St Mary's Sexual Assault Referral Centre is a not-for-profit organisation.\n\nSet up to support, work with and be an all accepting approach to homelessness. `)
+  })
+
+  it('should set decoded provider readonly description', () => {
+    expect(model.serviceProvider().readOnlyDescription()).toEqual(`<p>St Mary&#39;s Sexual Assault Referral Centre is a not-for-profit organisation.</p>\n<p>Set up to support, work with and be an all accepting approach to homelessness. </p>\n`)
   })
 
   it('should set addresses', () => {
@@ -149,7 +153,7 @@ function coffee4Craig () {
     'isVerified': false,
     'isPublished': true,
     'shortDescription': 'St Mary&#39;s Centre provides a range of services for anyone who has been raped or sexually assaulted',
-    'description': 'St Mary&#39;s Sexual Assault Referral Centre Coffee4Craig is a not-for-profit organisation set up to support, work with and be an all accepting approach to homelessness. ',
+    'description': 'St Mary&#39;s Sexual Assault Referral Centre is a not-for-profit organisation.\n\nSet up to support, work with and be an all accepting approach to homelessness. ',
     'establishedDate': '0001-01-03T00:00:00.0000000Z',
     'areaServiced': 'Manchester & South Wales',
     'email': 'risha@coffee4craig.com',

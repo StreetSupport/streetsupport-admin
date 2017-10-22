@@ -11,7 +11,7 @@ let cookies = require('../../src/js/cookies')
 let getUrlParameter = require('../../src/js/get-url-parameter')
 
 describe('Cancel Edit Service Provider Contact Details', () => {
-  var Model = require('../../src/js/models/ServiceProvider')
+  var Model = require('../../src/js/models/service-providers/ServiceProviderDetails')
   let model = null
 
   beforeEach(() => {

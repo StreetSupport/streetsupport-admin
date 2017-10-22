@@ -12,7 +12,7 @@ let cookies = require('../../src/js/cookies')
 let getUrlParameter = require('../../src/js/get-url-parameter')
 
 describe('Service Provider not found', () => {
-  var Model = require('../../src/js/models/ServiceProvider')
+  var Model = require('../../src/js/models/service-providers/ServiceProviderDetails')
   let model = null // eslint-disable-line
   let stubbedBrowser = null
 
