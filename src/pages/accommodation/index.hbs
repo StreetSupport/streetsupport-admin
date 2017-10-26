@@ -16,11 +16,11 @@ nosubnav: true
       </a>
       <div class="form__field-item form__field-item--full-width" data-claims="superadmin">
         <label for="filterByCity" class="form__label">Filter by city:</label>
-        {{!-- <select class="form__input form__input--medium" name="filterByCity" data-bind="options: cities,
-          optionsValue: (item) => { return item.id },
-          optionsText: (item) => { return item.name },
+        <select class="form__input form__input--medium" name="filterByCity" data-bind="options: cities,
+          optionsValue: function (item) { return item.id },
+          optionsText: function (item) { return item.name },
           value: selectedCityFilter,
-          optionsCaption: 'All'"></select> --}}
+          optionsCaption: 'All'"></select>
       </div>
     </header>
   </div>
