@@ -4,13 +4,15 @@ global describe, beforeEach, afterEach, it, expect
 
 'use strict'
 
-var sinon = require('sinon')
-var ajax = require('../../src/js/ajax')
-var endpoints = require('../../src/js/api-endpoints')
-var browser = require('../../src/js/browser')
-var cookies = require('../../src/js/cookies')
-var getUrlParameter = require('../../src/js/get-url-parameter')
-var spTags = require('../../src/js/serviceProviderTags')
+const sinon = require('sinon')
+const ajax = require('../../src/js/ajax')
+const endpoints = require('../../src/js/api-endpoints')
+const browser = require('../../src/js/browser')
+const cookies = require('../../src/js/cookies')
+const getUrlParameter = require('../../src/js/get-url-parameter')
+const spTags = require('../../src/js/serviceProviderTags')
+
+import { cities } from '../../src/data/generated/supported-cities'
 
 describe('Show Service Provider', () => {
   var Model = require('../../src/js/models/service-providers/ServiceProviderDetails')
@@ -73,6 +75,10 @@ describe('Show Service Provider', () => {
 
   it('should set associated City', () => {
     expect(model.serviceProvider().city()).toEqual('manchester')
+  })
+
+  it('should set cities collection', () => {
+    expect(model.serviceProvider().availableCities().length).toEqual(cities.length)
   })
 
   it('should set decoded provider short description', () => {

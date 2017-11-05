@@ -4,8 +4,10 @@ const marked = require('marked')
 
 const adminUrls = require('../../admin-urls')
 const ajax = require('../../ajax')
-const cookies = require('../../cookies')
 const browser = require('../../browser')
+const cookies = require('../../cookies')
+
+import { cities } from '../../../data/generated/supported-cities'
 
 const Address = require('../Address')
 const BaseViewModel = require('../BaseViewModel')
@@ -19,6 +21,7 @@ function ServiceProvider (data) {
 
   self.key = ko.observable(data.key)
   self.city = ko.observable(data.associatedCityId)
+  self.availableCities = ko.observableArray(cities)
   self.name = ko.observable(data.name)
   self.isVerified = ko.observable(data.isVerified)
   self.shortDescription = ko.observable(htmlEncode.htmlDecode(data.shortDescription))

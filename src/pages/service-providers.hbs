@@ -13,7 +13,6 @@ nosubnav: true
     <div data-bind="with: serviceProvider">
       <header>
         <h1 data-bind="html: name"></h1>
-        <p>Associated City: <span data-bind="text: city" class="h3"></span></p>
         <a data-claims="superadmin" href="dashboard.html" class="btn btn--info">
           <span class="btn__text">Back to dashboard</span>
         </a>
@@ -57,6 +56,19 @@ nosubnav: true
                 <!-- /ko -->
                 <!-- ko if: $parent.isEditingGeneralDetails -->
                 <input data-bind="textInput: name" class="form__input" />
+                <!-- /ko -->
+              </dd>
+              <dt class="key-value-pair__key" data-claims="superadmin">City</dt>
+              <dd class="key-value-pair__value" data-claims="superadmin">
+                <!-- ko ifnot: $parent.isEditingGeneralDetails -->
+                <span data-bind="html: city"></span>
+                <!-- /ko -->
+                <!-- ko if: $parent.isEditingGeneralDetails -->
+                <select data-bind="options: availableCities,
+                    optionsValue: function (item) { return item.id },
+                    optionsText:  function (item) { return item.name },
+                    value: city,
+                    optionsCaption: '-- please select --'" class="form__input"></select>
                 <!-- /ko -->
               </dd>
               <dt class="key-value-pair__key">Short Description</dt>
