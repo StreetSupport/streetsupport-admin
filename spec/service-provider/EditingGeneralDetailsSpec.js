@@ -77,6 +77,7 @@ describe('Edit Service Provider General Details', () => {
       model.serviceProvider().name('new name')
       model.serviceProvider().description('new description')
       model.serviceProvider().shortDescription('new short description')
+      model.serviceProvider().city('new city id')
       model.serviceProvider().tags()[0].isSelected(true)
       model.serviceProvider().tags()[1].isSelected(true)
       model.serviceProvider().tags()[2].isSelected(true)
@@ -100,6 +101,7 @@ describe('Edit Service Provider General Details', () => {
         'Name': 'new name',
         'Description': 'new description',
         'ShortDescription': 'new short description',
+        'CityId': 'new city id',
         'Tags': ['tag-a', 'tag-b', 'tag-c']
       }
       var apiCalledWithExpectedArgs = stubbedPutApi.withArgs(endpoint, headers, payload).calledOnce
