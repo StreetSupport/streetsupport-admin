@@ -57,7 +57,8 @@ function ServiceProviderDetails () {
         'Name': sp.name(),
         'Description': sp.description(),
         'ShortDescription': sp.shortDescription(),
-        'Tags': tagsToCsv()
+        'Tags': tagsToCsv(),
+        'CityId': sp.city()
       }
       ajax.put(self.endpointBuilder.serviceProviders(getUrlParameter.parameter('key')).generalInformation().build(),
         self.headers(cookies.get('session-token')),
