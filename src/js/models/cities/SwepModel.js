@@ -11,7 +11,7 @@ const City = function (data) {
   const self = this
   self.key = data.key
   self.name = data.name
-  self.userClaims = ko.observable(`cityadminfor:${data.key}`)
+  self.userClaims = ko.observable(`superadmin,cityadminfor:${data.key}`)
   self.swepIsAvailable = ko.observable(data.swepIsAvailable)
   self.buttonText = ko.computed(() => {
     return self.swepIsAvailable()

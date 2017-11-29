@@ -71,7 +71,7 @@ describe('SWEP Availabilty', () => {
   })
 
   it('- Should set claims for city', () => {
-    expect(sut.cities()[0].userClaims()).toEqual('cityadminfor:manchester')
+    expect(sut.cities()[0].userClaims()).toEqual('superadmin,cityadminfor:manchester')
   })
 
   describe('- Toggle swep availability', () => {

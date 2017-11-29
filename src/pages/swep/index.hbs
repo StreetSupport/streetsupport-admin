@@ -20,7 +20,7 @@ nosubnav: true
       <ul data-bind="foreach: cities" class="swep-list">
         <li>
           <h2 class="h3 swep-list__title" data-bind="text: name"></h2>
-          <button data-bind="attr: { class: buttonClass, 'data-claims': userClaims, }, click: toggleSwepAvailability">
+          <button data-bind="attr: { class: buttonClass, 'data-claims': userClaims }, click: toggleSwepAvailability">
             <span class="btn__text" data-bind="text: buttonText"></span>
           </button>
         </li>
