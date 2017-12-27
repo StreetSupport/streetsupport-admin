@@ -78,7 +78,7 @@
     "htmlencode": "0.0.4",
     "knockout": "3.4.1",
     "knockout.validation": "2.0.3",
-    "marked": "0.3.6",
+    "marked": "0.3.9",
     "moment": "2.19.3",
     "node-uuid": "^1.4.7",
     "q": "1.4.1",
