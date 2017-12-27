@@ -79,6 +79,13 @@ Page templating is done using [Hogan](http://twitter.github.io/hogan.js/). Note:
 
 Page code-behinds are written in plain ol' Javascript, or use [Knockout](http://knockoutjs.com/). Knockout view models are found in `/js/models/` are mostly tested. [ES2015](https://babeljs.io/learn-es2015/) syntax is transpiled using [Babel](https://babeljs.io/).
 
+### API Environment
+
+For dev against a local dev API:
+
+* Update the index in `src/js/env.js` to `0` connect to `local` env.
+* Update the local url in `src/js/api-endpoints` to your local environment API url e.g. `var local = 'http://localhost:8080'`
+
 ### Testing
 
 Tests reside in the `/spec` directory, and are written using [Jasmine](https://jasmine.github.io/) and [Sinon](http://sinonjs.org/). Please ensure any features submitted via pull request are covered by tests.
