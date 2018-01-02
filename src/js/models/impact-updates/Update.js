@@ -25,7 +25,7 @@ function Update (listener, cityId, data = { content: '', displayDate: defaultDis
   self.displayDateMonth = ko.observable(month)
   self.displayDateYear = ko.observable(year)
   self.displayDate = ko.observable(data.displayDate)
-  self.cityId = ko.observable(cityId ? cityId : data.cityId)
+  self.cityId = ko.observable(cityId || data.cityId)
   self.isEditing = ko.observable(false)
 
   self.clear = () => {

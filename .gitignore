@@ -13,7 +13,7 @@ node_modules
 .eyeglass_cache
 _svgicon
 _dist
-npm-debug.log
+npm-debug*
 cachebusting.json
 
 # Project Specific #
