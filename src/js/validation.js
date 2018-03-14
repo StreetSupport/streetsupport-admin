@@ -6,15 +6,15 @@ const options = {
   errorElementClass: 'form__input--error'
 }
 
-var initialise = function (koValidation) {
+const initialise = function (koValidation) {
   koValidation.init(options, true)
 }
 
-var getValidationGroup = function (koValidation, formModel) {
+const getValidationGroup = function (koValidation, formModel) {
   return koValidation.group(formModel)
 }
 
-var showErrors = function (koValidationGroup) {
+const showErrors = function (koValidationGroup) {
   koValidationGroup.showAllMessages()
   const validationMessages = document.querySelectorAll(`.${options.errorMessageClass}`)
   for (const error of validationMessages) {
