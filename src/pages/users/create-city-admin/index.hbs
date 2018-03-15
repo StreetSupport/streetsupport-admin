@@ -1,0 +1,53 @@
+---
+title: Create City Admin - Street Support Admin
+description: Street Support - Making it easier to help homeless people in Manchester
+layout: default.hbs
+permalink: false
+jsBundle: create-city-admin
+page: users
+nosubnav: true
+---
+
+<div class="block block--highlight admin-header">
+  <div class="container block__inner">
+    <header>
+      <h1>Create City Admin</h1>
+      <a href="../" class="btn btn--info">
+        <span class="btn__text">Back to Users</span>
+      </a>
+    </header>
+  </div>
+</div>
+<div class="block block--main-body">
+  <div class="container block__inner">
+    <!-- ko ifnot: formSubmitted -->
+    <div class="block__content form">
+    <p>To create a new City Admin, please enter their email and city, and hit 'save'.</p>
+    <p>They will be emailed a link where they can set their username and password. You can resend the link from the <a href="../">Users</a> page.</p>
+      {{> form-feedback}}
+      <article data-bind="with: formFields">
+        <dl class="key-value-pair">
+          {{> forms/textField fieldTitle="Email Address" dataFieldName="email" }}
+          <dt class="key-value-pair__key">City</dt>
+          <dd class="key-value-pair__value form__field-item">
+            <select data-bind="options: $parent.cities,
+                optionsValue: function (item) { return item.id },
+                optionsText: function (item) { return item.name },
+                value: cityId,
+                optionsCaption: '-- please select --'" class="form__input"></select>
+          </dd>
+        </dl>
+        
+        <button data-bind="click: $parent.save" class="btn btn--primary"><span class="btn__text">Save</span></button>
+      </article>
+    </div>
+    <!-- /ko -->
+    <!-- ko if: formSubmissionSuccessful -->
+    <p>Thank you for adding this entry.</p>
+    <button data-bind="click: reset" class="btn btn--primary">
+      <span class="btn__text">Add another</span>
+    </button>
+    <!-- /ko -->
+  </div>
+</div>
+{{> loading-spinner}}

@@ -24,13 +24,13 @@ nosubnav: true
   <div class="container block__inner">
     <div class="block__content" data-bind="with: volunteer">
       <h2>Offer Description</h2>
-      <p data-bind="text: description"></p>
+      <p data-bind="html: description"></p>
       <!-- ko if: additionalInfo -->
       <h3>Additional Info</h3>
-      <p data-bind="text: additionalInfo"></p>
+      <p data-bind="html: additionalInfo"></p>
       <!-- /ko -->
       <a href="/offers-of-items/" class="btn btn--info">
-        <span class="btn__text">Back to Offers</a>
+        <span class="btn__text">Back to Offers</span>
       </a>
     </div>
   </div>
