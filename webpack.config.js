@@ -50,6 +50,7 @@ module.exports = {
     shareOffer: p('share-offer'),
     mailingList: p('mailing-list'),
     users: p('users'),
+    'create-city-admin': p('create-city-admin'),
     editServiceProviderNeedCategories: p('edit-service-provider-need-categories'),
     impactupdates: p('impact-updates'),
     swep: p('swep'),
