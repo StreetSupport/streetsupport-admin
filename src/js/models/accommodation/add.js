@@ -1,3 +1,5 @@
+const htmlEncode = require('htmlencode')
+
 const ajax = require('../../ajax')
 const BaseViewModel = require('../../models/BaseViewModel')
 const auth = require('../../auth')
@@ -59,7 +61,13 @@ function Model () {
       ajax
         .get(endpoints.getServiceProvidersHAL, self.headers(cookies.get('session-token')))
         .then((result) => {
-          self.serviceProviders(result.data.items)
+          self.serviceProviders(result.data.items
+            .map(p => {
+              return {
+                key: p.key,
+                name: htmlEncode.htmlDecode(p.name)
+              }
+            }))
         }, () => {
           self.handleServerError()
         })
