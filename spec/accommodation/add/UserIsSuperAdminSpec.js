@@ -79,6 +79,10 @@ describe('Accommodation - Add - super admin', () => {
     expect(sut.serviceProviders().length).toEqual(providerData.items.length)
   })
 
+  it('- should decode provider names', () => {
+    expect(sut.serviceProviders()[0].name).toEqual('Provider A\'s House')
+  })
+
   it('- should set is super admin', () => {
     expect(sut.isSuperAdmin()).toBeTruthy()
   })
@@ -193,7 +197,7 @@ describe('Accommodation - Add - super admin', () => {
 })
 
 const providerData = { items: [
-  { key: 'provider-a', name: 'Provider A' },
+  { key: 'provider-a', name: 'Provider A&#39;s House' },
   { key: 'provider-b', name: 'Provider B' },
   { key: 'provider-c', name: 'Provider C' },
   { key: 'provider-d', name: 'Provider D' },
