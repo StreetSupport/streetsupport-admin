@@ -12,7 +12,7 @@
 
 .form__fieldset {
   border: none;
-  margin: 20px 0 0 0;
+  margin: 20px 0 0;
   padding: 0;
 }
 
@@ -54,9 +54,16 @@
 }
 
 .form__label--checkbox-container {
-  padding: 10px 0;
   display: block;
   clear: both;
+
+  &--strong {
+    @include cf;
+
+    margin: 10px 0;
+    padding: 10px 5px;
+    background: #fff;
+  }
 }
 
 .form__label--radio {
@@ -82,7 +89,7 @@
 
 .form__input--short {
   width: 120px;
-  float:left;
+  float: left;
   margin-right: 1em;
 }
 
@@ -130,7 +137,7 @@ label {
 }
 
 input[type="checkbox"],
-input[type="radio"], {
+input[type="radio"] {
   cursor: pointer;
   padding: 5px;
 }
