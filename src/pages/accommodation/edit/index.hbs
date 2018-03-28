@@ -28,6 +28,7 @@ nosubnav: true
             {{> forms/inline/editCancelSaveButtons }}
             <dl class="key-value-pair" data-bind="with: formFields">
               {{> forms/inline/textField fieldTitle="Name" dataFieldName="name" }}
+              {{> forms/inline/boolean fieldTitle="Visible on website?" dataFieldName="isPubliclyVisible" classes="form__label--checkbox-container--strong" }}
               <div data-claims="superadmin">
                 <dt class="key-value-pair__key key-value-pair__key--inline">Service Provider</dt>
                 <dd class="key-value-pair__value">
@@ -45,8 +46,7 @@ nosubnav: true
               </div>
               {{> forms/inline/textArea fieldTitle="Short Description" dataFieldName="synopsis" readOnlyFieldName="synopsisReadOnly" }}
               {{> forms/inline/textArea fieldTitle="Full Description" dataFieldName="description" readOnlyFieldName="descriptionReadOnly" }}
-              {{> forms/inline/boolean fieldTitle="Visible on website?" dataFieldName="isPubliclyVisible" }}
-              
+
               <dt class="key-value-pair__key key-value-pair__key--inline">Accommodation Type</dt>
               <dd class="key-value-pair__value">
                 <!-- ko ifnot: $parent.   isEditable -->
@@ -176,7 +176,7 @@ nosubnav: true
               {{> forms/inline/boolean fieldTitle="Housing Benefit Claimants" dataFieldName="acceptsBenefitsClaimants" }}
             </dl>
         </section>
-        <section class="split__element split__element--admin-panel">&nbsp;</section>        
+        <section class="split__element split__element--admin-panel">&nbsp;</section>
       </div>
     </div>
   </div>
