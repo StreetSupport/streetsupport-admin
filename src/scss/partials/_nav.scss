@@ -31,7 +31,7 @@
     position: fixed;
     top: 0;
     right: 0;
-    height: 100%;
+    min-height: 100%;
     width: $nav-width;
     z-index: 30;
     overflow-y: scroll;
@@ -47,7 +47,7 @@
       position: absolute;
       top: $header-top;
       width: 100%;
-      height: $header-subnav-height;
+      min-height: $header-subnav-height;
       transition: none;
       transform: none;
       box-shadow: 0px 2px 5px 0px rgba(50, 50, 50, 0.7);
@@ -55,7 +55,7 @@
       overflow-y: hidden;
 
       .section--nosubnav & {
-        height: $header-height;
+        min-height: $header-height;
       }
     }
 
