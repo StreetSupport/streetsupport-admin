@@ -19,6 +19,7 @@ module.exports = {
   getServiceCategories: p('/v2/service-categories/'),
   users: p('/v1/users'),
   unverifiedCityAdmins: p('/v1/unverified-city-admins'),
+  unverifiedSuperAdmins: p('/v1/unverified-super-admins'),
   verifiedUsers: p('/v1/verified-users'),
   unverifiedUsers: p('/v1/unverified-users'),
   sessions: p('/v1/sessions'),
