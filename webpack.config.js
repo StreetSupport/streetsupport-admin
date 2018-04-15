@@ -51,6 +51,7 @@ module.exports = {
     mailingList: p('mailing-list'),
     users: p('users'),
     'create-city-admin': p('create-city-admin'),
+    'create-super-admin': p('create-super-admin'),
     editServiceProviderNeedCategories: p('edit-service-provider-need-categories'),
     impactupdates: p('impact-updates'),
     swep: p('swep'),
