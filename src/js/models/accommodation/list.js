@@ -45,7 +45,7 @@ function Lister () {
   }
 
   self.selectedCityFilter.subscribe((newCityToFilterOn) => {
-    if(newCityToFilterOn) {
+    if (newCityToFilterOn) {
       loadNextUrl = `${endpoints.temporaryAccommodation}?cityId=${newCityToFilterOn}`
     } else {
       loadNextUrl = endpoints.temporaryAccommodation

@@ -1,0 +1,53 @@
+<h2>Donations</h2>
+<h3>Items accepted</h3>
+<p data-bind="text: needCatList"></p>
+<a data-bind="attr: { 'href': editNeedCategoriesUrl }" title="edit need categories" class="btn btn--info">
+  <span class="btn__text">Edit Items accepted</span>
+</a>
+<dl class="key-value-pair">
+  <dt class="key-value-pair__key">Donate Money Url</dt>
+  <dd class="key-value-pair__value">
+    <!-- ko ifnot: $parent.isEditingDonationDetails -->
+    <span data-bind="html: donationUrl"></span>
+    <!-- /ko -->
+    <!-- ko if: $parent.isEditingDonationDetails -->
+    <input type="text" data-bind="textInput: donationUrl" class="form__input form__input" />
+    <!-- /ko -->
+  </dd>
+  <dt class="key-value-pair__key">Donate Money Description</dt>
+  <dd class="key-value-pair__value">
+    <!-- ko ifnot: $parent.isEditingDonationDetails -->
+    <span data-bind="html: donationDescription"></span>
+    <!-- /ko -->
+    <!-- ko if: $parent.isEditingDonationDetails -->
+    <textarea data-bind="textInput: donationDescription" class="form__input form__input--textarea" rows="7"></textarea>
+    <!-- /ko -->
+  </dd>
+  <dt class="key-value-pair__key">Donate Items Description</dt>
+  <dd class="key-value-pair__value">
+      <p>Describe what items you accept, and how people can get them to you.</p>
+    <!-- ko ifnot: $parent.isEditingDonationDetails -->
+    <span data-bind="html: itemsDonationDescription"></span>
+    <!-- /ko -->
+    <!-- ko if: $parent.isEditingDonationDetails -->
+    <textarea data-bind="textInput: itemsDonationDescription" class="form__input form__input--textarea" rows="7"></textarea>
+    <!-- /ko -->
+  </dd>
+  <dt class="key-value-pair__key">Donate Items Url</dt>
+  <dd class="key-value-pair__value">
+    <p>Provide a link where people can find out more on how to donate items.</p>
+    <!-- ko ifnot: $parent.isEditingDonationDetails -->
+    <span data-bind="html: itemsDonationUrl"></span>
+    <!-- /ko -->
+    <!-- ko if: $parent.isEditingDonationDetails -->
+    <input type="text" data-bind="textInput: itemsDonationUrl" class="form__input form__input" />
+    <!-- /ko -->
+  </dd>
+</dl>
+<!-- ko ifnot: $parent.isEditingDonationDetails -->
+<button data-bind="click: $parent.editDonationDetails" class="btn btn--info"><span class="btn__text">edit</span></button>
+<!-- /ko -->
+<!-- ko if: $parent.isEditingDonationDetails -->
+<button data-bind="click: $parent.cancelEditDonationDetails" class="btn btn--indifferent"><span class="btn__text">cancel</span></button>
+<button data-bind="click: $parent.saveDonationDetails" class="btn btn--primary"><span class="btn__text">save</span></button>
+<!-- /ko -->

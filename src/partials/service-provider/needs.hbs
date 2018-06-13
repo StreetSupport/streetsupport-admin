@@ -1,0 +1,27 @@
+<h2>Needs</h2>
+<a data-bind="attr: { 'href': addNeedUrl }" title="add need" class="btn btn--primary">
+  <span class="btn__text">Add Need</span>
+</a>
+<div data-bind="foreach: needs">
+  <article class="service-provider__item">
+    <div class="service-provider__item-title">
+      <h3>
+        <a data-bind="attr: { href: viewOffersUrl }, html: description"></a>
+      </h3>
+    </div>
+    <div class="service-provider__item-info">
+    <a data-bind="attr: { 'href': editNeedUrl }" title="edit need" class="btn btn--info">
+      <span class="btn__text">Edit</span>
+    </a>
+    <!-- ko if: canRepost -->
+    <a data-bind="click: repostNeed" title="repost need" class="btn btn--primary">
+      <span class="btn__text">Re-post</span>
+    </a>
+    <!-- /ko -->
+    <a data-bind="click: deleteNeed" title="delete need" class="btn btn--warning">
+      <span class="btn__text">Delete</span>
+    </a>
+    <p class="service-provider__item-note">Posted <span data-bind="text: neededDate"></span></p>
+    </div>
+  </article>
+</div>
