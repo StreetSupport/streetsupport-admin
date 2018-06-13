@@ -1,16 +1,19 @@
 'use strict'
 
-var ko = require('knockout')
-var ajax = require('../ajax')
-var Endpoints = require('../endpoint-builder')
-var getUrlParameter = require('../get-url-parameter')
-var cookies = require('../cookies')
-var BaseViewModel = require('./BaseViewModel')
-var adminUrls = require('../admin-urls')
-var htmlEncode = require('htmlencode')
+const ko = require('knockout')
+const moment = require('moment')
+
+const adminUrls = require('../admin-urls')
+const ajax = require('../ajax')
+const BaseViewModel = require('./BaseViewModel')
+const browser = require('../browser')
+const cookies = require('../cookies')
+const Endpoints = require('../endpoint-builder')
+const getUrlParameter = require('../get-url-parameter')
+const htmlEncode = require('htmlencode')
 
 function Need (data) {
-  var self = this
+  const self = this
   self.endpoints = new Endpoints()
 
   self.serviceProviderId = data.serviceProviderId
@@ -21,11 +24,11 @@ function Need (data) {
   self.description = ko.observable(htmlEncode.htmlDecode(data.description))
   self.type = ko.observable(data.type)
   self.isPeopleOrThings = ko.computed(function () {
-    var type = self.type()
+    const type = self.type()
     return type !== undefined && (type.toLowerCase() === 'time' || type.toLowerCase() === 'items')
   }, self)
   self.isMoney = ko.computed(function () {
-    var type = self.type()
+    const type = self.type()
     return type !== undefined && (type.toLowerCase() === 'money')
   }, self)
   self.reason = ko.observable(htmlEncode.htmlDecode(data.reason))
@@ -37,6 +40,15 @@ function Need (data) {
   self.donationUrl = ko.observable(data.donationUrl)
   self.keywords = ko.observable(data.keywords !== undefined && data.keywords !== null ? data.keywords.join(', ') : '')
   self.customMessage = ko.observable(data.customMessage)
+  self.neededDateReadOnly = ko.observable(moment(data.neededDate))
+  self.neededDate = ko.computed(function () {
+    return self.neededDateReadOnly().fromNow()
+  }, self)
+  self.canRepost = ko.computed(function () {
+    const now = moment()
+    const diff = now.diff(self.neededDateReadOnly(), 'days')
+    return diff >= 7
+  }, self)
 
   self.tempKey = ko.observable(data.tempKey)
   self.isEditing = ko.observable(false)
@@ -61,6 +73,31 @@ function Need (data) {
         })
     }
   })
+
+  self.repostNeed = function () {
+    browser.loading()
+    const endpoint = self.endpointBuilder
+      .serviceProviders(self.serviceProviderId)
+      .needs(self.id())
+      .build() + '/neededDate'
+    const now = moment()
+    const model = {
+      NeededDate: now.toISOString()
+    }
+    ajax.put(endpoint,
+      self.headers(cookies.get('session-token')),
+      model
+    ).then(function (result) {
+      if (result.statusCode === 200) {
+        self.neededDateReadOnly(now)
+        browser.loaded()
+      } else {
+        self.handleError(result)
+      }
+    }, function (error) {
+      self.handleError(error)
+    })
+  }
 
   self.deleteNeed = function () {
     var endpoint = `${self.endpointBuilder.serviceProviders(getUrlParameter.parameter('key')).needs(self.id()).build()}`

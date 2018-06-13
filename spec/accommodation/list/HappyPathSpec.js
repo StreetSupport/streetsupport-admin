@@ -159,12 +159,11 @@ describe('Accommodation Listing', () => {
     })
 
     it('- should reload all accommodation when reset to \'All\'', () => {
-      sut.selectedCityFilter(null);
-      expect(sut.entries().length).toEqual(accomData.items.length);
+      sut.selectedCityFilter(null)
+      expect(sut.entries().length).toEqual(accomData.items.length)
     })
   })
 })
-
 
 const accomData = {
   'links': {
