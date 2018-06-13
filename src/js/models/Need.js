@@ -3,12 +3,13 @@
 const ko = require('knockout')
 const moment = require('moment')
 
+const adminUrls = require('../admin-urls')
 const ajax = require('../ajax')
+const BaseViewModel = require('./BaseViewModel')
+const browser = require('../browser')
+const cookies = require('../cookies')
 const Endpoints = require('../endpoint-builder')
 const getUrlParameter = require('../get-url-parameter')
-const cookies = require('../cookies')
-const BaseViewModel = require('./BaseViewModel')
-const adminUrls = require('../admin-urls')
 const htmlEncode = require('htmlencode')
 
 function Need (data) {
@@ -39,7 +40,15 @@ function Need (data) {
   self.donationUrl = ko.observable(data.donationUrl)
   self.keywords = ko.observable(data.keywords !== undefined && data.keywords !== null ? data.keywords.join(', ') : '')
   self.customMessage = ko.observable(data.customMessage)
-  self.neededDate = ko.observable(moment(data.neededDate).fromNow())
+  self.neededDateReadOnly = ko.observable(moment(data.neededDate))
+  self.neededDate = ko.computed(function () {
+    return self.neededDateReadOnly().fromNow()
+  }, self)
+  self.canRepost = ko.computed(function () {
+    const now = moment()
+    const diff = now.diff(self.neededDateReadOnly(), 'days')
+    return diff >= 7
+  }, self)
 
   self.tempKey = ko.observable(data.tempKey)
   self.isEditing = ko.observable(false)
@@ -64,6 +73,31 @@ function Need (data) {
         })
     }
   })
+
+  self.repostNeed = function () {
+    browser.loading()
+    const endpoint = self.endpointBuilder
+      .serviceProviders(self.serviceProviderId)
+      .needs(self.id())
+      .build() + '/neededDate'
+    const now = moment()
+    const model = {
+      NeededDate: now.toISOString()
+    }
+    ajax.put(endpoint,
+      self.headers(cookies.get('session-token')),
+      model
+    ).then(function (result) {
+      if (result.statusCode === 200) {
+        self.neededDateReadOnly(now)
+        browser.loaded()
+      } else {
+        self.handleError(result)
+      }
+    }, function (error) {
+      self.handleError(error)
+    })
+  }
 
   self.deleteNeed = function () {
     var endpoint = `${self.endpointBuilder.serviceProviders(getUrlParameter.parameter('key')).needs(self.id()).build()}`

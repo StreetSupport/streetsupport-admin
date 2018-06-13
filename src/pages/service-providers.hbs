@@ -40,270 +40,36 @@ nosubnav: true
       <div data-bind="with: serviceProvider">
         <div class="split split--admin-panel">
           <section class="split__element split__element--admin-panel">
-            <h2>General Details</h2>
-            <!-- ko ifnot: $parent.isEditingGeneralDetails -->
-            <button data-bind="click: $parent.editGeneralDetails" class="btn btn--info"><span class="btn__text">edit</span></button>
-            <!-- /ko -->
-            <!-- ko if: $parent.isEditingGeneralDetails -->
-            <button data-bind="click: $parent.cancelEditGeneralDetails" class="btn btn--indifferent"><span class="btn__text">cancel</span></button>
-            <button data-bind="click: $parent.saveGeneralDetails" class="btn btn--primary"><span class="btn__text">save</span></button>
-            <!-- /ko -->
-            <dl class="key-value-pair">
-              <dt class="key-value-pair__key">Name</dt>
-              <dd class="key-value-pair__value">
-                <!-- ko ifnot: $parent.isEditingGeneralDetails -->
-                <span data-bind="html: name"></span>
-                <!-- /ko -->
-                <!-- ko if: $parent.isEditingGeneralDetails -->
-                <input data-bind="textInput: name" class="form__input" />
-                <!-- /ko -->
-              </dd>
-              <dt class="key-value-pair__key" data-claims="superadmin">City</dt>
-              <dd class="key-value-pair__value" data-claims="superadmin">
-                <!-- ko ifnot: $parent.isEditingGeneralDetails -->
-                <span data-bind="html: city"></span>
-                <!-- /ko -->
-                <!-- ko if: $parent.isEditingGeneralDetails -->
-                <select data-bind="options: availableCities,
-                    optionsValue: function (item) { return item.id },
-                    optionsText:  function (item) { return item.name },
-                    value: city,
-                    optionsCaption: '-- please select --'" class="form__input"></select>
-                <!-- /ko -->
-              </dd>
-              <dt class="key-value-pair__key">Short Description</dt>
-              <dd class="key-value-pair__value">
-                <!-- ko ifnot: $parent.isEditingGeneralDetails -->
-                <span data-bind="html: shortDescription"></span>
-                <!-- /ko -->
-                <!-- ko if: $parent.isEditingGeneralDetails -->
-                <textarea data-bind="textInput: shortDescription" class="form__input" rows="2"></textarea>
-                <!-- /ko -->
-              </dd>
-              <dt class="key-value-pair__key">Description</dt>
-              <dd class="key-value-pair__value">
-                <!-- ko ifnot: $parent.isEditingGeneralDetails -->
-                <span data-bind="html: readOnlyDescription"></span>
-                <!-- /ko -->
-                <!-- ko if: $parent.isEditingGeneralDetails -->
-                <textarea data-bind="textInput: description" class="form__input form__input--textarea" rows="7"></textarea>
-                <!-- /ko -->
-              </dd>
-              <dt class="key-value-pair__key">Tags</dt>
-              <dd class="key-value-pair__value">
-                <dl class="key-value-pair" data-bind="foreach: tags">
-                  <dt class="key-value-pair__key key-value-pair__key--inline" data-bind="text: name"></dt>
-                  <!-- ko ifnot: $root.isEditingGeneralDetails -->
-                  <dd class="key-value-pair__value" data-bind="text: isSelected"></dd>
-                  <!-- /ko -->
-                  <!-- ko if: $root.isEditingGeneralDetails -->
-                  <dd class="key-value-pair__value">
-                    <input type="checkbox" data-bind="checked: isSelected" />
-                  </dd>
-                  <!-- /ko -->
-                </dl>
-              </dd>
-            </dl>
+            {{> service-provider/general-info}}
           </section>
 
           <section class="split__element split__element--admin-panel">
-            <h2>Contact Information</h2>
-            <!-- ko ifnot: $parent.isEditingContactDetails -->
-            <button data-bind="click: $parent.editContactDetails" class="btn btn--info">
-              <span class="btn__text">edit</span>
-            </button>
-            <!-- /ko -->
-            <!-- ko if: $parent.isEditingContactDetails -->
-            <button data-bind="click: $parent.cancelEditContactDetails" class="btn btn--indifferent">
-              <span class="btn__text">cancel</span>
-            </button>
-            <button data-bind="click: $parent.saveContactDetails" class="btn btn--primary">
-              <span class="btn__text">save</span>
-            </button>
-            <!-- /ko -->
-            <dl class="key-value-pair">
-              <dt class="key-value-pair__key">Telephone</dt>
-              <dd class="key-value-pair__value">
-                <!-- ko ifnot: $parent.isEditingContactDetails -->
-                <span data-bind="text: telephone"></span>
-                <!-- /ko -->
-                <!-- ko if: $parent.isEditingContactDetails -->
-                <input type="text" data-bind="textInput: telephone" class="form__input" />
-                <!-- /ko -->
-              </dd>
-              <dt class="key-value-pair__key">Email</dt>
-              <dd class="key-value-pair__value">
-                <!-- ko ifnot: $parent.isEditingContactDetails -->
-                <span data-bind="text: email"></span>
-                <!-- /ko -->
-                <!-- ko if: $parent.isEditingContactDetails -->
-                <input type="text" data-bind="textInput: email" class="form__input" />
-                <!-- /ko -->
-              </dd>
-              <dt class="key-value-pair__key">Website</dt>
-              <dd class="key-value-pair__value">
-                <!-- ko ifnot: $parent.isEditingContactDetails -->
-                <span data-bind="text: website"></span>
-                <!-- /ko -->
-                <!-- ko if: $parent.isEditingContactDetails -->
-                <input type="text" data-bind="textInput: website" class="form__input" />
-                <!-- /ko -->
-              </dd>
-              <dt class="key-value-pair__key">Facebook</dt>
-              <dd class="key-value-pair__value">
-                <!-- ko ifnot: $parent.isEditingContactDetails -->
-                <span data-bind="text: facebook"></span>
-                <!-- /ko -->
-                <!-- ko if: $parent.isEditingContactDetails -->
-                <input type="text" data-bind="textInput: facebook" class="form__input" />
-                <!-- /ko -->
-              </dd>
-              <dt class="key-value-pair__key">Twitter</dt>
-              <dd class="key-value-pair__value">
-                <!-- ko ifnot: $parent.isEditingContactDetails -->
-                <span data-bind="text: twitter"></span>
-                <!-- /ko -->
-                <!-- ko if: $parent.isEditingContactDetails -->
-                <input type="text" data-bind="textInput: twitter" class="form__input" />
-                <!-- /ko -->
-              </dd>
-            </dl>
+            {{> service-provider/contact-info}}
           </section>
         </div>
 
         <div class="split split--admin-panel">
           <section class="split__element split__element--admin-panel">
-            <header>
-              <h2>Locations</h2>
-              <a data-bind="attr: { 'href': addAddressUrl }" title="add location" class="btn btn--primary">
-                <span class="btn__text">Add</span>
-              </a>
-            </header>
-            <div data-bind="foreach: addresses">
-              <article class="key-value-pair location service-provider__item">
-                <h3 data-bind="html: formatted" class="key-value-pair__key"></h3>
-                <a data-bind="attr: { 'href': editAddressUrl }" title="edit location" class="btn btn--info">
-                  <span class="btn__text">Edit</span>
-                </a>
-                <a data-bind="click: deleteAddress" title="delete location" class="btn btn--warning">
-                  <span class="btn__text">Delete</span>
-                </a>
-              </article>
-            </div>
+            {{> service-provider/locations}}
           </section>
 
           <section class="split__element split__element--admin-panel">
-            <h2>Services</h2>
-            <a data-bind="attr: { 'href': addServiceUrl }" title="add services" class="btn btn--primary">
-              <span class="btn__text">Add</span>
-            </a>
-            <div data-bind="foreach: groupedServices">
-              <article class="service-provider__item">
-                <div class="service-provider__item-title">
-                  <h3 data-bind="text: name"></h3>
-                  <p data-bind="text: subCatList"></p>
-                </div>
-                <a data-bind="attr: { 'href': editServiceUrl }" title="edit service" class="btn btn--info">
-                  <span class="btn__text">Edit</span>
-                </a>
-                <a data-bind="click: deleteService" title="delete service" class="btn btn--warning">
-                  <span class="btn__text">Delete</span>
-                </a>
-              </article>
-            </div>
+            {{> service-provider/services}}
           </section>
         </div>
 
         <div class="split split--admin-panel">
           <section class="split__element split__element--admin-panel">
-            <h2>Needs</h2>
-            <a data-bind="attr: { 'href': addNeedUrl }" title="add need" class="btn btn--primary">
-              <span class="btn__text">Add Need</span>
-            </a>
-            <div data-bind="foreach: needs">
-              <article class="service-provider__item">
-                <div class="service-provider__item-title">
-                  <h3>
-                    <a data-bind="attr: { href: viewOffersUrl }, html: description"></a>
-                  </h3>
-                </div>
-                <a data-bind="attr: { 'href': editNeedUrl }" title="edit need" class="btn btn--info">
-                  <span class="btn__text">Edit</span>
-                </a>
-                <a data-bind="click: deleteNeed" title="delete need" class="btn btn--warning">
-                  <span class="btn__text">Delete</span>
-                </a>
-                <p class="service-provider__item-note">Posted <span data-bind="text: neededDate"></span></p>
-              </article>
-            </div>
+            {{> service-provider/needs}}
           </section>
           <section class="split__element split__element--admin-panel">
-            <h2>Donations</h2>
-            <h3>Items accepted</h3>
-            <p data-bind="text: needCatList"></p>
-            <a data-bind="attr: { 'href': editNeedCategoriesUrl }" title="edit need categories" class="btn btn--info">
-              <span class="btn__text">Edit Items accepted</span>
-            </a>
-            <dl class="key-value-pair">
-              <dt class="key-value-pair__key">Donate Money Url</dt>
-              <dd class="key-value-pair__value">
-                <!-- ko ifnot: $parent.isEditingDonationDetails -->
-                <span data-bind="html: donationUrl"></span>
-                <!-- /ko -->
-                <!-- ko if: $parent.isEditingDonationDetails -->
-                <input type="text" data-bind="textInput: donationUrl" class="form__input form__input" />
-                <!-- /ko -->
-              </dd>
-              <dt class="key-value-pair__key">Donate Money Description</dt>
-              <dd class="key-value-pair__value">
-                <!-- ko ifnot: $parent.isEditingDonationDetails -->
-                <span data-bind="html: donationDescription"></span>
-                <!-- /ko -->
-                <!-- ko if: $parent.isEditingDonationDetails -->
-                <textarea data-bind="textInput: donationDescription" class="form__input form__input--textarea" rows="7"></textarea>
-                <!-- /ko -->
-              </dd>
-              <dt class="key-value-pair__key">Donate Items Description</dt>
-              <dd class="key-value-pair__value">
-                  <p>Describe what items you accept, and how people can get them to you.</p>
-                <!-- ko ifnot: $parent.isEditingDonationDetails -->
-                <span data-bind="html: itemsDonationDescription"></span>
-                <!-- /ko -->
-                <!-- ko if: $parent.isEditingDonationDetails -->
-                <textarea data-bind="textInput: itemsDonationDescription" class="form__input form__input--textarea" rows="7"></textarea>
-                <!-- /ko -->
-              </dd>
-              <dt class="key-value-pair__key">Donate Items Url</dt>
-              <dd class="key-value-pair__value">
-                <p>Provide a link where people can find out more on how to donate items.</p>
-                <!-- ko ifnot: $parent.isEditingDonationDetails -->
-                <span data-bind="html: itemsDonationUrl"></span>
-                <!-- /ko -->
-                <!-- ko if: $parent.isEditingDonationDetails -->
-                <input type="text" data-bind="textInput: itemsDonationUrl" class="form__input form__input" />
-                <!-- /ko -->
-              </dd>
-            </dl>
-            <!-- ko ifnot: $parent.isEditingDonationDetails -->
-            <button data-bind="click: $parent.editDonationDetails" class="btn btn--info"><span class="btn__text">edit</span></button>
-            <!-- /ko -->
-            <!-- ko if: $parent.isEditingDonationDetails -->
-            <button data-bind="click: $parent.cancelEditDonationDetails" class="btn btn--indifferent"><span class="btn__text">cancel</span></button>
-            <button data-bind="click: $parent.saveDonationDetails" class="btn btn--primary"><span class="btn__text">save</span></button>
-            <!-- /ko -->
+            {{> service-provider/donations}}
           </section>
         </div>
 
         <div class="split split--admin-panel" data-claims="orgadmin">
           <section class="split__element split__element--admin-panel">
-            <h2>Accommodation</h2>
-            <a href="/accommodation" class="btn btn--primary">
-              <span class="btn__text">View all</span>
-            </a>
-
-            <a href="/accommodation/add" class="btn btn--info">
-              <span class="btn__text">Add new</span>
-            </a>
+            {{> service-provider/accommodation}}
           </section>
           <section class="split__element split__element--admin-panel">
           </section>
