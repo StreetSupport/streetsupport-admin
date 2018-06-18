@@ -69,6 +69,7 @@
     "yargs": "6.6.0"
   },
   "dependencies": {
+    "auth0-js": "^9.6.1",
     "cookie-cutter": "^0.1.1",
     "fastclick": "1.0.6",
     "geolib": "2.0.20",
@@ -81,9 +82,9 @@
     "moment": "2.19.3",
     "node-uuid": "^1.4.7",
     "q": "1.4.1",
+    "snyk": "^1.47.0",
     "spin.js": "2.3.2",
-    "svg4everybody": "2.1.4",
-    "snyk": "^1.47.0"
+    "svg4everybody": "2.1.4"
   },
   "babel": {
     "presets": [
