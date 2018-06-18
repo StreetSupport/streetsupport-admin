@@ -13,8 +13,10 @@ if (argv.production) {
   plugins.push(new webpack.optimize.UglifyJsPlugin())
 }
 
-let p = (pageName) => {
-  let pagesDir = path.join(__dirname, '/src/js/pages/page-')
+const pageDirPath = '/src/js/pages/'
+
+const p = (pageName) => {
+  const pagesDir = path.join(__dirname, pageDirPath, 'page-')
   return pagesDir + pageName
 }
 
@@ -60,7 +62,8 @@ module.exports = {
     tempAccomEdit: p('accommodation-edit'),
     tempAccomReviews: p('accommodation-reviews-add'),
     accommodationReviews: p('accommodation-reviews'),
-    accommodationReviewDetails: p('accommodation-review-details')
+    accommodationReviewDetails: p('accommodation-review-details'),
+    'login-auth0': path.join(__dirname, pageDirPath, 'auth0/login')
   },
   output: {
     path: path.join(__dirname, '/_dist/assets/js/'),
