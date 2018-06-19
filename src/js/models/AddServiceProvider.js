@@ -26,7 +26,6 @@ function AddServiceProvider () {
 
     return {
       endpoint,
-      headers: self.headers(cookies.get('session-token')),
       payload
     }
   }
@@ -46,7 +45,7 @@ function AddServiceProvider () {
     const postParams = buildPost()
 
     ajax
-      .post(postParams.endpoint, postParams.headers, postParams.payload)
+      .post(postParams.endpoint, postParams.payload)
       .then(function (result) {
         handlePost(result)
       }, function (error) {

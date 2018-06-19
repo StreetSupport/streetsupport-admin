@@ -36,12 +36,8 @@ describe('Editing Service Provider Need Categories', () => {
         }
       })
     sinon.stub(cookies, 'get').returns('saved-session-token')
-    const headers = {
-      'content-type': 'application/json',
-      'session-token': 'saved-session-token'
-    }
     ajaxGetStub
-      .withArgs(endpoints.getServiceProviders + '/albert-kennedy-trust', headers)
+      .withArgs(endpoints.getServiceProviders + '/albert-kennedy-trust')
       .returns({
         then: function (success, error) {
           success({
@@ -126,13 +122,9 @@ describe('Editing Service Provider Need Categories', () => {
 
     it('- Should post selected categories to api', () => {
       const endpoint = endpoints.getServiceProviders + '/albert-kennedy-trust/needs/categories'
-      const headers = {
-        'content-type': 'application/json',
-        'session-token': 'saved-session-token'
-      }
       const payload = [ 'cleaning-materials', 'services' ]
       expect(ajaxPutStub
-        .withArgs(endpoint, headers, payload)
+        .withArgs(endpoint, payload)
         .calledAfter(browserLoadingStub)
       ).toBeTruthy()
       expect(model.isSubmitted()).toBeTruthy()

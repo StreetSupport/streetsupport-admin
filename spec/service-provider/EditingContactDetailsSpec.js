@@ -80,10 +80,6 @@ describe('Edit Service Provider Contact Information', () => {
 
     it('should put service provider contact details to api with session token', () => {
       var endpoint = endpoints.getServiceProviders + '/coffee4craig/contact-details'
-      var headers = {
-        'content-type': 'application/json',
-        'session-token': 'stored-session-token'
-      }
       var payload = {
         'Telephone': 'new telephone',
         'Email': 'new email',
@@ -91,7 +87,7 @@ describe('Edit Service Provider Contact Information', () => {
         'Facebook': 'new facebook',
         'Twitter': 'new twitter'
       }
-      var apiCalledWithExpectedArgs = stubbedPutApi.withArgs(endpoint, headers, payload).calledOnce
+      var apiCalledWithExpectedArgs = stubbedPutApi.withArgs(endpoint, payload).calledOnce
       expect(apiCalledWithExpectedArgs).toBeTruthy()
     })
 

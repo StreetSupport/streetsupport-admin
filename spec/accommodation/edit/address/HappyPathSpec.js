@@ -17,10 +17,6 @@ const { testData, publishedServiceProviderData } = require('../testData')
 
 describe('Accommodation - Edit Address', () => {
   const Model = require(`${jsRoot}models/accommodation/edit`)
-  const headers = {
-    'content-type': 'application/json',
-    'session-token': 'stored-session-token'
-  }
   let sut = null
 
   let ajaxGetStub = null
@@ -32,7 +28,7 @@ describe('Accommodation - Edit Address', () => {
     browserLoadedStub = sinon.stub(browser, 'loaded')
     ajaxGetStub = sinon.stub(ajax, 'get')
     ajaxGetStub
-      .withArgs(`${endpoints.temporaryAccommodation}/${testData.id}`, headers)
+      .withArgs(`${endpoints.temporaryAccommodation}/${testData.id}`)
       .returns({
         then: function (success, error) {
           success({
@@ -42,7 +38,7 @@ describe('Accommodation - Edit Address', () => {
         }
       })
     ajaxGetStub
-      .withArgs(`${endpoints.getPublishedServiceProviders}`, headers)
+      .withArgs(`${endpoints.getPublishedServiceProviders}`)
       .returns({
         then: function (success, error) {
           success({
@@ -169,10 +165,6 @@ describe('Accommodation - Edit Address', () => {
 
       it('- should patch new data', () => {
         const endpoint = `${endpoints.temporaryAccommodation}/${testData.id}/address`
-        const headers = {
-          'content-type': 'application/json',
-          'session-token': 'stored-session-token'
-        }
         const payload = {
           Street1: 'new street line 1',
           Street2: 'new street line 2',
@@ -184,7 +176,7 @@ describe('Accommodation - Edit Address', () => {
           AddressIsPubliclyHidden: 'new false'
         }
         const patchAsExpected = ajaxPatchStub
-          .withArgs(endpoint, headers, payload)
+          .withArgs(endpoint, payload)
           .calledAfter(browserLoadingStub)
         expect(patchAsExpected).toBeTruthy()
       })

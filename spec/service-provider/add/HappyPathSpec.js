@@ -77,15 +77,11 @@ describe('Add Service Provider', () => {
 
     it('should post service provider name to api', () => {
       var endpoint = endpoints.getServiceProviders
-      var headers = {
-        'content-type': 'application/json',
-        'session-token': 'stored-session-token'
-      }
       var payload = {
         'Name': 'New Service Provider',
         'AssociatedCity': 'manchester'
       }
-      var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, headers, payload).calledOnce
+      var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, payload).calledOnce
       expect(apiCalledWithExpectedArgs).toBeTruthy()
     })
 

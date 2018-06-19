@@ -34,13 +34,9 @@ describe('Editing Service Provider Need', () => {
         }
       }
     }
-    ajaxGetStub = sinon.stub(ajax, 'get').withArgs(
-      endpoints.getServiceProviders + '/albert-kennedy-trust/needs/56d8784092855610f88d492a',
-      {
-        'content-type': 'application/json',
-        'session-token': 'saved-session-token'
-      }
-    ).returns(fakeGetResolution())
+    ajaxGetStub = sinon.stub(ajax, 'get')
+      .withArgs(endpoints.getServiceProviders + '/albert-kennedy-trust/needs/56d8784092855610f88d492a')
+      .returns(fakeGetResolution())
     var urlParamsStub = sinon.stub(getUrlParameter, 'parameter')
     urlParamsStub.withArgs('providerId').returns('albert-kennedy-trust')
     urlParamsStub.withArgs('needId').returns('56d8784092855610f88d492a')
@@ -132,10 +128,6 @@ describe('Editing Service Provider Need', () => {
       }
       ajaxPutStub = sinon.stub(ajax, 'put').withArgs(
         endpoints.getServiceProviders + '/albert-kennedy-trust/needs/56d8784092855610f88d492a',
-        {
-          'content-type': 'application/json',
-          'session-token': 'saved-session-token'
-        },
         {
           'Description': 'men\'s shoes & socks',
           'Type': 'Money',

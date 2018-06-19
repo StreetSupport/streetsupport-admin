@@ -77,10 +77,6 @@ describe('Grouped Service', () => {
       it('should put service details with new to api with session token', () => {
         var endpoint = endpoints.getServiceProviders + '/coffee4craig/services/57bdb2c58705422ecc65724f'
 
-        var headers = {
-          'content-type': 'application/json',
-          'session-token': 'stored-session-token'
-        }
         var payload = {
           'Info': 'new info',
           'Tags': [
@@ -106,7 +102,7 @@ describe('Grouped Service', () => {
           SubCategories: ['subcat2']
         }
 
-        var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, headers, payload).calledOnce
+        var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, payload).calledOnce
         expect(apiCalledWithExpectedArgs).toBeTruthy()
       })
     })
@@ -143,10 +139,6 @@ describe('Grouped Service', () => {
 
       it('should put service details with new to api with session token', () => {
         var endpoint = endpoints.getServiceProviders + '/coffee4craig/services/57bdb2c58705422ecc65724f'
-        var headers = {
-          'content-type': 'application/json',
-          'session-token': 'stored-session-token'
-        }
         var payload = {
           'Info': 'info',
           'Tags': [],
@@ -167,7 +159,7 @@ describe('Grouped Service', () => {
           'SubCategories': []
         }
 
-        var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, headers, payload).calledOnce
+        var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, payload).calledOnce
         expect(apiCalledWithExpectedArgs).toBeTruthy()
       })
     })

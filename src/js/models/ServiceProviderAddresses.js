@@ -60,7 +60,6 @@ function ServiceProviderAddresses () {
 
   self.init = function () {
     ajax.get(self.endpointBuilder.serviceProviders(getUrlParameter.parameter('key')).addresses().build(),
-      self.headers(cookies.get('session-token')),
       {})
       .then(function (result) {
         self.serviceProvider(new ServiceProvider(result.data))

@@ -15,11 +15,6 @@ describe('Edit Charter Pledge', () => {
   var ajaxPutStub
   var validationShowErrorsStub
 
-  var headers = {
-    'content-type': 'application/json',
-    'session-token': 'stored-session-token'
-  }
-
   beforeEach(() => {
     var getCharterPledgesPromise = () => {
       return {
@@ -33,7 +28,7 @@ describe('Edit Charter Pledge', () => {
     }
 
     sinon.stub(ajax, 'get')
-      .withArgs(endpoints.charterPledges, headers)
+      .withArgs(endpoints.charterPledges)
       .returns(getCharterPledgesPromise())
 
     sinon.stub(cookies, 'get')
@@ -55,7 +50,7 @@ describe('Edit Charter Pledge', () => {
     }
 
     ajaxPutStub = sinon.stub(ajax, 'put')
-      .withArgs(endpoints.charterPledges + '/' + pledgeData()[0].id + '/pledge', headers, { pledge: 'my new pledge' })
+      .withArgs(endpoints.charterPledges + '/' + pledgeData()[0].id + '/pledge', { pledge: 'my new pledge' })
       .returns(getPutPromise())
 
     model = new Model()

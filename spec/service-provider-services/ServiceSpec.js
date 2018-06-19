@@ -99,10 +99,6 @@ describe('Service', () => {
 
       it('should put service details with new to api with session token', () => {
         var endpoint = endpoints.getServiceProviders + '/coffee4craig/services/569d2b468705432268b65c75'
-        var headers = {
-          'content-type': 'application/json',
-          'session-token': 'stored-session-token'
-        }
         var payload = {
           'Info': 'new info',
           'LocationDescription': undefined,
@@ -126,7 +122,7 @@ describe('Service', () => {
           }
         }
 
-        var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, headers, payload).calledOnce
+        var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, payload).calledOnce
         expect(apiCalledWithExpectedArgs).toBeTruthy()
       })
 
@@ -181,10 +177,6 @@ describe('Service', () => {
 
       it('should put service details with new to api with session token', () => {
         var endpoint = endpoints.getServiceProviders + '/coffee4craig/services/569d2b468705432268b65c75'
-        var headers = {
-          'content-type': 'application/json',
-          'session-token': 'stored-session-token'
-        }
         var payload = {
           'Info': 'Breakfast',
           'LocationDescription': undefined,
@@ -208,7 +200,7 @@ describe('Service', () => {
           }
         }
 
-        var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, headers, payload).calledOnce
+        var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, payload).calledOnce
         expect(apiCalledWithExpectedArgs).toBeTruthy()
       })
     })

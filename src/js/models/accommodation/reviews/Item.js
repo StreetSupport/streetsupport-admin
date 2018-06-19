@@ -21,10 +21,9 @@ function Item (listener, formFields, endpoints) {
 
   self.deleteItem = () => {
     const endpoint = endpoints.delete(self)
-    const headers = self.headers(cookies.get('session-token'))
     browser.loading()
     ajax
-      .delete(endpoint, headers)
+      .delete(endpoint)
       .then((result) => {
         browser.loaded()
         if (result.statusCode === 200) {
@@ -41,9 +40,8 @@ function Item (listener, formFields, endpoints) {
     browser.loading()
     const endpoint = endpoints.update(self)
     const payload = validation.buildPayload(self.formFields())
-    const headers = self.headers(cookies.get('session-token'))
     ajax
-      .patch(endpoint, headers, payload)
+      .patch(endpoint, payload)
       .then((result) => {
         browser.loaded()
         if (result.statusCode.toString().charAt(0) === '2') {
@@ -57,10 +55,9 @@ function Item (listener, formFields, endpoints) {
   }
 
   self.save = () => {
-    const headers = self.headers(cookies.get('session-token'))
     browser.loading()
     ajax
-      .post(self.endpoints.save(self), headers, validation.buildPayload(self.formFields()))
+      .post(self.endpoints.save(self), validation.buildPayload(self.formFields()))
       .then((result) => {
         browser.loaded()
         if (result.statusCode === 201) {

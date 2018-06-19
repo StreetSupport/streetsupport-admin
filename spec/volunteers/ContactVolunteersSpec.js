@@ -70,15 +70,11 @@ describe('Contact Volunteer', () => {
 
   it('should post to api', () => {
     var endpoint = endpoints.volunteers + '/56d0362c928556085cc569b3/contact-requests'
-    var headers = {
-      'content-type': 'application/json',
-      'session-token': 'stored-session-token'
-    }
     var payload = {
       'Message': 'this is my message',
       'ShouldSendEmail': true
     }
-    var posted = ajaxPostStub.withArgs(endpoint, headers, payload).calledOnce
+    var posted = ajaxPostStub.withArgs(endpoint, payload).calledOnce
     expect(posted).toBeTruthy()
   })
 

@@ -21,17 +21,12 @@ describe('Accommodation Listing - Delete', () => {
   let browserLoadedStub = null
   let ajaxDeleteStub = null
 
-  const headers = {
-    'content-type': 'application/json',
-    'session-token': 'stored-session-token'
-  }
-
   beforeEach(() => {
     sinon.stub(querystring, 'parameter').withArgs('id').returns(testData.id)
 
     sinon
       .stub(ajax, 'get')
-      .withArgs(`${endpoints.prefix(testData.links.self)}?expand=reviews`, headers)
+      .withArgs(`${endpoints.prefix(testData.links.self)}?expand=reviews`)
       .returns({
         then: function (success, error) {
           success({
@@ -80,7 +75,7 @@ describe('Accommodation Listing - Delete', () => {
   it('- should delete review', () => {
     const endpoint = `${endpoints.temporaryAccommodation}/${testData.id}/reviews/${testData.embedded.reviews[0].id}`
     const deleteCalledAsExpected = ajaxDeleteStub
-      .withArgs(endpoint, headers)
+      .withArgs(endpoint)
       .calledAfter(browserLoadingStub)
     expect(deleteCalledAsExpected).toBeTruthy()
   })

@@ -93,10 +93,6 @@ describe('Edit Service Provider General Details', () => {
 
     it('should put service provider general details to api with session token', () => {
       var endpoint = endpoints.getServiceProviders + '/coffee4craig/general-information'
-      var headers = {
-        'content-type': 'application/json',
-        'session-token': 'stored-session-token'
-      }
       var payload = {
         'Name': 'new name',
         'Description': 'new description',
@@ -104,7 +100,7 @@ describe('Edit Service Provider General Details', () => {
         'CityId': 'new city id',
         'Tags': ['tag-a', 'tag-b', 'tag-c']
       }
-      var apiCalledWithExpectedArgs = stubbedPutApi.withArgs(endpoint, headers, payload).calledOnce
+      var apiCalledWithExpectedArgs = stubbedPutApi.withArgs(endpoint, payload).calledOnce
       expect(apiCalledWithExpectedArgs).toBeTruthy()
     })
 

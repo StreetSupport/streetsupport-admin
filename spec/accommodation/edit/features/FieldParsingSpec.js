@@ -21,10 +21,6 @@ testData.features.featuresAvailableAtAdditionalCost = '* coke&#10;* sprite&#10;*
 
 describe('Accommodation - Edit Features', () => {
   const Model = require(`${jsRoot}models/accommodation/edit`)
-  const headers = {
-    'content-type': 'application/json',
-    'session-token': 'stored-session-token'
-  }
   let sut = null
 
   let ajaxGetStub = null
@@ -34,7 +30,7 @@ describe('Accommodation - Edit Features', () => {
     sinon.stub(browser, 'loaded')
     ajaxGetStub = sinon.stub(ajax, 'get')
     ajaxGetStub
-      .withArgs(`${endpoints.temporaryAccommodation}/${testData.id}`, headers)
+      .withArgs(`${endpoints.temporaryAccommodation}/${testData.id}`)
       .returns({
         then: function (success, error) {
           success({
@@ -44,7 +40,7 @@ describe('Accommodation - Edit Features', () => {
         }
       })
     ajaxGetStub
-      .withArgs(`${endpoints.getPublishedServiceProviders}`, headers)
+      .withArgs(`${endpoints.getPublishedServiceProviders}`)
       .returns({
         then: function (success, error) {
           success({

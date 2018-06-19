@@ -5,7 +5,6 @@ var ajax = require('../ajax')
 var htmlEncode = require('htmlencode')
 var Endpoints = require('../endpoint-builder')
 var getUrlParameter = require('../get-url-parameter')
-var cookies = require('../cookies')
 var OpeningTime = require('./OpeningTime')
 var BaseViewModel = require('./BaseViewModel')
 var adminUrls = require('../admin-urls')
@@ -76,7 +75,7 @@ function Address (data) {
 
   self.deleteAddress = function () {
     var endpoint = self.endpointBuilder.serviceProviders(getUrlParameter.parameter('key')).addresses(self.key()).build()
-    ajax.delete(endpoint, self.headers(cookies.get('session-token')))
+    ajax.delete(endpoint)
     .then(function (result) {
       self.listeners().forEach((listener) => listener.deleteAddress(self))
     }, function (error) {
@@ -148,7 +147,6 @@ function Address (data) {
 
     if (self.tempKey() !== undefined || self.key() === undefined) {
       ajax.post(self.endpointBuilder.serviceProviders(getUrlParameter.parameter('providerId')).addresses().build(),
-        self.headers(cookies.get('session-token')),
         model
       ).then(function (result) {
         if (result.statusCode === 201) {
@@ -164,7 +162,6 @@ function Address (data) {
       })
     } else {
       ajax.put(self.endpointBuilder.serviceProviders(getUrlParameter.parameter('providerId')).addresses(self.key()).build(),
-        self.headers(cookies.get('session-token')),
         model
       ).then(function (result) {
         if (result.statusCode === 200) {

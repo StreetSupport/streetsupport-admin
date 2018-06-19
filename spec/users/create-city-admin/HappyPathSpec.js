@@ -17,10 +17,6 @@ import { cities } from '../../../src/data/generated/supported-cities'
 
 describe('Users - Create City Admin', () => {
   const Model = require(`${jsRoot}models/users/create-city-admin`)
-  const headers = {
-    'content-type': 'application/json',
-    'session-token': 'stored-session-token'
-  }
   let sut = null
   let browserLoadingStub = null
   let browserLoadedStub = null
@@ -85,7 +81,7 @@ describe('Users - Create City Admin', () => {
         'Email': 'test@email.com'
       }
       const calledAsExpected = ajaxPostStub
-        .withArgs(endpoint, headers, payload)
+        .withArgs(endpoint, payload)
         .calledAfter(browserLoadingStub)
       expect(calledAsExpected).toBeTruthy()
     })

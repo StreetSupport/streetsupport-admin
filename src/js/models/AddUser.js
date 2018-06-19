@@ -18,7 +18,7 @@ function AddUser () {
       'ProviderId': getUrlParameter.parameter('key')
     }
     ajax
-      .post(endpoint, self.headers(cookies.get('session-token')), payload)
+      .post(endpoint, payload)
       .then(function (result) {
         if (result.statusCode === 201) {
           self.message('User created.')

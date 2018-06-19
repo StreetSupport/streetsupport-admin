@@ -15,10 +15,6 @@ const validation = require(`${jsRoot}validation`)
 
 describe('Users - Create Super Admin', () => {
   const Model = require(`${jsRoot}models/users/create-super-admin`)
-  const headers = {
-    'content-type': 'application/json',
-    'session-token': 'stored-session-token'
-  }
   let sut = null
   let browserLoadingStub = null
   let browserLoadedStub = null
@@ -77,7 +73,7 @@ describe('Users - Create Super Admin', () => {
         'Email': 'test@email.com'
       }
       const calledAsExpected = ajaxPostStub
-        .withArgs(endpoint, headers, payload)
+        .withArgs(endpoint, payload)
         .calledAfter(browserLoadingStub)
       expect(calledAsExpected).toBeTruthy()
     })

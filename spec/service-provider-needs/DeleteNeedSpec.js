@@ -48,11 +48,7 @@ describe('Delete individual Need', () => {
 
   it('should delete need to api', () => {
     var endpoint = endpoints.getServiceProviders + '/coffee4craig/needs/abcde'
-    var headers = {
-      'content-type': 'application/json',
-      'session-token': 'saved-session-token'
-    }
-    var postAsExpected = ajaxStub.withArgs(endpoint, headers).calledOnce
+    var postAsExpected = ajaxStub.withArgs(endpoint).calledOnce
     expect(postAsExpected).toBeTruthy()
   })
 })

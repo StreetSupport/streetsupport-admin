@@ -23,9 +23,8 @@ function Details () {
   const retrieveItems = () => {
     browser.loading()
     const endpoint = `${self.endpointBuilder.temporaryAccommodation(accomId).build()}/reviews/${id}`
-    const headers = self.headers(cookies.get('session-token'))
     ajax
-      .get(endpoint, headers)
+      .get(endpoint)
       .then((result) => {
         self.review(buildModel(result.data))
         self.feedback(buildFeedback(result.data))

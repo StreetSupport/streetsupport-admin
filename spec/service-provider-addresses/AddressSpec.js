@@ -119,10 +119,6 @@ describe('Address', () => {
 
       it('should put address details to api with session token', () => {
         var endpoint = endpoints.getServiceProviders + '/coffee4craig/addresses/1234'
-        var headers = {
-          'content-type': 'application/json',
-          'session-token': 'stored-session-token'
-        }
         var payload = {
           'Street': 'new street1',
           'Street1': 'new street2',
@@ -143,7 +139,7 @@ describe('Address', () => {
           }]
         }
 
-        var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, headers, payload).calledOnce
+        var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, payload).calledOnce
         expect(apiCalledWithExpectedArgs).toBeTruthy()
       })
 

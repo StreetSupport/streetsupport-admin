@@ -41,18 +41,8 @@ describe('Add Service Provider Service, no addresses', () => {
 
     stubbedApi = sinon.stub(ajax, 'get')
 
-    var headers = {
-      'content-type': 'application/json',
-      'session-token': 'stored-session-token'
-    }
-
-    stubbedApi.withArgs(endpoints.getServiceCategories,
-      headers,
-      {}).returns(categoriesPromise())
-
-    stubbedApi.withArgs(endpoints.getServiceProviders + '/coffee4craig',
-      headers,
-      {}).returns(providerPromise())
+    stubbedApi.withArgs(endpoints.getServiceCategories, {}).returns(categoriesPromise())
+    stubbedApi.withArgs(endpoints.getServiceProviders + '/coffee4craig', {}).returns(providerPromise())
 
     sinon.stub(cookies, 'get').returns('stored-session-token')
     sinon.stub(getUrlParameter, 'parameter').withArgs('providerId').returns('coffee4craig')

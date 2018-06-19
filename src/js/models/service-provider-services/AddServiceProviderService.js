@@ -116,7 +116,7 @@ function AddServiceProviderService () {
         'IsOpen247': self.address().isOpen247()
       }
 
-      ajax.post(endpoint, self.headers(cookies.get('session-token')), payload)
+      ajax.post(endpoint, payload)
       .then(function (result) {
         if (result.statusCode === 201) {
           browser.redirect(adminUrls.serviceProviders + '?key=' + getUrlParameter.parameter('providerId'))
@@ -134,7 +134,7 @@ function AddServiceProviderService () {
     browser.loading()
 
     var serviceProviderEndpoint = self.endpointBuilder.serviceProviders(getUrlParameter.parameter('providerId')).build()
-    ajax.get(serviceProviderEndpoint, self.headers(cookies.get('session-token')), {})
+    ajax.get(serviceProviderEndpoint, {})
     .then(function (result) {
       let addresses = result.data.addresses
         .map((a) => new Address(a))

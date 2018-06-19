@@ -13,10 +13,6 @@ var Model = require('../../src/js/models/offers-of-items/ListModel')
 
 describe('Search Offers', () => {
   var model
-  var headers = {
-    'content-type': 'application/json',
-    'session-token': 'stored-session-token'
-  }
 
   beforeEach(() => {
     var getPromise = () => {
@@ -31,7 +27,7 @@ describe('Search Offers', () => {
     }
 
     sinon.stub(ajax, 'get')
-      .withArgs(endpoints.offersOfItems, headers)
+      .withArgs(endpoints.offersOfItems)
       .returns(getPromise())
 
     sinon.stub(cookies, 'get')

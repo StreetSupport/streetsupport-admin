@@ -14,10 +14,6 @@ var Model = require('../../src/js/models/offers-of-items/ListModel')
 
 describe('List Offers', () => {
   var model
-  var headers = {
-    'content-type': 'application/json',
-    'session-token': 'stored-session-token'
-  }
   var ajaxGetStub
   var browserLoadingStub
   var browserLoadedStub
@@ -33,7 +29,7 @@ describe('List Offers', () => {
     }
 
     ajaxGetStub = sinon.stub(ajax, 'get')
-      .withArgs(endpoints.offersOfItems, headers)
+      .withArgs(endpoints.offersOfItems)
       .returns(getPromise)
 
     sinon.stub(cookies, 'get')

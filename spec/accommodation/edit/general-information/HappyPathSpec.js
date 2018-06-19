@@ -20,10 +20,6 @@ import { categories } from '../../../../src/data/generated/accommodation-categor
 
 describe('Accommodation - Edit General Information', () => {
   const Model = require(`${jsRoot}models/accommodation/edit`)
-  const headers = {
-    'content-type': 'application/json',
-    'session-token': 'stored-session-token'
-  }
   let sut = null
 
   let ajaxGetStub = null
@@ -35,7 +31,7 @@ describe('Accommodation - Edit General Information', () => {
     browserLoadedStub = sinon.stub(browser, 'loaded')
     ajaxGetStub = sinon.stub(ajax, 'get')
     ajaxGetStub
-      .withArgs(`${endpoints.temporaryAccommodation}/${testData.id}`, headers)
+      .withArgs(`${endpoints.temporaryAccommodation}/${testData.id}`)
       .returns({
         then: function (success, error) {
           success({
@@ -45,7 +41,7 @@ describe('Accommodation - Edit General Information', () => {
         }
       })
     ajaxGetStub
-      .withArgs(`${endpoints.getPublishedServiceProviders}`, headers)
+      .withArgs(`${endpoints.getPublishedServiceProviders}`)
       .returns({
         then: function (success, error) {
           success({
@@ -161,10 +157,6 @@ describe('Accommodation - Edit General Information', () => {
 
       it('- should patch new data', () => {
         const endpoint = `${endpoints.temporaryAccommodation}/${testData.id}/general-details`
-        const headers = {
-          'content-type': 'application/json',
-          'session-token': 'stored-session-token'
-        }
         const payload = { Name: 'new name',
           Synopsis: 'new synopsis',
           Description: 'new description',
@@ -174,7 +166,7 @@ describe('Accommodation - Edit General Information', () => {
           ServiceProviderId: 'service-provider-id'
         }
         const patchAsExpected = ajaxPatchStub
-          .withArgs(endpoint, headers, payload)
+          .withArgs(endpoint, payload)
           .calledAfter(browserLoadingStub)
         expect(patchAsExpected).toBeTruthy()
       })

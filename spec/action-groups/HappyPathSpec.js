@@ -27,13 +27,9 @@ describe('List Action Groups', () => {
     browserSetOnHistoryPopStub = sinon.stub(browser, 'setOnHistoryPop')
     sinon.stub(urlParams, 'parameter').returns('')
 
-    let headers = {
-      'content-type': 'application/json',
-      'session-token': 'stored-session-token'
-    }
     ajaxGetStub = sinon
       .stub(ajax, 'get')
-      .withArgs(endpoints.actionGroups, headers)
+      .withArgs(endpoints.actionGroups)
       .returns({
         then: function (success, error) {
           success({

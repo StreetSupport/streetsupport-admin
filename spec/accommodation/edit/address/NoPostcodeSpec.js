@@ -19,10 +19,6 @@ const { testData, publishedServiceProviderData } = require('../testData')
 
 describe('Accommodation - Edit Address - no postcode set', () => {
   const Model = require(`${jsRoot}models/accommodation/edit`)
-  const headers = {
-    'content-type': 'application/json',
-    'session-token': 'stored-session-token'
-  }
   let sut = null
   let validationStub = null
   let ajaxGetStub = null
@@ -32,7 +28,7 @@ describe('Accommodation - Edit Address - no postcode set', () => {
     sinon.stub(browser, 'loading')
     sinon.stub(browser, 'loaded')
     ajaxGetStub = sinon.stub(ajax, 'get')
-    ajaxGetStub.withArgs(`${endpoints.temporaryAccommodation}/${testData.id}`, headers)
+    ajaxGetStub.withArgs(`${endpoints.temporaryAccommodation}/${testData.id}`)
       .returns({
         then: function (success, error) {
           success({
@@ -42,7 +38,7 @@ describe('Accommodation - Edit Address - no postcode set', () => {
         }
       })
     ajaxGetStub
-      .withArgs(`${endpoints.getPublishedServiceProviders}`, headers)
+      .withArgs(`${endpoints.getPublishedServiceProviders}`)
       .returns({
         then: function (success, error) {
           success({

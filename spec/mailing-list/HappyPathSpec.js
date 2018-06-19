@@ -23,13 +23,9 @@ describe('List Members', () => {
     browserLoadingStub = sinon.stub(browser, 'loading')
     browserLoadedStub = sinon.stub(browser, 'loaded')
 
-    let headers = {
-      'content-type': 'application/json',
-      'session-token': 'stored-session-token'
-    }
     ajaxGetStub = sinon
       .stub(ajax, 'get')
-      .withArgs(endpoints.mailingListMembers, headers)
+      .withArgs(endpoints.mailingListMembers)
       .returns({
         then: function (success, error) {
           success({

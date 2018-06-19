@@ -14,11 +14,6 @@ describe('Delete Charter Pledge', () => {
   var browserLoadedStub
   var ajaxPutStub
 
-  var headers = {
-    'content-type': 'application/json',
-    'session-token': 'stored-session-token'
-  }
-
   beforeEach(() => {
     var getCharterPledgesPromise = () => {
       return {
@@ -32,7 +27,7 @@ describe('Delete Charter Pledge', () => {
     }
 
     sinon.stub(ajax, 'get')
-      .withArgs(endpoints.charterPledges, headers)
+      .withArgs(endpoints.charterPledges)
       .returns(getCharterPledgesPromise())
 
     sinon.stub(cookies, 'get')
@@ -54,7 +49,7 @@ describe('Delete Charter Pledge', () => {
     }
 
     ajaxPutStub = sinon.stub(ajax, 'put')
-      .withArgs(endpoints.charterPledges + '/' + pledgeData()[0].id + '/deleted', headers)
+      .withArgs(endpoints.charterPledges + '/' + pledgeData()[0].id + '/deleted')
       .returns(getPutPromise())
     model = new Model()
     model.toggleShowAll()

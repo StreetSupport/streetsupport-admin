@@ -29,7 +29,7 @@ var ShareOfferModel = function () {
     browser.loading()
     var endpoint = self.endpointBuilder.offersOfItems(getUrlParam.parameter('id')).build() + '/broadcast'
     ajax
-      .post(endpoint, headers)
+      .post(endpoint)
       .then(function (res) {
         browser.loaded()
         if (res.status === 'error') {
@@ -51,8 +51,6 @@ var ShareOfferModel = function () {
     errorElementClass: 'form__input--error'
   }, true)
 
-  const headers = self.headers(cookies.get('session-token'))
-
   self.submit = function () {
     browser.loading()
     var endpoint = self.endpointBuilder.offersOfItems(getUrlParam.parameter('id')).build() + '/share'
@@ -60,7 +58,7 @@ var ShareOfferModel = function () {
       'OrgId': self.selectedOrgId().id
     }
     ajax
-      .post(endpoint, headers, payload)
+      .post(endpoint, payload)
       .then(function (res) {
         browser.loaded()
         if (res.status === 'error') {
@@ -76,14 +74,14 @@ var ShareOfferModel = function () {
 
   const getVolEndpoint = self.endpointBuilder.offersOfItems(getUrlParam.parameter('id')).build()
   ajax
-    .get(getVolEndpoint, headers)
+    .get(getVolEndpoint)
     .then((res) => {
       self.offer(new ItemOfferer(res.data))
 
       browser.loading()
       const getOrgsEndpoint = self.endpointBuilder.publishedOrgs(res.data.person.city).build()
       ajax
-        .get(getOrgsEndpoint, headers)
+        .get(getOrgsEndpoint)
         .then((res) => {
           self.organisations(res.data.map((o) => ({
             'id': o.key,

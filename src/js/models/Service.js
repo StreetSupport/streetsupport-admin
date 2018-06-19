@@ -109,7 +109,6 @@ function Service (data) {
     }
 
     ajax.put(endpoint,
-      self.headers(cookies.get('session-token')),
       model
     ).then(function (result) {
       if (result.statusCode === 200) {
@@ -125,7 +124,7 @@ function Service (data) {
 
   self.deleteService = function () {
     var endpoint = self.endpointBuilder.serviceProviders(getUrlParameter.parameter('key')).services(self.id()).build()
-    ajax.delete(endpoint, self.headers(cookies.get('session-token')))
+    ajax.delete(endpoint)
     .then(function (result) {
       self.listeners().forEach((l) => l.deleteService(self))
     }, function (error) {

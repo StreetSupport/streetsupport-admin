@@ -13,13 +13,6 @@ function BaseViewModel () {
 
   self.endpointBuilder = new Endpoints()
 
-  self.headers = function (sessionToken) {
-    return {
-      'content-type': 'application/json',
-      'session-token': sessionToken
-    }
-  }
-
   self.clearErrors = function () {
     self.errors([])
   }

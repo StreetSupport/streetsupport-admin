@@ -27,11 +27,10 @@ function User (data) {
     browser.loading()
 
     const endpoint = self.endpointBuilder.unverifiedUsers(self.id()).build()
-    const headers = self.headers(cookies.get('session-token'))
     let data = {}
 
     ajax
-      .put(endpoint, headers, data)
+      .put(endpoint, data)
       .then((result) => {
         self.verificationExpiryDate(moment().add(30, 'days').format())
         browser.loaded()
@@ -46,8 +45,6 @@ User.prototype = new BaseViewModel()
 function ListUsers () {
   const self = this
   const endpoint = self.endpointBuilder.users().build()
-  const headers = self.headers(cookies.get('session-token'))
-
   self.allUsers = ko.observableArray()
   self.verifiedUsers = ko.observableArray()
   self.unverifiedUsers = ko.observableArray()
@@ -57,7 +54,7 @@ function ListUsers () {
     browser.loading()
 
     ajax
-      .get(endpoint, headers)
+      .get(endpoint)
       .then(function (result) {
         const users = result.data
           .map((m) => new User(m))

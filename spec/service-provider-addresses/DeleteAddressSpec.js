@@ -40,11 +40,7 @@ describe('Delete Address', () => {
 
   it('should delete address key to api create endpoint with session token', () => {
     var endpoint = endpoints.getServiceProviders + '/coffee4craig/addresses/' + model.key()
-    var headers = {
-      'content-type': 'application/json',
-      'session-token': 'stored-session-token'
-    }
-    var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, headers).calledOnce
+    var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint).calledOnce
     expect(apiCalledWithExpectedArgs).toBeTruthy()
   })
 })

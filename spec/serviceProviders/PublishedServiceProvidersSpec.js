@@ -89,14 +89,10 @@ describe('PublishedServiceProviders', () => {
 
     it('should send inverse of current isPublished to api', () => {
       var endpoint = endpoints.getServiceProviders + '/albert-kennedy-trust/is-published'
-      var headers = {
-        'content-type': 'application/json',
-        'session-token': 'stored-session-token'
-      }
       var payload = {
         'IsPublished': false
       }
-      var apiCalledWithExpectedArgs = stubbedPutApi.withArgs(endpoint, headers, payload).calledOnce
+      var apiCalledWithExpectedArgs = stubbedPutApi.withArgs(endpoint, payload).calledOnce
       expect(apiCalledWithExpectedArgs).toBeTruthy()
     })
 

@@ -17,7 +17,6 @@ import { supportTypes } from '../../../data/generated/support-types'
 function Model () {
   const self = this
   const id = querystring.parameter('id')
-  const headers = self.headers(cookies.get('session-token'))
 
   const parseMarkdown = (src) => marked(htmlEncode.htmlDecode(src))
 
@@ -206,7 +205,7 @@ function Model () {
   self.init = () => {
     browser.loading()
     ajax
-      .get(self.endpointBuilder.temporaryAccommodation(id).build(), headers)
+      .get(self.endpointBuilder.temporaryAccommodation(id).build())
       .then((result) => {
         self.generalDetails().populateFormFields({
           data: result.data.generalInfo,
@@ -256,7 +255,7 @@ function Model () {
       : (result) => result.data
 
     ajax
-      .get(publisherEndpoint, headers)
+      .get(publisherEndpoint)
       .then((result) => {
         const serviceProviders = mapDataToKeyValues(result)
           .map((p) => {

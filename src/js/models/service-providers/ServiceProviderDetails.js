@@ -22,7 +22,6 @@ function ServiceProviderDetails () {
     var providerId = getUrlParameter.parameter('key')
 
     ajax.get(self.endpointBuilder.serviceProviders(providerId).build(),
-      self.headers(cookies.get('session-token')),
       {})
       .then(function (result) {
         self.serviceProvider(new ServiceProvider(result.data))
@@ -61,7 +60,6 @@ function ServiceProviderDetails () {
         'CityId': sp.city()
       }
       ajax.put(self.endpointBuilder.serviceProviders(getUrlParameter.parameter('key')).generalInformation().build(),
-        self.headers(cookies.get('session-token')),
         payload
         ).then(function (result) {
           if (result.statusCode === 200) {
@@ -86,7 +84,6 @@ function ServiceProviderDetails () {
   self.saveContactDetails = function () {
     if (self.isEditingContactDetails()) {
       ajax.put(self.endpointBuilder.serviceProviders(getUrlParameter.parameter('key')).contactDetails().build(),
-        self.headers(cookies.get('session-token')),
         {
           'Telephone': self.serviceProvider().telephone(),
           'Email': self.serviceProvider().email(),
@@ -128,7 +125,6 @@ function ServiceProviderDetails () {
       }
       const endpoint = self.endpointBuilder.serviceProviders(getUrlParameter.parameter('key')).donationInformation().build()
       ajax.put(endpoint,
-        self.headers(cookies.get('session-token')),
         payload
         ).then(function (result) {
           if (result.statusCode === 200) {

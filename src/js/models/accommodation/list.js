@@ -57,7 +57,7 @@ function Lister () {
 
   self.loadNext = () => {
     browser.loading()
-    ajax.get(loadNextUrl, self.headers(cookies.get('session-token')))
+    ajax.get(loadNextUrl)
       .then(getEntriesSuccess, (error) => {
         self.handleServerError(error)
       })

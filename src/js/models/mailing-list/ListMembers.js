@@ -21,7 +21,6 @@ function Member (data) {
 function ListMembers () {
   const self = this
   const endpoint = self.endpointBuilder.mailingListMembers().build()
-  const headers = self.headers(cookies.get('session-token'))
 
   const getUniqueMemberTypes = (members) => {
     const memberTypes = []
@@ -52,7 +51,7 @@ function ListMembers () {
     browser.loading()
 
     ajax
-      .get(endpoint, headers)
+      .get(endpoint)
       .then(function (result) {
         const members = result.data
           .map((m) => new Member(m))

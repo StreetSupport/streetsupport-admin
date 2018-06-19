@@ -79,7 +79,7 @@ function Address (data) {
 
   self.deleteAddress = function () {
     var endpoint = self.endpointBuilder.serviceProviders(getUrlParameter.parameter('key')).addresses(self.key()).build()
-    ajax.delete(endpoint, self.headers(cookies.get('session-token')))
+    ajax.delete(endpoint)
     .then(function (result) {
       self.listeners().forEach((listener) => listener.deleteAddress(self))
     }, function (error) {
@@ -129,7 +129,6 @@ function Address (data) {
 
     if (self.tempKey() !== undefined || self.key() === undefined) {
       ajax.post(self.endpointBuilder.serviceProviders(getUrlParameter.parameter('providerId')).addresses().build(),
-        self.headers(cookies.get('session-token')),
         model
       ).then(function (result) {
         self.isEditing(false)
@@ -141,7 +140,6 @@ function Address (data) {
       })
     } else {
       ajax.put(self.endpointBuilder.serviceProviders(getUrlParameter.parameter('providerId')).addresses(self.key()).build(),
-        self.headers(cookies.get('session-token')),
         model
       ).then(function (result) {
         self.isEditing(false)

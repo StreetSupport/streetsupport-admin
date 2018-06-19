@@ -21,17 +21,12 @@ describe('Accommodation Review Listing', () => {
   let browserLoadedStub = null
   let ajaxGetStub = null
 
-  const headers = {
-    'content-type': 'application/json',
-    'session-token': 'stored-session-token'
-  }
-
   beforeEach(() => {
     sinon.stub(querystring, 'parameter').withArgs('id').returns(testData.id)
 
     ajaxGetStub = sinon.stub(ajax, 'get')
     ajaxGetStub
-      .withArgs(`${endpoints.prefix(testData.links.self)}?expand=reviews`, headers)
+      .withArgs(`${endpoints.prefix(testData.links.self)}?expand=reviews`)
       .returns({
         then: function (success, error) {
           success({

@@ -20,17 +20,12 @@ describe('Accommodation Listing - Add', () => {
   let browserLoadedStub = null
   let ajaxPostStub = null
 
-  const headers = {
-    'content-type': 'application/json',
-    'session-token': 'stored-session-token'
-  }
-
   beforeEach(() => {
     sinon.stub(querystring, 'parameter').withArgs('id').returns(testData.id)
 
     sinon
       .stub(ajax, 'get')
-      .withArgs(`${endpoints.prefix(testData.links.self)}`, headers)
+      .withArgs(`${endpoints.prefix(testData.links.self)}`)
       .returns({
         then: function (success, error) {
           success({
@@ -150,7 +145,7 @@ describe('Accommodation Listing - Add', () => {
         OverallRating: 3
       }
       const postCalledAsExpected = ajaxPostStub
-        .withArgs(endpoint, headers, payload)
+        .withArgs(endpoint, payload)
         .calledAfter(browserLoadingStub)
       expect(postCalledAsExpected).toBeTruthy()
     })
@@ -201,7 +196,7 @@ describe('Accommodation Listing - Add', () => {
           Body: 'review body'
         }
         const calledAsExpected = ajaxPatchStub
-          .withArgs(endpoint, headers, payload)
+          .withArgs(endpoint, payload)
           .calledAfter(browserLoadingStub)
 
         expect(calledAsExpected).toBeTruthy()

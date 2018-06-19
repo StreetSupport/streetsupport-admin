@@ -84,17 +84,13 @@ describe('Edit Service Provider Donation Details', () => {
 
     it('should put service provider Donation details to api with session token', () => {
       var endpoint = endpoints.getServiceProviders + '/coffee4craig/donation-information'
-      var headers = {
-        'content-type': 'application/json',
-        'session-token': 'stored-session-token'
-      }
       var payload = {
         'DonationUrl': 'http://donate-here.com',
         'DonationDescription': 'donation description',
         'ItemsDonationUrl': 'http://item-donate-here.com',
         'ItemsDonationDescription': 'item donation description'
       }
-      var apiCalledWithExpectedArgs = stubbedPutApi.withArgs(endpoint, headers, payload).calledOnce
+      var apiCalledWithExpectedArgs = stubbedPutApi.withArgs(endpoint, payload).calledOnce
       expect(apiCalledWithExpectedArgs).toBeTruthy()
     })
 

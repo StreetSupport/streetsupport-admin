@@ -59,7 +59,7 @@ function Model () {
     if (auth.isSuperAdmin()) {
       self.isSuperAdmin(true)
       ajax
-        .get(endpoints.getServiceProvidersHAL, self.headers(cookies.get('session-token')))
+        .get(endpoints.getServiceProvidersHAL)
         .then((result) => {
           self.serviceProviders(result.data.items
             .map(p => {
@@ -78,12 +78,11 @@ function Model () {
     browser.loading()
     const endpoint = endpoints.temporaryAccommodation
     const payload = validation.buildPayload(self.formFields())
-    const headers = self.headers(cookies.get('session-token'))
     self.formSubmitted(true)
     self.formSubmissionNotSuccessful(false)
 
     ajax
-      .post(endpoint, headers, payload)
+      .post(endpoint, payload)
       .then((result) => {
         browser.loaded()
 

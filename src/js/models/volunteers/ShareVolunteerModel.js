@@ -29,8 +29,6 @@ var ShareVolunteerModel = function () {
     errorElementClass: 'form__input--error'
   }, true)
 
-  const headers = self.headers(cookies.get('session-token'))
-
   self.submit = function () {
     browser.loading()
     var endpoint = self.endpointBuilder.volunteers(getUrlParam.parameter('id')).build() + '/share'
@@ -38,7 +36,7 @@ var ShareVolunteerModel = function () {
       'OrgId': self.selectedOrgId().id
     }
     ajax
-      .post(endpoint, headers, payload)
+      .post(endpoint, payload)
       .then(function (res) {
         browser.loaded()
         if (res.status === 'error') {
@@ -54,14 +52,14 @@ var ShareVolunteerModel = function () {
 
   const getVolEndpoint = self.endpointBuilder.volunteers(getUrlParam.parameter('id')).build()
   ajax
-    .get(getVolEndpoint, headers)
+    .get(getVolEndpoint)
     .then((res) => {
       self.volunteer(new Volunteer(res.data))
 
       browser.loading()
       const getOrgsEndpoint = self.endpointBuilder.publishedOrgs(res.data.person.city).build()
       ajax
-        .get(getOrgsEndpoint, headers)
+        .get(getOrgsEndpoint)
         .then((res) => {
           self.organisations(res.data.map((o) => ({
             'id': o.key,

@@ -120,12 +120,8 @@ describe('Accommodation - Add - org admin', () => {
         'Postcode': 'postcode',
         'AddressIsPubliclyHidden': false
       }
-      const headers = {
-        'content-type': 'application/json',
-        'session-token': 'stored-session-token'
-      }
       const calledAsExpected = ajaxPostStub
-        .withArgs(endpoint, headers, payload)
+        .withArgs(endpoint, payload)
         .calledAfter(browserLoadingStub)
       expect(calledAsExpected).toBeTruthy()
     })

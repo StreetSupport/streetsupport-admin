@@ -71,9 +71,8 @@ var ListModel = function () {
     browser.loading()
 
     const endpoint = self.endpointBuilder.offersOfItems().build()
-    const headers = self.headers(cookies.get('session-token'))
     ajax
-      .get(endpoint, headers)
+      .get(endpoint)
       .then(function (success) {
         const volunteers = success.data
           .sort((a, b) => {

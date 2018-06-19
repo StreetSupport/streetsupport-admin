@@ -44,17 +44,10 @@ describe('Add Service Provider Service', () => {
 
     stubbedApi = sinon.stub(ajax, 'get')
 
-    var headers = {
-      'content-type': 'application/json',
-      'session-token': 'stored-session-token'
-    }
-
     stubbedApi.withArgs(endpoints.getServiceCategories,
-      headers,
       {}).returns(categoriesPromise())
 
     stubbedApi.withArgs(endpoints.getServiceProviders + '/coffee4craig',
-      headers,
       {}).returns(providerPromise())
 
     sinon.stub(cookies, 'get').returns('stored-session-token')
@@ -76,12 +69,8 @@ describe('Add Service Provider Service', () => {
 
   it('should request for provider', () => {
     var endpoint = endpoints.getServiceProviders + '/coffee4craig'
-    var headers = {
-      'content-type': 'application/json',
-      'session-token': 'stored-session-token'
-    }
     var payload = {}
-    var apiCalled = stubbedApi.withArgs(endpoint, headers, payload).calledOnce
+    var apiCalled = stubbedApi.withArgs(endpoint, payload).calledOnce
     expect(apiCalled).toBeTruthy()
   })
 
@@ -250,10 +239,6 @@ describe('Add Service Provider Service', () => {
 
     it('should post service details with new to api with session token', () => {
       var endpoint = endpoints.getServiceProviders + '/coffee4craig/services'
-      var headers = {
-        'content-type': 'application/json',
-        'session-token': 'stored-session-token'
-      }
       var payload = {
         'Info': 'new info',
         'LocationDescription': 'new location description',
@@ -279,7 +264,7 @@ describe('Add Service Provider Service', () => {
         'IsOpen247': true
       }
 
-      var apiCalledWithExpectedArgs = stubbedPostApi.withArgs(endpoint, headers, payload).calledOnce
+      var apiCalledWithExpectedArgs = stubbedPostApi.withArgs(endpoint, payload).calledOnce
       expect(apiCalledWithExpectedArgs).toBeTruthy()
     })
 

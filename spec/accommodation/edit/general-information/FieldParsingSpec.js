@@ -23,10 +23,6 @@ const serviceProviderData = origTestData.publishedServiceProviderData
 
 describe('Accommodation - Edit General Information - Field Parsing', () => {
   const Model = require(`${jsRoot}models/accommodation/edit`)
-  const headers = {
-    'content-type': 'application/json',
-    'session-token': 'stored-session-token'
-  }
   let sut = null
 
   let ajaxGetStub = null
@@ -34,7 +30,7 @@ describe('Accommodation - Edit General Information - Field Parsing', () => {
   beforeEach(() => {
     ajaxGetStub = sinon.stub(ajax, 'get')
     ajaxGetStub
-      .withArgs(`${endpoints.temporaryAccommodation}/${testData.id}`, headers)
+      .withArgs(`${endpoints.temporaryAccommodation}/${testData.id}`)
       .returns({
         then: function (success, error) {
           success({
@@ -44,7 +40,7 @@ describe('Accommodation - Edit General Information - Field Parsing', () => {
         }
       })
     ajaxGetStub
-      .withArgs(`${endpoints.getPublishedServiceProviders}`, headers)
+      .withArgs(`${endpoints.getPublishedServiceProviders}`)
       .returns({
         then: function (success, error) {
           success({

@@ -47,14 +47,9 @@ describe('Edit individual Address', () => {
     getUrlParameter.parameter.restore()
   })
 
-  it('should retrieve address from api with session token', () => {
+  it('should retrieve address from api', () => {
     var endpoint = endpoints.getServiceProviders + '/coffee4craig/addresses/1234'
-    var headers = {
-      'content-type': 'application/json',
-      'session-token': 'stored-session-token'
-    }
-    var payload = {}
-    var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, headers, payload).calledOnce
+    var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint).calledOnce
     expect(apiCalledWithExpectedArgs).toBeTruthy()
   })
 

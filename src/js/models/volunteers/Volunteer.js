@@ -60,8 +60,7 @@ const Volunteer = function (data, listener) {
     browser.loading()
 
     ajax
-      .get(endpoints.volunteers + '/' + self.id + '/contact-requests',
-        self.headers(cookies.get('session-token')))
+      .get(endpoints.volunteers + '/' + self.id + '/contact-requests')
       .then((result) => {
         let items = result.data.items
         items.forEach((i) => {
@@ -86,7 +85,6 @@ const Volunteer = function (data, listener) {
     ajax
       .patch(
         endpoints.volunteers + '/' + self.id + '/is-archived',
-        self.headers(cookies.get('session-token')),
         {})
       .then((result) => {
         self.listener.archived(self.id)

@@ -64,10 +64,6 @@ describe('Save brand new Address', () => {
 
     it('should post address details to api create endpoint with session token', () => {
       var endpoint = endpoints.getServiceProviders + '/coffee4craig/addresses'
-      var headers = {
-        'content-type': 'application/json',
-        'session-token': 'stored-session-token'
-      }
       var payload = {
         'Street': 'new street1',
         'Street1': 'new street2',
@@ -80,7 +76,7 @@ describe('Save brand new Address', () => {
         'IsOpen247': true
       }
 
-      var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, headers, payload).calledOnce
+      var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, payload).calledOnce
       expect(apiCalledWithExpectedArgs).toBeTruthy()
     })
 
@@ -169,10 +165,6 @@ describe('Save new Address as part of collection', () => {
 
     it('should post address details to api create endpoint with session token', () => {
       var endpoint = endpoints.getServiceProviders + '/coffee4craig/addresses'
-      var headers = {
-        'content-type': 'application/json',
-        'session-token': 'stored-session-token'
-      }
       var payload = {
         'Street': 'new street1',
         'Street1': 'new street2',
@@ -195,7 +187,7 @@ describe('Save new Address as part of collection', () => {
         'IsOpen247': false
       }
 
-      var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, headers, payload).calledOnce
+      var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, payload).calledOnce
       expect(apiCalledWithExpectedArgs).toBeTruthy()
     })
 

@@ -70,8 +70,7 @@ function ListActionGroupsModel () {
   self.init = () => {
     browser.loading()
     ajax
-      .get(self.endpointBuilder.actionGroups().build(),
-      self.headers(cookies.get('session-token')))
+      .get(self.endpointBuilder.actionGroups().build())
       .then((result) => {
         self.actionGroups(result.data.map((ag) => new ActionGroup(ag, self)))
 

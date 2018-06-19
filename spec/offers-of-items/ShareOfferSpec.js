@@ -105,14 +105,10 @@ describe('Share Offer', () => {
 
     it('should post to api', () => {
       var endpoint = endpoints.offersOfItems + '/56d0362c928556085cc569b3/share'
-      var headers = {
-        'content-type': 'application/json',
-        'session-token': 'stored-session-token'
-      }
       var payload = {
         'OrgId': 'coffee4craig'
       }
-      var posted = ajaxPostStub.withArgs(endpoint, headers, payload).calledOnce
+      var posted = ajaxPostStub.withArgs(endpoint, payload).calledOnce
       expect(posted).toBeTruthy()
     })
 
@@ -139,11 +135,7 @@ describe('Share Offer', () => {
 
     it('should post to api', () => {
       var endpoint = endpoints.offersOfItems + '/56d0362c928556085cc569b3/broadcast'
-      var headers = {
-        'content-type': 'application/json',
-        'session-token': 'stored-session-token'
-      }
-      var posted = ajaxPostStub.withArgs(endpoint, headers).calledOnce
+      var posted = ajaxPostStub.withArgs(endpoint).calledOnce
       expect(posted).toBeTruthy()
     })
 

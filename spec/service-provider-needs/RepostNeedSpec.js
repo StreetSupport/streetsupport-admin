@@ -135,8 +135,7 @@ describe('Need - reposting', () => {
     expect(ajaxPutStub.calledAfter(browserLoadingStub)).toBeTruthy()
     const putArgs = ajax.put.getCall(0).args
     expect(putArgs[0]).toEqual(endpoints.getServiceProviders + '/albert-kennedy-trust/needs/56d8784092855610f88d492a/neededDate')
-    expect(putArgs[1]).toEqual({ 'content-type': 'application/json', 'session-token': 'stored-session-token' })
-    expect(moment(putArgs[2].NeededDate).diff(moment(), 'days')).toEqual(0)
+    expect(moment(putArgs[1].NeededDate).diff(moment(), 'days')).toEqual(0)
   })
 
   it('should notify user it has loaded', () => {

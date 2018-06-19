@@ -64,10 +64,9 @@ function Need (data) {
     if (newValue.length > 5) {
       const tweetUrl = self.endpointBuilder.needTweetMessage().build()
       const endpoint = `${tweetUrl}?providerId=${self.serviceProviderId}&needDescription=${self.description()}`
-      const headers = self.headers(cookies.get('session-token'))
 
       ajax
-        .get(endpoint, headers)
+        .get(endpoint)
         .then((result) => {
           self.derivedTweet(result.data)
         })
@@ -85,7 +84,6 @@ function Need (data) {
       NeededDate: now.toISOString()
     }
     ajax.put(endpoint,
-      self.headers(cookies.get('session-token')),
       model
     ).then(function (result) {
       if (result.statusCode === 200) {
@@ -101,7 +99,7 @@ function Need (data) {
 
   self.deleteNeed = function () {
     var endpoint = `${self.endpointBuilder.serviceProviders(getUrlParameter.parameter('key')).needs(self.id()).build()}`
-    ajax.delete(endpoint, self.headers(cookies.get('session-token')))
+    ajax.delete(endpoint)
     .then(function (result) {
       self.listeners().forEach((l) => l.deleteNeed(self))
     }, function (error) {
@@ -129,7 +127,6 @@ function Need (data) {
 
     if (self.id() === undefined) { // adding
       ajax.post(self.endpointBuilder.serviceProviders(getUrlParameter.parameter('providerId')).needs().build(),
-        self.headers(cookies.get('session-token')),
         model
       ).then(function (result) {
         if (result.statusCode === 201) {
@@ -143,7 +140,6 @@ function Need (data) {
     } else { // editing
       let endpoint = self.endpointBuilder.serviceProviders(getUrlParameter.parameter('providerId')).needs(self.id()).build()
       ajax.put(endpoint,
-        self.headers(cookies.get('session-token')),
         model
       ).then(function (result) {
         if (result.statusCode === 200) {

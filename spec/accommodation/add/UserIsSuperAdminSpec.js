@@ -19,10 +19,6 @@ const auth = require(`${jsRoot}auth`)
 
 describe('Accommodation - Add - super admin', () => {
   const Model = require(`${jsRoot}models/accommodation/add`)
-  const headers = {
-    'content-type': 'application/json',
-    'session-token': 'stored-session-token'
-  }
   let sut = null
   let ajaxGetStub = null
   let browserLoadingStub = null
@@ -70,7 +66,7 @@ describe('Accommodation - Add - super admin', () => {
 
   it('- should get service providers', () => {
     const calledAsExpected = ajaxGetStub
-      .withArgs(endpoints.getServiceProvidersHAL, headers)
+      .withArgs(endpoints.getServiceProvidersHAL)
       .calledOnce
     expect(calledAsExpected).toBeTruthy()
   })
@@ -154,7 +150,7 @@ describe('Accommodation - Add - super admin', () => {
         'AddressIsPubliclyHidden': false
       }
       const calledAsExpected = ajaxPostStub
-        .withArgs(endpoint, headers, payload)
+        .withArgs(endpoint, payload)
         .calledAfter(browserLoadingStub)
       expect(calledAsExpected).toBeTruthy()
     })

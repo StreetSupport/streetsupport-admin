@@ -38,10 +38,9 @@ function Update (listener, cityId, data = { content: '', displayDate: defaultDis
 
   self.deleteUpdate = () => {
     const endpoint = self.endpointBuilder.impactUpdates(self.id()).build()
-    const headers = self.headers(cookies.get('session-token'))
     browser.loading()
     ajax
-      .delete(endpoint, headers)
+      .delete(endpoint)
       .then((result) => {
         browser.loaded()
         if (result.statusCode === 200) {
@@ -64,7 +63,6 @@ function Update (listener, cityId, data = { content: '', displayDate: defaultDis
 
   self.update = () => {
     const endpoint = self.endpointBuilder.impactUpdates(self.id()).build()
-    const headers = self.headers(cookies.get('session-token'))
     const data = {
       DisplayDate: new Date(self.displayDateYear(), self.displayDateMonth() - 1, self.displayDateDay()),
       Content: self.updateContent(),
@@ -72,7 +70,7 @@ function Update (listener, cityId, data = { content: '', displayDate: defaultDis
     }
     browser.loading()
     ajax
-      .put(endpoint, headers, data)
+      .put(endpoint, data)
       .then((result) => {
         browser.loaded()
         if (result.statusCode === 200) {
@@ -89,7 +87,6 @@ function Update (listener, cityId, data = { content: '', displayDate: defaultDis
 
   self.save = () => {
     const endpoint = self.endpointBuilder.impactUpdates().build()
-    const headers = self.headers(cookies.get('session-token'))
     const data = {
       DisplayDate: new Date(self.displayDateYear(), self.displayDateMonth() - 1, self.displayDateDay()),
       Content: self.updateContent(),
@@ -97,7 +94,7 @@ function Update (listener, cityId, data = { content: '', displayDate: defaultDis
     }
     browser.loading()
     ajax
-      .post(endpoint, headers, data)
+      .post(endpoint, data)
       .then((result) => {
         browser.loaded()
         if (result.statusCode === 201) {

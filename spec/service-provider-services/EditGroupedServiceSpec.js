@@ -19,10 +19,6 @@ describe('Edit Service', () => {
   let stubbedUrlParams = null
   let stubbedBrowser = null
 
-  let headers = {
-    'content-type': 'application/json',
-    'session-token': 'stored-session-token'
-  }
   let payload = {}
 
   let serviceEndpoint = endpoints.getServiceProviders + '/coffee4craig/services/57bdb2c58705422ecc657228'
@@ -47,8 +43,8 @@ describe('Edit Service', () => {
     }
 
     stubbedApi = sinon.stub(ajax, 'get')
-    stubbedApi.withArgs(serviceEndpoint, headers, payload).returns(serviceDataResolution)
-    stubbedApi.withArgs(categoryEndpoint, headers, payload).returns(categoryDataResolution)
+    stubbedApi.withArgs(serviceEndpoint, payload).returns(serviceDataResolution)
+    stubbedApi.withArgs(categoryEndpoint, payload).returns(categoryDataResolution)
     stubbedBrowser = sinon.stub(browser, 'redirect')
     sinon.stub(cookies, 'get').returns('stored-session-token')
     stubbedUrlParams = sinon.stub(getUrlParameter, 'parameter')
@@ -70,12 +66,12 @@ describe('Edit Service', () => {
   })
 
   it('should request for service', () => {
-    var apiCalled = stubbedApi.withArgs(serviceEndpoint, headers, payload).calledOnce
+    var apiCalled = stubbedApi.withArgs(serviceEndpoint, payload).calledOnce
     expect(apiCalled).toBeTruthy()
   })
 
   it('should request for categories', () => {
-    var apiCalled = stubbedApi.withArgs(categoryEndpoint, headers, payload).calledOnce
+    var apiCalled = stubbedApi.withArgs(categoryEndpoint, payload).calledOnce
     expect(apiCalled).toBeTruthy()
   })
 

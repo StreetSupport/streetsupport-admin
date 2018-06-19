@@ -19,11 +19,6 @@ const reviewUnderTest = testData.embedded.reviews[0]
 describe('Accommodation Listing - Details', () => {
   let sut = null
 
-  const headers = {
-    'content-type': 'application/json',
-    'session-token': 'stored-session-token'
-  }
-
   beforeEach(() => {
     const queryStringStub = sinon.stub(querystring, 'parameter')
     queryStringStub.withArgs('accom-id').returns(testData.id)
@@ -31,7 +26,7 @@ describe('Accommodation Listing - Details', () => {
 
     sinon
       .stub(ajax, 'get')
-      .withArgs(`${endpoints.prefix(testData.links.self)}/reviews/${reviewUnderTest.id}`, headers)
+      .withArgs(`${endpoints.prefix(testData.links.self)}/reviews/${reviewUnderTest.id}`)
       .returns({
         then: function (success, error) {
           success({

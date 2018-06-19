@@ -73,12 +73,8 @@ describe('Service Providers', () => {
 
   it('should retrieve service providers from api with session token', () => {
     var endpoint = endpoints.getServiceProvidersHAL
-    var headers = {
-      'content-type': 'application/json',
-      'session-token': 'stored-session-token'
-    }
     var payload = {}
-    var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, headers, payload).calledOnce
+    var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, payload).calledOnce
     expect(apiCalledWithExpectedArgs).toBeTruthy()
   })
 

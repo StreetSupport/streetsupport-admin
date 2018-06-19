@@ -94,14 +94,10 @@ describe('Share Volunteer', () => {
 
     it('should post to api', () => {
       var endpoint = endpoints.volunteers + '/56d0362c928556085cc569b3/share'
-      var headers = {
-        'content-type': 'application/json',
-        'session-token': 'stored-session-token'
-      }
       var payload = {
         'OrgId': 'coffee4craig'
       }
-      var posted = ajaxPostStub.withArgs(endpoint, headers, payload).calledOnce
+      var posted = ajaxPostStub.withArgs(endpoint, payload).calledOnce
       expect(posted).toBeTruthy()
     })
 

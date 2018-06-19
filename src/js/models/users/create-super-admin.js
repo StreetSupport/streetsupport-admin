@@ -28,12 +28,11 @@ function Model () {
     browser.loading()
     const endpoint = endpoints.unverifiedSuperAdmins
     const payload = validation.buildPayload(self.formFields())
-    const headers = self.headers(cookies.get('session-token'))
     self.formSubmitted(true)
     self.formSubmissionNotSuccessful(false)
 
     ajax
-      .post(endpoint, headers, payload)
+      .post(endpoint, payload)
       .then((result) => {
         browser.loaded()
 

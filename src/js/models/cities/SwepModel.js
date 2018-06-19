@@ -29,13 +29,12 @@ const City = function (data) {
     browser.loading()
 
     const endpoint = `${self.endpointBuilder.cities().build()}/${self.key}/swep-status`
-    const headers = self.headers(cookies.get('session-token'))
     const data = {
       isAvailable: !self.swepIsAvailable()
     }
 
     ajax
-      .patch(endpoint, headers, data)
+      .patch(endpoint, data)
       .then((result) => {
         browser.loaded()
         if (result.statusCode !== 200) {

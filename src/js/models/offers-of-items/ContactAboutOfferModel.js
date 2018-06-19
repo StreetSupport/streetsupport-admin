@@ -29,14 +29,12 @@ var ContactAboutOfferModel = function () {
     errorElementClass: 'form__input--error'
   }, true)
 
-  const headers = self.headers(cookies.get('session-token'))
-
   const sendRequest = function (payload) {
     if (self.formModel.isValid()) {
       browser.loading()
       var endpoint = self.endpointBuilder.offersOfItems(getUrlParam.parameter('id')).build() + '/contact-requests'
       ajax
-        .post(endpoint, headers, payload)
+        .post(endpoint, payload)
         .then(function (res) {
           browser.loaded()
           if (res.status === 'error') {
@@ -71,7 +69,7 @@ var ContactAboutOfferModel = function () {
 
   const getEndpoint = self.endpointBuilder.offersOfItems(getUrlParam.parameter('id')).build()
   ajax
-    .get(getEndpoint, headers)
+    .get(getEndpoint)
     .then((res) => {
       self.volunteer(new ItemOfferer(res.data))
       self.formModel().isAnEmail(self.volunteer().person.telephone.length === 0)

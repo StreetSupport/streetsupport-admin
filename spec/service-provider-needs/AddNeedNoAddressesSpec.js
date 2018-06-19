@@ -30,11 +30,7 @@ describe('Add individual Need with no addresses', () => {
     }
     sinon.stub(cookies, 'get').returns('saved-session-token')
     sinon.stub(ajax, 'get').withArgs(
-      endpoints.getServiceProviders + '/coffee4craig/addresses',
-      {
-        'content-type': 'application/json',
-        'session-token': 'saved-session-token'
-      }
+      endpoints.getServiceProviders + '/coffee4craig/addresses'
     ).returns(fakeGetResolution)
     model = new Model()
   })

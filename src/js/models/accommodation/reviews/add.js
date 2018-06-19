@@ -54,9 +54,8 @@ function Add () {
     browser.loading()
     const id = querystring.parameter('id')
     const endpoint = `${self.endpointBuilder.temporaryAccommodation(id).build()}`
-    const headers = self.headers(cookies.get('session-token'))
     ajax
-      .get(endpoint, headers)
+      .get(endpoint)
       .then((result) => {
         browser.loaded()
 

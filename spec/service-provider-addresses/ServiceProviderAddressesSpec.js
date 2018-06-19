@@ -40,12 +40,8 @@ describe('Service Provider Addresses', () => {
 
   it('should retrieve service provider from api with session token', () => {
     var endpoint = endpoints.getServiceProviders + '/coffee4craig/addresses'
-    var headers = {
-      'content-type': 'application/json',
-      'session-token': 'stored-session-token'
-    }
     var payload = {}
-    var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, headers, payload).calledOnce
+    var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, payload).calledOnce
     expect(apiCalledWithExpectedArgs).toBeTruthy()
   })
 

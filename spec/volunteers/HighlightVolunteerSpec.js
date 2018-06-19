@@ -13,10 +13,6 @@ var Model = require('../../src/js/models/volunteers/ListVolunteersModel')
 
 describe('Highlight Volunteers', () => {
   var model
-  var headers = {
-    'content-type': 'application/json',
-    'session-token': 'stored-session-token'
-  }
 
   beforeEach(() => {
     var getVolunteersPromise = () => {
@@ -31,7 +27,7 @@ describe('Highlight Volunteers', () => {
     }
 
     sinon.stub(ajax, 'get')
-      .withArgs(endpoints.volunteers, headers)
+      .withArgs(endpoints.volunteers)
       .returns(getVolunteersPromise())
 
     sinon.stub(cookies, 'get')

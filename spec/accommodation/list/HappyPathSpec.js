@@ -55,11 +55,7 @@ describe('Accommodation Listing', () => {
   })
 
   it('- should get accom listing', () => {
-    const headers = {
-      'content-type': 'application/json',
-      'session-token': 'stored-session-token'
-    }
-    expect(ajaxGetStub.withArgs(endpoints.temporaryAccommodation, headers).calledAfter(browserLoadingStub)).toBeTruthy()
+    expect(ajaxGetStub.withArgs(endpoints.temporaryAccommodation).calledAfter(browserLoadingStub)).toBeTruthy()
   })
 
   it('- should get cities', () => {
@@ -92,13 +88,9 @@ describe('Accommodation Listing', () => {
 
   describe('- Load more', () => {
     beforeEach(() => {
-      const headers = {
-        'content-type': 'application/json',
-        'session-token': 'stored-session-token'
-      }
       const endpoint = `${endpoints.temporaryAccommodation}?index=4`
       ajaxGetStub
-        .withArgs(endpoint, headers)
+        .withArgs(endpoint)
         .returns({
           then: function (success, error) {
             success({
@@ -130,13 +122,8 @@ describe('Accommodation Listing', () => {
       browserLoadedStub.reset()
 
       const endpoint = `${endpoints.temporaryAccommodation}?cityId=manchester`
-      const headers = {
-        'content-type': 'application/json',
-        'session-token': 'stored-session-token'
-      }
-
       ajaxGetStub
-        .withArgs(endpoint, headers)
+        .withArgs(endpoint)
         .returns({
           then: function (success, error) {
             success({

@@ -109,15 +109,11 @@ describe('SWEP Availabilty', () => {
 
       it('- Should patch to api', () => {
         const endpoint = `${endpoints.cities}/manchester/swep-status`
-        const headers = {
-          'content-type': 'application/json',
-          'session-token': 'stored-session-token'
-        }
         const data = {
           isAvailable: false
         }
         const apiCalledAsExpected = ajaxPatchStub
-        .withArgs(endpoint, headers, data)
+        .withArgs(endpoint, data)
           .calledAfter(browserLoadingStub)
         expect(apiCalledAsExpected).toBeTruthy()
       })
@@ -159,15 +155,11 @@ describe('SWEP Availabilty', () => {
 
       it('- Should patch to api', () => {
         const endpoint = `${endpoints.cities}/manchester/swep-status`
-        const headers = {
-          'content-type': 'application/json',
-          'session-token': 'stored-session-token'
-        }
         const data = {
           isAvailable: false
         }
         const apiCalledAsExpected = ajaxPatchStub
-        .withArgs(endpoint, headers, data)
+        .withArgs(endpoint, data)
           .calledAfter(browserLoadingStub)
         expect(apiCalledAsExpected).toBeTruthy()
       })

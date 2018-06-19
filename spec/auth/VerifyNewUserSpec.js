@@ -58,16 +58,12 @@ describe('Verify New User', () => {
 
     it('should post service provider name to api', () => {
       var endpoint = endpoints.verifiedUsers
-      var headers = {
-        'content-type': 'application/json',
-        'session-token': 'stored-session-token'
-      }
       var payload = {
         'UserName': 'username',
         'Password': 'password',
         'VerificationToken': 'verification-token'
       }
-      var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, headers, payload).calledOnce
+      var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, payload).calledOnce
       expect(apiCalledWithExpectedArgs).toBeTruthy()
     })
 

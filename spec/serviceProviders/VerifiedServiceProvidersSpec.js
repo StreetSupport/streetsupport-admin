@@ -96,11 +96,7 @@ describe('VerifiedServiceProviders', () => {
       var payload = {
         'IsVerified': false
       }
-      var headers = {
-        'content-type': 'application/json',
-        'session-token': 'stored-session-token'
-      }
-      var apiCalledWithExpectedArgs = stubbedPutApi.withArgs(endpoint, headers, payload).calledOnce
+      var apiCalledWithExpectedArgs = stubbedPutApi.withArgs(endpoint, payload).calledOnce
 
       expect(apiCalledWithExpectedArgs).toBeTruthy()
     })

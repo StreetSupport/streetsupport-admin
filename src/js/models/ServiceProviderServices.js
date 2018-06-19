@@ -38,7 +38,6 @@ function ServiceProviderServices () {
   self.init = function () {
     var endpoint = self.endpointBuilder.serviceProviders(getUrlParameter.parameter('providerId')).build()
     ajax.get(endpoint,
-      self.headers(cookies.get('session-token')),
       {})
       .then(function (result) {
         self.serviceProvider(new ServiceProvider(result.data))
