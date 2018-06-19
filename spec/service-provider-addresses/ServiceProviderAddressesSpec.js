@@ -7,7 +7,6 @@ global describe, beforeEach, afterEach, it, expect
 const sinon = require('sinon')
 const ajax = require('../../src/js/ajax')
 const endpoints = require('../../src/js/api-endpoints')
-const cookies = require('../../src/js/cookies')
 const getUrlParameter = require('../../src/js/get-url-parameter')
 
 describe('Service Provider Addresses', () => {
@@ -26,7 +25,6 @@ describe('Service Provider Addresses', () => {
     }
 
     stubbedApi = sinon.stub(ajax, 'get').returns(fakeResolved)
-    sinon.stub(cookies, 'get').returns('stored-session-token')
     sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
 
     model = new Model()
@@ -34,7 +32,6 @@ describe('Service Provider Addresses', () => {
 
   afterEach(() => {
     ajax.get.restore()
-    cookies.get.restore()
     getUrlParameter.parameter.restore()
   })
 

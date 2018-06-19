@@ -1,6 +1,5 @@
 var ko = require('knockout')
 var browser = require('../../browser')
-var cookies = require('../../cookies')
 var getUrlParameter = require('../../get-url-parameter')
 var ajax = require('../../ajax')
 var BaseViewModel = require('../BaseViewModel')

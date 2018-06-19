@@ -7,7 +7,6 @@ global describe, beforeEach, afterEach, it, expect
 var sinon = require('sinon')
 var ajax = require('../../src/js/ajax')
 var endpoints = require('../../src/js/api-endpoints')
-var cookies = require('../../src/js/cookies')
 var browser = require('../../src/js/browser')
 var getUrlParameter = require('../../src/js/get-url-parameter')
 
@@ -37,7 +36,6 @@ describe('Save brand new Address', () => {
       }
 
       stubbedApi = sinon.stub(ajax, 'post').returns(fakeResolved)
-      sinon.stub(cookies, 'get').returns('stored-session-token')
       sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
       sinon.stub(browser, 'loading')
       sinon.stub(browser, 'loaded')
@@ -56,7 +54,6 @@ describe('Save brand new Address', () => {
 
     afterEach(() => {
       ajax.post.restore()
-      cookies.get.restore()
       getUrlParameter.parameter.restore()
       browser.loading.restore()
       browser.loaded.restore()
@@ -135,7 +132,6 @@ describe('Save new Address as part of collection', () => {
       }
 
       stubbedApi = sinon.stub(ajax, 'post').returns(fakeResolved)
-      sinon.stub(cookies, 'get').returns('stored-session-token')
       sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
 
       model.street1('new street1')
@@ -159,7 +155,6 @@ describe('Save new Address as part of collection', () => {
 
     afterEach(() => {
       ajax.post.restore()
-      cookies.get.restore()
       getUrlParameter.parameter.restore()
     })
 

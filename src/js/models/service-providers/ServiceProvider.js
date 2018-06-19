@@ -5,7 +5,6 @@ const marked = require('marked')
 const adminUrls = require('../../admin-urls')
 const ajax = require('../../ajax')
 const browser = require('../../browser')
-const cookies = require('../../cookies')
 
 import { cities } from '../../../data/generated/supported-cities'
 

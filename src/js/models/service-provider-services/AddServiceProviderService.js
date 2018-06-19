@@ -9,7 +9,6 @@ const OpeningTime = require('../OpeningTime')
 const adminUrls = require('../../admin-urls')
 const ajax = require('../../ajax')
 const browser = require('../../browser')
-const cookies = require('../../cookies')
 const getUrlParameter = require('../../get-url-parameter')
 
 import { categories } from '../../../data/generated/service-categories'

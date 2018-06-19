@@ -10,7 +10,6 @@ let auth = require('../../../src/js/auth')
 let endpoints = require('../../../src/js/api-endpoints')
 let adminurls = require('../../../src/js/admin-urls')
 let browser = require('../../../src/js/browser')
-let cookies = require('../../../src/js/cookies')
 
 import { cities } from '../../../src/data/generated/supported-cities'
 
@@ -61,7 +60,6 @@ describe('Add Service Provider', () => {
       }
 
       stubbedApi = sinon.stub(ajax, 'post').returns(fakeResolved)
-      sinon.stub(cookies, 'get').returns('stored-session-token')
       stubbedBrowser = sinon.stub(browser, 'redirect')
 
       model.name('New Service Provider')
@@ -71,7 +69,6 @@ describe('Add Service Provider', () => {
 
     afterEach(() => {
       ajax.post.restore()
-      cookies.get.restore()
       browser.redirect.restore()
     })
 
@@ -105,7 +102,6 @@ describe('Add Service Provider', () => {
       }
 
       sinon.stub(ajax, 'post').returns(fakeResolved)
-      sinon.stub(cookies, 'get').returns('stored-session-token')
       stubbedBrowser = sinon.stub(browser, 'redirect')
 
       model.name('New Service Provider')
@@ -114,7 +110,6 @@ describe('Add Service Provider', () => {
 
     afterEach(() => {
       ajax.post.restore()
-      cookies.get.restore()
       browser.redirect.restore()
     })
 

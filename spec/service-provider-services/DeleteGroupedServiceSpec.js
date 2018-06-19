@@ -7,7 +7,6 @@ global describe, beforeEach, afterEach, it, expect
 var sinon = require('sinon')
 var ajax = require('../../src/js/ajax')
 var endpoints = require('../../src/js/api-endpoints')
-var cookies = require('../../src/js/cookies')
 var getUrlParameter = require('../../src/js/get-url-parameter')
 
 describe('Delete Service', () => {
@@ -25,7 +24,6 @@ describe('Delete Service', () => {
     }
 
     stubbedApi = sinon.stub(ajax, 'delete').returns(fakeResolved)
-    sinon.stub(cookies, 'get').returns('stored-session-token')
     sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
 
     model.deleteService()
@@ -33,7 +31,6 @@ describe('Delete Service', () => {
 
   afterEach(() => {
     ajax.delete.restore()
-    cookies.get.restore()
     getUrlParameter.parameter.restore()
   })
 

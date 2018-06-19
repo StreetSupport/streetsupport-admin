@@ -1,6 +1,5 @@
 var ajax = require('../ajax')
 var adminUrls = require('../admin-urls')
-var cookies = require('../cookies')
 var Address = require('./Address')
 var Service = require('./Service')
 var getUrlParameter = require('../get-url-parameter')

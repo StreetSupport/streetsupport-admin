@@ -1,7 +1,6 @@
 import ajax from '../../ajax'
 import adminUrls from '../../admin-urls'
 import browser from '../../browser'
-import cookies from '../../cookies'
 import BaseViewModel from '../BaseViewModel'
 import endpoints from '../../api-endpoints'
 import querystring from '../../get-url-parameter'

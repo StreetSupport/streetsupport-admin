@@ -7,7 +7,6 @@ global describe, beforeEach, afterEach, it, expect
 import sinon from 'sinon'
 import adminUrls from '../../src/js/admin-urls'
 import ajax from '../../src/js/ajax'
-import cookies from '../../src/js/cookies'
 import endpoints from '../../src/js/api-endpoints'
 import browser from '../../src/js/browser'
 import getUrlParameter from '../../src/js/get-url-parameter'
@@ -35,7 +34,6 @@ describe('Editing Service Provider Need Categories', () => {
           })
         }
       })
-    sinon.stub(cookies, 'get').returns('saved-session-token')
     ajaxGetStub
       .withArgs(endpoints.getServiceProviders + '/albert-kennedy-trust')
       .returns({
@@ -59,7 +57,6 @@ describe('Editing Service Provider Need Categories', () => {
     getUrlParameter.parameter.restore()
     browser.loading.restore()
     browser.loaded.restore()
-    cookies.get.restore()
   })
 
   it('- Should notify user it is loading', () => {

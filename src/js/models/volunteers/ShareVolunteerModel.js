@@ -3,7 +3,6 @@
 var BaseViewModel = require('../BaseViewModel')
 var ajax = require('../../ajax')
 var browser = require('../../browser')
-var cookies = require('../../cookies')
 var getUrlParam = require('../../get-url-parameter')
 var ko = require('knockout')
 var htmlencode = require('htmlencode')

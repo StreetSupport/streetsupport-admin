@@ -11,7 +11,6 @@ const ajax = require(`../../../src/js/ajax`)
 const auth = require(`../../../src/js/auth`)
 const endpoints = require(`../../../src/js/api-endpoints`)
 const browser = require(`../../../src/js/browser`)
-const cookies = require(`../../../src/js/cookies`)
 const Model = require(`../../../src/js/models/accommodation/list`)
 
 import { cities } from '../../../src/data/generated/supported-cities'
@@ -36,7 +35,6 @@ describe('Accommodation Listing', () => {
     sinon.stub(auth, 'canSeeReviews')
     browserLoadingStub = sinon.stub(browser, 'loading')
     browserLoadedStub = sinon.stub(browser, 'loaded')
-    sinon.stub(cookies, 'get').returns('stored-session-token')
 
     sut = new Model()
     sut.init()
@@ -47,7 +45,6 @@ describe('Accommodation Listing', () => {
     auth.canSeeReviews.restore()
     browser.loading.restore()
     browser.loaded.restore()
-    cookies.get.restore()
   })
 
   it('- should show user it is loading', () => {

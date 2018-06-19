@@ -11,7 +11,6 @@ const ajax = require(`${jsRoot}ajax`)
 const auth = require(`${jsRoot}auth`)
 const endpoints = require(`${jsRoot}api-endpoints`)
 const browser = require(`${jsRoot}browser`)
-const cookies = require(`${jsRoot}cookies`)
 const querystring = require(`${jsRoot}get-url-parameter`)
 
 const { testData, publishedServiceProviderData } = require('../testData')
@@ -51,9 +50,6 @@ describe('Accommodation - Edit General Information', () => {
         }
       })
     sinon.stub(auth, 'isSuperAdmin')
-    sinon.stub(cookies, 'get')
-      .withArgs('session-token')
-      .returns('stored-session-token')
 
     sinon.stub(querystring, 'parameter')
       .withArgs('id')
@@ -68,7 +64,6 @@ describe('Accommodation - Edit General Information', () => {
     browser.loaded.restore()
     ajax.get.restore()
     auth.isSuperAdmin.restore()
-    cookies.get.restore()
     querystring.parameter.restore()
   })
 

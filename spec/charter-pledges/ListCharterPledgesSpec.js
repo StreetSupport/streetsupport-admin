@@ -8,7 +8,6 @@ var sinon = require('sinon')
 var ajax = require('../../src/js/ajax')
 var endpoints = require('../../src/js/api-endpoints')
 var browser = require('../../src/js/browser')
-var cookies = require('../../src/js/cookies')
 var Model = require('../../src/js/models/charter-pledges/ListCharterPledgesModel')
 
 describe('List Charter Pledges', () => {
@@ -33,10 +32,6 @@ describe('List Charter Pledges', () => {
       .withArgs(endpoints.charterPledges)
       .returns(getCharterPledgesPromise())
 
-    sinon.stub(cookies, 'get')
-      .withArgs('session-token')
-      .returns('stored-session-token')
-
     browserLoadingStub = sinon.stub(browser, 'loading')
     browserLoadedStub = sinon.stub(browser, 'loaded')
 
@@ -45,7 +40,6 @@ describe('List Charter Pledges', () => {
 
   afterEach(() => {
     ajax.get.restore()
-    cookies.get.restore()
     browser.loading.restore()
     browser.loaded.restore()
   })

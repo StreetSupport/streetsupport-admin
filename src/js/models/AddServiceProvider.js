@@ -2,7 +2,6 @@ const ko = require('knockout')
 const ajax = require('../ajax')
 const auth = require('../auth')
 const adminUrls = require('../admin-urls')
-const cookies = require('../cookies')
 const browser = require('../browser')
 const BaseViewModel = require('./BaseViewModel')
 

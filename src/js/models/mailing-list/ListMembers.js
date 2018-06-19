@@ -2,7 +2,6 @@
 
 const ajax = require('../../ajax')
 const browser = require('../../browser')
-const cookies = require('../../cookies')
 const BaseViewModel = require('../BaseViewModel')
 const ko = require('knockout')
 const moment = require('moment')

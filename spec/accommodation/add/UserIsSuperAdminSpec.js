@@ -10,7 +10,6 @@ const jsRoot = '../../../src/js/'
 const ajax = require(`${jsRoot}ajax`)
 const endpoints = require(`${jsRoot}api-endpoints`)
 const browser = require(`${jsRoot}browser`)
-const cookies = require(`${jsRoot}cookies`)
 const validation = require(`${jsRoot}validation`)
 
 import { categories } from '../../../src/data/generated/accommodation-categories'
@@ -41,8 +40,6 @@ describe('Accommodation - Add - super admin', () => {
     browserLoadingStub = sinon.stub(browser, 'loading')
     browserLoadedStub = sinon.stub(browser, 'loaded')
 
-    sinon.stub(cookies, 'get').withArgs('session-token').returns('stored-session-token')
-
     sut = new Model()
     sut.init()
   })
@@ -53,7 +50,6 @@ describe('Accommodation - Add - super admin', () => {
     auth.isSuperAdmin.restore()
     browser.loading.restore()
     browser.loaded.restore()
-    cookies.get.restore()
   })
 
   it('- it should set list of accom types', () => {

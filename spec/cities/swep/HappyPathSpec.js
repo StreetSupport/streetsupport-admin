@@ -6,7 +6,6 @@ const auth = require('../../../src/js/auth')
 const adminUrls = require('../../../src/js/admin-urls')
 const endpoints = require('../../../src/js/api-endpoints')
 const browser = require('../../../src/js/browser')
-const cookies = require('../../../src/js/cookies')
 const nav = require('../../../src/js/nav')
 const Model = require('../../../src/js/models/cities/SwepModel')
 
@@ -20,10 +19,6 @@ describe('SWEP Availabilty', () => {
     browserLoadingStub = sinon.stub(browser, 'loading')
     browserLoadedStub = sinon.stub(browser, 'loaded')
     sinon.stub(nav, 'disableForbiddenLinks')
-
-    const cookieStub = sinon.stub(cookies, 'get')
-    cookieStub.withArgs('session-token').returns('stored-session-token')
-    cookieStub.withArgs('auth-claims').returns('SuperAdmin')
 
     ajaxGetStub = sinon
       .stub(ajax, 'get')
@@ -47,7 +42,6 @@ describe('SWEP Availabilty', () => {
     auth.isCityAdmin.restore()
     browser.loading.restore()
     browser.loaded.restore()
-    cookies.get.restore()
     nav.disableForbiddenLinks.restore()
   })
 

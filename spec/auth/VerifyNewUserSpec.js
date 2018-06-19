@@ -7,7 +7,6 @@ global describe, beforeEach, afterEach, it, expect
 var sinon = require('sinon')
 var ajax = require('../../src/js/ajax')
 var endpoints = require('../../src/js/api-endpoints')
-var cookies = require('../../src/js/cookies')
 var browser = require('../../src/js/browser')
 var getUrlParameter = require('../../src/js/get-url-parameter')
 
@@ -42,7 +41,6 @@ describe('Verify New User', () => {
       }
 
       stubbedApi = sinon.stub(ajax, 'post').returns(fakeResolved)
-      sinon.stub(cookies, 'get').returns('stored-session-token')
       sinon.stub(getUrlParameter, 'parameter').returns('verification-token')
 
       model.username('username')
@@ -52,7 +50,6 @@ describe('Verify New User', () => {
 
     afterEach(() => {
       ajax.post.restore()
-      cookies.get.restore()
       getUrlParameter.parameter.restore()
     })
 
@@ -90,7 +87,6 @@ describe('Verify New User', () => {
       }
 
       sinon.stub(ajax, 'post').returns(fakeResolved)
-      sinon.stub(cookies, 'get').returns('stored-session-token')
       sinon.stub(getUrlParameter, 'parameter').returns('verification-token')
 
       model.username('username')
@@ -100,7 +96,6 @@ describe('Verify New User', () => {
 
     afterEach(() => {
       ajax.post.restore()
-      cookies.get.restore()
       getUrlParameter.parameter.restore()
     })
 

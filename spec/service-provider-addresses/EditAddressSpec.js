@@ -9,7 +9,6 @@ var ajax = require('../../src/js/ajax')
 var endpoints = require('../../src/js/api-endpoints')
 var adminurls = require('../../src/js/admin-urls')
 var browser = require('../../src/js/browser')
-var cookies = require('../../src/js/cookies')
 var getUrlParameter = require('../../src/js/get-url-parameter')
 
 describe('Edit individual Address', () => {
@@ -29,7 +28,6 @@ describe('Edit individual Address', () => {
     }
 
     stubbedApi = sinon.stub(ajax, 'get').returns(fakeResolved)
-    sinon.stub(cookies, 'get').returns('stored-session-token')
     stubbedUrlParams = sinon.stub(getUrlParameter, 'parameter')
     stubbedUrlParams.withArgs('providerId').returns('coffee4craig')
     stubbedUrlParams.withArgs('addressId').returns('1234')
@@ -41,7 +39,6 @@ describe('Edit individual Address', () => {
 
   afterEach(() => {
     ajax.get.restore()
-    cookies.get.restore()
     browser.loaded.restore()
     browser.loading.restore()
     getUrlParameter.parameter.restore()

@@ -5,7 +5,6 @@ var browser = require('../../browser')
 var adminurls = require('../../admin-urls')
 var getUrlParameter = require('../../get-url-parameter')
 var ajax = require('../../ajax')
-var cookies = require('../../cookies')
 
 function AddServiceProviderNeed () {
   var self = this

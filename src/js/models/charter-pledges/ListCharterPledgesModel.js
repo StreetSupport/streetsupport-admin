@@ -2,7 +2,6 @@
 
 var ajax = require('../../ajax')
 var browser = require('../../browser')
-var cookies = require('../../cookies')
 var validation = require('../../validation')
 var BaseViewModel = require('../BaseViewModel')
 var ko = require('knockout')

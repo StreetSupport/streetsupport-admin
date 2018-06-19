@@ -2,8 +2,8 @@
 
 var BaseViewModel = require('../BaseViewModel')
 var ajax = require('../../ajax')
+var auth = require('../../auth')
 var browser = require('../../browser')
-var cookies = require('../../cookies')
 var getUrlParam = require('../../get-url-parameter')
 var ko = require('knockout')
 var htmlencode = require('htmlencode')
@@ -21,9 +21,10 @@ var ShareOfferModel = function () {
   self.apiErrors = ko.observableArray()
   self.offer = ko.observable()
 
-  const authClaims = cookies.get('auth-claims')
-
-  self.canShowBroadcastOffer = ko.observable(authClaims === 'SuperAdmin' || authClaims.startsWith('CityAdmin'))
+  self.canShowBroadcastOffer = ko.computed(function () {
+    const authClaims = auth.getUserClaims()
+    return authClaims.includes('superadmin') || authClaims.includes('cityadmin')
+  }, self)
 
   self.broadcastToOrgs = () => {
     browser.loading()

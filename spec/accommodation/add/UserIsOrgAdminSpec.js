@@ -10,7 +10,6 @@ const jsRoot = '../../../src/js/'
 const ajax = require(`${jsRoot}ajax`)
 const endpoints = require(`${jsRoot}api-endpoints`)
 const browser = require(`${jsRoot}browser`)
-const cookies = require(`${jsRoot}cookies`)
 const validation = require(`${jsRoot}validation`)
 
 import { categories } from '../../../src/data/generated/accommodation-categories'
@@ -60,8 +59,6 @@ describe('Accommodation - Add - org admin', () => {
       browserLoadedStub.reset()
       sinon.stub(validation, 'showErrors')
 
-      sinon.stub(cookies, 'get').withArgs('session-token').returns('stored-session-token')
-
       ajaxPostStub = sinon.stub(ajax, 'post')
         .returns({
           then: function (success, error) {
@@ -92,7 +89,6 @@ describe('Accommodation - Add - org admin', () => {
 
     afterEach(() => {
       ajax.post.restore()
-      cookies.get.restore()
       validation.showErrors.restore()
     })
 

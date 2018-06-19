@@ -7,7 +7,6 @@ import sinon from 'sinon'
 import Need from '../../src/js/models/Need'
 import ajax from '../../src/js/ajax'
 import browser from '../../src/js/browser'
-import cookies from '../../src/js/cookies'
 import endpoints from '../../src/js/api-endpoints'
 import querystring from '../../src/js/get-url-parameter'
 
@@ -104,10 +103,6 @@ describe('Need - reposting', () => {
     browserLoadingStub = sinon.stub(browser, 'loading')
     browserLoadedStub = sinon.stub(browser, 'loaded')
 
-    sinon.stub(cookies, 'get')
-      .withArgs('session-token')
-      .returns('stored-session-token')
-
     ajaxPutStub = sinon.stub(ajax, 'put')
       .returns(fakePutResolution)
 
@@ -123,7 +118,6 @@ describe('Need - reposting', () => {
     ajax.put.restore()
     browser.loading.restore()
     browser.loaded.restore()
-    cookies.get.restore()
     querystring.parameter.restore()
   })
 

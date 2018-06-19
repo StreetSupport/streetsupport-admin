@@ -8,7 +8,6 @@ var sinon = require('sinon')
 var ajax = require('../../src/js/ajax')
 var endpoints = require('../../src/js/api-endpoints')
 var browser = require('../../src/js/browser')
-var cookies = require('../../src/js/cookies')
 
 describe('VerifiedServiceProviders', () => {
   var Dashboard = require('../../src/js/models/ServiceProviders')
@@ -43,14 +42,12 @@ describe('VerifiedServiceProviders', () => {
     sinon.stub(ajax, 'get').returns(fakeResolved)
     sinon.stub(browser, 'loading')
     sinon.stub(browser, 'loaded')
-    sinon.stub(cookies, 'get').returns('stored-session-token')
 
     dashboard = new Dashboard()
   })
 
   afterEach(() => {
     ajax.get.restore()
-    cookies.get.restore()
     browser.loading.restore()
     browser.loaded.restore()
   })

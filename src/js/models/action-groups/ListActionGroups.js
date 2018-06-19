@@ -2,7 +2,6 @@
 
 let ajax = require('../../ajax')
 let browser = require('../../browser')
-let cookies = require('../../cookies')
 let querystring = require('../../get-url-parameter')
 let BaseViewModel = require('../BaseViewModel')
 

@@ -6,9 +6,9 @@ global describe, beforeEach, afterEach, it, expect
 
 var sinon = require('sinon')
 var ajax = require('../../src/js/ajax')
+var auth = require('../../src/js/auth')
 var endpoints = require('../../src/js/api-endpoints')
 var browser = require('../../src/js/browser')
-var cookies = require('../../src/js/cookies')
 var getUrlParam = require('../../src/js/get-url-parameter')
 var Model = require('../../src/js/models/offers-of-items/ShareOfferModel')
 
@@ -16,7 +16,6 @@ describe('Share Offer', () => {
   var model
   var ajaxPostStub
   var ajaxGetStub
-  let cookieStub = null
   var browserLoadingStub
   var browserLoadedStub
 
@@ -51,17 +50,7 @@ describe('Share Offer', () => {
           })
         }
       })
-
-    cookieStub = sinon.stub(cookies, 'get')
-
-    cookieStub
-      .withArgs('session-token')
-      .returns('stored-session-token')
-
-    cookieStub
-      .withArgs('auth-claims')
-      .returns('SuperAdmin')
-
+    sinon.stub(auth, 'getUserClaims').returns(['superadmin'])
     sinon.stub(getUrlParam, 'parameter').withArgs('id').returns('56d0362c928556085cc569b3')
 
     browserLoadingStub = sinon.stub(browser, 'loading')
@@ -73,7 +62,7 @@ describe('Share Offer', () => {
   afterEach(() => {
     ajax.post.restore()
     ajax.get.restore()
-    cookies.get.restore()
+    auth.getUserClaims.restore()
     browser.loading.restore()
     browser.loaded.restore()
     getUrlParam.parameter.restore()

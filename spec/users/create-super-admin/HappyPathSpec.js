@@ -10,7 +10,6 @@ const jsRoot = '../../../src/js/'
 const ajax = require(`${jsRoot}ajax`)
 const endpoints = require(`${jsRoot}api-endpoints`)
 const browser = require(`${jsRoot}browser`)
-const cookies = require(`${jsRoot}cookies`)
 const validation = require(`${jsRoot}validation`)
 
 describe('Users - Create Super Admin', () => {
@@ -23,8 +22,6 @@ describe('Users - Create Super Admin', () => {
     browserLoadingStub = sinon.stub(browser, 'loading')
     browserLoadedStub = sinon.stub(browser, 'loaded')
 
-    sinon.stub(cookies, 'get').withArgs('session-token').returns('stored-session-token')
-
     sut = new Model()
     sut.init()
   })
@@ -32,7 +29,6 @@ describe('Users - Create Super Admin', () => {
   afterEach(() => {
     browser.loading.restore()
     browser.loaded.restore()
-    cookies.get.restore()
   })
 
   describe('- submit', () => {

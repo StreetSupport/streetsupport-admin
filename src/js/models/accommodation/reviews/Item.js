@@ -1,7 +1,6 @@
 let ajax = require('../../../ajax')
 let BaseViewModel = require('../../BaseViewModel')
 let browser = require('../../../browser')
-let cookies = require('../../../cookies')
 let validation = require('../../../validation')
 
 function Item (listener, formFields, endpoints) {

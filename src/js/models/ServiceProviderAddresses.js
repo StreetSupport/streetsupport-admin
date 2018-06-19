@@ -1,5 +1,4 @@
 var ajax = require('../ajax')
-var cookies = require('../cookies')
 var Address = require('./Address')
 var getUrlParameter = require('../get-url-parameter')
 var ko = require('knockout')

@@ -9,7 +9,6 @@ const sinon = require('sinon')
 const jsRoot = '../../../src/js/'
 const ajax = require(`${jsRoot}ajax`)
 const auth = require(`${jsRoot}auth`)
-const cookies = require(`${jsRoot}cookies`)
 const storage = require(`${jsRoot}localStorage`)
 const endpoints = require(`${jsRoot}api-endpoints`)
 const browser = require(`${jsRoot}browser`)
@@ -23,12 +22,10 @@ describe('Accommodation - Add as TempAccom Admin', () => {
   let sut = null
   let browserLoadingStub = null
   let browserLoadedStub = null
-  let cookieStub = null
 
   beforeEach(() => {
     browserLoadingStub = sinon.stub(browser, 'loading')
     browserLoadedStub = sinon.stub(browser, 'loaded')
-    cookieStub = sinon.stub(cookies, 'get')
     sinon.stub(auth, 'isSuperAdmin')
     sinon.stub(storage, 'get')
       .withArgs('roles')
@@ -42,7 +39,6 @@ describe('Accommodation - Add as TempAccom Admin', () => {
     auth.isSuperAdmin.restore()
     browser.loading.restore()
     browser.loaded.restore()
-    cookies.get.restore()
     storage.get.restore()
   })
 
@@ -61,8 +57,6 @@ describe('Accommodation - Add as TempAccom Admin', () => {
       browserLoadingStub.reset()
       browserLoadedStub.reset()
       sinon.stub(validation, 'showErrors')
-
-      cookieStub.withArgs('session-token').returns('stored-session-token')
 
       ajaxPostStub = sinon.stub(ajax, 'post')
         .returns({

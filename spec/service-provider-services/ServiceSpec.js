@@ -9,7 +9,6 @@ const sinon = require('sinon')
 const ajax = require('../../src/js/ajax')
 const browser = require('../../src/js/browser')
 const endpoints = require('../../src/js/api-endpoints')
-const cookies = require('../../src/js/cookies')
 const getUrlParameter = require('../../src/js/get-url-parameter')
 
 describe('Service', () => {
@@ -73,7 +72,6 @@ describe('Service', () => {
         }
 
         stubbedApi = sinon.stub(ajax, 'put').returns(fakeResolved)
-        sinon.stub(cookies, 'get').returns('stored-session-token')
         sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
 
         model.info('new info')
@@ -93,7 +91,6 @@ describe('Service', () => {
 
       afterEach(() => {
         ajax.put.restore()
-        cookies.get.restore()
         getUrlParameter.parameter.restore()
       })
 
@@ -161,7 +158,6 @@ describe('Service', () => {
         }
 
         stubbedApi = sinon.stub(ajax, 'put').returns(fakeResolved)
-        sinon.stub(cookies, 'get').returns('stored-session-token')
         sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
 
         model.tags('')
@@ -171,7 +167,6 @@ describe('Service', () => {
 
       afterEach(() => {
         ajax.put.restore()
-        cookies.get.restore()
         getUrlParameter.parameter.restore()
       })
 
@@ -219,7 +214,6 @@ describe('Service', () => {
         }
         sinon.stub(browser, 'scrollTo')
         sinon.stub(ajax, 'put').returns(fakeResolved)
-        sinon.stub(cookies, 'get').returns('stored-session-token')
         sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
 
         model.info('new info')
@@ -230,7 +224,6 @@ describe('Service', () => {
       afterEach(() => {
         ajax.put.restore()
         browser.scrollTo.restore()
-        cookies.get.restore()
         getUrlParameter.parameter.restore()
       })
 

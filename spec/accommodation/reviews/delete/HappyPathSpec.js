@@ -9,7 +9,6 @@ const sinon = require('sinon')
 const ajax = require(`../../../../src/js/ajax`)
 const endpoints = require(`../../../../src/js/api-endpoints`)
 const browser = require(`../../../../src/js/browser`)
-const cookies = require(`../../../../src/js/cookies`)
 const querystring = require(`../../../../src/js/get-url-parameter`)
 const Model = require(`../../../../src/js/models/accommodation/reviews/list`)
 
@@ -48,7 +47,6 @@ describe('Accommodation Listing - Delete', () => {
 
     browserLoadingStub = sinon.stub(browser, 'loading')
     browserLoadedStub = sinon.stub(browser, 'loaded')
-    sinon.stub(cookies, 'get').returns('stored-session-token')
 
     sut = new Model()
     sut.init()
@@ -64,7 +62,6 @@ describe('Accommodation Listing - Delete', () => {
     ajax.delete.restore()
     browser.loading.restore()
     browser.loaded.restore()
-    cookies.get.restore()
     querystring.parameter.restore()
   })
 

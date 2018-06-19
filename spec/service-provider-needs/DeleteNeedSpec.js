@@ -8,7 +8,6 @@ var sinon = require('sinon')
 var ajax = require('../../src/js/ajax')
 var endpoints = require('../../src/js/api-endpoints')
 var browser = require('../../src/js/browser')
-var cookies = require('../../src/js/cookies')
 var getUrlParameter = require('../../src/js/get-url-parameter')
 
 describe('Delete individual Need', () => {
@@ -32,7 +31,6 @@ describe('Delete individual Need', () => {
         })
       }
     }
-    sinon.stub(cookies, 'get').returns('saved-session-token')
     ajaxStub = sinon.stub(ajax, 'delete').returns(fakeResolved)
 
     model.deleteNeed()
@@ -43,7 +41,6 @@ describe('Delete individual Need', () => {
     browser.loaded.restore()
     getUrlParameter.parameter.restore()
     ajax.delete.restore()
-    cookies.get.restore()
   })
 
   it('should delete need to api', () => {

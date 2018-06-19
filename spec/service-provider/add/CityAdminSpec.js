@@ -10,12 +10,10 @@ let auth = require('../../../src/js/auth')
 let endpoints = require('../../../src/js/api-endpoints')
 let adminurls = require('../../../src/js/admin-urls')
 let browser = require('../../../src/js/browser')
-let cookies = require('../../../src/js/cookies')
 
 describe('Add Service Provider as City Admin', () => {
   let Model = require('../../../src/js/models/AddServiceProvider')
   let model = null
-  let cookiesStub = null
 
   beforeEach(() => {
     sinon.stub(auth, 'isCityAdmin').returns(true)
@@ -48,9 +46,6 @@ describe('Add Service Provider as City Admin', () => {
       }
 
       stubbedApi = sinon.stub(ajax, 'post').returns(fakeResolved)
-      cookiesStub = sinon.stub(cookies, 'get')
-      cookiesStub.withArgs('session-token').returns('stored-session-token')
-      cookiesStub.withArgs('auth-claims').returns('CityAdminFor:timbuktu,CityAdmin')
       stubbedBrowser = sinon.stub(browser, 'redirect')
 
       model.name('New Service Provider')
@@ -59,7 +54,6 @@ describe('Add Service Provider as City Admin', () => {
 
     afterEach(() => {
       ajax.post.restore()
-      cookies.get.restore()
       browser.redirect.restore()
     })
 

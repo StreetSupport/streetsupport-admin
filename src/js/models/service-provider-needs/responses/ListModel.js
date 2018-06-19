@@ -1,6 +1,5 @@
 const ajax = require('../../../ajax')
 const browser = require('../../../browser')
-const cookies = require('../../../cookies')
 const querystring = require('../../../get-url-parameter')
 import BaseViewModel from '../../BaseViewModel'
 const ko = require('knockout')

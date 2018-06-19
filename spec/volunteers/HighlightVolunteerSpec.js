@@ -8,7 +8,6 @@ var sinon = require('sinon')
 var ajax = require('../../src/js/ajax')
 var endpoints = require('../../src/js/api-endpoints')
 var browser = require('../../src/js/browser')
-var cookies = require('../../src/js/cookies')
 var Model = require('../../src/js/models/volunteers/ListVolunteersModel')
 
 describe('Highlight Volunteers', () => {
@@ -30,10 +29,6 @@ describe('Highlight Volunteers', () => {
       .withArgs(endpoints.volunteers)
       .returns(getVolunteersPromise())
 
-    sinon.stub(cookies, 'get')
-      .withArgs('session-token')
-      .returns('stored-session-token')
-
     sinon.stub(browser, 'loading')
     sinon.stub(browser, 'loaded')
 
@@ -45,7 +40,6 @@ describe('Highlight Volunteers', () => {
 
   afterEach(() => {
     ajax.get.restore()
-    cookies.get.restore()
     browser.loading.restore()
     browser.loaded.restore()
   })

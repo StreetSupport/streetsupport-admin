@@ -2,7 +2,6 @@
 
 var ajax = require('../../ajax')
 var browser = require('../../browser')
-var cookies = require('../../cookies')
 var BaseViewModel = require('../BaseViewModel')
 var ItemOfferer = require('./ItemOfferer')
 var ko = require('knockout')

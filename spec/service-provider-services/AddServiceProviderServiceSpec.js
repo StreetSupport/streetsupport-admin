@@ -7,7 +7,6 @@ global describe, beforeEach, afterEach, it, expect
 const adminUrls = require('../../src/js/admin-urls')
 const ajax = require('../../src/js/ajax')
 const browser = require('../../src/js/browser')
-const cookies = require('../../src/js/cookies')
 const endpoints = require('../../src/js/api-endpoints')
 const getUrlParameter = require('../../src/js/get-url-parameter')
 const sinon = require('sinon')
@@ -50,7 +49,6 @@ describe('Add Service Provider Service', () => {
     stubbedApi.withArgs(endpoints.getServiceProviders + '/coffee4craig',
       {}).returns(providerPromise())
 
-    sinon.stub(cookies, 'get').returns('stored-session-token')
     sinon.stub(getUrlParameter, 'parameter').withArgs('providerId').returns('coffee4craig')
 
     sinon.stub(browser, 'loading')
@@ -63,7 +61,6 @@ describe('Add Service Provider Service', () => {
     ajax.get.restore()
     browser.loading.restore()
     browser.loaded.restore()
-    cookies.get.restore()
     getUrlParameter.parameter.restore()
   })
 

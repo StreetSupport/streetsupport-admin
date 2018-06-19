@@ -8,7 +8,6 @@ var sinon = require('sinon')
 var ajax = require('../../src/js/ajax')
 var endpoints = require('../../src/js/api-endpoints')
 var browser = require('../../src/js/browser')
-var cookies = require('../../src/js/cookies')
 var getUrlParameter = require('../../src/js/get-url-parameter')
 
 describe('Add individual Need with no addresses', () => {
@@ -28,7 +27,6 @@ describe('Add individual Need with no addresses', () => {
         })
       }
     }
-    sinon.stub(cookies, 'get').returns('saved-session-token')
     sinon.stub(ajax, 'get').withArgs(
       endpoints.getServiceProviders + '/coffee4craig/addresses'
     ).returns(fakeGetResolution)
@@ -40,7 +38,6 @@ describe('Add individual Need with no addresses', () => {
     browser.loaded.restore()
     getUrlParameter.parameter.restore()
     ajax.get.restore()
-    cookies.get.restore()
   })
 
   it('should set postcode to empty string', () => {

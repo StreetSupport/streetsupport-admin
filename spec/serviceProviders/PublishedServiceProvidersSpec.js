@@ -8,7 +8,6 @@ var sinon = require('sinon')
 var ajax = require('../../src/js/ajax')
 var endpoints = require('../../src/js/api-endpoints')
 var browser = require('../../src/js/browser')
-var cookies = require('../../src/js/cookies')
 
 describe('PublishedServiceProviders', () => {
   var Dashboard = require('../../src/js/models/ServiceProviders')
@@ -38,7 +37,6 @@ describe('PublishedServiceProviders', () => {
     }
 
     sinon.stub(ajax, 'get').returns(fakeResolved)
-    sinon.stub(cookies, 'get').returns('stored-session-token')
     sinon.stub(browser, 'loading')
     sinon.stub(browser, 'loaded')
 
@@ -47,7 +45,6 @@ describe('PublishedServiceProviders', () => {
 
   afterEach(() => {
     ajax.get.restore()
-    cookies.get.restore()
     browser.loading.restore()
     browser.loaded.restore()
   })

@@ -7,7 +7,6 @@ global describe, beforeEach, afterEach, it, expect
 let endpoints = require('../../src/js/api-endpoints')
 let ajax = require('../../src/js/ajax')
 let browser = require('../../src/js/browser')
-let cookies = require('../../src/js/cookies')
 let urlParams = require('../../src/js/get-url-parameter')
 let Model = require('../../src/js/models/action-groups/ListActionGroups')
 
@@ -21,7 +20,6 @@ describe('List Action Groups', () => {
   let ajaxGetStub = null
 
   beforeEach(() => {
-    sinon.stub(cookies, 'get').returns('stored-session-token')
     browserLoadingStub = sinon.stub(browser, 'loading')
     browserLoadedStub = sinon.stub(browser, 'loaded')
     browserSetOnHistoryPopStub = sinon.stub(browser, 'setOnHistoryPop')
@@ -47,7 +45,6 @@ describe('List Action Groups', () => {
     browser.loaded.restore()
     browser.setOnHistoryPop.restore()
     ajax.get.restore()
-    cookies.get.restore()
     urlParams.parameter.restore()
   })
 

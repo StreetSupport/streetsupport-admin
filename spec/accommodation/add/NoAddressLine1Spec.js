@@ -9,7 +9,6 @@ const sinon = require('sinon')
 const jsRoot = '../../../src/js/'
 const ajax = require(`${jsRoot}ajax`)
 const auth = require(`${jsRoot}auth`)
-const cookies = require(`${jsRoot}cookies`)
 const validation = require(`${jsRoot}validation`)
 
 describe('Accommodation - Add - No Address Line 1', () => {
@@ -19,10 +18,6 @@ describe('Accommodation - Add - No Address Line 1', () => {
   let validationStub = null
 
   beforeEach(() => {
-    sinon.stub(cookies, 'get')
-      .withArgs('session-token')
-      .returns('stored-session-token')
-
     validationStub = sinon.stub(validation, 'showErrors')
 
     ajaxPostStub = sinon.stub(ajax, 'post')
@@ -55,7 +50,6 @@ describe('Accommodation - Add - No Address Line 1', () => {
     ajax.post.restore()
     auth.providerAdminFor.restore()
     auth.isSuperAdmin.restore()
-    cookies.get.restore()
     validation.showErrors.restore()
   })
 

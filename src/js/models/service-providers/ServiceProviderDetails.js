@@ -2,7 +2,6 @@ var ko = require('knockout')
 
 var ajax = require('../../ajax')
 var adminUrls = require('../../admin-urls')
-var cookies = require('../../cookies')
 var browser = require('../../browser')
 var getUrlParameter = require('../../get-url-parameter')
 var ServiceProvider = require('./ServiceProvider')

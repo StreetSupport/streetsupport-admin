@@ -2,7 +2,6 @@ const ajax = require('../../ajax')
 const auth = require('../../auth')
 const BaseViewModel = require('../../models/BaseViewModel')
 const browser = require('../../browser')
-const cookies = require('../../cookies')
 const InlineEditableSubEntity = require('../../models/InlineEditableSubEntity')
 const querystring = require('../../get-url-parameter')
 

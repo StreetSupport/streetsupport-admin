@@ -1,7 +1,6 @@
 const ajax = require('../../ajax')
 const BaseViewModel = require('../../models/BaseViewModel')
 const browser = require('../../browser')
-const cookies = require('../../cookies')
 const endpoints = require('../../api-endpoints')
 const validation = require('../../validation')
 

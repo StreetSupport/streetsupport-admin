@@ -3,7 +3,6 @@
 const adminUrls = require('../../admin-urls')
 const ajax = require('../../ajax')
 const browser = require('../../browser')
-const cookies = require('../../cookies')
 const endpoints = require('../../api-endpoints')
 const htmlEncode = require('htmlencode')
 const BaseViewModel = require('../../models/BaseViewModel')

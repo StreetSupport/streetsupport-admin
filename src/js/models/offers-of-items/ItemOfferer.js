@@ -1,6 +1,5 @@
 var adminUrls = require('../../admin-urls')
 var ajax = require('../../ajax')
-var cookies = require('../../cookies')
 const endpoints = require('../../api-endpoints')
 var moment = require('moment')
 const htmlEncode = require('htmlencode')

@@ -7,7 +7,6 @@ global describe, beforeEach, afterEach, it, expect
 var sinon = require('sinon')
 var ajax = require('../../src/js/ajax')
 var endpoints = require('../../src/js/api-endpoints')
-var cookies = require('../../src/js/cookies')
 var getUrlParameter = require('../../src/js/get-url-parameter')
 var browser = require('../../src/js/browser')
 
@@ -44,7 +43,6 @@ describe('Add Service Provider Service, no addresses', () => {
     stubbedApi.withArgs(endpoints.getServiceCategories, {}).returns(categoriesPromise())
     stubbedApi.withArgs(endpoints.getServiceProviders + '/coffee4craig', {}).returns(providerPromise())
 
-    sinon.stub(cookies, 'get').returns('stored-session-token')
     sinon.stub(getUrlParameter, 'parameter').withArgs('providerId').returns('coffee4craig')
 
     sinon.stub(browser, 'loading')
@@ -57,7 +55,6 @@ describe('Add Service Provider Service, no addresses', () => {
     ajax.get.restore()
     browser.loading.restore()
     browser.loaded.restore()
-    cookies.get.restore()
     getUrlParameter.parameter.restore()
   })
 

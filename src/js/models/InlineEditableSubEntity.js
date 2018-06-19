@@ -4,7 +4,6 @@ require('knockout.validation') // No variable here is deliberate!
 const ajax = require('../ajax')
 const BaseViewModel = require('../models/BaseViewModel')
 const browser = require('../browser')
-const cookies = require('../cookies')
 const validation = require('../validation')
 
 function InlineEditableSubEntity (configOverride = {}) {
