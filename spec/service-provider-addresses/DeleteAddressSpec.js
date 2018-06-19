@@ -35,7 +35,7 @@ describe('Delete Address', () => {
     getUrlParameter.parameter.restore()
   })
 
-  it('should delete address key to api create endpoint with session token', () => {
+  it('should delete address key to api create endpoint', () => {
     var endpoint = endpoints.getServiceProviders + '/coffee4craig/addresses/' + model.key()
     var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint).calledOnce
     expect(apiCalledWithExpectedArgs).toBeTruthy()

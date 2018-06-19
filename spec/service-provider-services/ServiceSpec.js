@@ -94,7 +94,7 @@ describe('Service', () => {
         getUrlParameter.parameter.restore()
       })
 
-      it('should put service details with new to api with session token', () => {
+      it('should put service details with new to api', () => {
         var endpoint = endpoints.getServiceProviders + '/coffee4craig/services/569d2b468705432268b65c75'
         var payload = {
           'Info': 'new info',
@@ -170,7 +170,7 @@ describe('Service', () => {
         getUrlParameter.parameter.restore()
       })
 
-      it('should put service details with new to api with session token', () => {
+      it('should put service details with new to api', () => {
         var endpoint = endpoints.getServiceProviders + '/coffee4craig/services/569d2b468705432268b65c75'
         var payload = {
           'Info': 'Breakfast',

@@ -45,7 +45,7 @@ describe('Index', () => {
     })
   })
 
-  describe('Has session token', () => {
+  describe('has been authenticated', () => {
     beforeEach(() => {
       sinon.stub(webAuth, 'isAuthenticated').returns(true)
     })

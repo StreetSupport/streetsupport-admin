@@ -40,7 +40,7 @@ describe('Service Provider Services', () => {
     expect(model.addServiceLink).toEqual(adminurls.addServiceProviderService + '?key=coffee4craig')
   })
 
-  it('should retrieve service provider from api with session token', () => {
+  it('should retrieve service provider from api', () => {
     var endpoint = endpoints.getServiceProviders + '/coffee4craig'
     var payload = {}
     var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, payload).calledOnce

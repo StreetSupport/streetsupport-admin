@@ -71,7 +71,7 @@ describe('Grouped Service', () => {
         getUrlParameter.parameter.restore()
       })
 
-      it('should put service details with new to api with session token', () => {
+      it('should put service details with new to api', () => {
         var endpoint = endpoints.getServiceProviders + '/coffee4craig/services/57bdb2c58705422ecc65724f'
 
         var payload = {
@@ -132,7 +132,7 @@ describe('Grouped Service', () => {
         getUrlParameter.parameter.restore()
       })
 
-      it('should put service details with new to api with session token', () => {
+      it('should put service details with new to api', () => {
         var endpoint = endpoints.getServiceProviders + '/coffee4craig/services/57bdb2c58705422ecc65724f'
         var payload = {
           'Info': 'info',

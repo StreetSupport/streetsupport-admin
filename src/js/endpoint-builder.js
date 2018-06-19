@@ -35,11 +35,6 @@ function EndpointBuilder () {
     return self
   }
 
-  self.sessions = (sessionToken) => {
-    self.updateBaseResource(endpoints.sessions, sessionToken)
-    return self
-  }
-
   self.categories = () => {
     self.updateBaseResource(endpoints.getServiceCategories)
     return self

@@ -68,7 +68,7 @@ describe('Service Providers', () => {
     expect(browserLoadingStub.calledOnce).toBeTruthy()
   })
 
-  it('should retrieve service providers from api with session token', () => {
+  it('should retrieve service providers from api', () => {
     var endpoint = endpoints.getServiceProvidersHAL
     var payload = {}
     var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, payload).calledOnce

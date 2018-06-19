@@ -35,7 +35,7 @@ describe('Service Provider Addresses', () => {
     getUrlParameter.parameter.restore()
   })
 
-  it('should retrieve service provider from api with session token', () => {
+  it('should retrieve service provider from api', () => {
     var endpoint = endpoints.getServiceProviders + '/coffee4craig/addresses'
     var payload = {}
     var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, payload).calledOnce

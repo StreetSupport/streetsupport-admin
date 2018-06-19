@@ -79,7 +79,7 @@ describe('Edit Service Provider Donation Details', () => {
       ajax.put.restore()
     })
 
-    it('should put service provider Donation details to api with session token', () => {
+    it('should put service provider Donation details to api', () => {
       var endpoint = endpoints.getServiceProviders + '/coffee4craig/donation-information'
       var payload = {
         'DonationUrl': 'http://donate-here.com',

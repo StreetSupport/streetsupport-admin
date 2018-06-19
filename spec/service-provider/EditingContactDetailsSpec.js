@@ -75,7 +75,7 @@ describe('Edit Service Provider Contact Information', () => {
       ajax.put.restore()
     })
 
-    it('should put service provider contact details to api with session token', () => {
+    it('should put service provider contact details to api', () => {
       var endpoint = endpoints.getServiceProviders + '/coffee4craig/contact-details'
       var payload = {
         'Telephone': 'new telephone',

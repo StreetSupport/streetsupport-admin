@@ -114,7 +114,7 @@ describe('Address', () => {
         getUrlParameter.parameter.restore()
       })
 
-      it('should put address details to api with session token', () => {
+      it('should put address details to api', () => {
         var endpoint = endpoints.getServiceProviders + '/coffee4craig/addresses/1234'
         var payload = {
           'Street': 'new street1',

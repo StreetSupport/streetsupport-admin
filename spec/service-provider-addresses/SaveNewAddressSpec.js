@@ -59,7 +59,7 @@ describe('Save brand new Address', () => {
       browser.loaded.restore()
     })
 
-    it('should post address details to api create endpoint with session token', () => {
+    it('should post address details to api create endpoint', () => {
       var endpoint = endpoints.getServiceProviders + '/coffee4craig/addresses'
       var payload = {
         'Street': 'new street1',
@@ -158,7 +158,7 @@ describe('Save new Address as part of collection', () => {
       getUrlParameter.parameter.restore()
     })
 
-    it('should post address details to api create endpoint with session token', () => {
+    it('should post address details to api create endpoint', () => {
       var endpoint = endpoints.getServiceProviders + '/coffee4craig/addresses'
       var payload = {
         'Street': 'new street1',

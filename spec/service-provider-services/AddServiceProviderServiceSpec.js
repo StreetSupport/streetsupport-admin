@@ -234,7 +234,7 @@ describe('Add Service Provider Service', () => {
       browser.redirect.restore()
     })
 
-    it('should post service details with new to api with session token', () => {
+    it('should post service details with new to api', () => {
       var endpoint = endpoints.getServiceProviders + '/coffee4craig/services'
       var payload = {
         'Info': 'new info',

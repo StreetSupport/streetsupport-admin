@@ -34,7 +34,7 @@ describe('Delete Service', () => {
     getUrlParameter.parameter.restore()
   })
 
-  it('should delete service id to api create endpoint with session token', () => {
+  it('should delete service id to api create endpoint', () => {
     var endpoint = endpoints.getServiceProviders + '/coffee4craig/services/57bdb2c58705422ecc65724f'
     var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint).calledOnce
     expect(apiCalledWithExpectedArgs).toBeTruthy()
