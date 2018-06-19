@@ -2,6 +2,7 @@
 
 const sinon = require('sinon')
 const ajax = require('../../../src/js/ajax')
+const auth = require('../../../src/js/auth')
 const adminUrls = require('../../../src/js/admin-urls')
 const endpoints = require('../../../src/js/api-endpoints')
 const browser = require('../../../src/js/browser')
@@ -35,7 +36,7 @@ describe('SWEP Availabilty', () => {
           })
         }
       })
-
+    sinon.stub(auth, 'isCityAdmin').returns(false)
     sut = new Model()
 
     sut.init()
@@ -43,6 +44,7 @@ describe('SWEP Availabilty', () => {
 
   afterEach(() => {
     ajax.get.restore()
+    auth.isCityAdmin.restore()
     browser.loading.restore()
     browser.loaded.restore()
     cookies.get.restore()

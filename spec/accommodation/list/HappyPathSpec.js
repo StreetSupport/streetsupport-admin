@@ -8,6 +8,7 @@ const sinon = require('sinon')
 
 const adminUrls = require(`../../../src/js/admin-urls`)
 const ajax = require(`../../../src/js/ajax`)
+const auth = require(`../../../src/js/auth`)
 const endpoints = require(`../../../src/js/api-endpoints`)
 const browser = require(`../../../src/js/browser`)
 const cookies = require(`../../../src/js/cookies`)
@@ -32,6 +33,7 @@ describe('Accommodation Listing', () => {
           })
         }
       })
+    sinon.stub(auth, 'canSeeReviews')
     browserLoadingStub = sinon.stub(browser, 'loading')
     browserLoadedStub = sinon.stub(browser, 'loaded')
     sinon.stub(cookies, 'get').returns('stored-session-token')
@@ -42,6 +44,7 @@ describe('Accommodation Listing', () => {
 
   afterEach(() => {
     ajax.get.restore()
+    auth.canSeeReviews.restore()
     browser.loading.restore()
     browser.loaded.restore()
     cookies.get.restore()

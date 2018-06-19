@@ -8,9 +8,9 @@ const sinon = require('sinon')
 
 const jsRoot = '../../../src/js/'
 const ajax = require(`${jsRoot}ajax`)
+const auth = require(`${jsRoot}auth`)
 const cookies = require(`${jsRoot}cookies`)
 const validation = require(`${jsRoot}validation`)
-const auth = require(`${jsRoot}auth`)
 
 describe('Accommodation - Add - Invalid Email', () => {
   const Model = require(`${jsRoot}models/accommodation/add`)
@@ -24,6 +24,7 @@ describe('Accommodation - Add - Invalid Email', () => {
       .returns('stored-session-token')
 
     sinon.stub(auth, 'providerAdminFor')
+    sinon.stub(auth, 'isSuperAdmin')
 
     validationStub = sinon.stub(validation, 'showErrors')
 
@@ -54,8 +55,9 @@ describe('Accommodation - Add - Invalid Email', () => {
   })
 
   afterEach(() => {
-    auth.providerAdminFor.restore()
     ajax.post.restore()
+    auth.providerAdminFor.restore()
+    auth.isSuperAdmin.restore()
     cookies.get.restore()
     validation.showErrors.restore()
   })

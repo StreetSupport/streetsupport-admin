@@ -8,6 +8,7 @@ const sinon = require('sinon')
 const srcRoot = '../../../../src/'
 const jsRoot = `${srcRoot}js/`
 const ajax = require(`${jsRoot}ajax`)
+const auth = require(`${jsRoot}auth`)
 const endpoints = require(`${jsRoot}api-endpoints`)
 const browser = require(`${jsRoot}browser`)
 const cookies = require(`${jsRoot}cookies`)
@@ -48,6 +49,7 @@ describe('Accommodation - Edit General Information - as super admin', () => {
         }
       })
 
+    sinon.stub(auth, 'isSuperAdmin').returns(true)
     sinon.stub(browser, 'loading')
     sinon.stub(browser, 'loaded')
 
@@ -73,6 +75,7 @@ describe('Accommodation - Edit General Information - as super admin', () => {
     browser.loading.restore()
     browser.loaded.restore()
     ajax.get.restore()
+    auth.isSuperAdmin.restore()
     cookies.get.restore()
     querystring.parameter.restore()
   })

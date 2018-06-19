@@ -1,7 +1,10 @@
-module.exports  = function () {
+import { getWebAuth } from './webAuth'
+
+module.exports = function () {
   const self = this
 
   self.submit = function () {
-    console.log('submit')
+    const webAuth = getWebAuth()
+    webAuth.authorize()
   }
 }

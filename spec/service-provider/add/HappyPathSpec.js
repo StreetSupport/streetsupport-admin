@@ -6,6 +6,7 @@ global describe, beforeEach, afterEach, it, expect
 
 let sinon = require('sinon')
 let ajax = require('../../../src/js/ajax')
+let auth = require('../../../src/js/auth')
 let endpoints = require('../../../src/js/api-endpoints')
 let adminurls = require('../../../src/js/admin-urls')
 let browser = require('../../../src/js/browser')
@@ -18,6 +19,8 @@ describe('Add Service Provider', () => {
   let model = null
 
   beforeEach(() => {
+    sinon.stub(auth, 'isCityAdmin')
+    sinon.stub(auth, 'cityAdminFor')
     sinon.stub(browser, 'loading')
     sinon.stub(browser, 'loaded')
     sinon.stub(browser, 'scrollTo')
@@ -25,6 +28,8 @@ describe('Add Service Provider', () => {
   })
 
   afterEach(() => {
+    auth.isCityAdmin.restore()
+    auth.cityAdminFor.restore()
     browser.loading.restore()
     browser.loaded.restore()
     browser.scrollTo.restore()

@@ -8,6 +8,7 @@ const sinon = require('sinon')
 const srcRoot = '../../../../src/'
 const jsRoot = `${srcRoot}js/`
 const ajax = require(`${jsRoot}ajax`)
+const auth = require(`${jsRoot}auth`)
 const browser = require(`${jsRoot}browser`)
 const endpoints = require(`${jsRoot}api-endpoints`)
 const cookies = require(`${jsRoot}cookies`)
@@ -52,6 +53,7 @@ describe('Accommodation - Edit General Information - Field Parsing', () => {
           })
         }
       })
+    sinon.stub(auth, 'isSuperAdmin')
     sinon.stub(browser, 'loading')
     sinon.stub(browser, 'loaded')
     sinon.stub(cookies, 'get')
@@ -68,6 +70,7 @@ describe('Accommodation - Edit General Information - Field Parsing', () => {
 
   afterEach(() => {
     ajax.get.restore()
+    auth.isSuperAdmin.restore()
     browser.loading.restore()
     browser.loaded.restore()
     cookies.get.restore()

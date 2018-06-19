@@ -7,6 +7,7 @@ global describe, beforeEach, afterEach, it, expect
 const sinon = require('sinon')
 const jsRoot = '../../../../src/js/'
 const ajax = require(`${jsRoot}ajax`)
+const auth = require(`${jsRoot}auth`)
 const endpoints = require(`${jsRoot}api-endpoints`)
 const browser = require(`${jsRoot}browser`)
 const cookies = require(`${jsRoot}cookies`)
@@ -50,6 +51,7 @@ describe('Accommodation - Edit residentCriteria', () => {
           })
         }
       })
+    sinon.stub(auth, 'isSuperAdmin')
     sinon.stub(cookies, 'get')
       .withArgs('session-token')
       .returns('stored-session-token')
@@ -63,9 +65,10 @@ describe('Accommodation - Edit residentCriteria', () => {
   })
 
   afterEach(() => {
+    ajax.get.restore()
+    auth.isSuperAdmin.restore()
     browser.loading.restore()
     browser.loaded.restore()
-    ajax.get.restore()
     cookies.get.restore()
     querystring.parameter.restore()
   })

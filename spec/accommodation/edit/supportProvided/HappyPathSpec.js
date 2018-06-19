@@ -7,10 +7,12 @@ global describe, beforeEach, afterEach, it, expect
 const sinon = require('sinon')
 const jsRoot = '../../../../src/js/'
 const ajax = require(`${jsRoot}ajax`)
+const auth = require(`${jsRoot}auth`)
 const endpoints = require(`${jsRoot}api-endpoints`)
 const browser = require(`${jsRoot}browser`)
 const cookies = require(`${jsRoot}cookies`)
 const querystring = require(`${jsRoot}get-url-parameter`)
+const storage = require(`${jsRoot}localStorage`)
 
 const { testData, publishedServiceProviderData } = require('../testData')
 
@@ -27,6 +29,8 @@ describe('Accommodation - Edit SupportProvided', () => {
   let browserLoadedStub = null
 
   beforeEach(() => {
+    sinon.stub(auth, 'isSuperAdmin')
+    sinon.stub(storage, 'get').withArgs('roles').returns('superadmin')
     browserLoadingStub = sinon.stub(browser, 'loading')
     browserLoadedStub = sinon.stub(browser, 'loaded')
     ajaxGetStub = sinon.stub(ajax, 'get')
@@ -66,12 +70,18 @@ describe('Accommodation - Edit SupportProvided', () => {
     browser.loading.restore()
     browser.loaded.restore()
     ajax.get.restore()
+    auth.isSuperAdmin.restore()
     cookies.get.restore()
     querystring.parameter.restore()
+    storage.get.restore()
   })
 
   it('- should notify user it is loading', () => {
     expect(browserLoadingStub.calledOnce).toBeTruthy()
+  })
+
+  it('- should get data', () => {
+    expect(ajaxGetStub.calledTwice).toBeTruthy()
   })
 
   it('- should load supportProvided', () => {

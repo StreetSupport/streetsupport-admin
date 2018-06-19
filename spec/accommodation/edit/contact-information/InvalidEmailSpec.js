@@ -7,6 +7,7 @@ global describe, beforeEach, afterEach, it, expect
 const sinon = require('sinon')
 const jsRoot = '../../../../src/js/'
 const ajax = require(`${jsRoot}ajax`)
+const auth = require(`${jsRoot}auth`)
 const endpoints = require(`${jsRoot}api-endpoints`)
 const browser = require(`${jsRoot}browser`)
 const cookies = require(`${jsRoot}cookies`)
@@ -49,6 +50,7 @@ describe('Accommodation - Edit Contact Information - invalid email set', () => {
           })
         }
       })
+    sinon.stub(auth, 'isSuperAdmin')
     validationStub = sinon.stub(validation, 'showErrors')
 
     sinon.stub(cookies, 'get')
@@ -78,6 +80,7 @@ describe('Accommodation - Edit Contact Information - invalid email set', () => {
     browser.loading.restore()
     browser.loaded.restore()
     ajax.get.restore()
+    auth.isSuperAdmin.restore()
     cookies.get.restore()
     querystring.parameter.restore()
     validation.showErrors.restore()

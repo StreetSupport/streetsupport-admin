@@ -2,6 +2,7 @@
 
 var Q = require('q')
 var browser = require('./browser')
+import storage from './localStorage'
 
 var post = function (url, headers, data, isCustomErrorHandling) {
   if (Object.keys(headers).length === 0) {
@@ -72,6 +73,8 @@ var makeRequest = function (options) {
       req.setRequestHeader(key, options.headers[key])
     }
   }
+  req.setRequestHeader('Authorization', 'Bearer ' + storage.get('id_token')
+  )
 
   var parseResponseText = function (response) {
     if (response.responseText.length) {
@@ -101,7 +104,7 @@ var makeRequest = function (options) {
         'data': parseResponseText(this)
       })
     } else if (this.status === 401 && !options.isCustomErrorHandling) {
-      browser.redirect('/login.html')
+      browser.redirect('/login')
     } else if (this.status === 403 && !options.isCustomErrorHandling) {
       browser.redirect('/403.html')
     } else {

@@ -8,9 +8,11 @@ const sinon = require('sinon')
 
 const jsRoot = '../../../src/js/'
 const ajax = require(`${jsRoot}ajax`)
+const auth = require(`${jsRoot}auth`)
+const cookies = require(`${jsRoot}cookies`)
+const storage = require(`${jsRoot}localStorage`)
 const endpoints = require(`${jsRoot}api-endpoints`)
 const browser = require(`${jsRoot}browser`)
-const cookies = require(`${jsRoot}cookies`)
 const validation = require(`${jsRoot}validation`)
 
 import { categories } from '../../../src/data/generated/accommodation-categories'
@@ -27,16 +29,21 @@ describe('Accommodation - Add as TempAccom Admin', () => {
     browserLoadingStub = sinon.stub(browser, 'loading')
     browserLoadedStub = sinon.stub(browser, 'loaded')
     cookieStub = sinon.stub(cookies, 'get')
-    cookieStub.withArgs('auth-claims').returns('tempaccomadmin')
+    sinon.stub(auth, 'isSuperAdmin')
+    sinon.stub(storage, 'get')
+      .withArgs('roles')
+      .returns('tempaccomadmin')
 
     sut = new Model()
     sut.init()
   })
 
   afterEach(() => {
+    auth.isSuperAdmin.restore()
     browser.loading.restore()
     browser.loaded.restore()
     cookies.get.restore()
+    storage.get.restore()
   })
 
   it('- it should set list of accom types', () => {

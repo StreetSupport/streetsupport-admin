@@ -23,6 +23,7 @@ describe('Accommodation - Add - No Postcode', () => {
       .withArgs('session-token')
       .returns('stored-session-token')
     sinon.stub(auth, 'providerAdminFor')
+    sinon.stub(auth, 'isSuperAdmin')
 
     validationStub = sinon.stub(validation, 'showErrors')
 
@@ -52,6 +53,7 @@ describe('Accommodation - Add - No Postcode', () => {
 
   afterEach(() => {
     auth.providerAdminFor.restore()
+    auth.isSuperAdmin.restore()
     ajax.post.restore()
     cookies.get.restore()
     validation.showErrors.restore()

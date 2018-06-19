@@ -24,10 +24,6 @@ module.exports = {
   entry: {
     generic: p('generic'),
     index: p('index'),
-    login: p('login'),
-    logout: p('logout'),
-    requestResetPassword: p('request-reset-password'),
-    resetPassword: p('reset-password'),
     dashboard: p('dashboard'),
     serviceProvider: p('service-provider'),
     addServiceProvider: p('add-service-provider'),
@@ -63,7 +59,9 @@ module.exports = {
     tempAccomReviews: p('accommodation-reviews-add'),
     accommodationReviews: p('accommodation-reviews'),
     accommodationReviewDetails: p('accommodation-review-details'),
-    'login-auth0': path.join(__dirname, pageDirPath, 'auth0/login')
+    'auth0-login': path.join(__dirname, pageDirPath, 'auth0/login'),
+    'auth0-logout': path.join(__dirname, pageDirPath, 'auth0/logout'),
+    'auth0-authentication': path.join(__dirname, pageDirPath, 'auth0/authentication')
   },
   output: {
     path: path.join(__dirname, '/_dist/assets/js/'),

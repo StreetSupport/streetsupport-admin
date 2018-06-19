@@ -111,7 +111,7 @@ describe('Need - reposting', () => {
     ajaxPutStub = sinon.stub(ajax, 'put')
       .returns(fakePutResolution)
 
-   sinon.stub(querystring, 'parameter')
+    sinon.stub(querystring, 'parameter')
       .withArgs('id')
       .returns(needData.id)
 
