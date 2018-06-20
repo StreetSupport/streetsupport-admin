@@ -3,6 +3,7 @@
 var Q = require('q')
 var browser = require('./browser')
 import storage from './localStorage'
+import { storageKeys } from './models/auth0/webAuth'
 
 var post = function (url, data, isCustomErrorHandling) {
   return makeRequest({
@@ -48,7 +49,7 @@ var makeRequest = function (options) {
   var req = new XMLHttpRequest()
   req.open(options.method, options.url, true)
 
-  req.setRequestHeader('Authorization', 'Bearer ' + storage.get('id_token'))
+  req.setRequestHeader('Authorization', 'Bearer ' + storage.get(storageKeys.accessToken))
   req.setRequestHeader('content-type', 'application/json')
 
   var parseResponseText = function (response) {
