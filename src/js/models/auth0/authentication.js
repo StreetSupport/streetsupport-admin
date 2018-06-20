@@ -3,28 +3,25 @@
 import { storageKeys } from './webAuth'
 import browser from '../../browser'
 import storage from '../../localStorage'
+import { hashParameter } from '../../get-url-parameter'
 import jwt from 'jsonwebtoken'
 
 module.exports = function () {
-  function getParameterByName (name) {
-    var match = RegExp('[#&]' + name + '=([^&]*)').exec(window.location.hash)
-    return match && decodeURIComponent(match[1].replace(/\+/g, ' '))
-  }
-
-  const accessToken = getParameterByName('access_token')
-  const idToken = getParameterByName('id_token')
-  const state = getParameterByName('state')
-
-  //todo: nonce check
+  const accessToken = hashParameter('access_token')
+  const idToken = hashParameter('id_token')
+  const state = hashParameter('state')
 
   const storedState = storage.get(storageKeys.state)
-  if (atob(state) !== storedState) { // csrf check
+  const decodedIdToken = jwt.decode(idToken)
+  const storedNonce = storage.get(storageKeys.nonce)
+
+  if (atob(state) !== storedState || decodedIdToken.nonce !== storedNonce) { // csrf/replay check
     browser.redirect('/login')
   }
 
-  const roles = jwt.decode(idToken)['https://streetsupport.net/roles']
+  const roles = decodedIdToken['https://streetsupport.net/roles']
 
-  var expiresAt = JSON.stringify(getParameterByName('expires_in') * 1000 + new Date().getTime())
+  const expiresAt = JSON.stringify(hashParameter('expires_in') * 1000 + new Date().getTime())
   storage.set(storageKeys.accessToken, accessToken)
   storage.set(storageKeys.idToken, idToken)
   storage.set(storageKeys.expiresAt, expiresAt)

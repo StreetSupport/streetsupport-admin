@@ -8,6 +8,8 @@ module.exports = {
   redirector: s('/index'),
   fiveHundred: s('/500'),
   login: '/login',
+  authentication: '/login/authentication',
+  loggedOut: '/logout/success',
   dashboard: s('/dashboard'),
   serviceProviders: s('/service-providers'),
   notFound: s('/404'),

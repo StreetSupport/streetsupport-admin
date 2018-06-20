@@ -9,11 +9,22 @@ const storageKeys = {
   roles: 'roles'
 }
 
+const local = {
+  domain: 'https://ssn-auth-dev.eu.auth0.com/',
+  apiIdentifier: 'ssn-api-local',
+  clientId: 'Wiozbfk9PdmlaTm480kzoBFf2pHqXyK7'
+}
+
+const envs = [
+  local
+]
+
 module.exports = {
   isAuthenticated: function () {
     const expiresAt = JSON.parse(localStorage.get(storageKeys.expiresAt))
     const now = new Date().getTime()
     return now < expiresAt
   },
-  storageKeys
+  storageKeys,
+  envs
 }
