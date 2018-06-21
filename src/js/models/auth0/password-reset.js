@@ -12,7 +12,5 @@ module.exports = function () {
     ? () => browser.redirect(adminUrls.login)
     : () => browser.redirect(adminUrls.fiveHundred)
 
-  console.log(parameter('success'))
-
   action()
 }

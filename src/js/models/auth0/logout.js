@@ -1,16 +1,13 @@
 /* global location */
 
-import { storageKeys, envs } from './webAuth'
+import { logout, storageKeys } from './webAuth'
 import adminUrls from '../../admin-urls'
-import browser from '../../browser'
-import env from '../../env'
-import localStorage from '../../localStorage'
+import storage from '../../localStorage'
 
 module.exports = function () {
   Object.keys(storageKeys)
-    .forEach(k => localStorage.remove(storageKeys[k]))
-  const currentEnv = envs[env]
+    .forEach(k => storage.remove(storageKeys[k]))
+
   const logoutSuccessUrl = escape(`${location.protocol}//${location.host}${adminUrls.loggedOut}`)
-  console.log(logoutSuccessUrl)
-  browser.redirect(`${currentEnv.domain}v2/logout?returnTo=${logoutSuccessUrl}`)
+  logout(logoutSuccessUrl)
 }

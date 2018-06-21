@@ -1,4 +1,5 @@
-import localStorage from '../../localStorage'
+import browser from '../../browser'
+import env from '../../env'
 
 const storageKeys = {
   accessToken: 'access_token',
@@ -19,12 +20,32 @@ const envs = [
   local
 ]
 
+const currentEnv = envs[env]
+
+const isAuthenticated = function (expiresAt) {
+  const now = new Date().getTime()
+  return now < expiresAt
+}
+
+const login = function (loginSuccessUrl, nonce, encodedState) {
+  browser.redirect(`${currentEnv.domain}authorize?` +
+    `audience=${currentEnv.apiIdentifier}&` +
+    'scope=profile&' +
+    'response_type=id_token token&' +
+    `client_id=${currentEnv.clientId}&` +
+    `redirect_uri=${loginSuccessUrl}&` + // extract
+    `nonce=${nonce}&` +
+    `state=${encodedState}`)
+}
+
+const logout = function (logoutSuccessUrl) {
+  browser.redirect(`${currentEnv.domain}v2/logout?returnTo=${logoutSuccessUrl}`)
+}
+
 module.exports = {
-  isAuthenticated: function () {
-    const expiresAt = JSON.parse(localStorage.get(storageKeys.expiresAt))
-    const now = new Date().getTime()
-    return now < expiresAt
-  },
-  storageKeys,
-  envs
+  envs,
+  isAuthenticated,
+  login,
+  logout,
+  storageKeys
 }
