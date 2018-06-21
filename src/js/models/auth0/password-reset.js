@@ -8,7 +8,7 @@ module.exports = function () {
   Object.keys(storageKeys)
     .forEach(k => localStorage.remove(storageKeys[k]))
 
-  const action = parameter('success') === 'true' 
+  const action = parameter('success') === 'true'
     ? () => browser.redirect(adminUrls.login)
     : () => browser.redirect(adminUrls.fiveHundred)
 
