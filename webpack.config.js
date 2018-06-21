@@ -61,7 +61,8 @@ module.exports = {
     accommodationReviewDetails: p('accommodation-review-details'),
     'auth0-login': path.join(__dirname, pageDirPath, 'auth0/login'),
     'auth0-logout': path.join(__dirname, pageDirPath, 'auth0/logout'),
-    'auth0-authentication': path.join(__dirname, pageDirPath, 'auth0/authentication')
+    'auth0-authentication': path.join(__dirname, pageDirPath, 'auth0/authentication'),
+    'auth0-password-reset': path.join(__dirname, pageDirPath, 'auth0/password-reset')
   },
   output: {
     path: path.join(__dirname, '/_dist/assets/js/'),

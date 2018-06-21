@@ -8,7 +8,7 @@ let Spinner = require('spin.js')
 let adminUrls = require('./admin-urls')
 
 let redirect = (url) => {
-  if (url === adminUrls.login) {
+  if (url === adminUrls.login && window.location.pathname !== adminUrls.passwordReset + '/') {
     window.location.href = adminUrls.login + '?redirectUrl=' + window.location.href
   } else {
     window.location.href = url
