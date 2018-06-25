@@ -23,6 +23,6 @@ module.exports = function () {
     const encodedState = btoa(state)
     const loginSuccessUrl = escape(`${location.protocol}//${location.host}${adminUrls.authentication}`)
 
-    login(loginSuccessUrl, nonce, encodedState);
+    login(loginSuccessUrl, nonce, encodedState)
   }
 }

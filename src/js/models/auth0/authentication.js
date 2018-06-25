@@ -14,12 +14,12 @@ module.exports = function () {
     browser.redirect('/login')
   }
 
-  storeAuthValues(decodedIdToken, accessToken, idToken);
+  storeAuthValues(decodedIdToken, accessToken, idToken)
   browser.redirect(`/?redirectUrl=${JSON.parse(storedState).redirectUrl}`)
 }
 
-function retrieveResponseTokens() {
-  const idToken = hashParameter('id_token');
+function retrieveResponseTokens () {
+  const idToken = hashParameter('id_token')
   return {
     accessToken: hashParameter('access_token'),
     idToken,
@@ -28,26 +28,26 @@ function retrieveResponseTokens() {
   }
 }
 
-function retrieveRequestTokens() {
+function retrieveRequestTokens () {
   return {
     storedState: storage.get(storageKeys.state),
     storedNonce: storage.get(storageKeys.nonce)
   }
 }
 
-function responseIsInvalid(state, storedState, decodedIdToken, storedNonce) {
-  function isReplayAttack() {
+function responseIsInvalid (state, storedState, decodedIdToken, storedNonce) {
+  function isReplayAttack () {
     return decodedIdToken.nonce !== storedNonce
   }
 
-  function isCsrfAttack() {
+  function isCsrfAttack () {
     return atob(state) !== storedState
   }
 
-  return isCsrfAttack() || isReplayAttack();
+  return isCsrfAttack() || isReplayAttack()
 }
 
-function storeAuthValues(decodedIdToken, accessToken, idToken) {
+function storeAuthValues (decodedIdToken, accessToken, idToken) {
   const expiresAt = JSON.stringify(hashParameter('expires_in') * 1000 + new Date().getTime())
   const roles = decodedIdToken['https://streetsupport.net/roles']
   storage.set(storageKeys.accessToken, accessToken)

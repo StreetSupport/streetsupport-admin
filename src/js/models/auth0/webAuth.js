@@ -1,5 +1,6 @@
 import browser from '../../browser'
 import env from '../../env'
+import storage from '../../localStorage'
 
 const storageKeys = {
   accessToken: 'access_token',
@@ -22,7 +23,8 @@ const envs = [
 
 const currentEnv = envs[env]
 
-const isAuthenticated = function (expiresAt) {
+const isAuthenticated = function () {
+  const expiresAt = JSON.parse(storage.get(storageKeys.expiresAt))
   const now = new Date().getTime()
   return now < expiresAt
 }

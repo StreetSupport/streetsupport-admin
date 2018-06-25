@@ -38,7 +38,7 @@ function Index () {
       }
     }
 
-    if (!isAuthenticated(JSON.parse(storage.get(storageKeys.expiresAt)))) {
+    if (!isAuthenticated()) {
       browser.redirect(adminUrls.login)
     } else {
       success(storage.get(storageKeys.roles).toLowerCase().split(','))
