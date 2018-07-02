@@ -2,10 +2,10 @@
 
 const sinon = require('sinon')
 const ajax = require('../../../src/js/ajax')
+const auth = require('../../../src/js/auth')
 const adminUrls = require('../../../src/js/admin-urls')
 const endpoints = require('../../../src/js/api-endpoints')
 const browser = require('../../../src/js/browser')
-const cookies = require('../../../src/js/cookies')
 const nav = require('../../../src/js/nav')
 const Model = require('../../../src/js/models/cities/SwepModel')
 
@@ -20,10 +20,6 @@ describe('SWEP Availabilty', () => {
     browserLoadedStub = sinon.stub(browser, 'loaded')
     sinon.stub(nav, 'disableForbiddenLinks')
 
-    const cookieStub = sinon.stub(cookies, 'get')
-    cookieStub.withArgs('session-token').returns('stored-session-token')
-    cookieStub.withArgs('auth-claims').returns('SuperAdmin')
-
     ajaxGetStub = sinon
       .stub(ajax, 'get')
       .withArgs(endpoints.cities)
@@ -35,7 +31,7 @@ describe('SWEP Availabilty', () => {
           })
         }
       })
-
+    sinon.stub(auth, 'isCityAdmin').returns(false)
     sut = new Model()
 
     sut.init()
@@ -43,9 +39,9 @@ describe('SWEP Availabilty', () => {
 
   afterEach(() => {
     ajax.get.restore()
+    auth.isCityAdmin.restore()
     browser.loading.restore()
     browser.loaded.restore()
-    cookies.get.restore()
     nav.disableForbiddenLinks.restore()
   })
 
@@ -107,15 +103,11 @@ describe('SWEP Availabilty', () => {
 
       it('- Should patch to api', () => {
         const endpoint = `${endpoints.cities}/manchester/swep-status`
-        const headers = {
-          'content-type': 'application/json',
-          'session-token': 'stored-session-token'
-        }
         const data = {
           isAvailable: false
         }
         const apiCalledAsExpected = ajaxPatchStub
-        .withArgs(endpoint, headers, data)
+        .withArgs(endpoint, data)
           .calledAfter(browserLoadingStub)
         expect(apiCalledAsExpected).toBeTruthy()
       })
@@ -157,15 +149,11 @@ describe('SWEP Availabilty', () => {
 
       it('- Should patch to api', () => {
         const endpoint = `${endpoints.cities}/manchester/swep-status`
-        const headers = {
-          'content-type': 'application/json',
-          'session-token': 'stored-session-token'
-        }
         const data = {
           isAvailable: false
         }
         const apiCalledAsExpected = ajaxPatchStub
-        .withArgs(endpoint, headers, data)
+        .withArgs(endpoint, data)
           .calledAfter(browserLoadingStub)
         expect(apiCalledAsExpected).toBeTruthy()
       })

@@ -8,7 +8,6 @@ let sinon = require('sinon')
 let ajax = require('../../src/js/ajax')
 let adminurls = require('../../src/js/admin-urls')
 let browser = require('../../src/js/browser')
-let cookies = require('../../src/js/cookies')
 let getUrlParameter = require('../../src/js/get-url-parameter')
 
 describe('Add individual Address', () => {
@@ -42,7 +41,6 @@ describe('Add individual Address', () => {
         }
       }
       browserSpy = sinon.stub(browser, 'redirect')
-      sinon.stub(cookies, 'get').returns('saved-session-token')
       sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
       sinon.stub(ajax, 'post').returns(fakeResolved)
 
@@ -52,7 +50,6 @@ describe('Add individual Address', () => {
     afterEach(() => {
       ajax.post.restore()
       browser.redirect.restore()
-      cookies.get.restore()
       getUrlParameter.parameter.restore()
     })
 

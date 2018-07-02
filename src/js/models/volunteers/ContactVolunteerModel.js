@@ -3,7 +3,6 @@
 var BaseViewModel = require('../BaseViewModel')
 var ajax = require('../../ajax')
 var browser = require('../../browser')
-var cookies = require('../../cookies')
 var getUrlParam = require('../../get-url-parameter')
 var ko = require('knockout')
 require('knockout.validation') // No variable here is deliberate!
@@ -29,8 +28,6 @@ var ContactVolunteerModel = function () {
     errorElementClass: 'form__input--error'
   }, true)
 
-  const headers = self.headers(cookies.get('session-token'))
-
   self.submit = function () {
     if (self.formModel.isValid()) {
       browser.loading()
@@ -40,7 +37,7 @@ var ContactVolunteerModel = function () {
         'ShouldSendEmail': !self.formModel().isNotAnEmail()
       }
       ajax
-        .post(endpoint, headers, payload)
+        .post(endpoint, payload)
         .then(function (res) {
           browser.loaded()
           if (res.status === 'error') {
@@ -59,7 +56,7 @@ var ContactVolunteerModel = function () {
 
   const getEndpoint = self.endpointBuilder.volunteers(getUrlParam.parameter('id')).build()
   ajax
-    .get(getEndpoint, headers)
+    .get(getEndpoint)
     .then((res) => {
       self.volunteer(new Volunteer(res.data))
       self.formModel().isNotAnEmail(self.volunteer().person.email.length === 0)

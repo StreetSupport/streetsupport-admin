@@ -9,7 +9,6 @@ const sinon = require('sinon')
 const jsRoot = '../../../src/js/'
 const ajax = require(`${jsRoot}ajax`)
 const browser = require(`${jsRoot}browser`)
-const cookies = require(`${jsRoot}cookies`)
 const validation = require(`${jsRoot}validation`)
 
 describe('Users - Create Super Admin - server returns bad request', () => {
@@ -41,8 +40,6 @@ describe('Users - Create Super Admin - server returns bad request', () => {
       browserLoadedStub.reset()
       sinon.stub(validation, 'showErrors')
 
-      sinon.stub(cookies, 'get').withArgs('session-token').returns('stored-session-token')
-
       ajaxPostStub = sinon.stub(ajax, 'post')
         .returns({
           then: function (success, error) {
@@ -65,7 +62,6 @@ describe('Users - Create Super Admin - server returns bad request', () => {
 
     afterEach(() => {
       ajax.post.restore()
-      cookies.get.restore()
       validation.showErrors.restore()
     })
 

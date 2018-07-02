@@ -1,5 +1,4 @@
 var ajax = require('../ajax')
-var cookies = require('../cookies')
 var Address = require('./Address')
 var getUrlParameter = require('../get-url-parameter')
 var ko = require('knockout')
@@ -60,7 +59,6 @@ function ServiceProviderAddresses () {
 
   self.init = function () {
     ajax.get(self.endpointBuilder.serviceProviders(getUrlParameter.parameter('key')).addresses().build(),
-      self.headers(cookies.get('session-token')),
       {})
       .then(function (result) {
         self.serviceProvider(new ServiceProvider(result.data))

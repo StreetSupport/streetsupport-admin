@@ -2,63 +2,45 @@
 
 var Q = require('q')
 var browser = require('./browser')
+import storage from './localStorage'
+import { storageKeys } from './models/auth0/webAuth'
 
-var post = function (url, headers, data, isCustomErrorHandling) {
-  if (Object.keys(headers).length === 0) {
-    headers = {
-      'content-type': 'application/json'
-    }
-  }
+var post = function (url, data, isCustomErrorHandling) {
   return makeRequest({
     method: 'POST',
     url: url,
-    headers: headers,
     data: data,
     isCustomErrorHandling: isCustomErrorHandling
   }).promise
 }
 
-var put = function (url, headers, data) {
-  if (Object.keys(headers).length === 0) {
-    headers = {
-      'content-type': 'application/json'
-    }
-  }
+var put = function (url, data) {
   return makeRequest({
     method: 'PUT',
     url: url,
-    headers: headers,
     data: data
   }).promise
 }
 
-var patch = function (url, headers, data) {
-  if (Object.keys(headers).length === 0) {
-    headers = {
-      'content-type': 'application/json'
-    }
-  }
+var patch = function (url, data) {
   return makeRequest({
     method: 'PATCH',
     url: url,
-    headers: headers,
     data: data
   }).promise
 }
 
-var get = function (url, headers) {
+var get = function (url) {
   return makeRequest({
     method: 'GET',
-    url: url,
-    headers: headers
+    url: url
   }).promise
 }
 
-var _delete = function (url, headers) {
+var _delete = function (url) {
   return makeRequest({
     method: 'DELETE',
-    url: url,
-    headers: headers
+    url: url
   }).promise
 }
 
@@ -67,11 +49,8 @@ var makeRequest = function (options) {
   var req = new XMLHttpRequest()
   req.open(options.method, options.url, true)
 
-  for (var key in options.headers) {
-    if (options.headers.hasOwnProperty(key)) {
-      req.setRequestHeader(key, options.headers[key])
-    }
-  }
+  req.setRequestHeader('Authorization', 'Bearer ' + storage.get(storageKeys.accessToken))
+  req.setRequestHeader('content-type', 'application/json')
 
   var parseResponseText = function (response) {
     if (response.responseText.length) {
@@ -101,7 +80,7 @@ var makeRequest = function (options) {
         'data': parseResponseText(this)
       })
     } else if (this.status === 401 && !options.isCustomErrorHandling) {
-      browser.redirect('/login.html')
+      browser.redirect('/login')
     } else if (this.status === 403 && !options.isCustomErrorHandling) {
       browser.redirect('/403.html')
     } else {

@@ -7,7 +7,6 @@ global describe, beforeEach, afterEach, it, expect
 var sinon = require('sinon')
 var ajax = require('../../src/js/ajax')
 var endpoints = require('../../src/js/api-endpoints')
-var cookies = require('../../src/js/cookies')
 var getUrlParameter = require('../../src/js/get-url-parameter')
 
 describe('Delete Service', () => {
@@ -25,7 +24,6 @@ describe('Delete Service', () => {
     }
 
     stubbedApi = sinon.stub(ajax, 'delete').returns(fakeResolved)
-    sinon.stub(cookies, 'get').returns('stored-session-token')
     sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
 
     model.deleteService()
@@ -33,17 +31,12 @@ describe('Delete Service', () => {
 
   afterEach(() => {
     ajax.delete.restore()
-    cookies.get.restore()
     getUrlParameter.parameter.restore()
   })
 
-  it('should delete service id to api create endpoint with session token', () => {
+  it('should delete service id to api create endpoint', () => {
     var endpoint = endpoints.getServiceProviders + '/coffee4craig/services/' + model.id()
-    var headers = {
-      'content-type': 'application/json',
-      'session-token': 'stored-session-token'
-    }
-    var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, headers).calledOnce
+    var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint).calledOnce
     expect(apiCalledWithExpectedArgs).toBeTruthy()
   })
 })

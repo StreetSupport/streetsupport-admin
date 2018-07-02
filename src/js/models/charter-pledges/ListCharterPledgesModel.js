@@ -2,7 +2,6 @@
 
 var ajax = require('../../ajax')
 var browser = require('../../browser')
-var cookies = require('../../cookies')
 var validation = require('../../validation')
 var BaseViewModel = require('../BaseViewModel')
 var ko = require('knockout')
@@ -55,10 +54,9 @@ function Pledge (data, listener) {
     browser.loading()
 
     var endpoint = self.endpointBuilder.charterPledges(self.id).approval().build()
-    var headers = self.headers(cookies.get('session-token'))
 
     ajax
-      .put(endpoint, headers, { isApproved: !self.isApproved() })
+      .put(endpoint, { isApproved: !self.isApproved() })
       .then(function (result) {
         self.isApproved(!self.isApproved())
         listener.pledgeApprovalUpdated(self.isApproved())
@@ -72,10 +70,9 @@ function Pledge (data, listener) {
     browser.loading()
 
     var endpoint = self.endpointBuilder.charterPledges(self.id).featured().build()
-    var headers = self.headers(cookies.get('session-token'))
 
     ajax
-      .put(endpoint, headers, { isFeatured: !self.isFeatured() })
+      .put(endpoint, { isFeatured: !self.isFeatured() })
       .then(function (result) {
         self.isFeatured(!self.isFeatured())
         browser.loaded()
@@ -97,13 +94,12 @@ function Pledge (data, listener) {
     browser.loading()
 
     let endpoint = self.endpointBuilder.charterPledges(self.id).pledge().build()
-    let headers = self.headers(cookies.get('session-token'))
     let payload = {
       pledge: htmlEncode.htmlDecode(self.formModel().description())
     }
 
     ajax
-      .put(endpoint, headers, payload)
+      .put(endpoint, payload)
       .then((result) => {
         browser.loaded()
         self.description(self.formModel().description())
@@ -124,9 +120,8 @@ function Pledge (data, listener) {
   self.deletePledge = () => {
     browser.loading()
     let endpoint = self.endpointBuilder.charterPledges(self.id).deleted().build()
-    let headers = self.headers(cookies.get('session-token'))
     ajax
-      .put(endpoint, headers)
+      .put(endpoint)
       .then((result) => {
         browser.loaded()
         self.listener.pledgeDeleted(self)
@@ -184,10 +179,9 @@ function ListCharterPledgesModel () {
   browser.loading()
 
   var endpoint = self.endpointBuilder.charterPledges().build()
-  var headers = self.headers(cookies.get('session-token'))
 
   ajax
-    .get(endpoint, headers)
+    .get(endpoint)
     .then(function (result) {
       let pledges = result.data
         .sort((a, b) => {

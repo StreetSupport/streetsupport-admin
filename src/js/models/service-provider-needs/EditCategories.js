@@ -1,7 +1,6 @@
 import ajax from '../../ajax'
 import adminUrls from '../../admin-urls'
 import browser from '../../browser'
-import cookies from '../../cookies'
 import BaseViewModel from '../BaseViewModel'
 import endpoints from '../../api-endpoints'
 import querystring from '../../get-url-parameter'
@@ -48,7 +47,7 @@ const Model = function () {
   const getProvider = (providerId) => {
     const providerEndpoint = endpoints.getServiceProviders + '/' + providerId
     ajax
-      .get(providerEndpoint, self.headers(cookies.get('session-token')))
+      .get(providerEndpoint)
       .then((result) => {
         self.providerCategories = ko.observableArray(result.data.needCategories)
         dataReceived()
@@ -64,7 +63,7 @@ const Model = function () {
     const payload = self.categories()
       .filter((c) => c.isChecked())
       .map((c) => c.key)
-    ajax.put(endpoint, self.headers(cookies.get('session-token')), payload)
+    ajax.put(endpoint, payload)
       .then((result) => {
         self.isSubmitted(true)
         self.isSuccessful(true)

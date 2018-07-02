@@ -9,7 +9,6 @@ var ajax = require('../../src/js/ajax')
 var endpoints = require('../../src/js/api-endpoints')
 var adminurls = require('../../src/js/admin-urls')
 var browser = require('../../src/js/browser')
-var cookies = require('../../src/js/cookies')
 var getUrlParameter = require('../../src/js/get-url-parameter')
 
 describe('Add individual Need', () => {
@@ -31,15 +30,9 @@ describe('Add individual Need', () => {
         })
       }
     }
-    sinon.stub(cookies, 'get').returns('saved-session-token')
     ajaxGetStub = sinon.stub(ajax, 'get')
-    ajaxGetStub.withArgs(
-      endpoints.getServiceProviders + '/coffee4craig/addresses',
-      {
-        'content-type': 'application/json',
-        'session-token': 'saved-session-token'
-      }
-    ).returns(getAddressesResolution)
+    ajaxGetStub.withArgs(endpoints.getServiceProviders + '/coffee4craig/addresses')
+      .returns(getAddressesResolution)
 
     let getDerivedTweetResolution = () => {
       return {
@@ -52,14 +45,7 @@ describe('Add individual Need', () => {
       }
     }
     const endpoint = endpoints.needTweetMessage + '?providerId=coffee4craig&needDescription=new description'
-    const headers = {
-      'content-type': 'application/json',
-      'session-token': 'saved-session-token'
-    }
-    ajaxGetStub.withArgs(
-      endpoint,
-      headers
-    ).returns(getDerivedTweetResolution())
+    ajaxGetStub.withArgs(endpoint).returns(getDerivedTweetResolution())
 
     model = new Model()
   })
@@ -69,7 +55,6 @@ describe('Add individual Need', () => {
     browser.loaded.restore()
     getUrlParameter.parameter.restore()
     ajax.get.restore()
-    cookies.get.restore()
   })
 
   it('should set an empty description', () => {
@@ -176,10 +161,6 @@ describe('Add individual Need', () => {
 
     it('should post need to api', () => {
       var endpoint = endpoints.getServiceProviders + '/coffee4craig/needs'
-      var headers = {
-        'content-type': 'application/json',
-        'session-token': 'saved-session-token'
-      }
       var payload = {
         'Description': 'new description',
         'Type': 'type',
@@ -193,7 +174,7 @@ describe('Add individual Need', () => {
         'Keywords': [ 'keywordA', 'keywordB', 'keywordC' ],
         'CustomMessage': 'custom message'
       }
-      var postAsExpected = ajaxStub.withArgs(endpoint, headers, payload).calledOnce
+      var postAsExpected = ajaxStub.withArgs(endpoint, payload).calledOnce
       expect(postAsExpected).toBeTruthy()
     })
 

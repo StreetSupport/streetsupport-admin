@@ -13,8 +13,10 @@ if (argv.production) {
   plugins.push(new webpack.optimize.UglifyJsPlugin())
 }
 
-let p = (pageName) => {
-  let pagesDir = path.join(__dirname, '/src/js/pages/page-')
+const pageDirPath = '/src/js/pages/'
+
+const p = (pageName) => {
+  const pagesDir = path.join(__dirname, pageDirPath, 'page-')
   return pagesDir + pageName
 }
 
@@ -22,10 +24,6 @@ module.exports = {
   entry: {
     generic: p('generic'),
     index: p('index'),
-    login: p('login'),
-    logout: p('logout'),
-    requestResetPassword: p('request-reset-password'),
-    resetPassword: p('reset-password'),
     dashboard: p('dashboard'),
     serviceProvider: p('service-provider'),
     addServiceProvider: p('add-service-provider'),
@@ -39,7 +37,6 @@ module.exports = {
     editServiceProviderNeed: p('edit-service-provider-need'),
     needResponses: p('provider-need-responses'),
     addUser: p('add-user'),
-    verifyNewUser: p('verify-new-user'),
     charterPledges: p('charter-pledges'),
     actionGroups: p('action-groups'),
     volunteers: p('volunteers'),
@@ -60,7 +57,11 @@ module.exports = {
     tempAccomEdit: p('accommodation-edit'),
     tempAccomReviews: p('accommodation-reviews-add'),
     accommodationReviews: p('accommodation-reviews'),
-    accommodationReviewDetails: p('accommodation-review-details')
+    accommodationReviewDetails: p('accommodation-review-details'),
+    'auth0-login': path.join(__dirname, pageDirPath, 'auth0/login'),
+    'auth0-logout': path.join(__dirname, pageDirPath, 'auth0/logout'),
+    'auth0-authentication': path.join(__dirname, pageDirPath, 'auth0/authentication'),
+    'auth0-password-reset': path.join(__dirname, pageDirPath, 'auth0/password-reset')
   },
   output: {
     path: path.join(__dirname, '/_dist/assets/js/'),

@@ -8,7 +8,6 @@ let sinon = require('sinon')
 let ajax = require('../../src/js/ajax')
 let browser = require('../../src/js/browser')
 let endpoints = require('../../src/js/api-endpoints')
-let cookies = require('../../src/js/cookies')
 let getUrlParameter = require('../../src/js/get-url-parameter')
 
 describe('Address', () => {
@@ -91,7 +90,6 @@ describe('Address', () => {
         }
 
         stubbedApi = sinon.stub(ajax, 'put').returns(fakeResolved)
-        sinon.stub(cookies, 'get').returns('stored-session-token')
         sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
 
         model.street1('new street1')
@@ -113,16 +111,11 @@ describe('Address', () => {
 
       afterEach(() => {
         ajax.put.restore()
-        cookies.get.restore()
         getUrlParameter.parameter.restore()
       })
 
-      it('should put address details to api with session token', () => {
+      it('should put address details to api', () => {
         var endpoint = endpoints.getServiceProviders + '/coffee4craig/addresses/1234'
-        var headers = {
-          'content-type': 'application/json',
-          'session-token': 'stored-session-token'
-        }
         var payload = {
           'Street': 'new street1',
           'Street1': 'new street2',
@@ -143,7 +136,7 @@ describe('Address', () => {
           }]
         }
 
-        var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, headers, payload).calledOnce
+        var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, payload).calledOnce
         expect(apiCalledWithExpectedArgs).toBeTruthy()
       })
 
@@ -183,7 +176,6 @@ describe('Address', () => {
 
         sinon.stub(browser, 'scrollTo')
         sinon.stub(ajax, 'put').returns(fakeResolved)
-        sinon.stub(cookies, 'get').returns('stored-session-token')
         sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
 
         model.street1('new street1')
@@ -194,7 +186,6 @@ describe('Address', () => {
       afterEach(() => {
         ajax.put.restore()
         browser.scrollTo.restore()
-        cookies.get.restore()
         getUrlParameter.parameter.restore()
       })
 

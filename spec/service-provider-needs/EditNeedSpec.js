@@ -9,7 +9,6 @@ var ajax = require('../../src/js/ajax')
 var endpoints = require('../../src/js/api-endpoints')
 var adminurls = require('../../src/js/admin-urls')
 var browser = require('../../src/js/browser')
-var cookies = require('../../src/js/cookies')
 var getUrlParameter = require('../../src/js/get-url-parameter')
 
 describe('Editing Service Provider Need', () => {
@@ -34,17 +33,12 @@ describe('Editing Service Provider Need', () => {
         }
       }
     }
-    ajaxGetStub = sinon.stub(ajax, 'get').withArgs(
-      endpoints.getServiceProviders + '/albert-kennedy-trust/needs/56d8784092855610f88d492a',
-      {
-        'content-type': 'application/json',
-        'session-token': 'saved-session-token'
-      }
-    ).returns(fakeGetResolution())
+    ajaxGetStub = sinon.stub(ajax, 'get')
+      .withArgs(endpoints.getServiceProviders + '/albert-kennedy-trust/needs/56d8784092855610f88d492a')
+      .returns(fakeGetResolution())
     var urlParamsStub = sinon.stub(getUrlParameter, 'parameter')
     urlParamsStub.withArgs('providerId').returns('albert-kennedy-trust')
     urlParamsStub.withArgs('needId').returns('56d8784092855610f88d492a')
-    sinon.stub(cookies, 'get').returns('saved-session-token')
     model = new Model()
   })
 
@@ -53,7 +47,6 @@ describe('Editing Service Provider Need', () => {
     browser.loading.restore()
     browser.loaded.restore()
     getUrlParameter.parameter.restore()
-    cookies.get.restore()
     browser.redirect.restore()
   })
 
@@ -132,10 +125,6 @@ describe('Editing Service Provider Need', () => {
       }
       ajaxPutStub = sinon.stub(ajax, 'put').withArgs(
         endpoints.getServiceProviders + '/albert-kennedy-trust/needs/56d8784092855610f88d492a',
-        {
-          'content-type': 'application/json',
-          'session-token': 'saved-session-token'
-        },
         {
           'Description': 'men\'s shoes & socks',
           'Type': 'Money',

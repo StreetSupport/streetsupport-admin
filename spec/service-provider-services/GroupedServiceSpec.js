@@ -10,7 +10,6 @@ const sinon = require('sinon')
 const ajax = require('../../src/js/ajax')
 const browser = require('../../src/js/browser')
 const endpoints = require('../../src/js/api-endpoints')
-const cookies = require('../../src/js/cookies')
 const getUrlParameter = require('../../src/js/get-url-parameter')
 
 describe('Grouped Service', () => {
@@ -40,7 +39,6 @@ describe('Grouped Service', () => {
         }
 
         stubbedApi = sinon.stub(ajax, 'put').returns(fakeResolved)
-        sinon.stub(cookies, 'get').returns('stored-session-token')
         sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
 
         model.info('new info')
@@ -70,17 +68,12 @@ describe('Grouped Service', () => {
 
       afterEach(() => {
         ajax.put.restore()
-        cookies.get.restore()
         getUrlParameter.parameter.restore()
       })
 
-      it('should put service details with new to api with session token', () => {
+      it('should put service details with new to api', () => {
         var endpoint = endpoints.getServiceProviders + '/coffee4craig/services/57bdb2c58705422ecc65724f'
 
-        var headers = {
-          'content-type': 'application/json',
-          'session-token': 'stored-session-token'
-        }
         var payload = {
           'Info': 'new info',
           'Tags': [
@@ -106,7 +99,7 @@ describe('Grouped Service', () => {
           SubCategories: ['subcat2']
         }
 
-        var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, headers, payload).calledOnce
+        var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, payload).calledOnce
         expect(apiCalledWithExpectedArgs).toBeTruthy()
       })
     })
@@ -126,7 +119,6 @@ describe('Grouped Service', () => {
 
         sinon.stub(browser, 'scrollTo')
         stubbedApi = sinon.stub(ajax, 'put').returns(fakeResolved)
-        sinon.stub(cookies, 'get').returns('stored-session-token')
         sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
 
         model.tags('')
@@ -137,16 +129,11 @@ describe('Grouped Service', () => {
       afterEach(() => {
         ajax.put.restore()
         browser.scrollTo.restore()
-        cookies.get.restore()
         getUrlParameter.parameter.restore()
       })
 
-      it('should put service details with new to api with session token', () => {
+      it('should put service details with new to api', () => {
         var endpoint = endpoints.getServiceProviders + '/coffee4craig/services/57bdb2c58705422ecc65724f'
-        var headers = {
-          'content-type': 'application/json',
-          'session-token': 'stored-session-token'
-        }
         var payload = {
           'Info': 'info',
           'Tags': [],
@@ -167,7 +154,7 @@ describe('Grouped Service', () => {
           'SubCategories': []
         }
 
-        var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, headers, payload).calledOnce
+        var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, payload).calledOnce
         expect(apiCalledWithExpectedArgs).toBeTruthy()
       })
     })
@@ -187,7 +174,6 @@ describe('Grouped Service', () => {
 
         sinon.stub(ajax, 'put').returns(fakeResolved)
         sinon.stub(browser, 'scrollTo')
-        sinon.stub(cookies, 'get').returns('stored-session-token')
         sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
 
         model.info('new info')
@@ -198,7 +184,6 @@ describe('Grouped Service', () => {
       afterEach(() => {
         ajax.put.restore()
         browser.scrollTo.restore()
-        cookies.get.restore()
         getUrlParameter.parameter.restore()
       })
 

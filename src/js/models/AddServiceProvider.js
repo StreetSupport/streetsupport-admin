@@ -2,7 +2,6 @@ const ko = require('knockout')
 const ajax = require('../ajax')
 const auth = require('../auth')
 const adminUrls = require('../admin-urls')
-const cookies = require('../cookies')
 const browser = require('../browser')
 const BaseViewModel = require('./BaseViewModel')
 
@@ -26,7 +25,6 @@ function AddServiceProvider () {
 
     return {
       endpoint,
-      headers: self.headers(cookies.get('session-token')),
       payload
     }
   }
@@ -46,7 +44,7 @@ function AddServiceProvider () {
     const postParams = buildPost()
 
     ajax
-      .post(postParams.endpoint, postParams.headers, postParams.payload)
+      .post(postParams.endpoint, postParams.payload)
       .then(function (result) {
         handlePost(result)
       }, function (error) {

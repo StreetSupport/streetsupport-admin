@@ -3,7 +3,6 @@ require('knockout.validation') // No variable here is deliberate!
 
 let ajax = require('../../../ajax')
 let browser = require('../../../browser')
-let cookies = require('../../../cookies')
 let querystring = require('../../../get-url-parameter')
 let BaseViewModel = require('../../BaseViewModel')
 let Item = require('./Item')
@@ -54,9 +53,8 @@ function Add () {
     browser.loading()
     const id = querystring.parameter('id')
     const endpoint = `${self.endpointBuilder.temporaryAccommodation(id).build()}`
-    const headers = self.headers(cookies.get('session-token'))
     ajax
-      .get(endpoint, headers)
+      .get(endpoint)
       .then((result) => {
         browser.loaded()
 

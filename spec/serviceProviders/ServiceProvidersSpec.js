@@ -9,7 +9,6 @@ var ajax = require('../../src/js/ajax')
 var endpoints = require('../../src/js/api-endpoints')
 var adminurls = require('../../src/js/admin-urls')
 var browser = require('../../src/js/browser')
-var cookies = require('../../src/js/cookies')
 
 describe('Service Providers', () => {
   var Dashboard = require('../../src/js/models/ServiceProviders')
@@ -53,7 +52,6 @@ describe('Service Providers', () => {
     }
 
     stubbedApi = sinon.stub(ajax, 'get').returns(fakeResolved)
-    sinon.stub(cookies, 'get').returns('stored-session-token')
     browserLoadingStub = sinon.stub(browser, 'loading')
     browserLoadedStub = sinon.stub(browser, 'loaded')
 
@@ -62,7 +60,6 @@ describe('Service Providers', () => {
 
   afterEach(() => {
     ajax.get.restore()
-    cookies.get.restore()
     browser.loading.restore()
     browser.loaded.restore()
   })
@@ -71,14 +68,10 @@ describe('Service Providers', () => {
     expect(browserLoadingStub.calledOnce).toBeTruthy()
   })
 
-  it('should retrieve service providers from api with session token', () => {
+  it('should retrieve service providers from api', () => {
     var endpoint = endpoints.getServiceProvidersHAL
-    var headers = {
-      'content-type': 'application/json',
-      'session-token': 'stored-session-token'
-    }
     var payload = {}
-    var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, headers, payload).calledOnce
+    var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, payload).calledOnce
     expect(apiCalledWithExpectedArgs).toBeTruthy()
   })
 

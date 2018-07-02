@@ -4,7 +4,6 @@ var ko = require('knockout')
 var GroupedService = require('../GroupedService')
 var BaseViewModel = require('../BaseViewModel')
 var getUrlParameter = require('../../get-url-parameter')
-var cookies = require('../../cookies')
 var ajax = require('../../ajax')
 var browser = require('../../browser')
 var adminUrls = require('../../admin-urls')
@@ -61,7 +60,7 @@ function EditServiceProviderService () {
       .services(getUrlParameter.parameter('serviceId'))
       .build()
 
-    ajax.get(serviceProviderEndpoint, self.headers(cookies.get('session-token')), {})
+    ajax.get(serviceProviderEndpoint, {})
     .then(gotServices,
     function (error) {
       self.handleError(error)
@@ -74,7 +73,7 @@ function EditServiceProviderService () {
 
     var categoryEndpoint = self.endpointBuilder.categories().build()
 
-    ajax.get(categoryEndpoint, self.headers(cookies.get('session-token')), {})
+    ajax.get(categoryEndpoint, {})
     .then(gotCategories,
     function (error) {
       self.handleError(error)

@@ -5,7 +5,6 @@ const marked = require('marked')
 const adminUrls = require('../../admin-urls')
 const ajax = require('../../ajax')
 const browser = require('../../browser')
-const cookies = require('../../cookies')
 
 import { cities } from '../../../data/generated/supported-cities'
 
@@ -89,7 +88,7 @@ function ServiceProvider (data) {
   self.verifyOrg = function () {
     ajax
       .put(`${self.endpointBuilder.serviceProviders(self.key()).build()}/is-verified`,
-        self.headers(cookies.get('session-token')), { IsVerified: true })
+        { IsVerified: true })
       .then((success) => {
         self.isVerified(true)
       }, (e) => {

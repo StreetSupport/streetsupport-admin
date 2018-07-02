@@ -1,6 +1,5 @@
 var ajax = require('../ajax')
 var adminUrls = require('../admin-urls')
-var cookies = require('../cookies')
 var browser = require('../browser')
 var ko = require('knockout')
 var BaseViewModel = require('./BaseViewModel')
@@ -55,7 +54,6 @@ function DashboardModel () {
     browser.loading()
     ajax
     .get(self.endpointBuilder.serviceProvidersHAL().build(),
-      self.headers(cookies.get('session-token')),
       {})
     .then(function (result) {
       self.allServiceProviders(self.mapServiceProviders(result.data.items))
@@ -83,7 +81,6 @@ function DashboardModel () {
 
   self.toggleVerified = function (serviceProvider, event) {
     ajax.put(self.endpointBuilder.serviceProviders(serviceProvider.key).build() + '/is-verified',
-      self.headers(cookies.get('session-token')),
       {
         'IsVerified': !serviceProvider.isVerified()
       }
@@ -102,7 +99,6 @@ function DashboardModel () {
 
   self.togglePublished = function (serviceProvider, event) {
     ajax.put(self.endpointBuilder.serviceProviders(serviceProvider.key).build() + '/is-published',
-      self.headers(cookies.get('session-token')),
       {
         'IsPublished': !serviceProvider.isPublished()
       }

@@ -8,7 +8,6 @@ var sinon = require('sinon')
 let ajax = require('../../src/js/ajax')
 let endpoints = require('../../src/js/api-endpoints')
 let adminurls = require('../../src/js/admin-urls')
-let cookies = require('../../src/js/cookies')
 let getUrlParameter = require('../../src/js/get-url-parameter')
 
 describe('Service Provider Services', () => {
@@ -27,7 +26,6 @@ describe('Service Provider Services', () => {
     }
 
     stubbedApi = sinon.stub(ajax, 'get').returns(fakeResolved)
-    sinon.stub(cookies, 'get').returns('stored-session-token')
     sinon.stub(getUrlParameter, 'parameter').withArgs('providerId').returns('coffee4craig')
 
     model = new Model()
@@ -35,7 +33,6 @@ describe('Service Provider Services', () => {
 
   afterEach(() => {
     ajax.get.restore()
-    cookies.get.restore()
     getUrlParameter.parameter.restore()
   })
 
@@ -43,14 +40,10 @@ describe('Service Provider Services', () => {
     expect(model.addServiceLink).toEqual(adminurls.addServiceProviderService + '?key=coffee4craig')
   })
 
-  it('should retrieve service provider from api with session token', () => {
+  it('should retrieve service provider from api', () => {
     var endpoint = endpoints.getServiceProviders + '/coffee4craig'
-    var headers = {
-      'content-type': 'application/json',
-      'session-token': 'stored-session-token'
-    }
     var payload = {}
-    var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, headers, payload).calledOnce
+    var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, payload).calledOnce
     expect(apiCalledWithExpectedArgs).toBeTruthy()
   })
 

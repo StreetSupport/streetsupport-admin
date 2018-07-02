@@ -8,9 +8,9 @@ const sinon = require('sinon')
 const srcRoot = '../../../../src/'
 const jsRoot = `${srcRoot}js/`
 const ajax = require(`${jsRoot}ajax`)
+const auth = require(`${jsRoot}auth`)
 const endpoints = require(`${jsRoot}api-endpoints`)
 const browser = require(`${jsRoot}browser`)
-const cookies = require(`${jsRoot}cookies`)
 const querystring = require(`${jsRoot}get-url-parameter`)
 
 const { testData, publishedServiceProviderData } = require('../testData')
@@ -19,10 +19,6 @@ import { categories } from '../../../../src/data/generated/accommodation-categor
 
 describe('Accommodation - Edit General Information', () => {
   const Model = require(`${jsRoot}models/accommodation/edit`)
-  const headers = {
-    'content-type': 'application/json',
-    'session-token': 'stored-session-token'
-  }
   let sut = null
 
   let ajaxGetStub = null
@@ -34,7 +30,7 @@ describe('Accommodation - Edit General Information', () => {
     browserLoadedStub = sinon.stub(browser, 'loaded')
     ajaxGetStub = sinon.stub(ajax, 'get')
     ajaxGetStub
-      .withArgs(`${endpoints.temporaryAccommodation}/${testData.id}`, headers)
+      .withArgs(`${endpoints.temporaryAccommodation}/${testData.id}`)
       .returns({
         then: function (success, error) {
           success({
@@ -44,7 +40,7 @@ describe('Accommodation - Edit General Information', () => {
         }
       })
     ajaxGetStub
-      .withArgs(`${endpoints.getPublishedServiceProviders}`, headers)
+      .withArgs(`${endpoints.getPublishedServiceProviders}`)
       .returns({
         then: function (success, error) {
           success({
@@ -53,9 +49,7 @@ describe('Accommodation - Edit General Information', () => {
           })
         }
       })
-    sinon.stub(cookies, 'get')
-      .withArgs('session-token')
-      .returns('stored-session-token')
+    sinon.stub(auth, 'isSuperAdmin')
 
     sinon.stub(querystring, 'parameter')
       .withArgs('id')
@@ -69,7 +63,7 @@ describe('Accommodation - Edit General Information', () => {
     browser.loading.restore()
     browser.loaded.restore()
     ajax.get.restore()
-    cookies.get.restore()
+    auth.isSuperAdmin.restore()
     querystring.parameter.restore()
   })
 
@@ -158,10 +152,6 @@ describe('Accommodation - Edit General Information', () => {
 
       it('- should patch new data', () => {
         const endpoint = `${endpoints.temporaryAccommodation}/${testData.id}/general-details`
-        const headers = {
-          'content-type': 'application/json',
-          'session-token': 'stored-session-token'
-        }
         const payload = { Name: 'new name',
           Synopsis: 'new synopsis',
           Description: 'new description',
@@ -171,7 +161,7 @@ describe('Accommodation - Edit General Information', () => {
           ServiceProviderId: 'service-provider-id'
         }
         const patchAsExpected = ajaxPatchStub
-          .withArgs(endpoint, headers, payload)
+          .withArgs(endpoint, payload)
           .calledAfter(browserLoadingStub)
         expect(patchAsExpected).toBeTruthy()
       })

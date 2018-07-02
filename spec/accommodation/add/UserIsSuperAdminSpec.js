@@ -10,7 +10,6 @@ const jsRoot = '../../../src/js/'
 const ajax = require(`${jsRoot}ajax`)
 const endpoints = require(`${jsRoot}api-endpoints`)
 const browser = require(`${jsRoot}browser`)
-const cookies = require(`${jsRoot}cookies`)
 const validation = require(`${jsRoot}validation`)
 
 import { categories } from '../../../src/data/generated/accommodation-categories'
@@ -19,10 +18,6 @@ const auth = require(`${jsRoot}auth`)
 
 describe('Accommodation - Add - super admin', () => {
   const Model = require(`${jsRoot}models/accommodation/add`)
-  const headers = {
-    'content-type': 'application/json',
-    'session-token': 'stored-session-token'
-  }
   let sut = null
   let ajaxGetStub = null
   let browserLoadingStub = null
@@ -45,8 +40,6 @@ describe('Accommodation - Add - super admin', () => {
     browserLoadingStub = sinon.stub(browser, 'loading')
     browserLoadedStub = sinon.stub(browser, 'loaded')
 
-    sinon.stub(cookies, 'get').withArgs('session-token').returns('stored-session-token')
-
     sut = new Model()
     sut.init()
   })
@@ -57,7 +50,6 @@ describe('Accommodation - Add - super admin', () => {
     auth.isSuperAdmin.restore()
     browser.loading.restore()
     browser.loaded.restore()
-    cookies.get.restore()
   })
 
   it('- it should set list of accom types', () => {
@@ -70,7 +62,7 @@ describe('Accommodation - Add - super admin', () => {
 
   it('- should get service providers', () => {
     const calledAsExpected = ajaxGetStub
-      .withArgs(endpoints.getServiceProvidersHAL, headers)
+      .withArgs(endpoints.getServiceProvidersHAL)
       .calledOnce
     expect(calledAsExpected).toBeTruthy()
   })
@@ -154,7 +146,7 @@ describe('Accommodation - Add - super admin', () => {
         'AddressIsPubliclyHidden': false
       }
       const calledAsExpected = ajaxPostStub
-        .withArgs(endpoint, headers, payload)
+        .withArgs(endpoint, payload)
         .calledAfter(browserLoadingStub)
       expect(calledAsExpected).toBeTruthy()
     })

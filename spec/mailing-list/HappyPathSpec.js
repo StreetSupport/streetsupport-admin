@@ -7,7 +7,6 @@ global describe, beforeEach, afterEach, it, expect
 const endpoints = require('../../src/js/api-endpoints')
 const ajax = require('../../src/js/ajax')
 const browser = require('../../src/js/browser')
-const cookies = require('../../src/js/cookies')
 const Model = require('../../src/js/models/mailing-list/ListMembers')
 
 let sinon = require('sinon')
@@ -19,17 +18,12 @@ describe('List Members', () => {
   let ajaxGetStub = null
 
   beforeEach(() => {
-    sinon.stub(cookies, 'get').returns('stored-session-token')
     browserLoadingStub = sinon.stub(browser, 'loading')
     browserLoadedStub = sinon.stub(browser, 'loaded')
 
-    let headers = {
-      'content-type': 'application/json',
-      'session-token': 'stored-session-token'
-    }
     ajaxGetStub = sinon
       .stub(ajax, 'get')
-      .withArgs(endpoints.mailingListMembers, headers)
+      .withArgs(endpoints.mailingListMembers)
       .returns({
         then: function (success, error) {
           success({
@@ -46,7 +40,6 @@ describe('List Members', () => {
     browser.loading.restore()
     browser.loaded.restore()
     ajax.get.restore()
-    cookies.get.restore()
   })
 
   it('- Should notify user it is loading', () => {

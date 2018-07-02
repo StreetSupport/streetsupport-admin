@@ -7,7 +7,6 @@ global describe, beforeEach, afterEach, it, expect
 import sinon from 'sinon'
 import adminUrls from '../../src/js/admin-urls'
 import ajax from '../../src/js/ajax'
-import cookies from '../../src/js/cookies'
 import endpoints from '../../src/js/api-endpoints'
 import browser from '../../src/js/browser'
 import getUrlParameter from '../../src/js/get-url-parameter'
@@ -35,13 +34,8 @@ describe('Editing Service Provider Need Categories', () => {
           })
         }
       })
-    sinon.stub(cookies, 'get').returns('saved-session-token')
-    const headers = {
-      'content-type': 'application/json',
-      'session-token': 'saved-session-token'
-    }
     ajaxGetStub
-      .withArgs(endpoints.getServiceProviders + '/albert-kennedy-trust', headers)
+      .withArgs(endpoints.getServiceProviders + '/albert-kennedy-trust')
       .returns({
         then: function (success, error) {
           success({
@@ -63,7 +57,6 @@ describe('Editing Service Provider Need Categories', () => {
     getUrlParameter.parameter.restore()
     browser.loading.restore()
     browser.loaded.restore()
-    cookies.get.restore()
   })
 
   it('- Should notify user it is loading', () => {
@@ -126,13 +119,9 @@ describe('Editing Service Provider Need Categories', () => {
 
     it('- Should post selected categories to api', () => {
       const endpoint = endpoints.getServiceProviders + '/albert-kennedy-trust/needs/categories'
-      const headers = {
-        'content-type': 'application/json',
-        'session-token': 'saved-session-token'
-      }
       const payload = [ 'cleaning-materials', 'services' ]
       expect(ajaxPutStub
-        .withArgs(endpoint, headers, payload)
+        .withArgs(endpoint, payload)
         .calledAfter(browserLoadingStub)
       ).toBeTruthy()
       expect(model.isSubmitted()).toBeTruthy()

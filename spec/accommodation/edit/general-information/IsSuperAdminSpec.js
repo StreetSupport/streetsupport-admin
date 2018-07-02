@@ -8,19 +8,15 @@ const sinon = require('sinon')
 const srcRoot = '../../../../src/'
 const jsRoot = `${srcRoot}js/`
 const ajax = require(`${jsRoot}ajax`)
+const auth = require(`${jsRoot}auth`)
 const endpoints = require(`${jsRoot}api-endpoints`)
 const browser = require(`${jsRoot}browser`)
-const cookies = require(`${jsRoot}cookies`)
 const querystring = require(`${jsRoot}get-url-parameter`)
 
 const { testData, allServiceProviderData } = require('../testData')
 
 describe('Accommodation - Edit General Information - as super admin', () => {
   const Model = require(`${jsRoot}models/accommodation/edit`)
-  const headers = {
-    'content-type': 'application/json',
-    'session-token': 'stored-session-token'
-  }
   let sut = null
 
   let ajaxGetStub = null
@@ -28,7 +24,7 @@ describe('Accommodation - Edit General Information - as super admin', () => {
   beforeEach(() => {
     ajaxGetStub = sinon.stub(ajax, 'get')
     ajaxGetStub
-      .withArgs(`${endpoints.temporaryAccommodation}/${testData.id}`, headers)
+      .withArgs(`${endpoints.temporaryAccommodation}/${testData.id}`)
       .returns({
         then: function (success, error) {
           success({
@@ -38,7 +34,7 @@ describe('Accommodation - Edit General Information - as super admin', () => {
         }
       })
     ajaxGetStub
-      .withArgs(`${endpoints.getServiceProvidersHAL}`, headers)
+      .withArgs(`${endpoints.getServiceProvidersHAL}`)
       .returns({
         then: function (success, error) {
           success({
@@ -48,18 +44,9 @@ describe('Accommodation - Edit General Information - as super admin', () => {
         }
       })
 
+    sinon.stub(auth, 'isSuperAdmin').returns(true)
     sinon.stub(browser, 'loading')
     sinon.stub(browser, 'loaded')
-
-    const cookiesStub = sinon.stub(cookies, 'get')
-
-    cookiesStub
-      .withArgs('session-token')
-      .returns('stored-session-token')
-
-    cookiesStub
-      .withArgs('auth-claims')
-      .returns('SuperAdmin')
 
     sinon.stub(querystring, 'parameter')
       .withArgs('id')
@@ -73,7 +60,7 @@ describe('Accommodation - Edit General Information - as super admin', () => {
     browser.loading.restore()
     browser.loaded.restore()
     ajax.get.restore()
-    cookies.get.restore()
+    auth.isSuperAdmin.restore()
     querystring.parameter.restore()
   })
 

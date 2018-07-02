@@ -9,7 +9,6 @@ const sinon = require('sinon')
 const ajax = require(`../../../../src/js/ajax`)
 const endpoints = require(`../../../../src/js/api-endpoints`)
 const browser = require(`../../../../src/js/browser`)
-const cookies = require(`../../../../src/js/cookies`)
 const querystring = require(`../../../../src/js/get-url-parameter`)
 const Model = require(`../../../../src/js/models/accommodation/reviews/add`)
 import { testData } from '../testData'
@@ -20,17 +19,12 @@ describe('Accommodation Listing - Add', () => {
   let browserLoadedStub = null
   let ajaxPostStub = null
 
-  const headers = {
-    'content-type': 'application/json',
-    'session-token': 'stored-session-token'
-  }
-
   beforeEach(() => {
     sinon.stub(querystring, 'parameter').withArgs('id').returns(testData.id)
 
     sinon
       .stub(ajax, 'get')
-      .withArgs(`${endpoints.prefix(testData.links.self)}`, headers)
+      .withArgs(`${endpoints.prefix(testData.links.self)}`)
       .returns({
         then: function (success, error) {
           success({
@@ -55,7 +49,6 @@ describe('Accommodation Listing - Add', () => {
 
     browserLoadingStub = sinon.stub(browser, 'loading')
     browserLoadedStub = sinon.stub(browser, 'loaded')
-    sinon.stub(cookies, 'get').returns('stored-session-token')
 
     sut = new Model()
     sut.init()
@@ -66,7 +59,6 @@ describe('Accommodation Listing - Add', () => {
     ajax.post.restore()
     browser.loading.restore()
     browser.loaded.restore()
-    cookies.get.restore()
     querystring.parameter.restore()
   })
 
@@ -150,7 +142,7 @@ describe('Accommodation Listing - Add', () => {
         OverallRating: 3
       }
       const postCalledAsExpected = ajaxPostStub
-        .withArgs(endpoint, headers, payload)
+        .withArgs(endpoint, payload)
         .calledAfter(browserLoadingStub)
       expect(postCalledAsExpected).toBeTruthy()
     })
@@ -201,7 +193,7 @@ describe('Accommodation Listing - Add', () => {
           Body: 'review body'
         }
         const calledAsExpected = ajaxPatchStub
-          .withArgs(endpoint, headers, payload)
+          .withArgs(endpoint, payload)
           .calledAfter(browserLoadingStub)
 
         expect(calledAsExpected).toBeTruthy()

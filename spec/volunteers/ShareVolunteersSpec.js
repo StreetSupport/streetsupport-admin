@@ -8,7 +8,6 @@ var sinon = require('sinon')
 var ajax = require('../../src/js/ajax')
 var endpoints = require('../../src/js/api-endpoints')
 var browser = require('../../src/js/browser')
-var cookies = require('../../src/js/cookies')
 var getUrlParam = require('../../src/js/get-url-parameter')
 var Model = require('../../src/js/models/volunteers/ShareVolunteerModel')
 
@@ -51,10 +50,6 @@ describe('Share Volunteer', () => {
         }
       })
 
-    sinon.stub(cookies, 'get')
-      .withArgs('session-token')
-      .returns('stored-session-token')
-
     sinon.stub(getUrlParam, 'parameter').withArgs('id').returns('56d0362c928556085cc569b3')
 
     browserLoadingStub = sinon.stub(browser, 'loading')
@@ -66,7 +61,6 @@ describe('Share Volunteer', () => {
   afterEach(() => {
     ajax.post.restore()
     ajax.get.restore()
-    cookies.get.restore()
     browser.loading.restore()
     browser.loaded.restore()
     getUrlParam.parameter.restore()
@@ -94,14 +88,10 @@ describe('Share Volunteer', () => {
 
     it('should post to api', () => {
       var endpoint = endpoints.volunteers + '/56d0362c928556085cc569b3/share'
-      var headers = {
-        'content-type': 'application/json',
-        'session-token': 'stored-session-token'
-      }
       var payload = {
         'OrgId': 'coffee4craig'
       }
-      var posted = ajaxPostStub.withArgs(endpoint, headers, payload).calledOnce
+      var posted = ajaxPostStub.withArgs(endpoint, payload).calledOnce
       expect(posted).toBeTruthy()
     })
 

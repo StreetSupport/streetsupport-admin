@@ -6,17 +6,18 @@ global describe, beforeEach, afterEach, it, expect
 
 let sinon = require('sinon')
 let ajax = require('../../../src/js/ajax')
+let auth = require('../../../src/js/auth')
 let endpoints = require('../../../src/js/api-endpoints')
 let adminurls = require('../../../src/js/admin-urls')
 let browser = require('../../../src/js/browser')
-let cookies = require('../../../src/js/cookies')
 
 describe('Add Service Provider as City Admin', () => {
   let Model = require('../../../src/js/models/AddServiceProvider')
   let model = null
-  let cookiesStub = null
 
   beforeEach(() => {
+    sinon.stub(auth, 'isCityAdmin').returns(true)
+    sinon.stub(auth, 'cityAdminFor').returns('timbuktu')
     sinon.stub(browser, 'loading')
     sinon.stub(browser, 'loaded')
     sinon.stub(browser, 'scrollTo')
@@ -24,6 +25,8 @@ describe('Add Service Provider as City Admin', () => {
   })
 
   afterEach(() => {
+    auth.isCityAdmin.restore()
+    auth.cityAdminFor.restore()
     browser.loading.restore()
     browser.loaded.restore()
     browser.scrollTo.restore()
@@ -43,9 +46,6 @@ describe('Add Service Provider as City Admin', () => {
       }
 
       stubbedApi = sinon.stub(ajax, 'post').returns(fakeResolved)
-      cookiesStub = sinon.stub(cookies, 'get')
-      cookiesStub.withArgs('session-token').returns('stored-session-token')
-      cookiesStub.withArgs('auth-claims').returns('CityAdminFor:timbuktu,CityAdmin')
       stubbedBrowser = sinon.stub(browser, 'redirect')
 
       model.name('New Service Provider')
@@ -54,21 +54,16 @@ describe('Add Service Provider as City Admin', () => {
 
     afterEach(() => {
       ajax.post.restore()
-      cookies.get.restore()
       browser.redirect.restore()
     })
 
     it('should post service provider name to api', () => {
       var endpoint = endpoints.getServiceProviders
-      var headers = {
-        'content-type': 'application/json',
-        'session-token': 'stored-session-token'
-      }
       var payload = {
         'Name': 'New Service Provider',
         'AssociatedCity': 'timbuktu'
       }
-      var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, headers, payload).calledOnce
+      var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, payload).calledOnce
       expect(apiCalledWithExpectedArgs).toBeTruthy()
     })
 

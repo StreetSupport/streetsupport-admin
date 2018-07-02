@@ -8,7 +8,6 @@ var sinon = require('sinon')
 var ajax = require('../../src/js/ajax')
 var endpoints = require('../../src/js/api-endpoints')
 var browser = require('../../src/js/browser')
-var cookies = require('../../src/js/cookies')
 var getUrlParameter = require('../../src/js/get-url-parameter')
 var spTags = require('../../src/js/serviceProviderTags')
 
@@ -37,7 +36,6 @@ describe('Service Provider - Verify', () => {
         }
       })
 
-    sinon.stub(cookies, 'get').returns('stored-session-token')
     sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
     sinon.stub(browser, 'loading')
     sinon.stub(browser, 'loaded')
@@ -57,7 +55,6 @@ describe('Service Provider - Verify', () => {
   afterEach(() => {
     ajax.get.restore()
     ajax.put.restore()
-    cookies.get.restore()
     getUrlParameter.parameter.restore()
     browser.loading.restore()
     browser.loaded.restore()
@@ -69,11 +66,7 @@ describe('Service Provider - Verify', () => {
     var payload = {
       'IsVerified': true
     }
-    var headers = {
-      'content-type': 'application/json',
-      'session-token': 'stored-session-token'
-    }
-    var apiCalledWithExpectedArgs = stubbedPutApi.withArgs(endpoint, headers, payload).calledOnce
+    var apiCalledWithExpectedArgs = stubbedPutApi.withArgs(endpoint, payload).calledOnce
 
     expect(apiCalledWithExpectedArgs).toBeTruthy()
   })

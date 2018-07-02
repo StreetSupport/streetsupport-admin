@@ -8,7 +8,6 @@ const sinon = require('sinon')
 const ajax = require('../../src/js/ajax')
 const endpoints = require('../../src/js/api-endpoints')
 const browser = require('../../src/js/browser')
-const cookies = require('../../src/js/cookies')
 const getUrlParameter = require('../../src/js/get-url-parameter')
 
 describe('Edit Service Provider Donation Details', () => {
@@ -26,7 +25,6 @@ describe('Edit Service Provider Donation Details', () => {
     }
 
     sinon.stub(ajax, 'get').returns(fakeResolved)
-    sinon.stub(cookies, 'get').returns('stored-session-token')
     sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
     sinon.stub(browser, 'loading')
     sinon.stub(browser, 'loaded')
@@ -39,7 +37,6 @@ describe('Edit Service Provider Donation Details', () => {
 
   afterEach(() => {
     ajax.get.restore()
-    cookies.get.restore()
     getUrlParameter.parameter.restore()
     browser.loaded.restore()
     browser.loading.restore()
@@ -82,19 +79,15 @@ describe('Edit Service Provider Donation Details', () => {
       ajax.put.restore()
     })
 
-    it('should put service provider Donation details to api with session token', () => {
+    it('should put service provider Donation details to api', () => {
       var endpoint = endpoints.getServiceProviders + '/coffee4craig/donation-information'
-      var headers = {
-        'content-type': 'application/json',
-        'session-token': 'stored-session-token'
-      }
       var payload = {
         'DonationUrl': 'http://donate-here.com',
         'DonationDescription': 'donation description',
         'ItemsDonationUrl': 'http://item-donate-here.com',
         'ItemsDonationDescription': 'item donation description'
       }
-      var apiCalledWithExpectedArgs = stubbedPutApi.withArgs(endpoint, headers, payload).calledOnce
+      var apiCalledWithExpectedArgs = stubbedPutApi.withArgs(endpoint, payload).calledOnce
       expect(apiCalledWithExpectedArgs).toBeTruthy()
     })
 

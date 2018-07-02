@@ -9,7 +9,6 @@ const sinon = require('sinon')
 const ajax = require(`../../../../src/js/ajax`)
 const endpoints = require(`../../../../src/js/api-endpoints`)
 const browser = require(`../../../../src/js/browser`)
-const cookies = require(`../../../../src/js/cookies`)
 const querystring = require(`../../../../src/js/get-url-parameter`)
 const Model = require(`../../../../src/js/models/accommodation/reviews/details`)
 
@@ -19,11 +18,6 @@ const reviewUnderTest = testData.embedded.reviews[0]
 describe('Accommodation Listing - Details', () => {
   let sut = null
 
-  const headers = {
-    'content-type': 'application/json',
-    'session-token': 'stored-session-token'
-  }
-
   beforeEach(() => {
     const queryStringStub = sinon.stub(querystring, 'parameter')
     queryStringStub.withArgs('accom-id').returns(testData.id)
@@ -31,7 +25,7 @@ describe('Accommodation Listing - Details', () => {
 
     sinon
       .stub(ajax, 'get')
-      .withArgs(`${endpoints.prefix(testData.links.self)}/reviews/${reviewUnderTest.id}`, headers)
+      .withArgs(`${endpoints.prefix(testData.links.self)}/reviews/${reviewUnderTest.id}`)
       .returns({
         then: function (success, error) {
           success({
@@ -43,7 +37,6 @@ describe('Accommodation Listing - Details', () => {
 
     sinon.stub(browser, 'loading')
     sinon.stub(browser, 'loaded')
-    sinon.stub(cookies, 'get').returns('stored-session-token')
 
     sut = new Model()
     sut.init()
@@ -53,7 +46,6 @@ describe('Accommodation Listing - Details', () => {
     ajax.get.restore()
     browser.loading.restore()
     browser.loaded.restore()
-    cookies.get.restore()
     querystring.parameter.restore()
   })
 

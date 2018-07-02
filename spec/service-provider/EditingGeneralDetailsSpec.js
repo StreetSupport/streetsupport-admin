@@ -8,7 +8,6 @@ const sinon = require('sinon')
 const ajax = require('../../src/js/ajax')
 const endpoints = require('../../src/js/api-endpoints')
 const browser = require('../../src/js/browser')
-const cookies = require('../../src/js/cookies')
 const spTags = require('../../src/js/serviceProviderTags')
 const getUrlParameter = require('../../src/js/get-url-parameter')
 
@@ -27,7 +26,6 @@ describe('Edit Service Provider General Details', () => {
     }
 
     sinon.stub(ajax, 'get').returns(fakeResolved)
-    sinon.stub(cookies, 'get').returns('stored-session-token')
     sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
     sinon.stub(browser, 'loading')
     sinon.stub(browser, 'loaded')
@@ -47,7 +45,6 @@ describe('Edit Service Provider General Details', () => {
 
   afterEach(() => {
     ajax.get.restore()
-    cookies.get.restore()
     getUrlParameter.parameter.restore()
     browser.loaded.restore()
     browser.loading.restore()
@@ -91,12 +88,8 @@ describe('Edit Service Provider General Details', () => {
       ajax.put.restore()
     })
 
-    it('should put service provider general details to api with session token', () => {
+    it('should put service provider general details to api', () => {
       var endpoint = endpoints.getServiceProviders + '/coffee4craig/general-information'
-      var headers = {
-        'content-type': 'application/json',
-        'session-token': 'stored-session-token'
-      }
       var payload = {
         'Name': 'new name',
         'Description': 'new description',
@@ -104,7 +97,7 @@ describe('Edit Service Provider General Details', () => {
         'CityId': 'new city id',
         'Tags': ['tag-a', 'tag-b', 'tag-c']
       }
-      var apiCalledWithExpectedArgs = stubbedPutApi.withArgs(endpoint, headers, payload).calledOnce
+      var apiCalledWithExpectedArgs = stubbedPutApi.withArgs(endpoint, payload).calledOnce
       expect(apiCalledWithExpectedArgs).toBeTruthy()
     })
 
