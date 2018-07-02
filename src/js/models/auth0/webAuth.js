@@ -21,10 +21,16 @@ const dev = {
   apiIdentifier: 'ssn-api-dev',
   clientId: 'Wiozbfk9PdmlaTm480kzoBFf2pHqXyK7'
 }
+const uat = {
+  domain: 'https://ssn-auth-uat.eu.auth0.com/',
+  apiIdentifier: 'ssn-api-uat',
+  clientId: 'zThfa9fQo1b84lHGWQGO9TuefIy1dT29'
+}
 
 const envs = [
   local,
-  dev
+  dev,
+  uat
 ]
 
 const currentEnv = envs[env]
