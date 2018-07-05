@@ -5,7 +5,7 @@ import adminUrls from '../../admin-urls'
 import guid from 'node-uuid'
 import querystring from '../../get-url-parameter'
 import randomString from '../../randomString'
-import storage from '../../localStorage'
+import storage from '../../sessionStorage'
 
 module.exports = function () {
   const self = this

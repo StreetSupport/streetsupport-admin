@@ -1,6 +1,6 @@
 import browser from '../../browser'
 import env from '../../env'
-import storage from '../../localStorage'
+import storage from '../../sessionStorage'
 
 const storageKeys = {
   accessToken: 'access_token',

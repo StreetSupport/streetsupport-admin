@@ -11,7 +11,7 @@ const auth = require(`${jsRoot}auth`)
 const endpoints = require(`${jsRoot}api-endpoints`)
 const browser = require(`${jsRoot}browser`)
 const querystring = require(`${jsRoot}get-url-parameter`)
-const storage = require(`${jsRoot}localStorage`)
+const storage = require(`${jsRoot}sessionStorage`)
 
 const { testData, publishedServiceProviderData } = require('../testData')
 

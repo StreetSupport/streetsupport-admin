@@ -1,4 +1,4 @@
-import storage from './localStorage'
+import storage from './sessionStorage'
 import { storageKeys } from './models/auth0/webAuth'
 
 const roles = {

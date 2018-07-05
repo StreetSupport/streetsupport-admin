@@ -2,7 +2,7 @@
 
 var Q = require('q')
 var browser = require('./browser')
-import storage from './localStorage'
+import storage from './sessionStorage'
 import { storageKeys } from './models/auth0/webAuth'
 
 var post = function (url, data, isCustomErrorHandling) {

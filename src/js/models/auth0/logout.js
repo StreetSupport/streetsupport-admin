@@ -2,7 +2,7 @@
 
 import { logout, storageKeys } from './webAuth'
 import adminUrls from '../../admin-urls'
-import storage from '../../localStorage'
+import storage from '../../sessionStorage'
 
 module.exports = function () {
   Object.keys(storageKeys)

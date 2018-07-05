@@ -2,7 +2,7 @@
 
 import { storageKeys } from './webAuth'
 import browser from '../../browser'
-import storage from '../../localStorage'
+import storage from '../../sessionStorage'
 import { hashParameter } from '../../get-url-parameter'
 import jwt from 'jsonwebtoken'
 
