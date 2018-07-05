@@ -1,7 +1,7 @@
 /* global describe, beforeEach, afterEach, it, expect */
 
 const auth = require('../../src/js/auth')
-const storage = require('../../src/js/localStorage')
+const storage = require('../../src/js/sessionStorage')
 import { storageKeys } from '../../src/js/models/auth0/webAuth'
 
 const sinon = require('sinon')

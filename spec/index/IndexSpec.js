@@ -9,7 +9,7 @@ const adminurls = require('../../src/js/admin-urls')
 const browser = require('../../src/js/browser')
 const querystring = require('../../src/js/get-url-parameter')
 const webAuth = require('../../src/js/models/auth0/webAuth')
-const storage = require('../../src/js/localStorage')
+const storage = require('../../src/js/sessionStorage')
 
 describe('Index', () => {
   var Model = require('../../src/js/models/Index')

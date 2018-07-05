@@ -4,7 +4,7 @@ const adminUrls = require('../admin-urls')
 const browser = require('../browser')
 const querystring = require('../get-url-parameter')
 const BaseViewModel = require('./BaseViewModel')
-import storage from '../localStorage'
+import storage from '../sessionStorage'
 
 import { isAuthenticated, storageKeys } from '../models/auth0/webAuth'
 

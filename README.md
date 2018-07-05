@@ -90,17 +90,11 @@ For dev against a local dev API:
 
 Tests reside in the `/spec` directory, and are written using [Jasmine](https://jasmine.github.io/) and [Sinon](http://sinonjs.org/). Please ensure any features submitted via pull request are covered by tests.
 
-A number of happy paths are covered by automated browsers tests at: [https://github.com/StreetSupport/web-automated-testing](https://github.com/StreetSupport/web-automated-testing).
-
 ### Logins
 
 With the `env` variable set to dev (1), you can use the following login credentials:
 
-* `superadmin:StreetSupport!` access all the things!
-* `anaccomadmin:StreetSupport!` an admin for an individual accommodation entry
-* `mcradmin:StreetSupport!` an admin for the manchester area
-* `tempaccomadmin:StreetSupport!` an admin for B&Bs reviews
-* `orgadmin:StreetSupport!` an admin for an individual organisation
+* `dev+dev-meetup-01@streetsupport.net` the password for this account will be distributed via slack at our dev meetups, and reset after each event.
 
 ### Styling
 
