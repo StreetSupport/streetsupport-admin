@@ -17,12 +17,16 @@ nosubnav: true
 </div>
 <div class="block">
   <div class="container block__inner">
+    <div class="highlight">
+      <h2 class="h2">We've changed how our login works.</h2>
+      <p class="h3">Clicking the button below will take you to https://streetsupport.eu.auth0.com/. If this is the first time you have seen this, you need to click on "Don't remember your password?" and enter your email address. You will then receive an email with a link to set a new password.</p>
+      <p>If you can't remember which email you used to register, or are having any other problems, please <a href="mailto:admin@streetsupport.net">email us for help</a>.</p>
+    </div>
     <form class="form">
       <legend>Please click login to proceed:</legend>
       <button data-bind="click: submit" class="btn btn--info">
         <span class="btn__text">Login</span>
       </button>
-      <p>This will take you to Auth0, our identity provider.</p>
     </form>
     {{!-- <a href="request-reset-password.html">Forgotten password?</a> --}}
   </div>
