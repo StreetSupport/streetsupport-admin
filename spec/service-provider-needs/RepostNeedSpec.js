@@ -7,7 +7,6 @@ import sinon from 'sinon'
 import Need from '../../src/js/models/Need'
 import ajax from '../../src/js/ajax'
 import browser from '../../src/js/browser'
-import cookies from '../../src/js/cookies'
 import endpoints from '../../src/js/api-endpoints'
 import querystring from '../../src/js/get-url-parameter'
 
@@ -104,14 +103,10 @@ describe('Need - reposting', () => {
     browserLoadingStub = sinon.stub(browser, 'loading')
     browserLoadedStub = sinon.stub(browser, 'loaded')
 
-    sinon.stub(cookies, 'get')
-      .withArgs('session-token')
-      .returns('stored-session-token')
-
     ajaxPutStub = sinon.stub(ajax, 'put')
       .returns(fakePutResolution)
 
-   sinon.stub(querystring, 'parameter')
+    sinon.stub(querystring, 'parameter')
       .withArgs('id')
       .returns(needData.id)
 
@@ -123,7 +118,6 @@ describe('Need - reposting', () => {
     ajax.put.restore()
     browser.loading.restore()
     browser.loaded.restore()
-    cookies.get.restore()
     querystring.parameter.restore()
   })
 
@@ -135,8 +129,7 @@ describe('Need - reposting', () => {
     expect(ajaxPutStub.calledAfter(browserLoadingStub)).toBeTruthy()
     const putArgs = ajax.put.getCall(0).args
     expect(putArgs[0]).toEqual(endpoints.getServiceProviders + '/albert-kennedy-trust/needs/56d8784092855610f88d492a/neededDate')
-    expect(putArgs[1]).toEqual({ 'content-type': 'application/json', 'session-token': 'stored-session-token' })
-    expect(moment(putArgs[2].NeededDate).diff(moment(), 'days')).toEqual(0)
+    expect(moment(putArgs[1].NeededDate).diff(moment(), 'days')).toEqual(0)
   })
 
   it('should notify user it has loaded', () => {

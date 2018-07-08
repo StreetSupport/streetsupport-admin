@@ -3,7 +3,6 @@
 const adminUrls = require('../../admin-urls')
 const ajax = require('../../ajax')
 const browser = require('../../browser')
-const cookies = require('../../cookies')
 const endpoints = require('../../api-endpoints')
 const htmlEncode = require('htmlencode')
 const BaseViewModel = require('../../models/BaseViewModel')
@@ -60,8 +59,7 @@ const Volunteer = function (data, listener) {
     browser.loading()
 
     ajax
-      .get(endpoints.volunteers + '/' + self.id + '/contact-requests',
-        self.headers(cookies.get('session-token')))
+      .get(endpoints.volunteers + '/' + self.id + '/contact-requests')
       .then((result) => {
         let items = result.data.items
         items.forEach((i) => {
@@ -86,7 +84,6 @@ const Volunteer = function (data, listener) {
     ajax
       .patch(
         endpoints.volunteers + '/' + self.id + '/is-archived',
-        self.headers(cookies.get('session-token')),
         {})
       .then((result) => {
         self.listener.archived(self.id)

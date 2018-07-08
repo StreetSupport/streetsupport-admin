@@ -8,9 +8,9 @@ const sinon = require('sinon')
 
 const adminUrls = require(`../../../src/js/admin-urls`)
 const ajax = require(`../../../src/js/ajax`)
+const auth = require(`../../../src/js/auth`)
 const endpoints = require(`../../../src/js/api-endpoints`)
 const browser = require(`../../../src/js/browser`)
-const cookies = require(`../../../src/js/cookies`)
 const Model = require(`../../../src/js/models/accommodation/list`)
 
 import { cities } from '../../../src/data/generated/supported-cities'
@@ -32,9 +32,9 @@ describe('Accommodation Listing', () => {
           })
         }
       })
+    sinon.stub(auth, 'canSeeReviews')
     browserLoadingStub = sinon.stub(browser, 'loading')
     browserLoadedStub = sinon.stub(browser, 'loaded')
-    sinon.stub(cookies, 'get').returns('stored-session-token')
 
     sut = new Model()
     sut.init()
@@ -42,9 +42,9 @@ describe('Accommodation Listing', () => {
 
   afterEach(() => {
     ajax.get.restore()
+    auth.canSeeReviews.restore()
     browser.loading.restore()
     browser.loaded.restore()
-    cookies.get.restore()
   })
 
   it('- should show user it is loading', () => {
@@ -52,11 +52,7 @@ describe('Accommodation Listing', () => {
   })
 
   it('- should get accom listing', () => {
-    const headers = {
-      'content-type': 'application/json',
-      'session-token': 'stored-session-token'
-    }
-    expect(ajaxGetStub.withArgs(endpoints.temporaryAccommodation, headers).calledAfter(browserLoadingStub)).toBeTruthy()
+    expect(ajaxGetStub.withArgs(endpoints.temporaryAccommodation).calledAfter(browserLoadingStub)).toBeTruthy()
   })
 
   it('- should get cities', () => {
@@ -89,13 +85,9 @@ describe('Accommodation Listing', () => {
 
   describe('- Load more', () => {
     beforeEach(() => {
-      const headers = {
-        'content-type': 'application/json',
-        'session-token': 'stored-session-token'
-      }
       const endpoint = `${endpoints.temporaryAccommodation}?index=4`
       ajaxGetStub
-        .withArgs(endpoint, headers)
+        .withArgs(endpoint)
         .returns({
           then: function (success, error) {
             success({
@@ -127,13 +119,8 @@ describe('Accommodation Listing', () => {
       browserLoadedStub.reset()
 
       const endpoint = `${endpoints.temporaryAccommodation}?cityId=manchester`
-      const headers = {
-        'content-type': 'application/json',
-        'session-token': 'stored-session-token'
-      }
-
       ajaxGetStub
-        .withArgs(endpoint, headers)
+        .withArgs(endpoint)
         .returns({
           then: function (success, error) {
             success({

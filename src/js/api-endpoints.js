@@ -22,7 +22,6 @@ module.exports = {
   unverifiedSuperAdmins: p('/v1/unverified-super-admins'),
   verifiedUsers: p('/v1/verified-users'),
   unverifiedUsers: p('/v1/unverified-users'),
-  sessions: p('/v1/sessions'),
   resetPassword: p('/v1/reset-password-applications'),
   volunteers: p('/v1/volunteer-enquiries'),
   offersOfItems: p('/v1/offers-of-items'),

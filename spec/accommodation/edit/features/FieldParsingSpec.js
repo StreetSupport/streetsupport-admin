@@ -7,9 +7,9 @@ global describe, beforeEach, afterEach, it, expect
 const sinon = require('sinon')
 const jsRoot = '../../../../src/js/'
 const ajax = require(`${jsRoot}ajax`)
+const auth = require(`${jsRoot}auth`)
 const endpoints = require(`${jsRoot}api-endpoints`)
 const browser = require(`${jsRoot}browser`)
-const cookies = require(`${jsRoot}cookies`)
 const querystring = require(`${jsRoot}get-url-parameter`)
 
 const origTestData = require('../testData')
@@ -20,10 +20,6 @@ testData.features.featuresAvailableAtAdditionalCost = '* coke&#10;* sprite&#10;*
 
 describe('Accommodation - Edit Features', () => {
   const Model = require(`${jsRoot}models/accommodation/edit`)
-  const headers = {
-    'content-type': 'application/json',
-    'session-token': 'stored-session-token'
-  }
   let sut = null
 
   let ajaxGetStub = null
@@ -33,7 +29,7 @@ describe('Accommodation - Edit Features', () => {
     sinon.stub(browser, 'loaded')
     ajaxGetStub = sinon.stub(ajax, 'get')
     ajaxGetStub
-      .withArgs(`${endpoints.temporaryAccommodation}/${testData.id}`, headers)
+      .withArgs(`${endpoints.temporaryAccommodation}/${testData.id}`)
       .returns({
         then: function (success, error) {
           success({
@@ -43,7 +39,7 @@ describe('Accommodation - Edit Features', () => {
         }
       })
     ajaxGetStub
-      .withArgs(`${endpoints.getPublishedServiceProviders}`, headers)
+      .withArgs(`${endpoints.getPublishedServiceProviders}`)
       .returns({
         then: function (success, error) {
           success({
@@ -52,9 +48,7 @@ describe('Accommodation - Edit Features', () => {
           })
         }
       })
-    sinon.stub(cookies, 'get')
-      .withArgs('session-token')
-      .returns('stored-session-token')
+    sinon.stub(auth, 'isSuperAdmin')
 
     sinon.stub(querystring, 'parameter')
       .withArgs('id')
@@ -68,7 +62,7 @@ describe('Accommodation - Edit Features', () => {
     browser.loading.restore()
     browser.loaded.restore()
     ajax.get.restore()
-    cookies.get.restore()
+    auth.isSuperAdmin.restore()
     querystring.parameter.restore()
   })
 

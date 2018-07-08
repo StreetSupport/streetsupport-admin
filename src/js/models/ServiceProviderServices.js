@@ -1,6 +1,5 @@
 var ajax = require('../ajax')
 var adminUrls = require('../admin-urls')
-var cookies = require('../cookies')
 var Address = require('./Address')
 var Service = require('./Service')
 var getUrlParameter = require('../get-url-parameter')
@@ -38,7 +37,6 @@ function ServiceProviderServices () {
   self.init = function () {
     var endpoint = self.endpointBuilder.serviceProviders(getUrlParameter.parameter('providerId')).build()
     ajax.get(endpoint,
-      self.headers(cookies.get('session-token')),
       {})
       .then(function (result) {
         self.serviceProvider(new ServiceProvider(result.data))

@@ -1,6 +1,5 @@
 var adminUrls = require('../../admin-urls')
 var ajax = require('../../ajax')
-var cookies = require('../../cookies')
 const endpoints = require('../../api-endpoints')
 var moment = require('moment')
 const htmlEncode = require('htmlencode')
@@ -57,7 +56,6 @@ let ItemOfferer = function (data, listener) {
     ajax
       .get(
         endpoints.offersOfItems + '/' + self.id + '/contact-requests',
-        self.headers(cookies.get('session-token')),
         {})
       .then((result) => {
         let items = result.data.items
@@ -84,7 +82,6 @@ let ItemOfferer = function (data, listener) {
     ajax
       .patch(
         endpoints.offersOfItems + '/' + self.id + '/is-archived',
-        self.headers(cookies.get('session-token')),
         {})
       .then((result) => {
         self.listener.archived(self.id)

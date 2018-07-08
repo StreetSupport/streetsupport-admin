@@ -2,7 +2,6 @@ const adminUrls = require('../../admin-urls')
 const ajax = require('../../ajax')
 const auth = require('../../auth')
 const browser = require('../../browser')
-const cookies = require('../../cookies')
 const endpoints = require('../../api-endpoints')
 
 const BaseViewModel = require('../BaseViewModel')
@@ -57,7 +56,7 @@ function Lister () {
 
   self.loadNext = () => {
     browser.loading()
-    ajax.get(loadNextUrl, self.headers(cookies.get('session-token')))
+    ajax.get(loadNextUrl)
       .then(getEntriesSuccess, (error) => {
         self.handleServerError(error)
       })

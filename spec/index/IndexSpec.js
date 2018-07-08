@@ -4,43 +4,37 @@ global describe, beforeEach, afterEach, it, expect
 
 'use strict'
 
-var sinon = require('sinon')
-var ajax = require('../../src/js/ajax')
-var endpoints = require('../../src/js/api-endpoints')
-var adminurls = require('../../src/js/admin-urls')
-var browser = require('../../src/js/browser')
-var cookies = require('../../src/js/cookies')
-var querystring = require('../../src/js/get-url-parameter')
+const sinon = require('sinon')
+const adminurls = require('../../src/js/admin-urls')
+const browser = require('../../src/js/browser')
+const querystring = require('../../src/js/get-url-parameter')
+const webAuth = require('../../src/js/models/auth0/webAuth')
+const storage = require('../../src/js/sessionStorage')
 
 describe('Index', () => {
   var Model = require('../../src/js/models/Index')
   let model = null // eslint-disable-line
   var stubbedBrowser
-  var stubbedApi
+  var stubbedStorage
+
+  beforeEach(() => {
+    stubbedStorage = sinon.stub(storage, 'get')
+    stubbedBrowser = sinon.stub(browser, 'redirect')
+  })
 
   afterEach(() => {
-    cookies.get.restore()
     browser.redirect.restore()
-    ajax.get.restore()
+    storage.get.restore()
+    webAuth.isAuthenticated.restore()
   })
 
   describe('Not logged in', () => {
     beforeEach(() => {
-      sinon.stub(cookies, 'get').returns(null)
-      stubbedBrowser = sinon.stub(browser, 'redirect')
+      sinon.stub(webAuth, 'isAuthenticated').returns(false)
 
-      var resolved = () => {
-        return {
-          then: function (success, error) {
-            error({
-              'status': 404,
-              'data': {}
-            })
-          }
-        }
-      }
-
-      stubbedApi = sinon.stub(ajax, 'get').returns(resolved)
+      stubbedStorage
+        .withArgs(webAuth.storageKeys.roles)
+        .returns('')
 
       model = new Model()
     })
@@ -51,44 +45,24 @@ describe('Index', () => {
     })
   })
 
-  describe('Has session token', () => {
+  describe('has been authenticated', () => {
     beforeEach(() => {
-      sinon.stub(cookies, 'get').returns('stored-session-token')
-      stubbedBrowser = sinon.stub(browser, 'redirect')
-      stubbedApi = sinon.stub(ajax, 'get')
+      sinon.stub(webAuth, 'isAuthenticated').returns(true)
     })
 
     describe('as Super Admin', () => {
       beforeEach(() => {
         sinon.stub(querystring, 'parameter')
-        let resolved = {
-          then: function (success, error) {
-            success({
-              'status': 200,
-              'data': {
-                'authClaims': [ 'SuperAdmin' ]
-              }
-            })
-          }
-        }
 
-        stubbedApi.returns(resolved)
+        stubbedStorage
+          .withArgs(webAuth.storageKeys.roles)
+          .returns('superadmin')
+
         model = new Model()
       })
 
       afterEach(() => {
         querystring.parameter.restore()
-      })
-
-      it('should check if session still valid', () => {
-        var apiCalled = stubbedApi.withArgs(endpoints.sessions,
-          {
-            'content-type': 'application/json',
-            'session-token': 'stored-session-token'
-          },
-          {}).calledOnce
-
-        expect(apiCalled).toBeTruthy()
       })
 
       it('should redirect to dashboard', () => {
@@ -100,34 +74,14 @@ describe('Index', () => {
     describe('Admin For', () => {
       beforeEach(() => {
         sinon.stub(querystring, 'parameter')
-        let resolved = {
-          then: (success, _) => {
-            success({
-              'status': 200,
-              'data': {
-                'authClaims': [ 'OrgAdmin', 'AdminFor:coffee4craig' ]
-              }
-            })
-          }
-        }
-
-        stubbedApi.returns(resolved)
+        stubbedStorage
+          .withArgs(webAuth.storageKeys.roles)
+          .returns('adminfor:coffee4craig')
         model = new Model()
       })
 
       afterEach(() => {
         querystring.parameter.restore()
-      })
-
-      it('should check if session still valid', () => {
-        var apiCalled = stubbedApi.withArgs(endpoints.sessions,
-          {
-            'content-type': 'application/json',
-            'session-token': 'stored-session-token'
-          },
-          {}).calledOnce
-
-        expect(apiCalled).toBeTruthy()
       })
 
       it('should redirect to service provider page', () => {
@@ -139,34 +93,14 @@ describe('Index', () => {
     describe('Charter Admin', () => {
       beforeEach(() => {
         sinon.stub(querystring, 'parameter')
-        let resolved = {
-          then: function (success, error) {
-            success({
-              'status': 200,
-              'data': {
-                'authClaims': [ 'CharterAdmin' ]
-              }
-            })
-          }
-        }
-
-        stubbedApi.returns(resolved)
+        stubbedStorage
+          .withArgs(webAuth.storageKeys.roles)
+          .returns('charteradmin')
         model = new Model()
       })
 
       afterEach(() => {
         querystring.parameter.restore()
-      })
-
-      it('should check if session still valid', () => {
-        var apiCalled = stubbedApi.withArgs(endpoints.sessions,
-          {
-            'content-type': 'application/json',
-            'session-token': 'stored-session-token'
-          },
-          {}).calledOnce
-
-        expect(apiCalled).toBeTruthy()
       })
 
       it('should redirect to charter page', () => {
@@ -182,35 +116,16 @@ describe('Index', () => {
         sinon.stub(browser, 'origin')
           .returns('https://admin.streetsupport.net')
 
-        let resolved = {
-          then: function (success, error) {
-            success({
-              'status': 200,
-              'data': {
-                'authClaims': [ 'CharterAdmin' ]
-              }
-            })
-          }
-        }
+        stubbedStorage
+          .withArgs(webAuth.storageKeys.roles)
+          .returns('superadmin')
 
-        stubbedApi.returns(resolved)
         model = new Model()
       })
 
       afterEach(() => {
         querystring.parameter.restore()
         browser.origin.restore()
-      })
-
-      it('should check if session still valid', () => {
-        var apiCalled = stubbedApi.withArgs(endpoints.sessions,
-          {
-            'content-type': 'application/json',
-            'session-token': 'stored-session-token'
-          },
-          {}).calledOnce
-
-        expect(apiCalled).toBeTruthy()
       })
 
       it('should redirect to redirect url', () => {
@@ -225,19 +140,10 @@ describe('Index', () => {
           .returns('https://haxx0rz.l337/phishing/')
         sinon.stub(browser, 'origin')
           .returns('https://admin.streetsupport.net')
+        stubbedStorage
+          .withArgs(webAuth.storageKeys.roles)
+          .returns('charteradmin')
 
-        let resolved = {
-          then: function (success, error) {
-            success({
-              'status': 200,
-              'data': {
-                'authClaims': [ 'CharterAdmin' ]
-              }
-            })
-          }
-        }
-
-        stubbedApi.returns(resolved)
         model = new Model()
       })
 
@@ -246,52 +152,22 @@ describe('Index', () => {
         browser.origin.restore()
       })
 
-      it('should check if session still valid', () => {
-        var apiCalled = stubbedApi.withArgs(endpoints.sessions,
-          {
-            'content-type': 'application/json',
-            'session-token': 'stored-session-token'
-          },
-          {}).calledOnce
-
-        expect(apiCalled).toBeTruthy()
-      })
-
       it('should redirect to relevant home page', () => {
         var browserRedirectedWithExpectedUrl = stubbedBrowser.withArgs(adminurls.charter).calledOnce
         expect(browserRedirectedWithExpectedUrl).toBeTruthy()
       })
     })
+  })
 
-    describe('session expired', () => {
-      beforeEach(() => {
-        let resolved = {
-          then: function (success, error) {
-            error({
-              'status': 401
-            })
-          }
-        }
+  describe('session expired', () => {
+    beforeEach(() => {
+      sinon.stub(webAuth, 'isAuthenticated').returns(false)
+      model = new Model()
+    })
 
-        stubbedApi.returns(resolved)
-        model = new Model()
-      })
-
-      it('should check if session still valid', () => {
-        var apiCalled = stubbedApi.withArgs(endpoints.sessions,
-          {
-            'content-type': 'application/json',
-            'session-token': 'stored-session-token'
-          },
-          {}).calledOnce
-
-        expect(apiCalled).toBeTruthy()
-      })
-
-      it('should redirect to login', () => {
-        var browserRedirectedWithExpectedUrl = stubbedBrowser.withArgs(adminurls.login).calledOnce
-        expect(browserRedirectedWithExpectedUrl).toBeTruthy()
-      })
+    it('should redirect to login', () => {
+      var browserRedirectedWithExpectedUrl = stubbedBrowser.withArgs(adminurls.login).calledOnce
+      expect(browserRedirectedWithExpectedUrl).toBeTruthy()
     })
   })
 })

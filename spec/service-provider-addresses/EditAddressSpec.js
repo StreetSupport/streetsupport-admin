@@ -9,7 +9,6 @@ var ajax = require('../../src/js/ajax')
 var endpoints = require('../../src/js/api-endpoints')
 var adminurls = require('../../src/js/admin-urls')
 var browser = require('../../src/js/browser')
-var cookies = require('../../src/js/cookies')
 var getUrlParameter = require('../../src/js/get-url-parameter')
 
 describe('Edit individual Address', () => {
@@ -29,7 +28,6 @@ describe('Edit individual Address', () => {
     }
 
     stubbedApi = sinon.stub(ajax, 'get').returns(fakeResolved)
-    sinon.stub(cookies, 'get').returns('stored-session-token')
     stubbedUrlParams = sinon.stub(getUrlParameter, 'parameter')
     stubbedUrlParams.withArgs('providerId').returns('coffee4craig')
     stubbedUrlParams.withArgs('addressId').returns('1234')
@@ -41,20 +39,14 @@ describe('Edit individual Address', () => {
 
   afterEach(() => {
     ajax.get.restore()
-    cookies.get.restore()
     browser.loaded.restore()
     browser.loading.restore()
     getUrlParameter.parameter.restore()
   })
 
-  it('should retrieve address from api with session token', () => {
+  it('should retrieve address from api', () => {
     var endpoint = endpoints.getServiceProviders + '/coffee4craig/addresses/1234'
-    var headers = {
-      'content-type': 'application/json',
-      'session-token': 'stored-session-token'
-    }
-    var payload = {}
-    var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, headers, payload).calledOnce
+    var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint).calledOnce
     expect(apiCalledWithExpectedArgs).toBeTruthy()
   })
 

@@ -4,7 +4,6 @@ var sinon = require('sinon')
 var ajax = require('../../src/js/ajax')
 var endpoints = require('../../src/js/api-endpoints')
 var browser = require('../../src/js/browser')
-var cookies = require('../../src/js/cookies')
 var validation = require('../../src/js/validation')
 var Model = require('../../src/js/models/charter-pledges/ListCharterPledgesModel')
 
@@ -13,11 +12,6 @@ describe('Delete Charter Pledge', () => {
   var browserLoadingStub
   var browserLoadedStub
   var ajaxPutStub
-
-  var headers = {
-    'content-type': 'application/json',
-    'session-token': 'stored-session-token'
-  }
 
   beforeEach(() => {
     var getCharterPledgesPromise = () => {
@@ -32,12 +26,8 @@ describe('Delete Charter Pledge', () => {
     }
 
     sinon.stub(ajax, 'get')
-      .withArgs(endpoints.charterPledges, headers)
+      .withArgs(endpoints.charterPledges)
       .returns(getCharterPledgesPromise())
-
-    sinon.stub(cookies, 'get')
-      .withArgs('session-token')
-      .returns('stored-session-token')
 
     browserLoadingStub = sinon.stub(browser, 'loading')
     browserLoadedStub = sinon.stub(browser, 'loaded')
@@ -54,7 +44,7 @@ describe('Delete Charter Pledge', () => {
     }
 
     ajaxPutStub = sinon.stub(ajax, 'put')
-      .withArgs(endpoints.charterPledges + '/' + pledgeData()[0].id + '/deleted', headers)
+      .withArgs(endpoints.charterPledges + '/' + pledgeData()[0].id + '/deleted')
       .returns(getPutPromise())
     model = new Model()
     model.toggleShowAll()
@@ -65,7 +55,6 @@ describe('Delete Charter Pledge', () => {
 
   afterEach(() => {
     ajax.get.restore()
-    cookies.get.restore()
     browser.loading.restore()
     browser.loaded.restore()
     ajax.put.restore()

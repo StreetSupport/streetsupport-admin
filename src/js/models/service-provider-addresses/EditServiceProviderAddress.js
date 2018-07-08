@@ -1,6 +1,5 @@
 var ajax = require('../../ajax')
 var ko = require('knockout')
-var cookies = require('../../cookies')
 var Address = require('../Address')
 var getUrlParameter = require('../../get-url-parameter')
 var browser = require('../../browser')
@@ -22,10 +21,7 @@ function EditServiceProviderAddress () {
       .serviceProviders(getUrlParameter.parameter('providerId'))
       .addresses(getUrlParameter.parameter('addressId'))
       .build()
-
-    ajax.get(endpoint,
-      self.headers(cookies.get('session-token')),
-      {})
+    ajax.get(endpoint)
       .then(function (result) {
         var address = new Address(result.data)
         address.addListener(self)

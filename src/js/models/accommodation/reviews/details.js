@@ -3,7 +3,6 @@ require('knockout.validation') // No variable here is deliberate!
 
 let ajax = require('../../../ajax')
 let browser = require('../../../browser')
-let cookies = require('../../../cookies')
 let querystring = require('../../../get-url-parameter')
 let BaseViewModel = require('../../BaseViewModel')
 
@@ -23,9 +22,8 @@ function Details () {
   const retrieveItems = () => {
     browser.loading()
     const endpoint = `${self.endpointBuilder.temporaryAccommodation(accomId).build()}/reviews/${id}`
-    const headers = self.headers(cookies.get('session-token'))
     ajax
-      .get(endpoint, headers)
+      .get(endpoint)
       .then((result) => {
         self.review(buildModel(result.data))
         self.feedback(buildFeedback(result.data))

@@ -5,7 +5,6 @@ var browser = require('../../browser')
 var adminurls = require('../../admin-urls')
 var getUrlParameter = require('../../get-url-parameter')
 var ajax = require('../../ajax')
-var cookies = require('../../cookies')
 
 function AddServiceProviderNeed () {
   var self = this
@@ -19,7 +18,7 @@ function AddServiceProviderNeed () {
   browser.loading()
 
   var addressEndpoint = self.endpointBuilder.serviceProviders(getUrlParameter.parameter('providerId')).addresses().build()
-  ajax.get(addressEndpoint, self.headers(cookies.get('session-token')))
+  ajax.get(addressEndpoint)
     .then(function (result) {
       let getPostcode = () => {
         if (result.data.addresses !== undefined && result.data.addresses.length > 0) {

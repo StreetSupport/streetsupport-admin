@@ -8,15 +8,10 @@ var sinon = require('sinon')
 var ajax = require('../../src/js/ajax')
 var endpoints = require('../../src/js/api-endpoints')
 var browser = require('../../src/js/browser')
-var cookies = require('../../src/js/cookies')
 var Model = require('../../src/js/models/offers-of-items/ListModel')
 
 describe('Highlight Offers', () => {
   var model
-  var headers = {
-    'content-type': 'application/json',
-    'session-token': 'stored-session-token'
-  }
 
   beforeEach(() => {
     var getPromise = {
@@ -29,12 +24,8 @@ describe('Highlight Offers', () => {
     }
 
     sinon.stub(ajax, 'get')
-      .withArgs(endpoints.offersOfItems, headers)
+      .withArgs(endpoints.offersOfItems)
       .returns(getPromise)
-
-    sinon.stub(cookies, 'get')
-      .withArgs('session-token')
-      .returns('stored-session-token')
 
     sinon.stub(browser, 'loading')
     sinon.stub(browser, 'loaded')
@@ -47,7 +38,6 @@ describe('Highlight Offers', () => {
 
   afterEach(() => {
     ajax.get.restore()
-    cookies.get.restore()
     browser.loading.restore()
     browser.loaded.restore()
   })

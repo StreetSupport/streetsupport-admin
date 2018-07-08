@@ -8,7 +8,6 @@ var sinon = require('sinon')
 var ajax = require('../../src/js/ajax')
 var endpoints = require('../../src/js/api-endpoints')
 var browser = require('../../src/js/browser')
-var cookies = require('../../src/js/cookies')
 var Model = require('../../src/js/models/volunteers/ListVolunteersModel')
 
 describe('Archive Volunteer', () => {
@@ -42,10 +41,6 @@ describe('Archive Volunteer', () => {
       .withArgs(endpoints.volunteers + '/577ac6b7474f8b1944e973d0/is-archived')
       .returns(patchArchivedResult)
 
-    sinon.stub(cookies, 'get')
-      .withArgs('session-token')
-      .returns('stored-session-token')
-
     browserLoadingStub = sinon.stub(browser, 'loading')
     browserLoadedStub = sinon.stub(browser, 'loaded')
 
@@ -60,7 +55,6 @@ describe('Archive Volunteer', () => {
   afterEach(() => {
     ajax.get.restore()
     ajax.patch.restore()
-    cookies.get.restore()
     browser.loading.restore()
     browser.loaded.restore()
   })

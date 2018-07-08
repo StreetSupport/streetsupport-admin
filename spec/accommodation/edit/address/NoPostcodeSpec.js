@@ -8,9 +8,9 @@ const sinon = require('sinon')
 
 const jsRoot = '../../../../src/js/'
 const ajax = require(`${jsRoot}ajax`)
+const auth = require(`${jsRoot}auth`)
 const endpoints = require(`${jsRoot}api-endpoints`)
 const browser = require(`${jsRoot}browser`)
-const cookies = require(`${jsRoot}cookies`)
 const querystring = require(`${jsRoot}get-url-parameter`)
 const validation = require(`${jsRoot}validation`)
 
@@ -18,10 +18,6 @@ const { testData, publishedServiceProviderData } = require('../testData')
 
 describe('Accommodation - Edit Address - no postcode set', () => {
   const Model = require(`${jsRoot}models/accommodation/edit`)
-  const headers = {
-    'content-type': 'application/json',
-    'session-token': 'stored-session-token'
-  }
   let sut = null
   let validationStub = null
   let ajaxGetStub = null
@@ -31,7 +27,7 @@ describe('Accommodation - Edit Address - no postcode set', () => {
     sinon.stub(browser, 'loading')
     sinon.stub(browser, 'loaded')
     ajaxGetStub = sinon.stub(ajax, 'get')
-    ajaxGetStub.withArgs(`${endpoints.temporaryAccommodation}/${testData.id}`, headers)
+    ajaxGetStub.withArgs(`${endpoints.temporaryAccommodation}/${testData.id}`)
       .returns({
         then: function (success, error) {
           success({
@@ -41,7 +37,7 @@ describe('Accommodation - Edit Address - no postcode set', () => {
         }
       })
     ajaxGetStub
-      .withArgs(`${endpoints.getPublishedServiceProviders}`, headers)
+      .withArgs(`${endpoints.getPublishedServiceProviders}`)
       .returns({
         then: function (success, error) {
           success({
@@ -50,11 +46,8 @@ describe('Accommodation - Edit Address - no postcode set', () => {
           })
         }
       })
+    sinon.stub(auth, 'isSuperAdmin')
     validationStub = sinon.stub(validation, 'showErrors')
-
-    sinon.stub(cookies, 'get')
-      .withArgs('session-token')
-      .returns('stored-session-token')
 
     sinon.stub(querystring, 'parameter')
       .withArgs('id')
@@ -82,7 +75,7 @@ describe('Accommodation - Edit Address - no postcode set', () => {
     browser.loading.restore()
     browser.loaded.restore()
     ajax.get.restore()
-    cookies.get.restore()
+    auth.isSuperAdmin.restore()
     querystring.parameter.restore()
     validation.showErrors.restore()
     ajax.patch.restore()

@@ -8,9 +8,10 @@ const sinon = require('sinon')
 
 const jsRoot = '../../../src/js/'
 const ajax = require(`${jsRoot}ajax`)
+const auth = require(`${jsRoot}auth`)
+const storage = require(`${jsRoot}sessionStorage`)
 const endpoints = require(`${jsRoot}api-endpoints`)
 const browser = require(`${jsRoot}browser`)
-const cookies = require(`${jsRoot}cookies`)
 const validation = require(`${jsRoot}validation`)
 
 import { categories } from '../../../src/data/generated/accommodation-categories'
@@ -21,22 +22,24 @@ describe('Accommodation - Add as TempAccom Admin', () => {
   let sut = null
   let browserLoadingStub = null
   let browserLoadedStub = null
-  let cookieStub = null
 
   beforeEach(() => {
     browserLoadingStub = sinon.stub(browser, 'loading')
     browserLoadedStub = sinon.stub(browser, 'loaded')
-    cookieStub = sinon.stub(cookies, 'get')
-    cookieStub.withArgs('auth-claims').returns('tempaccomadmin')
+    sinon.stub(auth, 'isSuperAdmin')
+    sinon.stub(storage, 'get')
+      .withArgs('roles')
+      .returns('tempaccomadmin')
 
     sut = new Model()
     sut.init()
   })
 
   afterEach(() => {
+    auth.isSuperAdmin.restore()
     browser.loading.restore()
     browser.loaded.restore()
-    cookies.get.restore()
+    storage.get.restore()
   })
 
   it('- it should set list of accom types', () => {
@@ -54,8 +57,6 @@ describe('Accommodation - Add as TempAccom Admin', () => {
       browserLoadingStub.reset()
       browserLoadedStub.reset()
       sinon.stub(validation, 'showErrors')
-
-      cookieStub.withArgs('session-token').returns('stored-session-token')
 
       ajaxPostStub = sinon.stub(ajax, 'post')
         .returns({
@@ -115,12 +116,8 @@ describe('Accommodation - Add as TempAccom Admin', () => {
         'Postcode': 'postcode',
         'AddressIsPubliclyHidden': false
       }
-      const headers = {
-        'content-type': 'application/json',
-        'session-token': 'stored-session-token'
-      }
       const calledAsExpected = ajaxPostStub
-        .withArgs(endpoint, headers, payload)
+        .withArgs(endpoint, payload)
         .calledAfter(browserLoadingStub)
       expect(calledAsExpected).toBeTruthy()
     })

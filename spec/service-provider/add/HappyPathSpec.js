@@ -6,10 +6,10 @@ global describe, beforeEach, afterEach, it, expect
 
 let sinon = require('sinon')
 let ajax = require('../../../src/js/ajax')
+let auth = require('../../../src/js/auth')
 let endpoints = require('../../../src/js/api-endpoints')
 let adminurls = require('../../../src/js/admin-urls')
 let browser = require('../../../src/js/browser')
-let cookies = require('../../../src/js/cookies')
 
 import { cities } from '../../../src/data/generated/supported-cities'
 
@@ -18,6 +18,8 @@ describe('Add Service Provider', () => {
   let model = null
 
   beforeEach(() => {
+    sinon.stub(auth, 'isCityAdmin')
+    sinon.stub(auth, 'cityAdminFor')
     sinon.stub(browser, 'loading')
     sinon.stub(browser, 'loaded')
     sinon.stub(browser, 'scrollTo')
@@ -25,6 +27,8 @@ describe('Add Service Provider', () => {
   })
 
   afterEach(() => {
+    auth.isCityAdmin.restore()
+    auth.cityAdminFor.restore()
     browser.loading.restore()
     browser.loaded.restore()
     browser.scrollTo.restore()
@@ -56,7 +60,6 @@ describe('Add Service Provider', () => {
       }
 
       stubbedApi = sinon.stub(ajax, 'post').returns(fakeResolved)
-      sinon.stub(cookies, 'get').returns('stored-session-token')
       stubbedBrowser = sinon.stub(browser, 'redirect')
 
       model.name('New Service Provider')
@@ -66,21 +69,16 @@ describe('Add Service Provider', () => {
 
     afterEach(() => {
       ajax.post.restore()
-      cookies.get.restore()
       browser.redirect.restore()
     })
 
     it('should post service provider name to api', () => {
       var endpoint = endpoints.getServiceProviders
-      var headers = {
-        'content-type': 'application/json',
-        'session-token': 'stored-session-token'
-      }
       var payload = {
         'Name': 'New Service Provider',
         'AssociatedCity': 'manchester'
       }
-      var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, headers, payload).calledOnce
+      var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, payload).calledOnce
       expect(apiCalledWithExpectedArgs).toBeTruthy()
     })
 
@@ -104,7 +102,6 @@ describe('Add Service Provider', () => {
       }
 
       sinon.stub(ajax, 'post').returns(fakeResolved)
-      sinon.stub(cookies, 'get').returns('stored-session-token')
       stubbedBrowser = sinon.stub(browser, 'redirect')
 
       model.name('New Service Provider')
@@ -113,7 +110,6 @@ describe('Add Service Provider', () => {
 
     afterEach(() => {
       ajax.post.restore()
-      cookies.get.restore()
       browser.redirect.restore()
     })
 

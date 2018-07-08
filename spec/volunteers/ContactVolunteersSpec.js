@@ -8,7 +8,6 @@ var sinon = require('sinon')
 var ajax = require('../../src/js/ajax')
 var endpoints = require('../../src/js/api-endpoints')
 var browser = require('../../src/js/browser')
-var cookies = require('../../src/js/cookies')
 var getUrlParam = require('../../src/js/get-url-parameter')
 var Model = require('../../src/js/models/volunteers/ContactVolunteerModel')
 
@@ -41,10 +40,6 @@ describe('Contact Volunteer', () => {
         }
       })
 
-    sinon.stub(cookies, 'get')
-      .withArgs('session-token')
-      .returns('stored-session-token')
-
     sinon.stub(getUrlParam, 'parameter').withArgs('id').returns('56d0362c928556085cc569b3')
 
     browserLoadingStub = sinon.stub(browser, 'loading')
@@ -58,7 +53,6 @@ describe('Contact Volunteer', () => {
   afterEach(() => {
     ajax.post.restore()
     ajax.get.restore()
-    cookies.get.restore()
     browser.loading.restore()
     browser.loaded.restore()
     getUrlParam.parameter.restore()
@@ -70,15 +64,11 @@ describe('Contact Volunteer', () => {
 
   it('should post to api', () => {
     var endpoint = endpoints.volunteers + '/56d0362c928556085cc569b3/contact-requests'
-    var headers = {
-      'content-type': 'application/json',
-      'session-token': 'stored-session-token'
-    }
     var payload = {
       'Message': 'this is my message',
       'ShouldSendEmail': true
     }
-    var posted = ajaxPostStub.withArgs(endpoint, headers, payload).calledOnce
+    var posted = ajaxPostStub.withArgs(endpoint, payload).calledOnce
     expect(posted).toBeTruthy()
   })
 

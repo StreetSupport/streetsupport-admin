@@ -2,8 +2,8 @@
 
 var BaseViewModel = require('../BaseViewModel')
 var ajax = require('../../ajax')
+var auth = require('../../auth')
 var browser = require('../../browser')
-var cookies = require('../../cookies')
 var getUrlParam = require('../../get-url-parameter')
 var ko = require('knockout')
 var htmlencode = require('htmlencode')
@@ -21,15 +21,16 @@ var ShareOfferModel = function () {
   self.apiErrors = ko.observableArray()
   self.offer = ko.observable()
 
-  const authClaims = cookies.get('auth-claims')
-
-  self.canShowBroadcastOffer = ko.observable(authClaims === 'SuperAdmin' || authClaims.startsWith('CityAdmin'))
+  self.canShowBroadcastOffer = ko.computed(function () {
+    const authClaims = auth.getUserClaims()
+    return authClaims.includes('superadmin') || authClaims.includes('cityadmin')
+  }, self)
 
   self.broadcastToOrgs = () => {
     browser.loading()
     var endpoint = self.endpointBuilder.offersOfItems(getUrlParam.parameter('id')).build() + '/broadcast'
     ajax
-      .post(endpoint, headers)
+      .post(endpoint)
       .then(function (res) {
         browser.loaded()
         if (res.status === 'error') {
@@ -51,8 +52,6 @@ var ShareOfferModel = function () {
     errorElementClass: 'form__input--error'
   }, true)
 
-  const headers = self.headers(cookies.get('session-token'))
-
   self.submit = function () {
     browser.loading()
     var endpoint = self.endpointBuilder.offersOfItems(getUrlParam.parameter('id')).build() + '/share'
@@ -60,7 +59,7 @@ var ShareOfferModel = function () {
       'OrgId': self.selectedOrgId().id
     }
     ajax
-      .post(endpoint, headers, payload)
+      .post(endpoint, payload)
       .then(function (res) {
         browser.loaded()
         if (res.status === 'error') {
@@ -76,14 +75,14 @@ var ShareOfferModel = function () {
 
   const getVolEndpoint = self.endpointBuilder.offersOfItems(getUrlParam.parameter('id')).build()
   ajax
-    .get(getVolEndpoint, headers)
+    .get(getVolEndpoint)
     .then((res) => {
       self.offer(new ItemOfferer(res.data))
 
       browser.loading()
       const getOrgsEndpoint = self.endpointBuilder.publishedOrgs(res.data.person.city).build()
       ajax
-        .get(getOrgsEndpoint, headers)
+        .get(getOrgsEndpoint)
         .then((res) => {
           self.organisations(res.data.map((o) => ({
             'id': o.key,

@@ -1,19 +1,20 @@
 /* global describe, beforeEach, afterEach, it, expect */
 
-const cookies = require('../../src/js/cookies')
 const auth = require('../../src/js/auth')
+const storage = require('../../src/js/sessionStorage')
+import { storageKeys } from '../../src/js/models/auth0/webAuth'
 
 const sinon = require('sinon')
 
 describe('Auth Claims - getUserClaims', () => {
   beforeEach(() => {
-    sinon.stub(cookies, 'get')
-      .withArgs('auth-claims')
+    sinon.stub(storage, 'get')
+      .withArgs(storageKeys.roles)
       .returns('Claim,Claim2')
   })
 
   afterEach(() => {
-    cookies.get.restore()
+    storage.get.restore()
   })
 
   it('- should return comma separated claims as array and lower case', () => {
@@ -24,13 +25,13 @@ describe('Auth Claims - getUserClaims', () => {
 
 describe('Auth Claims - isSuperAdmin', () => {
   beforeEach(() => {
-    sinon.stub(cookies, 'get')
-      .withArgs('auth-claims')
+    sinon.stub(storage, 'get')
+    .withArgs(storageKeys.roles)
       .returns('SuperAdmin')
   })
 
   afterEach(() => {
-    cookies.get.restore()
+    storage.get.restore()
   })
 
   it('- should return superadmin is true', () => {
@@ -40,13 +41,13 @@ describe('Auth Claims - isSuperAdmin', () => {
 
 describe('Auth Claims - isSuperAdmin false', () => {
   beforeEach(() => {
-    sinon.stub(cookies, 'get')
-      .withArgs('auth-claims')
+    sinon.stub(storage, 'get')
+    .withArgs(storageKeys.roles)
       .returns('SomeOtherClaim')
   })
 
   afterEach(() => {
-    cookies.get.restore()
+    storage.get.restore()
   })
 
   it('- should return superadmin is false', () => {
@@ -56,13 +57,13 @@ describe('Auth Claims - isSuperAdmin false', () => {
 
 describe('Auth Claims - Admin for service provider', () => {
   beforeEach(() => {
-    sinon.stub(cookies, 'get')
-      .withArgs('auth-claims')
+    sinon.stub(storage, 'get')
+    .withArgs(storageKeys.roles)
       .returns('AdminFor:street-support,OrgAdmin')
   })
 
   afterEach(() => {
-    cookies.get.restore()
+    storage.get.restore()
   })
 
   it('- should return org id admin for', () => {
@@ -72,13 +73,13 @@ describe('Auth Claims - Admin for service provider', () => {
 
 describe('Auth Claims - can see reviews - if tempaccomadmin', () => {
   beforeEach(() => {
-    sinon.stub(cookies, 'get')
-      .withArgs('auth-claims')
+    sinon.stub(storage, 'get')
+    .withArgs(storageKeys.roles)
       .returns('TempAccomAdmin')
   })
 
   afterEach(() => {
-    cookies.get.restore()
+    storage.get.restore()
   })
 
   it('- should return true', () => {
@@ -88,13 +89,13 @@ describe('Auth Claims - can see reviews - if tempaccomadmin', () => {
 
 describe('Auth Claims - can see reviews - if not tempaccomadmin', () => {
   beforeEach(() => {
-    sinon.stub(cookies, 'get')
-      .withArgs('auth-claims')
+    sinon.stub(storage, 'get')
+    .withArgs(storageKeys.roles)
       .returns('SomeOtherClaim')
   })
 
   afterEach(() => {
-    cookies.get.restore()
+    storage.get.restore()
   })
 
   it('- should return false', () => {

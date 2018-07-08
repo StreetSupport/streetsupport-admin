@@ -7,7 +7,6 @@ global describe, beforeEach, afterEach, it, expect
 const adminUrls = require('../../src/js/admin-urls')
 const ajax = require('../../src/js/ajax')
 const browser = require('../../src/js/browser')
-const cookies = require('../../src/js/cookies')
 const endpoints = require('../../src/js/api-endpoints')
 const getUrlParameter = require('../../src/js/get-url-parameter')
 const sinon = require('sinon')
@@ -44,20 +43,12 @@ describe('Add Service Provider Service', () => {
 
     stubbedApi = sinon.stub(ajax, 'get')
 
-    var headers = {
-      'content-type': 'application/json',
-      'session-token': 'stored-session-token'
-    }
-
     stubbedApi.withArgs(endpoints.getServiceCategories,
-      headers,
       {}).returns(categoriesPromise())
 
     stubbedApi.withArgs(endpoints.getServiceProviders + '/coffee4craig',
-      headers,
       {}).returns(providerPromise())
 
-    sinon.stub(cookies, 'get').returns('stored-session-token')
     sinon.stub(getUrlParameter, 'parameter').withArgs('providerId').returns('coffee4craig')
 
     sinon.stub(browser, 'loading')
@@ -70,18 +61,13 @@ describe('Add Service Provider Service', () => {
     ajax.get.restore()
     browser.loading.restore()
     browser.loaded.restore()
-    cookies.get.restore()
     getUrlParameter.parameter.restore()
   })
 
   it('should request for provider', () => {
     var endpoint = endpoints.getServiceProviders + '/coffee4craig'
-    var headers = {
-      'content-type': 'application/json',
-      'session-token': 'stored-session-token'
-    }
     var payload = {}
-    var apiCalled = stubbedApi.withArgs(endpoint, headers, payload).calledOnce
+    var apiCalled = stubbedApi.withArgs(endpoint, payload).calledOnce
     expect(apiCalled).toBeTruthy()
   })
 
@@ -248,12 +234,8 @@ describe('Add Service Provider Service', () => {
       browser.redirect.restore()
     })
 
-    it('should post service details with new to api with session token', () => {
+    it('should post service details with new to api', () => {
       var endpoint = endpoints.getServiceProviders + '/coffee4craig/services'
-      var headers = {
-        'content-type': 'application/json',
-        'session-token': 'stored-session-token'
-      }
       var payload = {
         'Info': 'new info',
         'LocationDescription': 'new location description',
@@ -279,7 +261,7 @@ describe('Add Service Provider Service', () => {
         'IsOpen247': true
       }
 
-      var apiCalledWithExpectedArgs = stubbedPostApi.withArgs(endpoint, headers, payload).calledOnce
+      var apiCalledWithExpectedArgs = stubbedPostApi.withArgs(endpoint, payload).calledOnce
       expect(apiCalledWithExpectedArgs).toBeTruthy()
     })
 

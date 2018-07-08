@@ -6,20 +6,20 @@ global describe, beforeEach, afterEach, it, expect
 
 var sinon = require('sinon')
 var ajax = require('../../src/js/ajax')
+var auth = require('../../src/js/auth')
 var endpoints = require('../../src/js/api-endpoints')
 var browser = require('../../src/js/browser')
-var cookies = require('../../src/js/cookies')
 var getUrlParam = require('../../src/js/get-url-parameter')
 var Model = require('../../src/js/models/offers-of-items/ShareOfferModel')
 
-describe('Share Offer', () => {
+describe('Share Offer by City Admin', () => {
   var model
   var ajaxGetStub
-  let cookieStub = null
 
   beforeEach(() => {
     sinon.stub(browser, 'loading')
     sinon.stub(browser, 'loaded')
+    sinon.stub(auth, 'getUserClaims').returns(['cityadmin', 'cityadminfor:manchester'])
 
     ajaxGetStub = sinon.stub(ajax, 'get')
 
@@ -42,15 +42,6 @@ describe('Share Offer', () => {
           })
         }
       })
-    cookieStub = sinon.stub(cookies, 'get')
-
-    cookieStub
-      .withArgs('session-token')
-      .returns('stored-session-token')
-
-    cookieStub
-      .withArgs('auth-claims')
-      .returns('CityAdminFor%3Amanchester')
 
     sinon.stub(getUrlParam, 'parameter').withArgs('id').returns('56d0362c928556085cc569b3')
 
@@ -59,7 +50,7 @@ describe('Share Offer', () => {
 
   afterEach(() => {
     ajax.get.restore()
-    cookies.get.restore()
+    auth.getUserClaims.restore()
     browser.loading.restore()
     browser.loaded.restore()
     getUrlParam.parameter.restore()

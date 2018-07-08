@@ -1,6 +1,5 @@
 const ajax = require('../../../ajax')
 const browser = require('../../../browser')
-const cookies = require('../../../cookies')
 const querystring = require('../../../get-url-parameter')
 import BaseViewModel from '../../BaseViewModel'
 const ko = require('knockout')
@@ -19,7 +18,7 @@ const ListModel = function () {
     self.needId = querystring.parameter('needId')
     const endpoint = self.endpointBuilder.needOffers(self.needId).build()
     ajax
-      .get(`${endpoint}/offers-to-help`, self.headers(cookies.get('session-token')))
+      .get(`${endpoint}/offers-to-help`)
       .then((result) => {
         self.need(result.data.need)
         const offers = result.data.helpOffers

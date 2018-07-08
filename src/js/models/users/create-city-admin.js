@@ -1,7 +1,6 @@
 const ajax = require('../../ajax')
 const BaseViewModel = require('../../models/BaseViewModel')
 const browser = require('../../browser')
-const cookies = require('../../cookies')
 const endpoints = require('../../api-endpoints')
 const validation = require('../../validation')
 
@@ -33,12 +32,11 @@ function Model () {
     browser.loading()
     const endpoint = endpoints.unverifiedCityAdmins
     const payload = validation.buildPayload(self.formFields())
-    const headers = self.headers(cookies.get('session-token'))
     self.formSubmitted(true)
     self.formSubmissionNotSuccessful(false)
 
     ajax
-      .post(endpoint, headers, payload)
+      .post(endpoint, payload)
       .then((result) => {
         browser.loaded()
 

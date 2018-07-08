@@ -1,4 +1,5 @@
-const cookies = require('./cookies')
+import storage from './sessionStorage'
+import { storageKeys } from './models/auth0/webAuth'
 
 const roles = {
   superadmin: 'superadmin',
@@ -7,8 +8,8 @@ const roles = {
 }
 
 const getUserClaims = function () {
-  const userClaims = cookies.get('auth-claims')
-  if (userClaims === undefined) return []
+  const userClaims = storage.get(storageKeys.roles)
+  if (!userClaims) return []
   return userClaims.toLowerCase().split(',')
 }
 

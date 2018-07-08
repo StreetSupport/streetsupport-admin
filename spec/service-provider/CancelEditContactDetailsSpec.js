@@ -7,7 +7,6 @@ global describe, beforeEach, afterEach, it, expect
 var sinon = require('sinon')
 let ajax = require('../../src/js/ajax')
 let browser = require('../../src/js/browser')
-let cookies = require('../../src/js/cookies')
 let getUrlParameter = require('../../src/js/get-url-parameter')
 
 describe('Cancel Edit Service Provider Contact Details', () => {
@@ -25,7 +24,6 @@ describe('Cancel Edit Service Provider Contact Details', () => {
     }
 
     sinon.stub(ajax, 'get').returns(fakeResolved)
-    sinon.stub(cookies, 'get').returns('stored-session-token')
     sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
     sinon.stub(browser, 'loaded')
     sinon.stub(browser, 'loading')
@@ -44,7 +42,6 @@ describe('Cancel Edit Service Provider Contact Details', () => {
 
   afterEach(() => {
     ajax.get.restore()
-    cookies.get.restore()
     getUrlParameter.parameter.restore()
     browser.loading.restore()
     browser.loaded.restore()

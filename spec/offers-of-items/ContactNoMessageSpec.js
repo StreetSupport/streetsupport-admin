@@ -7,7 +7,6 @@ global describe, beforeEach, afterEach, it, expect
 var sinon = require('sinon')
 var ajax = require('../../src/js/ajax')
 var browser = require('../../src/js/browser')
-var cookies = require('../../src/js/cookies')
 var Model = require('../../src/js/models/volunteers/ContactVolunteerModel')
 var getUrlParam = require('../../src/js/get-url-parameter')
 
@@ -16,10 +15,6 @@ describe('Contact Volunteer - No message', () => {
   var ajaxPostStub
 
   beforeEach(() => {
-    sinon.stub(cookies, 'get')
-      .withArgs('session-token')
-      .returns('stored-session-token')
-
     sinon.stub(browser, 'loading')
     sinon.stub(browser, 'loaded')
     sinon.stub(getUrlParam, 'parameter').withArgs('id').returns('56d0362c928556085cc569b3')
@@ -43,7 +38,6 @@ describe('Contact Volunteer - No message', () => {
     getUrlParam.parameter.restore()
     ajax.post.restore()
     ajax.get.restore()
-    cookies.get.restore()
     browser.loading.restore()
     browser.loaded.restore()
   })

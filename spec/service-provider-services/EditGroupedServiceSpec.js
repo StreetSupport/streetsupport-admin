@@ -7,7 +7,6 @@ global describe, beforeEach, afterEach, it, expect
 var sinon = require('sinon')
 var ajax = require('../../src/js/ajax')
 var endpoints = require('../../src/js/api-endpoints')
-var cookies = require('../../src/js/cookies')
 var getUrlParameter = require('../../src/js/get-url-parameter')
 var browser = require('../../src/js/browser')
 var adminUrls = require('../../src/js/admin-urls')
@@ -19,10 +18,6 @@ describe('Edit Service', () => {
   let stubbedUrlParams = null
   let stubbedBrowser = null
 
-  let headers = {
-    'content-type': 'application/json',
-    'session-token': 'stored-session-token'
-  }
   let payload = {}
 
   let serviceEndpoint = endpoints.getServiceProviders + '/coffee4craig/services/57bdb2c58705422ecc657228'
@@ -47,10 +42,9 @@ describe('Edit Service', () => {
     }
 
     stubbedApi = sinon.stub(ajax, 'get')
-    stubbedApi.withArgs(serviceEndpoint, headers, payload).returns(serviceDataResolution)
-    stubbedApi.withArgs(categoryEndpoint, headers, payload).returns(categoryDataResolution)
+    stubbedApi.withArgs(serviceEndpoint, payload).returns(serviceDataResolution)
+    stubbedApi.withArgs(categoryEndpoint, payload).returns(categoryDataResolution)
     stubbedBrowser = sinon.stub(browser, 'redirect')
-    sinon.stub(cookies, 'get').returns('stored-session-token')
     stubbedUrlParams = sinon.stub(getUrlParameter, 'parameter')
     stubbedUrlParams.withArgs('providerId').returns('coffee4craig')
     stubbedUrlParams.withArgs('serviceId').returns('57bdb2c58705422ecc657228')
@@ -62,7 +56,6 @@ describe('Edit Service', () => {
 
   afterEach(() => {
     ajax.get.restore()
-    cookies.get.restore()
     getUrlParameter.parameter.restore()
     browser.loading.restore()
     browser.loaded.restore()
@@ -70,12 +63,12 @@ describe('Edit Service', () => {
   })
 
   it('should request for service', () => {
-    var apiCalled = stubbedApi.withArgs(serviceEndpoint, headers, payload).calledOnce
+    var apiCalled = stubbedApi.withArgs(serviceEndpoint, payload).calledOnce
     expect(apiCalled).toBeTruthy()
   })
 
   it('should request for categories', () => {
-    var apiCalled = stubbedApi.withArgs(categoryEndpoint, headers, payload).calledOnce
+    var apiCalled = stubbedApi.withArgs(categoryEndpoint, payload).calledOnce
     expect(apiCalled).toBeTruthy()
   })
 

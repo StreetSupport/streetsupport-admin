@@ -1,11 +1,11 @@
 var ko = require('knockout')
-var Need = require('../Need')
+
+var adminurls = require('../../admin-urls')
+var ajax = require('../../ajax')
 var BaseViewModel = require('../BaseViewModel')
 var browser = require('../../browser')
-var adminurls = require('../../admin-urls')
 var getUrlParameter = require('../../get-url-parameter')
-var ajax = require('../../ajax')
-var cookies = require('../../cookies')
+var Need = require('../Need')
 
 function EditServiceProviderNeed () {
   var self = this
@@ -22,10 +22,9 @@ function EditServiceProviderNeed () {
   browser.loading()
 
   var endpoint = self.endpointBuilder.serviceProviders(providerId).needs(needId).build()
-  var headers = self.headers(cookies.get('session-token'))
 
   ajax
-    .get(endpoint, headers)
+    .get(endpoint)
     .then((result) => {
       var need = new Need(result.data)
       need.addListener(self)

@@ -7,7 +7,6 @@ global describe, beforeEach, afterEach, it, expect
 let endpoints = require('../../src/js/api-endpoints')
 let ajax = require('../../src/js/ajax')
 let browser = require('../../src/js/browser')
-let cookies = require('../../src/js/cookies')
 let urlParams = require('../../src/js/get-url-parameter')
 let Model = require('../../src/js/models/action-groups/ListActionGroups')
 
@@ -21,20 +20,15 @@ describe('List Action Groups - id is in querystring', () => {
   let ajaxGetStub = null
 
   beforeEach(() => {
-    sinon.stub(cookies, 'get').returns('stored-session-token')
     browserLoadingStub = sinon.stub(browser, 'loading')
     browserLoadedStub = sinon.stub(browser, 'loaded')
     browserPushHistoryStub = sinon.stub(browser, 'pushHistory')
     sinon.stub(browser, 'setOnHistoryPop')
     sinon.stub(urlParams, 'parameter').returns('57166227e4b09686f6b2c88a')
 
-    let headers = {
-      'content-type': 'application/json',
-      'session-token': 'stored-session-token'
-    }
     ajaxGetStub = sinon
       .stub(ajax, 'get')
-      .withArgs(endpoints.actionGroups, headers)
+      .withArgs(endpoints.actionGroups)
       .returns({
         then: function (success, error) {
           success({
@@ -53,7 +47,6 @@ describe('List Action Groups - id is in querystring', () => {
     browser.pushHistory.restore()
     browser.setOnHistoryPop.restore()
     ajax.get.restore()
-    cookies.get.restore()
     urlParams.parameter.restore()
   })
 

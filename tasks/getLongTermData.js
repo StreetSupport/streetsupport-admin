@@ -69,7 +69,7 @@ gulp.task('support-types', (callback) => {
 
   fs.writeFile(`${config.paths.generatedData}${outputs.supportTypes}`, body, function (err) {
     if (err) {
-      return console.log(err)
+      console.log(err)
     }
   })
 
