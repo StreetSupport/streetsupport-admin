@@ -63,7 +63,6 @@ function ListUsers () {
             return 0
           })
         self.allUsers(users)
-        self.unverifiedUsers(self.allUsers().filter((u) => u.username() === null))
         self.verifiedUsers(self.allUsers().filter((u) => u.username() !== null))
         browser.loaded()
       }, function (error) {
