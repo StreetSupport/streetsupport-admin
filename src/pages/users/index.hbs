@@ -15,7 +15,7 @@ nosubnav: true
       <a href="create-city-admin" class="btn btn--info" data-claims="superadmin">
         <span class="btn__text">Create City Admin</span>
       </a>
-      <a href="create-super-admin" class="btn btn--info" data-claims="superadmin">
+      <a href="create-super-admin" class="btn btn--yellow" data-claims="superadmin">
         <span class="btn__text">Create Super Admin</span>
       </a>
     </header>
@@ -36,11 +36,9 @@ nosubnav: true
         </thead>
         <tbody data-bind="template: { name: 'unverified-users-tmpl', foreach: unverifiedUsers }"></tbody>
       </table>
-      <h2>Verified Users</h2>
       <table>
         <thead>
           <tr>
-            <th>Username</th>
             <th>Email</th>
             <th>Area</th>
             <th>Claims</th>
@@ -70,7 +68,6 @@ nosubnav: true
 
 <script type="text/html" id="verified-users-tmpl">
   <tr>
-    <td data-bind="html: username"></td>
     <td data-bind="text: email"></td>
     <td data-bind="text: associatedAreaId"></td>
     <td data-bind="html: claims"></td>
