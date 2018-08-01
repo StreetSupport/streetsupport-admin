@@ -46,7 +46,6 @@ function ListUsers () {
   const endpoint = self.endpointBuilder.users().build()
   self.allUsers = ko.observableArray()
   self.verifiedUsers = ko.observableArray()
-  self.unverifiedUsers = ko.observableArray()
   self.selectedMemberTypeFilter = ko.observable()
 
   self.init = () => {
@@ -63,7 +62,6 @@ function ListUsers () {
             return 0
           })
         self.allUsers(users)
-        self.unverifiedUsers(self.allUsers().filter((u) => u.username() === null))
         self.verifiedUsers(self.allUsers().filter((u) => u.username() !== null))
         browser.loaded()
       }, function (error) {
