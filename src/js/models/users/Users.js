@@ -46,7 +46,6 @@ function ListUsers () {
   const endpoint = self.endpointBuilder.users().build()
   self.allUsers = ko.observableArray()
   self.verifiedUsers = ko.observableArray()
-  self.unverifiedUsers = ko.observableArray()
   self.selectedMemberTypeFilter = ko.observable()
 
   self.init = () => {
