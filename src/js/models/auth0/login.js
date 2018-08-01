@@ -11,8 +11,8 @@ module.exports = function () {
   const self = this
 
   // delete once released to live
-  document.cookie = 'auth-claims=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-  document.cookie = 'session-token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+  document.cookie = 'auth-claims=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;'
+  document.cookie = 'session-token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;'
 
   self.submit = function () {
     const state = JSON.stringify({
