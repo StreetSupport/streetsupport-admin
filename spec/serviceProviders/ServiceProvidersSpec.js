@@ -4,11 +4,14 @@ global describe, beforeEach, afterEach, it, expect
 
 'use strict'
 
-var sinon = require('sinon')
-var ajax = require('../../src/js/ajax')
-var endpoints = require('../../src/js/api-endpoints')
-var adminurls = require('../../src/js/admin-urls')
-var browser = require('../../src/js/browser')
+const sinon = require('sinon')
+
+const adminurls = require('../../src/js/admin-urls')
+const ajax = require('../../src/js/ajax')
+const browser = require('../../src/js/browser')
+const endpoints = require('../../src/js/api-endpoints')
+
+import { cities } from '../../src/data/generated/supported-cities'
 
 describe('Service Providers', () => {
   var Dashboard = require('../../src/js/models/ServiceProviders')
@@ -29,21 +32,21 @@ describe('Service Providers', () => {
                 'name': 'Albert Kennedy Trust',
                 'isVerified': false,
                 'isPublished': false,
-                'associatedCityId': 'manchester'
+                'associatedLocationIds': 'manchester'
               },
               {
                 'key': 'booth-centre',
                 'name': 'Booth Centre',
                 'isVerified': true,
                 'isPublished': true,
-                'associatedCityId': 'leeds'
+                'associatedLocationIds': 'leeds'
               },
               {
                 'key': 'coffee4craig',
                 'name': 'Coffee4Craig',
                 'isVerified': false,
                 'isPublished': true,
-                'associatedCityId': 'brighton'
+                'associatedLocationIds': 'brighton'
               }
             ]
           }
@@ -89,12 +92,6 @@ describe('Service Providers', () => {
     expect(dashboard.serviceProviders()[2].key).toEqual('coffee4craig')
   })
 
-  it('should sort service provider by city id', () => {
-    expect(dashboard.serviceProviders()[0].cityId).toEqual('manchester')
-    expect(dashboard.serviceProviders()[1].cityId).toEqual('leeds')
-    expect(dashboard.serviceProviders()[2].cityId).toEqual('brighton')
-  })
-
   it('should set service provider url', () => {
     expect(dashboard.serviceProviders()[0].url).toEqual(adminurls.serviceProviders + '?key=albert-kennedy-trust')
   })
@@ -124,7 +121,7 @@ describe('Service Providers', () => {
   })
 
   it('- should set available cities', () => {
-    expect(dashboard.availableCities().length).toEqual(3)
+    expect(dashboard.availableCities().length).toEqual(cities.length)
   })
 
   describe('- filter by city', () => {
