@@ -94,7 +94,7 @@ describe('Edit Service Provider General Details', () => {
         'Name': 'new name',
         'Description': 'new description',
         'ShortDescription': 'new short description',
-        'CityId': 'new city id',
+        'AssociatedLocationIds': 'new city id',
         'Tags': ['tag-a', 'tag-b', 'tag-c']
       }
       var apiCalledWithExpectedArgs = stubbedPutApi.withArgs(endpoint, payload).calledOnce

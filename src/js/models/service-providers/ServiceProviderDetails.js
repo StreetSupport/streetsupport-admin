@@ -56,7 +56,7 @@ function ServiceProviderDetails () {
         'Description': sp.description(),
         'ShortDescription': sp.shortDescription(),
         'Tags': tagsToCsv(),
-        'CityId': sp.city()
+        'AssociatedLocationIds': sp.city()
       }
       ajax.put(self.endpointBuilder.serviceProviders(getUrlParameter.parameter('key')).generalInformation().build(),
         payload

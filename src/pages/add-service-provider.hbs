@@ -31,13 +31,14 @@ nosubnav: true
           <dl class="key-value-pair" data-claims="superadmin">
             <dt class="key-value-pair__key">Associated City</dt>
             <dd class="key-value-pair__value">
-              <select data-bind="options: cities,
+              <select size="5" multiple="true" data-bind="options: cities,
                 optionsValue: 'id',
                 optionsText: function (city) {
                   return city.name
                 },
-                value: cityId,
+                selectedOptions: cityId,
                 optionsCaption: '-- please select --'" class="form__input"></select>
+                <p>Note: use ctrl + click to select multiple locations.</p>
           </dd>
         </dl>
         <button data-bind="click: save" class="btn btn--primary"><span class="btn__text">save</span></button>

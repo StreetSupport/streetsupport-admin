@@ -63,7 +63,7 @@ describe('Add Service Provider', () => {
       stubbedBrowser = sinon.stub(browser, 'redirect')
 
       model.name('New Service Provider')
-      model.cityId('manchester')
+      model.cityId('manchester, leeds')
       model.save()
     })
 
@@ -73,11 +73,12 @@ describe('Add Service Provider', () => {
     })
 
     it('should post service provider name to api', () => {
-      var endpoint = endpoints.getServiceProviders
+      var endpoint = endpoints.getServiceProvidersHAL
       var payload = {
         'Name': 'New Service Provider',
-        'AssociatedCity': 'manchester'
+        'AssociatedLocations': 'manchester, leeds'
       }
+
       var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, payload).calledOnce
       expect(apiCalledWithExpectedArgs).toBeTruthy()
     })
