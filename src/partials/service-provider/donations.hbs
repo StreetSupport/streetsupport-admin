@@ -20,7 +20,7 @@
     <span data-bind="html: donationDescription"></span>
     <!-- /ko -->
     <!-- ko if: $parent.isEditingDonationDetails -->
-    <textarea data-bind="textInput: donationDescription" class="form__input form__input--textarea" rows="7"></textarea>
+    <textarea data-bind="textInput: donationDescription" class="form__input form__input--textarea" rows="7" maxlength="50"></textarea>
     <!-- /ko -->
   </dd>
   <dt class="key-value-pair__key">Donate Items Description</dt>
