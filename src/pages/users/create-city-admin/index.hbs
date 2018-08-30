@@ -30,10 +30,10 @@ nosubnav: true
           {{> forms/textField fieldTitle="Email Address" dataFieldName="email" }}
           <dt class="key-value-pair__key">City</dt>
           <dd class="key-value-pair__value form__field-item">
-            <select data-bind="options: $parent.cities,
+            <select size="5" multiple="true" data-bind="options: $parent.cities,
                 optionsValue: function (item) { return item.id },
                 optionsText: function (item) { return item.name },
-                value: cityId,
+                selectedOptions: locationIds,
                 optionsCaption: '-- please select --'" class="form__input"></select>
           </dd>
         </dl>

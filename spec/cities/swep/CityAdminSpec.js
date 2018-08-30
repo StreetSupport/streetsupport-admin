@@ -13,7 +13,7 @@ describe('SWEP Availabilty as City Admin', () => {
 
   beforeEach(() => {
     sinon.stub(auth, 'isCityAdmin').returns(true)
-    sinon.stub(auth, 'cityAdminFor').returns('manchester')
+    sinon.stub(auth, 'locationsAdminFor').returns(['manchester', 'oldham'])
     sinon.stub(browser, 'loading')
     sinon.stub(browser, 'loaded')
     sinon.stub(nav, 'disableForbiddenLinks')
@@ -38,14 +38,14 @@ describe('SWEP Availabilty as City Admin', () => {
   afterEach(() => {
     ajax.get.restore()
     auth.isCityAdmin.restore()
-    auth.cityAdminFor.restore()
+    auth.locationsAdminFor.restore()
     browser.loading.restore()
     browser.loaded.restore()
     nav.disableForbiddenLinks.restore()
   })
 
   it(`- Should only show admin's city`, () => {
-    expect(sut.cities().length).toEqual(1)
+    expect(sut.cities().length).toEqual(2)
   })
 })
 
@@ -60,6 +60,13 @@ const cities = [
   {
     'key': 'leeds',
     'name': 'Leeds',
+    'latitude': 53.7954906003838,
+    'longitude': -1.54511238485298,
+    'swepIsAvailable': false
+  },
+  {
+    'key': 'oldham',
+    'name': 'Oldham',
     'latitude': 53.7954906003838,
     'longitude': -1.54511238485298,
     'swepIsAvailable': false

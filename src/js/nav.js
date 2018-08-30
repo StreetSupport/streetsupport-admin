@@ -7,7 +7,7 @@ const overlayElement = '.js-nav-overlay'
 const activeClass = 'is-active'
 
 const disableForbiddenLinks = () => {
-  const disableRestrictedLinks = (userClaims, requiredClaims) => {
+  const disableRestrictedLinks = (userClaims) => {
     const hasClaim = (userClaims, requiredClaims) => {
       if (requiredClaims === null) return false
       requiredClaims = requiredClaims.split(',')
