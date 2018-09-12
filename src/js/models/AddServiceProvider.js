@@ -15,7 +15,7 @@ function AddServiceProvider () {
 
   const buildPost = () => {
     const cityId = auth.isCityAdmin()
-    ? auth.cityAdminFor()
+    ? [ auth.cityAdminFor() ]
     : self.cityId()
 
     const endpoint = self.endpointBuilder.serviceProvidersHAL().build()
