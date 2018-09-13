@@ -15,14 +15,14 @@ function AddServiceProvider () {
 
   const buildPost = () => {
     const cityId = auth.isCityAdmin()
-    ? auth.cityAdminFor()
+    ? [ auth.cityAdminFor() ]
     : self.cityId()
-    const endpoint = self.endpointBuilder.serviceProviders().build()
+
+    const endpoint = self.endpointBuilder.serviceProvidersHAL().build()
     const payload = {
       'Name': self.name(),
-      'AssociatedCity': cityId
+      'AssociatedLocations': cityId
     }
-
     return {
       endpoint,
       payload

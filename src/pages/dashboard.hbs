@@ -20,6 +20,8 @@ nosubnav: true
         <label for="ffilterByCityilter" class="form__label">Filter by city:</label>
         <select class="form__input form__input--medium" name="filterByCity" data-bind="options: availableCities,
                           value: cityFilter,
+                          optionsText: 'name',
+                          optionsValue: 'id',
                           optionsCaption: 'All',
                           event: { change: filter }"></select>
       </div>

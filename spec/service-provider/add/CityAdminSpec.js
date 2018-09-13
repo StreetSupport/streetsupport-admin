@@ -58,10 +58,10 @@ describe('Add Service Provider as City Admin', () => {
     })
 
     it('should post service provider name to api', () => {
-      var endpoint = endpoints.getServiceProviders
+      var endpoint = endpoints.getServiceProvidersHAL
       var payload = {
         'Name': 'New Service Provider',
-        'AssociatedCity': 'timbuktu'
+        'AssociatedLocations': [ 'timbuktu' ]
       }
       var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, payload).calledOnce
       expect(apiCalledWithExpectedArgs).toBeTruthy()

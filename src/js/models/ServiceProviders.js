@@ -1,15 +1,18 @@
-var ajax = require('../ajax')
-var adminUrls = require('../admin-urls')
-var browser = require('../browser')
-var ko = require('knockout')
-var BaseViewModel = require('./BaseViewModel')
+const ko = require('knockout')
+
+const adminUrls = require('../admin-urls')
+const ajax = require('../ajax')
+const BaseViewModel = require('./BaseViewModel')
+const browser = require('../browser')
+
+import { cities } from '../../data/generated/supported-cities'
 
 function ServiceProvider (sp) {
   this.key = sp.key
   this.name = sp.name
   this.url = adminUrls.serviceProviders + '?key=' + sp.key
   this.newUserUrl = adminUrls.userAdd + '?key=' + sp.key
-  this.cityId = sp.associatedCityId
+  this.associatedLocationIds = sp.associatedLocationIds
   this.isVerified = ko.observable(sp.isVerified)
   this.isPublished = ko.observable(sp.isPublished)
   this.verifiedLabel = ko.computed(function () { return this.isVerified() ? 'verified' : 'under review' }, this)
@@ -28,7 +31,7 @@ function DashboardModel () {
   self.cityFilter = ko.observable()
   self.isVerifiedFilter = ko.observable()
   self.isPublishedFilter = ko.observable()
-  self.availableCities = ko.observableArray()
+  self.availableCities = ko.observableArray(cities)
   self.availableStatuses = ko.observableArray([
     {
       value: true,
@@ -58,10 +61,6 @@ function DashboardModel () {
     .then(function (result) {
       self.allServiceProviders(self.mapServiceProviders(result.data.items))
       self.serviceProviders(self.mapServiceProviders(result.data.items))
-
-      self.availableCities(result.data.items
-        .map((sp) => sp.associatedCityId)
-        .filter((e, i, a) => { return a.indexOf(e) === i }))
 
       browser.loaded()
     },
@@ -135,7 +134,9 @@ function DashboardModel () {
     }
     if (self.cityFilter() !== undefined) {
       filtered = filtered
-        .filter((sp) => sp.cityId === self.cityFilter())
+        .filter((sp) => {
+          return sp.associatedLocationIds.indexOf(self.cityFilter()) >= 0
+        })
     }
     if (self.isPublishedFilter() !== undefined) {
       filtered = filtered

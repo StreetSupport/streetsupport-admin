@@ -22,10 +22,10 @@
       <span data-bind="html: city"></span>
       <!-- /ko -->
       <!-- ko if: $parent.isEditingGeneralDetails -->
-      <select data-bind="options: availableCities,
+      <select size="5" multiple="true" data-bind="options: availableCities,
           optionsValue: function (item) { return item.id },
           optionsText:  function (item) { return item.name },
-          value: city,
+          selectedOptions: city,
           optionsCaption: '-- please select --'" class="form__input"></select>
       <!-- /ko -->
     </dd>
