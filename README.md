@@ -64,7 +64,7 @@ Each page of the site is found under the `/pages/` directory. Each page is repre
 * description: the page's meta description
 * layout: the master layout file (found in `/layouts/`)
 * permalink: ???
-* jsBundle: the js bundle that will be loaded into the page. Bundles are defined in `/webpack.config.js` and each one points to a js file in `/src/js/`
+* jsBundle: the js bundle that will be loaded into the page. Bundles are defined in `/webpack.config.js` and each one points to a js file in `/src/js/`. For basic pages, use `generic`.
 * section: the top level navigation item this page belongs to. See `/src/scss/modules/_variables.scss` for list of sections
 * page: the navigation item for this page. See `/src/scss/modules/_variables.scss` for list of pages
 * nosubnav: {true|false} if `true`, hide the sub navigation on the page

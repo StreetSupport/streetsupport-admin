@@ -33,7 +33,7 @@ describe('Accommodation - Add - No City', () => {
     sut.init()
 
     sut.formFields().email('test@email.com')
-    sut.formFields().cityId('')
+    sut.formFields().locationIds([])
 
     sut.save()
   })

@@ -25,6 +25,12 @@ const cityAdminFor = function () {
   return adminForClaim !== undefined ? adminForClaim.split(':')[1] : ''
 }
 
+const locationsAdminFor = function () {
+  return getUserClaims()
+    .filter((c) => c.startsWith('cityadminfor:'))
+    .map((c) => c.split(':')[1])
+}
+
 const canSeeReviews = function () {
   const claims = getUserClaims()
   return claims.includes(roles.superadmin) || claims.includes(roles.tempaccomadmin)
@@ -44,5 +50,6 @@ module.exports = {
   providerAdminFor,
   canSeeReviews,
   isCityAdmin,
-  cityAdminFor
+  cityAdminFor,
+  locationsAdminFor
 }

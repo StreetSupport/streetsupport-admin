@@ -56,7 +56,7 @@ describe('Accommodation - add - server returns bad request', () => {
         })
 
       sut.formFields().email('test@email.com')
-      sut.formFields().cityId('manchester')
+      sut.formFields().locationIds(['manchester', 'bury'])
 
       sut.save()
     })
