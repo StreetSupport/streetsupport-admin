@@ -54,7 +54,7 @@ function Model () {
     const formFields = ko.validatedObservable({
       name: ko.observable().extend({ required: true }),
       additionalInfo: ko.observable(),
-      email: ko.observable().extend({ email: true }),
+      email: ko.observable().extend({ email: true, required: false }),
       telephone: ko.observable()
     })
     const endpoint = self.endpointBuilder.temporaryAccommodation(id).contactInformation().build()
