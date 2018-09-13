@@ -33,7 +33,7 @@ describe('Users - Create City Admin - Invalid Email', () => {
     sut.init()
 
     sut.formFields().email('email')
-    sut.formFields().cityId('manchester')
+    sut.formFields().locationIds(['manchester', 'bury'])
 
     sut.save()
   })

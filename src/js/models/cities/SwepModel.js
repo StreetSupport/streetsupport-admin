@@ -51,8 +51,8 @@ City.prototype = new BaseViewModel()
 
 const filterCities = function (city) {
   return auth.isCityAdmin()
-  ? city.key === auth.cityAdminFor()
-  : true
+    ? auth.locationsAdminFor().includes(city.key)
+    : true
 }
 
 const Swep = function () {

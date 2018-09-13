@@ -55,7 +55,7 @@ describe('Users - Create City Admin', () => {
           }
         })
 
-      sut.formFields().cityId('manchester')
+      sut.formFields().locationIds(['manchester', 'leeds'])
       sut.formFields().email('test@email.com')
 
       sut.save()
@@ -73,7 +73,7 @@ describe('Users - Create City Admin', () => {
     it('- should post form data to api', () => {
       const endpoint = endpoints.unverifiedCityAdmins
       const payload = {
-        'CityId': 'manchester',
+        'LocationIds': ['manchester', 'leeds'],
         'Email': 'test@email.com'
       }
       const calledAsExpected = ajaxPostStub

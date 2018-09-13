@@ -14,7 +14,7 @@ function Model () {
 
   self.formFields = ko.validatedObservable({
     email: ko.observable().extend({ email: true, required: true }),
-    cityId: ko.observable().extend({ required: true })
+    locationIds: ko.observable().extend({ required: true })
   })
 
   self.cities = ko.observableArray(cities)
