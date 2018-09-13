@@ -5,7 +5,7 @@ let browser = require('../../browser')
 let BaseViewModel = require('../BaseViewModel')
 let Update = require('./Update')
 
-function ListImpactUpdates() {
+function ListImpactUpdates () {
   let self = this
   self.cities = ko.observableArray()
   self.impactUpdates = ko.observableArray()
@@ -62,7 +62,7 @@ function ListImpactUpdates() {
   function getSelectableCities (result) {
     return auth.isCityAdmin()
       ? result.data.filter(l => auth.locationsAdminFor().includes(l.key))
-      : result.data;
+      : result.data
   }
 }
 
