@@ -70,8 +70,8 @@ function EndpointBuilder () {
     return self
   }
 
-  self.users = () => {
-    self.updateBaseResource(endpoints.users)
+  self.users = (userId) => {
+    self.updateBaseResource(endpoints.users, userId)
     return self
   }
 
