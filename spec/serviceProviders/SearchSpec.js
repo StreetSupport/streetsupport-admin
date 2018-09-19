@@ -96,6 +96,7 @@ describe('Service Providers - search', () => {
         index: '0',
         name: 'street',
         isVerified: 'true',
+        isPublished: 'false',
         location: 'manchester'
       }
       var actual = {}

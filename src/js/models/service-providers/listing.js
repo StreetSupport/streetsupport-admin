@@ -119,7 +119,6 @@ function DashboardModel () {
   ])
 
   self.submitSearch = function () {
-    console.log(self.filterOnIsPublished())
     self.index(0)
     self.loadDocuments()
   }
