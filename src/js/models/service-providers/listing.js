@@ -1,11 +1,12 @@
 const ko = require('knockout')
 
 const adminUrls = require('../../admin-urls')
+const auth = require('../../auth')
 const ajax = require('../../ajax')
 const BaseViewModel = require('../BaseViewModel')
 const browser = require('../../browser')
 
-import { cities } from '../../../data/generated/supported-cities'
+import { cities as locations } from '../../../data/generated/supported-cities'
 
 class PaginationLink {
   constructor (listener, pageNumber, isCurrent) {
@@ -51,6 +52,10 @@ function DashboardModel () {
   self.pageSize = ko.observable(10)
   self.index = ko.observable(0)
 
+  const locationsForUser = auth.isCityAdmin()
+  ? locations.filter((l) => auth.locationsAdminFor().includes(l.id))
+  : locations
+
   const buildGetUrl = () => {
     return `${self.endpointBuilder.serviceProvidersv3().build()}?pageSize=${self.pageSize()}&index=${self.index()}`
   }
@@ -69,7 +74,11 @@ function DashboardModel () {
 
   self.allServiceProviders = ko.observableArray()
   self.serviceProviders = ko.observableArray()
-  self.availableCities = ko.observableArray(cities)
+  self.shouldShowLocationFilter = ko.computed(function () {
+    return locationsForUser.length > 1
+  }, self)
+  self.availableLocations = ko.observableArray(locationsForUser)
+  self.locationToFilterOn = ko.observable()
   self.paginationLinks = ko.observableArray([])
   self.availableStatuses = ko.observableArray([
     {
@@ -94,7 +103,6 @@ function DashboardModel () {
 
   self.init = function () {
     browser.loading()
-    console.log(buildGetUrl())
     ajax
       .get(buildGetUrl(), {})
       .then(function (result) {

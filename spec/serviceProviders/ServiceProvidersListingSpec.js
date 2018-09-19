@@ -8,11 +8,12 @@ const sinon = require('sinon')
 
 const adminurls = require('../../src/js/admin-urls')
 const ajax = require('../../src/js/ajax')
+const auth = require('../../src/js/auth')
 const browser = require('../../src/js/browser')
 const data = require('./serviceProviderData')
 const endpoints = require('../../src/js/api-endpoints')
 
-import { cities } from '../../src/data/generated/supported-cities'
+import { cities as locations } from '../../src/data/generated/supported-cities'
 
 describe('Service Providers', () => {
   const Model = require('../../src/js/models/service-providers/listing')
@@ -35,6 +36,7 @@ describe('Service Providers', () => {
     }
 
     stubbedApi = sinon.stub(ajax, 'get').returns(fakeResolved)
+    sinon.stub(auth, 'isCityAdmin').returns(false)
     browserLoadingStub = sinon.stub(browser, 'loading')
     browserLoadedStub = sinon.stub(browser, 'loaded')
 
@@ -43,6 +45,7 @@ describe('Service Providers', () => {
 
   afterEach(() => {
     ajax.get.restore()
+    auth.isCityAdmin.restore()
     browser.loading.restore()
     browser.loaded.restore()
   })
@@ -100,8 +103,8 @@ describe('Service Providers', () => {
     expect(sut.serviceProviders()[1].publishedLabelClass()).toEqual('status status--true')
   })
 
-  it('- should set available cities', () => {
-    expect(sut.availableCities().length).toEqual(cities.length)
+  it('- should set available locations', () => {
+    expect(sut.availableLocations().length).toEqual(locations.length)
   })
 
   it('- should construct pagination', () => {
