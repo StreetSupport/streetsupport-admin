@@ -15,16 +15,48 @@ nosubnav: true
       <a href="/add-service-provider.html" class="btn btn--info">
         <span class="btn__text">Add New Service Provider</span>
       </a>
-      <!-- ko if: shouldShowLocationFilter -->
-      <div class="form__field-item form__field-item--full-width" data-claims="superadmin,cityadmin">
-        <label for="filterOnLocation" class="form__label">Filter by location:</label>
-        <select class="form__input form__input--medium" name="filterOnLocation" data-bind="options: availableLocations,
-                          value: locationToFilterOn,
-                          optionsText: 'name',
-                          optionsValue: 'id',
-                          optionsCaption: 'All'"></select>
-      </div>
-      <!-- /ko -->
+      <form class="form" data-bind="submit: submitSearch">
+        <fieldset class="form__fieldset">
+          <legend class="form__legend">Filter results</legend>
+          <ul class="form__field-list">
+            <!-- ko if: shouldShowLocationFilter -->
+            <li class="form__field-item form__field-item--full-width" data-claims="superadmin,cityadmin">
+              <label for="filterOnLocation" class="form__label">Location:</label>
+              <select class="form__input form__input--medium" name="filterOnLocation" data-bind="options: availableLocations,
+                                value: locationToFilterOn,
+                                optionsText: 'name',
+                                optionsValue: 'id',
+                                optionsCaption: 'All'"></select>
+            </li>
+            <!-- /ko -->
+            <li class="form__field-item">
+              <label for="filterByName" class="form__label">Name:</label>
+              <input type="text" name="filterByName" class="form__input" data-bind="textInput: nameToFilterOn"></input>
+            </li>
+            <li class="form__field-item">
+              <label class="form__label">Is Verified:</label>
+              <label for="is-verified" class="form__label form__label--checkbox">Yes:</label>
+              <input id="is-verified" name="is-verified" type="radio" data-bind="checkedValue: true, checked: filterOnIsVerified"></input>
+              <label for="is-not-verified" class="form__label form__label--checkbox">No:</label>
+              <input id="is-not-verified" name="is-not-verified" type="radio" data-bind="checkedValue: false, checked: filterOnIsVerified"></input>
+              <label for="either-verified" class="form__label form__label--checkbox">Either:</label>
+              <input id="either-verified" name="either-verified" type="radio" name="filterByIsVerified" data-bind="checkedValue: '', checked: filterOnIsVerified"></input>
+            </li>
+            <li class="form__field-item">
+              <label class="form__label">Is Visible:</label>
+              <label for="is-visible" class="form__label form__label--checkbox">Yes:</label>
+              <input id="is-visible" name="is-visible" type="radio" name="filterOnIsPublished" data-bind="checkedValue: true, checked: filterOnIsPublished"></input>
+              <label for="is-not-visible" class="form__label form__label--checkbox">No:</label>
+              <input id="is-not-visible" name="is-not-visible" type="radio" name="filterOnIsPublished" data-bind="checkedValue: false, checked: filterOnIsPublished"></input>
+              <label for="either-visible" class="form__label form__label--checkbox">Either:</label>
+              <input id="either-visible" name="either-visible" type="radio" name="filterOnIsPublished" data-bind="checkedValue: '', checked: filterOnIsPublished"></input>
+          </li>
+          </ul>
+        </fieldset>
+        <button type="submit" class="btn btn--info">
+          <span class="btn__text">Search</span>
+        </button>
+      </form>
     </header>
   </div>
 </div>

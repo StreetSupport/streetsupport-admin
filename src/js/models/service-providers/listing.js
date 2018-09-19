@@ -57,12 +57,26 @@ function DashboardModel () {
   : locations
 
   const buildGetUrl = () => {
-    return `${self.endpointBuilder.serviceProvidersv3().build()}?pageSize=${self.pageSize()}&index=${self.index()}`
+    const filters = [
+      { key: 'pageSize', value: self.pageSize, isSet: (val) => true },
+      { key: 'index', value: self.index, isSet: (val) => true },
+      { key: 'name', value: self.nameToFilterOn, isSet: (val) => val !== undefined && val.length > 0 },
+      { key: 'location', value: self.locationToFilterOn, isSet: (val) => val !== undefined && val.length > 0 },
+      { key: 'isVerified', value: self.filterOnIsVerified, isSet: (val) => val !== '' },
+      { key: 'isPublished', value: self.filterOnIsPublished, isSet: (val) => val !== '' }
+    ]
+
+    const filterQueryString = filters
+      .filter((f) => f.isSet(f.value()))
+      .map((f) => `${f.key}=${f.value()}`)
+      .join('&')
+
+    return `${self.endpointBuilder.serviceProvidersv3().build()}?${filterQueryString}`
   }
 
   self.changePage = (pageNumber) => {
     self.index((pageNumber - 1) * self.pageSize())
-    self.init()
+    self.loadDocuments()
   }
 
   const setPaginationLinks = (paginatedData) => {
@@ -79,6 +93,9 @@ function DashboardModel () {
   }, self)
   self.availableLocations = ko.observableArray(locationsForUser)
   self.locationToFilterOn = ko.observable()
+  self.nameToFilterOn = ko.observable()
+  self.filterOnIsVerified = ko.observable('')
+  self.filterOnIsPublished = ko.observable('')
   self.paginationLinks = ko.observableArray([])
   self.availableStatuses = ko.observableArray([
     {
@@ -101,7 +118,13 @@ function DashboardModel () {
     }
   ])
 
-  self.init = function () {
+  self.submitSearch = function () {
+    console.log(self.filterOnIsPublished())
+    self.index(0)
+    self.loadDocuments()
+  }
+
+  self.loadDocuments = function () {
     browser.loading()
     ajax
       .get(buildGetUrl(), {})
@@ -165,7 +188,7 @@ function DashboardModel () {
     self.serviceProviders(updatedSPs)
   }
 
-  self.init()
+  self.loadDocuments()
 }
 
 DashboardModel.prototype = new BaseViewModel()
