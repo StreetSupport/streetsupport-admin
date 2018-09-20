@@ -80,7 +80,13 @@ gulp.task('supported-cities', (callback) => {
   return request(endpoints.cities)
     .pipe(source(`${config.paths.generatedData}${outputs.supportedCities}`))
     .pipe(streamify(jeditor(function (cities) {
-      return cities.map(function (c) {
+      return cities
+      .sort((a, b) => {
+        if (a.name < b.name) return -1
+        if (a.name > b.name) return 1
+        return 0
+      })
+      .map(function (c) {
         return {
           id: c.key,
           findHelpId: c.key,

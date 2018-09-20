@@ -11,7 +11,7 @@ module.exports = {
   authentication: '/login/authentication',
   loggedOut: '/logout/success',
   passwordReset: '/password-reset',
-  dashboard: s('/dashboard'),
+  dashboard: '/service-providers',
   serviceProviders: s('/service-providers'),
   notFound: s('/404'),
   serverError: s('/500'),

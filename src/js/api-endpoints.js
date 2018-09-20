@@ -16,6 +16,7 @@ module.exports = {
   getServiceProviders: p('/v1/all-service-providers'),
   getPublishedServiceProviders: p('/v2/service-providers'),
   getServiceProvidersHAL: p('/v2/all-service-providers'),
+  getServiceProvidersv3: p('/v3/service-providers'),
   getServiceCategories: p('/v2/service-categories/'),
   users: p('/v1/users'),
   unverifiedCityAdmins: p('/v1/unverified-city-admins'),

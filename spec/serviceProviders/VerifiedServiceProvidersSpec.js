@@ -4,14 +4,15 @@ global describe, beforeEach, afterEach, it, expect
 
 'use strict'
 
-var sinon = require('sinon')
-var ajax = require('../../src/js/ajax')
-var endpoints = require('../../src/js/api-endpoints')
-var browser = require('../../src/js/browser')
+const sinon = require('sinon')
+const ajax = require('../../src/js/ajax')
+const auth = require('../../src/js/auth')
+const endpoints = require('../../src/js/api-endpoints')
+const browser = require('../../src/js/browser')
 
 describe('VerifiedServiceProviders', () => {
-  var Dashboard = require('../../src/js/models/ServiceProviders')
-  var dashboard
+  const Dashboard = require('../../src/js/models/service-providers/listing')
+  let dashboard
 
   beforeEach(() => {
     let fakeResolved = {
@@ -40,6 +41,7 @@ describe('VerifiedServiceProviders', () => {
     }
 
     sinon.stub(ajax, 'get').returns(fakeResolved)
+    sinon.stub(auth, 'isCityAdmin').returns(false)
     sinon.stub(browser, 'loading')
     sinon.stub(browser, 'loaded')
 
@@ -48,6 +50,7 @@ describe('VerifiedServiceProviders', () => {
 
   afterEach(() => {
     ajax.get.restore()
+    auth.isCityAdmin.restore()
     browser.loading.restore()
     browser.loaded.restore()
   })

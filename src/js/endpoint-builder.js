@@ -25,6 +25,11 @@ function EndpointBuilder () {
     return self
   }
 
+  self.serviceProvidersv3 = (providerId) => {
+    self.updateBaseResource(endpoints.getServiceProvidersv3, providerId)
+    return self
+  }
+
   self.verifiedUsers = (userId) => {
     self.updateBaseResource(endpoints.verifiedUsers, userId)
     return self
