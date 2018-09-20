@@ -16,6 +16,11 @@
   padding: 0;
 }
 
+.form__legend {
+  @extend .h2;
+  margin-bottom: 10px;
+}
+
 .form__fieldset-title {
   margin-bottom: 5px;
 }

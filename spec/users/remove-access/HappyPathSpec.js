@@ -16,7 +16,6 @@ const userData = [
   { 'id': '5b30df1146e3db1c60867e61', 'userName': '74f0cf79-0de7-4c03-bc39-34787757faf0', 'email': 'vince+dev-mcradmin@streetsupport.net', 'claims': ['CityAdminFor:manchester', 'CityAdmin'], 'isVerified': false, 'verificationExpiryDate': '0001-01-01T00:00:00.0000000Z', 'associatedAreaId': '' }
 ]
 
-
 describe('Users - listing', () => {
   const Model = require(`${jsRoot}models/users/Users`)
   let sut = null
@@ -27,7 +26,7 @@ describe('Users - listing', () => {
     sinon.stub(ajax, 'get')
       .withArgs(endpoints.users)
       .returns({
-        then: function (success,) {
+        then: function (success, _) {
           success({
             data: userData
           })
@@ -57,7 +56,7 @@ describe('Users - listing', () => {
     beforeEach(() => {
       ajaxDelete = sinon.stub(ajax, 'delete')
       ajaxDelete.returns({
-        then: function (success,) {
+        then: function (success, _) {
           success({})
         }
       })
@@ -77,7 +76,7 @@ describe('Users - listing', () => {
     })
 
     it('- should send delete request', () => {
-      const deleteRequestCalledAsExpected = ajaxDelete.withArgs(`${endpoints.users}/${userData[0].id}`).calledAfter(browserLoadingStub);
+      const deleteRequestCalledAsExpected = ajaxDelete.withArgs(`${endpoints.users}/${userData[0].id}`).calledAfter(browserLoadingStub)
       expect(deleteRequestCalledAsExpected).toBeTruthy()
     })
 
