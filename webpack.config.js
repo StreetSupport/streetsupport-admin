@@ -24,7 +24,6 @@ module.exports = {
   entry: {
     generic: p('generic'),
     index: p('index'),
-    dashboard: p('dashboard'),
     'service-provider-listing': path.join(__dirname, pageDirPath, 'service-providers/listing'),
     serviceProvider: p('service-provider'),
     addServiceProvider: p('add-service-provider'),

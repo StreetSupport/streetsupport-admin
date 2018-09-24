@@ -55,7 +55,12 @@
 
 .form__label--checkbox {
   display: inline;
-  margin-right: 1em;
+  margin-right: 0.5em;
+  margin-left: 2em;
+
+  &:first-of-type { 
+    margin-left: 0;
+  }
 }
 
 .form__label--checkbox-container {
