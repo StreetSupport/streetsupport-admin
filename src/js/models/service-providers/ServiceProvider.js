@@ -62,7 +62,13 @@ function ServiceProvider (data) {
       : []
   }
 
-  self.groupedServices = ko.observableArray(data.groupedServices.map((s) => new GroupedService(s)))
+  self.groupedServices = ko.observableArray(data.groupedServices
+    .map((s) => new GroupedService(s))
+    .sort((a, b) => {
+      if (a.name > b.name) return 1
+      if (a.name < b.name) return -1
+      return 0
+    }))
   self.groupedServices().forEach((s) => s.addListener(self))
 
   self.needs = ko.observableArray(buildNeeds(data.needs))
