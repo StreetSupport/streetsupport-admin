@@ -12,6 +12,39 @@ nosubnav: true
   <div class="container block__inner">
     <header>
       <h1>Volunteers</h1>
+      <form class="form" data-bind="submit: submitSearch">
+        <fieldset class="form__fieldset">
+          <legend class="form__legend">Filter results</legend>
+          <ul class="form__field-list">
+            <!-- ko if: shouldShowLocationFilter -->
+            <li class="form__field-item form__field-item--full-width" data-claims="superadmin,cityadmin">
+              <label for="filterOnLocation" class="form__label">Location:</label>
+              <select class="form__input form__input--medium" name="filterOnLocation" data-bind="options: availableLocations,
+                                value: locationToFilterOn,
+                                optionsText: 'name',
+                                optionsValue: 'id',
+                                optionsCaption: 'All'"></select>
+            </li>
+            <!-- /ko -->
+            <li class="form__field-item">
+              <label for="textSearchToFilterOn" class="form__label">Search for text:</label>
+              <input type="text" name="textSearchToFilterOn" class="form__input" data-bind="textInput: textSearchToFilterOn"></input>
+            </li>
+            <li class="form__field-item">
+              <label class="form__label">Is Archived:</label>
+              <label for="is-archived" class="form__label form__label--checkbox">Yes:</label>
+              <input id="is-archived" name="is-archived" type="radio" data-bind="checkedValue: true, checked: filterOnIsArchived"></input>
+              <label for="is-not-archived" class="form__label form__label--checkbox">No:</label>
+              <input id="is-not-archived" name="is-not-archived" type="radio" data-bind="checkedValue: false, checked: filterOnIsArchived"></input>
+              <label for="either-archived" class="form__label form__label--checkbox">Either:</label>
+              <input id="either-archived" name="either-archived" type="radio" name="filterOnIsArchived" data-bind="checkedValue: '', checked: filterOnIsArchived"></input>
+            </li>
+          </ul>
+        </fieldset>
+        <button type="submit" class="btn btn--info">
+          <span class="btn__text">Search</span>
+        </button>
+      </form>
     </header>
   </div>
 </div>

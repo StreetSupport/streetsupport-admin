@@ -1,30 +1,51 @@
 'use strict'
 
 const ajax = require('../../ajax')
+const auth = require('../../auth')
 const browser = require('../../browser')
 const BaseViewModel = require('../BaseViewModel')
 const ko = require('knockout')
 const Volunteer = require('./Volunteer')
 
+import { cities as locations } from '../../../data/generated/supported-cities'
 import ListingPagination from '../ListingPagination'
 
 const ListVolunteersModel = function () {
   const self = this
+
+  const locationsForUser = auth.isCityAdmin()
+    ? locations.filter((l) => auth.locationsAdminFor().includes(l.id))
+    : locations
 
   self.allVolunteers = ko.observableArray()
   self.volunteers = ko.observableArray()
   self.searchTerm = ko.observable()
   self.isFilteredByHighlighted = ko.observable(false)
   self.cityFilter = ko.observable()
-  self.availableCities = ko.observableArray()
+  self.availableLocations = ko.observableArray(locationsForUser)
 
   self.paginationLinks = ko.observableArray([])
   self.pagination = new ListingPagination(self)
 
+  self.locationToFilterOn = ko.observable()
+  self.textSearchToFilterOn = ko.observable()
+  self.filterOnIsArchived = ko.observable('')
+
+  self.shouldShowLocationFilter = ko.computed(function () {
+    return locationsForUser.length > 1
+  }, self)
+
+  self.submitSearch = function () {
+    self.pagination.changePage(1)
+  }
+
   const buildGetUrl = () => {
     const filters = [
       { key: 'pageSize', getValue: () => self.pagination.pageSize, isSet: (val) => true },
-      { key: 'index', getValue: () => self.pagination.index, isSet: (val) => true }
+      { key: 'index', getValue: () => self.pagination.index, isSet: (val) => true },
+      { key: 'location', getValue: self.locationToFilterOn, isSet: (val) => val !== undefined && val.length > 0 },
+      { key: 'search', getValue: self.textSearchToFilterOn, isSet: (val) => val !== undefined && val.length > 0 },
+      { key: 'isArchived', getValue: self.filterOnIsArchived, isSet: (val) => val !== '' },
     ]
 
     const filterQueryString = filters
@@ -49,14 +70,7 @@ const ListVolunteersModel = function () {
 
         self.allVolunteers(volunteers)
         self.volunteers(volunteers)
-
-        self.availableCities(volunteers
-          .map((v) => v.person.city)
-          .filter((e, i, a) => { return a.indexOf(e) === i })
-          .filter((c) => c !== null)
-          .filter((c) => c.length > 0)
-        )
-
+        
         browser.loaded()
       }, function (error) {
         self.handleServerError(error)
