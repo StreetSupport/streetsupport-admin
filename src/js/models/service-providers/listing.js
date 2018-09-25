@@ -7,17 +7,7 @@ const BaseViewModel = require('../BaseViewModel')
 const browser = require('../../browser')
 
 import { cities as locations } from '../../../data/generated/supported-cities'
-
-class PaginationLink {
-  constructor (listener, pageNumber, isCurrent) {
-    this.listener = listener
-    this.pageNumber = ko.observable(pageNumber)
-    this.isCurrent = ko.observable(isCurrent)
-    this.changePage = function () {
-      this.listener.changePage(this.pageNumber())
-    }
-  }
-}
+import ListingPagination from '../ListingPagination'
 
 class ServiceProvider {
   constructor (sp) {
@@ -49,42 +39,29 @@ const mapServiceProviders = function (data) {
 function DashboardModel () {
   const self = this
 
-  self.pageSize = ko.observable(10)
-  self.index = ko.observable(0)
-
   const locationsForUser = auth.isCityAdmin()
   ? locations.filter((l) => auth.locationsAdminFor().includes(l.id))
   : locations
 
   const buildGetUrl = () => {
     const filters = [
-      { key: 'pageSize', value: self.pageSize, isSet: (val) => true },
-      { key: 'index', value: self.index, isSet: (val) => true },
-      { key: 'name', value: self.nameToFilterOn, isSet: (val) => val !== undefined && val.length > 0 },
-      { key: 'location', value: self.locationToFilterOn, isSet: (val) => val !== undefined && val.length > 0 },
-      { key: 'isVerified', value: self.filterOnIsVerified, isSet: (val) => val !== '' },
-      { key: 'isPublished', value: self.filterOnIsPublished, isSet: (val) => val !== '' }
+      { key: 'pageSize', getValue: () => self.pagination.pageSize, isSet: (val) => true },
+      { key: 'index', getValue: () => self.pagination.index, isSet: (val) => true },
+      { key: 'name', getValue: self.nameToFilterOn, isSet: (val) => val !== undefined && val.length > 0 },
+      { key: 'location', getValue: self.locationToFilterOn, isSet: (val) => val !== undefined && val.length > 0 },
+      { key: 'isVerified', getValue: self.filterOnIsVerified, isSet: (val) => val !== '' },
+      { key: 'isPublished', getValue: self.filterOnIsPublished, isSet: (val) => val !== '' }
     ]
 
     const filterQueryString = filters
-      .filter((f) => f.isSet(f.value()))
-      .map((f) => `${f.key}=${f.value()}`)
+      .filter((f) => f.isSet(f.getValue()))
+      .map((f) => `${f.key}=${f.getValue()}`)
       .join('&')
 
     return `${self.endpointBuilder.serviceProvidersv3().build()}?${filterQueryString}`
   }
 
-  self.changePage = (pageNumber) => {
-    self.index((pageNumber - 1) * self.pageSize())
-    self.loadDocuments()
-  }
-
-  const setPaginationLinks = (paginatedData) => {
-    const totalPages = Math.ceil(paginatedData.total / self.pageSize())
-    const currentPage = Math.ceil(self.index() / self.pageSize())
-    self.paginationLinks(Array.from({ length: totalPages })
-      .map((_, i) => new PaginationLink(self, i + 1, currentPage === i)))
-  }
+  self.pagination = new ListingPagination(self)
 
   self.allServiceProviders = ko.observableArray()
   self.serviceProviders = ko.observableArray()
@@ -119,8 +96,7 @@ function DashboardModel () {
   ])
 
   self.submitSearch = function () {
-    self.index(0)
-    self.loadDocuments()
+    self.pagination.changePage(1)
   }
 
   self.loadDocuments = function () {
@@ -128,7 +104,7 @@ function DashboardModel () {
     ajax
       .get(buildGetUrl(), {})
       .then(function (result) {
-        setPaginationLinks(result.data)
+        self.pagination.updateData(result.data)
         self.allServiceProviders(mapServiceProviders(result.data.items))
         self.serviceProviders(mapServiceProviders(result.data.items))
 
@@ -176,13 +152,13 @@ function DashboardModel () {
   }
 
   self.updateServiceProvider = function (serviceProvider, invert) {
-    var updatedSPs = self.serviceProviders().map((sp) => {
-      if (sp.key !== serviceProvider.key) return sp
-
-      invert(sp, serviceProvider)
-
-      return sp
-    })
+    const updatedSPs = self.serviceProviders()
+      .map((sp) => {
+        if (sp.key === serviceProvider.key) {
+          invert(sp, serviceProvider)
+        }
+        return sp
+      })
 
     self.serviceProviders(updatedSPs)
   }
