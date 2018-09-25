@@ -83,18 +83,6 @@ describe('List Volunteers', () => {
     expect(model.availableCities().length).toEqual(2)
   })
 
-  describe('- filter by city', () => {
-    beforeEach(() => {
-      model.cityFilter('manchester')
-      model.filterByCity()
-    })
-
-    it('- should filter to volunteers with selected city', () => {
-      expect(model.volunteers().length).toEqual(1)
-      expect(model.volunteers()[0].person.email).toEqual('vince.lee@polyhatsoftware.co.uk')
-    })
-  })
-
   describe('- view all', () => {
     beforeEach(() => {
       model.cityFilter()

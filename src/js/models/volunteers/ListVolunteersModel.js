@@ -1,13 +1,15 @@
 'use strict'
 
-var ajax = require('../../ajax')
-var browser = require('../../browser')
-var BaseViewModel = require('../BaseViewModel')
-var ko = require('knockout')
-var Volunteer = require('./Volunteer')
+const ajax = require('../../ajax')
+const browser = require('../../browser')
+const BaseViewModel = require('../BaseViewModel')
+const ko = require('knockout')
+const Volunteer = require('./Volunteer')
 
-var ListVolunteersModel = function () {
-  var self = this
+import ListingPagination from '../ListingPagination'
+
+const ListVolunteersModel = function () {
+  const self = this
 
   self.allVolunteers = ko.observableArray()
   self.volunteers = ko.observableArray()
@@ -16,41 +18,8 @@ var ListVolunteersModel = function () {
   self.cityFilter = ko.observable()
   self.availableCities = ko.observableArray()
 
-  self.search = () => {
-    if (self.searchTerm() === undefined || self.searchTerm().length < 3) {
-      self.volunteers(self.allVolunteers())
-    } else {
-      let terms = self.searchTerm()
-        .split(',')
-        .map((t) => t.trim())
-
-      let filtered = self.allVolunteers()
-        .filter((v) => {
-          let searchedFields = [
-            v.person.firstName,
-            v.person.lastName,
-            v.person.email,
-            v.person.telephone,
-            v.person.postcode,
-            v.skillsAndExperience.description,
-            v.availability.description,
-            v.resources.description
-          ]
-
-          let match = (field, searchTerm) => {
-            return field.toLowerCase().indexOf(searchTerm.toLowerCase()) >= 0
-          }
-
-          for (let t of terms) {
-            if (searchedFields.filter((f) => match(f, t)).length > 0) return true
-          }
-          return false
-        })
-      self.volunteers(filtered)
-    }
-  }
-
-  self.searchTerm.subscribe(() => self.search())
+  self.paginationLinks = ko.observableArray([])
+  self.pagination = new ListingPagination(self)
 
   self.filterByHighlighted = () => {
     if (self.isFilteredByHighlighted()) {
@@ -58,7 +27,7 @@ var ListVolunteersModel = function () {
         .filter((v) => v.isHighlighted() === true)
       self.volunteers(filtered)
     } else {
-      self.search()
+      self.volunteers(self.allVolunteers())
     }
   }
 
@@ -70,14 +39,16 @@ var ListVolunteersModel = function () {
     const endpoint = self.endpointBuilder.volunteers().build()
     ajax
       .get(endpoint)
-      .then(function (success) {
-        const volunteers = success.data
+      .then(function (result) {
+        const volunteers = result.data
           .sort((a, b) => {
             if (a.creationDate < b.creationDate) return 1
             if (a.creationDate > b.creationDate) return -1
             return 0
           })
           .map((v) => new Volunteer(v, self))
+
+        self.pagination.updateData(result.data)
 
         self.allVolunteers(volunteers)
         self.volunteers(volunteers)
@@ -95,14 +66,14 @@ var ListVolunteersModel = function () {
       })
   }
 
-  self.filterByCity = () => {
-    let filtered = self.allVolunteers()
-    if (self.cityFilter() !== undefined) {
-      filtered = self.allVolunteers()
-        .filter((sp) => sp.person.city === self.cityFilter())
-    }
-    self.volunteers(filtered)
-  }
+  // self.filterByCity = () => {
+  //   let filtered = self.allVolunteers()
+  //   if (self.cityFilter() !== undefined) {
+  //     filtered = self.allVolunteers()
+  //       .filter((sp) => sp.person.city === self.cityFilter())
+  //   }
+  //   self.volunteers(filtered)
+  // }
 
   self.archived = (id) => {
     self.allVolunteers(self.allVolunteers()

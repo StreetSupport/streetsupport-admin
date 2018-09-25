@@ -11,31 +11,19 @@ nosubnav: true
 <div class="block block--highlight admin-header">
   <div class="container block__inner">
     <header>
-    <h1>Volunteers</h1>
-    <div class="form__field-item form__field-item--full-width">
-      <label for="search" class="form__label">Search</label>
-      <input type="text" data-bind="textInput: searchTerm, onkeyup: search" class="form__input form__input--medium" />
-    </div>
-    <div class="form__field-item form__field-item--full-width" data-claims="superadmin">
-      <label for="ffilterByCityilter" class="form__label">Filter by city:</label>
-      <select class="form__input form__input--medium" name="filterByCity" data-bind="options: availableCities,
-                        value: cityFilter,
-                        optionsCaption: 'All',
-                        event: { change: filterByCity }"></select>
-    </div>
-    <div class="form__field-item form__field-item--full-width">
-      <label for="filter" class="form__label form__label--checkbox">Only show highlighted</label>
-      <input type="checkbox" id="filter" data-bind="checked: isFilteredByHighlighted" />
-    </div>
+      <h1>Volunteers</h1>
+      <div class="form__field-item form__field-item--full-width">
+        <label for="filter" class="form__label form__label--checkbox">Only show highlighted</label>
+        <input type="checkbox" id="filter" data-bind="checked: isFilteredByHighlighted" />
+      </div>
     </header>
   </div>
 </div>
 <div class="block block--main-body">
   <div class="container block__inner">
     <div class="block__content">
-      <div data-bind="foreach: volunteers">
-        <!-- ko template: { name: 'volunteer' } --><!-- /ko -->
-      </div>
+      <div data-bind="template: { name: 'volunteer', foreach: volunteers }"></div>
+      {{> pagination }}
     </div>
   </div>
 </div>
