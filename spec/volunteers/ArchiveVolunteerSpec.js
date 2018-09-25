@@ -77,24 +77,27 @@ describe('Archive Volunteer', () => {
   })
 })
 
-const volunteerData = [{
-  'id': '577ac6b7474f8b1944e973d0',
-  'person': {
-    'firstName': 'xxxx',
-    'lastName': 'xx',
-    'telephone': '1239053892',
-    'email': 'xxxxx@gmail.com',
-    'postcode': 'm20 5wf',
-    'city': 'manchester'
-  },
-  'skillsAndExperience': {
-    'description': 'Diy '
-  },
-  'availability': {
-    'description': 'Sundays'
-  },
-  'resources': {
-    'description': 'None'
-  },
-  'creationDate': '2016-07-04T20:27:35.8910000Z'
-}]
+const volunteerData = {
+  total: 12,
+  items: [{
+    'id': '577ac6b7474f8b1944e973d0',
+    'person': {
+      'firstName': 'xxxx',
+      'lastName': 'xx',
+      'telephone': '1239053892',
+      'email': 'xxxxx@gmail.com',
+      'postcode': 'm20 5wf',
+      'city': 'manchester'
+    },
+    'skillsAndExperience': {
+      'description': 'Diy '
+    },
+    'availability': {
+      'description': 'Sundays'
+    },
+    'resources': {
+      'description': 'None'
+    },
+    'creationDate': '2016-07-04T20:27:35.8910000Z'
+  }]
+}

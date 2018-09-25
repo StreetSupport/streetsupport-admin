@@ -21,31 +21,28 @@ const ListVolunteersModel = function () {
   self.paginationLinks = ko.observableArray([])
   self.pagination = new ListingPagination(self)
 
-  self.filterByHighlighted = () => {
-    if (self.isFilteredByHighlighted()) {
-      const filtered = self.volunteers()
-        .filter((v) => v.isHighlighted() === true)
-      self.volunteers(filtered)
-    } else {
-      self.volunteers(self.allVolunteers())
-    }
+  const buildGetUrl = () => {
+    const filters = [
+      { key: 'pageSize', getValue: () => self.pagination.pageSize, isSet: (val) => true },
+      { key: 'index', getValue: () => self.pagination.index, isSet: (val) => true }
+    ]
+
+    const filterQueryString = filters
+      .filter((f) => f.isSet(f.getValue()))
+      .map((f) => `${f.key}=${f.getValue()}`)
+      .join('&')
+
+    return `${self.endpointBuilder.volunteers().build()}?${filterQueryString}`
   }
 
-  self.isFilteredByHighlighted.subscribe(() => self.filterByHighlighted(), self)
-
-  self.init = () => {
+  self.loadDocuments = () => {
+    self.isFilteredByHighlighted(false)
     browser.loading()
 
-    const endpoint = self.endpointBuilder.volunteers().build()
     ajax
-      .get(endpoint)
+      .get(buildGetUrl())
       .then(function (result) {
-        const volunteers = result.data
-          .sort((a, b) => {
-            if (a.creationDate < b.creationDate) return 1
-            if (a.creationDate > b.creationDate) return -1
-            return 0
-          })
+        const volunteers = result.data.items
           .map((v) => new Volunteer(v, self))
 
         self.pagination.updateData(result.data)
@@ -66,14 +63,17 @@ const ListVolunteersModel = function () {
       })
   }
 
-  // self.filterByCity = () => {
-  //   let filtered = self.allVolunteers()
-  //   if (self.cityFilter() !== undefined) {
-  //     filtered = self.allVolunteers()
-  //       .filter((sp) => sp.person.city === self.cityFilter())
-  //   }
-  //   self.volunteers(filtered)
-  // }
+  self.filterByHighlighted = () => {
+    if (self.isFilteredByHighlighted()) {
+      const filtered = self.volunteers()
+        .filter((v) => v.isHighlighted() === true)
+      self.volunteers(filtered)
+    } else {
+      self.volunteers(self.allVolunteers())
+    }
+  }
+
+  self.isFilteredByHighlighted.subscribe(() => self.filterByHighlighted(), self)
 
   self.archived = (id) => {
     self.allVolunteers(self.allVolunteers()
@@ -82,7 +82,7 @@ const ListVolunteersModel = function () {
       .filter((v) => v.id !== id))
   }
 
-  self.init()
+  self.loadDocuments()
 }
 
 ListVolunteersModel.prototype = new BaseViewModel()
