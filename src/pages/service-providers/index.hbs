@@ -35,21 +35,11 @@ nosubnav: true
             </li>
             <li class="form__field-item">
               <label class="form__label">Is Verified:</label>
-              <label for="is-verified" class="form__label form__label--checkbox">Yes:</label>
-              <input id="is-verified" name="is-verified" type="radio" data-bind="checkedValue: true, checked: filterOnIsVerified"></input>
-              <label for="is-not-verified" class="form__label form__label--checkbox">No:</label>
-              <input id="is-not-verified" name="is-not-verified" type="radio" data-bind="checkedValue: false, checked: filterOnIsVerified"></input>
-              <label for="either-verified" class="form__label form__label--checkbox">Either:</label>
-              <input id="either-verified" name="either-verified" type="radio" name="filterByIsVerified" data-bind="checkedValue: '', checked: filterOnIsVerified"></input>
+              {{> forms/yesNoEitherRadio dataFieldName="verified" dataValue="filterOnIsVerified" }}
             </li>
             <li class="form__field-item">
               <label class="form__label">Is Visible:</label>
-              <label for="is-visible" class="form__label form__label--checkbox">Yes:</label>
-              <input id="is-visible" name="is-visible" type="radio" name="filterOnIsPublished" data-bind="checkedValue: true, checked: filterOnIsPublished"></input>
-              <label for="is-not-visible" class="form__label form__label--checkbox">No:</label>
-              <input id="is-not-visible" name="is-not-visible" type="radio" name="filterOnIsPublished" data-bind="checkedValue: false, checked: filterOnIsPublished"></input>
-              <label for="either-visible" class="form__label form__label--checkbox">Either:</label>
-              <input id="either-visible" name="either-visible" type="radio" name="filterOnIsPublished" data-bind="checkedValue: '', checked: filterOnIsPublished"></input>
+              {{> forms/yesNoEitherRadio dataFieldName="visible" dataValue="filterOnIsPublished" }}
           </li>
           </ul>
         </fieldset>
@@ -66,11 +56,7 @@ nosubnav: true
       {{> form-feedback}}
       <section class="block__content" data-bind="template: { name: 'serviceProvider-template', foreach: serviceProviders }" class="stacked-list">
       </section>
-      <div class="pagination">
-        <span class="pagination__label">Page:</span>
-        <ol class="pagination__list" data-bind="template: { name: 'pagination-nav-template', foreach: paginationLinks }">
-        </ol>
-      </div>
+      {{> pagination }}
       {{> loading-spinner}}
     </div>
   </div>
@@ -93,15 +79,4 @@ nosubnav: true
     <span class="btn__text btn__text--dashboard">New User</span>
   </a>
 </article>
-</script>
-
-<script type="text/html" id="pagination-nav-template">
-<li class="pagination__list-item">
-  <!-- ko if: isCurrent -->
-  <span class="pagination__link pagination__link--current" data-bind="text: pageNumber"></span>
-  <!-- /ko -->
-  <!-- ko ifnot: isCurrent -->
-  <a class="pagination__link" data-bind="click: changePage, text: pageNumber"></a>
-  <!-- /ko -->
-</li>
 </script>

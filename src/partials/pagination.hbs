@@ -1,0 +1,13 @@
+<div class="pagination">
+  <span class="pagination__label">Page:</span>
+  <ol class="pagination__list" data-bind="foreach: paginationLinks">
+    <li class="pagination__list-item">
+      <!-- ko if: isCurrent -->
+      <span class="pagination__link pagination__link--current" data-bind="text: pageNumber"></span>
+      <!-- /ko -->
+      <!-- ko ifnot: isCurrent -->
+      <a class="pagination__link" data-bind="click: changePage, text: pageNumber"></a>
+      <!-- /ko -->
+    </li>
+  </ol>
+</div>

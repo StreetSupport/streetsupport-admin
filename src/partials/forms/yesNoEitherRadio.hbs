@@ -1,0 +1,6 @@
+<label for="is-{{ dataFieldName }}" class="form__label form__label--checkbox">Yes:</label>
+<input id="is-{{ dataFieldName }}" name="is-{{ dataFieldName }}" type="radio" data-bind="checkedValue: true, checked: {{ dataValue }}"></input>
+<label for="is-not-{{ dataFieldName }}" class="form__label form__label--checkbox">No:</label>
+<input id="is-not-{{ dataFieldName }}" name="is-not-{{ dataFieldName }}" type="radio" data-bind="checkedValue: false, checked: {{ dataValue }}"></input>
+<label for="either-{{ dataFieldName }}" class="form__label form__label--checkbox">Either:</label>
+<input id="either-{{ dataFieldName }}" name="either-{{ dataFieldName }}" type="radio" name="{{ dataValue }}" data-bind="checkedValue: '', checked: {{ dataValue }}"></input>
