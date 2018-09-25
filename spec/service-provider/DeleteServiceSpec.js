@@ -9,7 +9,7 @@ const ajax = require('../../src/js/ajax')
 const browser = require('../../src/js/browser')
 const getUrlParameter = require('../../src/js/get-url-parameter')
 
-describe('Show Service Provider', () => {
+describe('Delete Service', () => {
   const Model = require('../../src/js/models/service-providers/ServiceProviderDetails')
   let model = null
 

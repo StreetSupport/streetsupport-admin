@@ -5,7 +5,7 @@
 <div data-bind="foreach: groupedServices">
   <article class="service-provider__item">
     <div class="service-provider__item-title">
-      <h3 data-bind="text: name"></h3>
+      <h3><span data-bind="text: name"></span> - <span data-bind="text: address.postcode"></span></h3>
       <p data-bind="text: subCatList"></p>
     </div>
     <a data-bind="attr: { 'href': editServiceUrl }" title="edit service" class="btn btn--info">
