@@ -6,6 +6,7 @@ global describe, beforeEach, afterEach, it, expect
 
 var sinon = require('sinon')
 var ajax = require('../../src/js/ajax')
+const auth = require('../../src/js/auth')
 var endpoints = require('../../src/js/api-endpoints')
 var browser = require('../../src/js/browser')
 var Model = require('../../src/js/models/volunteers/ListVolunteersModel')
@@ -27,6 +28,7 @@ describe('Highlight Volunteers', () => {
 
     sinon.stub(ajax, 'get')
       .returns(getVolunteersPromise())
+    sinon.stub(auth, 'isCityAdmin').returns(false)
 
     sinon.stub(browser, 'loading')
     sinon.stub(browser, 'loaded')
@@ -39,6 +41,7 @@ describe('Highlight Volunteers', () => {
 
   afterEach(() => {
     ajax.get.restore()
+    auth.isCityAdmin.restore()
     browser.loading.restore()
     browser.loaded.restore()
   })

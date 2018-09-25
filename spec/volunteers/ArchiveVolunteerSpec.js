@@ -6,6 +6,7 @@ global describe, beforeEach, afterEach, it, expect
 
 var sinon = require('sinon')
 var ajax = require('../../src/js/ajax')
+const auth = require('../../src/js/auth')
 var endpoints = require('../../src/js/api-endpoints')
 var browser = require('../../src/js/browser')
 var Model = require('../../src/js/models/volunteers/ListVolunteersModel')
@@ -41,6 +42,7 @@ describe('Archive Volunteer', () => {
       .withArgs(endpoints.volunteers + '/577ac6b7474f8b1944e973d0/is-archived')
       .returns(patchArchivedResult)
 
+    sinon.stub(auth, 'isCityAdmin').returns(false)
     browserLoadingStub = sinon.stub(browser, 'loading')
     browserLoadedStub = sinon.stub(browser, 'loaded')
 
@@ -55,6 +57,7 @@ describe('Archive Volunteer', () => {
   afterEach(() => {
     ajax.get.restore()
     ajax.patch.restore()
+    auth.isCityAdmin.restore()
     browser.loading.restore()
     browser.loaded.restore()
   })

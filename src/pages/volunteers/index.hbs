@@ -32,12 +32,7 @@ nosubnav: true
             </li>
             <li class="form__field-item">
               <label class="form__label">Is Archived:</label>
-              <label for="is-archived" class="form__label form__label--checkbox">Yes:</label>
-              <input id="is-archived" name="is-archived" type="radio" data-bind="checkedValue: true, checked: filterOnIsArchived"></input>
-              <label for="is-not-archived" class="form__label form__label--checkbox">No:</label>
-              <input id="is-not-archived" name="is-not-archived" type="radio" data-bind="checkedValue: false, checked: filterOnIsArchived"></input>
-              <label for="either-archived" class="form__label form__label--checkbox">Either:</label>
-              <input id="either-archived" name="either-archived" type="radio" name="filterOnIsArchived" data-bind="checkedValue: '', checked: filterOnIsArchived"></input>
+              {{> forms/yesNoEitherRadio dataFieldName="archived" dataValue="filterOnIsArchived" }}
             </li>
           </ul>
         </fieldset>

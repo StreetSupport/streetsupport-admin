@@ -35,21 +35,11 @@ nosubnav: true
             </li>
             <li class="form__field-item">
               <label class="form__label">Is Verified:</label>
-              <label for="is-verified" class="form__label form__label--checkbox">Yes:</label>
-              <input id="is-verified" name="is-verified" type="radio" data-bind="checkedValue: true, checked: filterOnIsVerified"></input>
-              <label for="is-not-verified" class="form__label form__label--checkbox">No:</label>
-              <input id="is-not-verified" name="is-not-verified" type="radio" data-bind="checkedValue: false, checked: filterOnIsVerified"></input>
-              <label for="either-verified" class="form__label form__label--checkbox">Either:</label>
-              <input id="either-verified" name="either-verified" type="radio" name="filterByIsVerified" data-bind="checkedValue: '', checked: filterOnIsVerified"></input>
+              {{> forms/yesNoEitherRadio dataFieldName="verified" dataValue="filterOnIsVerified" }}
             </li>
             <li class="form__field-item">
               <label class="form__label">Is Visible:</label>
-              <label for="is-visible" class="form__label form__label--checkbox">Yes:</label>
-              <input id="is-visible" name="is-visible" type="radio" name="filterOnIsPublished" data-bind="checkedValue: true, checked: filterOnIsPublished"></input>
-              <label for="is-not-visible" class="form__label form__label--checkbox">No:</label>
-              <input id="is-not-visible" name="is-not-visible" type="radio" name="filterOnIsPublished" data-bind="checkedValue: false, checked: filterOnIsPublished"></input>
-              <label for="either-visible" class="form__label form__label--checkbox">Either:</label>
-              <input id="either-visible" name="either-visible" type="radio" name="filterOnIsPublished" data-bind="checkedValue: '', checked: filterOnIsPublished"></input>
+              {{> forms/yesNoEitherRadio dataFieldName="visible" dataValue="filterOnIsPublished" }}
           </li>
           </ul>
         </fieldset>
