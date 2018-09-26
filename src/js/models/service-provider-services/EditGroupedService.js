@@ -44,7 +44,13 @@ function EditServiceProviderService () {
         self.service().addListener(self)
 
         let category = self.categoryData.filter((c) => c.key === self.service().categoryId)[0]
-        self.service().subCategories(category.subCategories.map((c) => new Category(c, self.serviceData.subCategories)))
+        self.service().subCategories(category.subCategories
+          .sort((a, b) => {
+            if (a.name < b.name) return -1
+            if (a.name > b.name) return 1
+            return 0
+          })
+          .map((c) => new Category(c, self.serviceData.subCategories)))
         browser.loaded()
       }
     }

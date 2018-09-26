@@ -6,6 +6,9 @@ import request from 'request'
 import source from 'vinyl-source-stream'
 import streamify from 'gulp-streamify'
 import replace from 'gulp-replace'
+import runSequence from 'run-sequence'
+
+import { newFile } from './fileHelpers'
 
 const endpoints = require('../src/js/api-endpoints')
 
@@ -17,6 +20,30 @@ const outputs = {
 }
 
 /* calls API and generates static data */
+gulp.task('volunteer-categories', (callback) => {
+  return request(endpoints.volunteerCategories)
+    .pipe(source(`${config.paths.generatedData}full-volunteer-categories.js`))
+    .pipe(gulp.dest('./'))
+})
+
+gulp.task('parse-vol-categories', (callback) => {
+  const cats = JSON.parse(fs.readFileSync(`${config.paths.generatedData}full-volunteer-categories.js`))
+    .items
+    .map(function (c) {
+      return {
+        key: c.key,
+        name: c.description
+      }
+    })
+    .sort((a, b) => {
+      if (a.name < b.name) return -1
+      if (a.name > b.name) return 1
+      return 0
+    })
+  return newFile('volunteer-categories.js', `export const categories = ${JSON.stringify(cats)}`)
+    .pipe(gulp.dest(`${config.paths.generatedData}`))
+})
+
 gulp.task('service-categories', (callback) => {
   return request(endpoints.getServiceCategories)
     .pipe(source(`${config.paths.generatedData}${outputs.serviceCategories}`))
@@ -28,12 +55,18 @@ gulp.task('service-categories', (callback) => {
             key: c.key,
             sortOrder: c.sortOrder,
             name: c.name,
-            subCategories: c.subCategories.map(function (sc) {
-              return {
-                key: sc.key,
-                name: sc.name
-              }
-            })
+            subCategories: c.subCategories
+              .map(function (sc) {
+                return {
+                  key: sc.key,
+                  name: sc.name
+                }
+              })
+              .sort((a, b) => {
+                if (a.name > b.name) return -1
+                if (a.name < b.name) return 1
+                return 0
+              })
           }
         })
         .sort((a, b) => {
@@ -102,4 +135,21 @@ gulp.task('supported-cities', (callback) => {
     .pipe(gulp.dest('./'))
 })
 
-gulp.task('getLongTermData', ['service-categories', 'accom-subcategories', 'supported-cities', 'support-types'])
+gulp.task('parse-vol-categories-task', (callback) => {
+  runSequence(
+    'volunteer-categories',
+    'parse-vol-categories',
+    callback
+  )
+})
+
+gulp.task(
+  'getLongTermData', 
+  [
+    'service-categories',
+    'accom-subcategories',
+    'supported-cities',
+    'support-types',
+    'parse-vol-categories-task'
+  ]
+)

@@ -64,6 +64,7 @@ var vol = {
     'postcode': 'M1 2JB'
   },
   'skillsAndExperience': {
+    'categories': ['a', 'b'],
     'description': '&lt;script&gt;alert(&#39;xss!&#39;);&lt;/script&gt;'
   },
   'availability': {

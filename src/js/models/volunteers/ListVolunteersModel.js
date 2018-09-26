@@ -8,6 +8,7 @@ const ko = require('knockout')
 const Volunteer = require('./Volunteer')
 
 import { cities as locations } from '../../../data/generated/supported-cities'
+import { categories as volCategories } from '../../../data/generated/volunteer-categories.js'
 import ListingPagination from '../ListingPagination'
 
 const ListVolunteersModel = function () {
@@ -23,11 +24,13 @@ const ListVolunteersModel = function () {
   self.isFilteredByHighlighted = ko.observable(false)
   self.cityFilter = ko.observable()
   self.availableLocations = ko.observableArray(locationsForUser)
+  self.volCategories = ko.observableArray(volCategories)
 
   self.paginationLinks = ko.observableArray([])
   self.pagination = new ListingPagination(self)
 
   self.locationToFilterOn = ko.observable()
+  self.volCategoryToFilterOn = ko.observable()
   self.textSearchToFilterOn = ko.observable()
   self.filterOnIsArchived = ko.observable('')
 
@@ -44,8 +47,9 @@ const ListVolunteersModel = function () {
       { key: 'pageSize', getValue: () => self.pagination.pageSize, isSet: (val) => true },
       { key: 'index', getValue: () => self.pagination.index, isSet: (val) => true },
       { key: 'location', getValue: self.locationToFilterOn, isSet: (val) => val !== undefined && val.length > 0 },
+      { key: 'skillsCategory', getValue: self.volCategoryToFilterOn, isSet: (val) => val !== undefined && val.length > 0 },
       { key: 'search', getValue: self.textSearchToFilterOn, isSet: (val) => val !== undefined && val.length > 0 },
-      { key: 'isArchived', getValue: self.filterOnIsArchived, isSet: (val) => val !== '' },
+      { key: 'isArchived', getValue: self.filterOnIsArchived, isSet: (val) => val !== '' }
     ]
 
     const filterQueryString = filters
@@ -70,7 +74,7 @@ const ListVolunteersModel = function () {
 
         self.allVolunteers(volunteers)
         self.volunteers(volunteers)
-        
+
         browser.loaded()
       }, function (error) {
         self.handleServerError(error)

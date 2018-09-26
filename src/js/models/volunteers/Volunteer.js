@@ -23,6 +23,7 @@ const Volunteer = function (data, listener) {
     city: data.person.city
   }
   self.skillsAndExperience = {
+    categories: data.skillsAndExperience.categories.join(', '),
     description: data.skillsAndExperience.description
   }
   self.availability = {

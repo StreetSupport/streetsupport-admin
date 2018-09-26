@@ -10,7 +10,7 @@ var browser = require('../../src/js/browser')
 var Model = require('../../src/js/models/volunteers/ContactVolunteerModel')
 var getUrlParam = require('../../src/js/get-url-parameter')
 
-describe('Contact Volunteer - No message', () => {
+describe('Contact Offer of item - No message', () => {
   var model
   var ajaxPostStub
 
@@ -62,6 +62,7 @@ var vol = {
     'postcode': 'M1 2JB'
   },
   'skillsAndExperience': {
+    'categories': ['a', 'b'],
     'description': '&lt;script&gt;alert(&#39;xss!&#39;);&lt;/script&gt;'
   },
   'availability': {

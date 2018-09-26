@@ -56,7 +56,13 @@ function AddServiceProviderService () {
   })
 
   self.setAvailableSubCategories = function () {
-    self.subCategories(self.category().subCategories.map((sc) => new SubCat(sc.key, sc.name)))
+    self.subCategories(self.category().subCategories
+      .map((sc) => new SubCat(sc.key, sc.name))
+      .sort((a, b) => {
+        if (a.name < b.name) return -1
+        if (a.name > b.name) return 1
+        return 0
+      }))
     self.allSubCatsSelected(false)
   }
 

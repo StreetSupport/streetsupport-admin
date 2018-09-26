@@ -105,19 +105,19 @@ describe('Edit Service', () => {
   })
 
   it('- should set category id', () => {
-    expect(model.service().subCategories()[0].id()).toEqual('laundry')
+    expect(model.service().subCategories()[0].id()).toEqual('blankets')
   })
 
   it('- should set category name', () => {
-    expect(model.service().subCategories()[0].name()).toEqual('Laundry')
+    expect(model.service().subCategories()[0].name()).toEqual('Blankets')
   })
 
   it('- should set category isSelected', () => {
-    expect(model.service().subCategories()[0].isSelected()).toBeFalsy()
-    expect(model.service().subCategories()[1].isSelected()).toBeFalsy()
+    expect(model.service().subCategories()[0].isSelected()).toBeTruthy()
+    expect(model.service().subCategories()[1].isSelected()).toBeTruthy()
     expect(model.service().subCategories()[2].isSelected()).toBeFalsy()
-    expect(model.service().subCategories()[3].isSelected()).toBeTruthy()
-    expect(model.service().subCategories()[4].isSelected()).toBeTruthy()
+    expect(model.service().subCategories()[3].isSelected()).toBeFalsy()
+    expect(model.service().subCategories()[4].isSelected()).toBeFalsy()
   })
 
   describe('select all subcategories', () => {

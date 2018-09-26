@@ -99,6 +99,7 @@ var volunteerData = () => {
         'postcode': 'M3 4BD'
       },
       'skillsAndExperience': {
+        'categories': ['a', 'b'],
         'description': 'the interwebz. beating people up, '
       },
       'availability': {
@@ -119,6 +120,7 @@ var volunteerData = () => {
         'postcode': 'M3 4BD'
       },
       'skillsAndExperience': {
+        'categories': ['a', 'b'],
         'description': 's'
       },
       'availability': {
@@ -139,6 +141,7 @@ var volunteerData = () => {
         'postcode': 'M1 2JB'
       },
       'skillsAndExperience': {
+        'categories': ['a', 'b'],
         'description': '&lt;script&gt;alert(&#39;xss!&#39;);&lt;/script&gt;'
       },
       'availability': {
@@ -159,6 +162,7 @@ var volunteerData = () => {
         'postcode': 'M1 2JB'
       },
       'skillsAndExperience': {
+        'categories': ['a', 'b'],
         'description': '&lt;script&gt;alert(&#39;xss!&#39;);&lt;/script&gt;'
       },
       'availability': {
