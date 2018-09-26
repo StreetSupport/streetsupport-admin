@@ -25,6 +25,7 @@ module.exports = {
   unverifiedUsers: p('/v1/unverified-users'),
   resetPassword: p('/v1/reset-password-applications'),
   volunteers: p('/v1/volunteer-enquiries'),
+  volunteerCategories: p('/v1/volunteer-categories'),
   offersOfItems: p('/v1/offers-of-items'),
   charterPledges: p('/v1/charter-supporters'),
   actionGroups: p('/v1/action-groups/members'),

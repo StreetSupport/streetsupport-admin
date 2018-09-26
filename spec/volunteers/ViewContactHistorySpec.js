@@ -88,6 +88,7 @@ const volunteerData = {
     'city': 'manchester'
   },
   'skillsAndExperience': {
+    'categories': ['a', 'b'],
     'description': 'Diy '
   },
   'availability': {

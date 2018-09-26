@@ -98,11 +98,11 @@ describe('Add Service Provider Service', () => {
     })
 
     it('should map subCategory key', () => {
-      expect(model.subCategories()[0].key).toEqual(categories[0].subCategories[0].key)
+      expect(model.subCategories()[0].key).toEqual('animal-care')
     })
 
     it('should map subCategory name', () => {
-      expect(model.subCategories()[0].name).toEqual(categories[0].subCategories[0].name)
+      expect(model.subCategories()[0].name).toEqual('Animal welfare and vets')
     })
 
     it('should set subCategory isSelected to false', () => {
@@ -241,7 +241,7 @@ describe('Add Service Provider Service', () => {
         'LocationDescription': 'new location description',
         'Tags': ['tag a', 'tag b'],
         'Category': categories[0].key,
-        'SubCategories': [categories[0].subCategories[1].key, categories[0].subCategories[3].key],
+        'SubCategories': ['asylum', 'bame'],
         'OpeningTimes': [{
           'StartTime': '10:00',
           'EndTime': '16:30',

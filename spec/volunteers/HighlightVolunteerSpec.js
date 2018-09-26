@@ -98,6 +98,7 @@ var volunteerData = () => {
         'postcode': 'the wall'
       },
       'skillsAndExperience': {
+        'categories': ['a', 'b'],
         'description': 'knowing nothing'
       },
       'availability': {
@@ -118,6 +119,7 @@ var volunteerData = () => {
         'postcode': 'great keep'
       },
       'skillsAndExperience': {
+        'categories': ['a', 'b'],
         'description': 'war'
       },
       'availability': {
@@ -138,6 +140,7 @@ var volunteerData = () => {
         'postcode': 'redkeep'
       },
       'skillsAndExperience': {
+        'categories': ['a', 'b'],
         'description': 'having a thoroughly bad time'
       },
       'availability': {
@@ -158,6 +161,7 @@ var volunteerData = () => {
         'postcode': 'redkeep'
       },
       'skillsAndExperience': {
+        'categories': ['a', 'b'],
         'description': 'eating and whoring'
       },
       'availability': {
