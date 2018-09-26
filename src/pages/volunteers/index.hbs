@@ -23,9 +23,17 @@ nosubnav: true
                                 value: locationToFilterOn,
                                 optionsText: 'name',
                                 optionsValue: 'id',
-                                optionsCaption: 'All'"></select>
+                                optionsCaption: 'Any'"></select>
             </li>
             <!-- /ko -->
+            <li class="form__field-item form__field-item--full-width">
+              <label for="filterOnVolCategory" class="form__label">Category:</label>
+              <select class="form__input form__input--medium" name="filterOnVolCategory" data-bind="options: volCategories,
+                                value: volCategoryToFilterOn,
+                                optionsText: 'name',
+                                optionsValue: 'key',
+                                optionsCaption: 'Any'"></select>
+            </li>
             <li class="form__field-item">
               <label for="textSearchToFilterOn" class="form__label">Search for text:</label>
               <input type="text" name="textSearchToFilterOn" class="form__input" data-bind="textInput: textSearchToFilterOn"></input>
@@ -83,6 +91,7 @@ nosubnav: true
     <section class="key-value-pair volunteer__details-list">
       <div class="volunteer__details-item volunteer__details-item--3">
         <h3>Skills/Experience</h3>
+        <p data-bind="html:skillsAndExperience.categories"></p>
         <p data-bind="html:skillsAndExperience.description"></p>
       </div>
       <div class="volunteer__details-item volunteer__details-item--3">
