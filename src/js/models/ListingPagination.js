@@ -34,7 +34,7 @@ export default class ListingPagination {
 
   /**
    * on receiving new data from api
-   * @param { paginated data from api } paginatedData 
+   * @param { paginated data from api } paginatedData
    */
   updateData (paginatedData) {
     const totalPages = Math.ceil(paginatedData.total / this.pageSize)
