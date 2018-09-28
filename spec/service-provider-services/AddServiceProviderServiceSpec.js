@@ -225,6 +225,7 @@ describe('Add Service Provider Service', () => {
       model.targetAudience('tag a, tag b')
       model.preselectedAddress(model.addresses()[0])
       model.prefillAddress()
+      model.isTelephoneService(true)
 
       model.saveService()
     })
@@ -258,7 +259,8 @@ describe('Add Service Provider Service', () => {
         'City': 'Manchester',
         'Postcode': 'M4 5JD',
         'Telephone': 'telephone',
-        'IsOpen247': true
+        'IsOpen247': true,
+        'IsTelephoneService': true
       }
 
       var apiCalledWithExpectedArgs = stubbedPostApi.withArgs(endpoint, payload).calledOnce
