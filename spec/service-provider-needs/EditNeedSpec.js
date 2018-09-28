@@ -28,17 +28,22 @@ describe('Editing Service Provider Need', () => {
         then: function (success, error) {
           success({
             'statusCode': 200,
-            'data': needData()
+            'data': value
           })
         }
       }
     }
     ajaxGetStub = sinon.stub(ajax, 'get')
+    ajaxGetStub
       .withArgs(endpoints.getServiceProviders + '/albert-kennedy-trust/needs/56d8784092855610f88d492a')
-      .returns(fakeGetResolution())
+      .returns(fakeGetResolution(needData))
+    ajaxGetStub
+      .withArgs(`${endpoints.needOffers}/${needData.id}/offers-to-help`)
+      .returns(fakeGetResolution(needResponses))
+
     var urlParamsStub = sinon.stub(getUrlParameter, 'parameter')
     urlParamsStub.withArgs('providerId').returns('albert-kennedy-trust')
-    urlParamsStub.withArgs('needId').returns('56d8784092855610f88d492a')
+    urlParamsStub.withArgs('needId').returns(needData.id)
     model = new Model()
   })
 
@@ -48,10 +53,6 @@ describe('Editing Service Provider Need', () => {
     browser.loaded.restore()
     getUrlParameter.parameter.restore()
     browser.redirect.restore()
-  })
-
-  it('should get need from api', () => {
-    expect(ajaxGetStub.calledOnce).toBeTruthy()
   })
 
   it('should set editNeedUrl', () => {
@@ -135,7 +136,7 @@ describe('Editing Service Provider Need', () => {
           'Email': 'email',
           'DonationAmountInPounds': 1,
           'DonationUrl': 'http://www.donationUrl.com',
-          'Keywords': [ 'keywordA', 'keywordB', 'keywordC' ],
+          'Keywords': ['keywordA', 'keywordB', 'keywordC'],
           'CustomMessage': 'custom message'
         }
       ).returns(fakePutResolution())
@@ -158,20 +159,22 @@ describe('Editing Service Provider Need', () => {
   })
 })
 
-function needData () {
-  return {
-    'id': '56d8784092855610f88d492a',
-    'description': 'men&#39;s shoes &amp; socks',
-    'serviceProviderId': 'albert-kennedy-trust',
-    'type': 'Money',
-    'reason': 'we need &#39;em',
-    'moreInfoUrl': 'http://www.wang.com',
-    'postcode': 'm1 3ly',
-    'instructions': 'instructions',
-    'email': 'email',
-    'donationAmountInPounds': 1,
-    'donationUrl': 'http://www.donationUrl.com',
-    'keywords': [ 'keywordA', 'keywordB', 'keywordC' ],
-    'customMessage': 'custom message'
-  }
+const needData = {
+  'id': '56d8784092855610f88d492a',
+  'description': 'men&#39;s shoes &amp; socks',
+  'serviceProviderId': 'albert-kennedy-trust',
+  'type': 'Money',
+  'reason': 'we need &#39;em',
+  'moreInfoUrl': 'http://www.wang.com',
+  'postcode': 'm1 3ly',
+  'instructions': 'instructions',
+  'email': 'email',
+  'donationAmountInPounds': 1,
+  'donationUrl': 'http://www.donationUrl.com',
+  'keywords': ['keywordA', 'keywordB', 'keywordC'],
+  'customMessage': 'custom message'
+}
+
+const needResponses = {
+  helpOffers: 3
 }

@@ -255,6 +255,7 @@ function coffee4Craig () {
       'description': 'some new description.',
       'serviceProviderId': 'coffee4craig'
     }],
-    'tags': ['tag-a', 'tag-c', 'tag-d']
+    'tags': ['tag-a', 'tag-c', 'tag-d'],
+    helpOffers: []
   }
 }

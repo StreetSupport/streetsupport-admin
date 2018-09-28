@@ -11,28 +11,31 @@ var browser = require('../../src/js/browser')
 var getUrlParameter = require('../../src/js/get-url-parameter')
 
 describe('Delete individual Need', () => {
-  var Model = require('../../src/js/models/Need')
-  var model
-  var ajaxStub
+  const Model = require('../../src/js/models/Need')
+  let model
+  let ajaxStub
 
   beforeEach(() => {
     sinon.stub(browser, 'loading')
     sinon.stub(browser, 'loaded')
     sinon.stub(getUrlParameter, 'parameter').withArgs('key').returns('coffee4craig')
-    model = new Model({
-      id: 'abcde',
-      description: 'description'
-    })
     let fakeResolved = {
       then: (success, _) => {
         success({
           'status': 200,
-          'data': {}
+          'data': {
+            helpOffers: []
+          }
         })
       }
     }
     ajaxStub = sinon.stub(ajax, 'delete').returns(fakeResolved)
+    sinon.stub(ajax, 'get').returns(fakeResolved)
 
+    model = new Model({
+      id: 'abcde',
+      description: 'description'
+    })
     model.deleteNeed()
   })
 
@@ -41,6 +44,7 @@ describe('Delete individual Need', () => {
     browser.loaded.restore()
     getUrlParameter.parameter.restore()
     ajax.delete.restore()
+    ajax.get.restore()
   })
 
   it('should delete need to api', () => {
