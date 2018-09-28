@@ -59,6 +59,8 @@ function Need (data) {
 
   self.derivedTweet = ko.observable()
 
+  self.totalResponses = ko.observable(0)
+
   self.description.subscribe((newValue) => {
     if (newValue.length > 5) {
       const tweetUrl = self.endpointBuilder.needTweetMessage().build()
@@ -154,6 +156,14 @@ function Need (data) {
 
   self.addListener = function (listener) {
     self.listeners().push(listener)
+  }
+
+  if (self.id()) {
+    ajax
+      .get(`${self.endpoints.serviceProviderNeeds(self.id()).build()}/offers-to-help`)
+      .then((result) => {
+        self.totalResponses(result.data.helpOffers.length)
+      })
   }
 }
 

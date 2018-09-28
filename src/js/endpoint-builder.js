@@ -15,6 +15,11 @@ function EndpointBuilder () {
     return self
   }
 
+  self.serviceProviderNeeds = (needId) => {
+    self.updateBaseResource(endpoints.needOffers, needId)
+    return self
+  }
+
   self.publishedOrgs = (cityId) => {
     self.updateBaseResource(endpoints.getPublishedServiceProviders, cityId)
     return self

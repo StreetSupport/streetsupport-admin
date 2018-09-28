@@ -10,21 +10,23 @@
       </h3>
     </div>
     <div class="service-provider__item-info">
-    <a data-bind="attr: { 'href': viewOffersUrl }" title="view responses" class="btn btn--primary">
-      <span class="btn__text">View Responses</span>
-    </a>
-    <a data-bind="attr: { 'href': editNeedUrl }" title="edit need" class="btn btn--info">
-      <span class="btn__text">Edit</span>
-    </a>
-    <!-- ko if: canRepost -->
-    <a data-bind="click: repostNeed" title="repost need" class="btn btn--indifferent">
-      <span class="btn__text">Re-post</span>
-    </a>
-    <!-- /ko -->
-    <a data-bind="click: deleteNeed" title="delete need" class="btn btn--warning">
-      <span class="btn__text">Delete</span>
-    </a>
-    <p class="service-provider__item-note">Posted <span data-bind="text: neededDate"></span></p>
+      <!-- ko if: totalResponses -->
+      <a data-bind="attr: { 'href': viewOffersUrl }" title="view responses" class="btn btn--primary">
+        <span class="btn__text">View Responses (<span data-bind="text: totalResponses"></span>)</span>
+      </a>
+      <!-- /ko -->
+      <a data-bind="attr: { 'href': editNeedUrl }" title="edit need" class="btn btn--info">
+        <span class="btn__text">Edit</span>
+      </a>
+      <!-- ko if: canRepost -->
+      <a data-bind="click: repostNeed" title="repost need" class="btn btn--indifferent">
+        <span class="btn__text">Re-post</span>
+      </a>
+      <!-- /ko -->
+      <a data-bind="click: deleteNeed" title="delete need" class="btn btn--warning">
+        <span class="btn__text">Delete</span>
+      </a>
+      <p class="service-provider__item-note">Posted <span data-bind="text: neededDate"></span></p>
     </div>
   </article>
 </div>

@@ -7,7 +7,6 @@ global describe, beforeEach, afterEach, it, expect
 var sinon = require('sinon')
 var ajax = require('../../src/js/ajax')
 const auth = require('../../src/js/auth')
-var endpoints = require('../../src/js/api-endpoints')
 var adminUrls = require('../../src/js/admin-urls')
 var browser = require('../../src/js/browser')
 var Model = require('../../src/js/models/volunteers/ListVolunteersModel')

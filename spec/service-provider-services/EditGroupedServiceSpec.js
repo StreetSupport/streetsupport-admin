@@ -165,6 +165,10 @@ describe('Edit Service', () => {
     it('should redirect to service provider', () => {
       expect(stubbedBrowser.withArgs(adminUrls.serviceProviders + '?key=coffee4craig').calledOnce).toBeTruthy()
     })
+
+    it('should put isTelephoneService', () => {
+      expect(stubbedApi.getCall(0).args[1].IsTelephoneService).toBeTruthy()
+    })
   })
 })
 
@@ -240,6 +244,7 @@ function serviceData () {
     'serviceProviderId': 'vince-test-provider',
     'serviceProviderName': 'Vince Test Provider',
     'isPublished': false,
+    'isTelephoneService': true,
     'subCategories': [
       {
         'id': 'clothes',
