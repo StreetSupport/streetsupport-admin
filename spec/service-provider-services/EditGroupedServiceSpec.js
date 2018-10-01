@@ -169,6 +169,10 @@ describe('Edit Service', () => {
     it('should put isTelephoneService', () => {
       expect(stubbedApi.getCall(0).args[1].IsTelephoneService).toBeTruthy()
     })
+
+    it('should put isAppointmentOnly', () => {
+      expect(stubbedApi.getCall(0).args[1].IsAppointmentOnly).toBeTruthy()
+    })
   })
 })
 
@@ -245,6 +249,7 @@ function serviceData () {
     'serviceProviderName': 'Vince Test Provider',
     'isPublished': false,
     'isTelephoneService': true,
+    'isAppointmentOnly': true,
     'subCategories': [
       {
         'id': 'clothes',

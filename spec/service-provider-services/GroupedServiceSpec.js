@@ -55,6 +55,7 @@ describe('Grouped Service', () => {
         model.address.telephone('new telephone')
         model.isOpen247(true)
         model.isTelephoneService(true)
+        model.isAppointmentOnly(true)
         model.subCategories()[0] = {
           id: ko.observable('subcat1'),
           isSelected: ko.observable(false)
@@ -98,6 +99,7 @@ describe('Grouped Service', () => {
           'Telephone': 'new telephone',
           'IsOpen247': true,
           'IsTelephoneService': true,
+          'IsAppointmentOnly': true,
           SubCategories: ['subcat2']
         }
 
@@ -154,6 +156,7 @@ describe('Grouped Service', () => {
           'Telephone': 'telephone',
           'IsOpen247': false,
           'IsTelephoneService': false,
+          'IsAppointmentOnly': false,
           'SubCategories': []
         }
 
