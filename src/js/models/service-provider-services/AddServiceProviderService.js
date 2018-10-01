@@ -42,6 +42,7 @@ function AddServiceProviderService () {
   }, self)
 
   self.isTelephoneService = ko.observable(false)
+  self.isAppointmentOnly = ko.observable(false)
 
   self.address = ko.observable(new Address({}))
 
@@ -121,7 +122,8 @@ function AddServiceProviderService () {
         'Postcode': self.address().postcode(),
         'Telephone': self.address().telephone(),
         'IsOpen247': self.address().isOpen247(),
-        'IsTelephoneService': self.isTelephoneService()
+        'IsTelephoneService': self.isTelephoneService(),
+        'IsAppointmentOnly': self.isAppointmentOnly()
       }
 
       ajax.post(endpoint, payload)
