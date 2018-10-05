@@ -108,6 +108,16 @@ function Need (data) {
     })
   }
 
+  self.resolveNeed = function () {
+    var endpoint = `${self.endpointBuilder.serviceProviders(getUrlParameter.parameter('key')).needs(self.id()).build()}/is-resolved`
+    ajax.patch(endpoint)
+    .then(function (result) {
+      self.listeners().forEach((l) => l.deleteNeed(self))
+    }, function (error) {
+      self.handleError(error)
+    })
+  }
+
   self.save = function () {
     let keywords = self.keywords() !== undefined
       ? self.keywords().split(',').map((k) => k.trim())
