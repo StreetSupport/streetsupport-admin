@@ -47,9 +47,9 @@ describe('Resolve Need', () => {
     ajax.get.restore()
   })
 
-  it('should delete need to api', () => {
+  it('should patch to api', () => {
     const endpoint = endpoints.getServiceProviders + '/coffee4craig/needs/abcde/is-resolved'
-    const patchedAsExpected = ajaxStub.withArgs(endpoint).calledOnce
+    const patchedAsExpected = ajaxStub.withArgs(endpoint, { IsResolved: true }).calledOnce
     expect(patchedAsExpected).toBeTruthy()
   })
 })
