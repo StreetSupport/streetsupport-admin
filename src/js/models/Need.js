@@ -110,7 +110,7 @@ function Need (data) {
 
   self.resolveNeed = function () {
     var endpoint = `${self.endpointBuilder.serviceProviders(getUrlParameter.parameter('key')).needs(self.id()).build()}/is-resolved`
-    ajax.patch(endpoint)
+    ajax.patch(endpoint, { IsResolved: true })
     .then(function (result) {
       self.listeners().forEach((l) => l.deleteNeed(self))
     }, function (error) {
