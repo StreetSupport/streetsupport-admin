@@ -35,7 +35,7 @@ describe('Show Service Provider', () => {
       .withArgs(`${endpoints.getServiceProviders}/coffee4craig`)
       .returns(fakeResolved(coffee4Craig))
     stubbedApi
-      .withArgs(`${endpoints.needOffers}/56ca227f92855621e8d60318/offers-to-help`)
+      .withArgs(`${endpoints.serviceProviderNeeds}/56ca227f92855621e8d60318/offers-to-help`)
       .returns(fakeResolved(needResponses))
 
     sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')

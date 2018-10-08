@@ -16,7 +16,7 @@ function EndpointBuilder () {
   }
 
   self.serviceProviderNeeds = (needId) => {
-    self.updateBaseResource(endpoints.needOffers, needId)
+    self.updateBaseResource(endpoints.serviceProviderNeeds, needId)
     return self
   }
 
@@ -145,11 +145,6 @@ function EndpointBuilder () {
   self.needs = (needId) => {
     self.childResource = 'needs'
     self.childResourceId = needId
-    return self
-  }
-
-  self.needOffers = (needId) => {
-    self.updateBaseResource(endpoints.needOffers, needId)
     return self
   }
 

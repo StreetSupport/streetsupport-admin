@@ -21,7 +21,7 @@ function EditServiceProviderNeed () {
 
   browser.loading()
 
-  var endpoint = self.endpointBuilder.serviceProviders(providerId).needs(needId).build()
+  var endpoint = self.endpointBuilder.serviceProviderNeeds(needId).build()
 
   ajax
     .get(endpoint)

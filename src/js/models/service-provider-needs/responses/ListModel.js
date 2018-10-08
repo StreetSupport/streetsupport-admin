@@ -16,7 +16,7 @@ const ListModel = function () {
   self.init = () => {
     browser.loading()
     self.needId = querystring.parameter('needId')
-    const endpoint = self.endpointBuilder.needOffers(self.needId).build()
+    const endpoint = self.endpointBuilder.serviceProviderNeeds(self.needId).build()
     ajax
       .get(`${endpoint}/offers-to-help`)
       .then((result) => {
