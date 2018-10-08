@@ -35,10 +35,10 @@ describe('Editing Service Provider Need', () => {
     }
     ajaxGetStub = sinon.stub(ajax, 'get')
     ajaxGetStub
-      .withArgs(endpoints.getServiceProviders + '/albert-kennedy-trust/needs/56d8784092855610f88d492a')
+      .withArgs(`${endpoints.serviceProviderNeeds}/${needData.id}`)
       .returns(fakeGetResolution(needData))
     ajaxGetStub
-      .withArgs(`${endpoints.needOffers}/${needData.id}/offers-to-help`)
+      .withArgs(`${endpoints.serviceProviderNeeds}/${needData.id}/offers-to-help`)
       .returns(fakeGetResolution(needResponses))
 
     var urlParamsStub = sinon.stub(getUrlParameter, 'parameter')

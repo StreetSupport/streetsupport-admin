@@ -31,10 +31,10 @@ describe('Delete Need', () => {
       .withArgs(`${endpoints.getServiceProviders}/coffee4craig`)
       .returns(fakeResolved(coffee4Craig))
     ajaxGetStub
-      .withArgs(`${endpoints.needOffers}/a/offers-to-help`)
+      .withArgs(`${endpoints.serviceProviderNeeds}/a/offers-to-help`)
       .returns(fakeResolved(needResponses))
     ajaxGetStub
-      .withArgs(`${endpoints.needOffers}/b/offers-to-help`)
+      .withArgs(`${endpoints.serviceProviderNeeds}/b/offers-to-help`)
       .returns(fakeResolved(needResponses))
     sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
     sinon.stub(browser, 'loading')
