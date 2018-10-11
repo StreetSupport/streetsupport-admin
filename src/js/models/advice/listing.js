@@ -16,12 +16,13 @@ const Model = function () {
 
   self.mapItems = (i) => {
     return {
+      id: ko.observable(i.id),
+      editUrl: ko.observable(`edit?id=${i.id}`),
       title: ko.observable(htmlencode.htmlDecode(i.title)),
       locationKey: ko.observable(i.locationKey),
       tags: ko.observable(i.tags)
     }
   }
-
   self.filters = []
   self.baseUrl = self.endpointBuilder.faqs().build()
 

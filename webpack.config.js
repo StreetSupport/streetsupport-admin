@@ -64,6 +64,7 @@ module.exports = {
     'auth0-password-reset': path.join(__dirname, pageDirPath, 'auth0/password-reset'),
     advice: path.join(__dirname, pageDirPath, 'advice/listing'),
     'advice-add': path.join(__dirname, pageDirPath, 'advice/add'),
+    'advice-edit': path.join(__dirname, pageDirPath, 'advice/edit'),
   },
   output: {
     path: path.join(__dirname, '/_dist/assets/js/'),

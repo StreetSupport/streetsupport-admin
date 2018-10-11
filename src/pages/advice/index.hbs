@@ -28,5 +28,11 @@ nosubnav: true
       <p data-bind="text: locationKey"></p>
       <p data-bind="text: tags"></p>
     </header>
+    <a data-bind="attr: { href: editUrl }" class="stacked-list__button btn btn--info">
+      <span class="btn__text btn__text--dashboard">Edit</span>
+    </a>
+  <button data-bind="click: $parent.delete" class="stacked-list__button btn btn--warning">
+    <span class="btn__text btn__text--dashboard">Delete</span>
+  </button>
   </article>
 </script>

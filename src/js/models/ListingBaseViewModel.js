@@ -5,7 +5,7 @@ const browser = require('../browser')
 const BaseViewModel = require('./BaseViewModel')
 import ListingPagination from './ListingPagination'
 
-function ListingBaseViewModel () {
+function ListingBaseViewModel() {
   const self = this
 
   self.pagination = new ListingPagination(self)
@@ -19,6 +19,20 @@ function ListingBaseViewModel () {
       .join('&')
 
     return `${self.vm.baseUrl}?pageSize=${self.pagination.pageSize}&index=${self.pagination.index}&${filterQueryString}`
+  }
+
+  self.delete = function (item) {
+    const id = item.id()
+    ajax
+      .delete(`${self.vm.baseUrl}/${id}`)
+      .then(function () {
+        self.items(self.items().filter((i) => i.id() !== id))
+
+        browser.loaded()
+      },
+        function (error) {
+          self.handleError(error)
+        })
   }
 
   self.init = function (vm) {
