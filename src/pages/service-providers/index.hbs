@@ -50,19 +50,10 @@ nosubnav: true
     </header>
   </div>
 </div>
-<div class="block block--main-body">
-  <div class="container block__inner">
-    <div class="block__content">
-      {{> form-feedback}}
-      <section class="block__content" data-bind="template: { name: 'serviceProvider-template', foreach: items }" class="stacked-list">
-      </section>
-      {{> pagination }}
-      {{> loading-spinner}}
-    </div>
-  </div>
-</div>
 
-<script type="text/html" id="serviceProvider-template">
+{{> item-listing }}
+
+<script type="text/html" id="item-template">
 <article class="stacked-list__item stacked-list__item--service-providers">
   <header class="stacked-list__header">
     <h2 class="stacked-list__heading"><a data-bind="attr: { 'href': url, 'title': name }, html: name"></a></h2>
