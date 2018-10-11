@@ -3,11 +3,9 @@ const ko = require('knockout')
 const adminUrls = require('../../admin-urls')
 const auth = require('../../auth')
 const ajax = require('../../ajax')
-const BaseViewModel = require('../BaseViewModel')
-const browser = require('../../browser')
+const ListingBaseViewModel = require('../ListingBaseViewModel')
 
 import { cities as locations } from '../../../data/generated/supported-cities'
-import ListingPagination from '../ListingPagination'
 
 class ServiceProvider {
   constructor (sp) {
@@ -27,44 +25,23 @@ class ServiceProvider {
   }
 }
 
-const mapServiceProviders = function (data) {
-  return data
-    .sort((a, b) => {
-      if (a.key > b.key) return 1
-      if (a.key < b.key) return -1
-      return 0
-    }).map((sp) => new ServiceProvider(sp))
-}
-
 function DashboardModel () {
   const self = this
 
   const locationsForUser = auth.isCityAdmin()
   ? locations.filter((l) => auth.locationsAdminFor().includes(l.id))
   : locations
+  
+  self.filters = [
+    { key: 'name', getValue: (vm) => vm.nameToFilterOn(), isSet: (val) => val !== undefined && val.length > 0 },
+    { key: 'location', getValue: (vm) => vm.locationToFilterOn(), isSet: (val) => val !== undefined && val.length > 0 },
+    { key: 'isVerified', getValue: (vm) => vm.filterOnIsVerified(), isSet: (val) => val !== '' },
+    { key: 'isPublished', getValue: (vm) => vm.filterOnIsPublished(), isSet: (val) => val !== '' }
+  ]
 
-  const buildGetUrl = () => {
-    const filters = [
-      { key: 'pageSize', getValue: () => self.pagination.pageSize, isSet: (val) => true },
-      { key: 'index', getValue: () => self.pagination.index, isSet: (val) => true },
-      { key: 'name', getValue: self.nameToFilterOn, isSet: (val) => val !== undefined && val.length > 0 },
-      { key: 'location', getValue: self.locationToFilterOn, isSet: (val) => val !== undefined && val.length > 0 },
-      { key: 'isVerified', getValue: self.filterOnIsVerified, isSet: (val) => val !== '' },
-      { key: 'isPublished', getValue: self.filterOnIsPublished, isSet: (val) => val !== '' }
-    ]
+  self.mapItems = (sp) => { return new ServiceProvider(sp) }
+  self.baseUrl = self.endpointBuilder.serviceProvidersv3().build()
 
-    const filterQueryString = filters
-      .filter((f) => f.isSet(f.getValue()))
-      .map((f) => `${f.key}=${f.getValue()}`)
-      .join('&')
-
-    return `${self.endpointBuilder.serviceProvidersv3().build()}?${filterQueryString}`
-  }
-
-  self.pagination = new ListingPagination(self)
-
-  self.allServiceProviders = ko.observableArray()
-  self.serviceProviders = ko.observableArray()
   self.shouldShowLocationFilter = ko.computed(function () {
     return locationsForUser.length > 1
   }, self)
@@ -73,7 +50,6 @@ function DashboardModel () {
   self.nameToFilterOn = ko.observable()
   self.filterOnIsVerified = ko.observable('')
   self.filterOnIsPublished = ko.observable('')
-  self.paginationLinks = ko.observableArray([])
   self.availableStatuses = ko.observableArray([
     {
       value: true,
@@ -97,22 +73,6 @@ function DashboardModel () {
 
   self.submitSearch = function () {
     self.pagination.changePage(1)
-  }
-
-  self.loadDocuments = function () {
-    browser.loading()
-    ajax
-      .get(buildGetUrl(), {})
-      .then(function (result) {
-        self.pagination.updateData(result.data)
-        self.allServiceProviders(mapServiceProviders(result.data.items))
-        self.serviceProviders(mapServiceProviders(result.data.items))
-
-        browser.loaded()
-      },
-        function (error) {
-          self.handleError(error)
-        })
   }
 
   self.toggleVerified = function (serviceProvider, event) {
@@ -152,7 +112,7 @@ function DashboardModel () {
   }
 
   self.updateServiceProvider = function (serviceProvider, invert) {
-    const updatedSPs = self.serviceProviders()
+    const updatedSPs = self.items()
       .map((sp) => {
         if (sp.key === serviceProvider.key) {
           invert(sp, serviceProvider)
@@ -160,12 +120,12 @@ function DashboardModel () {
         return sp
       })
 
-    self.serviceProviders(updatedSPs)
+    self.items(updatedSPs)
   }
 
-  self.loadDocuments()
+  self.init(self)
 }
 
-DashboardModel.prototype = new BaseViewModel()
+DashboardModel.prototype = new ListingBaseViewModel()
 
 module.exports = DashboardModel

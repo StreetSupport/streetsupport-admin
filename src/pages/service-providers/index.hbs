@@ -54,7 +54,7 @@ nosubnav: true
   <div class="container block__inner">
     <div class="block__content">
       {{> form-feedback}}
-      <section class="block__content" data-bind="template: { name: 'serviceProvider-template', foreach: serviceProviders }" class="stacked-list">
+      <section class="block__content" data-bind="template: { name: 'serviceProvider-template', foreach: items }" class="stacked-list">
       </section>
       {{> pagination }}
       {{> loading-spinner}}

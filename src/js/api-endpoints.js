@@ -36,5 +36,6 @@ module.exports = {
   needTweetMessage: p('/v1/need-twitter-message'),
   serviceProviderNeeds: p('/v2/service-provider-needs'),
   impactUpdates: p('/v1/impact-updates'),
-  temporaryAccommodation: p('/v1/accommodation')
+  temporaryAccommodation: p('/v1/accommodation'),
+  faqs: p('/v1/faqs')
 }
