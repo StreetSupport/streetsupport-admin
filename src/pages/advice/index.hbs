@@ -1,0 +1,38 @@
+---
+title: Location Advice - Street Support Admin
+description: Street Support - Making it easier to help homeless people in Manchester
+layout: default.hbs
+permalink: false
+jsBundle: advice
+page: advice
+nosubnav: true
+---
+
+<div class="block block--highlight">
+  <div class="container block__inner">
+    <header>
+      <h1>Location Advice Q&amp;A Content</h1>
+      <a class="btn btn--info" href="add/">
+        <span class="btn__text">Add New Q&amp;A</span>
+      </a>
+    </header>
+  </div>
+</div>
+
+{{> item-listing }}
+
+<script type="text/html" id="item-template">
+  <article class="stacked-list__item stacked-list__item">
+    <header class="stacked-list__header">
+      <h2 class="stacked-list__heading" data-bind="html: title"></h2>
+      <p data-bind="text: locationKey"></p>
+      <p data-bind="text: tags"></p>
+    </header>
+    <a data-bind="attr: { href: editUrl }" class="stacked-list__button btn btn--info">
+      <span class="btn__text btn__text--dashboard">Edit</span>
+    </a>
+  <button data-bind="click: $parent.delete" class="stacked-list__button btn btn--warning">
+    <span class="btn__text btn__text--dashboard">Delete</span>
+  </button>
+  </article>
+</script>

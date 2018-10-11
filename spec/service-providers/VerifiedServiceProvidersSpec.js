@@ -56,16 +56,16 @@ describe('VerifiedServiceProviders', () => {
   })
 
   it('should set verified labels', () => {
-    expect(dashboard.serviceProviders()[0].verifiedLabel()).toEqual('verified')
+    expect(dashboard.items()[0].verifiedLabel()).toEqual('verified')
   })
 
   it('should set un-verified labels', () => {
-    expect(dashboard.serviceProviders()[1].verifiedLabel()).toEqual('under review')
+    expect(dashboard.items()[1].verifiedLabel()).toEqual('under review')
   })
 
   it('should set toggle verification button labels', () => {
-    expect(dashboard.serviceProviders()[0].toggleVerificationButtonLabel()).toEqual('un-verify')
-    expect(dashboard.serviceProviders()[1].toggleVerificationButtonLabel()).toEqual('verify')
+    expect(dashboard.items()[0].toggleVerificationButtonLabel()).toEqual('un-verify')
+    expect(dashboard.items()[1].toggleVerificationButtonLabel()).toEqual('verify')
   })
 
   describe('Toggle Verified status', () => {
@@ -84,7 +84,7 @@ describe('VerifiedServiceProviders', () => {
       stubbedPutApi = sinon.stub(ajax, 'put')
       stubbedPutApi.returns(fakePostResolved)
 
-      dashboard.toggleVerified(dashboard.serviceProviders()[0])
+      dashboard.toggleVerified(dashboard.items()[0])
     })
 
     afterEach(() => {
@@ -102,19 +102,19 @@ describe('VerifiedServiceProviders', () => {
     })
 
     it('should invert isVerified', () => {
-      expect(dashboard.serviceProviders()[0].isVerified()).toBeFalsy()
+      expect(dashboard.items()[0].isVerified()).toBeFalsy()
     })
 
     it('should not change isPublished', () => {
-      expect(dashboard.serviceProviders()[0].isPublished()).toBeFalsy()
+      expect(dashboard.items()[0].isPublished()).toBeFalsy()
     })
 
     it('should set verified labels', () => {
-      expect(dashboard.serviceProviders()[0].verifiedLabel()).toEqual('under review')
+      expect(dashboard.items()[0].verifiedLabel()).toEqual('under review')
     })
 
     it('should set toggle verification button labels', () => {
-      expect(dashboard.serviceProviders()[0].toggleVerificationButtonLabel()).toEqual('verify')
+      expect(dashboard.items()[0].toggleVerificationButtonLabel()).toEqual('verify')
     })
   })
 })

@@ -58,7 +58,7 @@ gulp.task('deploy', (callback) => {
 // Run tests and watch js/spec files
 gulp.task('jsdev', (callback) => {
   runSequence(
-    'getLongTermData',
+    // 'getLongTermData',
     'jasmine',
     'standardlint',
     'specsstandardlint',
