@@ -15,6 +15,11 @@ function EndpointBuilder () {
     return self
   }
 
+  self.faqs = (faqId) => {
+    self.updateBaseResource(endpoints.faqs, faqId)
+    return self
+  }
+
   self.serviceProviderNeeds = (needId) => {
     self.updateBaseResource(endpoints.serviceProviderNeeds, needId)
     return self

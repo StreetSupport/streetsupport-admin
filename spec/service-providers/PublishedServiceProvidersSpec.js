@@ -53,16 +53,16 @@ describe('PublishedServiceProviders', () => {
   })
 
   it('should set published labels', () => {
-    expect(dashboard.serviceProviders()[0].publishedLabel()).toEqual('published')
+    expect(dashboard.items()[0].publishedLabel()).toEqual('published')
   })
 
   it('should set un-published labels', () => {
-    expect(dashboard.serviceProviders()[1].publishedLabel()).toEqual('disabled')
+    expect(dashboard.items()[1].publishedLabel()).toEqual('disabled')
   })
 
   it('should set toggle publish button labels', () => {
-    expect(dashboard.serviceProviders()[0].togglePublishButtonLabel()).toEqual('disable')
-    expect(dashboard.serviceProviders()[1].togglePublishButtonLabel()).toEqual('publish')
+    expect(dashboard.items()[0].togglePublishButtonLabel()).toEqual('disable')
+    expect(dashboard.items()[1].togglePublishButtonLabel()).toEqual('publish')
   })
 
   describe('Toggle Published status', () => {
@@ -80,7 +80,7 @@ describe('PublishedServiceProviders', () => {
 
       stubbedPutApi = sinon.stub(ajax, 'put').returns(fakePostResolved)
 
-      dashboard.togglePublished(dashboard.serviceProviders()[0])
+      dashboard.togglePublished(dashboard.items()[0])
     })
 
     afterEach(() => {
@@ -97,15 +97,15 @@ describe('PublishedServiceProviders', () => {
     })
 
     it('should invert isPublished', () => {
-      expect(dashboard.serviceProviders()[0].isPublished()).toBeFalsy()
+      expect(dashboard.items()[0].isPublished()).toBeFalsy()
     })
 
     it('should set published labels', () => {
-      expect(dashboard.serviceProviders()[0].publishedLabel()).toEqual('disabled')
+      expect(dashboard.items()[0].publishedLabel()).toEqual('disabled')
     })
 
     it('should set toggle publish button labels', () => {
-      expect(dashboard.serviceProviders()[0].togglePublishButtonLabel()).toEqual('publish')
+      expect(dashboard.items()[0].togglePublishButtonLabel()).toEqual('publish')
     })
   })
 })
