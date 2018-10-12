@@ -24,10 +24,10 @@ const Model = function () {
     const payload = {
       title: self.title(),
       body: self.body(),
-      tags: self.tags().length 
+      tags: self.tags().length
         ? self.tags().split(',').map((t) => t.trim())
         : [],
-      locationKey : self.locationKey(),
+      locationKey: self.locationKey(),
       sortPosition: self.sortPosition()
     }
     ajax

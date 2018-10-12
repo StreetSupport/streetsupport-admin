@@ -4,7 +4,6 @@ const htmlencode = require('htmlencode')
 const ajax = require('../../ajax')
 const auth = require('../../auth')
 const browser = require('../../browser')
-const endpoints = require('../../api-endpoints')
 const querystring = require('../../get-url-parameter')
 import { cities as locations } from '../../../data/generated/supported-cities'
 
@@ -26,10 +25,10 @@ const Model = function () {
     const payload = {
       title: self.title(),
       body: self.body(),
-      tags: self.tags().length 
+      tags: self.tags().length
         ? self.tags().split(',').map((t) => t.trim())
         : [],
-      locationKey : self.locationKey(),
+      locationKey: self.locationKey(),
       sortPosition: self.sortPosition()
     }
     ajax

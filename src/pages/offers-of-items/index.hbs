@@ -11,34 +11,45 @@ nosubnav: true
 <div class="block block--highlight admin-header">
   <div class="container block__inner">
     <header>
-    <h1>Offers</h1>
-    <!-- ko template: { name: 'search' } --><!-- /ko -->
+      <h1>Offers</h1>
+      
+      <form class="form" data-bind="submit: submitSearch">
+        <fieldset class="form__fieldset">
+          <legend class="form__legend">Filter results</legend>
+          <ul class="form__field-list">
+            <!-- ko if: shouldShowLocationFilter -->
+            <li class="form__field-item form__field-item--full-width" data-claims="superadmin,cityadmin">
+              <label for="filterOnLocation" class="form__label">Location:</label>
+              <select class="form__input form__input--medium" name="filterOnLocation" data-bind="options: availableLocations,
+                                value: locationToFilterOn,
+                                optionsText: 'name',
+                                optionsValue: 'id',
+                                optionsCaption: 'All'"></select>
+            </li>
+            <!-- /ko -->
+            <li class="form__field-item">
+              <label for="filterByName" class="form__label">Search Description:</label>
+              <input type="text" name="filterByName" class="form__input" data-bind="textInput: nameToFilterOn"></input>
+            </li>
+          </ul>
+        </fieldset>
+        <button type="submit" class="btn btn--info">
+          <span class="btn__text">Search</span>
+        </button>
+      </form>
     </header>
   </div>
 </div>
 <div class="block block--main-body">
   <div class="container block__inner">
     <div class="block__content">
-      <div data-bind="foreach: offers">
-        <!-- ko template: { name: 'volunteer' } --><!-- /ko -->
-      </div>
+      {{> item-listing }}
     </div>
   </div>
 </div>
 {{> loading-spinner}}
 
-<script type="text/html" id="search">
-<div class="form__field-item form__field-item--full-width">
-  <label for="search" class="form__label">Search</label>
-  <input type="text" data-bind="textInput: searchTerm, onkeyup: search" class="form__input form__input--medium" />
-</div>
-<div class="form__field-item form__field-item--full-width">
-  <label for="filter" class="form__label form__label--checkbox">Only show highlighted</label>
-  <input type="checkbox" id="filter" data-bind="checked: isFilteredByHighlighted" />
-</div>
-</script>
-
-<script type="text/html" id="volunteer">
+<script type="text/html" id="item-template">
   <article data-bind="css: highlighted">
     <header class="volunteer__header">
       <div class="highlight-item">

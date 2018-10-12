@@ -8,7 +8,7 @@ const ListingBaseViewModel = require('../ListingBaseViewModel')
 import { cities as locations } from '../../../data/generated/supported-cities'
 
 class ServiceProvider {
-  constructor (sp) {
+  constructor(sp) {
     this.key = sp.key
     this.name = sp.name
     this.url = adminUrls.serviceProviders + '?key=' + sp.key
@@ -25,13 +25,13 @@ class ServiceProvider {
   }
 }
 
-function DashboardModel () {
+function DashboardModel() {
   const self = this
 
   const locationsForUser = auth.isCityAdmin()
-  ? locations.filter((l) => auth.locationsAdminFor().includes(l.id))
-  : locations
-  
+    ? locations.filter((l) => auth.locationsAdminFor().includes(l.id))
+    : locations
+
   self.filters = [
     { key: 'name', getValue: (vm) => vm.nameToFilterOn(), isSet: (val) => val !== undefined && val.length > 0 },
     { key: 'location', getValue: (vm) => vm.locationToFilterOn(), isSet: (val) => val !== undefined && val.length > 0 },
@@ -70,10 +70,6 @@ function DashboardModel () {
       text: 'un-published'
     }
   ])
-
-  self.submitSearch = function () {
-    self.pagination.changePage(1)
-  }
 
   self.toggleVerified = function (serviceProvider, event) {
     ajax.put(self.endpointBuilder.serviceProviders(serviceProvider.key).build() + '/is-verified',
