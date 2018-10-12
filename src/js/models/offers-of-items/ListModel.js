@@ -1,97 +1,50 @@
 'use strict'
 
-var ajax = require('../../ajax')
-var browser = require('../../browser')
-var BaseViewModel = require('../BaseViewModel')
-var ItemOfferer = require('./ItemOfferer')
-var ko = require('knockout')
+const ListingBaseViewModel = require('../ListingBaseViewModel')
+const ItemOfferer = require('./ItemOfferer')
+const ko = require('knockout')
+import { cities as locations } from '../../../data/generated/supported-cities'
+const auth = require('../../auth')
 
-var ListModel = function () {
-  var self = this
-
-  self.allVolunteers = ko.observableArray()
-  self.offers = ko.observableArray()
-  self.searchTerm = ko.observable()
-  self.isFilteredByHighlighted = ko.observable(false)
-
-  self.search = () => {
-    if (self.searchTerm() === undefined || self.searchTerm().length < 3) {
-      self.offers(self.allVolunteers())
-    } else {
-      let terms = self.searchTerm()
-        .split(',')
-        .map((t) => t.trim())
-
-      let filtered = self.allVolunteers()
-        .filter((v) => {
-          let searchedFields = [
-            v.person.firstName,
-            v.person.lastName,
-            v.person.email,
-            v.person.telephone,
-            v.person.postcode,
-            v.description,
-            v.additionalInfo
-          ]
-
-          let match = (field, searchTerm) => {
-            return field.toLowerCase().indexOf(searchTerm.toLowerCase()) >= 0
-          }
-
-          for (let t of terms) {
-            if (searchedFields.filter((f) => match(f, t)).length > 0) return true
-          }
-          return false
-        })
-      self.offers(filtered)
-    }
-  }
-
-  self.searchTerm.subscribe(() => self.search())
+const ListModel = function () {
+  const self = this
 
   self.filterByHighlighted = () => {
     if (self.isFilteredByHighlighted()) {
-      const filtered = self.offers()
+      const filtered = self.items()
         .filter((v) => v.isHighlighted() === true)
-      self.offers(filtered)
-    } else {
-      self.search()
+      self.items(filtered)
     }
   }
-
+  self.isFilteredByHighlighted = ko.observable(false)
   self.isFilteredByHighlighted.subscribe(() => self.filterByHighlighted(), self)
 
   self.archived = (id) => {
-    self.offers(self.offers()
+    self.items(self.items()
       .filter((v) => v.id !== id))
   }
+  
+  self.filters = [
+    { key: 'searchTerm', getValue: (vm) => vm.nameToFilterOn(), isSet: (val) => val !== undefined && val.length > 0 },
+    { key: 'location', getValue: (vm) => vm.locationToFilterOn(), isSet: (val) => val !== undefined && val.length > 0 }
+  ]
 
-  self.init = () => {
-    browser.loading()
+  self.mapItems = (i) => { return new ItemOfferer(i, self) }
+  self.baseUrl = self.endpointBuilder.offersOfItems().build()
 
-    const endpoint = self.endpointBuilder.offersOfItems().build()
-    ajax
-      .get(endpoint)
-      .then(function (success) {
-        const volunteers = success.data
-          .sort((a, b) => {
-            if (a.creationDate < b.creationDate) return 1
-            if (a.creationDate > b.creationDate) return -1
-            return 0
-          })
-          .map((v) => new ItemOfferer(v, self))
+  const locationsForUser = auth.isCityAdmin()
+    ? locations.filter((l) => auth.locationsAdminFor().includes(l.id))
+    : locations
+  self.shouldShowLocationFilter = ko.computed(function () {
+    return locationsForUser.length > 1
+  }, self)
+  self.availableLocations = ko.observableArray(locationsForUser)
+  self.locationToFilterOn = ko.observable()
+  self.nameToFilterOn = ko.observable()
 
-        self.allVolunteers(volunteers)
-        self.offers(volunteers)
-        browser.loaded()
-      }, function (error) {
-        self.handleServerError(error)
-      })
-  }
-
-  self.init()
+  self.init(self)
 }
 
-ListModel.prototype = new BaseViewModel()
+ListModel.prototype = new ListingBaseViewModel()
 
 module.exports = ListModel
