@@ -1,7 +1,6 @@
 const ko = require('knockout')
 const htmlencode = require('htmlencode')
 
-const adminUrls = require('../../admin-urls')
 const auth = require('../../auth')
 const ListingBaseViewModel = require('../ListingBaseViewModel')
 

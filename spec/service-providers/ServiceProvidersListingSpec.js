@@ -56,8 +56,7 @@ describe('Service Providers', () => {
 
   it('should retrieve service providers from api', () => {
     var endpoint = `${endpoints.getServiceProvidersv3}?pageSize=10&index=0&`
-    var payload = {}
-    var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, payload).calledOnce
+    var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint).calledOnce
     expect(apiCalledWithExpectedArgs).toBeTruthy()
   })
 
@@ -118,8 +117,7 @@ describe('Service Providers', () => {
 
     it('- should retrieve new page', () => {
       var endpoint = `${endpoints.getServiceProvidersv3}?pageSize=10&index=20&`
-      var payload = {}
-      var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, payload).calledOnce
+      var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint).calledOnce
       expect(apiCalledWithExpectedArgs).toBeTruthy()
     })
   })

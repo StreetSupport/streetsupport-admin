@@ -41,10 +41,14 @@ function ListingBaseViewModel() {
     self.loadDocuments()
   }
 
+  self.submitSearch = function () {
+    self.pagination.changePage(1)
+  }
+
   self.loadDocuments = function () {
     browser.loading()
     ajax
-      .get(self.buildGetUrl(), {})
+      .get(self.buildGetUrl())
       .then(function (result) {
         self.pagination.updateData(result.data)
         self.items(result.data.items.map((i) => self.vm.mapItems(i)))
