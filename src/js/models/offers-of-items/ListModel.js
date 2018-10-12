@@ -9,16 +9,6 @@ const auth = require('../../auth')
 const ListModel = function () {
   const self = this
 
-  self.filterByHighlighted = () => {
-    if (self.isFilteredByHighlighted()) {
-      const filtered = self.items()
-        .filter((v) => v.isHighlighted() === true)
-      self.items(filtered)
-    }
-  }
-  self.isFilteredByHighlighted = ko.observable(false)
-  self.isFilteredByHighlighted.subscribe(() => self.filterByHighlighted(), self)
-
   self.archived = (id) => {
     self.items(self.items()
       .filter((v) => v.id !== id))
