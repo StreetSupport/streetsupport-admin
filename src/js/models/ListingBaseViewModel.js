@@ -37,7 +37,6 @@ function ListingBaseViewModel() {
 
   self.init = function (vm) {
     self.vm = vm
-
     self.loadDocuments()
   }
 

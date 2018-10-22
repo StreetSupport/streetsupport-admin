@@ -14,26 +14,17 @@ nosubnav: true
       <a href="/accommodation/add" class="btn btn--info">
         <span class="btn__text">Add new entry</span>
       </a>
-      <div class="form__field-item form__field-item--full-width" data-claims="superadmin">
-        <label for="filterByCity" class="form__label">Filter by city:</label>
-        <select class="form__input form__input--medium" name="filterByCity" data-bind="options: cities,
-          optionsValue: function (item) { return item.id },
-          optionsText: function (item) { return item.name },
-          value: selectedCityFilter,
-          optionsCaption: 'All'"></select>
-      </div>
     </header>
   </div>
 </div>
 <div class="block block--main-body">
   <div class="container block__inner">
-    <!-- ko template: { name: 'entries-template' } --><!-- /ko -->
+    {{> item-listing }}
   </div>
 </div>
 {{> loading-spinner}}
 
-<script type="text/html" id="entries-template">
-  <div class="block__content" data-bind="foreach:entries">
+<script type="text/html" id="item-template">
     <article>
       <header>
         <h1 class="h2" data-bind="html: name"></h1>
@@ -51,11 +42,4 @@ nosubnav: true
       </a>
       <!-- /ko -->
     </article>
-  </div>
-
-  <!-- ko if: canLoadMore -->
-  <button class="btn btn--primary" data-bind="click: loadNext">
-    <span class="btn__text">Load more</span>
-  </button>
-  <!-- /ko -->
 </script>
