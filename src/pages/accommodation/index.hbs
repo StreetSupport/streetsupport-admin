@@ -14,6 +14,30 @@ nosubnav: true
       <a href="/accommodation/add" class="btn btn--info">
         <span class="btn__text">Add new entry</span>
       </a>
+      <form class="form" data-bind="submit: submitSearch">
+        <fieldset class="form__fieldset">
+          <legend class="form__legend">Filter results</legend>
+          <ul class="form__field-list">
+            <!-- ko if: shouldShowLocationFilter -->
+            <li class="form__field-item form__field-item--full-width" data-claims="superadmin,cityadmin">
+              <label for="filterOnLocation" class="form__label">Location:</label>
+              <select class="form__input form__input--medium" name="filterOnLocation" data-bind="options: cities,
+                                value: locationToFilterOn,
+                                optionsText: 'name',
+                                optionsValue: 'id',
+                                optionsCaption: 'All'"></select>
+            </li>
+            <!-- /ko -->
+            <li class="form__field-item">
+              <label for="filterByName" class="form__label">Name:</label>
+              <input type="text" name="filterByName" class="form__input" data-bind="textInput: nameToFilterOn"></input>
+            </li>
+          </ul>
+        </fieldset>
+        <button type="submit" class="btn btn--info">
+          <span class="btn__text">Search</span>
+        </button>
+      </form>
     </header>
   </div>
 </div>

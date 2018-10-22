@@ -21,8 +21,14 @@ function Lister () {
   const self = this
 
   self.cities = ko.observableArray(cities)
+  self.shouldShowLocationFilter = ko.computed(() => self.cities().length > 1, self)
+  self.nameToFilterOn = ko.observable()
+  self.locationToFilterOn = ko.observable()
 
-  self.filters = []
+  self.filters = [
+    { key: 'name', getValue: (vm) => vm.nameToFilterOn(), isSet: (val) => val !== undefined && val.length > 0 },
+    { key: 'location', getValue: (vm) => vm.locationToFilterOn(), isSet: (val) => val !== undefined && val.length > 0 },
+  ]
   self.mapItems = mapItem
   self.baseUrl = endpoints.temporaryAccommodation
 
