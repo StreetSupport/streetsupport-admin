@@ -1,68 +1,40 @@
 const adminUrls = require('../../admin-urls')
-const ajax = require('../../ajax')
 const auth = require('../../auth')
-const browser = require('../../browser')
 const endpoints = require('../../api-endpoints')
 
-const BaseViewModel = require('../BaseViewModel')
+const ListingBaseViewModel = require('../ListingBaseViewModel')
 
 const ko = require('knockout')
 
 import { cities } from '../../../data/generated/supported-cities'
 
-const formatData = (data) => {
-  const formatted = data
-  formatted
-      .forEach((i) => {
-        i.editUrl = `${adminUrls.temporaryAccommodation}/edit?id=${i.id}`
-        i.addReviewsUrl = `${adminUrls.temporaryAccommodation}/reviews/add?id=${i.id}`
-        i.reviewsListingUrl = `${adminUrls.temporaryAccommodation}/reviews?id=${i.id}`
-        i.userCanSeeReviews = auth.canSeeReviews()
-      })
-  return formatted
+const mapItem = (i) => {
+  i.editUrl = `${adminUrls.temporaryAccommodation}/edit?id=${i.id}`
+  i.addReviewsUrl = `${adminUrls.temporaryAccommodation}/reviews/add?id=${i.id}`
+  i.reviewsListingUrl = `${adminUrls.temporaryAccommodation}/reviews?id=${i.id}`
+  i.userCanSeeReviews = auth.canSeeReviews()
+
+  return i
 }
 
 function Lister () {
   const self = this
 
-  self.entries = ko.observableArray()
-  self.canLoadMore = ko.observable(false)
   self.cities = ko.observableArray(cities)
-  self.selectedCityFilter = ko.observable()
+  self.shouldShowLocationFilter = ko.computed(() => self.cities().length > 1, self)
+  self.nameToFilterOn = ko.observable()
+  self.locationToFilterOn = ko.observable()
 
-  let loadNextUrl = endpoints.temporaryAccommodation
+  self.filters = [
+    { key: 'name', getValue: (vm) => vm.nameToFilterOn(), isSet: (val) => val !== undefined && val.length > 0 },
+    { key: 'location', getValue: (vm) => vm.locationToFilterOn(), isSet: (val) => val !== undefined && val.length > 0 },
+  ]
+  self.mapItems = mapItem
+  self.baseUrl = endpoints.temporaryAccommodation
 
-  const getEntriesSuccess = (result) => {
-    self.entries([...self.entries(), ...formatData(result.data.items)])
-    loadNextUrl = endpoints.prefix(result.data.links.next)
-    self.canLoadMore(result.data.links.next !== null)
-    browser.loaded()
-  }
-
-  self.init = () => {
-    self.loadNext()
-  }
-
-  self.selectedCityFilter.subscribe((newCityToFilterOn) => {
-    if (newCityToFilterOn) {
-      loadNextUrl = `${endpoints.temporaryAccommodation}?cityId=${newCityToFilterOn}`
-    } else {
-      loadNextUrl = endpoints.temporaryAccommodation
-    }
-
-    self.entries([])
-    self.loadNext()
-  })
-
-  self.loadNext = () => {
-    browser.loading()
-    ajax.get(loadNextUrl)
-      .then(getEntriesSuccess, (error) => {
-        self.handleServerError(error)
-      })
-  }
+  self.init(self)
 }
 
-Lister.prototype = new BaseViewModel()
+Lister.prototype = new ListingBaseViewModel()
 
 module.exports = Lister
