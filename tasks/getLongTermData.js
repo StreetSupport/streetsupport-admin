@@ -16,7 +16,8 @@ const outputs = {
   serviceCategories: 'service-categories.js',
   accomCategories: 'accommodation-categories.js',
   supportTypes: 'support-types.js',
-  supportedCities: 'supported-cities.js'
+  supportedCities: 'supported-cities.js',
+  clientGroups: 'client-groups.js'
 }
 
 /* calls API and generates static data */
@@ -29,17 +30,17 @@ gulp.task('volunteer-categories', (callback) => {
 gulp.task('parse-vol-categories', (callback) => {
   const cats = JSON.parse(fs.readFileSync(`${config.paths.generatedData}full-volunteer-categories.js`))
     .items
-    .map(function (c) {
-      return {
-        key: c.key,
-        name: c.description
-      }
-    })
-    .sort((a, b) => {
-      if (a.name < b.name) return -1
-      if (a.name > b.name) return 1
-      return 0
-    })
+      .map(function (c) {
+        return {
+          key: c.key,
+          name: c.description
+        }
+      })
+      .sort((a, b) => {
+        if (a.name < b.name) return -1
+        if (a.name > b.name) return 1
+        return 0
+      })
   return newFile('volunteer-categories.js', `export const categories = ${JSON.stringify(cats)}`)
     .pipe(gulp.dest(`${config.paths.generatedData}`))
 })
@@ -135,6 +136,22 @@ gulp.task('supported-cities', (callback) => {
     .pipe(gulp.dest('./'))
 })
 
+
+gulp.task('client-groups', (callback) => {
+  return request(endpoints.clientGroups)
+    .pipe(source(`${config.paths.generatedData}${outputs.clientGroups}`))
+    .pipe(streamify(jeditor(function (data) {
+      return data.items
+        .sort((a, b) => {
+          if (a.sortPosition > b.sortPosition) return -1
+          if (a.sortPosition < b.sortPosition) return 1
+          return 0
+        })
+    })))
+    .pipe(replace('[', 'export const clientGroups = ['))
+    .pipe(gulp.dest('./'))
+})
+
 gulp.task('parse-vol-categories-task', (callback) => {
   runSequence(
     'volunteer-categories',
@@ -149,6 +166,7 @@ gulp.task(
     'service-categories',
     'accom-subcategories',
     'supported-cities',
+    'client-groups',
     'support-types',
     'parse-vol-categories-task'
   ]

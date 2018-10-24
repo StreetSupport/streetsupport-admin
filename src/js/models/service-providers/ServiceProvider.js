@@ -7,6 +7,7 @@ const ajax = require('../../ajax')
 const browser = require('../../browser')
 
 import { cities } from '../../../data/generated/supported-cities'
+import { clientGroups } from '../../../data/generated/client-groups'
 
 const Address = require('../Address')
 const BaseViewModel = require('../BaseViewModel')
@@ -21,6 +22,8 @@ function ServiceProvider (data) {
   self.key = ko.observable(data.key)
   self.city = ko.observable(data.associatedCityId)
   self.availableCities = ko.observableArray(cities)
+  self.clientGroups = ko.observable(data.clientGroupKeys)
+  self.availableClientGroups = ko.observableArray(clientGroups)
   self.name = ko.observable(data.name)
   self.isVerified = ko.observable(data.isVerified)
   self.shortDescription = ko.observable(htmlEncode.htmlDecode(data.shortDescription))

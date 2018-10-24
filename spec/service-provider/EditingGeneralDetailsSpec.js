@@ -80,6 +80,7 @@ describe('Edit Service Provider General Details', () => {
       model.serviceProvider().tags()[2].isSelected(true)
       model.serviceProvider().tags()[3].isSelected(false)
       model.serviceProvider().tags()[4].isSelected(false)
+      model.serviceProvider().clientGroups('cg1,cg2')
 
       model.saveGeneralDetails()
     })
@@ -95,10 +96,12 @@ describe('Edit Service Provider General Details', () => {
         'Description': 'new description',
         'ShortDescription': 'new short description',
         'AssociatedLocationIds': [ 'new city id' ],
-        'Tags': ['tag-a', 'tag-b', 'tag-c']
+        'Tags': ['tag-a', 'tag-b', 'tag-c'],
+        'ClientGroupKeys': 'cg1,cg2'
       }
-      var apiCalledWithExpectedArgs = stubbedPutApi.withArgs(endpoint, payload).calledOnce
-      expect(apiCalledWithExpectedArgs).toBeTruthy()
+      const [actualEndpoint, actualPayload] = stubbedPutApi.getCalls()[0].args
+      expect(actualEndpoint).toEqual(endpoint)
+      expect(actualPayload).toEqual(payload)
     })
 
     it('should set isEditingGeneralDetails to false', () => {
