@@ -47,7 +47,7 @@ const Model = function () {
   self.init = function () {
     const locationsForUser = auth.isCityAdmin()
       ? locations.filter((l) => auth.locationsAdminFor().includes(l.id))
-      : locations
+      : [{ id: 'general', name: 'General Advice' }, ...locations]
 
     self.locations(locationsForUser)
   }
