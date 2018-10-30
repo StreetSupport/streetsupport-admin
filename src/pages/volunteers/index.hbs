@@ -54,31 +54,37 @@ nosubnav: true
 <div class="block">
   <div class="container block__inner">
     <div class="block__content text-right">
-      <div class="">
-        <label for="filter" class="form__label form__label--checkbox">Only show highlighted</label>
-        <input type="checkbox" id="filter" data-bind="checked: isFilteredByHighlighted" />
-      </div>
+      <button class="btn btn--primary" data-bind="click: viewAsCsv">
+        <span class="btn__text">
+        <!-- ko if: viewingAsCsv -->
+          View this query as pages
+        <!-- /ko -->
+        <!-- ko ifnot: viewingAsCsv -->
+          View this query as a CSV
+        <!-- /ko -->
+        </span> 
+      </button>
     </div>
   </div>
 </div>
 
 <div class="block block--main-body">
   <div class="container block__inner">
-    <div class="block__content">
-      <div data-bind="template: { name: 'volunteer', foreach: volunteers }"></div>
-      {{> pagination }}
-    </div>
+    {{> item-listing }}
+    <!-- /ko -->
   </div>
 </div>
-{{> loading-spinner}}
 
-<script type="text/html" id="volunteer">
-  <article data-bind="css: highlighted">
+<script type="text/html" id="csv-template">
+  <tr>
+    <td data-bind="text: name"></td>
+    <td data-bind="text: email"></td>
+  </tr>
+</script>
+
+<script type="text/html" id="item-template">
+  <article>
     <header class="volunteer__header">
-      <div class="highlight-item">
-        <label class="highlight-item__label" data-bind="attr: { for: id }">Highlight</label>
-        <input class="highlight-item__checkbox" type="checkbox" data-bind="checked: isHighlighted, attr: { id: id }" />
-      </div>
       <h1 class="h2 volunteer__heading">
         <span data-bind="html:person.firstName"></span>
         <span data-bind="html:person.lastName"></span>

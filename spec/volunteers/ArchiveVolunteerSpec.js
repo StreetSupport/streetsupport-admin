@@ -51,7 +51,7 @@ describe('Archive Volunteer', () => {
     browserLoadingStub.reset()
     browserLoadedStub.reset()
 
-    model.volunteers()[0].archive()
+    model.items()[0].archive()
   })
 
   afterEach(() => {
@@ -71,8 +71,7 @@ describe('Archive Volunteer', () => {
   })
 
   it('- should remove archived item', () => {
-    expect(model.allVolunteers().length).toEqual(0)
-    expect(model.volunteers().length).toEqual(0)
+    expect(model.items().length).toEqual(0)
   })
 
   it('- should notify user it is loaded', () => {
