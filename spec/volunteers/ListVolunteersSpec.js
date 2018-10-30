@@ -54,19 +54,19 @@ describe('List Volunteers', () => {
   })
 
   it('should set volunteers', () => {
-    expect(model.volunteers().length).toEqual(4)
+    expect(model.items().length).toEqual(4)
   })
 
   it('should set url to contact volunteer', () => {
-    expect(model.volunteers()[2].contactUrl).toEqual(adminUrls.contactVolunteer + '?id=570542130a4f951fb8abe4b9')
+    expect(model.items()[2].contactUrl).toEqual(adminUrls.contactVolunteer + '?id=570542130a4f951fb8abe4b9')
   })
 
   it('should set url to share volunteer', () => {
-    expect(model.volunteers()[2].shareUrl).toEqual(adminUrls.shareVolunteer + '?id=570542130a4f951fb8abe4b9')
+    expect(model.items()[2].shareUrl).toEqual(adminUrls.shareVolunteer + '?id=570542130a4f951fb8abe4b9')
   })
 
   it('should format creationDate', () => {
-    expect(model.volunteers()[2].creationDate).toEqual('06/04/16')
+    expect(model.items()[2].creationDate).toEqual('06/04/16')
   })
 
   it('should show user then that is loaded', () => {
@@ -79,7 +79,7 @@ describe('List Volunteers', () => {
     })
 
     it('- should show all volunteers', () => {
-      expect(model.volunteers().length).toEqual(4)
+      expect(model.items().length).toEqual(4)
     })
   })
 })

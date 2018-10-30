@@ -8,9 +8,27 @@ import ListingPagination from './ListingPagination'
 function ListingBaseViewModel() {
   const self = this
 
-  self.pagination = new ListingPagination(self)
+  self.pagination = new ListingPagination(self, 10)
   self.paginationLinks = ko.observableArray([])
   self.items = ko.observableArray()
+  self.csvItems = ko.observableArray()
+
+  self.viewingAsCsv = ko.observable(false)
+  self.previousPageSize = self.pagination.pageSize
+  self.previousIndex = self.pagination.index
+  self.viewAsCsv = function () {
+    self.viewingAsCsv(!self.viewingAsCsv())
+    if (!self.viewingAsCsv()) {
+      self.pagination.pageSize = self.previousPageSize
+      self.pagination.index = self.previousIndex
+      self.loadDocuments()
+    } else {
+      self.previousIndex = self.pagination.index
+      self.pagination.pageSize = 1000
+      self.pagination.index = 0
+      self.loadDocuments()
+    }
+  }
 
   self.buildGetUrl = () => {
     const filterQueryString = self.vm.filters
@@ -49,10 +67,12 @@ function ListingBaseViewModel() {
     ajax
       .get(self.buildGetUrl())
       .then(function (result) {
+        browser.loaded()
         self.pagination.updateData(result.data)
         self.items(result.data.items.map((i) => self.vm.mapItems(i)))
-
-        browser.loaded()
+        if (self.viewingAsCsv() && self.vm.mapCsvItems) {
+          self.csvItems(result.data.items.map((i) => self.vm.mapCsvItems(i)))
+        }
       },
         function (error) {
           self.handleError(error)
