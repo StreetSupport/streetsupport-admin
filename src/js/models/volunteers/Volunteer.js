@@ -36,12 +36,6 @@ const Volunteer = function (data, listener) {
   self.contactUrl = adminUrls.contactVolunteer + '?id=' + data.id
   self.shareUrl = adminUrls.shareVolunteer + '?id=' + data.id
   self.creationDate = moment(data.creationDate).format('DD/MM/YY')
-  self.isHighlighted = ko.observable(false)
-  self.highlighted = ko.computed(() => {
-    return self.isHighlighted()
-      ? 'volunteer volunteer--highlighted'
-      : 'volunteer'
-  }, self)
   self.canShare = ko.computed(function () {
     return self.person.city !== null && self.person.city.length > 0
   }, self)
