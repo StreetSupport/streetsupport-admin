@@ -160,14 +160,14 @@ gulp.task('parse-vol-categories-task', (callback) => {
   )
 })
 
-gulp.task(
-  'getLongTermData', 
-  [
+gulp.task('getLongTermData', (callback) => {
+  runSequence(
+    'supported-cities',
     'service-categories',
     'accom-subcategories',
-    'supported-cities',
     'client-groups',
     'support-types',
-    'parse-vol-categories-task'
-  ]
-)
+    'parse-vol-categories-task',
+    callback
+  )
+})
