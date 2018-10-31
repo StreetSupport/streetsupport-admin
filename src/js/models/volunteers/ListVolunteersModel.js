@@ -34,7 +34,11 @@ const ListVolunteersModel = function () {
   self.mapCsvItems = (i) => {
     return {
       name: ko.observable(`${i.person.firstName} ${i.person.lastName}`),
-      email: ko.observable(`${i.person.email}`)
+      email: ko.observable(i.person.email),
+      skillsCats: ko.observable(i.skillsAndExperience.categories.join(', ')),
+      skillsDesc: ko.observable(i.skillsAndExperience.description),
+      availability: ko.observable(i.availability.description),
+      resources: ko.observable(i.resources.description)
     }
   }
   self.filters = [

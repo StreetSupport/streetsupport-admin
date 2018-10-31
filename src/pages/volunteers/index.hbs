@@ -57,10 +57,10 @@ nosubnav: true
       <button class="btn btn--primary" data-bind="click: viewAsCsv">
         <span class="btn__text">
         <!-- ko if: viewingAsCsv -->
-          View this query as pages
+          View this query as paginated list
         <!-- /ko -->
         <!-- ko ifnot: viewingAsCsv -->
-          View this query as a CSV
+          View this query as table
         <!-- /ko -->
         </span> 
       </button>
@@ -71,7 +71,6 @@ nosubnav: true
 <div class="block block--main-body">
   <div class="container block__inner">
     {{> item-listing }}
-    <!-- /ko -->
   </div>
 </div>
 
@@ -79,6 +78,10 @@ nosubnav: true
   <tr>
     <td data-bind="text: name"></td>
     <td data-bind="text: email"></td>
+    <td data-bind="text: skillsCats"></td>
+    <td data-bind="text: skillsDesc"></td>
+    <td data-bind="text: availability"></td>
+    <td data-bind="text: resources"></td>
   </tr>
 </script>
 

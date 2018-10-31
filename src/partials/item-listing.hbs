@@ -7,9 +7,13 @@
           <tr>
             <th>Name</th>
             <th>Email</th>
+            <th>Categories</th>
+            <th>Skills</th>
+            <th>Availability</th>
+            <th>Resources</th>
           </tr>
         </thead>
-        <tbody  data-bind="template: { name: 'csv-template', foreach: csvItems }">
+        <tbody data-bind="template: { name: 'csv-template', foreach: csvItems }">
         </tbody>
       </table>
       <!-- /ko -->
