@@ -4,6 +4,8 @@ const auth = require('../../auth')
 const ListingBaseViewModel = require('../ListingBaseViewModel')
 const ko = require('knockout')
 const Volunteer = require('./Volunteer')
+const htmlencode = require('htmlencode')
+
 
 import { cities as locations } from '../../../data/generated/supported-cities'
 import { categories as volCategories } from '../../../data/generated/volunteer-categories.js'
@@ -34,7 +36,11 @@ const ListVolunteersModel = function () {
   self.mapCsvItems = (i) => {
     return {
       name: ko.observable(`${i.person.firstName} ${i.person.lastName}`),
-      email: ko.observable(`${i.person.email}`)
+      email: ko.observable(i.person.email),
+      skillsCats: ko.observable(i.skillsAndExperience.categories.join(', ')),
+      skillsDesc: ko.observable(htmlencode.htmlDecode(i.skillsAndExperience.description)),
+      availability: ko.observable(htmlencode.htmlDecode(i.availability.description)),
+      resources: ko.observable(htmlencode.htmlDecode(i.resources.description))
     }
   }
   self.filters = [
