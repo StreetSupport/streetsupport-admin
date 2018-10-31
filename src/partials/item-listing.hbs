@@ -1,7 +1,7 @@
+<!-- ko if: viewingAsCsv -->
 <div class="block block--main-body">
-  <div class="container block__inner">
+  <div class="block__inner">
     <div class="block__content">
-      <!-- ko if: viewingAsCsv -->
       <table>
         <thead>
           <tr>
@@ -16,13 +16,19 @@
         <tbody data-bind="template: { name: 'csv-template', foreach: csvItems }">
         </tbody>
       </table>
-      <!-- /ko -->
-      <!-- ko ifnot: viewingAsCsv -->
-      <section class="block__content" data-bind="template: { name: 'item-template', foreach: items }" class="stacked-list">
-      </section>
-      {{> pagination }}
-      <!-- /ko -->
-      {{> loading-spinner }}
     </div>
   </div>
 </div>
+<!-- /ko -->
+<!-- ko ifnot: viewingAsCsv -->
+<div class="block block--main-body">
+  <div class="container block__inner">
+    <div class="block__content">
+      <section class="block__content" data-bind="template: { name: 'item-template', foreach: items }" class="stacked-list">
+      </section>
+      {{> pagination }}
+    </div>
+  </div>
+</div>
+<!-- /ko -->
+{{> loading-spinner }}
