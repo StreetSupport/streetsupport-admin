@@ -8,7 +8,7 @@ const ListingBaseViewModel = require('../ListingBaseViewModel')
 import { cities as locations } from '../../../data/generated/supported-cities'
 
 class ServiceProvider {
-  constructor(sp) {
+  constructor (sp) {
     this.key = sp.key
     this.name = sp.name
     this.url = adminUrls.serviceProviders + '?key=' + sp.key
@@ -25,7 +25,7 @@ class ServiceProvider {
   }
 }
 
-function DashboardModel() {
+function DashboardModel () {
   const self = this
 
   const locationsForUser = auth.isCityAdmin()
