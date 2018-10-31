@@ -5,7 +5,7 @@ const browser = require('../browser')
 const BaseViewModel = require('./BaseViewModel')
 import ListingPagination from './ListingPagination'
 
-function ListingBaseViewModel() {
+function ListingBaseViewModel () {
   const self = this
 
   self.pagination = new ListingPagination(self, 10)

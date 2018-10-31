@@ -13,7 +13,7 @@ const ListModel = function () {
     self.items(self.items()
       .filter((v) => v.id !== id))
   }
-  
+
   self.filters = [
     { key: 'searchTerm', getValue: (vm) => vm.nameToFilterOn(), isSet: (val) => val !== undefined && val.length > 0 },
     { key: 'location', getValue: (vm) => vm.locationToFilterOn(), isSet: (val) => val !== undefined && val.length > 0 }
