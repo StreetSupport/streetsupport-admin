@@ -62,12 +62,12 @@ describe('SWEP Availabilty', () => {
   })
 
   it('- Should set toggle button text', () => {
-    expect(sut.cities()[0].buttonText()).toEqual('Set Unavailable')
-    expect(sut.cities()[1].buttonText()).toEqual('Set Available')
+    expect(sut.cities()[0].buttonText()).toEqual('Set Available')
+    expect(sut.cities()[1].buttonText()).toEqual('Set Unavailable')
   })
 
   it('- Should set claims for city', () => {
-    expect(sut.cities()[0].userClaims()).toEqual('superadmin,cityadminfor:manchester')
+    expect(sut.cities()[0].userClaims()).toEqual('superadmin,cityadminfor:leeds')
   })
 
   describe('- Toggle swep availability', () => {
@@ -102,9 +102,9 @@ describe('SWEP Availabilty', () => {
       })
 
       it('- Should patch to api', () => {
-        const endpoint = `${endpoints.cities}/manchester/swep-status`
+        const endpoint = `${endpoints.cities}/leeds/swep-status`
         const data = {
-          isAvailable: false
+          isAvailable: true
         }
         const apiCalledAsExpected = ajaxPatchStub
         .withArgs(endpoint, data)
@@ -113,7 +113,7 @@ describe('SWEP Availabilty', () => {
       })
 
       it('- Should toggle swepIsAvailable', () => {
-        expect(sut.cities()[0].swepIsAvailable()).toBeFalsy()
+        expect(sut.cities()[0].swepIsAvailable()).toBeTruthy()
       })
 
       it('- Should notify user it has loaded', () => {
@@ -148,9 +148,9 @@ describe('SWEP Availabilty', () => {
       })
 
       it('- Should patch to api', () => {
-        const endpoint = `${endpoints.cities}/manchester/swep-status`
+        const endpoint = `${endpoints.cities}/leeds/swep-status`
         const data = {
-          isAvailable: false
+          isAvailable: true
         }
         const apiCalledAsExpected = ajaxPatchStub
         .withArgs(endpoint, data)
