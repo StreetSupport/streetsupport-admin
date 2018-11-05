@@ -1,17 +1,10 @@
 const ko = require('knockout')
 const htmlencode = require('htmlencode')
 
-const auth = require('../../auth')
 const ListingBaseViewModel = require('../ListingBaseViewModel')
-
-import { cities as locations } from '../../../data/generated/supported-cities'
 
 const Model = function () {
   const self = this
-
-  const locationsForUser = auth.isCityAdmin()
-    ? locations.filter((l) => auth.locationsAdminFor().includes(l.id))
-    : locations
 
   self.mapItems = (i) => {
     return {

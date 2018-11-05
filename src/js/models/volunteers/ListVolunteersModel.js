@@ -6,7 +6,6 @@ const ko = require('knockout')
 const Volunteer = require('./Volunteer')
 const htmlencode = require('htmlencode')
 
-
 import { cities as locations } from '../../../data/generated/supported-cities'
 import { categories as volCategories } from '../../../data/generated/volunteer-categories.js'
 
@@ -32,7 +31,7 @@ const ListVolunteersModel = function () {
     return locationsForUser.length > 1
   }, self)
 
-  self.mapItems = (i) =>  new Volunteer(i, self)
+  self.mapItems = (i) => new Volunteer(i, self)
   self.mapCsvItems = (i) => {
     return {
       name: ko.observable(`${i.person.firstName} ${i.person.lastName}`),

@@ -27,7 +27,7 @@ function Lister () {
 
   self.filters = [
     { key: 'name', getValue: (vm) => vm.nameToFilterOn(), isSet: (val) => val !== undefined && val.length > 0 },
-    { key: 'location', getValue: (vm) => vm.locationToFilterOn(), isSet: (val) => val !== undefined && val.length > 0 },
+    { key: 'location', getValue: (vm) => vm.locationToFilterOn(), isSet: (val) => val !== undefined && val.length > 0 }
   ]
   self.mapItems = mapItem
   self.baseUrl = endpoints.temporaryAccommodation
