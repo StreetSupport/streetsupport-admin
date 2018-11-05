@@ -67,6 +67,11 @@ const Swep = function () {
       .then((result) => {
         browser.loaded()
         const cities = result.data
+          .sort((a, b) => {
+            if (a.name < b.name) return -1
+            if (a.name > b.name) return 1
+            return 0
+          })
           .filter(filterCities)
           .map((c) => new City(c))
         self.cities(cities)
