@@ -1,5 +1,5 @@
 /*
-global describe, beforeEach, afterEach, it, expect
+global describe, beforeAll, afterAll, it, expect
 */
 
 'use strict'
@@ -17,7 +17,7 @@ describe('List Offers', () => {
   var browserLoadingStub
   var browserLoadedStub
 
-  beforeEach(() => {
+  beforeAll(() => {
     var getPromise = {
       then: function (success, error) {
         success({
@@ -37,7 +37,7 @@ describe('List Offers', () => {
     model = new Model()
   })
 
-  afterEach(() => {
+  afterAll(() => {
     ajax.get.restore()
     auth.isCityAdmin.restore()
     browser.loading.restore()
@@ -77,10 +77,11 @@ var getData = () => {
         'firstName': 'Vince',
         'lastName': 'Lee',
         'telephone': '01234567890',
-        'email': 'vince.lee@polyhatsoftware.co.uk',
+        'email': 'test1@test.com',
         'postcode': 'M3 4BD',
         'city': 'Westeros'
       },
+      'categories': [],
       'description': 'description A',
       'additionalInfo': 'additional information A',
       'creationDate': '2016-03-23T12:05:11.0420000Z'
@@ -90,10 +91,11 @@ var getData = () => {
         'firstName': 'Vincent',
         'lastName': 'Lee',
         'telephone': '',
-        'email': 'vslee888+ncc@gmail.com',
+        'email': 'test2@test.com',
         'postcode': 'M3 4BD',
         'city': 'Westeros'
       },
+      'categories': [],
       'description': 'description A',
       'additionalInfo': 'additional information A',
       'creationDate': '2016-04-25T08:14:52.7170000Z'
@@ -103,10 +105,11 @@ var getData = () => {
         'firstName': 'Vince',
         'lastName': 'Lee',
         'telephone': '',
-        'email': 'vslee888+060416@gmail.com',
+        'email': 'test3@test.com',
         'postcode': 'M1 2JB',
         'city': 'Westeros'
       },
+      'categories': [],
       'description': 'description A',
       'additionalInfo': 'additional information A',
       'creationDate': '2016-04-06T17:06:27.1830000Z'
