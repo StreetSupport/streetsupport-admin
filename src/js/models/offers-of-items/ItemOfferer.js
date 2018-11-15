@@ -6,6 +6,7 @@ const htmlEncode = require('htmlencode')
 var ko = require('knockout')
 var browser = require('../../browser')
 var BaseViewModel = require('../BaseViewModel')
+import { categories } from '../../../data/generated/need-categories'
 
 let ItemOfferer = function (data, listener) {
   const truncate = (text, maxLength, suffix) => {
@@ -29,6 +30,15 @@ let ItemOfferer = function (data, listener) {
   }
   self.description = data.description
   self.additionalInfo = data.additionalInfo
+  self.categories = data.categories
+    .map((nc) => {
+      const cat = categories.find((c) => c.key === nc)
+      if (cat) {
+        return cat.value
+      }
+      return nc
+    })
+    .join(', ')
   self.shortDescription = truncate(data.description, 150, '&hellip;')
   self.shortAdditionalInfo = truncate(data.additionalInfo, 150, '&hellip;')
 

@@ -31,6 +31,14 @@ nosubnav: true
               <label for="filterByName" class="form__label">Search Description:</label>
               <input type="text" name="filterByName" class="form__input" data-bind="textInput: nameToFilterOn"></input>
             </li>
+            <li class="form__field-item form__field-item--full-width">
+              <label for="filterOnCategory" class="form__label">Category:</label>
+              <select class="form__input form__input--medium" name="filterOnCategory" data-bind="options: categories,
+                                value: categoryToFilterOn,
+                                optionsText: 'value',
+                                optionsValue: 'key',
+                                optionsCaption: 'All'"></select>
+            </li>
           </ul>
         </fieldset>
         <button type="submit" class="btn btn--info">
@@ -57,11 +65,10 @@ nosubnav: true
         <input class="highlight-item__checkbox" type="checkbox" data-bind="checked: isHighlighted, attr: { id: id }" />
       </div>
       <h1 class="h2 volunteer__heading">
-        <span data-bind="html:person.firstName"></span>
-        <span data-bind="html:person.lastName"></span>
+        <span data-bind="text: categories"></span>
       </h1>
       <h2 class="h3 volunteer__sub-heading">
-        <span data-bind="text: person.postcode"></span>
+        <span data-bind="text: person.postcode"></span> - 
         <span data-bind="text: creationDate"></span>
       </h2>
     </header>
