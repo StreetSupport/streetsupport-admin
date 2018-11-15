@@ -147,6 +147,7 @@ var offer = {
     'email': 'lindatucker@ntlworld.com',
     'postcode': 'BL4 9PY',
     'city': 'manchester' },
+  'categories': [],
   'description': 'Coats jackets hats scarfs gloves socks',
   'additionalInfo': 'About 10 of each item above , a small collection from friends and relatives ',
   'creationDate': '2016-12-13T00:21:06.8230000Z' }
