@@ -19,7 +19,7 @@ const Model = function () {
 
   self.locationToFilterOn = ko.observable()
   self.nameToFilterOn = ko.observable()
-  
+
   self.mapItems = (i) => {
     return {
       id: ko.observable(i.id),
@@ -31,8 +31,8 @@ const Model = function () {
   }
   self.filters = [
     { key: 'searchTerm', getValue: (vm) => vm.nameToFilterOn(), isSet: (val) => val !== undefined && val.length > 0 },
-    { key: 'location', getValue: (vm) => vm.locationToFilterOn(), isSet: (val) => val !== undefined && val.length > 0 },
- 
+    { key: 'location', getValue: (vm) => vm.locationToFilterOn(), isSet: (val) => val !== undefined && val.length > 0 }
+
   ]
   self.baseUrl = self.endpointBuilder.faqs().build()
 
