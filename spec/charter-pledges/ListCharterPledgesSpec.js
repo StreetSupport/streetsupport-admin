@@ -50,14 +50,6 @@ describe('List Charter Pledges', () => {
     expect(ajaxGetStub.calledOnce).toBeTruthy()
   })
 
-<<<<<<< HEAD
-  it('should retrieve non-approved pledges by default', () => {
-    const expected = `${endpoints.charterPledges}?isApproved=false&pageSize=10&index=0`
-    expect(ajaxGetStub.getCalls()[0].args[0]).toEqual(expected)
-  })
-
-=======
->>>>>>> paginate and search charter supporters
   it('should set url to supporter full name', () => {
     expect(model.items()[0].fullName).toEqual('first name last name')
   })

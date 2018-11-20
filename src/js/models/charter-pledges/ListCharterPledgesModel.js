@@ -160,7 +160,7 @@ function ListCharterPledgesModel () {
     { key: 'supporterCategory', getValue: (vm) => vm.filterOnPledgeCat(), isSet: (val) => val !== undefined && val.length > 0 },
 =======
   self.textToFilterOn = ko.observable()
-  self.filterOnIsApproved = ko.observable('')
+  self.filterOnIsApproved = ko.observable(false)
   self.filterOnIsFeatured = ko.observable('')
   self.filterOnIsOptedIn = ko.observable('')
 
