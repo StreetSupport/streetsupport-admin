@@ -137,7 +137,7 @@ function ListCharterPledgesModel () {
   var self = this
 
   self.textToFilterOn = ko.observable()
-  self.filterOnIsApproved = ko.observable('')
+  self.filterOnIsApproved = ko.observable(false)
   self.filterOnIsFeatured = ko.observable('')
   self.filterOnIsOptedIn = ko.observable('')
 
