@@ -31,12 +31,20 @@ function ListingBaseViewModel () {
   }
 
   self.buildGetUrl = () => {
-    const filterQueryString = self.vm.filters
+    const filters = self.vm.filters
       .filter((f) => f.isSet(f.getValue(self.vm)))
       .map((f) => `${f.key}=${f.getValue(self.vm)}`)
+
+    const paginationParts = [
+     { key: 'pageSize', value: self.pagination.pageSize },
+     { key: 'index', value: self.pagination.index }
+    ]
+      .map((kvp) => `${kvp.key}=${kvp.value}`)
+
+    const qs = [...filters, ...paginationParts]
       .join('&')
 
-    return `${self.vm.baseUrl}?pageSize=${self.pagination.pageSize}&index=${self.pagination.index}&${filterQueryString}`
+    return `${self.vm.baseUrl}?${qs}`
   }
 
   self.delete = function (item) {

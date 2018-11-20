@@ -3,7 +3,7 @@
 var ajax = require('../../ajax')
 var browser = require('../../browser')
 var validation = require('../../validation')
-var BaseViewModel = require('../BaseViewModel')
+var ListingBaseViewModel = require('../ListingBaseViewModel')
 var ko = require('knockout')
 require('knockout.validation') // No variable here is deliberate!
 var moment = require('moment')
@@ -131,79 +131,36 @@ function Pledge (data, listener) {
   }
 }
 
-Pledge.prototype = new BaseViewModel()
+Pledge.prototype = new ListingBaseViewModel()
 
 function ListCharterPledgesModel () {
   var self = this
-  self.allPledges = ko.observableArray()
-  self.pledges = ko.observableArray()
-  self.showAll = ko.observable(false)
-  self.showAllButtonLabel = ko.computed(function () {
-    return self.showAll()
-      ? 'View awaiting approval'
-      : 'Show all'
-  }, self)
-  self.supporterCategories = ko.observableArray()
-  self.selectedCategory = ko.observable('')
-  self.selectedCategory.subscribe((newValue) => {
-    if (newValue === undefined) {
-      self.updateVisiblePledges()
-    } else {
-      self.pledges(self.allPledges().filter((x) => x.supporterCategory === newValue))
-    }
-  })
 
-  self.updateVisiblePledges = function () {
-    if (self.showAll() === true) {
-      self.pledges(self.allPledges())
-    } else {
-      self.pledges(self.allPledges().filter((x) => x.isApproved() === false))
-    }
-  }
+  self.textToFilterOn = ko.observable()
+  self.filterOnIsApproved = ko.observable('')
+  self.filterOnIsFeatured = ko.observable('')
+  self.filterOnIsOptedIn = ko.observable('')
 
-  self.toggleShowAll = function () {
-    self.showAll(!self.showAll())
-    self.updateVisiblePledges()
-  }
+  self.filters = [
+    { key: 'searchTerm', getValue: (vm) => vm.textToFilterOn(), isSet: (val) => val !== undefined && val.length > 0 },
+    { key: 'isApproved', getValue: (vm) => vm.filterOnIsApproved(), isSet: (val) => val !== '' },
+    { key: 'isFeatured', getValue: (vm) => vm.filterOnIsFeatured(), isSet: (val) => val !== '' },
+    { key: 'isOptedIn', getValue: (vm) => vm.filterOnIsOptedIn(), isSet: (val) => val !== '' }
+
+  ]
+  self.mapItems = (p) => new Pledge(p, self)
+  self.baseUrl = self.endpointBuilder.charterPledges().build()
+  self.init(self)
 
   self.pledgeApprovalUpdated = function (pledge) {
-    self.updateVisiblePledges()
   }
 
   self.pledgeDeleted = (pledge) => {
-    let pledgesWithDeletedRemoved = self.allPledges().filter((p) => p.id !== pledge.id)
-    self.allPledges(pledgesWithDeletedRemoved)
-    self.updateVisiblePledges()
+    const pledgesWithDeletedRemoved = self.items().filter((p) => p.id !== pledge.id)
+    self.items(pledgesWithDeletedRemoved)
   }
-
-  browser.loading()
-
-  var endpoint = self.endpointBuilder.charterPledges().build()
-
-  ajax
-    .get(endpoint)
-    .then(function (result) {
-      let pledges = result.data
-        .sort((a, b) => {
-          if (a.creationDate < b.creationDate) return 1
-          if (a.creationDate > b.creationDate) return -1
-          return 0
-        })
-        .map((p) => new Pledge(p, self))
-
-      self.allPledges(pledges)
-      self.pledges(self.allPledges().filter((x) => x.isApproved() === false))
-
-      self.supporterCategories(pledges
-        .map((p) => p.supporterCategory)
-        .filter((item, i, ar) => ar.indexOf(item) === i))
-
-      browser.loaded()
-    }, function (error) {
-      self.handleServerError(error)
-    })
 }
 
-ListCharterPledgesModel.prototype = new BaseViewModel()
+ListCharterPledgesModel.prototype = new ListingBaseViewModel()
 
 module.exports = ListCharterPledgesModel
