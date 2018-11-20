@@ -12,33 +12,39 @@ nosubnav: true
   <div class="container block__inner">
     <header>
       <h1>Charter Pledges</h1>
-      <div class="form__field-item form__field-item--full-width">
-        <button data-bind="click: toggleShowAll" class="btn btn--info">
-          <span data-bind="text: showAllButtonLabel"></span>
+      <form class="form" data-bind="submit: submitSearch">
+        <fieldset class="form__fieldset">
+          <legend class="form__legend">Filter results</legend>
+          <ul class="form__field-list">
+            <li class="form__field-item">
+              <label for="filterByText" class="form__label">Text search:</label>
+              <input type="text" name="filterByText" class="form__input" data-bind="textInput: textToFilterOn"></input>
+            </li>
+            <li class="form__field-item">
+              <label class="form__label">Is Approved:</label>
+              {{> forms/yesNoEitherRadio dataFieldName="approved" dataValue="filterOnIsApproved" }}
+            </li>
+            <li class="form__field-item">
+              <label class="form__label">Is Featured:</label>
+              {{> forms/yesNoEitherRadio dataFieldName="featured" dataValue="filterOnIsFeatured" }}
+            </li>
+            <li class="form__field-item">
+              <label class="form__label">Is Opted In for contact:</label>
+              {{> forms/yesNoEitherRadio dataFieldName="optedIn" dataValue="filterOnIsOptedIn" }}
+            </li>
+          </ul>
+        </fieldset>
+        <button type="submit" class="btn btn--info">
+          <span class="btn__text">Search</span>
         </button>
-      </div>
-      <div class="form__field-item form__field-item--full-width">
-        <label class="form__label">Filter by Category:</label>
-        <select class="form__input form__input--full" data-bind="options: supporterCategories,
-        value: selectedCategory,
-        optionsCaption: '-- All Categories --'"></select>
-      </div>
+      </form>
     </header>
   </div>
 </div>
-<div class="block block--main-body">
-  <div class="container block__inner">
-    <div class="block__content">
-      <!-- ko if: pledges().length === 0 -->
-      <p>There are no pledges currently awaiting approval.</p>
-      <!-- /ko -->
-      <div data-bind="template: { name: 'pledge', foreach:pledges }"></div>
-    </div>
-  </div>
-</div>
 
-{{> loading-spinner}}
-<script type="text/html" id="pledge">
+{{> item-listing }}
+
+<script type="text/html" id="item-template">
   <article class="pledge">
     <!-- ko ifnot: isEditable -->
     <p data-bind="html:description" class="h3 pledge__description"></p>
