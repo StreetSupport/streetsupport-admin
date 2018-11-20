@@ -45,8 +45,13 @@ function ListingBaseViewModel () {
       .map((f) => `${f.key}=${f.getValue(self.vm)}`)
 
     const paginationParts = [
+<<<<<<< HEAD
       { key: 'pageSize', value: self.pagination.pageSize },
       { key: 'index', value: self.pagination.index }
+=======
+     { key: 'pageSize', value: self.pagination.pageSize },
+     { key: 'index', value: self.pagination.index }
+>>>>>>> paginate and search charter supporters
     ]
       .map((kvp) => `${kvp.key}=${kvp.value}`)
 

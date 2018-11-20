@@ -1,11 +1,19 @@
 'use strict'
 
+<<<<<<< HEAD
 const ajax = require('../../ajax')
 const browser = require('../../browser')
 const validation = require('../../validation')
 const BaseViewModel = require('../BaseViewModel')
 const ListingBaseViewModel = require('../ListingBaseViewModel')
 const ko = require('knockout')
+=======
+var ajax = require('../../ajax')
+var browser = require('../../browser')
+var validation = require('../../validation')
+var ListingBaseViewModel = require('../ListingBaseViewModel')
+var ko = require('knockout')
+>>>>>>> paginate and search charter supporters
 require('knockout.validation') // No variable here is deliberate!
 const moment = require('moment')
 const htmlEncode = require('htmlencode')
@@ -134,11 +142,12 @@ function Pledge (data, listener) {
   }
 }
 
-Pledge.prototype = new BaseViewModel()
+Pledge.prototype = new ListingBaseViewModel()
 
 function ListCharterPledgesModel () {
   var self = this
 
+<<<<<<< HEAD
   self.pledgeCats = pledgeCats
 
   self.textToFilterOn = ko.observable()
@@ -149,6 +158,14 @@ function ListCharterPledgesModel () {
 
   self.filters = [
     { key: 'supporterCategory', getValue: (vm) => vm.filterOnPledgeCat(), isSet: (val) => val !== undefined && val.length > 0 },
+=======
+  self.textToFilterOn = ko.observable()
+  self.filterOnIsApproved = ko.observable('')
+  self.filterOnIsFeatured = ko.observable('')
+  self.filterOnIsOptedIn = ko.observable('')
+
+  self.filters = [
+>>>>>>> paginate and search charter supporters
     { key: 'searchTerm', getValue: (vm) => vm.textToFilterOn(), isSet: (val) => val !== undefined && val.length > 0 },
     { key: 'isApproved', getValue: (vm) => vm.filterOnIsApproved(), isSet: (val) => val !== '' },
     { key: 'isFeatured', getValue: (vm) => vm.filterOnIsFeatured(), isSet: (val) => val !== '' },
@@ -156,8 +173,13 @@ function ListCharterPledgesModel () {
 
   ]
   self.mapItems = (p) => new Pledge(p, self)
+<<<<<<< HEAD
   self.mapCsvItems = self.mapItems
   self.baseUrl = self.endpointBuilder.charterPledges().build()
+=======
+  self.baseUrl = self.endpointBuilder.charterPledges().build()
+  self.init(self)
+>>>>>>> paginate and search charter supporters
 
   self.pledgeApprovalUpdated = function (pledge) {
   }
@@ -166,8 +188,11 @@ function ListCharterPledgesModel () {
     const pledgesWithDeletedRemoved = self.items().filter((p) => p.id !== pledge.id)
     self.items(pledgesWithDeletedRemoved)
   }
+<<<<<<< HEAD
 
   self.init(self)
+=======
+>>>>>>> paginate and search charter supporters
 }
 
 ListCharterPledgesModel.prototype = new ListingBaseViewModel()
