@@ -16,6 +16,14 @@ nosubnav: true
         <fieldset class="form__fieldset">
           <legend class="form__legend">Filter results</legend>
           <ul class="form__field-list">
+            <li class="form__field-item form__field-item--full-width">
+              <label for="filterOnPledgeCat" class="form__label">Category:</label>
+              <select class="form__input form__input--medium" name="filterOnPledgeCat" data-bind="options: pledgeCats,
+                                value: filterOnPledgeCat,
+                                optionsText: 'name',
+                                optionsValue: 'name',
+                                optionsCaption: 'Any'"></select>
+            </li>
             <li class="form__field-item">
               <label for="filterByText" class="form__label">Text search:</label>
               <input type="text" name="filterByText" class="form__input" data-bind="textInput: textToFilterOn"></input>
