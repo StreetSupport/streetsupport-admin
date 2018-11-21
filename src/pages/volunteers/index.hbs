@@ -59,6 +59,19 @@ nosubnav: true
 
 {{> item-listing }}
 
+
+<script type="text/html" id="csv-header">
+  <tr>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Categories</th>
+    <th>Skills</th>
+    <th>Availability</th>
+    <th>Resources</th>
+  </tr>
+</script>
+        
+
 <script type="text/html" id="csv-template">
   <tr>
     <td data-bind="text: name"></td>

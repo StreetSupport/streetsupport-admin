@@ -1,18 +1,20 @@
 'use strict'
 
-var ajax = require('../../ajax')
-var browser = require('../../browser')
-var validation = require('../../validation')
-var BaseViewModel = require('../BaseViewModel')
-var ListingBaseViewModel = require('../ListingBaseViewModel')
-var ko = require('knockout')
+const ajax = require('../../ajax')
+const browser = require('../../browser')
+const validation = require('../../validation')
+const BaseViewModel = require('../BaseViewModel')
+const ListingBaseViewModel = require('../ListingBaseViewModel')
+const ko = require('knockout')
 require('knockout.validation') // No variable here is deliberate!
-var moment = require('moment')
-var htmlEncode = require('htmlencode')
+const moment = require('moment')
+const htmlEncode = require('htmlencode')
+
+import pledgeCats from '../../../data/generated/examplePledges'
 
 function Pledge (data, listener) {
   validation.initialise(ko.validation)
-  var self = this
+  const self = this
   self.listener = listener
   self.id = data.id
   self.fullName = data.firstName + ' ' + data.lastName
@@ -137,12 +139,16 @@ Pledge.prototype = new BaseViewModel()
 function ListCharterPledgesModel () {
   var self = this
 
+  self.pledgeCats = pledgeCats
+
   self.textToFilterOn = ko.observable()
   self.filterOnIsApproved = ko.observable(false)
   self.filterOnIsFeatured = ko.observable('')
   self.filterOnIsOptedIn = ko.observable('')
+  self.filterOnPledgeCat = ko.observable()
 
   self.filters = [
+    { key: 'supporterCategory', getValue: (vm) => vm.filterOnPledgeCat(), isSet: (val) => val !== undefined && val.length > 0 },
     { key: 'searchTerm', getValue: (vm) => vm.textToFilterOn(), isSet: (val) => val !== undefined && val.length > 0 },
     { key: 'isApproved', getValue: (vm) => vm.filterOnIsApproved(), isSet: (val) => val !== '' },
     { key: 'isFeatured', getValue: (vm) => vm.filterOnIsFeatured(), isSet: (val) => val !== '' },
@@ -150,6 +156,7 @@ function ListCharterPledgesModel () {
 
   ]
   self.mapItems = (p) => new Pledge(p, self)
+  self.mapCsvItems = self.mapItems
   self.baseUrl = self.endpointBuilder.charterPledges().build()
   self.init(self)
 
