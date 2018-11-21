@@ -16,7 +16,6 @@ nosubnav: true
         <fieldset class="form__fieldset">
           <legend class="form__legend">Filter results</legend>
           <ul class="form__field-list">
-<<<<<<< HEAD
             <li class="form__field-item form__field-item--full-width">
               <label for="filterOnPledgeCat" class="form__label">Category:</label>
               <select class="form__input form__input--medium" name="filterOnPledgeCat" data-bind="options: pledgeCats,
@@ -25,8 +24,6 @@ nosubnav: true
                                 optionsValue: 'name',
                                 optionsCaption: 'Any'"></select>
             </li>
-=======
->>>>>>> paginate and search charter supporters
             <li class="form__field-item">
               <label for="filterByText" class="form__label">Text search:</label>
               <input type="text" name="filterByText" class="form__input" data-bind="textInput: textToFilterOn"></input>
@@ -56,6 +53,28 @@ nosubnav: true
 
 {{> item-listing }}
 
+<script type="text/html" id="csv-header">
+  <tr>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Organisation</th>
+    <th>Pledge</th>
+    <th>Category</th>
+    <th>Pledge Date</th>
+  </tr>
+</script>
+
+<script type="text/html" id="csv-template">
+  <tr>
+    <td data-bind="html: fullName"></td>
+    <td data-bind="text: email"></td>
+    <td data-bind="text: organisation"></td>
+    <td data-bind="html: description"></td>
+    <td data-bind="text: supporterCategory"></td>
+    <td data-bind="text: creationDate"></td>
+  </tr>
+</script>
+
 <script type="text/html" id="item-template">
   <article class="pledge">
     <!-- ko ifnot: isEditable -->
@@ -67,7 +86,10 @@ nosubnav: true
     </div>
     <!-- /ko -->
     <p class="pledge__author">
-      <span class="pledge__author-name" data-bind="html:fullName"></span> (<a data-bind="text:email, attr: { href: mailToLink }" class="pledge__author-email"></a>) <span data-bind="html:organisation" class="pledge__author-organisation"></span> Submitted on: <span data-bind="text:creationDate" class="pledge__author-creationDate"></span>
+      <span class="pledge__author-name" data-bind="html:fullName"></span> 
+      (<a data-bind="text:email, attr: { href: mailToLink }" class="pledge__author-email"></a>) 
+      <span data-bind="html:organisation" class="pledge__author-organisation"></span> 
+      Submitted on: <span data-bind="text:creationDate" class="pledge__author-creationDate"></span>
     </p>
     <!-- ko ifnot: isEditable -->
     <button data-bind="click: toggleApproval, attr: { class: approvedButtonClass }">
