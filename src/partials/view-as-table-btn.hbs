@@ -1,0 +1,21 @@
+<div class="block">
+  <div class="container block__inner">
+    <div class="block__content text-right">
+      <button class="btn btn--primary" data-bind="click: viewAsCsv">
+        <span class="btn__text">
+        <!-- ko if: viewingAsCsv -->
+          View this query as paginated list
+        <!-- /ko -->
+        <!-- ko ifnot: viewingAsCsv -->
+          View this query as table
+        <!-- /ko -->
+        </span> 
+      </button>
+      <!-- ko if: viewingAsCsv -->
+      <!-- ko if: hasOptedInFilter -->
+      <p>If exporting this list, be sure "Is Opted In" was selected above, and delete the exported file when you have finished with it.</p>
+      <!-- /ko -->
+      <!-- /ko -->
+    </div>
+  </div>
+</div>
