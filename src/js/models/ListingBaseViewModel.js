@@ -16,6 +16,8 @@ function ListingBaseViewModel () {
   self.viewingAsCsv = ko.observable(false)
   self.previousPageSize = self.pagination.pageSize
   self.previousIndex = self.pagination.index
+  self.hasOptedInFilter = ko.observable(false)
+
   self.viewAsCsv = function () {
     self.viewingAsCsv(!self.viewingAsCsv())
     if (!self.viewingAsCsv()) {
@@ -26,6 +28,13 @@ function ListingBaseViewModel () {
       self.previousIndex = self.pagination.index
       self.pagination.pageSize = 1000
       self.pagination.index = 0
+
+      self.hasOptedInFilter(self.vm.filterOnIsOptedIn !== undefined)
+
+      if(self.hasOptedInFilter) {
+        self.vm.filterOnIsOptedIn(true)
+      }
+
       self.loadDocuments()
     }
   }

@@ -42,6 +42,10 @@ nosubnav: true
               <label class="form__label">Is Archived:</label>
               {{> forms/yesNoEitherRadio dataFieldName="archived" dataValue="filterOnIsArchived" }}
             </li>
+            <li class="form__field-item">
+              <label class="form__label">Is Opted In:</label>
+              {{> forms/yesNoEitherRadio dataFieldName="optedIn" dataValue="filterOnIsOptedIn" }}
+            </li>
           </ul>
         </fieldset>
         <button type="submit" class="btn btn--info">
@@ -51,24 +55,22 @@ nosubnav: true
     </header>
   </div>
 </div>
-<div class="block">
-  <div class="container block__inner">
-    <div class="block__content text-right">
-      <button class="btn btn--primary" data-bind="click: viewAsCsv">
-        <span class="btn__text">
-        <!-- ko if: viewingAsCsv -->
-          View this query as paginated list
-        <!-- /ko -->
-        <!-- ko ifnot: viewingAsCsv -->
-          View this query as table
-        <!-- /ko -->
-        </span> 
-      </button>
-    </div>
-  </div>
-</div>
+{{> view-as-table-btn }}
 
 {{> item-listing }}
+
+
+<script type="text/html" id="csv-header">
+  <tr>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Categories</th>
+    <th>Skills</th>
+    <th>Availability</th>
+    <th>Resources</th>
+  </tr>
+</script>
+        
 
 <script type="text/html" id="csv-template">
   <tr>
@@ -89,7 +91,6 @@ nosubnav: true
         <span data-bind="html:person.lastName"></span>
       </h1>
       <h2 class="h3 volunteer__sub-heading">
-        <span data-bind="text: person.postcode"></span>
         <span data-bind="text: creationDate"></span>
       </h2>
     </header>

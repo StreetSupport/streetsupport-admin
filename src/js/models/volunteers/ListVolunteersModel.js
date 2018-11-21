@@ -26,6 +26,7 @@ const ListVolunteersModel = function () {
   self.volCategoryToFilterOn = ko.observable()
   self.textSearchToFilterOn = ko.observable()
   self.filterOnIsArchived = ko.observable('')
+  self.filterOnIsOptedIn = ko.observable('')
 
   self.shouldShowLocationFilter = ko.computed(function () {
     return locationsForUser.length > 1
@@ -46,7 +47,8 @@ const ListVolunteersModel = function () {
     { key: 'location', getValue: (vm) => vm.locationToFilterOn(), isSet: (val) => val !== undefined && val.length > 0 },
     { key: 'skillsCategory', getValue: (vm) => vm.volCategoryToFilterOn(), isSet: (val) => val !== undefined && val.length > 0 },
     { key: 'search', getValue: (vm) => vm.textSearchToFilterOn(), isSet: (val) => val !== undefined && val.length > 0 },
-    { key: 'isArchived', getValue: (vm) => vm.filterOnIsArchived(), isSet: (val) => val !== '' }
+    { key: 'isArchived', getValue: (vm) => vm.filterOnIsArchived(), isSet: (val) => val !== '' },
+    { key: 'isOptedIn', getValue: (vm) => vm.filterOnIsOptedIn(), isSet: (val) => val !== '' }
   ]
   self.baseUrl = self.endpointBuilder.volunteers().build()
 
