@@ -139,8 +139,6 @@ Pledge.prototype = new BaseViewModel()
 function ListCharterPledgesModel () {
   var self = this
 
-<<<<<<< HEAD
-<<<<<<< HEAD
   self.pledgeCats = pledgeCats
 
   self.textToFilterOn = ko.observable()
@@ -151,41 +149,14 @@ function ListCharterPledgesModel () {
 
   self.filters = [
     { key: 'supporterCategory', getValue: (vm) => vm.filterOnPledgeCat(), isSet: (val) => val !== undefined && val.length > 0 },
-=======
-=======
-  self.pledgeCats = pledgeCats
-
->>>>>>> view tabulated pledges
-  self.textToFilterOn = ko.observable()
-  self.filterOnIsApproved = ko.observable(false)
-  self.filterOnIsFeatured = ko.observable('')
-  self.filterOnIsOptedIn = ko.observable('')
-  self.filterOnPledgeCat = ko.observable()
-
-  self.filters = [
-<<<<<<< HEAD
->>>>>>> paginate and search charter supporters
-=======
-    { key: 'supporterCategory', getValue: (vm) => vm.filterOnPledgeCat(), isSet: (val) => val !== undefined && val.length > 0 },
->>>>>>> view tabulated pledges
     { key: 'searchTerm', getValue: (vm) => vm.textToFilterOn(), isSet: (val) => val !== undefined && val.length > 0 },
     { key: 'isApproved', getValue: (vm) => vm.filterOnIsApproved(), isSet: (val) => val !== '' },
     { key: 'isFeatured', getValue: (vm) => vm.filterOnIsFeatured(), isSet: (val) => val !== '' },
     { key: 'isOptedIn', getValue: (vm) => vm.filterOnIsOptedIn(), isSet: (val) => val !== '' }
-
   ]
   self.mapItems = (p) => new Pledge(p, self)
-<<<<<<< HEAD
-<<<<<<< HEAD
   self.mapCsvItems = self.mapItems
   self.baseUrl = self.endpointBuilder.charterPledges().build()
-=======
-=======
-  self.mapCsvItems = self.mapItems
->>>>>>> view tabulated pledges
-  self.baseUrl = self.endpointBuilder.charterPledges().build()
-  self.init(self)
->>>>>>> paginate and search charter supporters
 
   self.pledgeApprovalUpdated = function (pledge) {
   }
@@ -194,11 +165,8 @@ function ListCharterPledgesModel () {
     const pledgesWithDeletedRemoved = self.items().filter((p) => p.id !== pledge.id)
     self.items(pledgesWithDeletedRemoved)
   }
-<<<<<<< HEAD
 
   self.init(self)
-=======
->>>>>>> paginate and search charter supporters
 }
 
 ListCharterPledgesModel.prototype = new ListingBaseViewModel()

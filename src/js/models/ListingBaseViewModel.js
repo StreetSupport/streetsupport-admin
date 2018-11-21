@@ -31,7 +31,7 @@ function ListingBaseViewModel () {
 
       self.hasOptedInFilter(self.vm.filterOnIsOptedIn !== undefined)
 
-      if(self.hasOptedInFilter) {
+      if (self.hasOptedInFilter) {
         self.vm.filterOnIsOptedIn(true)
       }
 
