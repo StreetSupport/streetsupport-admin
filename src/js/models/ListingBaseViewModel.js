@@ -31,7 +31,7 @@ function ListingBaseViewModel () {
 
       self.hasOptedInFilter(self.vm.filterOnIsOptedIn !== undefined)
 
-      if(self.hasOptedInFilter) {
+      if (self.hasOptedInFilter) {
         self.vm.filterOnIsOptedIn(true)
       }
 
@@ -45,8 +45,8 @@ function ListingBaseViewModel () {
       .map((f) => `${f.key}=${f.getValue(self.vm)}`)
 
     const paginationParts = [
-     { key: 'pageSize', value: self.pagination.pageSize },
-     { key: 'index', value: self.pagination.index }
+      { key: 'pageSize', value: self.pagination.pageSize },
+      { key: 'index', value: self.pagination.index }
     ]
       .map((kvp) => `${kvp.key}=${kvp.value}`)
 
