@@ -158,7 +158,6 @@ function ListCharterPledgesModel () {
   self.mapItems = (p) => new Pledge(p, self)
   self.mapCsvItems = self.mapItems
   self.baseUrl = self.endpointBuilder.charterPledges().build()
-  self.init(self)
 
   self.pledgeApprovalUpdated = function (pledge) {
   }
@@ -167,6 +166,8 @@ function ListCharterPledgesModel () {
     const pledgesWithDeletedRemoved = self.items().filter((p) => p.id !== pledge.id)
     self.items(pledgesWithDeletedRemoved)
   }
+
+  self.init(self)
 }
 
 ListCharterPledgesModel.prototype = new ListingBaseViewModel()
