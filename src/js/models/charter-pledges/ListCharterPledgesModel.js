@@ -3,6 +3,7 @@
 var ajax = require('../../ajax')
 var browser = require('../../browser')
 var validation = require('../../validation')
+var BaseViewModel = require('../BaseViewModel')
 var ListingBaseViewModel = require('../ListingBaseViewModel')
 var ko = require('knockout')
 require('knockout.validation') // No variable here is deliberate!
@@ -131,7 +132,7 @@ function Pledge (data, listener) {
   }
 }
 
-Pledge.prototype = new ListingBaseViewModel()
+Pledge.prototype = new BaseViewModel()
 
 function ListCharterPledgesModel () {
   var self = this
