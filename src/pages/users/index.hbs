@@ -19,36 +19,48 @@ nosubnav: true
         <span class="btn__text">Create Super Admin</span>
       </a>
     </header>
-  </div>
-</div>
-<div class="block block--main-body">
-  <div class="container block__inner">
-    <div class="block__content">
-      <table>
-        <thead>
-          <tr>
-            <th>Email</th>
-            <th>Location</th>
-            <th>Claims</th>
-            <th data-claims="superadmin, cityadmin">Remove</th>
-          </tr>
-        </thead>
-        <tbody data-bind="template: { name: 'users-tmpl', foreach: users }"></tbody>
-      </table>
-      {{> loading-spinner }}
-    </div>
+    <form class="form" data-bind="submit: submitSearch">
+      <fieldset class="form__fieldset">
+        <legend class="form__legend">Filter results</legend>
+        <ul class="form__field-list">
+          <li class="form__field-item form__field-item--full-width">
+            <label for="filterOnRole" class="form__label">Role:</label>
+            <select class="form__input form__input--medium" name="filterOnRole" data-bind="options: roles,
+                              value: filterOnRole,
+                              optionsText: 'id',
+                              optionsValue: 'id',
+                              optionsCaption: 'Any'"></select>
+          </li>
+          <!-- ko if: shouldShowLocationFilter -->
+          <li class="form__field-item form__field-item--full-width" data-claims="superadmin,cityadmin">
+            <label for="filterOnLocation" class="form__label">Location:</label>
+            <select class="form__input form__input--medium" name="filterOnLocation" data-bind="options: availableLocations,
+                              value: locationToFilterOn,
+                              optionsText: 'name',
+                              optionsValue: 'id',
+                              optionsCaption: 'All'"></select>
+          </li>
+          <!-- /ko -->
+        </ul>
+      </fieldset>
+      <button type="submit" class="btn btn--info">
+        <span class="btn__text">Search</span>
+      </button>
+    </form>
   </div>
 </div>
 
-<script type="text/html" id="users-tmpl">
-  <tr>
-    <td data-bind="text: email"></td>
-    <td data-bind="text: associatedAreaId"></td>
-    <td data-bind="html: claims"></td>
-    <td data-claims="superadmin, cityadmin">
+{{> item-listing }}
+
+<script type="text/html" id="item-template">
+  <article>
+    <p><span data-bind="text: email"></span>
+    <span data-bind="text: associatedAreaId"></span></p>
+    <p data-bind="html: claims"></p>
+    <div data-claims="superadmin, cityadmin">
       <button class="btn btn--warning" data-bind="click: removeAccess">
         <span class="btn__text">Remove Access</span>
       </button>
-    </td>
-  </tr>
+    </div>
+  </article>
 </script>

@@ -8,6 +8,7 @@ const sinon = require('sinon')
 
 const jsRoot = '../../../src/js/'
 const ajax = require(`${jsRoot}ajax`)
+const auth = require(`${jsRoot}auth`)
 const endpoints = require(`${jsRoot}api-endpoints`)
 const browser = require(`${jsRoot}browser`)
 
@@ -24,30 +25,31 @@ describe('Users - listing', () => {
 
   beforeEach(() => {
     sinon.stub(ajax, 'get')
-      .withArgs(endpoints.users)
       .returns({
         then: function (success, _) {
           success({
-            data: userData
+            data: {
+              items: userData
+            }
           })
         }
       })
-
+    sinon.stub(auth, 'isCityAdmin').returns(false)
     browserLoadingStub = sinon.stub(browser, 'loading')
     browserLoadedStub = sinon.stub(browser, 'loaded')
 
     sut = new Model()
-    sut.init()
   })
 
   afterEach(() => {
     ajax.get.restore()
+    auth.isCityAdmin.restore()
     browser.loading.restore()
     browser.loaded.restore()
   })
 
   it('- should list users', () => {
-    expect(sut.users().length).toEqual(2)
+    expect(sut.items().length).toEqual(2)
   })
 
   describe('- remove access', () => {
@@ -64,7 +66,7 @@ describe('Users - listing', () => {
       browserLoadingStub.reset()
       browserLoadedStub.reset()
 
-      sut.users()[0].removeAccess()
+      sut.items()[0].removeAccess()
     })
 
     afterEach(() => {
@@ -76,12 +78,12 @@ describe('Users - listing', () => {
     })
 
     it('- should send delete request', () => {
-      const deleteRequestCalledAsExpected = ajaxDelete.withArgs(`${endpoints.users}/${userData[0].id}`).calledAfter(browserLoadingStub)
-      expect(deleteRequestCalledAsExpected).toBeTruthy()
+      const endpoint = ajaxDelete.getCalls()[0].args[0]
+      expect(endpoint).toEqual(`${endpoints.users}/58ef63a5254ac6229c3d08f5`)
     })
 
     it('- should remove user from listing', () => {
-      expect(sut.users().filter((u) => u.id() === userData[0].id).length).toEqual(0)
+      expect(sut.items().filter((u) => u.id() === userData[0].id).length).toEqual(0)
     })
 
     it('- should show browser is loaded', () => {
