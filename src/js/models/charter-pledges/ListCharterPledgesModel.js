@@ -10,7 +10,7 @@ require('knockout.validation') // No variable here is deliberate!
 const moment = require('moment')
 const htmlEncode = require('htmlencode')
 
-import pledgeCats from '../../../data/generated/examplePledges'
+import pledgeCats from '../../../data/examplePledges'
 
 function Pledge (data, listener) {
   validation.initialise(ko.validation)
