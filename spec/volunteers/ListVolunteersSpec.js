@@ -1,5 +1,5 @@
 /*
-global describe, beforeEach, afterEach, it, expect
+global describe, beforeAll, afterAll, it, expect
 */
 
 'use strict'
@@ -17,7 +17,7 @@ describe('List Volunteers', () => {
   var browserLoadingStub
   var browserLoadedStub
 
-  beforeEach(() => {
+  beforeAll(() => {
     var getVolunteersPromise = () => {
       return {
         then: function (success, error) {
@@ -38,7 +38,7 @@ describe('List Volunteers', () => {
     model = new Model()
   })
 
-  afterEach(() => {
+  afterAll(() => {
     ajax.get.restore()
     auth.isCityAdmin.restore()
     browser.loading.restore()
@@ -71,16 +71,6 @@ describe('List Volunteers', () => {
 
   it('should show user then that is loaded', () => {
     expect(browserLoadedStub.calledAfter(ajaxGetStub)).toBeTruthy()
-  })
-
-  describe('- view all', () => {
-    beforeEach(() => {
-      model.cityFilter()
-    })
-
-    it('- should show all volunteers', () => {
-      expect(model.items().length).toEqual(4)
-    })
   })
 })
 

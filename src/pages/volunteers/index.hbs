@@ -42,6 +42,10 @@ nosubnav: true
               <label class="form__label">Is Archived:</label>
               {{> forms/yesNoEitherRadio dataFieldName="archived" dataValue="filterOnIsArchived" }}
             </li>
+            <li class="form__field-item">
+              <label class="form__label">Is Opted In:</label>
+              {{> forms/yesNoEitherRadio dataFieldName="optedIn" dataValue="filterOnIsOptedIn" }}
+            </li>
           </ul>
         </fieldset>
         <button type="submit" class="btn btn--info">
@@ -64,6 +68,11 @@ nosubnav: true
         <!-- /ko -->
         </span> 
       </button>
+      <!-- ko if: viewingAsCsv -->
+      <!-- ko if: hasOptedInFilter -->
+      <p>If exporting this list, be sure "Is Opted In" was selected above, and delete the exported file when you have finished with it.</p>
+      <!-- /ko -->
+      <!-- /ko -->
     </div>
   </div>
 </div>
@@ -89,7 +98,6 @@ nosubnav: true
         <span data-bind="html:person.lastName"></span>
       </h1>
       <h2 class="h3 volunteer__sub-heading">
-        <span data-bind="text: person.postcode"></span>
         <span data-bind="text: creationDate"></span>
       </h2>
     </header>
