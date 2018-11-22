@@ -19,11 +19,12 @@ nosubnav: true
         <span class="btn__text">Create Super Admin</span>
       </a>
     </header>
-    <form class="form" data-bind="submit: submitSearch">
+    <!-- ko if: shouldShowLocationFilter -->
+    <form class="form" data-bind="submit: submitSearch" data-claims="superadmin,cityadmin">
       <fieldset class="form__fieldset">
         <legend class="form__legend">Filter results</legend>
         <ul class="form__field-list">
-          <li class="form__field-item form__field-item--full-width">
+          <li class="form__field-item form__field-item--full-width" data-claims="superadmin">
             <label for="filterOnRole" class="form__label">Role:</label>
             <select class="form__input form__input--medium" name="filterOnRole" data-bind="options: roles,
                               value: filterOnRole,
@@ -31,7 +32,6 @@ nosubnav: true
                               optionsValue: 'id',
                               optionsCaption: 'Any'"></select>
           </li>
-          <!-- ko if: shouldShowLocationFilter -->
           <li class="form__field-item form__field-item--full-width" data-claims="superadmin,cityadmin">
             <label for="filterOnLocation" class="form__label">Location:</label>
             <select class="form__input form__input--medium" name="filterOnLocation" data-bind="options: availableLocations,
@@ -40,13 +40,13 @@ nosubnav: true
                               optionsValue: 'id',
                               optionsCaption: 'All'"></select>
           </li>
-          <!-- /ko -->
         </ul>
       </fieldset>
       <button type="submit" class="btn btn--info">
         <span class="btn__text">Search</span>
       </button>
     </form>
+    <!-- /ko -->
   </div>
 </div>
 
