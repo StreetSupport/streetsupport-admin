@@ -1,9 +1,12 @@
 'use strict'
 
 const ajax = require('../../ajax')
+const auth = require('../../auth')
 const browser = require('../../browser')
 const BaseViewModel = require('../BaseViewModel')
+const ListingBaseViewModel = require('../ListingBaseViewModel')
 const ko = require('knockout')
+import { cities as locations } from '../../../data/generated/supported-cities'
 
 function User (data, listener) {
   const self = this
@@ -33,37 +36,45 @@ User.prototype = new BaseViewModel()
 
 function ListUsers () {
   const self = this
-  const endpoint = self.endpointBuilder.users().build()
-  self.users = ko.observableArray()
-  self.selectedMemberTypeFilter = ko.observable()
+
+  self.roles = [
+    { id: 'SuperAdmin' },
+    { id: 'CityAdmin' },
+    { id: 'OrgAdmin' },
+    { id: 'CharterAdmin' },
+    { id: 'TempAccomAdmin' },
+    { id: 'IndividualAccomAdmin' }
+  ]
+  self.availableLocations = auth.isCityAdmin()
+    ? locations.filter((l) => auth.locationsAdminFor().includes(l.id))
+    : locations
+  self.shouldShowLocationFilter = self.availableLocations.length > 1
+
+  self.filterOnRole = ko.observable()
+  self.filterOnRole
+    .subscribe((newValue) => {
+      if (newValue !== 'OrgAdmin') {
+        self.locationToFilterOn('')
+      }
+    })
+
+  self.locationToFilterOn = ko.observable()
+
+  self.filters = [
+    { key: 'role', getValue: (vm) => vm.filterOnRole(), isSet: (val) => val !== undefined && val.length > 0 },
+    { key: 'location', getValue: (vm) => vm.locationToFilterOn(), isSet: (val) => val !== undefined && val.length > 0 }
+  ]
+  self.mapItems = (p) => new User(p, self)
+  self.mapCsvItems = self.mapItems
+  self.baseUrl = self.endpointBuilder.users().build()
 
   self.userDeleted = function (userId) {
-    self.users(self.users().filter((u) => u.id() !== userId))
+    self.items(self.items().filter((u) => u.id() !== userId))
   }
 
-  self.init = () => {
-    browser.loading()
-
-    ajax
-      .get(endpoint)
-      .then(function (result) {
-        const users = result.data
-          .map((m) => new User(m, self))
-          .sort((a, b) => {
-            if (a.username() < b.username()) return 1
-            if (b.username() > a.username()) return -1
-            return 0
-          })
-        self.users(users)
-        browser.loaded()
-      }, function (error) {
-        self.handleServerError(error)
-      })
-  }
-
-  self.init()
+  self.init(self)
 }
 
-ListUsers.prototype = new BaseViewModel()
+ListUsers.prototype = new ListingBaseViewModel()
 
 module.exports = ListUsers
