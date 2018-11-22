@@ -10,6 +10,7 @@ const jsRoot = '../../../src/js/'
 const ajax = require(`${jsRoot}ajax`)
 const endpoints = require(`${jsRoot}api-endpoints`)
 const browser = require(`${jsRoot}browser`)
+const querystring = require(`${jsRoot}get-url-parameter`)
 const validation = require(`${jsRoot}validation`)
 
 import { categories } from '../../../src/data/generated/accommodation-categories'
@@ -23,6 +24,10 @@ describe('Accommodation - Add - org admin', () => {
   let browserLoadedStub = null
 
   beforeEach(() => {
+    sinon.stub(querystring, 'parameter').returns('the-users-service-provider-id')
+
+    sinon.stub(auth, 'isCityAdmin')
+
     browserLoadingStub = sinon.stub(browser, 'loading')
     browserLoadedStub = sinon.stub(browser, 'loaded')
 
@@ -37,10 +42,12 @@ describe('Accommodation - Add - org admin', () => {
   })
 
   afterEach(() => {
+    auth.isCityAdmin.restore()
     browser.loading.restore()
     browser.loaded.restore()
     auth.providerAdminFor.restore()
     auth.isSuperAdmin.restore()
+    querystring.parameter.restore()
   })
 
   it('- it should set list of accom types', () => {
@@ -116,10 +123,9 @@ describe('Accommodation - Add - org admin', () => {
         'Postcode': 'postcode',
         'AddressIsPubliclyHidden': false
       }
-      const calledAsExpected = ajaxPostStub
-        .withArgs(endpoint, payload)
-        .calledAfter(browserLoadingStub)
-      expect(calledAsExpected).toBeTruthy()
+      const args = ajaxPostStub.getCalls()[0].args
+      expect(args[0]).toEqual(endpoint)
+      expect(args[1]).toEqual(payload)
     })
 
     it('- should show user it has loaded', () => {

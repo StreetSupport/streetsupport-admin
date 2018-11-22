@@ -12,6 +12,7 @@ const auth = require(`../../../src/js/auth`)
 const endpoints = require(`../../../src/js/api-endpoints`)
 const browser = require(`../../../src/js/browser`)
 const Model = require(`../../../src/js/models/accommodation/list`)
+const querystring = require('../../../src/js/get-url-parameter')
 
 import { cities } from '../../../src/data/generated/supported-cities'
 
@@ -33,8 +34,11 @@ describe('Accommodation Listing', () => {
         }
       })
     sinon.stub(auth, 'canSeeReviews')
+    sinon.stub(auth, 'isCityAdmin')
+    sinon.stub(auth, 'isSuperAdmin')
     browserLoadingStub = sinon.stub(browser, 'loading')
     browserLoadedStub = sinon.stub(browser, 'loaded')
+    sinon.stub(querystring, 'parameter')
 
     sut = new Model()
   })
@@ -42,8 +46,11 @@ describe('Accommodation Listing', () => {
   afterEach(() => {
     ajax.get.restore()
     auth.canSeeReviews.restore()
+    auth.isCityAdmin.restore()
+    auth.isSuperAdmin.restore()
     browser.loading.restore()
     browser.loaded.restore()
+    querystring.parameter.restore()
   })
 
   it('- should show user it is loading', () => {
