@@ -18,7 +18,7 @@ function ServiceProviderDetails () {
 
   self.init = function () {
     browser.loading()
-    var providerId = getUrlParameter.parameter('key')
+    const providerId = getUrlParameter.parameter('key')
 
     ajax.get(self.endpointBuilder.serviceProviders(providerId).build(),
       {})

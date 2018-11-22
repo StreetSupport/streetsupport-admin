@@ -6,6 +6,7 @@ const auth = require('../../auth')
 const browser = require('../../browser')
 const endpoints = require('../../api-endpoints')
 const validation = require('../../validation')
+const querystring = require('../../get-url-parameter')
 
 import { categories } from '../../../data/generated/accommodation-categories'
 import { supportTypes } from '../../../data/generated/support-types'
@@ -45,7 +46,6 @@ function Model () {
     }
   }))
 
-  self.isSuperAdmin = ko.observable()
   self.serviceProviders = ko.observableArray()
   self.formSubmitted = ko.observable(false)
   self.formSubmissionSuccessful = ko.observable(false)
@@ -55,8 +55,8 @@ function Model () {
   self.init = () => {
     validation.initialise(ko.validation)
     self.fieldErrors = validation.getValidationGroup(ko.validation, self.formFields)
-    if (auth.isSuperAdmin()) {
-      self.isSuperAdmin(true)
+
+    if (auth.isSuperAdmin() || auth.isCityAdmin()) {
       ajax
         .get(endpoints.getServiceProvidersHAL)
         .then((result) => {
@@ -73,6 +73,9 @@ function Model () {
               return 0
             })
           )
+
+          const presetProviderId = auth.providerAdminFor() || querystring.parameter('providerId')
+          self.formFields().serviceProviderId(presetProviderId)
         }, () => {
           self.handleServerError()
         })
