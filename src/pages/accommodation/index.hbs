@@ -28,6 +28,15 @@ nosubnav: true
                                 optionsCaption: 'All'"></select>
             </li>
             <!-- /ko -->
+            <li class="form__field-item" data-claims="superadmin,cityadmin">
+              <label for="filterByName" class="form__label">Service Provider:</label>  
+              <select data-bind="options: serviceProviders,
+                optionsValue: function (item) { return item.key },
+                optionsText:  function (item) { return item.name },
+                value: providerIdToFilterOn,
+                optionsCaption: '-- please select --'"
+                class="form__input"></select>
+            </li>
             <li class="form__field-item">
               <label for="filterByName" class="form__label">Name:</label>
               <input type="text" name="filterByName" class="form__input" data-bind="textInput: nameToFilterOn"></input>

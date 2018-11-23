@@ -10,6 +10,7 @@ const jsRoot = '../../../src/js/'
 const ajax = require(`${jsRoot}ajax`)
 const endpoints = require(`${jsRoot}api-endpoints`)
 const browser = require(`${jsRoot}browser`)
+const querystring = require(`${jsRoot}get-url-parameter`)
 const validation = require(`${jsRoot}validation`)
 
 import { categories } from '../../../src/data/generated/accommodation-categories'
@@ -36,6 +37,8 @@ describe('Accommodation - Add - super admin', () => {
 
     sinon.stub(auth, 'providerAdminFor').returns('')
     sinon.stub(auth, 'isSuperAdmin').returns(true)
+    sinon.stub(auth, 'isCityAdmin').returns(false)
+    sinon.stub(querystring, 'parameter')
 
     browserLoadingStub = sinon.stub(browser, 'loading')
     browserLoadedStub = sinon.stub(browser, 'loaded')
@@ -47,9 +50,11 @@ describe('Accommodation - Add - super admin', () => {
   afterEach(() => {
     ajax.get.restore()
     auth.providerAdminFor.restore()
+    auth.isCityAdmin.restore()
     auth.isSuperAdmin.restore()
     browser.loading.restore()
     browser.loaded.restore()
+    querystring.parameter.restore()
   })
 
   it('- it should set list of accom types', () => {
@@ -73,10 +78,6 @@ describe('Accommodation - Add - super admin', () => {
 
   it('- should decode provider names', () => {
     expect(sut.serviceProviders()[0].name).toEqual('Provider A\'s House')
-  })
-
-  it('- should set is super admin', () => {
-    expect(sut.isSuperAdmin()).toBeTruthy()
   })
 
   describe('- submit', () => {

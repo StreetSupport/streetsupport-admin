@@ -26,16 +26,14 @@ nosubnav: true
         <h3>General Info</h3>
         <dl class="key-value-pair">
           {{> forms/textField fieldTitle="Name" dataFieldName="name" }}
-          <!-- ko if: $parent.isSuperAdmin -->
-          <dt class="key-value-pair__key">Service Provider</dt>
-          <dd class="key-value-pair__value form__field-item">
+          <dt data-claims="superadmin,cityadmin" class="key-value-pair__key">Service Provider</dt>
+          <dd data-claims="superadmin,cityadmin" class="key-value-pair__value form__field-item">
             <select data-bind="options: $parent.serviceProviders,
                 optionsValue: function (item) { return item.key },
                 optionsText:  function (item) { return item.name },
                 value: serviceProviderId,
                 optionsCaption: '-- please select --'" class="form__input"></select>
           </dd>
-          <!-- /ko -->
           {{> forms/textArea fieldTitle="Short Summary" dataFieldName="synopsis" }}
           {{> forms/textArea fieldTitle="Full Description" dataFieldName="description" }}
           {{> forms/boolean fieldTitle="Open Access? (No referral required)" dataFieldName="isOpenAccess" claimsRequired="superadmin,orgadmin,cityadmin" }}
