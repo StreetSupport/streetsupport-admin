@@ -73,6 +73,11 @@ nosubnav: true
       <a data-bind="attr: { href: reviewsListingUrl }" data-claims="superadmin,tempaccomadmin" class="btn btn--info">
         <span class="btn__text">view past feedback</a>
       </a>
+      <!-- ko if: canAddProviderAdmin -->
+      <a data-bind="attr: { href: addAccomProviderUrl }" data-claims="superadmin,tempaccomadmin" class="btn btn--info">
+        <span class="btn__text">add provider admin</a>
+      </a>
+      <!-- /ko -->
       <!-- /ko -->
     </article>
 </script>

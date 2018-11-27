@@ -86,6 +86,14 @@ describe('Accommodation Listing', () => {
   it('- should set reviews listing url', () => {
     expect(sut.items()[0].reviewsListingUrl).toEqual(`${adminUrls.temporaryAccommodation}/reviews?id=${accomData.items[0].id}`)
   })
+
+  it('- should set can add provider admin if service provider id not set', () => {
+    expect(sut.items()[0].canAddProviderAdmin).toBeTruthy()
+  })
+
+  it('- should set cannot add provider admin if service provider id is set', () => {
+    expect(sut.items()[1].canAddProviderAdmin).toBeFalsy()
+  })
 })
 
 const accomData = {
@@ -105,7 +113,8 @@ const accomData = {
       'city': 'city',
       'postcode': 'm13fy',
       'latitude': 0,
-      'longitude': 0
+      'longitude': 0,
+      'serviceProviderId': null
     },
     {
       'id': '589a08ad6a38c32e883f26dh',
@@ -117,7 +126,8 @@ const accomData = {
       'city': 'city',
       'postcode': 'm13fy',
       'latitude': 0,
-      'longitude': 0
+      'longitude': 0,
+      'serviceProviderId': 'service-provider-id'
     },
     {
       'id': '589a08ad6a38c32e883f26di',

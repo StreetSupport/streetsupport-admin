@@ -17,6 +17,8 @@ const mapItem = (i) => {
   i.editUrl = `${adminUrls.temporaryAccommodation}/edit?id=${i.id}`
   i.addReviewsUrl = `${adminUrls.temporaryAccommodation}/reviews/add?id=${i.id}`
   i.reviewsListingUrl = `${adminUrls.temporaryAccommodation}/reviews?id=${i.id}`
+  i.addAccomProviderUrl = `/users/create-accom-provider-admin?id=${i.id}`
+  i.canAddProviderAdmin = i.serviceProviderId === null
   i.userCanSeeReviews = auth.canSeeReviews()
 
   return i
