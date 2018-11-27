@@ -34,6 +34,8 @@ module.exports = {
   temporaryAccommodation: p('/v1/accommodation'),
   unverifiedCityAdmins: p('/v1/unverified-city-admins'),
   unverifiedSuperAdmins: p('/v1/unverified-super-admins'),
+  charterAdmins: p('/v1/charter-admins'),
+  accomReviewAdmins: p('/v1/accommodation-review-admins'),
   unverifiedUsers: p('/v1/unverified-users'),
   users: p('/v1/users'),
   verifiedUsers: p('/v1/verified-users'),
