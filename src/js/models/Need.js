@@ -57,22 +57,7 @@ function Need (data) {
 
   self.viewOffersUrl = `${adminUrls.needOffers}?needId=${self.id()}`
 
-  self.derivedTweet = ko.observable()
-
   self.totalResponses = ko.observable(0)
-
-  self.description.subscribe((newValue) => {
-    if (newValue.length > 5) {
-      const tweetUrl = self.endpointBuilder.needTweetMessage().build()
-      const endpoint = `${tweetUrl}?providerId=${self.serviceProviderId}&needDescription=${self.description()}`
-
-      ajax
-        .get(endpoint)
-        .then((result) => {
-          self.derivedTweet(result.data)
-        })
-    }
-  })
 
   self.repostNeed = function () {
     browser.loading()
