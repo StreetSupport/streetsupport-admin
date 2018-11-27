@@ -36,6 +36,7 @@ module.exports = {
   unverifiedSuperAdmins: p('/v1/unverified-super-admins'),
   charterAdmins: p('/v1/charter-admins'),
   accomReviewAdmins: p('/v1/accommodation-review-admins'),
+  accomProviderAdmins: p('/v1/accommodation-provider-admins'),
   unverifiedUsers: p('/v1/unverified-users'),
   users: p('/v1/users'),
   verifiedUsers: p('/v1/verified-users'),

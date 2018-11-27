@@ -27,7 +27,7 @@ function Model () {
 
   self.postData = () => {
     browser.loading()
-    const endpoint = endpoints.accomReviewAdmins
+    const endpoint = endpoints.accomProviderAdmins
     const payload = validation.buildPayload(self.formFields())
     self.formSubmitted(true)
     self.formSubmissionNotSuccessful(false)
