@@ -34,19 +34,6 @@ describe('Add individual Need', () => {
     ajaxGetStub.withArgs(endpoints.getServiceProviders + '/coffee4craig/addresses')
       .returns(getAddressesResolution)
 
-    let getDerivedTweetResolution = () => {
-      return {
-        then: function (success, error) {
-          success({
-            'statusCode': 200,
-            'data': 'returned derived tweet'
-          })
-        }
-      }
-    }
-    const endpoint = endpoints.needTweetMessage + '?providerId=coffee4craig&needDescription=new description'
-    ajaxGetStub.withArgs(endpoint).returns(getDerivedTweetResolution())
-
     model = new Model()
   })
 
@@ -106,10 +93,6 @@ describe('Add individual Need', () => {
   describe('update description', () => {
     beforeEach(() => {
       model.need().description('new description')
-    })
-
-    it('- should update derived tweet', () => {
-      expect(model.need().derivedTweet()).toEqual('returned derived tweet')
     })
   })
 
