@@ -21,6 +21,7 @@ describe('Accommodation Listing', () => {
   let browserLoadingStub = null
   let browserLoadedStub = null
   let ajaxGetStub = null
+  let authGetLocationsForUserStub = null
 
   beforeEach(() => {
     ajaxGetStub = sinon
@@ -36,6 +37,7 @@ describe('Accommodation Listing', () => {
     sinon.stub(auth, 'canSeeReviews')
     sinon.stub(auth, 'isCityAdmin')
     sinon.stub(auth, 'isSuperAdmin')
+    authGetLocationsForUserStub = sinon.stub(auth, 'getLocationsForUser').returns(cities)
     browserLoadingStub = sinon.stub(browser, 'loading')
     browserLoadedStub = sinon.stub(browser, 'loaded')
     sinon.stub(querystring, 'parameter')
@@ -48,6 +50,7 @@ describe('Accommodation Listing', () => {
     auth.canSeeReviews.restore()
     auth.isCityAdmin.restore()
     auth.isSuperAdmin.restore()
+    auth.getLocationsForUser.restore()
     browser.loading.restore()
     browser.loaded.restore()
     querystring.parameter.restore()
@@ -64,6 +67,7 @@ describe('Accommodation Listing', () => {
   })
 
   it('- should get cities', () => {
+    expect(authGetLocationsForUserStub.getCalls()[0].args[0]).toEqual(undefined)
     expect(sut.cities().length).toEqual(cities.length)
   })
 

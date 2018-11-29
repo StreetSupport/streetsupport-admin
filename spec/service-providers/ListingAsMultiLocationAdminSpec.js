@@ -30,8 +30,7 @@ describe('Service Providers - listing as multi-location admin', () => {
     }
 
     sinon.stub(ajax, 'get').returns(fakeResolved)
-    sinon.stub(auth, 'isCityAdmin').returns(true)
-    sinon.stub(auth, 'locationsAdminFor').returns(userLocations)
+    sinon.stub(auth, 'getLocationsForUser').returns(userLocations)
     sinon.stub(browser, 'loading')
     sinon.stub(browser, 'loaded')
 
@@ -40,8 +39,7 @@ describe('Service Providers - listing as multi-location admin', () => {
 
   afterEach(() => {
     ajax.get.restore()
-    auth.isCityAdmin.restore()
-    auth.locationsAdminFor.restore()
+    auth.getLocationsForUser.restore()
     browser.loading.restore()
     browser.loaded.restore()
   })

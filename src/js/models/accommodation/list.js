@@ -11,8 +11,6 @@ const htmlEncode = require('htmlencode')
 
 require('../../arrayExtensions')
 
-import { cities as locations } from '../../../data/generated/supported-cities'
-
 const mapItem = (i) => {
   i.editUrl = `${adminUrls.temporaryAccommodation}/edit?id=${i.id}`
   i.addReviewsUrl = `${adminUrls.temporaryAccommodation}/reviews/add?id=${i.id}`
@@ -27,10 +25,7 @@ const mapItem = (i) => {
 function Lister () {
   const self = this
 
-  const locationsForUser = auth.isCityAdmin()
-  ? locations.filter((l) => auth.locationsAdminFor().includes(l.id))
-  : locations
-  self.cities = ko.observableArray(locationsForUser)
+  self.cities = ko.observableArray(auth.getLocationsForUser())
   self.shouldShowLocationFilter = ko.computed(() => self.cities().length > 1, self)
   self.nameToFilterOn = ko.observable()
   self.locationToFilterOn = ko.observable()

@@ -3,19 +3,15 @@ const htmlencode = require('htmlencode')
 
 const auth = require('../../auth')
 const ListingBaseViewModel = require('../ListingBaseViewModel')
-import { cities as locations } from '../../../data/generated/supported-cities'
 
 const Model = function () {
   const self = this
 
-  const locationsForUser = auth.isCityAdmin()
-    ? locations.filter((l) => auth.locationsAdminFor().includes(l.id))
-    : [{ id: 'general', name: 'General Advice' }, ...locations]
+  self.availableLocations = ko.observableArray(auth.getLocationsForUser([{ id: 'general', name: 'General Advice' }]))
 
   self.shouldShowLocationFilter = ko.computed(function () {
-    return locationsForUser.length > 1
+    return self.availableLocations().length > 1
   }, self)
-  self.availableLocations = ko.observableArray(locationsForUser)
 
   self.locationToFilterOn = ko.observable()
   self.nameToFilterOn = ko.observable()

@@ -4,7 +4,6 @@ const ajax = require('../../ajax')
 const auth = require('../../auth')
 const browser = require('../../browser')
 const endpoints = require('../../api-endpoints')
-import { cities as locations } from '../../../data/generated/supported-cities'
 
 const BaseViewModel = require('../BaseViewModel')
 
@@ -45,11 +44,7 @@ const Model = function () {
   }
 
   self.init = function () {
-    const locationsForUser = auth.isCityAdmin()
-      ? locations.filter((l) => auth.locationsAdminFor().includes(l.id))
-      : [{ id: 'general', name: 'General Advice' }, ...locations]
-
-    self.locations(locationsForUser)
+    self.locations(auth.getLocationsForUser([{ id: 'general', name: 'General Advice' }]))
   }
 }
 

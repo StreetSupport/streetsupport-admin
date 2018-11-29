@@ -1,5 +1,6 @@
 import storage from './sessionStorage'
 import { storageKeys } from './models/auth0/webAuth'
+import { cities as locations } from '../data/generated/supported-cities'
 
 const roles = {
   superadmin: 'superadmin',
@@ -31,6 +32,12 @@ const locationsAdminFor = function () {
     .map((c) => c.split(':')[1])
 }
 
+const getLocationsForUser = function (additionalOptions = []) {
+  if (isSuperAdmin()) return [...additionalOptions, ...locations]
+  if (isCityAdmin()) return locations.filter((l) => locationsAdminFor().includes(l.id))
+  return additionalOptions
+}
+
 const canSeeReviews = function () {
   const claims = getUserClaims()
   return claims.includes(roles.superadmin) || claims.includes(roles.tempaccomadmin)
@@ -51,5 +58,6 @@ module.exports = {
   canSeeReviews,
   isCityAdmin,
   cityAdminFor,
-  locationsAdminFor
+  locationsAdminFor,
+  getLocationsForUser
 }
