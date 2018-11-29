@@ -26,7 +26,7 @@ describe('Accommodation - Add - org admin', () => {
   beforeEach(() => {
     sinon.stub(querystring, 'parameter').returns('the-users-service-provider-id')
 
-    sinon.stub(auth, 'isCityAdmin')
+    sinon.stub(auth, 'getLocationsForUser').returns([])
 
     browserLoadingStub = sinon.stub(browser, 'loading')
     browserLoadedStub = sinon.stub(browser, 'loaded')
@@ -35,18 +35,19 @@ describe('Accommodation - Add - org admin', () => {
       .returns('the-users-service-provider-id')
 
     sinon.stub(auth, 'isSuperAdmin')
-      .returns(false)
+    sinon.stub(auth, 'isCityAdmin')
 
     sut = new Model()
     sut.init()
   })
 
   afterEach(() => {
-    auth.isCityAdmin.restore()
+    auth.getLocationsForUser.restore()
     browser.loading.restore()
     browser.loaded.restore()
     auth.providerAdminFor.restore()
     auth.isSuperAdmin.restore()
+    auth.isCityAdmin.restore()
     querystring.parameter.restore()
   })
 
@@ -121,6 +122,7 @@ describe('Accommodation - Add - org admin', () => {
         'AddressLine3': 'address line 3',
         'City': 'manchester',
         'Postcode': 'postcode',
+        'LocationId': undefined,
         'AddressIsPubliclyHidden': false
       }
       const args = ajaxPostStub.getCalls()[0].args

@@ -37,7 +37,7 @@ describe('Accommodation - Add - super admin', () => {
 
     sinon.stub(auth, 'providerAdminFor').returns('')
     sinon.stub(auth, 'isSuperAdmin').returns(true)
-    sinon.stub(auth, 'isCityAdmin').returns(false)
+    sinon.stub(auth, 'getLocationsForUser').returns([])
     sinon.stub(querystring, 'parameter')
 
     browserLoadingStub = sinon.stub(browser, 'loading')
@@ -50,7 +50,7 @@ describe('Accommodation - Add - super admin', () => {
   afterEach(() => {
     ajax.get.restore()
     auth.providerAdminFor.restore()
-    auth.isCityAdmin.restore()
+    auth.getLocationsForUser.restore()
     auth.isSuperAdmin.restore()
     browser.loading.restore()
     browser.loaded.restore()
@@ -112,6 +112,7 @@ describe('Accommodation - Add - super admin', () => {
       sut.formFields().addressLine3('address line 3')
       sut.formFields().city('manchester')
       sut.formFields().postcode('postcode')
+      sut.formFields().locationId('manchester')
       sut.formFields().serviceProviderId('coffee4craig')
 
       sut.save()
@@ -144,6 +145,7 @@ describe('Accommodation - Add - super admin', () => {
         'AddressLine3': 'address line 3',
         'City': 'manchester',
         'Postcode': 'postcode',
+        'LocationId': 'manchester',
         'AddressIsPubliclyHidden': false
       }
       const calledAsExpected = ajaxPostStub

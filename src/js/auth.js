@@ -33,7 +33,7 @@ const locationsAdminFor = function () {
 }
 
 const getLocationsForUser = function (additionalOptions = []) {
-  if (isSuperAdmin()) return [...additionalOptions, ...locations]
+  if (isSuperAdmin() || isAccomAdmin()) return [...additionalOptions, ...locations]
   if (isCityAdmin()) return locations.filter((l) => locationsAdminFor().includes(l.id))
   return additionalOptions
 }
@@ -49,6 +49,10 @@ const isSuperAdmin = function () {
 
 const isCityAdmin = function () {
   return getUserClaims().includes(roles.cityadmin)
+}
+
+const isAccomAdmin = function () {
+  return getUserClaims().includes(roles.tempaccomadmin)
 }
 
 module.exports = {
