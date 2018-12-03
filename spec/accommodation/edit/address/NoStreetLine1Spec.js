@@ -47,6 +47,7 @@ describe('Accommodation - Edit Address - no street1 set', () => {
         }
       })
     sinon.stub(auth, 'isSuperAdmin')
+    sinon.stub(auth, 'getLocationsForUser').returns([0])
     validationStub = sinon.stub(validation, 'showErrors')
 
     sinon.stub(querystring, 'parameter')
@@ -75,6 +76,7 @@ describe('Accommodation - Edit Address - no street1 set', () => {
     ajax.get.restore()
     ajax.patch.restore()
     auth.isSuperAdmin.restore()
+    auth.getLocationsForUser.restore()
     browser.loaded.restore()
     browser.loading.restore()
     querystring.parameter.restore()

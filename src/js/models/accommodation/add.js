@@ -38,7 +38,7 @@ function Model () {
   })
 
   self.locations = ko.observableArray(auth.getLocationsForUser())
-  self.shouldShowLocations = self.locations().length > 1
+  self.shouldShowLocations = ko.computed(() => self.locations().length > 1, self)
   self.accommodationTypes = ko.observableArray(categories)
 
   self.supportTypes = ko.observableArray(supportTypes.map((t) => {
