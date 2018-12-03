@@ -74,7 +74,7 @@ describe('Edit Service Provider General Details', () => {
       model.serviceProvider().name('new name')
       model.serviceProvider().description('new description')
       model.serviceProvider().shortDescription('new short description')
-      model.serviceProvider().city('new city id')
+      model.serviceProvider().city('new city id,new city id 2')
       model.serviceProvider().tags()[0].isSelected(true)
       model.serviceProvider().tags()[1].isSelected(true)
       model.serviceProvider().tags()[2].isSelected(true)
@@ -95,7 +95,7 @@ describe('Edit Service Provider General Details', () => {
         'Name': 'new name',
         'Description': 'new description',
         'ShortDescription': 'new short description',
-        'AssociatedLocationIds': [ 'new city id' ],
+        'AssociatedLocationIds': ['new city id', 'new city id 2'],
         'Tags': ['tag-a', 'tag-b', 'tag-c'],
         'ClientGroupKeys': 'cg1,cg2'
       }
