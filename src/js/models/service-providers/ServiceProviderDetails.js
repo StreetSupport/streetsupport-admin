@@ -56,7 +56,7 @@ function ServiceProviderDetails () {
         'Description': sp.description(),
         'ShortDescription': sp.shortDescription(),
         'Tags': tagsToCsv(),
-        'AssociatedLocationIds': sp.city() !== undefined ? sp.city().split(',') : [],
+        'AssociatedLocationIds': typeof sp.city() === "string" ? sp.city().split(',') : sp.city(),
         'ClientGroupKeys': sp.clientGroups()
       }
 
