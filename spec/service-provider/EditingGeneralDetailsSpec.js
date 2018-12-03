@@ -95,7 +95,7 @@ describe('Edit Service Provider General Details', () => {
         'Name': 'new name',
         'Description': 'new description',
         'ShortDescription': 'new short description',
-        'AssociatedLocationIds': [ 'new city id', 'new city id 2' ],
+        'AssociatedLocationIds': ['new city id', 'new city id 2'],
         'Tags': ['tag-a', 'tag-b', 'tag-c'],
         'ClientGroupKeys': 'cg1,cg2'
       }
