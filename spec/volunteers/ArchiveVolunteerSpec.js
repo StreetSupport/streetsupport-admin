@@ -42,7 +42,7 @@ describe('Archive Volunteer', () => {
       .withArgs(endpoints.volunteers + '/577ac6b7474f8b1944e973d0/is-archived')
       .returns(patchArchivedResult)
 
-    sinon.stub(auth, 'isCityAdmin').returns(false)
+    sinon.stub(auth, 'getLocationsForUser').returns([])
     browserLoadingStub = sinon.stub(browser, 'loading')
     browserLoadedStub = sinon.stub(browser, 'loaded')
 
@@ -57,7 +57,7 @@ describe('Archive Volunteer', () => {
   afterEach(() => {
     ajax.get.restore()
     ajax.patch.restore()
-    auth.isCityAdmin.restore()
+    auth.getLocationsForUser.restore()
     browser.loading.restore()
     browser.loaded.restore()
   })

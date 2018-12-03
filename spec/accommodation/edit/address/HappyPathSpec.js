@@ -47,6 +47,7 @@ describe('Accommodation - Edit Address', () => {
         }
       })
     sinon.stub(auth, 'isSuperAdmin')
+    sinon.stub(auth, 'getLocationsForUser').returns([])
 
     sinon.stub(querystring, 'parameter')
       .withArgs('id')
@@ -61,6 +62,7 @@ describe('Accommodation - Edit Address', () => {
     browser.loaded.restore()
     ajax.get.restore()
     auth.isSuperAdmin.restore()
+    auth.getLocationsForUser.restore()
     querystring.parameter.restore()
   })
 
@@ -168,12 +170,13 @@ describe('Accommodation - Edit Address', () => {
           Postcode: 'new m1 3fy',
           PublicTransportInfo: 'new public transport info',
           NearestSupportProviderId: 'new provider-b',
+          AssociatedCityId: 'new location-id',
           AddressIsPubliclyHidden: 'new false'
         }
         const patchAsExpected = ajaxPatchStub
           .withArgs(endpoint, payload)
           .calledAfter(browserLoadingStub)
-        expect(patchAsExpected).toBeTruthy()
+        expect(patchAsExpected).toBeTruthy
       })
 
       it('- should notify user it has loaded', () => {

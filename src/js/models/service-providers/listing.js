@@ -5,8 +5,6 @@ const auth = require('../../auth')
 const ajax = require('../../ajax')
 const ListingBaseViewModel = require('../ListingBaseViewModel')
 
-import { cities as locations } from '../../../data/generated/supported-cities'
-
 class ServiceProvider {
   constructor (sp) {
     this.key = sp.key
@@ -28,10 +26,6 @@ class ServiceProvider {
 function DashboardModel () {
   const self = this
 
-  const locationsForUser = auth.isCityAdmin()
-    ? locations.filter((l) => auth.locationsAdminFor().includes(l.id))
-    : locations
-
   self.filters = [
     { key: 'name', getValue: (vm) => vm.nameToFilterOn(), isSet: (val) => val !== undefined && val.length > 0 },
     { key: 'location', getValue: (vm) => vm.locationToFilterOn(), isSet: (val) => val !== undefined && val.length > 0 },
@@ -42,10 +36,10 @@ function DashboardModel () {
   self.mapItems = (sp) => { return new ServiceProvider(sp) }
   self.baseUrl = self.endpointBuilder.serviceProvidersv3().build()
 
+  self.availableLocations = ko.observableArray(auth.getLocationsForUser())
   self.shouldShowLocationFilter = ko.computed(function () {
-    return locationsForUser.length > 1
+    return self.availableLocations().length > 1
   }, self)
-  self.availableLocations = ko.observableArray(locationsForUser)
   self.locationToFilterOn = ko.observable()
   self.nameToFilterOn = ko.observable()
   self.filterOnIsVerified = ko.observable('')

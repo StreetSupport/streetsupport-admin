@@ -31,7 +31,7 @@ describe('Service Providers - search', () => {
 
     stubbedApi = sinon.stub(ajax, 'get')
     stubbedApi.returns(fakeResolved)
-    sinon.stub(auth, 'isCityAdmin').returns(false)
+    sinon.stub(auth, 'getLocationsForUser').returns([])
     sinon.stub(browser, 'loading')
     sinon.stub(browser, 'loaded')
 
@@ -40,7 +40,7 @@ describe('Service Providers - search', () => {
 
   afterEach(() => {
     ajax.get.restore()
-    auth.isCityAdmin.restore()
+    auth.getLocationsForUser.restore()
     browser.loading.restore()
     browser.loaded.restore()
   })

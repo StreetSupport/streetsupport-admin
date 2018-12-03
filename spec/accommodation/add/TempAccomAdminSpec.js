@@ -82,6 +82,7 @@ describe('Accommodation - Add as TempAccom Admin', () => {
       sut.formFields().addressLine2('address line 2')
       sut.formFields().addressLine3('address line 3')
       sut.formFields().city('manchester')
+      sut.formFields().locationId('manchester')
       sut.formFields().postcode('postcode')
 
       sut.save()
@@ -113,6 +114,7 @@ describe('Accommodation - Add as TempAccom Admin', () => {
         'AddressLine2': 'address line 2',
         'AddressLine3': 'address line 3',
         'City': 'manchester',
+        'LocationId': 'manchester',
         'Postcode': 'postcode',
         'AddressIsPubliclyHidden': false
       }

@@ -38,7 +38,7 @@ describe('PublishedServiceProviders', () => {
     }
 
     sinon.stub(ajax, 'get').returns(fakeResolved)
-    sinon.stub(auth, 'isCityAdmin').returns(false)
+    sinon.stub(auth, 'getLocationsForUser').returns([])
     sinon.stub(browser, 'loading')
     sinon.stub(browser, 'loaded')
 
@@ -47,7 +47,7 @@ describe('PublishedServiceProviders', () => {
 
   afterEach(() => {
     ajax.get.restore()
-    auth.isCityAdmin.restore()
+    auth.getLocationsForUser.restore()
     browser.loading.restore()
     browser.loaded.restore()
   })

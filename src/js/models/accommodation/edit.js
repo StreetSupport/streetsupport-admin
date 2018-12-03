@@ -71,6 +71,7 @@ function Model () {
       street3: ko.observable(),
       city: ko.observable().extend({ required: true }),
       postcode: ko.observable().extend({ required: true }),
+      associatedCityId: ko.observable().extend(),
       publicTransportInfo: ko.observable(),
       nearestSupportProviderId: ko.observable(),
       addressIsPubliclyHidden: ko.observable()
@@ -79,7 +80,10 @@ function Model () {
     return new InlineEditableSubEntity({
       formFields: formFields,
       patchEndpoint: endpoint,
-      dropdownFields: [{ fieldId: 'nearestSupportProviderId', collection: 'serviceProviders' }]
+      dropdownFields: [
+        { fieldId: 'associatedCityId', collection: 'locations' },
+        { fieldId: 'nearestSupportProviderId', collection: 'serviceProviders' }
+      ]
     })
   }
 
@@ -269,6 +273,7 @@ function Model () {
             return 0
           })
         self.address().serviceProviders(serviceProviders)
+        self.address().locations(auth.getLocationsForUser())
         self.generalDetails().serviceProviders(serviceProviders)
       }, () => {
 

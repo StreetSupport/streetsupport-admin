@@ -31,7 +31,7 @@ describe('List Volunteers', () => {
 
     ajaxGetStub = sinon.stub(ajax, 'get')
       .returns(getVolunteersPromise())
-    sinon.stub(auth, 'isCityAdmin').returns(false)
+    sinon.stub(auth, 'getLocationsForUser').returns([])
     browserLoadingStub = sinon.stub(browser, 'loading')
     browserLoadedStub = sinon.stub(browser, 'loaded')
 
@@ -40,7 +40,7 @@ describe('List Volunteers', () => {
 
   afterAll(() => {
     ajax.get.restore()
-    auth.isCityAdmin.restore()
+    auth.getLocationsForUser.restore()
     browser.loading.restore()
     browser.loaded.restore()
   })

@@ -18,7 +18,7 @@ const testData = JSON.parse(JSON.stringify(origTestData.testData))
 testData.features.additionalFeatures = '* fries&#10;* burgers&#10;* hotdogs'
 testData.features.featuresAvailableAtAdditionalCost = '* coke&#10;* sprite&#10;* fanta'
 
-describe('Accommodation - Edit Features', () => {
+describe('Accommodation - Edit Features - field parsing', () => {
   const Model = require(`${jsRoot}models/accommodation/edit`)
   let sut = null
 
@@ -49,6 +49,7 @@ describe('Accommodation - Edit Features', () => {
         }
       })
     sinon.stub(auth, 'isSuperAdmin')
+    sinon.stub(auth, 'getLocationsForUser').returns([])
 
     sinon.stub(querystring, 'parameter')
       .withArgs('id')
@@ -63,6 +64,7 @@ describe('Accommodation - Edit Features', () => {
     browser.loaded.restore()
     ajax.get.restore()
     auth.isSuperAdmin.restore()
+    auth.getLocationsForUser.restore()
     querystring.parameter.restore()
   })
 

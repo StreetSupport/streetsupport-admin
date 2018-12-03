@@ -6,20 +6,15 @@ const ko = require('knockout')
 const Volunteer = require('./Volunteer')
 const htmlencode = require('htmlencode')
 
-import { cities as locations } from '../../../data/generated/supported-cities'
 import { categories as volCategories } from '../../../data/generated/volunteer-categories.js'
 
 const ListVolunteersModel = function () {
   const self = this
 
-  const locationsForUser = auth.isCityAdmin()
-    ? locations.filter((l) => auth.locationsAdminFor().includes(l.id))
-    : locations
-
   self.searchTerm = ko.observable()
   self.isFilteredByHighlighted = ko.observable(false)
   self.cityFilter = ko.observable()
-  self.availableLocations = ko.observableArray(locationsForUser)
+  self.availableLocations = ko.observableArray(auth.getLocationsForUser())
   self.volCategories = ko.observableArray(volCategories)
 
   self.locationToFilterOn = ko.observable()
@@ -29,7 +24,7 @@ const ListVolunteersModel = function () {
   self.filterOnIsOptedIn = ko.observable('')
 
   self.shouldShowLocationFilter = ko.computed(function () {
-    return locationsForUser.length > 1
+    return self.availableLocations().length > 1
   }, self)
 
   self.mapItems = (i) => new Volunteer(i, self)
