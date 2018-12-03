@@ -32,10 +32,13 @@ function Model () {
     addressLine2: ko.observable(),
     addressLine3: ko.observable(),
     city: ko.observable().extend({ required: true }),
+    locationId: ko.observable().extend(),
     postcode: ko.observable().extend({ required: true }),
     addressIsPubliclyHidden: ko.observable(false)
   })
 
+  self.locations = ko.observableArray(auth.getLocationsForUser())
+  self.shouldShowLocations = ko.computed(() => self.locations().length > 1, self)
   self.accommodationTypes = ko.observableArray(categories)
 
   self.supportTypes = ko.observableArray(supportTypes.map((t) => {

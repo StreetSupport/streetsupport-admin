@@ -47,6 +47,7 @@ describe('Accommodation - Edit Contact Information', () => {
         }
       })
     sinon.stub(auth, 'isSuperAdmin')
+    sinon.stub(auth, 'getLocationsForUser').returns([])
 
     sinon.stub(querystring, 'parameter')
       .withArgs('id')
@@ -59,6 +60,7 @@ describe('Accommodation - Edit Contact Information', () => {
   afterEach(() => {
     ajax.get.restore()
     auth.isSuperAdmin.restore()
+    auth.getLocationsForUser.restore()
     browser.loaded.restore()
     browser.loading.restore()
     querystring.parameter.restore()

@@ -3,7 +3,6 @@
 const ListingBaseViewModel = require('../ListingBaseViewModel')
 const ItemOfferer = require('./ItemOfferer')
 const ko = require('knockout')
-import { cities as locations } from '../../../data/generated/supported-cities'
 const auth = require('../../auth')
 import { categories } from '../../../data/generated/need-categories'
 
@@ -25,13 +24,10 @@ const ListModel = function () {
   self.mapItems = (i) => { return new ItemOfferer(i, self) }
   self.baseUrl = self.endpointBuilder.offersOfItems().build()
 
-  const locationsForUser = auth.isCityAdmin()
-    ? locations.filter((l) => auth.locationsAdminFor().includes(l.id))
-    : locations
+  self.availableLocations = ko.observableArray(auth.getLocationsForUser())
   self.shouldShowLocationFilter = ko.computed(function () {
-    return locationsForUser.length > 1
+    return self.availableLocations().length > 1
   }, self)
-  self.availableLocations = ko.observableArray(locationsForUser)
   self.categories = ko.observableArray(categories)
   self.locationToFilterOn = ko.observable()
   self.nameToFilterOn = ko.observable()

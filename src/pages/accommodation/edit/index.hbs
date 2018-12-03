@@ -29,13 +29,13 @@ nosubnav: true
             <dl class="key-value-pair" data-bind="with: formFields">
               {{> forms/inline/textField fieldTitle="Name" dataFieldName="name" }}
               {{> forms/inline/boolean fieldTitle="Visible on website?" dataFieldName="isPubliclyVisible" classes="form__label--checkbox-container--strong" }}
-              <div data-claims="superadmin">
+              <div data-claims="superadmin,cityadmin">
                 <dt class="key-value-pair__key key-value-pair__key--inline">Service Provider</dt>
                 <dd class="key-value-pair__value">
-                  <!-- ko ifnot: $parent.   isEditable -->
+                  <!-- ko ifnot: $parent.isEditable -->
                   <span data-bind="html: serviceProviderIdReadOnly"></span>
                   <!-- /ko -->
-                  <!-- ko if: $parent.    isEditable -->
+                  <!-- ko if: $parent.isEditable -->
                   <select data-bind="options: $parent.serviceProviders,
                   optionsValue: function (item) { return item.id },
                   optionsText:  function (item) { return item.name },
@@ -49,10 +49,10 @@ nosubnav: true
 
               <dt class="key-value-pair__key key-value-pair__key--inline">Accommodation Type</dt>
               <dd class="key-value-pair__value">
-                <!-- ko ifnot: $parent.   isEditable -->
+                <!-- ko ifnot: $parent.isEditable -->
                 <span data-bind="html: accommodationType"></span>
                 <!-- /ko -->
-                <!-- ko if: $parent.    isEditable -->
+                <!-- ko if: $parent.isEditable -->
                 <select data-bind="options: $parent.accommodationTypes,
                     optionsValue: function (item) { return item.key },
                     optionsText:  function (item) { return item.name },
@@ -86,6 +86,18 @@ nosubnav: true
               {{> forms/inline/textField fieldTitle="Postcode" dataFieldName="postcode" }}
               {{> forms/inline/boolean fieldTitle="Hide address from public?" dataFieldName="addressIsPubliclyHidden" }}
               {{> forms/inline/textArea fieldTitle="Public Transport" dataFieldName="publicTransportInfo" readOnlyFieldName="publicTransportInfo" }}
+              <dt data-claims="superadmin,cityadmin" class="key-value-pair__key">Street Support Location</dt>
+              <dd data-claims="superadmin,cityadmin" class="key-value-pair__value form__field-item">
+                <!-- ko ifnot: $parent.isEditable -->
+                <span data-bind="html: associatedCityIdReadOnly"></span>
+                <!-- /ko -->
+                <!-- ko if: $parent.isEditable -->
+                <select data-bind="options: $parent.locations,
+                    optionsValue: function (item) { return item.id },
+                    optionsText:  function (item) { return item.name },
+                    value: associatedCityId" class="form__input"></select>
+                <!-- /ko -->
+              </dd>
               <dt class="key-value-pair__key">Nearest Support Provider</dt>
               <dd class="key-value-pair__value">
                 <!-- ko ifnot: $parent.isEditable -->
