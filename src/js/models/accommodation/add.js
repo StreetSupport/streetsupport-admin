@@ -88,7 +88,9 @@ function Model () {
     self.loadServiceProviders(newLocationId)
   })
 
-  self.hasLocationSelected = ko.computed(() => self.formFields().locationId() !== undefined, self)
+  self.hasLocationSelected = ko.computed(() => {
+    return self.formFields().locationId() !== null && self.formFields().locationId() !== undefined
+  }, self)
 
   self.init = () => {
     validation.initialise(ko.validation)
