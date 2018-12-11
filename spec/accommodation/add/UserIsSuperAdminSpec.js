@@ -65,19 +65,27 @@ describe('Accommodation - Add - super admin', () => {
     expect(sut.supportTypes().length).toEqual(supportTypes.length)
   })
 
-  it('- should get service providers', () => {
-    const calledAsExpected = ajaxGetStub
-      .withArgs(endpoints.getServiceProvidersHAL)
-      .calledOnce
-    expect(calledAsExpected).toBeTruthy()
+  it('- should not get service providers immediately', () => {
+    expect(ajaxGetStub.called).toBeFalsy()
   })
 
-  it('- should set service providers', () => {
-    expect(sut.serviceProviders().length).toEqual(providerData.items.length)
-  })
+  describe('- change location', () => {
+    beforeEach(() => {
+      sut.formFields().locationId('manchester')
+    })
 
-  it('- should decode provider names', () => {
-    expect(sut.serviceProviders()[0].name).toEqual('Provider A\'s House')
+    it('- should get service providers', () => {
+      const endpoint = ajaxGetStub.getCalls()[0].args[0]
+      expect(endpoint).toEqual(`${endpoints.getServiceProvidersv3}?location=manchester`)
+    })
+
+    it('- should set service providers', () => {
+      expect(sut.serviceProviders().length).toEqual(providerData.items.length)
+    })
+
+    it('- should decode provider names', () => {
+      expect(sut.serviceProviders()[0].name).toEqual('Provider A\'s House')
+    })
   })
 
   describe('- submit', () => {
@@ -172,10 +180,9 @@ describe('Accommodation - Add - super admin', () => {
       })
 
       it('- should reset the form', () => {
-        const formFieldKeys = Object.keys(sut.formFields())
-        formFieldKeys
+        Object.keys(sut.formFields())
           .forEach((k) => {
-            expect(sut.formFields()[k]()).toEqual(null)
+            expect(sut.formFields()[k]()).toEqual(null, {k, value: sut.formFields()[k]()})
           })
       })
 

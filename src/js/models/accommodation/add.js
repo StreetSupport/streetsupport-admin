@@ -34,7 +34,7 @@ function Model () {
     addressLine2: ko.observable(),
     addressLine3: ko.observable(),
     city: ko.observable().extend({ required: true }),
-    locationId: ko.observable().extend({ required: true }),
+    locationId: ko.observable().extend(),
     postcode: ko.observable().extend({ required: true }),
     addressIsPubliclyHidden: ko.observable(false)
   })
@@ -73,7 +73,9 @@ function Model () {
           )
 
           const presetProviderId = auth.providerAdminFor() || querystring.parameter('providerId')
-          self.formFields().serviceProviderId(presetProviderId)
+          if (presetProviderId) {
+            self.formFields().serviceProviderId(presetProviderId)
+          }
         }, () => {
           self.handleServerError()
         })
@@ -97,8 +99,6 @@ function Model () {
     browser.loading()
     const endpoint = endpoints.temporaryAccommodation
     const payload = validation.buildPayload(self.formFields())
-
-    console.log(payload)
 
     self.formSubmitted(true)
     self.formSubmissionNotSuccessful(false)
@@ -130,11 +130,12 @@ function Model () {
   }
 
   self.reset = () => {
-    const formFieldKeys = Object.keys(self.formFields())
-    formFieldKeys
+    Object.keys(self.formFields())
       .forEach((k) => {
         self.formFields()[k](null)
       })
+
+
     self.formSubmitted(false)
     self.formSubmissionSuccessful(false)
     self.formSubmissionNotSuccessful(false)
