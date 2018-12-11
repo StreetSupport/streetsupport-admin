@@ -25,16 +25,19 @@ const mapItem = (i) => {
 function Lister () {
   const self = this
 
-  self.cities = ko.observableArray(auth.getLocationsForUser())
+  const locationsForUser = auth.getLocationsForUser()
+
+  self.cities = ko.observableArray(locationsForUser)
   self.shouldShowLocationFilter = ko.computed(() => self.cities().length > 1, self)
   self.nameToFilterOn = ko.observable()
   self.locationToFilterOn = ko.observable()
   self.providerIdToFilterOn = ko.observable(querystring.parameter('providerId'))
   self.serviceProviders = ko.observableArray()
+  self.shouldShowServiceProviders = ko.computed(() => self.serviceProviders().length > 0, self)
 
-  if (auth.isSuperAdmin() || auth.isCityAdmin()) {
+  self.retrieveServiceProviders = (locationId) => {
     ajax
-      .get(endpoints.getServiceProvidersHAL)
+      .get(`${endpoints.getServiceProvidersv3}?location=${locationId}`)
       .then((result) => {
         self.serviceProviders(result.data.items
           .map(p => {
@@ -51,6 +54,18 @@ function Lister () {
       }, () => {
         self.handleServerError()
       })
+  }
+
+  self.locationToFilterOn.subscribe((newLocationId) => {
+    if (newLocationId === undefined) {
+      self.serviceProviders([])
+    } else if (auth.isSuperAdmin() || auth.isCityAdmin()) {
+      self.retrieveServiceProviders(newLocationId)
+    }
+  })
+
+  if (locationsForUser.length === 1) {
+    self.locationToFilterOn(locationsForUser[0].id)
   }
 
   self.filters = [
