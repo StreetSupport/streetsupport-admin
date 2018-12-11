@@ -75,6 +75,8 @@ function Model () {
           const presetProviderId = auth.providerAdminFor() || querystring.parameter('providerId')
           if (presetProviderId) {
             self.formFields().serviceProviderId(presetProviderId)
+          } else {
+            self.formFields().serviceProviderId(null)
           }
         }, () => {
           self.handleServerError()
@@ -85,6 +87,8 @@ function Model () {
   self.formFields().locationId.subscribe((newLocationId) => {
     self.loadServiceProviders(newLocationId)
   })
+
+  self.hasLocationSelected = ko.computed(() => self.formFields().locationId() !== undefined, self)
 
   self.init = () => {
     validation.initialise(ko.validation)
