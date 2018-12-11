@@ -32,10 +32,15 @@ nosubnav: true
             <select data-bind="options: $parent.locations,
                 optionsValue: function (item) { return item.id },
                 optionsText:  function (item) { return item.name },
-                value: locationId" class="form__input"></select>
+                value: locationId,
+                optionsCaption: '-- please select --'" class="form__input"></select>
           </dd>
           <!-- /ko -->
           <dt data-claims="superadmin,cityadmin" class="key-value-pair__key">Service Provider</dt>
+          <!-- ko ifnot: $parent.hasLocationSelected --> 
+          <dd data-claims="superadmin,cityadmin" class="key-value-pair__value form__field-item">Please select a Location first.</dd>
+          <!-- /ko -->
+          <!-- ko if: $parent.hasLocationSelected --> 
           <dd data-claims="superadmin,cityadmin" class="key-value-pair__value form__field-item">
             <select data-bind="options: $parent.serviceProviders,
                 optionsValue: function (item) { return item.key },
@@ -43,6 +48,7 @@ nosubnav: true
                 value: serviceProviderId,
                 optionsCaption: '-- please select --'" class="form__input"></select>
           </dd>
+          <!-- /ko -->
           {{> forms/textArea fieldTitle="Short Summary" dataFieldName="synopsis" }}
           {{> forms/textArea fieldTitle="Full Description" dataFieldName="description" }}
           {{> forms/boolean fieldTitle="Open Access? (No referral required)" dataFieldName="isOpenAccess" claimsRequired="superadmin,orgadmin,cityadmin" }}

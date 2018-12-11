@@ -28,6 +28,7 @@ nosubnav: true
                                 optionsCaption: 'All'"></select>
             </li>
             <!-- /ko -->
+            <!-- ko if: shouldShowServiceProviders -->
             <li class="form__field-item" data-claims="superadmin,cityadmin">
               <label for="filterByName" class="form__label">Service Provider:</label>  
               <select data-bind="options: serviceProviders,
@@ -37,6 +38,7 @@ nosubnav: true
                 optionsCaption: '-- please select --'"
                 class="form__input"></select>
             </li>
+            <!-- /ko -->
             <li class="form__field-item">
               <label for="filterByName" class="form__label">Name:</label>
               <input type="text" name="filterByName" class="form__input" data-bind="textInput: nameToFilterOn"></input>

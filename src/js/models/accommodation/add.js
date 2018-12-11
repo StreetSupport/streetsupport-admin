@@ -11,6 +11,8 @@ const querystring = require('../../get-url-parameter')
 import { categories } from '../../../data/generated/accommodation-categories'
 import { supportTypes } from '../../../data/generated/support-types'
 
+require('../../arrayExtensions')
+
 const ko = require('knockout')
 require('knockout.validation') // No variable here is deliberate!
 
@@ -55,13 +57,10 @@ function Model () {
   self.formSubmissionNotSuccessful = ko.observable(false)
   self.editNewItemUrl = ko.observable()
 
-  self.init = () => {
-    validation.initialise(ko.validation)
-    self.fieldErrors = validation.getValidationGroup(ko.validation, self.formFields)
-
+  self.loadServiceProviders = (locationId) => {
     if (auth.isSuperAdmin() || auth.isCityAdmin()) {
       ajax
-        .get(endpoints.getServiceProvidersHAL)
+        .get(`${endpoints.getServiceProvidersv3}?location=${locationId}`)
         .then((result) => {
           self.serviceProviders(result.data.items
             .map(p => {
@@ -70,18 +69,35 @@ function Model () {
                 name: htmlEncode.htmlDecode(p.name)
               }
             })
-            .sort((a, b) => {
-              if (a.name > b.name) return 1
-              if (a.name < b.name) return -1
-              return 0
-            })
+            .sortAsc('name')
           )
 
           const presetProviderId = auth.providerAdminFor() || querystring.parameter('providerId')
-          self.formFields().serviceProviderId(presetProviderId)
+          if (presetProviderId) {
+            self.formFields().serviceProviderId(presetProviderId)
+          } else {
+            self.formFields().serviceProviderId(null)
+          }
         }, () => {
           self.handleServerError()
         })
+    }
+  }
+
+  self.formFields().locationId.subscribe((newLocationId) => {
+    self.loadServiceProviders(newLocationId)
+  })
+
+  self.hasLocationSelected = ko.computed(() => {
+    return self.formFields().locationId() !== null && self.formFields().locationId() !== undefined
+  }, self)
+
+  self.init = () => {
+    validation.initialise(ko.validation)
+    self.fieldErrors = validation.getValidationGroup(ko.validation, self.formFields)
+
+    if (self.locations().length === 1) {
+      self.formFields().locationId(self.locations()[0].id)
     }
   }
 
@@ -89,6 +105,7 @@ function Model () {
     browser.loading()
     const endpoint = endpoints.temporaryAccommodation
     const payload = validation.buildPayload(self.formFields())
+
     self.formSubmitted(true)
     self.formSubmissionNotSuccessful(false)
 
@@ -119,11 +136,12 @@ function Model () {
   }
 
   self.reset = () => {
-    const formFieldKeys = Object.keys(self.formFields())
-    formFieldKeys
+    Object.keys(self.formFields())
       .forEach((k) => {
         self.formFields()[k](null)
       })
+
+
     self.formSubmitted(false)
     self.formSubmissionSuccessful(false)
     self.formSubmissionNotSuccessful(false)
