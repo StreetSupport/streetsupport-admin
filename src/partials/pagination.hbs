@@ -1,3 +1,4 @@
+<!-- ko if: pagination.hasPages -->
 <div class="pagination">
   <span class="pagination__label">Page:</span>
   <ol class="pagination__list" data-bind="foreach: paginationLinks">
@@ -11,3 +12,7 @@
     </li>
   </ol>
 </div>
+<!-- /ko -->
+<!-- ko ifnot: pagination.hasItems -->
+<p>Your search criteria returned no results, please try again.</p>
+<!-- /ko -->

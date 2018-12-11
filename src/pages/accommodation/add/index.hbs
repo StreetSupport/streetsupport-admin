@@ -32,7 +32,8 @@ nosubnav: true
             <select data-bind="options: $parent.locations,
                 optionsValue: function (item) { return item.id },
                 optionsText:  function (item) { return item.name },
-                value: locationId" class="form__input"></select>
+                value: locationId,
+                optionsCaption: '-- please select --'" class="form__input"></select>
           </dd>
           <!-- /ko -->
           <dt data-claims="superadmin,cityadmin" class="key-value-pair__key">Service Provider</dt>
