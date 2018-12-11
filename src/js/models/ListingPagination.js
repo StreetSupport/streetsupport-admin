@@ -22,6 +22,7 @@ export default class ListingPagination {
     this.listingModel = listingModel
     this.index = 0
     this.pageSize = pageSize
+    this.hasItems = ko.observable(false)
   }
 
   /**
@@ -38,8 +39,13 @@ export default class ListingPagination {
    */
   updateData (paginatedData) {
     const totalPages = Math.ceil(paginatedData.total / this.pageSize)
+    this.hasItems(paginatedData.items.length > 0)
     const currentPage = Math.ceil(this.index / this.pageSize)
     this.listingModel.paginationLinks(Array.from({ length: totalPages })
       .map((_, i) => new PaginationLink(this, i + 1, currentPage === i)))
+  }
+
+  get hasPages () {
+    return this.listingModel.paginationLinks().length > 1
   }
 }
