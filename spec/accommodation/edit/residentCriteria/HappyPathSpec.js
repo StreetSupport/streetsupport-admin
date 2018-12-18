@@ -37,7 +37,6 @@ describe('Accommodation - Edit residentCriteria', () => {
         }
       })
     ajaxGetStub
-      .withArgs(`${endpoints.getPublishedServiceProviders}`)
       .returns({
         then: function (success, error) {
           success({

@@ -36,7 +36,6 @@ describe('Accommodation - Edit Contact Information - invalid email set', () => {
         }
       })
     ajaxGetStub
-      .withArgs(`${endpoints.getPublishedServiceProviders}`)
       .returns({
         then: function (success, error) {
           success({

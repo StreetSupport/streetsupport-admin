@@ -141,7 +141,6 @@ function Model () {
         self.formFields()[k](null)
       })
 
-
     self.formSubmitted(false)
     self.formSubmissionSuccessful(false)
     self.formSubmissionNotSuccessful(false)
