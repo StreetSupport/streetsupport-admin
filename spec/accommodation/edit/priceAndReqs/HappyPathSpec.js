@@ -40,7 +40,6 @@ describe('Accommodation - Edit PricingAndRequirements', () => {
         }
       })
     ajaxGetStub
-      .withArgs(`${endpoints.getPublishedServiceProviders}`)
       .returns({
         then: function (success, error) {
           success({
