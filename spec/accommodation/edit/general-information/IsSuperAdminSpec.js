@@ -34,7 +34,6 @@ describe('Accommodation - Edit General Information - as super admin', () => {
         }
       })
     ajaxGetStub
-      .withArgs(`${endpoints.getServiceProvidersHAL}`)
       .returns({
         then: function (success, error) {
           success({

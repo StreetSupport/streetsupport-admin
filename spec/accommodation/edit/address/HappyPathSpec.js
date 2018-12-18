@@ -37,7 +37,6 @@ describe('Accommodation - Edit Address', () => {
         }
       })
     ajaxGetStub
-      .withArgs(`${endpoints.getPublishedServiceProviders}`)
       .returns({
         then: function (success, error) {
           success({

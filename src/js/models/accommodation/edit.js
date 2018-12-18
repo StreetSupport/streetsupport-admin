@@ -205,6 +205,38 @@ function Model () {
   self.supportProvided = ko.observable(self.buildSupportProvided())
   self.residentCriteria = ko.observable(self.buildResidentCriteria())
 
+  self.updateServiceProviders = function (locationId) {
+    const publisherEndpoint = auth.isSuperAdmin()
+      ? `${self.endpointBuilder.serviceProvidersv3().build()}?location=${locationId}`
+      : `${self.endpointBuilder.publishedOrgs().build()}/${locationId}`
+
+    const mapDataToKeyValues = auth.isSuperAdmin()
+      ? (result) => result.data.items
+      : (result) => result.data
+
+    ajax
+      .get(publisherEndpoint)
+      .then((result) => {
+        const serviceProviders = mapDataToKeyValues(result)
+          .map((p) => {
+            return {
+              id: p.key,
+              name: htmlEncode.htmlDecode(p.name)
+            }
+          })
+          .sort((a, b) => {
+            if (a.name > b.name) return 1
+            if (a.name < b.name) return -1
+            return 0
+          })
+        self.address().serviceProviders(serviceProviders)
+        self.address().locations(auth.getLocationsForUser())
+        self.generalDetails().serviceProviders(serviceProviders)
+      }, () => {
+
+      })
+  }
+
   self.init = () => {
     browser.loading()
     ajax
@@ -246,37 +278,12 @@ function Model () {
 
         self.generalDetails().accommodationTypes = ko.observableArray(categories)
 
+        self.updateServiceProviders(self.address().formFields().associatedCityId())
+        self.address().formFields().associatedCityId.subscribe((newLocationId) => {
+          self.updateServiceProviders(newLocationId)
+        })
+
         browser.loaded()
-      })
-
-    const publisherEndpoint = auth.isSuperAdmin()
-      ? self.endpointBuilder.serviceProvidersHAL().build()
-      : self.endpointBuilder.publishedOrgs().build()
-
-    const mapDataToKeyValues = auth.isSuperAdmin()
-      ? (result) => result.data.items
-      : (result) => result.data
-
-    ajax
-      .get(publisherEndpoint)
-      .then((result) => {
-        const serviceProviders = mapDataToKeyValues(result)
-          .map((p) => {
-            return {
-              id: p.key,
-              name: htmlEncode.htmlDecode(p.name)
-            }
-          })
-          .sort((a, b) => {
-            if (a.name > b.name) return 1
-            if (a.name < b.name) return -1
-            return 0
-          })
-        self.address().serviceProviders(serviceProviders)
-        self.address().locations(auth.getLocationsForUser())
-        self.generalDetails().serviceProviders(serviceProviders)
-      }, () => {
-
       })
   }
 }

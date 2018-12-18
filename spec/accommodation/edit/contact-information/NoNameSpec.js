@@ -37,7 +37,6 @@ describe('Accommodation - Edit Contact Information - no name set', () => {
         }
       })
     ajaxGetStub
-      .withArgs(`${endpoints.getPublishedServiceProviders}`)
       .returns({
         then: function (success, error) {
           success({
