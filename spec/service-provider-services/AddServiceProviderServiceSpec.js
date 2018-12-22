@@ -217,8 +217,8 @@ describe('Add Service Provider Service', () => {
 
       model.category(model.categories()[0])
       model.setAvailableSubCategories()
+      model.subCategories()[0].isSelected(true)
       model.subCategories()[1].isSelected(true)
-      model.subCategories()[3].isSelected(true)
 
       model.info('new info')
       model.locationDescription('new location description')
@@ -243,7 +243,7 @@ describe('Add Service Provider Service', () => {
         'LocationDescription': 'new location description',
         'Tags': ['tag a', 'tag b'],
         'Category': categories[0].key,
-        'SubCategories': ['asylum', 'bame'],
+        'SubCategories': ['animal-care', 'asylum'],
         'OpeningTimes': [{
           'StartTime': '10:00',
           'EndTime': '16:30',
