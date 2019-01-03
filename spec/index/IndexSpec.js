@@ -31,12 +31,16 @@ describe('Index', () => {
   describe('Not logged in', () => {
     beforeEach(() => {
       sinon.stub(webAuth, 'isAuthenticated').returns(false)
-
+      sinon.stub(querystring, 'parameter')
       stubbedStorage
         .withArgs(webAuth.storageKeys.roles)
         .returns('')
 
       model = new Model()
+    })
+
+    afterEach(() => {
+      querystring.parameter.restore()
     })
 
     it('should redirect to login', () => {
@@ -161,8 +165,13 @@ describe('Index', () => {
 
   describe('session expired', () => {
     beforeEach(() => {
+      sinon.stub(querystring, 'parameter')
       sinon.stub(webAuth, 'isAuthenticated').returns(false)
       model = new Model()
+    })
+
+    afterEach(() => {
+      querystring.parameter.restore()
     })
 
     it('should redirect to login', () => {

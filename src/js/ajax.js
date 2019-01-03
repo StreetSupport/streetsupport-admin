@@ -80,7 +80,7 @@ var makeRequest = function (options) {
         'data': parseResponseText(this)
       })
     } else if (this.status === 401 && !options.isCustomErrorHandling) {
-      browser.redirect('/login')
+      browser.redirect(`/login?redirectUrl=${window.location}`)
     } else if (this.status === 403 && !options.isCustomErrorHandling) {
       browser.redirect('/403.html')
     } else {
