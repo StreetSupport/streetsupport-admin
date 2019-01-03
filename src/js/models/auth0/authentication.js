@@ -15,6 +15,7 @@ module.exports = function () {
   }
 
   storeAuthValues(decodedIdToken, accessToken, idToken)
+
   browser.redirect(`/?redirectUrl=${JSON.parse(storedState).redirectUrl}`)
 }
 
