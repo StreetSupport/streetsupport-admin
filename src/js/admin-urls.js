@@ -13,6 +13,7 @@ module.exports = {
   passwordReset: '/password-reset/',
   dashboard: '/service-providers/',
   serviceProviders: s('/service-providers'),
+  forbidden: s('/403'),
   notFound: s('/404'),
   serverError: s('/500'),
   serviceProviderAddresses: s('/service-provider-addresses'),
