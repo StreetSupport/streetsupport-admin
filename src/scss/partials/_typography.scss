@@ -5,7 +5,8 @@ body {
 
 .h1,
 .h2,
-.h3 {
+.h3,
+.h4 {
   font-family: $font-headline;
   font-weight: $font-headline-weight;
   margin: 0 0 20px 0;
@@ -22,6 +23,10 @@ body {
 
 .h3 {
   font-size: 16px;
+}
+
+.h4 {
+  font-size: 14px;
 }
 
 .small {
