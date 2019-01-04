@@ -11,29 +11,51 @@ nosubnav: true
 <div class="block block--highlight admin-header">
   <div class="container block__inner">
     <header data-bind="with: volunteer">
-      <h1>Contact <span data-bind="text: person.firstName"></span>
-        <span data-bind="text: person.lastName"></span>
-      <!-- ko if: person.telephone -->
-        (<span data-bind="text: person.telephone"></span>)
-      <!-- /ko -->
-      </h1>
+      <h1>Contact Volunteer</h1>
+      <a href="/volunteers/" class="btn btn--info">
+        <span class="btn__text">Back to Volunteers</a>
+      </a>
     </header>
   </div>
 </div>
 <div class="block">
   <div class="container block__inner">
+    <div class="block__content split" data-bind="with: volunteer">
+        <h1 class="h2">Volunteer Details</h1>
+      <section class="split__element">
+        <h2 class="h3">Name</h2>
+        <p>
+          <span data-bind="text: person.firstName"></span>
+          <span data-bind="text: person.lastName"></span>
+        </p>
+        <!-- ko if: person.telephone -->
+        <h2 class="h3">Telephone</h2>
+        <p data-bind="text: person.telephone"></p>
+        <!-- /ko -->
+        <h2 class="h3">Skills</h2>
+        <h3 class="h4">Categories</h3>
+        <p data-bind="text: skillsAndExperience.categories"></p>
+        <h3 class="h4">Description</h3>
+        <p data-bind="text: skillsAndExperience.description"></p>
+      </section>
+      <section class="split__element">
+        <h2 class="h3">Availability</h2>
+        <p data-bind="text: availability.description"></p>
+        <h2 class="h3">Resources</h2>
+        <p data-bind="text: resources.description"></p>
+      </section>
+    </div>
     <div class="block__content">
       <!-- ko if: isFormSubmitSuccessful -->
-        <!-- ko template: { name: 'form-submit-success-template' } --><!-- /ko -->
+      <!-- ko template: { name: 'form-submit-success-template' } -->
+      <!-- /ko -->
       <!-- /ko -->
       <!-- ko if: isFormSubmitFailure -->
-        <!-- ko template: { name: 'form-submit-failure-template' } --><!-- /ko -->
+      <!-- ko template: { name: 'form-submit-failure-template' } -->
+      <!-- /ko -->
       <!-- /ko -->
       <!-- ko ifnot: isFormSubmitSuccessful -->
       <form class="form" data-bind="submit: submit">
-        <a href="/volunteers/" class="btn btn--info">
-          <span class="btn__text">Back to Volunteers</a>
-        </a>
         <fieldset class="form__fieldset" data-bind="with: formModel">
           <legend class="h2 form__fieldset-title">Contact Volunteer</legend>
           <ul class="form__field-list">
@@ -42,7 +64,9 @@ nosubnav: true
               <textarea class="form__input form__input--textarea" id="message" data-bind="value: message" placeholder="required"></textarea>
             </li>
             <li class="form__field-item form__field-item--full">
-              <label class="form__label--checkbox" for="isNotAnEmail">If you have contacted the volunteer in some other way and don't want to send this message as an email, please tick the checkbox and we will save the message in the contact log. <input id="isNotAnEmail" name="isNotAnEmail" type="checkbox" data-bind="checked: isNotAnEmail" /></label>
+              <label class="form__label--checkbox" for="isNotAnEmail">If you have contacted the volunteer in some other
+                way and don't want to send this message as an email, please tick the checkbox and we will save the
+                message in the contact log. <input id="isNotAnEmail" name="isNotAnEmail" type="checkbox" data-bind="checked: isNotAnEmail" /></label>
             </li>
           </ul>
         </fieldset>
