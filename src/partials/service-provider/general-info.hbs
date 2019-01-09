@@ -1,11 +1,5 @@
 <h2>General Details</h2>
-  <!-- ko ifnot: $parent.isEditingGeneralDetails -->
-  <button data-bind="click: $parent.editGeneralDetails" class="btn btn--info"><span class="btn__text">edit</span></button>
-  <!-- /ko -->
-  <!-- ko if: $parent.isEditingGeneralDetails -->
-  <button data-bind="click: $parent.cancelEditGeneralDetails" class="btn btn--indifferent"><span class="btn__text">cancel</span></button>
-  <button data-bind="click: $parent.saveGeneralDetails" class="btn btn--primary"><span class="btn__text">save</span></button>
-  <!-- /ko -->
+  <!-- ko template: { name: 'buttons' } --><!-- /ko -->
   <dl class="key-value-pair">
     <dt class="key-value-pair__key">Name</dt>
     <dd class="key-value-pair__value">
@@ -75,3 +69,13 @@
       </dl>
     </dd>
   </dl>
+
+  <script type="text/html" id="buttons">
+  <!-- ko ifnot: $parent.isEditingGeneralDetails -->
+  <button data-bind="click: $parent.editGeneralDetails" class="btn btn--info"><span class="btn__text">edit</span></button>
+  <!-- /ko -->
+  <!-- ko if: $parent.isEditingGeneralDetails -->
+  <button data-bind="click: $parent.cancelEditGeneralDetails" class="btn btn--indifferent"><span class="btn__text">cancel</span></button>
+  <button data-bind="click: $parent.saveGeneralDetails" class="btn btn--primary"><span class="btn__text">save</span></button>
+  <!-- /ko -->
+  </script>
