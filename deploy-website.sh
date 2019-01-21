@@ -7,16 +7,19 @@ set -e
 if [[ $TRAVIS_BRANCH == 'release' ]]
   then
     AZURE_WEBSITE=$PROD_AZURE_WEBSITE
+    APP_INSIGHTS_KEY=$PROD_APP_INSIGHTS_KEY
     APIENVIRONMENT=3
 fi
 if [[ $TRAVIS_BRANCH == 'uat' ]]
   then
     AZURE_WEBSITE=$UAT_AZURE_WEBSITE
+    APP_INSIGHTS_KEY=$UAT_APP_INSIGHTS_KEY
     APIENVIRONMENT=2
 fi
 if [[ $TRAVIS_BRANCH == 'develop' ]]
   then
     AZURE_WEBSITE=$DEV_AZURE_WEBSITE
+    APP_INSIGHTS_KEY=''
     APIENVIRONMENT=1
 fi
 
@@ -45,6 +48,13 @@ cd src/files
 cat > version.txt << EOF
 $DATE
 EOF
+
+cd ../../
+
+# Set appInsightsKey
+cd src/data
+
+sed -i.bak "s/\"appInsightsKey\": \".*\"/\"appInsightsKey\": \"$APP_INSIGHTS_KEY\"/" site.json
 
 cd ../../
 
