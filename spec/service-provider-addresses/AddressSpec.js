@@ -124,6 +124,7 @@ describe('Address', () => {
           'City': 'new city',
           'Postcode': 'new postcode',
           'IsOpen247': false,
+          'IsAppointmentOnly': false,
           'Telephone': 'new telephone',
           'OpeningTimes': [{
             'startTime': '12:00',

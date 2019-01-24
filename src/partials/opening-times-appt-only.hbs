@@ -1,0 +1,20 @@
+<h3>Opening Times</h3>
+<label class="form__label form_label--checkbox-container">Is Open 24/7 <input type="checkbox" data-bind="checked: isOpen247" /></label>
+<label class="form__label form_label--checkbox-container">Is Appointment Only <input type="checkbox" data-bind="checked: isAppointmentOnly" /></label>
+<!-- ko if: requiresOpeningTimes -->
+<button data-bind="click: newOpeningTime" class="btn btn--info"><span class="btn__text">new</span></button>
+<ul data-bind="foreach: openingTimes" class="key-value-pair openingTimes">
+  <li class="openingTimes__item">
+    <select data-bind="options: days,
+      optionsText: $data,
+      value: day,
+      optionsCaption: '--  select day --'" class="form__input openingTimes__day"></select>
+    <input data-bind="textInput: startTime" type="text" class="form__input openingTimes__time" placeholder="eg: 09:00" />
+    <input data-bind="textInput: endTime" type="text" class="form__input openingTimes__time" placeholder="eg: 17:00" />
+    <div class="openingTimes__buttons">
+      <button data-bind="click: $parent.removeOpeningTime" class="btn btn--warning"><span class="btn__text">remove</span></button>
+      <button data-bind="click: $parent.duplicateOpeningTime" class="btn btn--indifferent"><span class="btn__text">duplicate</span></button>
+    </divdd>
+  </li>
+</ul>
+<!-- /ko -->
