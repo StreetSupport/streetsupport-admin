@@ -70,7 +70,7 @@ describe('Index', () => {
       })
 
       it('should redirect to dashboard', () => {
-        var browserRedirectedWithExpectedUrl = stubbedBrowser.withArgs(adminurls.dashboard).calledOnce
+        var browserRedirectedWithExpectedUrl = stubbedBrowser.withArgs(adminurls.dashboardv2).calledOnce
         expect(browserRedirectedWithExpectedUrl).toBeTruthy()
       })
     })

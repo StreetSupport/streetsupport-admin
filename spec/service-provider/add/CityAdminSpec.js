@@ -67,7 +67,7 @@ describe('Add Service Provider as City Admin', () => {
       expect(apiCalledWithExpectedArgs).toBeTruthy()
     })
 
-    it('should redirect to dashboard', () => {
+    it('should redirect to service provider listing', () => {
       expect(stubbedBrowser.withArgs(adminurls.dashboard).calledOnce).toBeTruthy()
     })
   })
