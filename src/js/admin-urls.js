@@ -12,6 +12,7 @@ module.exports = {
   loggedOut: '/logout/success/',
   passwordReset: '/password-reset/',
   dashboard: '/service-providers/',
+  dashboardv2: '/dashboard/',
   serviceProviders: s('/service-providers'),
   forbidden: s('/403'),
   notFound: s('/404'),

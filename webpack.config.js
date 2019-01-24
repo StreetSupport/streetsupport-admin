@@ -68,6 +68,7 @@ module.exports = {
     advice: path.join(__dirname, pageDirPath, 'advice/listing'),
     'advice-add': path.join(__dirname, pageDirPath, 'advice/add'),
     'advice-edit': path.join(__dirname, pageDirPath, 'advice/edit'),
+    dashboard: path.join(__dirname, pageDirPath, 'dashboard/')
   },
   output: {
     path: path.join(__dirname, '/_dist/assets/js/'),
