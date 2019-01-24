@@ -48,6 +48,7 @@ describe('Save brand new Address', () => {
       model.postcode('new postcode')
       model.telephone('new telephone')
       model.isOpen247(true)
+      model.isAppointmentOnly(true)
 
       model.save()
     })
@@ -70,7 +71,8 @@ describe('Save brand new Address', () => {
         'Postcode': 'new postcode',
         'Telephone': 'new telephone',
         'OpeningTimes': [],
-        'IsOpen247': true
+        'IsOpen247': true,
+        'IsAppointmentOnly': true
       }
 
       var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, payload).calledOnce
@@ -179,7 +181,8 @@ describe('Save new Address as part of collection', () => {
             'day': 'Tuesday'
           }
         ],
-        'IsOpen247': false
+        'IsOpen247': false,
+        'IsAppointmentOnly': false
       }
 
       var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, payload).calledOnce
