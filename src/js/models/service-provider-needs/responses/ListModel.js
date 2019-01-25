@@ -1,3 +1,5 @@
+
+const adminUrls = require('../../../admin-urls')
 const ajax = require('../../../ajax')
 const browser = require('../../../browser')
 const querystring = require('../../../get-url-parameter')
@@ -8,6 +10,8 @@ const moment = require('moment')
 const ListModel = function () {
   const self = this
   self.need = ko.observable()
+  self.providerUrl = ko.observable()
+  self.needUrl = ko.observable()
   self.offers = ko.observableArray()
   self.hasOffers = ko.computed(() => {
     return self.offers().length > 0
@@ -21,6 +25,8 @@ const ListModel = function () {
       .get(`${endpoint}/offers-to-help`)
       .then((result) => {
         self.need(result.data.need)
+        self.providerUrl(`${adminUrls.serviceProviders}?key=${self.need().serviceProviderId}`)
+        self.needUrl(`${adminUrls.serviceProviderNeedsEdit}?providerId=${self.need().serviceProviderId}&needId=${self.need().id}`)
         const offers = result.data.helpOffers
         offers
           .forEach((o) => {

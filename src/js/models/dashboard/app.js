@@ -72,7 +72,7 @@ class Need {
   }
 
   get viewSPUrl () {
-    return `${adminUrls.serviceProviders}?key=${this.serviceProviderId}`
+    return `${adminUrls.serviceProviderNeedsEdit}?providerId=${this.serviceProviderId}&needId=${this.id}`
   }
 }
 
