@@ -55,7 +55,7 @@ function Need (data) {
 
   self.editNeedUrl = adminUrls.serviceProviderNeedsEdit + '?providerId=' + self.serviceProviderId + '&needId=' + self.id()
 
-  self.viewOffersUrl = `${adminUrls.needOffers}?needId=${self.id()}`
+  self.viewOffersUrl = `${adminUrls.needResponses}?needId=${self.id()}`
 
   self.totalResponses = ko.observable(0)
 

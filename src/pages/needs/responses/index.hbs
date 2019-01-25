@@ -13,6 +13,12 @@ nosubnav: true
       <header data-bind="with: need">
         <h1>Responses to Need '<span data-bind="html: description"></span>'</h1>
         <p data-bind="html: reason"></p>
+        <a class="btn btn--info" data-bind="attr: { href: $parent.providerUrl }">
+          <span class="btn__text">Back to Provider</span>
+        </a>
+        <a class="btn btn--primary" data-bind="attr: { href: $parent.needUrl }">
+          <span class="btn__text">Back to Need</span>
+        </a>
       </header>
     </div>
   </div>

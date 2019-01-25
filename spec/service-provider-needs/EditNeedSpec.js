@@ -107,6 +107,14 @@ describe('Editing Service Provider Need', () => {
     expect(model.need().keywords()).toEqual('keywordA, keywordB, keywordC')
   })
 
+  it('should set provider url', () => {
+    expect(model.providerUrl()).toEqual(`${adminurls.serviceProviders}?key=albert-kennedy-trust`)
+  })
+
+  it('should set responses url', () => {
+    expect(model.responsesUrl()).toEqual(`${adminurls.needResponses}?needId=56d8784092855610f88d492a`)
+  })
+
   it('should tell browser dataLoaded', () => {
     expect(browserStub.calledOnce).toBeTruthy()
   })

@@ -10,8 +10,14 @@ nosubnav: true
 
 <div class="block block--highlight admin-header">
   <div class="container block__inner">
-      <header>
-        <h1>Edit Need</h1>
+      <header data-bind="with: need">
+        <h1>Edit Need: <span data-bind="html: description"></span></h1>
+        <a class="btn btn--info" data-bind="attr: { href: $parent.providerUrl }">
+          <span class="btn__text">Back to Provider</span>
+        </a>
+        <a class="btn btn--primary" data-bind="attr: { href: $parent.responsesUrl }">
+          <span class="btn__text">View Responses</span>
+        </a>
       </header>
     </div>
   </div>

@@ -1,32 +1,34 @@
-var ko = require('knockout')
+const ko = require('knockout')
 
-var adminurls = require('../../admin-urls')
-var ajax = require('../../ajax')
-var BaseViewModel = require('../BaseViewModel')
-var browser = require('../../browser')
-var getUrlParameter = require('../../get-url-parameter')
-var Need = require('../Need')
+const adminurls = require('../../admin-urls')
+const ajax = require('../../ajax')
+const BaseViewModel = require('../BaseViewModel')
+const browser = require('../../browser')
+const getUrlParameter = require('../../get-url-parameter')
+const Need = require('../Need')
 
 function EditServiceProviderNeed () {
-  var self = this
+  const self = this
   self.need = ko.observable()
 
-  var providerId = getUrlParameter.parameter('providerId')
-  var needId = getUrlParameter.parameter('needId')
+  const providerId = getUrlParameter.parameter('providerId')
+  const needId = getUrlParameter.parameter('needId')
+
+  self.providerUrl = ko.observable(`${adminurls.serviceProviders}?key=${providerId}`)
+  self.responsesUrl = ko.observable(`${adminurls.needResponses}?needId=${needId}`)
 
   self.saveNeed = function (need) {
-    var redirect = adminurls.serviceProviders + '?key=' + providerId
-    browser.redirect(redirect)
+    browser.redirect(self.providerUrl())
   }
 
   browser.loading()
 
-  var endpoint = self.endpointBuilder.serviceProviderNeeds(needId).build()
+  const endpoint = self.endpointBuilder.serviceProviderNeeds(needId).build()
 
   ajax
     .get(endpoint)
     .then((result) => {
-      var need = new Need(result.data)
+      const need = new Need(result.data)
       need.addListener(self)
       self.need(need)
       browser.loaded()
