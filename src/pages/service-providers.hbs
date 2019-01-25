@@ -12,9 +12,15 @@ nosubnav: true
   <div class="container block__inner">
     <div data-bind="with: serviceProvider">
       <header>
-        <h1 data-bind="html: name"></h1>
-        <a data-claims="superadmin" href="/" class="btn btn--info">
-          <span class="btn__text">Back to dashboard</span>
+        <h1>
+          <span class="h1" data-bind="html: name"></span>
+          <span class="small" data-claims="superadmin,cityadmin">(
+            <span data-bind="text: verifiedMessage"></span>, 
+            <span data-bind="text: publishedMessage"></span>
+          )</span>
+        </h1>
+        <a data-claims="superadmin,cityadmin" href="/service-providers/" class="btn btn--info">
+          <span class="btn__text">View all Providers</span>
         </a>
       </header>
     </div>
