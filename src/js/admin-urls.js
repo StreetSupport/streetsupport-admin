@@ -34,6 +34,6 @@ module.exports = {
   actionGroups: '/action-groups/',
   charter: s('/charter-pledges'),
   serviceProviderNeedCategoriesEdit: s('/edit-service-provider-need-categories'),
-  needOffers: '/needs/responses',
+  needResponses: '/needs/responses',
   temporaryAccommodation: '/accommodation'
 }
