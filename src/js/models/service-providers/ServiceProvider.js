@@ -43,6 +43,8 @@ function ServiceProvider (data) {
   self.donationDescription = ko.observable(htmlEncode.htmlDecode(data.donationDescription))
   self.itemsDonationUrl = ko.observable(data.itemsDonationUrl)
   self.itemsDonationDescription = ko.observable(htmlEncode.htmlDecode(data.itemsDonationDescription))
+  self.verifiedMessage = ko.observable(`${ data.isVerified ? 'verified by provider' : 'not verified'}`)
+  self.publishedMessage = ko.observable(`${ data.isPublished ? 'published' : 'not published'}`)
 
   self.tags = ko.observableArray(
     spTags.all()
