@@ -35,7 +35,7 @@ function Index () {
       { getPredicate: () => redirectUrl !== undefined && redirectUrl.indexOf(browser.origin()) === 0, newLocation: redirectUrl },
       { getPredicate: () => orgAdminForClaim.length > 0, newLocation: `${adminUrls.serviceProviders}?key=${orgAdminForClaim.substring(adminForPrefix.length)}` },
       { getPredicate: () => authClaims.includes('superadmin'), newLocation: adminUrls.dashboardv2 },
-      { getPredicate: () => authClaims.includes('cityadmin'), newLocation: adminUrls.dashboard },
+      { getPredicate: () => authClaims.includes('cityadmin'), newLocation: adminUrls.dashboardv2 },
       { getPredicate: () => authClaims.includes('charteradmin'), newLocation: adminUrls.charter },
       { getPredicate: () => authClaims.includes('tempaccomadmin'), newLocation: adminUrls.temporaryAccommodation },
       { getPredicate: () => authClaims.includes('individualaccomadmin'), newLocation: getIndividualAccomNewLocation() },
