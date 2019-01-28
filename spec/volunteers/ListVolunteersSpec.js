@@ -85,7 +85,7 @@ var volunteerData = () => {
         'telephone': '01234567890',
         'email': 'vince.lee@polyhatsoftware.co.uk',
         'city': 'manchester',
-        'postcode': 'M3 4BD'
+        'postcode': 'postcode'
       },
       'skillsAndExperience': {
         'categories': ['a', 'b'],
@@ -106,7 +106,7 @@ var volunteerData = () => {
         'telephone': '',
         'email': 'vslee888+ncc@gmail.com',
         'city': 'leeds',
-        'postcode': 'M3 4BD'
+        'postcode': 'postcode'
       },
       'skillsAndExperience': {
         'categories': ['a', 'b'],

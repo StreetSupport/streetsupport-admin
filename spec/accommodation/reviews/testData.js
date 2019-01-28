@@ -60,7 +60,7 @@ export const testData = {
     'street2': null,
     'street3': null,
     'city': 'manchester',
-    'postcode': 'M3 4BD',
+    'postcode': 'postcode',
     'latitude': 53.4755361548836,
     'longitude': -2.25848699844466,
     'publicTransportInfo': 'get a bus',

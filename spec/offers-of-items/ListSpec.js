@@ -78,7 +78,7 @@ var getData = () => {
         'lastName': 'Lee',
         'telephone': '01234567890',
         'email': 'test1@test.com',
-        'postcode': 'M3 4BD',
+        'postcode': 'postcode',
         'city': 'Westeros'
       },
       'categories': [],
@@ -92,7 +92,7 @@ var getData = () => {
         'lastName': 'Lee',
         'telephone': '',
         'email': 'test2@test.com',
-        'postcode': 'M3 4BD',
+        'postcode': 'postcode',
         'city': 'Westeros'
       },
       'categories': [],

@@ -65,7 +65,7 @@ describe('Accommodation Review Listing', () => {
   })
 
   it('- should set accom\'s address', () => {
-    expect(sut.address()).toEqual('test 1, manchester, M3 4BD')
+    expect(sut.address()).toEqual('test 1, manchester, postcode')
   })
 
   it('- should set review\'s details url', () => {

@@ -91,12 +91,12 @@ function coffee4Craig () {
         'tags': null,
         'location': {
           'description': '',
-          'streetLine1': 'Flat 713',
-          'streetLine2': '37 Potato Wharf',
+          'streetLine1': 'address line 1',
+          'streetLine2': 'address line 2',
           'streetLine3': '',
           'streetLine4': '',
           'city': 'Manchester',
-          'postcode': 'M3 4BD',
+          'postcode': 'postcode',
           'latitude': 53.4755361548836,
           'longitude': -2.25848699844466
         },
@@ -126,12 +126,12 @@ function coffee4Craig () {
         'tags': null,
         'location': {
           'description': '',
-          'streetLine1': 'Flat 713',
-          'streetLine2': '37 Potato Wharf',
+          'streetLine1': 'address line 1',
+          'streetLine2': 'address line 2',
           'streetLine3': '',
           'streetLine4': '',
           'city': 'Manchester',
-          'postcode': 'M3 4BD',
+          'postcode': 'postcode',
           'latitude': 53.4755361548836,
           'longitude': -2.25848699844466
         },
@@ -165,12 +165,12 @@ function coffee4Craig () {
         'tags': null,
         'location': {
           'description': '',
-          'streetLine1': 'Flat 713',
-          'streetLine2': '37 Potato Wharf',
+          'streetLine1': 'address line 1',
+          'streetLine2': 'address line 2',
           'streetLine3': '',
           'streetLine4': '',
           'city': 'Manchester',
-          'postcode': 'M3 4BD',
+          'postcode': 'postcode',
           'latitude': 53.4755361548836,
           'longitude': -2.25848699844466
         },
