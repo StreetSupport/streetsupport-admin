@@ -5,6 +5,7 @@ layout: default.hbs
 permalink: false
 jsBundle: contactVolunteer
 page: contactVolunteer
+section: volunteers
 nosubnav: true
 ---
 
@@ -58,6 +59,7 @@ nosubnav: true
       <form class="form" data-bind="submit: submit">
         <fieldset class="form__fieldset" data-bind="with: formModel">
           <legend class="h2 form__fieldset-title">Contact Volunteer</legend>
+          <p>To email the person offering this item, enter your message in the text area, and press "<em>send email</em>".</p>
           <ul class="form__field-list">
             <li class="form__field-item form__field-item--full">
               <label class="form__label" for="message">Message/Notes</label>
@@ -70,7 +72,7 @@ nosubnav: true
             </li>
           </ul>
         </fieldset>
-        <button type="submit" class="btn btn--primary form__submit" data-bind="click: submit"><span class="btn__text">Submit</span></button>
+        <button type="submit" class="btn btn--primary form__submit" data-bind="click: submit"><span class="btn__text">send email</span></button>
       </form>
       <!-- /ko -->
     </div>

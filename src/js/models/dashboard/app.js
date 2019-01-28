@@ -1,5 +1,6 @@
 import * as ko from 'knockout'
 import moment from 'moment'
+import htmlEncode from 'htmlencode'
 
 const adminUrls = require('../../admin-urls')
 const ajax = require('../../ajax')
@@ -7,7 +8,7 @@ const EndpointBuilder = require('../../endpoint-builder')
 
 class SearchResult {
   constructor (sp, index) {
-    this.name = sp.name
+    this.name = htmlEncode.htmlDecode(sp.name)
     this.key = sp.key
     this.tabIndex = index
   }
@@ -66,7 +67,7 @@ class Need {
   constructor (data) {
     this.id = data.id
     this.serviceProviderId = data.serviceProviderId
-    this.serviceProviderName = data.serviceProviderName
+    this.serviceProviderName = htmlEncode.htmlDecode(data.serviceProviderName)
     this.description = data.description
     this.neededDate = moment(data.neededDate).format('DD/MM/YY')
   }
@@ -90,10 +91,88 @@ class LatestNeeds {
   }
 }
 
+class ServiceProvider { 
+  constructor (data) {
+    this.key = data.key
+    this.name = htmlEncode.htmlDecode(data.name)
+  }
+
+  get viewSPUrl () {
+    return `${adminUrls.serviceProviders}?key=${this.key}`
+  }
+}
+
+class NewlyRegisteredProviders {
+  constructor () {
+    this.providers = ko.observableArray([])
+
+    ajax
+      .get(`${new EndpointBuilder().serviceProvidersv3().build()}?pageSize=5&isPublished=false&sortBy=creationDate`)
+      .then((result) => {
+        const providers = result.data.items
+          .map((p) => new ServiceProvider(p))
+        this.providers(providers)
+      })
+  }
+}
+
+class Volunteer {
+  constructor (data) {
+    this.id = data.id
+    this.skillsAndResources = ko.observable(`Skills: ${data.skillsAndExperience.description}; Resources: ${data.resources.description}`)
+  }
+
+  get viewUrl () {
+    return `${adminUrls.contactVolunteer}?id=${this.id}`
+  }
+}
+
+class LatestVolunteers {
+  constructor () {
+    this.volunteers = ko.observableArray([])
+
+    ajax
+      .get(`${new EndpointBuilder().volunteers().build()}?pageSize=5&sortBy=creationDate`)
+      .then((result) => {
+        const volunteers = result.data.items
+          .map((p) => new Volunteer(p))
+        this.volunteers(volunteers)
+      })
+  }
+}
+
+class Offer {
+  constructor (data) {
+    this.id = data.id
+    this.description = ko.observable(`${data.description}`)
+  }
+
+  get viewUrl () {
+    return `${adminUrls.contactAboutOffer}?id=${this.id}`
+  }
+}
+
+class LatestOffers {
+  constructor () {
+    this.offers = ko.observableArray([])
+
+    ajax
+      .get(`${new EndpointBuilder().offersOfItems().build()}?pageSize=5&sortBy=creationDate`)
+      .then((result) => {
+        const offers = result.data.items
+          .map((p) => new Offer(p))
+        this.offers(offers)
+      })
+  }
+}
+
 function Dashboard () {
   const self = this
   self.spSearch = new SPSearch({ tabIndex: 100 })
   self.latestNeeds = new LatestNeeds()
+  self.newlyRegisteredProviders = new NewlyRegisteredProviders()
+  self.latestVolunteers = new LatestVolunteers()
+  self.latestOffers = new LatestOffers()
 }
 
 module.exports = Dashboard
