@@ -4,66 +4,95 @@ description: Street Support - Making it easier to help homeless people in Manche
 layout: default.hbs
 permalink: false
 jsBundle: dashboard
-page: index
+page: dashboard
 nosubnav: true
 ---
 
 <div class="block">
   <div class="container block__inner">
-    <section data-bind="with: spSearch">
-      <h2>Service Providers</h2>
-      <form class="form" data-bind="submit: submitSearch">
-        <fieldset class="form__fieldset">
-          <legend class="form__legend">Find Service Provider</legend>
-          <ul class="form__field-list search-dropdown">
-            <li class="form__field-item form__field-item--full">
-              <label for="filterByName" class="form__label hide-screen">Name:</label>
-              <input type="text" name="filterByName" autocomplete="off" class="form__input form__input--full search-dropdown__query-field"
-                data-bind="textInput: nameQuery, attr: { tabindex: tabIndex }" placeholder="eg. Street Support"></input>
-              <!-- ko if: canClearResults -->
-              <button class="search-dropdown__clear-btn" data-bind="click: clear">x</button>
-              <!-- /ko -->
-            </li>
-            <!-- ko if: canClearResults -->
-            <li class="form__field-item form__field-item--full search-dropdown__results-container">
-              <ul class="search-dropdown__results" data-bind="foreach: searchResults">
-                <li class="search-dropdown__result-item">
-                  <!-- ko if: hasUrl -->
-                  <a class="search-dropdown__result-item-link" data-bind="attr: { href: url, tabindex: tabIndex }, text: name"></a>
-                  <!-- /ko -->
-                  <!-- ko ifnot: hasUrl -->
-                  <span class="search-dropdown__result-item-no-link" data-bind="text: name"></span>
+    <div class="split">
+      <div class="split__element">
+        <section data-bind="with: spSearch">
+          <h2>Service Providers</h2>
+          <form class="form" data-bind="submit: submitSearch">
+            <fieldset class="form__fieldset">
+              <legend class="form__legend">Find Service Provider</legend>
+              <ul class="form__field-list search-dropdown">
+                <li class="form__field-item form__field-item--full">
+                  <label for="filterByName" class="form__label hide-screen">Name:</label>
+                  <input type="text" name="filterByName" autocomplete="off" class="form__input form__input--full search-dropdown__query-field"
+                    data-bind="textInput: nameQuery, attr: { tabindex: tabIndex }" placeholder="eg. Street Support"></input>
+                  <!-- ko if: canClearResults -->
+                  <button class="search-dropdown__clear-btn" data-bind="click: clear">x</button>
                   <!-- /ko -->
                 </li>
+                <!-- ko if: canClearResults -->
+                <li class="form__field-item form__field-item--full search-dropdown__results-container">
+                  <ul class="search-dropdown__results" data-bind="foreach: searchResults">
+                    <li class="search-dropdown__result-item">
+                      <!-- ko if: hasUrl -->
+                      <a class="search-dropdown__result-item-link" data-bind="attr: { href: url, tabindex: tabIndex }, text: name"></a>
+                      <!-- /ko -->
+                      <!-- ko ifnot: hasUrl -->
+                      <span class="search-dropdown__result-item-no-link" data-bind="text: name"></span>
+                      <!-- /ko -->
+                    </li>
+                  </ul>
+                </li>
+                <!-- /ko -->
               </ul>
+            </fieldset>
+          </form>
+        </section>
+        <section data-bind="with: newlyRegisteredProviders">
+          <h3>Latest Orgs Awaiting Publishing</h3>
+          <ul data-bind="foreach: providers">
+            <li>
+              <a data-bind="attr: { href: viewSPUrl }, html: name"></a>
             </li>
-            <!-- /ko -->
           </ul>
-        </fieldset>
-      </form>
-    </section>
-    <section data-bind="with: newlyRegisteredProviders">
-      <h2>Latest Orgs Awaiting Publishing</h2>
-      <ul data-bind="foreach: providers">
-        <li>
-          <a data-bind="attr: { href: viewSPUrl }, html: name"></a>
-        </li>
-      </ul>
-      <a href="/service-providers" class="btn btn--info">
-        <span class="btn__text">View all Service Providers</span>
-      </a>
-    </section>
-    <section data-bind="with: latestNeeds">
-      <h2>Latest Needs</h2>
-      <ul data-bind="foreach: needs">
-        <li>
-          <a data-bind="attr: { href: viewSPUrl }">
-            <span data-bind="text: neededDate"></span>
-            <span data-bind="html: serviceProviderName"></span>:
-            <strong><span data-bind="html: description"></span></strong>
+          <a href="/service-providers" class="btn btn--info">
+            <span class="btn__text">View all Service Providers</span>
           </a>
-        </li>
-      </ul>
-    </section>
+        </section>
+      </div>
+
+      <div class="split__element">
+        <section data-bind="with: latestNeeds">
+          <h2>Latest Needs</h2>
+          <ul data-bind="foreach: needs">
+            <li>
+              <a data-bind="attr: { href: viewSPUrl }">
+                <span data-bind="text: neededDate"></span>
+                <span data-bind="html: serviceProviderName"></span>:
+                <strong><span data-bind="html: description"></span></strong>
+              </a>
+            </li>
+          </ul>
+        </section>
+        <section data-bind="with: latestVolunteers">
+          <h2>Latest Volunteers</h2>
+          <ul data-bind="foreach: volunteers">
+            <li>
+              <a data-bind="attr: { href: viewUrl }, html: skillsAndResources"></a>
+            </li>
+          </ul>
+          <a href="/volunteers" class="btn btn--info">
+            <span class="btn__text">View all Volunteers</span>
+          </a>
+        </section>
+        <section data-bind="with: latestOffers">
+          <h2>Latest Offers</h2>
+          <ul data-bind="foreach: offers">
+            <li>
+              <a data-bind="attr: { href: viewUrl }, html: description"></a>
+            </li>
+          </ul>
+          <a href="/offers" class="btn btn--info">
+            <span class="btn__text">View all offers</span>
+          </a>
+        </section>
+      </div>
+    </div>
   </div>
 </div>

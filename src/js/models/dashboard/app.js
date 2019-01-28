@@ -107,13 +107,61 @@ class NewlyRegisteredProviders {
     this.providers = ko.observableArray([])
 
     ajax
-      .get(`${new EndpointBuilder().serviceProvidersv3().build()}?pageSize=10&isPublished=false&sortBy=creationDate`)
+      .get(`${new EndpointBuilder().serviceProvidersv3().build()}?pageSize=5&isPublished=false&sortBy=creationDate`)
       .then((result) => {
         const providers = result.data.items
           .map((p) => new ServiceProvider(p))
-
-          console.log(result.data.items, providers)
         this.providers(providers)
+      })
+  }
+}
+
+class Volunteer {
+  constructor (data) {
+    this.id = data.id
+    this.skillsAndResources = ko.observable(`Skills: ${data.skillsAndExperience.description}; Resources: ${data.resources.description}`)
+  }
+
+  get viewUrl () {
+    return `${adminUrls.contactVolunteer}?id=${this.id}`
+  }
+}
+
+class LatestVolunteers {
+  constructor () {
+    this.volunteers = ko.observableArray([])
+
+    ajax
+      .get(`${new EndpointBuilder().volunteers().build()}?pageSize=5&sortBy=creationDate`)
+      .then((result) => {
+        const volunteers = result.data.items
+          .map((p) => new Volunteer(p))
+        this.volunteers(volunteers)
+      })
+  }
+}
+
+class Offer {
+  constructor (data) {
+    this.id = data.id
+    this.description = ko.observable(`${data.description}`)
+  }
+
+  get viewUrl () {
+    return `${adminUrls.contactAboutOffer}?id=${this.id}`
+  }
+}
+
+class LatestOffers {
+  constructor () {
+    this.offers = ko.observableArray([])
+
+    ajax
+      .get(`${new EndpointBuilder().offersOfItems().build()}?pageSize=5&sortBy=creationDate`)
+      .then((result) => {
+        const offers = result.data.items
+          .map((p) => new Offer(p))
+        this.offers(offers)
       })
   }
 }
@@ -123,6 +171,8 @@ function Dashboard () {
   self.spSearch = new SPSearch({ tabIndex: 100 })
   self.latestNeeds = new LatestNeeds()
   self.newlyRegisteredProviders = new NewlyRegisteredProviders()
+  self.latestVolunteers = new LatestVolunteers()
+  self.latestOffers = new LatestOffers()
 }
 
 module.exports = Dashboard
