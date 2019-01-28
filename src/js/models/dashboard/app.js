@@ -6,6 +6,9 @@ const adminUrls = require('../../admin-urls')
 const ajax = require('../../ajax')
 const EndpointBuilder = require('../../endpoint-builder')
 
+import { Volunteer, LatestVolunteers } from './Volunteers'
+import { Offer, LatestOffers } from './Offers'
+
 class SearchResult {
   constructor (sp, index) {
     this.name = htmlEncode.htmlDecode(sp.name)
@@ -116,55 +119,6 @@ class NewlyRegisteredProviders {
   }
 }
 
-class Volunteer {
-  constructor (data) {
-    this.id = data.id
-    this.skillsAndResources = ko.observable(`Skills: ${data.skillsAndExperience.description}; Resources: ${data.resources.description}`)
-  }
-
-  get viewUrl () {
-    return `${adminUrls.contactVolunteer}?id=${this.id}`
-  }
-}
-
-class LatestVolunteers {
-  constructor () {
-    this.volunteers = ko.observableArray([])
-
-    ajax
-      .get(`${new EndpointBuilder().volunteers().build()}?pageSize=5&sortBy=creationDate`)
-      .then((result) => {
-        const volunteers = result.data.items
-          .map((p) => new Volunteer(p))
-        this.volunteers(volunteers)
-      })
-  }
-}
-
-class Offer {
-  constructor (data) {
-    this.id = data.id
-    this.description = ko.observable(`${data.description}`)
-  }
-
-  get viewUrl () {
-    return `${adminUrls.contactAboutOffer}?id=${this.id}`
-  }
-}
-
-class LatestOffers {
-  constructor () {
-    this.offers = ko.observableArray([])
-
-    ajax
-      .get(`${new EndpointBuilder().offersOfItems().build()}?pageSize=5&sortBy=creationDate`)
-      .then((result) => {
-        const offers = result.data.items
-          .map((p) => new Offer(p))
-        this.offers(offers)
-      })
-  }
-}
 
 function Dashboard () {
   const self = this
