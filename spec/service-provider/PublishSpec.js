@@ -4,48 +4,75 @@ global describe, beforeEach, afterEach, it, expect
 
 'use strict'
 
-const sinon = require('sinon')
-const ajax = require('../../src/js/ajax')
-const browser = require('../../src/js/browser')
-const getUrlParameter = require('../../src/js/get-url-parameter')
+var sinon = require('sinon')
+var ajax = require('../../src/js/ajax')
+var endpoints = require('../../src/js/api-endpoints')
+var browser = require('../../src/js/browser')
+var getUrlParameter = require('../../src/js/get-url-parameter')
+var spTags = require('../../src/js/serviceProviderTags')
 
-describe('Delete Service', () => {
-  const Model = require('../../src/js/models/service-providers/ServiceProviderDetails')
-  let model = null
+describe('Service Provider - Publish', () => {
+  var Model = require('../../src/js/models/service-providers/ServiceProviderDetails')
+  var model
+  var stubbedPutApi
 
   beforeEach(() => {
     let fakeResolved = {
-      then: (success, _) => {
+      then: function (success, error) {
         success({
           'status': 200,
           'data': coffee4Craig()
         })
       }
     }
-    sinon.stub(ajax, 'delete').returns(fakeResolved)
+
     sinon.stub(ajax, 'get').returns(fakeResolved)
+    stubbedPutApi = sinon.stub(ajax, 'put')
+      .returns({
+        then: function (success, error) {
+          success({
+            'status': 200
+          })
+        }
+      })
+
     sinon.stub(getUrlParameter, 'parameter').returns('coffee4craig')
     sinon.stub(browser, 'loading')
     sinon.stub(browser, 'loaded')
+    sinon.stub(spTags, 'all').returns([
+      { id: 'tag-a', name: 'Tag A' },
+      { id: 'tag-b', name: 'Tag B' },
+      { id: 'tag-c', name: 'Tag C' },
+      { id: 'tag-d', name: 'Tag D' },
+      { id: 'tag-e', name: 'Tag E' }
+    ])
 
     model = new Model()
-    model.serviceProvider().services()[0].deleteService()
+
+    model.serviceProvider().publishOrg()
   })
 
   afterEach(() => {
     ajax.get.restore()
-    ajax.delete.restore()
+    ajax.put.restore()
     getUrlParameter.parameter.restore()
     browser.loading.restore()
     browser.loaded.restore()
+    spTags.all.restore()
   })
 
-  it('should remove Service from collection', () => {
-    expect(model.serviceProvider().services().length).toEqual(1)
+  it('- should send inverse of current isPublished to api', () => {
+    var endpoint = endpoints.getServiceProviders + '/coffee4craig/is-published'
+    var payload = {
+      'IsPublished': true
+    }
+    var apiCalledWithExpectedArgs = stubbedPutApi.withArgs(endpoint, payload).calledOnce
+
+    expect(apiCalledWithExpectedArgs).toBeTruthy()
   })
 
-  it('should keep expected address', () => {
-    expect(model.serviceProvider().services()[0].id()).toEqual('5678')
+  it('- should invert isPublished', () => {
+    expect(model.serviceProvider().isPublished()).toBeTruthy()
   })
 })
 
@@ -53,9 +80,11 @@ function coffee4Craig () {
   return {
     'key': 'coffee4craig',
     'name': 'Coffee 4 Craig',
-    'isVerified': false,
-    'isPublished': true,
-    'description': 'Coffee4Craig is a not-for-profit organisation set up to support, work with and be an all accepting approach to homelessness. ',
+    'associatedCityId': 'manchester',
+    'isPublished': false,
+    'isVerified': true,
+    'shortDescription': 'St Mary&#39;s Centre provides a range of services for anyone who has been raped or sexually assaulted',
+    'description': 'St Mary&#39;s Sexual Assault Referral Centre Coffee4Craig is a not-for-profit organisation set up to support, work with and be an all accepting approach to homelessness. ',
     'establishedDate': '0001-01-03T00:00:00.0000000Z',
     'areaServiced': 'Manchester & South Wales',
     'email': 'risha@coffee4craig.com',
@@ -63,6 +92,7 @@ function coffee4Craig () {
     'website': 'http://www.coffee4craig.com/',
     'facebook': 'https://www.facebook.com/Coffee4Craig/?fref=ts',
     'twitter': '@Coffee4Craig',
+    'needCategories': ['cat a', 'cat b'],
     'addresses': [{
       'key': '1234',
       'street': '7-11 Lancaster Rd',
@@ -80,7 +110,6 @@ function coffee4Craig () {
       'city': null,
       'postcode': 'M1 1AF'
     }],
-
     'groupedServices': [
       {
         'id': '57bdb2c58705422ecc65724f',
@@ -107,8 +136,8 @@ function coffee4Craig () {
             'day': 'Tuesday'
           }
         ],
-        'serviceProviderId': null,
-        'serviceProviderName': null,
+        'serviceProviderId': 'vince-test-provider',
+        'serviceProviderName': 'Vince Test Provider',
         'isPublished': false,
         'subCategories': [
           {
@@ -197,8 +226,7 @@ function coffee4Craig () {
       }
     ],
     'providedServices': [{
-      'serviceProviderId': 'coffee4craig',
-      'key': '1324',
+      'key': '569d2b468705432268b65c75',
       'name': 'Meals',
       'info': 'Breakfast',
       'openingTimes': [{
@@ -221,31 +249,13 @@ function coffee4Craig () {
         'openingTimes': null
       },
       'tags': ['some tags']
-    }, {
-      'serviceProviderId': 'coffee4craig',
-      'key': '5678',
-      'name': 'Meals',
-      'info': 'Breakfast',
-      'openingTimes': [{
-        'startTime': '09:00',
-        'endTime': '10:00',
-        'day': 'Monday'
-      }, {
-        'startTime': '09:00',
-        'endTime': '10:00',
-        'day': 'Tuesday'
-      }],
-      'address': {
-        'key': '7a6ff0f3-5b04-4bd9-b088-954e473358f5',
-        'street': 'Booth Centre',
-        'street1': null,
-        'street2': 'Edward Holt House',
-        'street3': 'Pimblett Street',
-        'city': 'Manchester',
-        'postcode': 'M3 1FU',
-        'openingTimes': null
-      },
-      'tags': ['some tags']
-    }]
+    }],
+    'needs': [{
+      'id': '56ca227f92855621e8d60318',
+      'description': 'some new description.',
+      'serviceProviderId': 'coffee4craig'
+    }],
+    'tags': ['tag-a', 'tag-c', 'tag-d'],
+    helpOffers: []
   }
 }

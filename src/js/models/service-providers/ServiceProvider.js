@@ -26,6 +26,7 @@ function ServiceProvider (data) {
   self.availableClientGroups = ko.observableArray(clientGroups)
   self.name = ko.observable(data.name)
   self.isVerified = ko.observable(data.isVerified)
+  self.isPublished = ko.observable(data.isPublished)
   self.shortDescription = ko.observable(htmlEncode.htmlDecode(data.shortDescription))
   self.description = ko.observable(htmlEncode.htmlDecode(data.description))
   self.readOnlyDescription = ko.computed(function () {
@@ -43,8 +44,8 @@ function ServiceProvider (data) {
   self.donationDescription = ko.observable(htmlEncode.htmlDecode(data.donationDescription))
   self.itemsDonationUrl = ko.observable(data.itemsDonationUrl)
   self.itemsDonationDescription = ko.observable(htmlEncode.htmlDecode(data.itemsDonationDescription))
-  self.verifiedMessage = ko.observable(`${ data.isVerified ? 'verified by provider' : 'not verified'}`)
-  self.publishedMessage = ko.observable(`${ data.isPublished ? 'published' : 'not published'}`)
+  self.verifiedMessage = ko.observable(`${data.isVerified ? 'verified by provider' : 'not verified'}`)
+  self.publishedMessage = ko.computed(() => `${self.isPublished() ? 'published' : 'not published'}`, self)
 
   self.tags = ko.observableArray(
     spTags.all()
@@ -80,11 +81,11 @@ function ServiceProvider (data) {
   self.needs().forEach((s) => s.addListener(self))
 
   self.needCatList = ko.observable(data.needCategories !== undefined ? data.needCategories
-          .sort((a, b) => {
-            if (a.value > b.value) return 1
-            if (a.value < b.value) return -1
-            return 0
-          }).join(', ') : '')
+    .sort((a, b) => {
+      if (a.value > b.value) return 1
+      if (a.value < b.value) return -1
+      return 0
+    }).join(', ') : '')
 
   self.editNeedCategoriesUrl = adminUrls.serviceProviderNeedCategoriesEdit + '?providerId=' + data.key
 
@@ -104,6 +105,17 @@ function ServiceProvider (data) {
         { IsVerified: true })
       .then((success) => {
         self.isVerified(true)
+      }, (e) => {
+        browser.redirect(adminUrls.error)
+      })
+  }
+
+  self.publishOrg = function () {
+    ajax
+      .put(`${self.endpointBuilder.serviceProviders(self.key()).build()}/is-published`,
+        { IsPublished: true })
+      .then((success) => {
+        self.isPublished(true)
       }, (e) => {
         browser.redirect(adminUrls.error)
       })
