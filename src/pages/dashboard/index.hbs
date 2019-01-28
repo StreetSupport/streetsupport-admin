@@ -41,6 +41,14 @@ nosubnav: true
           </ul>
         </fieldset>
       </form>
+    </section>
+    <section data-bind="with: newlyRegisteredProviders">
+      <h2>Latest Orgs Awaiting Publishing</h2>
+      <ul data-bind="foreach: providers">
+        <li>
+          <a data-bind="attr: { href: viewSPUrl }, html: name"></a>
+        </li>
+      </ul>
       <a href="/service-providers" class="btn btn--info">
         <span class="btn__text">View all Service Providers</span>
       </a>
