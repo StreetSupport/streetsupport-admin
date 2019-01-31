@@ -75,7 +75,7 @@ describe('Index', () => {
       })
     })
 
-    describe('Admin For', () => {
+    describe('- Org Admin', () => {
       beforeEach(() => {
         sinon.stub(querystring, 'parameter')
         stubbedStorage
@@ -89,7 +89,7 @@ describe('Index', () => {
       })
 
       it('should redirect to service provider page', () => {
-        var browserRedirectedWithExpectedUrl = stubbedBrowser.withArgs(adminurls.serviceProviders + '?key=coffee4craig').calledOnce
+        var browserRedirectedWithExpectedUrl = stubbedBrowser.withArgs(adminurls.dashboardv2).calledOnce
         expect(browserRedirectedWithExpectedUrl).toBeTruthy()
       })
     })
