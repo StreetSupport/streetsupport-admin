@@ -5,6 +5,7 @@ import { cities as locations } from '../data/generated/supported-cities'
 const roles = {
   superadmin: 'superadmin',
   cityadmin: 'cityadmin',
+  orgadmin: 'orgadmin',
   tempaccomadmin: 'tempaccomadmin'
 }
 

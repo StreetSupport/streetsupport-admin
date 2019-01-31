@@ -12,7 +12,7 @@ nosubnav: true
   <div class="container block__inner">
     <div class="split">
       <div class="split__element">
-        <section data-bind="with: spSearch">
+        <section data-bind="with: spSearch" data-claims="superadmin,cityadmin">
           <h2>Service Providers</h2>
           <form class="form" data-bind="submit: submitSearch">
             <fieldset class="form__fieldset">
@@ -44,7 +44,13 @@ nosubnav: true
             </fieldset>
           </form>
         </section>
-        <section data-bind="with: newlyRegisteredProviders">
+        <section data-claims="orgadmin">
+          <h2>My Organisation</h2>
+          <a data-bind="attr: { href: editOrgUrl }" class="btn btn--primary">
+            <span class="btn__text">Update Organisation Details</span>
+          </a>
+        </section>
+        <section data-bind="with: newlyRegisteredProviders" data-claims="superadmin,cityadmin">
           <h3>Latest Orgs Awaiting Publishing</h3>
           <ul data-bind="foreach: providers">
             <li>
@@ -55,10 +61,22 @@ nosubnav: true
             <span class="btn__text">View all Service Providers</span>
           </a>
         </section>
+        <section data-bind="with: needResponses" data-claims="orgadmin">
+          <h2>Needs</h2>
+          <a data-bind="attr: { href: $parent.addNeedUrl }" class="btn btn--primary">
+            <span class="btn__text">Add new Need</span>
+          </a>
+          <h3>Latest Responses</h3>
+          <ul data-bind="foreach: responses">
+            <li>
+              <a data-bind="attr: { href: viewUrl }, html: message"></a>
+            </li>
+          </ul>
+        </section>
       </div>
 
       <div class="split__element">
-        <section data-bind="with: latestNeeds">
+        <section data-bind="with: latestNeeds" data-claims="superadmin,cityadmin">
           <h2>Latest Needs</h2>
           <ul data-bind="foreach: needs">
             <li>

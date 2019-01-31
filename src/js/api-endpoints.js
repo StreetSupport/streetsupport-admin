@@ -30,6 +30,7 @@ module.exports = {
   offersOfItems: p('/v1/offers-of-items'),
   resetPassword: p('/v1/reset-password-applications'),
   serviceProviderNeeds: p('/v2/service-provider-needs'),
+  needResponses: p('/v2/service-provider-needs/responses'),
   shareVolunteer: p('/v1/volunteer-shares'),
   temporaryAccommodation: p('/v1/accommodation'),
   unverifiedCityAdmins: p('/v1/unverified-city-admins'),

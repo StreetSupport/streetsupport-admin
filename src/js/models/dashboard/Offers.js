@@ -18,7 +18,6 @@ export class Offer {
 export class LatestOffers {
   constructor () {
     this.offers = ko.observableArray([])
-
     ajax
       .get(`${new EndpointBuilder().offersOfItems().build()}?pageSize=5&sortBy=creationDate`)
       .then((result) => {

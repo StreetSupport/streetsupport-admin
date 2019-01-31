@@ -18,7 +18,6 @@ export class Volunteer {
 export class LatestVolunteers {
   constructor () {
     this.volunteers = ko.observableArray([])
-
     ajax
       .get(`${new EndpointBuilder().volunteers().build()}?pageSize=5&sortBy=creationDate`)
       .then((result) => {
