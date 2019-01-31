@@ -87,15 +87,13 @@ class LatestNeeds {
   constructor () {
     this.needs = ko.observableArray([])
 
-    if (auth.isSuperAdmin() || auth.isCityAdmin()) {
-      ajax
-        .get(`${new EndpointBuilder().serviceProviderNeeds().build()}?pageSize=10`)
-        .then((result) => {
-          const needs = result.data.items
-            .map((n) => new Need(n))
-          this.needs(needs)
-        })
-    }
+    ajax
+      .get(`${new EndpointBuilder().serviceProviderNeeds().build()}?pageSize=10`)
+      .then((result) => {
+        const needs = result.data.items
+          .map((n) => new Need(n))
+        this.needs(needs)
+      })
   }
 }
 

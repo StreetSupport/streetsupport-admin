@@ -1,10 +1,18 @@
 <section data-bind="with: latestOffers">
   <h2>Latest Offers</h2>
-  <ul data-bind="foreach: offers">
-    <li>
-      <a data-bind="attr: { href: viewUrl }, html: description"></a>
-    </li>
-  </ul>
+  <table>
+    <thead>
+      <th>description</th>
+      <th></th>
+    </thead>
+  <tbody data-bind="foreach: offers">
+    <tr>
+      <td data-bind="html: description"></td>
+      <td><a data-bind="attr: { href: viewUrl }">view</a></td>
+      
+    </tr>
+  </tbody>
+  </table>
   <a href="/offers-of-items" class="btn btn--info">
     <span class="btn__text">View all offers</span>
   </a>
