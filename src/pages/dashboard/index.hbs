@@ -61,35 +61,48 @@ nosubnav: true
             <span class="btn__text">View all Service Providers</span>
           </a>
         </section>
-        <section data-bind="with: needResponses" data-claims="orgadmin">
-          <h2>Needs</h2>
-          <a data-bind="attr: { href: $parent.addNeedUrl }" class="btn btn--primary">
-            <span class="btn__text">Add new Need</span>
-          </a>
-          <h3>Latest Responses</h3>
-          <ul data-bind="foreach: responses">
-            <li>
-              <a data-bind="attr: { href: viewUrl }, html: message"></a>
-            </li>
-          </ul>
-        </section>
+        {{> dashboard/latestVolunteers }}
+        {{> dashboard/latestOffers }}
       </div>
 
       <div class="split__element">
-        <section data-bind="with: latestNeeds" data-claims="superadmin,cityadmin">
-          <h2>Latest Needs</h2>
-          <ul data-bind="foreach: needs">
-            <li>
-              <a data-bind="attr: { href: viewSPUrl }">
-                <span data-bind="text: neededDate"></span>
-                <span data-bind="html: serviceProviderName"></span>:
-                <strong><span data-bind="html: description"></span></strong>
-              </a>
-            </li>
-          </ul>
+        <section data-bind="with: latestNeeds">
+          <h2>Needs</h2>
+          <table>
+            <thead>
+              <th data-claims="superadmin,cityadmin">org</th>
+              <th>date</th>
+              <th>need</th>
+              <th></th>
+            </thead>
+            <tbody data-bind="foreach: needs">
+              <tr>
+                <td data-claims="superadmin,cityadmin" data-bind="html: serviceProviderName"></td>
+                <td data-bind="text: neededDate"></td>
+                <td data-bind="html: description"></td>
+                <td><a data-bind="attr: { href: viewSPUrl }">view</a></td>
+              </tr>
+            </tbody>
+          </table>
+          <a data-claims="orgadmin" data-bind="attr: { href: $parent.addNeedUrl }" class="btn btn--primary">
+            <span class="btn__text">Add new Need</span>
+          </a>
         </section>
-        {{> dashboard/latestVolunteers }}
-        {{> dashboard/latestOffers }}
+        <section data-bind="with: needResponses" data-claims="orgadmin">
+          <h2>Latest Responses to Needs</h2>
+          <table>
+            <thead>
+              <th>message</th>
+              <th></th>
+            </thead>
+            <tbody data-bind="foreach: responses">
+              <tr>
+                <td data-bind="html: message"></td>
+                <td><a data-bind="attr: { href: viewUrl }">view</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
       </div>
     </div>
   </div>

@@ -1,10 +1,19 @@
 <section data-bind="with: latestVolunteers">
   <h2>Latest Volunteers</h2>
-  <ul data-bind="foreach: volunteers">
-    <li>
-      <a data-bind="attr: { href: viewUrl }, html: skillsAndResources"></a>
-    </li>
-  </ul>
+  <table>
+    <thead>
+      <th>skills</th>
+      <th>resources</th>
+      <th></th>
+    </thead>
+    <tbody data-bind="foreach: volunteers">
+      <tr>
+        <td data-bind="html: skills"></td>
+        <td data-bind="html: resources"></td>
+        <td><a data-bind="attr: { href: viewUrl }">view</a></td>
+      </tr>
+    </tbody>
+  </table>
   <a href="/volunteers" class="btn btn--info">
     <span class="btn__text">View all Volunteers</span>
   </a>
