@@ -1,0 +1,11 @@
+<section data-bind="with: latestVolunteers">
+  <h2>Latest Volunteers</h2>
+  <ul data-bind="foreach: volunteers">
+    <li>
+      <a data-bind="attr: { href: viewUrl }, html: skillsAndResources"></a>
+    </li>
+  </ul>
+  <a href="/volunteers" class="btn btn--info">
+    <span class="btn__text">View all Volunteers</span>
+  </a>
+</section>

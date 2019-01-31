@@ -33,7 +33,7 @@ function Index () {
     const rules = [
       { getPredicate: () => !isAuthenticated(), newLocation: adminUrls.login },
       { getPredicate: () => redirectUrl !== undefined && redirectUrl.indexOf(browser.origin()) === 0, newLocation: redirectUrl },
-      { getPredicate: () => orgAdminForClaim.length > 0, newLocation: `${adminUrls.serviceProviders}?key=${orgAdminForClaim.substring(adminForPrefix.length)}` },
+      { getPredicate: () => orgAdminForClaim.length > 0, newLocation: adminUrls.dashboardv2 },
       { getPredicate: () => authClaims.includes('superadmin'), newLocation: adminUrls.dashboardv2 },
       { getPredicate: () => authClaims.includes('cityadmin'), newLocation: adminUrls.dashboardv2 },
       { getPredicate: () => authClaims.includes('charteradmin'), newLocation: adminUrls.charter },
