@@ -7,7 +7,8 @@ const EndpointBuilder = require('../../endpoint-builder')
 export class Volunteer {
   constructor (data) {
     this.id = data.id
-    this.skillsAndResources = ko.observable(`Skills: ${data.skillsAndExperience.description}; Resources: ${data.resources.description}`)
+    this.skills = ko.observable(data.skillsAndExperience.description)
+    this.resources = ko.observable(data.resources.description)
   }
 
   get viewUrl () {
