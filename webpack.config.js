@@ -55,6 +55,7 @@ module.exports = {
     editServiceProviderNeedCategories: p('edit-service-provider-need-categories'),
     impactupdates: p('impact-updates'),
     swep: p('swep'),
+    'city-add': path.join(__dirname, pageDirPath, 'cities/add'),
     tempAccom: p('accommodation'),
     tempAccomAdd: p('accommodation-add'),
     tempAccomEdit: p('accommodation-edit'),
