@@ -14,8 +14,8 @@ const City = function (data) {
   self.swepIsAvailable = ko.observable(data.swepIsAvailable)
   self.buttonText = ko.computed(() => {
     return self.swepIsAvailable()
-      ? 'Set Unavailable'
-      : 'Set Available'
+      ? 'Set SWEP OFF'
+      : 'Set SWEP ON'
   }, self)
 
   self.buttonClass = ko.computed(() => {
