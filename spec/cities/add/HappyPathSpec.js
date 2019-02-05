@@ -19,7 +19,7 @@ describe('Cities - add', () => {
         then: function (success, error) {
           success({
             'status': 'created',
-            'statusCode': 200
+            'statusCode': 201
           })
         }
       })
