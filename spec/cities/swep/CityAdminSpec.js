@@ -6,7 +6,7 @@ const auth = require('../../../src/js/auth')
 const endpoints = require('../../../src/js/api-endpoints')
 const browser = require('../../../src/js/browser')
 const nav = require('../../../src/js/nav')
-const Model = require('../../../src/js/models/cities/SwepModel')
+const Model = require('../../../src/js/models/cities/ListingModel')
 
 describe('SWEP Availabilty as City Admin', () => {
   let sut = null

@@ -1,0 +1,41 @@
+---
+title: Cities - Street Support
+description: Street support makes it easier to help homeless people. Here is more information about how it works.
+layout: default.hbs
+permalink: false
+jsBundle: city-add
+nosubnav: true
+---
+
+<div class="block block--highlight admin-header">
+  <div class="container block__inner">
+    <header>
+      <h1>Add New City</h1>
+      <a href="../" class="btn btn--info">
+        <span class="btn__text">Back to Cities</span>
+      </a>
+    </header>
+  </div>
+</div>
+<div class="block block--main-body">
+  <div class="container block__inner">
+    <!-- ko ifnot: formSubmitted -->
+    <div class="block__content form">
+    <p>To create a new City, please enter its name and the postcode for the the location's centre (where the map will default to when the City is selected).</p>
+      {{> form-feedback}}
+      <form data-bind="submit: submit">
+        <dl class="key-value-pair">
+          {{> forms/textField fieldTitle="Name" dataFieldName="cityName" }}
+          {{> forms/textField fieldTitle="Postcode of Centre" dataFieldName="postcode" }}
+        </dl>
+        
+        <button data-bind="click: submit" class="btn btn--primary"><span class="btn__text">Save</span></button>
+      </form>
+    </div>
+    <!-- /ko -->
+    <!-- ko if: wasSuccessful -->
+    <p>New city added</p>
+    <!-- /ko -->
+  </div>
+</div>
+{{> loading-spinner}}

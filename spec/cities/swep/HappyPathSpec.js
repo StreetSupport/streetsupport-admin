@@ -7,7 +7,7 @@ const adminUrls = require('../../../src/js/admin-urls')
 const endpoints = require('../../../src/js/api-endpoints')
 const browser = require('../../../src/js/browser')
 const nav = require('../../../src/js/nav')
-const Model = require('../../../src/js/models/cities/SwepModel')
+const Model = require('../../../src/js/models/cities/ListingModel')
 
 describe('SWEP Availabilty', () => {
   let sut = null
@@ -62,8 +62,8 @@ describe('SWEP Availabilty', () => {
   })
 
   it('- Should set toggle button text', () => {
-    expect(sut.cities()[0].buttonText()).toEqual('Set Available')
-    expect(sut.cities()[1].buttonText()).toEqual('Set Unavailable')
+    expect(sut.cities()[0].buttonText()).toEqual('Set SWEP ON')
+    expect(sut.cities()[1].buttonText()).toEqual('Set SWEP OFF')
   })
 
   it('- Should set claims for city', () => {
