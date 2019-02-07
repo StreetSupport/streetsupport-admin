@@ -18,7 +18,7 @@ function EditServiceProviderNeed () {
   self.responsesUrl = ko.observable(`${adminurls.needResponses}?needId=${needId}`)
 
   self.saveNeed = function (need) {
-    browser.redirect(self.providerUrl())
+    browser.redirect(`${adminurls.serviceProviders}?key=${need.serviceProviderId}`)
   }
 
   browser.loading()
