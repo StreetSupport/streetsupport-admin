@@ -84,7 +84,7 @@ function Need (data) {
   }
 
   self.deleteNeed = function () {
-    var endpoint = `${self.endpointBuilder.serviceProviders(getUrlParameter.parameter('key')).needs(self.id()).build()}`
+    var endpoint = `${self.endpointBuilder.serviceProviders(self.serviceProviderId).needs(self.id()).build()}`
     ajax.delete(endpoint)
     .then(function (result) {
       self.listeners().forEach((l) => l.deleteNeed(self))
@@ -94,7 +94,7 @@ function Need (data) {
   }
 
   self.resolveNeed = function () {
-    var endpoint = `${self.endpointBuilder.serviceProviders(getUrlParameter.parameter('key')).needs(self.id()).build()}/is-resolved`
+    var endpoint = `${self.endpointBuilder.serviceProviders(self.serviceProviderId).needs(self.id()).build()}/is-resolved`
     ajax.patch(endpoint, { IsResolved: true })
     .then(function (result) {
       self.listeners().forEach((l) => l.deleteNeed(self))
@@ -122,7 +122,7 @@ function Need (data) {
     }
 
     if (self.id() === undefined) { // adding
-      ajax.post(self.endpointBuilder.serviceProviders(getUrlParameter.parameter('providerId')).needs().build(),
+      ajax.post(self.endpointBuilder.serviceProviders(self.serviceProviderId).needs().build(),
         model
       ).then(function (result) {
         if (result.statusCode === 201) {
@@ -134,7 +134,7 @@ function Need (data) {
         self.handleError(error)
       })
     } else { // editing
-      let endpoint = self.endpointBuilder.serviceProviders(getUrlParameter.parameter('providerId')).needs(self.id()).build()
+      let endpoint = self.endpointBuilder.serviceProviders(self.serviceProviderId).needs(self.id()).build()
       ajax.put(endpoint,
         model
       ).then(function (result) {
