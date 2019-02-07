@@ -34,7 +34,8 @@ describe('Resolve Need', () => {
 
     model = new Model({
       id: 'abcde',
-      description: 'description'
+      description: 'description',
+      serviceProviderId: 'coffee4craig'
     })
     model.resolveNeed()
   })
