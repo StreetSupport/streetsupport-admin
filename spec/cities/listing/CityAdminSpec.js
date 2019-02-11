@@ -8,7 +8,7 @@ const browser = require('../../../src/js/browser')
 const nav = require('../../../src/js/nav')
 const Model = require('../../../src/js/models/cities/ListingModel')
 
-describe('SWEP Availabilty as City Admin', () => {
+describe('Listing as City Admin', () => {
   let sut = null
 
   beforeEach(() => {

@@ -3,15 +3,15 @@
 import { stub } from 'sinon'
 
 import ajax, { post } from '../../../src/js/ajax'
-import browser, { loading, loaded } from '../../../src/js/browser'
+import browser from '../../../src/js/browser'
 import { cities } from '../../../src/js/api-endpoints'
 import Model from '../../../src/js/models/cities/AddModel'
 
 describe('Cities - add', () => {
   let sut,
-      ajaxPostStub,
-      browserLoadingStub,
-      browserLoadedStub
+    ajaxPostStub,
+    browserLoadingStub,
+    browserLoadedStub
 
   beforeAll(() => {
     ajaxPostStub = stub(ajax, 'post')
@@ -48,14 +48,14 @@ describe('Cities - add', () => {
     beforeAll(() => {
       sut.cityName('city name')
       sut.postcode('postcode')
-  
+
       sut.submit()
     })
-  
+
     it('- should show user it is loading', () => {
       expect(browserLoadingStub.calledOnce).toBeTruthy()
     })
-  
+
     it('- should set form submitted to true', () => {
       expect(sut.formSubmitted()).toBeTruthy()
     })
@@ -73,11 +73,11 @@ describe('Cities - add', () => {
       }
       expect(args[1]).toEqual(payload)
     })
-  
+
     it('- should set submission successful to true', () => {
       expect(sut.wasSuccessful()).toBeTruthy()
     })
-  
+
     it('- should show user it has loaded', () => {
       expect(browserLoadedStub.calledAfter(ajaxPostStub)).toBeTruthy()
     })
