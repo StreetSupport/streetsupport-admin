@@ -10,6 +10,7 @@ const City = function (data) {
   const self = this
   self.key = data.key
   self.name = data.name
+  self.isPublic = ko.observable(data.isPublic)
   self.userClaims = ko.observable(`superadmin,cityadminfor:${data.key}`)
   self.swepIsAvailable = ko.observable(data.swepIsAvailable)
   self.buttonText = ko.computed(() => {
@@ -40,6 +41,22 @@ const City = function (data) {
           self.handleError(result)
         } else {
           self.swepIsAvailable(!self.swepIsAvailable())
+        }
+      }, (_) => {
+        self.handleServerError()
+      })
+  }
+
+  self.makePublic = () => {
+    const endpoint = `${self.endpointBuilder.cities().build()}/${self.key}/is-public`
+    ajax
+      .patch(endpoint)
+      .then((result) => {
+        browser.loaded()
+        if (result.statusCode !== 200) {
+          self.handleError(result)
+        } else {
+          self.isPublic(true)
         }
       }, (_) => {
         self.handleServerError()
