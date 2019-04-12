@@ -8,7 +8,6 @@ const ajax = require('../ajax')
 const BaseViewModel = require('./BaseViewModel')
 const browser = require('../browser')
 const Endpoints = require('../endpoint-builder')
-const getUrlParameter = require('../get-url-parameter')
 const htmlEncode = require('htmlencode')
 
 function Need (data) {
@@ -39,6 +38,8 @@ function Need (data) {
   self.donationUrl = ko.observable(data.donationUrl)
   self.keywords = ko.observable(data.keywords !== undefined && data.keywords !== null ? data.keywords.join(', ') : '')
   self.customMessage = ko.observable(data.customMessage)
+  self.isPriority = ko.observable(data.isPriority)
+
   self.neededDateReadOnly = ko.observable(moment(data.neededDate))
   self.neededDate = ko.computed(function () {
     return self.neededDateReadOnly().fromNow()
@@ -98,6 +99,16 @@ function Need (data) {
     ajax.patch(endpoint, { IsResolved: true })
     .then(function (result) {
       self.listeners().forEach((l) => l.deleteNeed(self))
+    }, function (error) {
+      self.handleError(error)
+    })
+  }
+
+  self.markAsPriority = function () {
+    var endpoint = `${self.endpointBuilder.serviceProviders(self.serviceProviderId).needs(self.id()).build()}/is-priority`
+    ajax.patch(endpoint, { IsPriority: !self.isPriority() })
+    .then(function (result) {
+      self.isPriority(!self.isPriority())
     }, function (error) {
       self.handleError(error)
     })
