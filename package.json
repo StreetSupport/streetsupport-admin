@@ -77,11 +77,11 @@
     "jsonwebtoken": "^8.3.0",
     "knockout": "3.5.0-rc",
     "knockout.validation": "2.0.3",
-    "marked": "0.4.0",
+    "marked": "0.6.2",
     "moment": "2.19.3",
     "node-uuid": "^1.4.7",
     "q": "1.4.1",
-    "snyk": "^1.69.7",
+    "snyk": "^1.76.0",
     "spin.js": "2.3.2",
     "svg4everybody": "2.1.4"
   },
