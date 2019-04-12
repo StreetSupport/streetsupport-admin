@@ -26,6 +26,16 @@
       <a data-bind="click: resolveNeed" title="mark need as resolved" class="btn btn--warning">
         <span class="btn__text">Mark as Resolved</span>
       </a>
+      <!-- ko if: isPriority -->
+      <a data-bind="click: markAsPriority" data-claims="superadmin,cityadmin" title="unmark as a priority" class="btn btn--indifferent">
+        <span class="btn__text">Unset Priority Need</span>
+      </a>
+      <!-- /ko -->
+      <!-- ko ifnot: isPriority -->
+      <a data-bind="click: markAsPriority" data-claims="superadmin,cityadmin" title="mark need as a priority" class="btn btn--primary">
+        <span class="btn__text">Mark as Priority Need</span>
+      </a>
+      <!-- /ko -->
       <p class="service-provider__item-note">Posted <span data-bind="text: neededDate"></span></p>
     </div>
   </article>
