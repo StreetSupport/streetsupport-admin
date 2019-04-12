@@ -27,12 +27,12 @@
         <span class="btn__text">Mark as Resolved</span>
       </a>
       <!-- ko if: isPriority -->
-      <a data-bind="click: markAsPriority" data-bind="superadmin,cityadmin" title="unmark as a priority" class="btn btn--indifferent">
+      <a data-bind="click: markAsPriority" data-claims="superadmin,cityadmin" title="unmark as a priority" class="btn btn--indifferent">
         <span class="btn__text">Unset Priority Need</span>
       </a>
       <!-- /ko -->
       <!-- ko ifnot: isPriority -->
-      <a data-bind="click: markAsPriority" data-bind="superadmin,cityadmin" title="mark need as a priority" class="btn btn--primary">
+      <a data-bind="click: markAsPriority" data-claims="superadmin,cityadmin" title="mark need as a priority" class="btn btn--primary">
         <span class="btn__text">Mark as Priority Need</span>
       </a>
       <!-- /ko -->
