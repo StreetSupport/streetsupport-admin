@@ -41,7 +41,11 @@
       <span data-bind="html: readOnlyDescription"></span>
       <!-- /ko -->
       <!-- ko if: $parent.isEditingGeneralDetails -->
-      <textarea data-bind="textInput: description" class="form__input form__input--textarea" rows="7"></textarea>
+      <textarea data-bind="textInput: description" class="form__input form__input--textarea" rows="7" placeholder="For consistent structured content across the platform, please use the examples below:
+      *italic text*
+      **bold text**
+      [I am a link](https://linkurl.com)
+      * bullet point list"></textarea>
       <!-- /ko -->
     </dd>
     <dt class="key-value-pair__key">Client Groups</dt>
