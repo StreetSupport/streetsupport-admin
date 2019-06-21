@@ -73,14 +73,19 @@ let origin = () => {
   return window.location.origin
 }
 
+const search = () => {
+  return window.location.search
+}
+
 module.exports = {
-  redirect: redirect,
-  loading: loading,
-  loaded: loaded,
-  trackEvent: trackEvent,
-  pushHistory: pushHistory,
-  popHistory: popHistory,
-  setOnHistoryPop: setOnHistoryPop,
-  scrollTo: scrollTo,
-  origin: origin
+  redirect,
+  loading,
+  loaded,
+  trackEvent,
+  pushHistory,
+  popHistory,
+  setOnHistoryPop,
+  scrollTo,
+  origin,
+  search
 }

@@ -27,10 +27,10 @@ function DashboardModel () {
   const self = this
 
   self.filters = [
-    { key: 'name', getValue: (vm) => vm.nameToFilterOn(), isSet: (val) => val !== undefined && val.length > 0 },
-    { key: 'location', getValue: (vm) => vm.locationToFilterOn(), isSet: (val) => val !== undefined && val.length > 0 },
-    { key: 'isVerified', getValue: (vm) => vm.filterOnIsVerified(), isSet: (val) => val !== '' },
-    { key: 'isPublished', getValue: (vm) => vm.filterOnIsPublished(), isSet: (val) => val !== '' }
+    { key: 'name', setValue: (vm, value) => vm.nameToFilterOn(value), getValue: (vm) => vm.nameToFilterOn(), isSet: (val) => val !== undefined && val.length > 0 },
+    { key: 'location', setValue: (vm, value) => vm.locationToFilterOn(value), getValue: (vm) => vm.locationToFilterOn(), isSet: (val) => val !== undefined && val.length > 0 },
+    { key: 'isVerified', setValue: (vm, value) => vm.filterOnIsVerified(Boolean(value)), getValue: (vm) => vm.filterOnIsVerified(), isSet: (val) => val !== '' },
+    { key: 'isPublished', setValue: (vm, value) => vm.filterOnIsPublished(Boolean(value)), getValue: (vm) => vm.filterOnIsPublished(), isSet: (val) => val !== '' }
   ]
 
   self.mapItems = (sp) => { return new ServiceProvider(sp) }

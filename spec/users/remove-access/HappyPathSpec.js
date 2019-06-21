@@ -37,6 +37,8 @@ describe('Users - listing', () => {
     sinon.stub(auth, 'isCityAdmin').returns(false)
     browserLoadingStub = sinon.stub(browser, 'loading')
     browserLoadedStub = sinon.stub(browser, 'loaded')
+    sinon.stub(browser, 'pushHistory')
+    sinon.stub(browser, 'search')
 
     sut = new Model()
   })
@@ -46,6 +48,8 @@ describe('Users - listing', () => {
     auth.isCityAdmin.restore()
     browser.loading.restore()
     browser.loaded.restore()
+    browser.pushHistory.restore()
+    browser.search.restore()
   })
 
   it('- should list users', () => {

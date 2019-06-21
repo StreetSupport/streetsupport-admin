@@ -32,6 +32,9 @@ describe('Edit Charter Pledge', () => {
 
     browserLoadingStub = sinon.stub(browser, 'loading')
     browserLoadedStub = sinon.stub(browser, 'loaded')
+    sinon.stub(browser, 'pushHistory')
+    sinon.stub(browser, 'search')
+
     validationShowErrorsStub = sinon.stub(validation, 'showErrors')
 
     var getPutPromise = () => {
@@ -55,6 +58,8 @@ describe('Edit Charter Pledge', () => {
     ajax.get.restore()
     browser.loading.restore()
     browser.loaded.restore()
+    browser.pushHistory.restore()
+    browser.search.restore()
     ajax.put.restore()
     validation.showErrors.restore()
   })
