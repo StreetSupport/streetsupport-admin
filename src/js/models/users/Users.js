@@ -61,8 +61,8 @@ function ListUsers () {
   self.locationToFilterOn = ko.observable()
 
   self.filters = [
-    { key: 'role', getValue: (vm) => vm.filterOnRole(), isSet: (val) => val !== undefined && val.length > 0 },
-    { key: 'location', getValue: (vm) => vm.locationToFilterOn(), isSet: (val) => val !== undefined && val.length > 0 }
+    { key: 'role', setValue: (vm, value) => vm.filterOnRole(value), getValue: (vm) => vm.filterOnRole(), isSet: (val) => val !== undefined && val.length > 0 },
+    { key: 'location', setValue: (vm, value) => vm.locationToFilterOn(value), getValue: (vm) => vm.locationToFilterOn(), isSet: (val) => val !== undefined && val.length > 0 }
   ]
   self.mapItems = (p) => new User(p, self)
   self.mapCsvItems = self.mapItems

@@ -16,9 +16,9 @@ const ListModel = function () {
 
   const hasValue = (val) => val !== undefined && val.length > 0
   self.filters = [
-    { key: 'searchTerm', getValue: (vm) => vm.nameToFilterOn(), isSet: hasValue },
-    { key: 'category', getValue: (vm) => vm.categoryToFilterOn(), isSet: hasValue },
-    { key: 'location', getValue: (vm) => vm.locationToFilterOn(), isSet: hasValue }
+    { key: 'searchTerm', setValue: (vm, value) => vm.nameToFilterOn(value), getValue: (vm) => vm.nameToFilterOn(), isSet: hasValue },
+    { key: 'category', setValue: (vm, value) => vm.categoryToFilterOn(value), getValue: (vm) => vm.categoryToFilterOn(), isSet: hasValue },
+    { key: 'location', setValue: (vm, value) => vm.locationToFilterOn(value), getValue: (vm) => vm.locationToFilterOn(), isSet: hasValue }
   ]
 
   self.mapItems = (i) => { return new ItemOfferer(i, self) }

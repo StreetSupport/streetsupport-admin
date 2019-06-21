@@ -33,6 +33,8 @@ describe('Service Providers - listing as single location admin', () => {
     sinon.stub(auth, 'getLocationsForUser').returns(userLocations)
     sinon.stub(browser, 'loading')
     sinon.stub(browser, 'loaded')
+    sinon.stub(browser, 'pushHistory')
+    sinon.stub(browser, 'search')
 
     sut = new Model()
   })
@@ -42,6 +44,8 @@ describe('Service Providers - listing as single location admin', () => {
     auth.getLocationsForUser.restore()
     browser.loading.restore()
     browser.loaded.restore()
+    browser.pushHistory.restore()
+    browser.search.restore()
   })
 
   it('- should hide locations filter dropdown', () => {

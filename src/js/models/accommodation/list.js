@@ -69,9 +69,9 @@ function Lister () {
   }
 
   self.filters = [
-    { key: 'providerId', getValue: (vm) => vm.providerIdToFilterOn(), isSet: (val) => val !== undefined && val.length > 0 },
-    { key: 'name', getValue: (vm) => vm.nameToFilterOn(), isSet: (val) => val !== undefined && val.length > 0 },
-    { key: 'location', getValue: (vm) => vm.locationToFilterOn(), isSet: (val) => val !== undefined && val.length > 0 }
+    { key: 'providerId', setValue: (vm, value) => vm.providerIdToFilterOn(value), getValue: (vm) => vm.providerIdToFilterOn(), isSet: (val) => val !== undefined && val.length > 0 },
+    { key: 'name', setValue: (vm, value) => vm.nameToFilterOn(value), getValue: (vm) => vm.nameToFilterOn(), isSet: (val) => val !== undefined && val.length > 0 },
+    { key: 'location', setValue: (vm, value) => vm.locationToFilterOn(value), getValue: (vm) => vm.locationToFilterOn(), isSet: (val) => val !== undefined && val.length > 0 }
   ]
   self.mapItems = mapItem
   self.baseUrl = endpoints.temporaryAccommodation
