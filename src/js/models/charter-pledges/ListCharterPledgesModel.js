@@ -148,11 +148,12 @@ function ListCharterPledgesModel () {
   self.filterOnPledgeCat = ko.observable()
 
   self.filters = [
-    { key: 'supporterCategory', getValue: (vm) => vm.filterOnPledgeCat(), isSet: (val) => val !== undefined && val.length > 0 },
-    { key: 'searchTerm', getValue: (vm) => vm.textToFilterOn(), isSet: (val) => val !== undefined && val.length > 0 },
-    { key: 'isApproved', getValue: (vm) => vm.filterOnIsApproved(), isSet: (val) => val !== '' },
-    { key: 'isFeatured', getValue: (vm) => vm.filterOnIsFeatured(), isSet: (val) => val !== '' },
-    { key: 'isOptedIn', getValue: (vm) => vm.filterOnIsOptedIn(), isSet: (val) => val !== '' }
+    { key: 'supporterCategory', setValue: (vm, value) => vm.filterOnPledgeCat(value), getValue: (vm) => vm.filterOnPledgeCat(), isSet: (val) => val !== undefined && val.length > 0 },
+    { key: 'searchTerm', setValue: (vm, value) => vm.textToFilterOn(value), getValue: (vm) => vm.textToFilterOn(), isSet: (val) => val !== undefined && val.length > 0 },
+    { key: 'isApproved', setValue: (vm, value) => vm.filterOnIsApproved(Boolean(value)), getValue: (vm) => vm.filterOnIsApproved(), isSet: (val) => val !== '' },
+    { key: 'isFeatured', setValue: (vm, value) => vm.filterOnIsFeatured(Boolean(value)), getValue: (vm) => vm.filterOnIsFeatured(), isSet: (val) => val !== '' },
+    { key: 'isOptedIn', setValue: (vm, value) => vm.filterOnIsOptedIn(Boolean(value)), getValue: (vm) => vm.filterOnIsOptedIn(), isSet: (val) => val !== '' }
+
   ]
   self.mapItems = (p) => new Pledge(p, self)
   self.mapCsvItems = self.mapItems

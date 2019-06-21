@@ -39,6 +39,8 @@ describe('Service Providers', () => {
     sinon.stub(auth, 'getLocationsForUser').returns(locations)
     browserLoadingStub = sinon.stub(browser, 'loading')
     browserLoadedStub = sinon.stub(browser, 'loaded')
+    sinon.stub(browser, 'pushHistory')
+    sinon.stub(browser, 'search')
 
     dashboard = new Model()
   })
@@ -48,6 +50,8 @@ describe('Service Providers', () => {
     auth.getLocationsForUser.restore()
     browser.loading.restore()
     browser.loaded.restore()
+    browser.pushHistory.restore()
+    browser.search.restore()
   })
 
   it('should tell user loading', () => {
@@ -56,8 +60,7 @@ describe('Service Providers', () => {
 
   it('should retrieve service providers from api', () => {
     var endpoint = `${endpoints.getServiceProvidersv3}?pageSize=10&index=0`
-    var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint).calledOnce
-    expect(apiCalledWithExpectedArgs).toBeTruthy()
+    expect(stubbedApi.firstCall.args[0]).toEqual(endpoint)
   })
 
   it('should tell user loaded', () => {

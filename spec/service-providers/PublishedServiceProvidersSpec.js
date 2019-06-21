@@ -41,6 +41,8 @@ describe('PublishedServiceProviders', () => {
     sinon.stub(auth, 'getLocationsForUser').returns([])
     sinon.stub(browser, 'loading')
     sinon.stub(browser, 'loaded')
+    sinon.stub(browser, 'pushHistory')
+    sinon.stub(browser, 'search')
 
     dashboard = new Dashboard()
   })
@@ -50,6 +52,8 @@ describe('PublishedServiceProviders', () => {
     auth.getLocationsForUser.restore()
     browser.loading.restore()
     browser.loaded.restore()
+    browser.pushHistory.restore()
+    browser.search.restore()
   })
 
   it('should set published labels', () => {

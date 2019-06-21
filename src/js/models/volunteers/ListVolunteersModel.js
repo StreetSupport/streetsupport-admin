@@ -39,11 +39,11 @@ const ListVolunteersModel = function () {
     }
   }
   self.filters = [
-    { key: 'location', getValue: (vm) => vm.locationToFilterOn(), isSet: (val) => val !== undefined && val.length > 0 },
-    { key: 'skillsCategory', getValue: (vm) => vm.volCategoryToFilterOn(), isSet: (val) => val !== undefined && val.length > 0 },
-    { key: 'search', getValue: (vm) => vm.textSearchToFilterOn(), isSet: (val) => val !== undefined && val.length > 0 },
-    { key: 'isArchived', getValue: (vm) => vm.filterOnIsArchived(), isSet: (val) => val !== '' },
-    { key: 'isOptedIn', getValue: (vm) => vm.filterOnIsOptedIn(), isSet: (val) => val !== '' }
+    { key: 'location', setValue: (vm, value) => vm.locationToFilterOn(value), getValue: (vm) => vm.locationToFilterOn(), isSet: (val) => val !== undefined && val.length > 0 },
+    { key: 'skillsCategory', setValue: (vm, value) => vm.volCategoryToFilterOn(value), getValue: (vm) => vm.volCategoryToFilterOn(), isSet: (val) => val !== undefined && val.length > 0 },
+    { key: 'search', setValue: (vm, value) => vm.textSearchToFilterOn(value), getValue: (vm) => vm.textSearchToFilterOn(), isSet: (val) => val !== undefined && val.length > 0 },
+    { key: 'isArchived', setValue: (vm, value) => vm.filterOnIsArchived(Boolean(value)), getValue: (vm) => vm.filterOnIsArchived(), isSet: (val) => val !== '' },
+    { key: 'isOptedIn', setValue: (vm, value) => vm.filterOnIsOptedIn(Boolean(value)), getValue: (vm) => vm.filterOnIsOptedIn(), isSet: (val) => val !== '' }
   ]
   self.baseUrl = self.endpointBuilder.volunteers().build()
 

@@ -33,6 +33,8 @@ describe('List Offers', () => {
     sinon.stub(auth, 'getLocationsForUser').returns([])
     browserLoadingStub = sinon.stub(browser, 'loading')
     browserLoadedStub = sinon.stub(browser, 'loaded')
+    sinon.stub(browser, 'pushHistory')
+    sinon.stub(browser, 'search')
 
     model = new Model()
   })
@@ -42,6 +44,8 @@ describe('List Offers', () => {
     auth.getLocationsForUser.restore()
     browser.loading.restore()
     browser.loaded.restore()
+    browser.pushHistory.restore()
+    browser.search.restore()
   })
 
   it('should notify user it is loading', () => {

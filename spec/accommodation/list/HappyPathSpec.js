@@ -40,6 +40,8 @@ describe('Accommodation Listing', () => {
     authGetLocationsForUserStub = sinon.stub(auth, 'getLocationsForUser').returns(cities)
     browserLoadingStub = sinon.stub(browser, 'loading')
     browserLoadedStub = sinon.stub(browser, 'loaded')
+    sinon.stub(browser, 'pushHistory')
+    sinon.stub(browser, 'search')
     sinon.stub(querystring, 'parameter')
 
     sut = new Model()
@@ -53,6 +55,8 @@ describe('Accommodation Listing', () => {
     auth.getLocationsForUser.restore()
     browser.loading.restore()
     browser.loaded.restore()
+    browser.pushHistory.restore()
+    browser.search.restore()
     querystring.parameter.restore()
   })
 

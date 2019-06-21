@@ -14,7 +14,8 @@ const data = require('./serviceProviderData')
 describe('Service Providers - search', () => {
   const Model = require('../../src/js/models/service-providers/listing')
   let sut,
-    stubbedApi
+    stubbedApi,
+    stubbedBrowserHistoryPush
 
   beforeEach(() => {
     const fakeResolved = {
@@ -34,6 +35,8 @@ describe('Service Providers - search', () => {
     sinon.stub(auth, 'getLocationsForUser').returns([])
     sinon.stub(browser, 'loading')
     sinon.stub(browser, 'loaded')
+    stubbedBrowserHistoryPush = sinon.stub(browser, 'pushHistory')
+    sinon.stub(browser, 'search')
 
     sut = new Model()
   })
@@ -43,6 +46,8 @@ describe('Service Providers - search', () => {
     auth.getLocationsForUser.restore()
     browser.loading.restore()
     browser.loaded.restore()
+    browser.pushHistory.restore()
+    browser.search.restore()
   })
 
   describe('- from start', () => {
@@ -66,6 +71,26 @@ describe('Service Providers - search', () => {
       }
       var actual = {}
       stubbedApi.secondCall.args[0]
+        .split('?')[1]
+        .split('&')
+        .forEach((kv) => {
+          const [key, value] = kv.split('=')
+          actual[key] = value
+        })
+      expect(actual).toEqual(expected)
+    })
+
+    it('- should set the browser history with the search parameters', () => {
+      var expected = {
+        pageSize: '10',
+        index: '0',
+        name: 'street',
+        isVerified: 'true',
+        isPublished: 'true',
+        location: 'manchester'
+      }
+      var actual = {}
+      stubbedBrowserHistoryPush.secondCall.args[2]
         .split('?')[1]
         .split('&')
         .forEach((kv) => {
