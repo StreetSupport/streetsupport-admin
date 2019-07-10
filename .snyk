@@ -53,3 +53,16 @@ patch:
   'npm:marked:20170907':
     - marked:
         patched: '2017-11-01T05:40:07.808Z'
+  SNYK-JS-LODASH-450202:
+    - snyk > lodash:
+        patched: '2019-07-10T02:49:58.681Z'
+    - snyk > inquirer > lodash:
+        patched: '2019-07-10T02:49:58.681Z'
+    - snyk > snyk-config > lodash:
+        patched: '2019-07-10T02:49:58.681Z'
+    - snyk > snyk-mvn-plugin > lodash:
+        patched: '2019-07-10T02:49:58.681Z'
+    - snyk > snyk-nodejs-lockfile-parser > lodash:
+        patched: '2019-07-10T02:49:58.681Z'
+    - snyk > snyk-nuget-plugin > lodash:
+        patched: '2019-07-10T02:49:58.681Z'
