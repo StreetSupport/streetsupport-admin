@@ -7,6 +7,7 @@ function BaseViewModel () {
   var self = this
   self.message = ko.observable()
   self.errors = ko.observableArray()
+  self.isProcessing = ko.observable(false)
   self.hasErrors = ko.computed(function () {
     return self.errors().length > 0
   }, self)
