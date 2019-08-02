@@ -34,6 +34,7 @@ function AddServiceProviderNeed () {
       self.need(need)
       browser.loaded()
     }, function (error) {
+      browser.loaded()
       self.handleError(error)
     })
 }

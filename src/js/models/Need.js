@@ -115,6 +115,7 @@ function Need (data) {
   }
 
   self.save = function () {
+    self.isProcessing(true)
     let keywords = self.keywords() !== undefined
       ? self.keywords().split(',').map((k) => k.trim())
       : []
@@ -133,9 +134,12 @@ function Need (data) {
     }
 
     if (self.id() === undefined) { // adding
+      browser.loading()
       ajax.post(self.endpointBuilder.serviceProviders(self.serviceProviderId).needs().build(),
         model
       ).then(function (result) {
+        browser.loaded()
+        self.isProcessing(false)
         if (result.statusCode === 201) {
           self.listeners().forEach((l) => l.saveNeed(self))
         } else {
@@ -149,6 +153,7 @@ function Need (data) {
       ajax.put(endpoint,
         model
       ).then(function (result) {
+        self.isProcessing(false)
         if (result.statusCode === 200) {
           self.listeners().forEach((l) => l.saveNeed(self))
         } else {
