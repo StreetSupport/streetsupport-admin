@@ -22,7 +22,9 @@ nosubnav: true
       <article data-bind="with: need">
         {{> form-feedback}}
         {{> need}}
-        <button data-bind="click: save" class="btn btn--primary"><span class="btn__text">save</span></button>
+        <!-- ko ifnot: isProcessing() -->
+        <button data-bind="click: save" class="btn btn--primary" ><span class="btn__text">save</span></button>
+        <!-- /ko -->
       </article>
     </div>
   </div>
