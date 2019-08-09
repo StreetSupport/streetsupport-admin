@@ -30,9 +30,13 @@ function Index () {
         : adminUrls.forbidden
     }
 
+    const redirectUrlIsOk = () => redirectUrl !== undefined &&
+    redirectUrl.indexOf(browser.origin()) === 0 &&
+    redirectUrl.indexOf('password-reset') === -1
+
     const rules = [
       { getPredicate: () => !isAuthenticated(), newLocation: adminUrls.login },
-      { getPredicate: () => redirectUrl !== undefined && redirectUrl.indexOf(browser.origin()) === 0, newLocation: redirectUrl },
+      { getPredicate: redirectUrlIsOk, newLocation: redirectUrl },
       { getPredicate: () => orgAdminForClaim.length > 0, newLocation: adminUrls.dashboardv2 },
       { getPredicate: () => authClaims.includes('superadmin'), newLocation: adminUrls.dashboardv2 },
       { getPredicate: () => authClaims.includes('cityadmin'), newLocation: adminUrls.dashboardv2 },
