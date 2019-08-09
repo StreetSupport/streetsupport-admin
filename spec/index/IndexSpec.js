@@ -32,6 +32,29 @@ describe('Index', () => {
     beforeEach(() => {
       sinon.stub(webAuth, 'isAuthenticated').returns(false)
       sinon.stub(querystring, 'parameter')
+        .withArgs('redirectUrl')
+        .returns('https://site.com/password-reset/some-other-stuff?wang=fu')
+      stubbedStorage
+        .withArgs(webAuth.storageKeys.roles)
+        .returns('')
+
+      model = new Model()
+    })
+
+    afterEach(() => {
+      querystring.parameter.restore()
+    })
+
+    it('should redirect to login', () => {
+      var browserRedirectedWithExpectedUrl = stubbedBrowser.withArgs(adminurls.login).calledOnce
+      expect(browserRedirectedWithExpectedUrl).toBeTruthy()
+    })
+  })
+
+  describe('Has been redirected from password reset', () => {
+    beforeEach(() => {
+      sinon.stub(webAuth, 'isAuthenticated').returns(false)
+      sinon.stub(querystring, 'parameter')
       stubbedStorage
         .withArgs(webAuth.storageKeys.roles)
         .returns('')

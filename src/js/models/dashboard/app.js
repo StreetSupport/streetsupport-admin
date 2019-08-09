@@ -88,7 +88,7 @@ class LatestNeeds {
     this.needs = ko.observableArray([])
 
     ajax
-      .get(`${new EndpointBuilder().serviceProviderNeeds().build()}?pageSize=10`)
+      .get(`${new EndpointBuilder().serviceProviderNeeds().build()}?pageSize=10&isResolved=false`)
       .then((result) => {
         const needs = result.data.items
           .map((n) => new Need(n))
