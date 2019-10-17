@@ -96,7 +96,7 @@ function ServiceProvider (data) {
   self.amendServicesUrl = adminUrls.serviceProviderServices + '?providerId=' + data.key
 
   self.addNeedUrl = adminUrls.serviceProviderNeedsAdd + '?providerId=' + data.key
-  self.viewAccomUrl = adminUrls.temporaryAccommodation + '?providerId=' + data.key
+  self.viewAccomUrl = adminUrls.temporaryAccommodation + '?index=0&pageSize=10&providerId=' + data.key
   self.addAccomUrl = `${adminUrls.temporaryAccommodation}/add/?providerId=${data.key}`
 
   self.verifyOrg = function () {
