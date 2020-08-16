@@ -101,7 +101,6 @@ describe('Grouped Service', () => {
           'IsOpen247': true,
           'IsTelephoneService': true,
           'IsAppointmentOnly': true,
-          'IsAppointmentOnly': true,
           SubCategories: ['subcat2'],
           ClientGroupKeys: []
         }
