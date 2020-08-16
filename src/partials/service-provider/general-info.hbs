@@ -50,15 +50,13 @@
     </dd>
     <dt class="key-value-pair__key">Client Groups</dt>
     <dd class="key-value-pair__value">
-      <!-- ko ifnot: $parent.isEditingGeneralDetails -->
       <span data-bind="html: clientGroups"></span>
-      <!-- /ko -->
       <!-- ko if: $parent.isEditingGeneralDetails -->
       <select size="5" multiple="true" data-bind="options: availableClientGroups,
           optionsValue: function (item) { return item.key },
           optionsText:  function (item) { return item.name },
           selectedOptions: clientGroups,
-          optionsCaption: '-- please select --'" class="form__input"></select>
+          optionsCaption: '-- please select --'" class="form__input client-group-select"></select>
       <!-- /ko -->
     </dd>
     <dt class="key-value-pair__key">Tags</dt>

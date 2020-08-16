@@ -227,6 +227,7 @@ describe('Add Service Provider Service', () => {
       model.prefillAddress()
       model.isTelephoneService(true)
       model.isAppointmentOnly(true)
+      model.clientGroups([])
 
       model.saveService()
     })
@@ -262,7 +263,8 @@ describe('Add Service Provider Service', () => {
         'Telephone': 'telephone',
         'IsOpen247': true,
         'IsTelephoneService': true,
-        'IsAppointmentOnly': true
+        'IsAppointmentOnly': true,
+        'ClientGroupKeys': []
       }
 
       var apiCalledWithExpectedArgs = stubbedPostApi.withArgs(endpoint, payload).calledOnce
