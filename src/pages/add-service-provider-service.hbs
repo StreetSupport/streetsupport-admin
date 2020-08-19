@@ -54,7 +54,7 @@ nosubnav: true
         </section>
         <section class="block__section">
           <h3>Service Details</h3>
-          <dl>
+          <dl class="key-value-pair">
             <dt class="key-value-pair__key">Description</dt>
             <dd class="key-value-pair__value">
               <textarea data-bind="textInput: info" class="form__input form__input--multiline" placeholder="For consistent structured content across the platform, please use the following examples:   *italic text*
@@ -62,6 +62,17 @@ nosubnav: true
                     [I am a link](https://linkurl.com)
                     * bullet point list"></textarea>
             </dd>
+
+            <dt class="key-value-pair__key">Client Groups</dt>
+            <dd class="key-value-pair__value">
+              <span data-bind="html: clientGroups"></span>
+              <select size="5" multiple="true" data-bind="options: availableClientGroups,
+                  optionsValue: function (item) { return item.key },
+                  optionsText:  function (item) { return item.name },
+                  selectedOptions: clientGroups,
+                  optionsCaption: '-- please select --'" class="form__input client-group-select"></select>
+            </dd>
+
             <dt class="key-value-pair__key">Target Audience - eg: "lgbt, under 25s"</dt>
             <dd class="key-value-pair__value">
               <input data-bind="textInput: targetAudience" type="text" class="form__input" />

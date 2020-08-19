@@ -64,6 +64,7 @@ describe('Grouped Service', () => {
           id: ko.observable('subcat2'),
           isSelected: ko.observable(true)
         }
+        model.clientGroups = ko.observableArray()
 
         model.save()
       })
@@ -100,10 +101,12 @@ describe('Grouped Service', () => {
           'IsOpen247': true,
           'IsTelephoneService': true,
           'IsAppointmentOnly': true,
-          SubCategories: ['subcat2']
+          SubCategories: ['subcat2'],
+          ClientGroupKeys: []
         }
 
         var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, payload).calledOnce
+
         expect(apiCalledWithExpectedArgs).toBeTruthy()
       })
     })
@@ -157,7 +160,8 @@ describe('Grouped Service', () => {
           'IsOpen247': false,
           'IsTelephoneService': false,
           'IsAppointmentOnly': false,
-          'SubCategories': []
+          'SubCategories': [],
+          'ClientGroupKeys': ['cg-1']
         }
 
         var apiCalledWithExpectedArgs = stubbedApi.withArgs(endpoint, payload).calledOnce
@@ -235,6 +239,7 @@ function getData () {
         'id': 'haircut',
         'name': 'Haircuts'
       }
-    ]
+    ],
+    'clientGroupKeys': ['cg-1']
   }
 }

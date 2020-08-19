@@ -48,6 +48,17 @@ nosubnav: true
             <dd class="key-value-pair__value">
               <textarea data-bind="textInput: info" class="form__input form__input--multiline"></textarea>
             </dd>
+
+            <dt class="key-value-pair__key">Client Groups</dt>
+            <dd class="key-value-pair__value">
+              <span data-bind="html: clientGroups"></span>
+              <select size="5" multiple="true" data-bind="options: availableClientGroups,
+                  optionsValue: function (item) { return item.key },
+                  optionsText:  function (item) { return item.name },
+                  selectedOptions: clientGroups,
+                  optionsCaption: '-- please select --'" class="form__input client-group-select"></select>
+            </dd>
+
             <dt class="key-value-pair__key">Target Audience</dt>
             <dd class="key-value-pair__value">
               <input data-bind="textInput: tags" type="text" class="form__input" />
