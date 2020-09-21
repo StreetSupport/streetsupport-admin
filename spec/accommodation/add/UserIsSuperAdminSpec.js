@@ -86,6 +86,14 @@ describe('Accommodation - Add - super admin', () => {
     it('- should decode provider names', () => {
       expect(sut.serviceProviders()[0].name).toEqual('Provider A\'s House')
     })
+
+    it('should populate addresses', () => {
+      expect(sut.addresses().length).toEqual(0)
+    })
+
+    it('- should set hasAddresses', () => {
+      expect(sut.hasAddresses()).toBeFalsy()
+    })
   })
 
   describe('- submit', () => {
@@ -199,10 +207,10 @@ describe('Accommodation - Add - super admin', () => {
 })
 
 const providerData = { items: [
-  { key: 'provider-a', name: 'Provider A&#39;s House' },
-  { key: 'provider-b', name: 'Provider B' },
-  { key: 'provider-c', name: 'Provider C' },
-  { key: 'provider-d', name: 'Provider D' },
-  { key: 'provider-e', name: 'Provider E' },
-  { key: 'provider-f', name: 'Provider F' }
+  { key: 'provider-a', name: 'Provider A&#39;s House', addresses: [] },
+  { key: 'provider-b', name: 'Provider B', addresses: [] },
+  { key: 'provider-c', name: 'Provider C', addresses: [] },
+  { key: 'provider-d', name: 'Provider D', addresses: [] },
+  { key: 'provider-e', name: 'Provider E', addresses: [] },
+  { key: 'provider-f', name: 'Provider F', addresses: [] }
 ]}
