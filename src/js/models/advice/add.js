@@ -52,7 +52,7 @@ const Model = function () {
     self.getParentScenarios()
   }
 
-  self.getParentScenarios = (locationId) => {
+  self.getParentScenarios = () => {
     ajax
       .get(`${endpoints.parentScenarios}`)
       .then((result) => {

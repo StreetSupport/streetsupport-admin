@@ -57,7 +57,8 @@ describe('Advice QA - Add', () => {
       model.locationKey('location')
       model.tags('tag-a , tag-b, tag-c ')
       model.sortPosition(123)
-
+      model.parentScenarioKey('parent-scenario')
+      model.parentScenarios([{ key: 'parent-scenario', name: 'Parent scenario' }, { key: 'parent-scenario2', name: 'Parent scenario 2' }])
       model.save()
     })
 
@@ -74,7 +75,8 @@ describe('Advice QA - Add', () => {
         body: 'body',
         locationKey: 'location',
         tags: ['tag-a', 'tag-b', 'tag-c'],
-        sortPosition: 123
+        sortPosition: 123,
+        parentScenario: { key: 'parent-scenario', name: 'Parent scenario' }
       }
       expect(payload).toEqual(expected)
     })
