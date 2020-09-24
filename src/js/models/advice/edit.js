@@ -19,7 +19,7 @@ const Model = function () {
   self.sortPosition = ko.observable()
   self.locationKey = ko.observable()
   self.locations = ko.observableArray()
-  self.parentScenarios= ko.observableArray()
+  self.parentScenarios= ko.observableArray([])
   self.parentScenarioKey = ko.observable()
 
   self.save = function () {
@@ -61,7 +61,7 @@ const Model = function () {
         self.locationKey(result.data.locationKey)
         self.tags(result.data.tags.join(', '))
         self.sortPosition(result.data.sortPosition)
-        self.parentScenarioKey(result.data.parentScenario.key)
+        self.parentScenarioKey(result.data.parentScenario !== null ? result.data.parentScenario.key : null)
         browser.loaded()
       }, (err) => {
         self.handleError(err)
