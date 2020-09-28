@@ -53,15 +53,23 @@ const Model = function () {
     browser.loading()
     self.getParentScenarios()
 
+    // We generate this for retrieving the not cached item
+    let syntaxSugar = new Date().getTime()
+
     ajax
-      .get(self.endpointBuilder.faqs(querystring.parameter('id')).build())
+      .get(self.endpointBuilder.faqs(querystring.parameter('id')).build() + `?unique=${syntaxSugar}`)
       .then((result) => {
         self.title(htmlencode.htmlDecode(result.data.title))
         self.body(htmlencode.htmlDecode(result.data.body))
         self.locationKey(result.data.locationKey)
         self.tags(result.data.tags.join(', '))
         self.sortPosition(result.data.sortPosition)
-        self.parentScenarioKey(result.data.parentScenario !== null ? result.data.parentScenario.key : null)
+        if (result.data.parentScenario !== null) {
+          self.parentScenarioKey(result.data.parentScenario.key)
+        }
+        else {
+          self.parentScenarioKey(null)
+        }
         browser.loaded()
       }, (err) => {
         self.handleError(err)
