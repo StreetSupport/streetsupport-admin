@@ -10,12 +10,23 @@ const browser = require('../browser')
 const Endpoints = require('../endpoint-builder')
 const htmlEncode = require('htmlencode')
 
+import { clientGroups } from '../../data/generated/client-groups'
+
 function Need (data) {
   const self = this
   self.endpoints = new Endpoints()
 
   self.serviceProviderId = data.serviceProviderId
   self.availableTypes = ko.observableArray(['money', 'time', 'items'])
+  self.availableClientGroups = ko.observableArray(clientGroups)
+  
+  if ((data.сlientGroupKeys === null || data.сlientGroupKeys === undefined) && (data.clientGroups !== null || data.clientGroups !== undefined)) {
+    self.сlientGroupKeys = ko.observableArray(data.clientGroups.map((v) => v.key))
+  } else {
+    self.сlientGroupKeys = ko.observableArray(data.сlientGroupKeys)
+  }
+
+  self.сlientGroups = ko.observableArray(data.clientGroups)
 
   self.id = ko.observable(data.id)
 
@@ -130,7 +141,8 @@ function Need (data) {
       'DonationAmountInPounds': self.donationAmountInPounds(),
       'DonationUrl': self.donationUrl(),
       'CustomMessage': self.customMessage(),
-      'Keywords': keywords
+      'Keywords': keywords,
+      'ClientGroupKeys': self.сlientGroupKeys()
     }
 
     if (self.id() === undefined) { // adding
