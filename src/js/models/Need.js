@@ -19,8 +19,7 @@ function Need (data) {
   self.serviceProviderId = data.serviceProviderId
   self.availableTypes = ko.observableArray(['money', 'time', 'items'])
   self.availableClientGroups = ko.observableArray(clientGroups)
-  
-  if ((data.сlientGroupKeys === null || data.сlientGroupKeys === undefined) && (data.clientGroups !== null || data.clientGroups !== undefined)) {
+  if ((data.сlientGroupKeys === null || data.сlientGroupKeys === undefined) && (data.clientGroups !== null && data.clientGroups !== undefined)) {
     self.сlientGroupKeys = ko.observableArray(data.clientGroups.map((v) => v.key))
   } else {
     self.сlientGroupKeys = ko.observableArray(data.сlientGroupKeys)
