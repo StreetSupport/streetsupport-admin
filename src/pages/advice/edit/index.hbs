@@ -11,7 +11,7 @@ nosubnav: true
 <div class="block block--highlight">
   <div class="container block__inner">
     <header>
-      <h1>Add Location Advice Q&amp;A Content</h1>
+      <h1>Edit Location Advice Q&amp;A Content</h1>
       <a class="btn btn--info" href="/advice">
         <span class="btn__text">Back to Listing</span>
       </a>
@@ -33,6 +33,14 @@ nosubnav: true
             <select data-bind="options: locations,
               value: locationKey,
               optionsValue: function (item) { return item.id },
+              optionsText:  function (item) { return item.name },
+              optionsCaption: '-- please select --'" class="form__input"></select>
+          </dd>
+          <dt class="key-value-pair__key">Parent Scenario</dt>
+          <dd class="key-value-pair__value">
+            <select data-bind="options: parentScenarios,
+              value: parentScenarioKey,
+              optionsValue: function (item) { return item.key },
               optionsText:  function (item) { return item.name },
               optionsCaption: '-- please select --'" class="form__input"></select>
           </dd>

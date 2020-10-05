@@ -43,6 +43,14 @@ nosubnav: true
               optionsText:  function (item) { return item.name },
               optionsCaption: '-- please select --'" class="form__input"></select>
           </dd>
+          <dt class="key-value-pair__key">Parent Scenario</dt>
+          <dd class="key-value-pair__value">
+            <select data-bind="options: parentScenarios,
+              value: parentScenarioKey,
+              optionsValue: function (item) { return item.key },
+              optionsText:  function (item) { return item.name },
+              optionsCaption: '-- please select --'" class="form__input"></select>
+          </dd>
           <dt class="key-value-pair__key">Body</dt>
           <dd class="key-value-pair__value">
             <textarea data-bind="textInput: body" class="form__input" rows="20"></textarea>
