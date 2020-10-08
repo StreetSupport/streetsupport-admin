@@ -19,16 +19,14 @@ function Need (data) {
   self.serviceProviderId = data.serviceProviderId
   self.availableTypes = ko.observableArray(['money', 'time', 'items'])
   self.availableClientGroups = ko.observableArray(clientGroups)
-  if ((data.сlientGroupKeys === null || data.сlientGroupKeys === undefined) && (data.clientGroups !== null && data.clientGroups !== undefined)) {
+
+  if (data.clientGroups !== null && data.clientGroups !== undefined && data.clientGroups.length > 0) {
     self.сlientGroupKeys = ko.observableArray(data.clientGroups.map((v) => v.key))
   } else {
-    self.сlientGroupKeys = ko.observableArray(data.сlientGroupKeys)
+    self.сlientGroupKeys = ko.observableArray([])
   }
 
-  self.сlientGroups = ko.observableArray(data.clientGroups)
-
   self.id = ko.observable(data.id)
-
   self.description = ko.observable(htmlEncode.htmlDecode(data.description))
   self.type = ko.observable(data.type)
   self.isPeopleOrThings = ko.computed(function () {
