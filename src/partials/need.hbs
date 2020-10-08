@@ -9,6 +9,17 @@
     value: type,
     optionsCaption: '-- please select --'" class="form__input"></select>
   </dd>
+  
+  <dt class="key-value-pair__key">Client Groups</dt>
+  <dd class="key-value-pair__value">
+    <span data-bind="html: сlientGroupKeys"></span>
+    <select size="5" multiple="true" data-bind="options: availableClientGroups,
+        optionsValue: function (item) { return item.key },
+        optionsText:  function (item) { return item.name },
+        selectedOptions: сlientGroupKeys,
+        optionsCaption: '-- please select --'" class="form__input client-group-select"></select>
+  </dd>
+
   <dt class="key-value-pair__key">Description</dt>
   <dd class="key-value-pair__value">
     <input type="text" data-bind="textInput: description" class="form__input form__input--full-width" maxlength="50" />

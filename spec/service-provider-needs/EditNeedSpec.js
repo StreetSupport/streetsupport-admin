@@ -107,6 +107,10 @@ describe('Editing Service Provider Need', () => {
     expect(model.need().keywords()).toEqual('keywordA, keywordB, keywordC')
   })
 
+  it('should set client group keys', () => {
+    expect(model.need().сlientGroupKeys().length).toEqual(2)
+  })
+
   it('should set provider url', () => {
     expect(model.providerUrl()).toEqual(`${adminurls.serviceProviders}?key=albert-kennedy-trust`)
   })
@@ -145,7 +149,8 @@ describe('Editing Service Provider Need', () => {
           'DonationAmountInPounds': 1,
           'DonationUrl': 'http://www.donationUrl.com',
           'Keywords': ['keywordA', 'keywordB', 'keywordC'],
-          'CustomMessage': 'custom message'
+          'CustomMessage': 'custom message',
+          'ClientGroupKeys': ['cg-1', 'cg-2']
         }
       ).returns(fakePutResolution())
 
@@ -180,7 +185,8 @@ const needData = {
   'donationAmountInPounds': 1,
   'donationUrl': 'http://www.donationUrl.com',
   'keywords': ['keywordA', 'keywordB', 'keywordC'],
-  'customMessage': 'custom message'
+  'customMessage': 'custom message',
+  'clientGroups': [{'key': 'cg-1'}, {'key': 'cg-2'}]
 }
 
 const needResponses = {

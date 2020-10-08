@@ -18,7 +18,7 @@ const Model = function () {
   self.sortPosition = ko.observable()
   self.locationKey = ko.observable()
   self.locations = ko.observableArray()
-  self.parentScenarios= ko.observableArray([])
+  self.parentScenarios = ko.observableArray([])
   self.parentScenarioKey = ko.observable()
 
   self.save = function () {
