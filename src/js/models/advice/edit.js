@@ -20,7 +20,7 @@ const Model = function () {
   self.locationKey = ko.observable()
   self.locations = ko.observableArray()
   self.parentScenarios = ko.observableArray([])
-  self.parentScenarioKey = ko.observable()
+  self.parentScenarioId = ko.observable()
 
   self.save = function () {
     browser.loading()
@@ -32,7 +32,7 @@ const Model = function () {
         : [],
       locationKey: self.locationKey(),
       sortPosition: self.sortPosition(),
-      parentScenario: self.parentScenarios().find((ps) => ps.key === self.parentScenarioKey())
+      parentScenarioId: self.parentScenarioId()
     }
     ajax
       .put(self.endpointBuilder.faqs(querystring.parameter('id')).build(), payload)
@@ -64,10 +64,10 @@ const Model = function () {
         self.locationKey(result.data.locationKey)
         self.tags(result.data.tags.join(', '))
         self.sortPosition(result.data.sortPosition)
-        if (result.data.parentScenario !== null) {
-          self.parentScenarioKey(result.data.parentScenario.key)
+        if (result.data.parentScenarioId !== null) {
+          self.parentScenarioId(result.data.parentScenarioId)
         } else {
-          self.parentScenarioKey(null)
+          self.parentScenarioId(null)
         }
         browser.loaded()
       }, (err) => {
@@ -82,7 +82,7 @@ const Model = function () {
         self.parentScenarios(result.data
           .map(p => {
             return {
-              key: p.key,
+              id: p.id,
               name: htmlencode.htmlDecode(p.name)
             }
           })

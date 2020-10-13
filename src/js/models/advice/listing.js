@@ -27,8 +27,9 @@ const Model = function () {
   }
   self.filters = [
     { key: 'searchTerm', setValue: (vm, value) => vm.nameToFilterOn(value), getValue: (vm) => vm.nameToFilterOn(), isSet: (val) => val !== undefined && val.length > 0 },
-    { key: 'location', setValue: (vm, value) => vm.locationToFilterOn(value), getValue: (vm) => vm.locationToFilterOn(), isSet: (val) => val !== undefined && val.length > 0 }
-
+    { key: 'location', setValue: (vm, value) => vm.locationToFilterOn(value), getValue: (vm) => vm.locationToFilterOn(), isSet: (val) => val !== undefined && val.length > 0 },
+    { key: 'tags', setValue: (vm, value) => vm.locationToFilterOn(value), getValue: (vm) => 'families', isSet: (val) => val !== undefined && val.length > 0 },
+    { key: 'parentScenarioId', setValue: (vm, value) => vm.locationToFilterOn(value), getValue: (vm) => '5f69bf51a27c1c3b84fe6447', isSet: (val) => val !== undefined && val.length > 0 }
   ]
   self.baseUrl = self.endpointBuilder.faqs().build()
 

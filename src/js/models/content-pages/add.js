@@ -16,30 +16,30 @@ const Model = function () {
   self.body = ko.observable()
   self.tags = ko.observable('')
   self.sortPosition = ko.observable()
-  self.locationKey = ko.observable()
-  self.locations = ko.observableArray()
   self.parentScenarios = ko.observableArray([])
   self.parentScenarioId = ko.observable()
+  self.type = ko.observable()
+  self.availableTypes = ko.observableArray(['advice', 'guides'])
 
   self.save = function () {
     browser.loading()
     const payload = {
       title: self.title(),
+      type: self.type(),
       body: self.body(),
       tags: self.tags().length
         ? self.tags().split(',').map((t) => t.trim())
         : [],
-      locationKey: self.locationKey(),
       sortPosition: self.sortPosition(),
       parentScenarioId: self.parentScenarioId()
     }
+    debugger
     ajax
-      .post(endpoints.faqs, payload)
+      .post(endpoints.contentPages, payload)
       .then((result) => {
         if (result.statusCode === 201) {
           self.itemCreated(true)
         } else {
-          
           self.handleError(result)
         }
         browser.loaded()
@@ -49,7 +49,6 @@ const Model = function () {
   }
 
   self.init = function () {
-    self.locations(auth.getLocationsForUser([{ id: 'general', name: 'General Advice' }]))
     self.getParentScenarios()
   }
 
