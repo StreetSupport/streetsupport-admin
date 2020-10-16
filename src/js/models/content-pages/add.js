@@ -1,7 +1,6 @@
 const ko = require('knockout')
 
 const ajax = require('../../ajax')
-const auth = require('../../auth')
 const browser = require('../../browser')
 const endpoints = require('../../api-endpoints')
 const htmlEncode = require('htmlencode')
@@ -33,11 +32,11 @@ const Model = function () {
       sortPosition: self.sortPosition(),
       parentScenarioId: self.parentScenarioId()
     }
-    debugger
     ajax
       .post(endpoints.contentPages, payload)
       .then((result) => {
         if (result.statusCode === 201) {
+          self.clearErrors()
           self.itemCreated(true)
         } else {
           self.handleError(result)

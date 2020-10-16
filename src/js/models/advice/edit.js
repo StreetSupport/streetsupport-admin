@@ -38,6 +38,7 @@ const Model = function () {
       .put(self.endpointBuilder.faqs(querystring.parameter('id')).build(), payload)
       .then((result) => {
         if (result.statusCode === 200) {
+          self.clearErrors()
           browser.redirect('/advice')
         } else {
           self.handleError(result)

@@ -1,7 +1,5 @@
 const ko = require('knockout')
 const htmlencode = require('htmlencode')
-
-const auth = require('../../auth')
 const ListingBaseViewModel = require('../ListingBaseViewModel')
 
 const Model = function () {
@@ -20,10 +18,8 @@ const Model = function () {
     }
   }
   self.filters = [
-    { key: 'type', getValue: (vm) => vm.typeToFilterOn(), isSet: (val) => val !== undefined && val.length > 0 },
-    { key: 'searchTerm', getValue: (vm) => vm.nameToFilterOn(), isSet: (val) => val !== undefined && val.length > 0 }
-    // { key: 'tags', getValue: (vm) => 'alone', isSet: (val) => val !== undefined && val.length > 0 }, 
-    // { key: 'parentScenarioId', getValue: (vm) => '5f69bf51a27c1c3b84fe6448', isSet: (val) => val !== undefined && val.length > 0 }
+    { key: 'type', setValue: (vm, value) => vm.typeToFilterOn(value), getValue: (vm) => vm.typeToFilterOn(), isSet: (val) => val !== undefined && val.length > 0 },
+    { key: 'searchTerm', setValue: (vm, value) => vm.nameToFilterOn(value), getValue: (vm) => vm.nameToFilterOn(), isSet: (val) => val !== undefined && val.length > 0 }
   ]
   self.baseUrl = self.endpointBuilder.contentPages().build()
 

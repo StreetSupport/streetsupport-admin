@@ -2,7 +2,6 @@ const ko = require('knockout')
 const htmlencode = require('htmlencode')
 
 const ajax = require('../../ajax')
-const auth = require('../../auth')
 const browser = require('../../browser')
 const querystring = require('../../get-url-parameter')
 const endpoints = require('../../api-endpoints')
@@ -38,6 +37,7 @@ const Model = function () {
       .put(self.endpointBuilder.contentPages(querystring.parameter('id')).build(), payload)
       .then((result) => {
         if (result.statusCode === 200) {
+          self.clearErrors()
           browser.redirect('/content-pages')
         } else {
           self.handleError(result)
@@ -54,11 +54,9 @@ const Model = function () {
 
     // We generate this for retrieving the not cached item
     let syntaxSugar = new Date().getTime()
-
     ajax
       .get(self.endpointBuilder.contentPages(querystring.parameter('id')).build() + `?unique=${syntaxSugar}`)
       .then((result) => {
-        debugger
         self.title(htmlencode.htmlDecode(result.data.title))
         self.type(result.data.type)
         self.body(htmlencode.htmlDecode(result.data.body))

@@ -37,9 +37,9 @@ const Model = function () {
       .post(endpoints.faqs, payload)
       .then((result) => {
         if (result.statusCode === 201) {
+          self.clearErrors()
           self.itemCreated(true)
         } else {
-          
           self.handleError(result)
         }
         browser.loaded()
