@@ -43,6 +43,10 @@ function BaseViewModel () {
   self.handleServerError = function () {
     browser.redirect(adminUrls.serverError)
   }
+
+  self.clearErrors = function () {
+    self.errors([])
+  }
 }
 
 module.exports = BaseViewModel

@@ -19,7 +19,7 @@ const Model = function () {
   self.locationKey = ko.observable()
   self.locations = ko.observableArray()
   self.parentScenarios = ko.observableArray([])
-  self.parentScenarioKey = ko.observable()
+  self.parentScenarioId = ko.observable()
 
   self.save = function () {
     browser.loading()
@@ -31,12 +31,13 @@ const Model = function () {
         : [],
       locationKey: self.locationKey(),
       sortPosition: self.sortPosition(),
-      parentScenario: self.parentScenarios().find((ps) => ps.key === self.parentScenarioKey())
+      parentScenarioId: self.parentScenarioId()
     }
     ajax
       .post(endpoints.faqs, payload)
       .then((result) => {
         if (result.statusCode === 201) {
+          self.clearErrors()
           self.itemCreated(true)
         } else {
           self.handleError(result)
@@ -59,7 +60,7 @@ const Model = function () {
         self.parentScenarios(result.data
           .map(p => {
             return {
-              key: p.key,
+              id: p.id,
               name: htmlEncode.htmlDecode(p.name)
             }
           })
