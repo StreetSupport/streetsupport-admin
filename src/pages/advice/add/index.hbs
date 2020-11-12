@@ -1,6 +1,6 @@
 ---
 title: Add Location Advice - Street Support Admin
-description: Street Support - Making it easier to help homeless people in Manchester
+description: Street Support - Making it easier to help homeless people
 layout: default.hbs
 permalink: false
 jsBundle: advice-add
@@ -46,8 +46,8 @@ nosubnav: true
           <dt class="key-value-pair__key">Parent Scenario</dt>
           <dd class="key-value-pair__value">
             <select data-bind="options: parentScenarios,
-              value: parentScenarioKey,
-              optionsValue: function (item) { return item.key },
+              value: parentScenarioId,
+              optionsValue: function (item) { return item.id },
               optionsText:  function (item) { return item.name },
               optionsCaption: '-- please select --'" class="form__input"></select>
           </dd>

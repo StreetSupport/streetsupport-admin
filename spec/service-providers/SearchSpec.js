@@ -75,7 +75,9 @@ describe('Service Providers - search', () => {
         .split('&')
         .forEach((kv) => {
           const [key, value] = kv.split('=')
-          actual[key] = value
+          if (key !== 'unique') {
+            actual[key] = value
+          }
         })
       expect(actual).toEqual(expected)
     })
@@ -130,7 +132,9 @@ describe('Service Providers - search', () => {
         .split('&')
         .forEach((kv) => {
           const [key, value] = kv.split('=')
-          actual[key] = value
+          if (key !== 'unique') {
+            actual[key] = value
+          }
         })
       expect(actual).toEqual(expected)
     })

@@ -11,8 +11,8 @@ const auth = require('../../../src/js/auth')
 const endpoints = require('../../../src/js/api-endpoints')
 const browser = require('../../../src/js/browser')
 
-describe('Advice QA - Add', () => {
-  var Model = require('../../../src/js/models/advice/add')
+describe('Content Page - Add', () => {
+  var Model = require('../../../src/js/models/content-pages/add')
   var model
   let ajaxPostStub,
     browserLoadingStub,
@@ -53,18 +53,17 @@ describe('Advice QA - Add', () => {
   describe('- save', () => {
     beforeEach(() => {
       model.title('title')
+      model.type('advice')
       model.body('body')
-      model.locationKey('location')
       model.tags('tag-a , tag-b, tag-c ')
       model.sortPosition(123)
       model.parentScenarioId('5f69bf51a27c1c3b84fe6001')
-      model.parentScenarios([{ id: '5f69bf51a27c1c3b84fe6001', name: 'Parent scenario' }, { id: '5f69bf51a27c1c3b84fe6002', name: 'Parent scenario 2' }])
       model.save()
     })
 
-    it('should post to api faqs endpoint', () => {
+    it('should post to api content-pages endpoint', () => {
       const endpoint = ajaxPostStub.getCalls()[0].args[0]
-      expect(endpoint).toEqual(endpoints.faqs)
+      expect(endpoint).toEqual(endpoints.contentPages)
       expect(ajaxPostStub.calledAfter(browserLoadingStub)).toBeTruthy()
     })
 
@@ -72,8 +71,8 @@ describe('Advice QA - Add', () => {
       const payload = ajaxPostStub.getCalls()[0].args[1]
       const expected = {
         title: 'title',
+        type: 'advice',
         body: 'body',
-        locationKey: 'location',
         tags: ['tag-a', 'tag-b', 'tag-c'],
         sortPosition: 123,
         parentScenarioId: '5f69bf51a27c1c3b84fe6001'

@@ -1,18 +1,18 @@
 ---
-title: Edit Location Advice - Street Support Admin
+title: Add General Advice - Street Support Admin
 description: Street Support - Making it easier to help homeless people
 layout: default.hbs
 permalink: false
-jsBundle: advice-edit
-page: advice
+jsBundle: content-page-add
+page: content-page
 nosubnav: true
 ---
 
 <div class="block block--highlight">
   <div class="container block__inner">
     <header>
-      <h1>Edit Location Advice Q&amp;A Content</h1>
-      <a class="btn btn--info" href="/advice">
+      <h1>Add Content Page</h1>
+      <a class="btn btn--info" href="/content-pages">
         <span class="btn__text">Back to Listing</span>
       </a>
     </header>
@@ -22,18 +22,26 @@ nosubnav: true
   <div class="container block__inner">
     <div class="block__content form">
       {{> form-feedback}}
+      <!-- ko if: itemCreated -->
+      <p>Item created</p>
+      <a href="/content-pages" class="btn btn--info">
+        <span class="btn__text">Back to listing</span>
+      </a>
+      <!-- /ko -->
+      <!-- ko ifnot: itemCreated -->
       <article>
         <dl class="key-value-pair">
           <dt class="key-value-pair__key">Title</dt>
           <dd class="key-value-pair__value">
             <input data-bind="textInput: title" type="text" class="form__input" />
           </dd>
-          <dt class="key-value-pair__key">Location</dt>
+          <dt class="key-value-pair__key">Content Type</dt>
           <dd class="key-value-pair__value">
-            <select data-bind="options: locations,
-              value: locationKey,
-              optionsValue: function (item) { return item.id },
-              optionsText:  function (item) { return item.name },
+            <select data-bind="options: availableTypes,
+              value: type,
+              optionsText: function (item) {
+                return item
+              },
               optionsCaption: '-- please select --'" class="form__input"></select>
           </dd>
           <dt class="key-value-pair__key">Parent Scenario</dt>
@@ -59,6 +67,7 @@ nosubnav: true
         </dl>
         <button data-bind="click: save" class="btn btn--primary"><span class="btn__text">save</span></button>
       </article>
+      <!-- /ko -->
       {{> loading-spinner }}
     </div>
   </div>
