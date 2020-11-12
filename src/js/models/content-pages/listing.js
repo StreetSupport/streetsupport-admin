@@ -19,7 +19,7 @@ const Model = function () {
   }
   self.filters = [
     { key: 'type', setValue: (vm, value) => vm.typeToFilterOn(value), getValue: (vm) => vm.typeToFilterOn(), isSet: (val) => val !== undefined && val.length > 0 },
-    { key: 'searchTerm', setValue: (vm, value) => vm.nameToFilterOn(value), getValue: (vm) => vm.nameToFilterOn(), isSet: (val) => val !== undefined && val.length > 0 }
+    { key: 'searchTerm', setValue: (vm, value) => vm.nameToFilterOn(value), getValue: (vm) => { return vm.nameToFilterOn() ? vm.nameToFilterOn().trim() : vm.nameToFilterOn() }, isSet: (val) => val !== undefined && val.length > 0 }
   ]
   self.baseUrl = self.endpointBuilder.contentPages().build()
 

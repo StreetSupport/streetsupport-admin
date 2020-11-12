@@ -67,7 +67,7 @@ describe('Accommodation Listing', () => {
   it('- should get accom listing', () => {
     const expected = `${endpoints.temporaryAccommodation}?pageSize=10&index=0`
     expect(ajaxGetStub.calledAfter(browserLoadingStub)).toBeTruthy()
-    expect(ajaxGetStub.getCalls()[0].args[0]).toEqual(expected)
+    expect(ajaxGetStub.getCalls()[0].args[0].slice(0, ajaxGetStub.getCalls()[0].args[0].indexOf('&unique'))).toEqual(expected)
   })
 
   it('- should get cities', () => {
