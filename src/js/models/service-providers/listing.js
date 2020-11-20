@@ -32,7 +32,7 @@ class Note {
     this.date = ko.observable(data ? data.date : moment().format(dateFormat))
     this.staffName = ko.observable(data ? htmlEncode.htmlDecode(data.staffName) : null)
     this.reason = ko.observable(data ? htmlEncode.htmlDecode(data.reason) : null)
-    this.isToday = ko.observable(data ? data.isToday : true)
+    this.isNow = ko.observable(data ? data.isNow : true)
   }
 }
 
@@ -136,7 +136,7 @@ function DashboardModel () {
       } else if (!moment(self.note().date()).isSameOrAfter(moment().format(dateFormat), 'day')) {
         self.errorMessage('Date can not be in the past')
       } else {
-        self.note().isToday(self.note().date() === moment().format(dateFormat))
+        self.note().isNow(self.note().date() === moment().format(dateFormat))
         self.errorMessage(null)
         self.isOpenNotesInputModal(!self.isOpenNotesInputModal())
       }
@@ -151,7 +151,7 @@ function DashboardModel () {
           Date: new Date(self.note().date()),
           StaffName: self.note().staffName(),
           Reason: self.note().reason(),
-          IsToday: self.note().isToday()
+          IsNow: self.note().isNow()
         }
       })
     .then(function (result) {
