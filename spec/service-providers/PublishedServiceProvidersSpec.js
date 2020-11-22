@@ -52,8 +52,7 @@ describe('PublishedServiceProviders', () => {
       creationDate: ko.observable(moment()),
       date: ko.observable(moment().format('YYYY-MM-DD')),
       staffName: ko.observable('staff'),
-      reason: ko.observable('reason'),
-      isNow: ko.observable(true)
+      reason: ko.observable('reason')
     })
   })
 
@@ -110,8 +109,7 @@ describe('PublishedServiceProviders', () => {
           CreationDate: dashboard.note().creationDate(),
           Date: new Date(dashboard.note().date()),
           StaffName: dashboard.note().staffName(),
-          Reason: dashboard.note().reason(),
-          IsNow: dashboard.note().isNow()
+          Reason: dashboard.note().reason()
         }
       }
 

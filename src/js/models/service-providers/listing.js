@@ -32,7 +32,6 @@ class Note {
     this.date = ko.observable(data ? data.date : moment().format(dateFormat))
     this.staffName = ko.observable(data ? htmlEncode.htmlDecode(data.staffName) : null)
     this.reason = ko.observable(data ? htmlEncode.htmlDecode(data.reason) : null)
-    this.isNow = ko.observable(data ? data.isNow : true)
   }
 }
 
@@ -125,6 +124,7 @@ function DashboardModel () {
       }
     } else { // if we want to close modal (we don't want to disable service provider)
       self.isOpenNotesInputModal(!self.isOpenNotesInputModal())
+      self.note(new Note())
       self.currentServiceProvider(null)
     }
   }
@@ -136,7 +136,6 @@ function DashboardModel () {
       } else if (!moment(self.note().date()).isSameOrAfter(moment().format(dateFormat), 'day')) {
         self.errorMessage('Date can not be in the past')
       } else {
-        self.note().isNow(self.note().date() === moment().format(dateFormat))
         self.errorMessage(null)
         self.isOpenNotesInputModal(!self.isOpenNotesInputModal())
       }
@@ -150,13 +149,12 @@ function DashboardModel () {
           CreationDate: self.note().creationDate(),
           Date: new Date(self.note().date()),
           StaffName: self.note().staffName(),
-          Reason: self.note().reason(),
-          IsNow: self.note().isNow()
+          Reason: self.note().reason()
         }
       })
     .then(function (result) {
       self.updateServiceProvider(self.currentServiceProvider(), self.invertPublished)
-      if (self.currentServiceProvider().notes().length === 1) {
+      if (!self.currentServiceProvider().isPublished() && (self.currentServiceProvider().notes().length === 1 || moment(self.note().date()).isSame(moment().format(dateFormat)))) {
         browser.refresh()
       }
       self.currentServiceProvider(null)
