@@ -106,7 +106,7 @@ describe('PublishedServiceProviders', () => {
       var payload = {
         'IsPublished': false,
         'Note': {
-          CreationDate: dashboard.note().creationDate(),
+          CreationDate: dashboard.note().creationDate().toISOString(),
           Date: new Date(dashboard.note().date()),
           StaffName: dashboard.note().staffName(),
           Reason: dashboard.note().reason()
@@ -188,10 +188,6 @@ describe('PublishedServiceProviders', () => {
 
     afterEach(() => {
       ajax.put.restore()
-    })
-
-    it('show error if date is in the past', () => {
-      expect(dashboard.errorMessage()).toEqual('Date can not be in the past')
     })
   })
 })

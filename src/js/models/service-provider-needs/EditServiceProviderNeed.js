@@ -6,11 +6,15 @@ const BaseViewModel = require('../BaseViewModel')
 const browser = require('../../browser')
 const getUrlParameter = require('../../get-url-parameter')
 const Need = require('../Need')
+const moment = require('moment')
+const dateFormat = 'YYYY-MM-DD'
 
 function EditServiceProviderNeed () {
   const self = this
   self.need = ko.observable()
-
+  self.dateFormat = dateFormat
+  self.moment = moment
+  
   const providerId = getUrlParameter.parameter('providerId')
   const needId = getUrlParameter.parameter('needId')
 

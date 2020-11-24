@@ -69,7 +69,7 @@ nosubnav: true
             <dl class="key-value-pair">
               <dt class="key-value-pair__key">Date</dt>
               <dd class="key-value-pair__value">
-                <input data-bind="value: date" type="date" class="form__input"/>
+                <input data-bind="value: date, attr: { min: $parent.moment().format($parent.dateFormat) }" type="date" class="form__input"/>
               </dd>
 
               <dt class="key-value-pair__key">Name of SSN staff</dt>

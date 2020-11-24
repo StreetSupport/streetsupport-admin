@@ -39,6 +39,7 @@ function DashboardModel () {
   const self = this
 
   self.moment = moment
+  self.dateFormat = dateFormat
   self.isOpenNotesInputModal = ko.observable(false)
   self.isOpenNotesModal = ko.observable(false)
   self.currentServiceProvider = ko.observable()
@@ -133,8 +134,6 @@ function DashboardModel () {
     if (self.currentServiceProvider().isPublished()) {
       if (!self.note().date() || !self.note().staffName() || !self.note().staffName().trim() || !self.note().reason() || !self.note().reason().trim()) {
         self.errorMessage('Please fill all fields')
-      } else if (!moment(self.note().date()).isSameOrAfter(moment().format(dateFormat), 'day')) {
-        self.errorMessage('Date can not be in the past')
       } else {
         self.errorMessage(null)
         self.isOpenNotesInputModal(!self.isOpenNotesInputModal())
@@ -146,7 +145,8 @@ function DashboardModel () {
       {
         'IsPublished': !self.currentServiceProvider().isPublished(),
         'Note': {
-          CreationDate: self.note().creationDate(),
+          CreationDate: self.note().creationDate().toISOString(),
+          // We must use new Date() for passing date with timezone. In the database this date should be saved in utc format (00 hours 00 minutes).
           Date: new Date(self.note().date()),
           StaffName: self.note().staffName(),
           Reason: self.note().reason()

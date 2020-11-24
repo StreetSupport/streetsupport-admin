@@ -5,10 +5,14 @@ var browser = require('../../browser')
 var adminurls = require('../../admin-urls')
 var getUrlParameter = require('../../get-url-parameter')
 var ajax = require('../../ajax')
+const moment = require('moment')
+const dateFormat = 'YYYY-MM-DD'
 
 function AddServiceProviderNeed () {
   var self = this
   self.need = ko.observable()
+  self.dateFormat = dateFormat
+  self.moment = moment
 
   self.saveNeed = function (need) {
     var redirect = adminurls.serviceProviders + '?key=' + getUrlParameter.parameter('providerId')

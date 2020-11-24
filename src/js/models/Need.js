@@ -9,6 +9,7 @@ const BaseViewModel = require('./BaseViewModel')
 const browser = require('../browser')
 const Endpoints = require('../endpoint-builder')
 const htmlEncode = require('htmlencode')
+const dateFormat = 'YYYY-MM-DD'
 
 import { clientGroups } from '../../data/generated/client-groups'
 
@@ -39,6 +40,8 @@ function Need (data) {
   }, self)
   self.reason = ko.observable(htmlEncode.htmlDecode(data.reason))
   self.moreInfoUrl = ko.observable(data.moreInfoUrl)
+  self.startDate = ko.observable(data.neededDate ? moment(data.neededDate).format(dateFormat) : moment().format(dateFormat))
+  self.endDate = ko.observable(data.endDate ? data.endDate.format(dateFormat) : moment().add('1', 'days').format(dateFormat))
   self.postcode = ko.observable(data.postcode)
   self.instructions = ko.observable(htmlEncode.htmlDecode(data.instructions))
   self.email = ko.observable(data.email)
@@ -67,6 +70,12 @@ function Need (data) {
   self.viewOffersUrl = `${adminUrls.needResponses}?needId=${self.id()}`
 
   self.totalResponses = ko.observable(0)
+
+  self.startDate.subscribe((value) => {
+    if(moment(value) > moment(self.endDate()).add('-1', 'days')){
+      self.endDate(moment(value).add('1', 'days').format(dateFormat))
+    }
+  })
 
   self.repostNeed = function () {
     browser.loading()
@@ -139,7 +148,9 @@ function Need (data) {
       'DonationUrl': self.donationUrl(),
       'CustomMessage': self.customMessage(),
       'Keywords': keywords,
-      'ClientGroupKeys': self.сlientGroupKeys()
+      'ClientGroupKeys': self.сlientGroupKeys(),
+      'NeededDate': self.startDate(),
+      'Endate': self.endDate()
     }
 
     if (self.id() === undefined) { // adding

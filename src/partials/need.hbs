@@ -36,6 +36,17 @@
   <dd class="key-value-pair__value">
     <input type="text" data-bind="textInput: moreInfoUrl" class="form__input" />
   </dd>
+
+  <dt class="key-value-pair__key">Start advertising date</dt>
+  <dd class="key-value-pair__value">
+    <input data-bind="value: startDate, attr: { min: $parent.moment().format($parent.dateFormat) }" type="date" class="form__input"/>
+  </dd>
+
+  <dt class="key-value-pair__key">End advertising date</dt>
+  <dd class="key-value-pair__value">
+    <input data-bind="value: endDate, attr: { min: $parent.moment(startDate()).add(1, 'days').format($parent.dateFormat), max: $parent.moment(startDate()).add(6, 'months').format($parent.dateFormat) }" type="date" class="form__input"/>
+  </dd>
+
   <!-- ko if: isPeopleOrThings -->
   <dt class="key-value-pair__key">Additional Instructions</dt>
   <dd class="key-value-pair__value">
