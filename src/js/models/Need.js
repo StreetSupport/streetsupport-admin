@@ -149,8 +149,8 @@ function Need (data) {
       'CustomMessage': self.customMessage(),
       'Keywords': keywords,
       'ClientGroupKeys': self.сlientGroupKeys(),
-      'NeededDate': self.startDate(),
-      'EndDate': self.endDate()
+      'NeededDate': new Date(self.startDate()),
+      'EndDate': new Date(self.endDate())
     }
 
     if (self.id() === undefined) { // adding
