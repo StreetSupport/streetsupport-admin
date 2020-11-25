@@ -41,7 +41,7 @@ function Need (data) {
   self.reason = ko.observable(htmlEncode.htmlDecode(data.reason))
   self.moreInfoUrl = ko.observable(data.moreInfoUrl)
   self.startDate = ko.observable(data.neededDate ? moment(data.neededDate).format(dateFormat) : moment().format(dateFormat))
-  self.endDate = ko.observable(data.endDate ? data.endDate.format(dateFormat) : moment().add('1', 'days').format(dateFormat))
+  self.endDate = ko.observable(data.endDate ? moment(data.endDate).format(dateFormat) : moment().add('1', 'days').format(dateFormat))
   self.postcode = ko.observable(data.postcode)
   self.instructions = ko.observable(htmlEncode.htmlDecode(data.instructions))
   self.email = ko.observable(data.email)
@@ -150,7 +150,7 @@ function Need (data) {
       'Keywords': keywords,
       'ClientGroupKeys': self.сlientGroupKeys(),
       'NeededDate': self.startDate(),
-      'Endate': self.endDate()
+      'EndDate': self.endDate()
     }
 
     if (self.id() === undefined) { // adding
