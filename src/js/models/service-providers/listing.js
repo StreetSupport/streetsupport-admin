@@ -23,7 +23,8 @@ class ServiceProvider {
     this.publishedLabel = ko.computed(function () { return this.isPublished() ? 'published' : 'disabled' }, this)
     this.publishedLabelClass = ko.computed(function () { return this.isPublished() ? 'status status--true' : 'status status--false' }, this)
     this.togglePublishButtonLabel = ko.computed(function () { return this.isPublished() ? 'disable' : 'publish' }, this)
-    this.notes = sp.notes ? ko.observableArray(sp.notes.map((e) => { return new Note(e) }).reverse()) : ko.observableArray()  }
+    this.notes = sp.notes ? ko.observableArray(sp.notes.map((e) => { return new Note(e) }).reverse()) : ko.observableArray()
+  }
 }
 
 class Note {
@@ -142,16 +143,16 @@ function DashboardModel () {
 
     if (!self.isOpenNotesInputModal()) {
       ajax.put(self.endpointBuilder.serviceProviders(self.currentServiceProvider().key).build() + '/is-published',
-      {
-        'IsPublished': !self.currentServiceProvider().isPublished(),
-        'Note': {
-          CreationDate: self.note().creationDate().toISOString(),
-          // We must use new Date() for passing date with timezone. In the database this date should be saved in utc format (00 hours 00 minutes).
-          Date: new Date(self.note().date()),
-          StaffName: self.note().staffName(),
-          Reason: self.note().reason()
-        }
-      })
+        {
+          'IsPublished': !self.currentServiceProvider().isPublished(),
+          'Note': {
+            CreationDate: self.note().creationDate().toISOString(),
+            // We must use new Date() for passing date with timezone. In the database this date should be saved in utc format (00 hours 00 minutes).
+            Date: new Date(self.note().date()),
+            StaffName: self.note().staffName(),
+            Reason: self.note().reason()
+          }
+        })
     .then(function (result) {
       self.updateServiceProvider(self.currentServiceProvider(), self.invertPublished)
       if (!self.currentServiceProvider().isPublished() && (self.currentServiceProvider().notes().length === 1 || moment(self.note().date()).isSame(moment().format(dateFormat)))) {
@@ -176,7 +177,7 @@ function DashboardModel () {
         if (sp.key === serviceProvider.key) {
           if (serviceProvider.isPublished()) {
             sp.notes().unshift(self.note())
-          } 
+          }
           invert(sp, serviceProvider)
         }
         return sp

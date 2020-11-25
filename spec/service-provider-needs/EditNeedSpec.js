@@ -160,8 +160,8 @@ describe('Editing Service Provider Need', () => {
           'Keywords': ['keywordA', 'keywordB', 'keywordC'],
           'CustomMessage': 'custom message',
           'ClientGroupKeys': ['cg-1', 'cg-2'],
-          'NeededDate': moment('2020-11-25').format('YYYY-MM-DD'),
-          'EndDate': moment('2020-11-27').format('YYYY-MM-DD')
+          'NeededDate': new Date('2020-11-25'),
+          'EndDate': new Date('2020-11-27')
         }
       ).returns(fakePutResolution())
 

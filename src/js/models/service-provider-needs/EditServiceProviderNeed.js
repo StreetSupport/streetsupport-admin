@@ -14,7 +14,6 @@ function EditServiceProviderNeed () {
   self.need = ko.observable()
   self.dateFormat = dateFormat
   self.moment = moment
-  
   const providerId = getUrlParameter.parameter('providerId')
   const needId = getUrlParameter.parameter('needId')
 

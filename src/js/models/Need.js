@@ -72,7 +72,7 @@ function Need (data) {
   self.totalResponses = ko.observable(0)
 
   self.startDate.subscribe((value) => {
-    if(moment(value) > moment(self.endDate()).add('-1', 'days')){
+    if (moment(value) > moment(self.endDate()).add('-1', 'days')) {
       self.endDate(moment(value).add('1', 'days').format(dateFormat))
     }
   })

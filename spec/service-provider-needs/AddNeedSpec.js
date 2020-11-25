@@ -161,8 +161,8 @@ describe('Add individual Need', () => {
         'Keywords': [ 'keywordA', 'keywordB', 'keywordC' ],
         'CustomMessage': 'custom message',
         'ClientGroupKeys': [],
-        'NeededDate': moment('2020-11-25').format('YYYY-MM-DD'),
-        'EndDate': moment('2020-11-27').format('YYYY-MM-DD')
+        'NeededDate': new Date('2020-11-25'),
+        'EndDate': new Date('2020-11-27')
       }
       var postAsExpected = ajaxStub.withArgs(endpoint, payload).calledOnce
       expect(postAsExpected).toBeTruthy()
