@@ -10,6 +10,7 @@ var endpoints = require('../../src/js/api-endpoints')
 var adminurls = require('../../src/js/admin-urls')
 var browser = require('../../src/js/browser')
 var getUrlParameter = require('../../src/js/get-url-parameter')
+const moment = require('moment')
 
 describe('Add individual Need', () => {
   var Model = require('../../src/js/models/service-provider-needs/AddServiceProviderNeed')
@@ -134,6 +135,8 @@ describe('Add individual Need', () => {
       model.need().keywords(' keywordA, keywordB ,keywordC ')
       model.need().customMessage('custom message')
       model.need().clientGroups = []
+      model.need().startDate(moment('2020-11-25').format('YYYY-MM-DD'))
+      model.need().endDate(moment('2020-11-27').format('YYYY-MM-DD'))
 
       model.need().save()
     })
@@ -157,7 +160,9 @@ describe('Add individual Need', () => {
         'DonationUrl': 'http://donatehere.com',
         'Keywords': [ 'keywordA', 'keywordB', 'keywordC' ],
         'CustomMessage': 'custom message',
-        'ClientGroupKeys': []
+        'ClientGroupKeys': [],
+        'NeededDate': new Date('2020-11-25'),
+        'EndDate': new Date('2020-11-27')
       }
       var postAsExpected = ajaxStub.withArgs(endpoint, payload).calledOnce
       expect(postAsExpected).toBeTruthy()

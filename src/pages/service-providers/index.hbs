@@ -53,6 +53,96 @@ nosubnav: true
 
 {{> item-listing }}
 
+<!-- The Show Input Motes Modal -->
+<!-- ko if: isOpenNotesInputModal -->
+<div class="modal" data-bind="style: { display: isOpenNotesInputModal() ? 'block' : 'none' }">
+
+  <!-- Modal content -->
+  <div class="modal__content">
+    <span class="modal__close" data-bind="click: toggleNotesInput">&times;</span>
+
+    <div class="block">
+      <div class="container block__inner">
+        <div class="block__content form">
+          <!-- ko if: note -->
+          <article data-bind="with: note">
+            <dl class="key-value-pair">
+              <dt class="key-value-pair__key">Date</dt>
+              <dd class="key-value-pair__value">
+                <input data-bind="value: date, attr: { min: $parent.moment().format($parent.dateFormat) }" type="date" class="form__input"/>
+              </dd>
+
+              <dt class="key-value-pair__key">Name of SSN staff</dt>
+              <dd class="key-value-pair__value">
+                <input data-bind="textInput: staffName" type="text" class="form__input"/>
+              </dd>
+
+              <dt class="key-value-pair__key">Reason for disabling the page</dt>
+              <dd class="key-value-pair__value">
+                <textarea rows="5" data-bind="textInput: reason" class="form__input" style="resize: none;"></textarea>
+              </dd>
+
+              <dt class="key-value-pair__key errors" data-bind="text: $parent.errorMessage, style: { display: $parent.errorMessage() ? 'block' : 'none' }"></dt>
+            </dl>
+
+            <button data-bind="click: $parent.togglePublished" class="stacked-list__button btn btn--info">
+              <span data-bind="text: 'Disable'" class="btn__text btn__text--dashboard"></span>
+            </button>
+          </article>
+          <!-- /ko -->
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+<!-- /ko -->
+
+<!-- The Show Motes Modal -->
+<!-- ko if: isOpenNotesModal -->
+<div class="modal" data-bind="style: { display: isOpenNotesModal() ? 'block' : 'none' }">
+
+  <!-- Modal content -->
+  <div class="modal__content">
+    <span class="modal__close" data-bind="click: toggleNotes">&times;</span>
+
+    <div class="block">
+      <div class="container block__inner" data-bind="with: currentServiceProvider">
+        <!-- ko if: notes -->
+        <div class="block__content form" data-bind="foreach: notes">
+          <article>
+            <dl class="key-value-pair">
+              <dt class="key-value-pair__key">Date</dt>
+              <dd class="key-value-pair__value">
+                <span data-bind="text: $parents[1].moment(date()).format('DD/MM/YYYY')"></span>
+              </dd>
+
+              <dt class="key-value-pair__key">Name of SSN staff</dt>
+              <dd class="key-value-pair__value">
+                <span data-bind="text: staffName"></span>
+              </dd>
+
+              <dt class="key-value-pair__key">Reason for disabling the page</dt>
+              <dd class="key-value-pair__value">
+                <span data-bind="text: reason" style="text-align: justify;"></span>
+              </dd>
+            </dl>
+            <!-- ko if: $parent.notes().length - 1 !== $index()  -->
+            <div class="separator"></div>
+            <!-- /ko -->
+          </article>
+
+        </div>
+        <!-- /ko -->
+      </div>
+    </div>
+
+  </div>
+
+</div>
+<!-- /ko -->
+
 <script type="text/html" id="item-template">
 <article class="stacked-list__item stacked-list__item--service-providers">
   <header class="stacked-list__header">
@@ -63,11 +153,14 @@ nosubnav: true
   <button data-bind="click: $parent.toggleVerified" class="stacked-list__button btn btn--info">
     <span data-bind="text: toggleVerificationButtonLabel" class="btn__text btn__text--dashboard"></span>
   </button>
-  <button data-bind="click: $parent.togglePublished" class="stacked-list__button btn btn--info">
+  <button data-bind="click: $parent.toggleNotesInput" class="stacked-list__button btn btn--info">
     <span data-bind="text: togglePublishButtonLabel" class="btn__text btn__text--dashboard"></span>
   </button>
   <a data-bind="attr: { href: newUserUrl }" class="stacked-list__button btn btn--primary">
     <span class="btn__text btn__text--dashboard">New User</span>
   </a>
+  <button data-bind="click: $parent.toggleNotes, style: { display: notes().length > 0 ? 'inline-block' : 'none' }" class="stacked-list__button btn btn--info">
+    <span data-bind="text: 'Notes'" class="btn__text btn__text--dashboard"></span>
+  </button>
 </article>
 </script>
