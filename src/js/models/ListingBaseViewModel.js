@@ -124,7 +124,6 @@ function ListingBaseViewModel () {
 
     // We generate this for retrieving the not cached item
     let syntaxSugar = new Date().getTime()
-    
     ajax
       .get(getUrl.fullUrl + `&unique=${syntaxSugar}`)
       .then(function (result) {

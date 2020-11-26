@@ -23,7 +23,7 @@ const Model = function () {
 
   self.save = function () {
     browser.loading()
-    const payload = { 
+    const payload = {
       title: self.title(),
       type: self.type(),
       body: self.body(),
