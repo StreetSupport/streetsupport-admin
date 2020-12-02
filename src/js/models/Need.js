@@ -53,7 +53,7 @@ function Need (data) {
 
   self.neededDateReadOnly = ko.observable(moment(data.neededDate))
   self.neededDate = ko.computed(function () {
-    return self.neededDateReadOnly().fromNow()
+    return moment().isSame(self.neededDateReadOnly(), 'day') ? 'Posted today' : (moment().subtract(1, 'day').isSame(self.neededDateReadOnly(), 'day') ? 'Posted yesterday' : (moment().isBefore(self.neededDateReadOnly(), 'day') ? 'Will be posted ' + self.neededDateReadOnly().fromNow() : 'Posted ' + self.neededDateReadOnly().fromNow()))
   }, self)
   self.canRepost = ko.computed(function () {
     const now = moment()
@@ -149,7 +149,9 @@ function Need (data) {
       'CustomMessage': self.customMessage(),
       'Keywords': keywords,
       'ClientGroupKeys': self.сlientGroupKeys(),
+      // We must use new Date(self.startDate()) or moment(self.startDate()).utcOffset(0, true) for passing date without timezone. In the database this date should be saved in utc format (00 hours 00 minutes).
       'NeededDate': new Date(self.startDate()),
+       // We must use new Date(self.endDate()) or moment(self.endDate()).utcOffset(0, true) for passing date without timezone. In the database this date should be saved in utc format (00 hours 00 minutes).
       'EndDate': new Date(self.endDate())
     }
 
