@@ -37,10 +37,10 @@ nosubnav: true
           </dd>
           <!-- /ko -->
           <dt data-claims="superadmin,cityadmin" class="key-value-pair__key">Service Provider</dt>
-          <!-- ko ifnot: $parent.hasLocationSelected --> 
+          <!-- ko ifnot: $parent.hasLocationSelected -->
           <dd data-claims="superadmin,cityadmin" class="key-value-pair__value form__field-item">Please select a Location first.</dd>
           <!-- /ko -->
-          <!-- ko if: $parent.hasLocationSelected --> 
+          <!-- ko if: $parent.hasLocationSelected -->
           <dd data-claims="superadmin,cityadmin" class="key-value-pair__value form__field-item">
             <select data-bind="options: $parent.serviceProviders,
                 optionsValue: function (item) { return item.key },
@@ -76,6 +76,21 @@ nosubnav: true
           {{> forms/emailField fieldTitle="Email" dataFieldName="email" }}
           {{> forms/textField fieldTitle="Telephone" dataFieldName="telephone" }}
         </dl>
+        <!-- ko if: $parent.hasAddresses() -->
+          <h3>Use Existing Address</h3>
+          <dl class="key-value-pair">
+            <dt class="key-value-pair__key">Select</dt>
+            <dd class="key-value-pair__value">
+              <select data-bind="options: $parent.addresses,
+              optionsText: function (item) {
+                return item.street1 + ' - ' + item.postcode
+              },
+              value:  $parent.preselectedAddress,
+              optionsCaption: '-- please select --',
+              event: { change: $parent.prefillAddress }" class="form__input"></select>
+            </dd>
+          </dl>
+        <!-- /ko -->
         <h3>Location Details</h3>
         <dl class="key-value-pair">
           {{> forms/textField fieldTitle="Street Line 1" dataFieldName="addressLine1" }}
@@ -86,7 +101,7 @@ nosubnav: true
         </dl>
 
         {{> forms/boolean fieldTitle="Hide address from public?" dataFieldName="addressIsPubliclyHidden" claimsRequired="superadmin,orgadmin,cityadmin" }}
-        
+
         <button data-bind="click: $parent.save" class="btn btn--primary"><span class="btn__text">Save</span></button>
       </article>
     </div>

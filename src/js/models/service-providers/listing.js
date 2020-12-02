@@ -4,7 +4,10 @@ const adminUrls = require('../../admin-urls')
 const auth = require('../../auth')
 const ajax = require('../../ajax')
 const ListingBaseViewModel = require('../ListingBaseViewModel')
-
+const htmlEncode = require('htmlencode')
+const moment = require('moment')
+const dateFormat = 'YYYY-MM-DD'
+const browser = require('../../browser')
 class ServiceProvider {
   constructor (sp) {
     this.key = sp.key
@@ -20,11 +23,29 @@ class ServiceProvider {
     this.publishedLabel = ko.computed(function () { return this.isPublished() ? 'published' : 'disabled' }, this)
     this.publishedLabelClass = ko.computed(function () { return this.isPublished() ? 'status status--true' : 'status status--false' }, this)
     this.togglePublishButtonLabel = ko.computed(function () { return this.isPublished() ? 'disable' : 'publish' }, this)
+    this.notes = sp.notes ? ko.observableArray(sp.notes.map((e) => { return new Note(e) }).reverse()) : ko.observableArray()
+  }
+}
+
+class Note {
+  constructor (data) {
+    this.creationDate = ko.observable(data ? data.creationDate : moment())
+    this.date = ko.observable(data ? data.date : moment().format(dateFormat))
+    this.staffName = ko.observable(data ? htmlEncode.htmlDecode(data.staffName) : null)
+    this.reason = ko.observable(data ? htmlEncode.htmlDecode(data.reason) : null)
   }
 }
 
 function DashboardModel () {
   const self = this
+
+  self.moment = moment
+  self.dateFormat = dateFormat
+  self.isOpenNotesInputModal = ko.observable(false)
+  self.isOpenNotesModal = ko.observable(false)
+  self.currentServiceProvider = ko.observable()
+  self.note = ko.observable(new Note())
+  self.errorMessage = ko.observable()
 
   self.filters = [
     { key: 'name', setValue: (vm, value) => vm.nameToFilterOn(value), getValue: (vm) => vm.nameToFilterOn(), isSet: (val) => val !== undefined && val.length > 0 },
@@ -83,18 +104,67 @@ function DashboardModel () {
     oldSP.isVerified(!newSP.isVerified())
   }
 
-  self.togglePublished = function (serviceProvider, event) {
-    ajax.put(self.endpointBuilder.serviceProviders(serviceProvider.key).build() + '/is-published',
-      {
-        'IsPublished': !serviceProvider.isPublished()
+  self.toggleNotes = function (serviceProvider, event) {
+    if (!self.isOpenNotesModal()) {
+      self.currentServiceProvider(serviceProvider)
+    } else {
+      self.currentServiceProvider(null)
+    }
+    self.isOpenNotesModal(!self.isOpenNotesModal())
+  }
+
+  self.toggleNotesInput = function (serviceProvider, event) {
+    // if we want to disable or publish service provider
+    if (!self.isOpenNotesInputModal()) {
+      self.currentServiceProvider(serviceProvider)
+
+      // if we want to disable service provider
+      if (serviceProvider.isPublished()) {
+        self.isOpenNotesInputModal(!self.isOpenNotesInputModal())
+      } else { // if we want to publish service provider
+        self.togglePublished()
       }
-    )
-      .then(function (result) {
-        self.updateServiceProvider(serviceProvider, self.invertPublished)
-      },
-        function (error) {
-          self.handleError(error)
+    } else { // if we want to close modal (we don't want to disable service provider)
+      self.isOpenNotesInputModal(!self.isOpenNotesInputModal())
+      self.note(new Note())
+      self.currentServiceProvider(null)
+    }
+  }
+
+  self.togglePublished = function () {
+    if (self.currentServiceProvider().isPublished()) {
+      if (!self.note().date() || !self.note().staffName() || !self.note().staffName().trim() || !self.note().reason() || !self.note().reason().trim()) {
+        self.errorMessage('Please fill all fields')
+      } else {
+        self.errorMessage(null)
+        self.isOpenNotesInputModal(!self.isOpenNotesInputModal())
+      }
+    }
+
+    if (!self.isOpenNotesInputModal()) {
+      ajax.put(self.endpointBuilder.serviceProviders(self.currentServiceProvider().key).build() + '/is-published',
+        {
+          'IsPublished': !self.currentServiceProvider().isPublished(),
+          'Note': {
+            CreationDate: self.note().creationDate().toISOString(),
+            // We must use new Date() for passing date without timezone. In the database this date should be saved in utc format (00 hours 00 minutes).
+            Date: new Date(self.note().date()),
+            StaffName: self.note().staffName(),
+            Reason: self.note().reason()
+          }
         })
+    .then(function (result) {
+      self.updateServiceProvider(self.currentServiceProvider(), self.invertPublished)
+      if (!self.currentServiceProvider().isPublished() && (self.currentServiceProvider().notes().length === 1 || moment(self.note().date()).isSame(moment().format(dateFormat)))) {
+        browser.refresh()
+      }
+      self.currentServiceProvider(null)
+      self.note(new Note())
+    },
+      function (error) {
+        self.handleError(error)
+      })
+    }
   }
 
   self.invertPublished = function (oldSP, newSP) {
@@ -105,6 +175,9 @@ function DashboardModel () {
     const updatedSPs = self.items()
       .map((sp) => {
         if (sp.key === serviceProvider.key) {
+          if (serviceProvider.isPublished()) {
+            sp.notes().unshift(self.note())
+          }
           invert(sp, serviceProvider)
         }
         return sp

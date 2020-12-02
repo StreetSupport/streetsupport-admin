@@ -57,7 +57,8 @@ describe('Advice QA - Add', () => {
       model.locationKey('location')
       model.tags('tag-a , tag-b, tag-c ')
       model.sortPosition(123)
-
+      model.parentScenarioId('5f69bf51a27c1c3b84fe6001')
+      model.parentScenarios([{ id: '5f69bf51a27c1c3b84fe6001', name: 'Parent scenario' }, { id: '5f69bf51a27c1c3b84fe6002', name: 'Parent scenario 2' }])
       model.save()
     })
 
@@ -74,7 +75,8 @@ describe('Advice QA - Add', () => {
         body: 'body',
         locationKey: 'location',
         tags: ['tag-a', 'tag-b', 'tag-c'],
-        sortPosition: 123
+        sortPosition: 123,
+        parentScenarioId: '5f69bf51a27c1c3b84fe6001'
       }
       expect(payload).toEqual(expected)
     })

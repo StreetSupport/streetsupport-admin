@@ -9,6 +9,9 @@ const BaseViewModel = require('./BaseViewModel')
 const browser = require('../browser')
 const Endpoints = require('../endpoint-builder')
 const htmlEncode = require('htmlencode')
+const dateFormat = 'YYYY-MM-DD'
+
+import { clientGroups } from '../../data/generated/client-groups'
 
 function Need (data) {
   const self = this
@@ -16,9 +19,15 @@ function Need (data) {
 
   self.serviceProviderId = data.serviceProviderId
   self.availableTypes = ko.observableArray(['money', 'time', 'items'])
+  self.availableClientGroups = ko.observableArray(clientGroups)
+
+  if (data.clientGroups !== null && data.clientGroups !== undefined && data.clientGroups.length > 0) {
+    self.сlientGroupKeys = ko.observableArray(data.clientGroups.map((v) => v.key))
+  } else {
+    self.сlientGroupKeys = ko.observableArray([])
+  }
 
   self.id = ko.observable(data.id)
-
   self.description = ko.observable(htmlEncode.htmlDecode(data.description))
   self.type = ko.observable(data.type)
   self.isPeopleOrThings = ko.computed(function () {
@@ -31,6 +40,8 @@ function Need (data) {
   }, self)
   self.reason = ko.observable(htmlEncode.htmlDecode(data.reason))
   self.moreInfoUrl = ko.observable(data.moreInfoUrl)
+  self.startDate = ko.observable(data.neededDate ? moment(data.neededDate).format(dateFormat) : moment().format(dateFormat))
+  self.endDate = ko.observable(data.endDate ? moment(data.endDate).format(dateFormat) : moment().add('1', 'days').format(dateFormat))
   self.postcode = ko.observable(data.postcode)
   self.instructions = ko.observable(htmlEncode.htmlDecode(data.instructions))
   self.email = ko.observable(data.email)
@@ -42,7 +53,7 @@ function Need (data) {
 
   self.neededDateReadOnly = ko.observable(moment(data.neededDate))
   self.neededDate = ko.computed(function () {
-    return self.neededDateReadOnly().fromNow()
+    return moment().isSame(self.neededDateReadOnly(), 'day') ? 'Posted today' : (moment().subtract(1, 'day').isSame(self.neededDateReadOnly(), 'day') ? 'Posted yesterday' : (moment().isBefore(self.neededDateReadOnly(), 'day') ? 'Will be posted ' + self.neededDateReadOnly().fromNow() : 'Posted ' + self.neededDateReadOnly().fromNow()))
   }, self)
   self.canRepost = ko.computed(function () {
     const now = moment()
@@ -59,6 +70,12 @@ function Need (data) {
   self.viewOffersUrl = `${adminUrls.needResponses}?needId=${self.id()}`
 
   self.totalResponses = ko.observable(0)
+
+  self.startDate.subscribe((value) => {
+    if (moment(value) > moment(self.endDate()).add('-1', 'days')) {
+      self.endDate(moment(value).add('1', 'days').format(dateFormat))
+    }
+  })
 
   self.repostNeed = function () {
     browser.loading()
@@ -130,7 +147,12 @@ function Need (data) {
       'DonationAmountInPounds': self.donationAmountInPounds(),
       'DonationUrl': self.donationUrl(),
       'CustomMessage': self.customMessage(),
-      'Keywords': keywords
+      'Keywords': keywords,
+      'ClientGroupKeys': self.сlientGroupKeys(),
+      // We must use new Date(self.startDate()) or moment(self.startDate()).utcOffset(0, true) for passing date without timezone. In the database this date should be saved in utc format (00 hours 00 minutes).
+      'NeededDate': new Date(self.startDate()),
+       // We must use new Date(self.endDate()) or moment(self.endDate()).utcOffset(0, true) for passing date without timezone. In the database this date should be saved in utc format (00 hours 00 minutes).
+      'EndDate': new Date(self.endDate())
     }
 
     if (self.id() === undefined) { // adding

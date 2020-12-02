@@ -9,6 +9,8 @@ const ajax = require('../../src/js/ajax')
 const auth = require('../../src/js/auth')
 const endpoints = require('../../src/js/api-endpoints')
 const browser = require('../../src/js/browser')
+const moment = require('moment')
+const ko = require('knockout')
 
 describe('PublishedServiceProviders', () => {
   const Dashboard = require('../../src/js/models/service-providers/listing')
@@ -43,8 +45,15 @@ describe('PublishedServiceProviders', () => {
     sinon.stub(browser, 'loaded')
     sinon.stub(browser, 'pushHistory')
     sinon.stub(browser, 'search')
+    sinon.stub(browser, 'refresh')
 
     dashboard = new Dashboard()
+    sinon.stub(dashboard, 'note').returns({
+      creationDate: ko.observable(moment()),
+      date: ko.observable(moment().format('YYYY-MM-DD')),
+      staffName: ko.observable('staff'),
+      reason: ko.observable('reason')
+    })
   })
 
   afterEach(() => {
@@ -54,6 +63,7 @@ describe('PublishedServiceProviders', () => {
     browser.loaded.restore()
     browser.pushHistory.restore()
     browser.search.restore()
+    browser.refresh.restore()
   })
 
   it('should set published labels', () => {
@@ -83,8 +93,8 @@ describe('PublishedServiceProviders', () => {
       }
 
       stubbedPutApi = sinon.stub(ajax, 'put').returns(fakePostResolved)
-
-      dashboard.togglePublished(dashboard.items()[0])
+      dashboard.toggleNotesInput(dashboard.items()[0])
+      dashboard.togglePublished()
     })
 
     afterEach(() => {
@@ -94,8 +104,15 @@ describe('PublishedServiceProviders', () => {
     it('should send inverse of current isPublished to api', () => {
       var endpoint = endpoints.getServiceProviders + '/albert-kennedy-trust/is-published'
       var payload = {
-        'IsPublished': false
+        'IsPublished': false,
+        'Note': {
+          CreationDate: dashboard.note().creationDate().toISOString(),
+          Date: new Date(dashboard.note().date()),
+          StaffName: dashboard.note().staffName(),
+          Reason: dashboard.note().reason()
+        }
       }
+
       var apiCalledWithExpectedArgs = stubbedPutApi.withArgs(endpoint, payload).calledOnce
       expect(apiCalledWithExpectedArgs).toBeTruthy()
     })
@@ -110,6 +127,67 @@ describe('PublishedServiceProviders', () => {
 
     it('should set toggle publish button labels', () => {
       expect(dashboard.items()[0].togglePublishButtonLabel()).toEqual('publish')
+    })
+
+    it('should set current service provider to null', () => {
+      expect(dashboard.currentServiceProvider()).toEqual(null)
+    })
+
+    it('should close modal', () => {
+      expect(dashboard.isOpenNotesInputModal()).toEqual(false)
+    })
+  })
+
+    describe('Validate text fields of notes', () => {
+      let stubbedPutApi
+
+      beforeEach(() => {
+        let fakePostResolved = {
+          then: function (success, error) {
+            success({
+              'status': 200,
+              'data': {}
+            })
+          }
+        }
+        
+        dashboard.note().reason(null)
+        stubbedPutApi = sinon.stub(ajax, 'put').returns(fakePostResolved)
+        dashboard.toggleNotesInput(dashboard.items()[0])
+        dashboard.togglePublished()
+      })
+
+      afterEach(() => {
+        ajax.put.restore()
+      })
+
+
+      it('show error if required field is empty', () => {
+        expect(dashboard.errorMessage()).toEqual('Please fill all fields')
+      })
+  })
+
+  describe('Validate date fields of notes', () => {
+    let stubbedPutApi
+
+    beforeEach(() => {
+      let fakePostResolved = {
+        then: function (success, error) {
+          success({
+            'status': 200,
+            'data': {}
+          })
+        }
+      }
+      
+      dashboard.note().date(moment('2020-11-11'))
+      stubbedPutApi = sinon.stub(ajax, 'put').returns(fakePostResolved)
+      dashboard.toggleNotesInput(dashboard.items()[0])
+      dashboard.togglePublished()
+    })
+
+    afterEach(() => {
+      ajax.put.restore()
     })
   })
 })

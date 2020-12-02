@@ -87,6 +87,10 @@ describe('Add Service Provider Service', () => {
     expect(model.address().street1()).toEqual('')
   })
 
+  it('client groups should be empty', () => {
+    expect(model.clientGroups().length).toEqual(0)
+  })
+
   describe('select category', () => {
     beforeEach(() => {
       model.category(model.categories()[0])
@@ -227,6 +231,7 @@ describe('Add Service Provider Service', () => {
       model.prefillAddress()
       model.isTelephoneService(true)
       model.isAppointmentOnly(true)
+      model.clientGroups(['cg-1'])
 
       model.saveService()
     })
@@ -262,7 +267,8 @@ describe('Add Service Provider Service', () => {
         'Telephone': 'telephone',
         'IsOpen247': true,
         'IsTelephoneService': true,
-        'IsAppointmentOnly': true
+        'IsAppointmentOnly': true,
+        'ClientGroupKeys': ['cg-1']
       }
 
       var apiCalledWithExpectedArgs = stubbedPostApi.withArgs(endpoint, payload).calledOnce
@@ -298,7 +304,8 @@ function addresses () {
         'startTime': '10:00',
         'endTime': '16:30',
         'day': 'Tuesday'
-      }]
+      }],
+      'clientGroupKeys': ['cg-1']
     }, {
       'key': 2,
       'street': 'Another address',

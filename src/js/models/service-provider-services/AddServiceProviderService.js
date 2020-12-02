@@ -12,6 +12,7 @@ const browser = require('../../browser')
 const getUrlParameter = require('../../get-url-parameter')
 
 import { categories } from '../../../data/generated/service-categories'
+import { clientGroups } from '../../../data/generated/client-groups'
 
 function SubCat (key, name) {
   var self = this
@@ -25,6 +26,8 @@ function AddServiceProviderService () {
 
   self.info = ko.observable()
   self.locationDescription = ko.observable('')
+  self.clientGroups = ko.observableArray()
+  self.availableClientGroups = ko.observableArray(clientGroups)
   self.targetAudience = ko.observable('')
 
   self.categories = ko.observableArray()
@@ -123,7 +126,8 @@ function AddServiceProviderService () {
         'Telephone': self.address().telephone(),
         'IsOpen247': self.address().isOpen247(),
         'IsTelephoneService': self.isTelephoneService(),
-        'IsAppointmentOnly': self.isAppointmentOnly()
+        'IsAppointmentOnly': self.isAppointmentOnly(),
+        'ClientGroupKeys': self.clientGroups()
       }
 
       ajax.post(endpoint, payload)

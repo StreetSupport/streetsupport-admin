@@ -10,6 +10,7 @@ var endpoints = require('../../src/js/api-endpoints')
 var adminurls = require('../../src/js/admin-urls')
 var browser = require('../../src/js/browser')
 var getUrlParameter = require('../../src/js/get-url-parameter')
+const moment = require('moment')
 
 describe('Editing Service Provider Need', () => {
   var Model = require('../../src/js/models/service-provider-needs/EditServiceProviderNeed')
@@ -107,6 +108,18 @@ describe('Editing Service Provider Need', () => {
     expect(model.need().keywords()).toEqual('keywordA, keywordB, keywordC')
   })
 
+  it('should set client group keys', () => {
+    expect(model.need().сlientGroupKeys().length).toEqual(2)
+  })
+
+  it('should set start date', () => {
+    expect(model.need().startDate()).toEqual(moment('2020-11-25').format('YYYY-MM-DD'))
+  })
+
+  it('should set end date', () => {
+    expect(model.need().endDate()).toEqual(moment('2020-11-27').format('YYYY-MM-DD'))
+  })
+
   it('should set provider url', () => {
     expect(model.providerUrl()).toEqual(`${adminurls.serviceProviders}?key=albert-kennedy-trust`)
   })
@@ -145,7 +158,10 @@ describe('Editing Service Provider Need', () => {
           'DonationAmountInPounds': 1,
           'DonationUrl': 'http://www.donationUrl.com',
           'Keywords': ['keywordA', 'keywordB', 'keywordC'],
-          'CustomMessage': 'custom message'
+          'CustomMessage': 'custom message',
+          'ClientGroupKeys': ['cg-1', 'cg-2'],
+          'NeededDate': new Date('2020-11-25'),
+          'EndDate': new Date('2020-11-27')
         }
       ).returns(fakePutResolution())
 
@@ -180,7 +196,10 @@ const needData = {
   'donationAmountInPounds': 1,
   'donationUrl': 'http://www.donationUrl.com',
   'keywords': ['keywordA', 'keywordB', 'keywordC'],
-  'customMessage': 'custom message'
+  'customMessage': 'custom message',
+  'clientGroups': [{'key': 'cg-1'}, {'key': 'cg-2'}],
+  'neededDate': '2020-11-25',
+  'endDate': '2020-11-27'
 }
 
 const needResponses = {

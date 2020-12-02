@@ -77,6 +77,10 @@ const search = () => {
   return window.location.search
 }
 
+let refresh = () => {
+  window.location.reload()
+}
+
 module.exports = {
   redirect,
   loading,
@@ -87,5 +91,6 @@ module.exports = {
   setOnHistoryPop,
   scrollTo,
   origin,
-  search
+  search,
+  refresh
 }

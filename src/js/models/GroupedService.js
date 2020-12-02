@@ -1,5 +1,6 @@
 'use strict'
 
+import { clientGroups } from '../../data/generated/client-groups'
 var ko = require('knockout')
 var htmlencode = require('htmlencode')
 var ajax = require('../ajax')
@@ -37,7 +38,8 @@ function Service (data) {
   self.endpoints = new Endpoints()
   self.listeners = ko.observableArray()
   self.editServiceUrl = adminUrls.serviceProviderServicesEdit + '?providerId=' + data.serviceProviderId + '&serviceId=' + data.id
-
+  self.clientGroups = ko.observable(data.clientGroupKeys)
+  self.availableClientGroups = ko.observableArray(clientGroups)
   self.newOpeningTime = function () {
     var openingTimes = self.openingTimes()
     openingTimes.push(new OpeningTime({
@@ -96,7 +98,8 @@ function Service (data) {
       'IsOpen247': self.isOpen247(),
       'IsTelephoneService': self.isTelephoneService(),
       'IsAppointmentOnly': self.isAppointmentOnly(),
-      'SubCategories': self.subCategories().filter((sc) => sc.isSelected()).map((sc) => sc.id())
+      'SubCategories': self.subCategories().filter((sc) => sc.isSelected()).map((sc) => sc.id()),
+      'ClientGroupKeys': self.clientGroups()
     }
 
     ajax.put(endpoint,

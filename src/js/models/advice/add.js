@@ -4,6 +4,7 @@ const ajax = require('../../ajax')
 const auth = require('../../auth')
 const browser = require('../../browser')
 const endpoints = require('../../api-endpoints')
+const htmlEncode = require('htmlencode')
 
 const BaseViewModel = require('../BaseViewModel')
 
@@ -17,6 +18,8 @@ const Model = function () {
   self.sortPosition = ko.observable()
   self.locationKey = ko.observable()
   self.locations = ko.observableArray()
+  self.parentScenarios = ko.observableArray([])
+  self.parentScenarioId = ko.observable()
 
   self.save = function () {
     browser.loading()
@@ -27,12 +30,14 @@ const Model = function () {
         ? self.tags().split(',').map((t) => t.trim())
         : [],
       locationKey: self.locationKey(),
-      sortPosition: self.sortPosition()
+      sortPosition: self.sortPosition(),
+      parentScenarioId: self.parentScenarioId()
     }
     ajax
       .post(endpoints.faqs, payload)
       .then((result) => {
         if (result.statusCode === 201) {
+          self.clearErrors()
           self.itemCreated(true)
         } else {
           self.handleError(result)
@@ -45,6 +50,24 @@ const Model = function () {
 
   self.init = function () {
     self.locations(auth.getLocationsForUser([{ id: 'general', name: 'General Advice' }]))
+    self.getParentScenarios()
+  }
+
+  self.getParentScenarios = () => {
+    ajax
+      .get(`${endpoints.parentScenarios}`)
+      .then((result) => {
+        self.parentScenarios(result.data
+          .map(p => {
+            return {
+              id: p.id,
+              name: htmlEncode.htmlDecode(p.name)
+            }
+          })
+        )
+      }, () => {
+        self.handleServerError()
+      })
   }
 }
 

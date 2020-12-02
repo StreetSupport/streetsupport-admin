@@ -122,8 +122,10 @@ function ListingBaseViewModel () {
     const getUrl = self.buildGetUrl(existingFilters)
     browser.pushHistory({}, '', `?${getUrl.qs}`)
 
+    // We generate this for retrieving the not cached item
+    let syntaxSugar = new Date().getTime()
     ajax
-      .get(getUrl.fullUrl)
+      .get(getUrl.fullUrl + `&unique=${syntaxSugar}`)
       .then(function (result) {
         browser.loaded()
         self.pagination.updateData(result.data)

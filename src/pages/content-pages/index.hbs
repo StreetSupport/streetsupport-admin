@@ -1,0 +1,59 @@
+---
+title: Content Page - Street Support Admin
+description: Street Support - Making it easier to help homeless people
+layout: default.hbs
+permalink: false
+jsBundle: content-page
+page: content-page
+nosubnav: true
+---
+
+<div class="block block--highlight">
+  <div class="container block__inner">
+    <header>
+      <h1>Content Page</h1>
+      <a class="btn btn--info" href="add/">
+        <span class="btn__text">Add New</span>
+      </a>
+      <form class="form" data-bind="submit: submitSearch">
+        <fieldset class="form__fieldset">
+          <legend class="form__legend">Filter results</legend>
+          <ul class="form__field-list">
+              <li class="form__field-item form__field-item--full-width" data-claims="superadmin,cityadmin">
+                <label for="filterOnLocation" class="form__label">Content Type:</label>
+                <select class="form__input form__input--medium" name="filterOnType" data-bind="options: availableTypes,
+                                  value: typeToFilterOn,
+                                  optionsText: function (item) {
+                                    return item
+                                  }"></select>
+            </li>
+            <li class="form__field-item">
+              <label for="filterByName" class="form__label">Text:</label>
+              <input type="text" name="filterByName" class="form__input" data-bind="textInput: nameToFilterOn"></input>
+            </li>
+          </ul>
+        </fieldset>
+        <button type="submit" class="btn btn--info">
+          <span class="btn__text">Search</span>
+        </button>
+      </form>
+    </header>
+  </div>
+</div>
+
+{{> item-listing }}
+
+<script type="text/html" id="item-template">
+  <article class="stacked-list__item stacked-list__item">
+    <header class="stacked-list__header">
+      <h2 class="stacked-list__heading" data-bind="html: title"></h2>
+      <p data-bind="text: tags"></p>
+    </header>
+    <a data-bind="attr: { href: editUrl }" class="stacked-list__button btn btn--info">
+      <span class="btn__text btn__text--dashboard">Edit</span>
+    </a>
+  <button data-bind="click: $parent.delete" class="stacked-list__button btn btn--warning">
+    <span class="btn__text btn__text--dashboard">Delete</span>
+  </button>
+  </article>
+</script>

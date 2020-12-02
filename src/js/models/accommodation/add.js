@@ -51,11 +51,38 @@ function Model () {
     }
   }))
 
+  self.addresses = ko.observableArray()
+  self.hasAddresses = ko.computed(function () {
+    if (self.addresses === undefined) return false
+    if (self.addresses().length === 0) return false
+    return true
+  }, self)
+
   self.serviceProviders = ko.observableArray()
   self.formSubmitted = ko.observable(false)
   self.formSubmissionSuccessful = ko.observable(false)
   self.formSubmissionNotSuccessful = ko.observable(false)
   self.editNewItemUrl = ko.observable()
+  self.preselectedAddress = ko.observable()
+
+  self.formFields().serviceProviderId.subscribe((newValue) => {
+    if (newValue && self.serviceProviders().length) {
+      let addresses = self.serviceProviders().filter((x) => x.key === newValue).map((y) => y.addresses)[0]
+      if (addresses) {
+        self.addresses(addresses)
+      } else {
+        self.addresses([])
+      }
+    }
+  })
+
+  self.prefillAddress = function () {
+    self.formFields().addressLine1(self.preselectedAddress().street1)
+    self.formFields().addressLine2(self.preselectedAddress().street2)
+    self.formFields().addressLine3(self.preselectedAddress().street3)
+    self.formFields().city(self.preselectedAddress().city)
+    self.formFields().postcode(self.preselectedAddress().postcode)
+  }
 
   self.loadServiceProviders = (locationId) => {
     if (auth.isSuperAdmin() || auth.isCityAdmin()) {
@@ -66,7 +93,8 @@ function Model () {
             .map(p => {
               return {
                 key: p.key,
-                name: htmlEncode.htmlDecode(p.name)
+                name: htmlEncode.htmlDecode(p.name),
+                addresses: p.addresses
               }
             })
             .sortAsc('name')

@@ -42,5 +42,7 @@ module.exports = {
   users: p('/v1/users'),
   verifiedUsers: p('/v1/verified-users'),
   volunteerCategories: p('/v1/volunteer-categories'),
-  volunteers: p('/v1/volunteer-enquiries')
+  volunteers: p('/v1/volunteer-enquiries'),
+  parentScenarios: p('/v1/parent-scenarios'),
+  contentPages: p('/v1/content-pages')
 }

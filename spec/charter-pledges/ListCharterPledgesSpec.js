@@ -56,7 +56,7 @@ describe('List Charter Pledges', () => {
 
   it('should retrieve non-approved pledges by default', () => {
     const expected = `${endpoints.charterPledges}?isApproved=false&pageSize=10&index=0`
-    expect(ajaxGetStub.getCalls()[0].args[0]).toEqual(expected)
+    expect(ajaxGetStub.getCalls()[0].args[0].slice(0, ajaxGetStub.getCalls()[0].args[0].indexOf('&unique'))).toEqual(expected)
   })
 
   it('should set url to supporter full name', () => {
