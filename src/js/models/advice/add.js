@@ -19,7 +19,10 @@ const Model = function () {
   self.locationKey = ko.observable()
   self.locations = ko.observableArray()
   self.parentScenarios = ko.observableArray([])
-  self.parentScenarioId = ko.observable()
+  self.parentScenarioIds = ko.observableArray()
+  self.parentScenarioNames = ko.computed(() => {
+    return self.parentScenarios().filter(x => self.parentScenarioIds().indexOf(x.id) >= 0).map(y => y.name)
+  }, self)
 
   self.save = function () {
     browser.loading()
@@ -31,7 +34,7 @@ const Model = function () {
         : [],
       locationKey: self.locationKey(),
       sortPosition: self.sortPosition(),
-      parentScenarioId: self.parentScenarioId()
+      parentScenarioIds: self.parentScenarioIds()
     }
     ajax
       .post(endpoints.faqs, payload)
