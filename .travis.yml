@@ -9,7 +9,7 @@ cache:
 addons:
   ssh_known_hosts: 178.62.41.238
 before_script:
-  - npm install npm@latest -g
+  - npm install
   - npm install -g gulp-cli
   - chmod +x ./deploy-website.sh
 script: "./deploy-website.sh"
