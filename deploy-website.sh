@@ -22,6 +22,7 @@ if [[ $TRAVIS_BRANCH == 'develop' ]]
     APP_INSIGHTS_KEY=''
     APIENVIRONMENT=1
 fi
+APIENVIRONMENT=1
 
 # Get the commit details
 THE_COMMIT=`git rev-parse HEAD`
