@@ -3,6 +3,11 @@
 # If there are any errors, fail Travis
 set -e
 
+# Set settings for develop environment by default.
+AZURE_WEBSITE=$DEV_AZURE_WEBSITE
+APP_INSIGHTS_KEY=''
+APIENVIRONMENT=1
+
 # Define variables depending on the branch
 if [[ $TRAVIS_BRANCH == 'release' ]]
   then
@@ -15,12 +20,6 @@ if [[ $TRAVIS_BRANCH == 'uat' ]]
     AZURE_WEBSITE=$UAT_AZURE_WEBSITE
     APP_INSIGHTS_KEY=$UAT_APP_INSIGHTS_KEY
     APIENVIRONMENT=2
-fi
-if [[ $TRAVIS_BRANCH == 'develop' ]]
-  then
-    AZURE_WEBSITE=$DEV_AZURE_WEBSITE
-    APP_INSIGHTS_KEY=''
-    APIENVIRONMENT=1
 fi
 
 # Get the commit details
