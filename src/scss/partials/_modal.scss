@@ -68,4 +68,9 @@
         text-decoration: none;
         cursor: pointer;
     }
+
+    &.confirmation-dialog {
+        margin-top: 70px;
+        font-size: 20px;
+    }
 }
