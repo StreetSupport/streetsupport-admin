@@ -59,6 +59,9 @@ const Model = function () {
 
     // We generate this for retrieving the not cached item
     let syntaxSugar = new Date().getTime()
+
+    // We generate this for retrieving the not cached item
+    let syntaxSugar = new Date().getTime()
     ajax
       .get(self.endpointBuilder.faqs(querystring.parameter('id')).build() + `?unique=${syntaxSugar}`)
       .then((result) => {
@@ -67,6 +70,7 @@ const Model = function () {
         self.locationKey(result.data.locationKey)
         self.tags(result.data.tags.join(', '))
         self.sortPosition(result.data.sortPosition)
+
         if (result.data.parentScenarioIds !== null && result.data.parentScenarioIds.length) {
           self.parentScenarioIds(result.data.parentScenarioIds)
         } else {
