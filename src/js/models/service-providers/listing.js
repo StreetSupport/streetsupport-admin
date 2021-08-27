@@ -43,6 +43,7 @@ function DashboardModel () {
   self.dateFormat = dateFormat
   self.isOpenNotesInputModal = ko.observable(false)
   self.isOpenNotesModal = ko.observable(false)
+  self.isOpenClearNotesConfirmationDialog = ko.observable(false)
   self.currentServiceProvider = ko.observable()
   self.note = ko.observable(new Note())
   self.errorMessage = ko.observable()
@@ -165,6 +166,23 @@ function DashboardModel () {
         self.handleError(error)
       })
     }
+  }
+
+  self.handleClearNotesConfirmation = function () {
+    self.isOpenClearNotesConfirmationDialog(!self.isOpenClearNotesConfirmationDialog())
+  }
+
+  self.clearNotes = function () {
+    ajax.delete(self.endpointBuilder.serviceProviders(self.currentServiceProvider().key).build() + '/clear-notes')
+    .then(function () {
+      self.isOpenClearNotesConfirmationDialog(false)
+      self.isOpenNotesModal(false)
+      self.currentServiceProvider().notes([])
+    },
+      function (error) {
+        self.isOpenClearNotesConfirmationDialog(false)
+        self.handleError(error)
+      })
   }
 
   self.invertPublished = function (oldSP, newSP) {

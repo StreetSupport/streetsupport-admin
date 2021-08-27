@@ -134,10 +134,38 @@ nosubnav: true
           </article>
 
         </div>
+
+        <button data-bind="click: $parents[0].handleClearNotesConfirmation" class="btn btn--warning">
+          <span class="btn__text">Clear notes</span>
+        </button>
         <!-- /ko -->
       </div>
     </div>
 
+  </div>
+
+</div>
+<!-- /ko -->
+
+<!-- The Show Confirmation Dialog on Clear notes -->
+<!-- ko if: isOpenClearNotesConfirmationDialog -->
+<div class="modal confirmation-dialog" data-bind="style: { display: isOpenClearNotesConfirmationDialog() ? 'block' : 'none' }">
+
+  <!-- Modal content -->
+  <div class="modal__content">
+    <div class="block">
+      <div class="container block__inner">
+        <p>
+          Are you sure you want to delete all notes?
+        </p>
+        <button data-bind="click: clearNotes" class="btn btn--warning">
+          <span class="btn__text">Yes</span>
+        </button>
+        <button data-bind="click: handleClearNotesConfirmation" class="btn btn--indifferent">
+          <span class="btn__text">Cancel</span>
+        </button>
+      </div>
+    </div>
   </div>
 
 </div>

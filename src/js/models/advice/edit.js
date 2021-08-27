@@ -20,7 +20,10 @@ const Model = function () {
   self.locationKey = ko.observable()
   self.locations = ko.observableArray()
   self.parentScenarios = ko.observableArray([])
-  self.parentScenarioId = ko.observable()
+  self.parentScenarioIds = ko.observableArray()
+  self.parentScenarioNames = ko.computed(() => {
+    return self.parentScenarios().filter(x => self.parentScenarioIds().indexOf(x.id) >= 0).map(y => y.name)
+  }, self)
 
   self.save = function () {
     browser.loading()
@@ -32,7 +35,7 @@ const Model = function () {
         : [],
       locationKey: self.locationKey(),
       sortPosition: self.sortPosition(),
-      parentScenarioId: self.parentScenarioId()
+      parentScenarioIds: self.parentScenarioIds()
     }
     ajax
       .put(self.endpointBuilder.faqs(querystring.parameter('id')).build(), payload)
@@ -57,6 +60,8 @@ const Model = function () {
     // We generate this for retrieving the not cached item
     let syntaxSugar = new Date().getTime()
 
+    // We generate this for retrieving the not cached item
+    let syntaxSugar = new Date().getTime()
     ajax
       .get(self.endpointBuilder.faqs(querystring.parameter('id')).build() + `?unique=${syntaxSugar}`)
       .then((result) => {
@@ -65,10 +70,11 @@ const Model = function () {
         self.locationKey(result.data.locationKey)
         self.tags(result.data.tags.join(', '))
         self.sortPosition(result.data.sortPosition)
-        if (result.data.parentScenarioId !== null) {
-          self.parentScenarioId(result.data.parentScenarioId)
+
+        if (result.data.parentScenarioIds !== null && result.data.parentScenarioIds.length) {
+          self.parentScenarioIds(result.data.parentScenarioIds)
         } else {
-          self.parentScenarioId(null)
+          self.parentScenarioIds([])
         }
         browser.loaded()
       }, (err) => {

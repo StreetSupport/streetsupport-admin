@@ -31,7 +31,13 @@ describe('PublishedServiceProviders', () => {
               {
                 'key': 'coffee4craig',
                 'name': 'Coffee4Craig',
-                'isPublished': false
+                'isPublished': false,
+                'notes': [{
+                  creationDate: ko.observable(moment()),
+                  date: ko.observable(moment().format('YYYY-MM-DD')),
+                  staffName: ko.observable('staff'),
+                  reason: ko.observable('reason')
+                }]
               }
             ]
           }
@@ -167,8 +173,8 @@ describe('PublishedServiceProviders', () => {
       })
   })
 
-  describe('Validate date fields of notes', () => {
-    let stubbedPutApi
+  describe('Validated if notes were cleared', () => {
+    let stubbedDeleteApi
 
     beforeEach(() => {
       let fakePostResolved = {
@@ -181,13 +187,17 @@ describe('PublishedServiceProviders', () => {
       }
       
       dashboard.note().date(moment('2020-11-11'))
-      stubbedPutApi = sinon.stub(ajax, 'put').returns(fakePostResolved)
-      dashboard.toggleNotesInput(dashboard.items()[0])
-      dashboard.togglePublished()
+      stubbedDeleteApi = sinon.stub(ajax, 'delete').returns(fakePostResolved)
+      dashboard.toggleNotes(dashboard.items()[1])
+      dashboard.clearNotes()
     })
 
     afterEach(() => {
-      ajax.put.restore()
+      ajax.delete.restore()
+    })
+
+    it('should set empty notes', () => {
+      expect(dashboard.currentServiceProvider().notes().length).toEqual(0);
     })
   })
 })

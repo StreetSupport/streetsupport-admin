@@ -43,13 +43,14 @@ nosubnav: true
               optionsText:  function (item) { return item.name },
               optionsCaption: '-- please select --'" class="form__input"></select>
           </dd>
-          <dt class="key-value-pair__key">Parent Scenario</dt>
+          <dt class="key-value-pair__key">Parent Scenarios</dt>
           <dd class="key-value-pair__value">
-            <select data-bind="options: parentScenarios,
-              value: parentScenarioId,
-              optionsValue: function (item) { return item.id },
-              optionsText:  function (item) { return item.name },
-              optionsCaption: '-- please select --'" class="form__input"></select>
+            <span data-bind="html: parentScenarioNames"></span>
+            <select size="5" multiple="true" data-bind="options: parentScenarios,
+                optionsValue: function (item) { return item.id },
+                optionsText:  function (item) { return item.name },
+                selectedOptions: parentScenarioIds,
+                optionsCaption: '-- please select --'" class="form__input client-group-select"></select>
           </dd>
           <dt class="key-value-pair__key">Body</dt>
           <dd class="key-value-pair__value">
