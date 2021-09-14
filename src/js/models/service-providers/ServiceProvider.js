@@ -46,7 +46,21 @@ function ServiceProvider (data) {
   self.itemsDonationDescription = ko.observable(htmlEncode.htmlDecode(data.itemsDonationDescription))
   self.verifiedMessage = ko.observable(`${data.isVerified ? 'verified by provider' : 'not verified'}`)
   self.publishedMessage = ko.computed(() => `${self.isPublished() ? 'published' : 'not published'}`, self)
+  self.lastUpdateDate = ko.observable(new Date(data.documentModifiedDate).toLocaleString())
+  self.diffDays = ko.computed(() => {
+    //NOTE: we use toDateString() for igonoring time part of the date
+    const date1 = new Date(new Date(self.lastUpdateDate()).toDateString());
+    const date2 = new Date(new Date().toDateString());
+    const diffTime = Math.abs(date2 - date1);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return diffDays;
+  }, self)
+  self.administrators = ko.observableArray(data.administrators)
+  self.selectedAdministrator = ko.observable((() => {
+    const admin = (self.administrators() || []).find(item => item.isSelected);
 
+    return admin ? admin.email : '';
+  })())
   self.tags = ko.observableArray(
     spTags.all()
       .map((t) => {

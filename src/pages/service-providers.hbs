@@ -52,6 +52,11 @@ nosubnav: true
       {{> form-feedback}}
       <div data-bind="with: serviceProvider">
         <div class="split split--admin-panel">
+          <section class="stacked-list__item stacked-list__item">
+            {{> service-provider/admin-details}}
+          </section>
+        </div>
+        <div class="split split--admin-panel">
           <section class="split__element split__element--admin-panel">
             {{> service-provider/general-info}}
           </section>
