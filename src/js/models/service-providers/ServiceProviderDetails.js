@@ -73,6 +73,28 @@ function ServiceProviderDetails () {
     }
   }
 
+  self.saveAdminDetails = function (event) {
+    const payload = {
+      'SelectedAdministratorEmail': event.selectedAdministrator()
+    }
+
+    ajax.put(self.endpointBuilder.serviceProviders(getUrlParameter.parameter('key')).adminDetails().build(),
+      payload
+    ).then(function (result) {
+      if (result.statusCode === 200) {
+        window.alert('Updated')
+        self.updateTimestamp(result.data.documentModifiedDate)
+        self.clearErrors()
+      } else {
+        self.handleError(result)
+      }
+    })
+  }
+
+  self.updateTimestamp = function (data) {
+    self.serviceProvider().lastUpdateDate(new Date(data).toLocaleString())
+  }
+
   self.editContactDetails = function () {
     self.isEditingContactDetails(true)
   }
