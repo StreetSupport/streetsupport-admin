@@ -51,8 +51,9 @@ describe('Edit Service Provider Admin Information', () => {
 
   describe('Save', () => {
     var stubbedPutApi
+    global.window = { 'alert': () => {} }
 
-    beforeEach(() => {
+    beforeEach(() => {    
       sinon.stub(global.window, 'alert')
 
       let fakeResolved = {
@@ -65,7 +66,7 @@ describe('Edit Service Provider Admin Information', () => {
       }
 
       stubbedPutApi = sinon.stub(ajax, 'put').returns(fakeResolved)
-      model.saveAdminDetails({ 'selectedAdministrator': ko.observable('test2@email.com')})
+      model.saveAdminDetails({ 'selectedAdministrator': ko.observable('test2@email.com') })
     })
 
     afterEach(() => {
@@ -73,48 +74,10 @@ describe('Edit Service Provider Admin Information', () => {
       ajax.put.restore()
     })
 
-    it('should put service provider contact details to api', () => {
+    it('should put service provider admin details to api', () => {
       var endpoint = model.endpointBuilder.serviceProviders(getUrlParameter.parameter('key')).adminDetails().build()
       var payload = {
-        'SelectedAdministratorEmail': 'test2@email.com',
-      }
-      var apiCalledWithExpectedArgs = stubbedPutApi.withArgs(endpoint, payload).calledOnce
-      expect(apiCalledWithExpectedArgs).toBeTruthy()
-    })
-
-    it('should update lastUpdateDate', () => {
-      expect(model.serviceProvider().lastUpdateDate()).toEqual(new Date('2021-09-16T13:45:49.3600000Z').toLocaleString())
-    })
-  })
-
-    describe('Save', () => {
-    var stubbedPutApi
-
-    beforeEach(() => {
-      sinon.stub(global.window, 'alert')
-
-      let fakeResolved = {
-        then: (success, _) => {
-          success({
-            'statusCode': 200,
-            'data': { 'documentModifiedDate': '2021-09-16T13:45:49.3600000Z' }
-          })
-        }
-      }
-
-      stubbedPutApi = sinon.stub(ajax, 'put').returns(fakeResolved)
-      model.saveAdminDetails({ 'selectedAdministrator': ko.observable('test2@email.com')})
-    })
-
-    afterEach(() => {
-      global.window.alert.restore()
-      ajax.put.restore()
-    })
-
-    it('should put service provider contact details to api', () => {
-      var endpoint = model.endpointBuilder.serviceProviders(getUrlParameter.parameter('key')).adminDetails().build()
-      var payload = {
-        'SelectedAdministratorEmail': 'test2@email.com',
+        'SelectedAdministratorEmail': 'test2@email.com'
       }
       var apiCalledWithExpectedArgs = stubbedPutApi.withArgs(endpoint, payload).calledOnce
       expect(apiCalledWithExpectedArgs).toBeTruthy()
@@ -139,7 +102,7 @@ function coffee4Craig () {
     'groupedServices': [],
     'providedServices': [],
     'documentModifiedDate': '2021-09-15T13:45:49.3600000Z',
-    'administrators': [{ 'email': "test@email.com", "isSelected": false },
-                       { 'email': "test2@email.com", "isSelected": false }]
+    'administrators': [{ 'email': 'test@email.com', 'isSelected': false },
+                       { 'email': 'test2@email.com', 'isSelected': false }]
   }
 }
