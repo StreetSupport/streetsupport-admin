@@ -122,13 +122,13 @@ describe('Content Page - Edit', () => {
         model.title('updated title')
         model.save()
       })
-  
+
       it('should put to api content-pages endpoint', () => {
         const endpoint = ajaxPutStub.getCalls()[0].args[0]
         expect(endpoint).toEqual(`${endpoints.contentPages}/${content.id}`)
         expect(ajaxPutStub.calledAfter(browserLoadingStub)).toBeTruthy()
       })
-  
+
       it('should post payload', () => {
         const payload = ajaxPutStub.getCalls()[0].args[1]
         const expected = {
@@ -141,7 +141,7 @@ describe('Content Page - Edit', () => {
         }
         expect(payload).toEqual(expected)
       })
-  
+
       it('should show loaded', () => {
         expect(browserLoadedStub.calledAfter(ajaxPutStub)).toBeTruthy()
       })
@@ -150,21 +150,21 @@ describe('Content Page - Edit', () => {
 })
 
 var content = {
-    "title":"Test advice",
-    "type":"advice",
-    "body":"Test",
-    "sortPosition":999,
-    "tags":["test"],
-    "parentScenarioId":"5f69bf51a27c1c3b84fe6448",
-    "id":"5f858e140532b82be4b0b8b2"
+  'title': 'Test advice',
+  'type': 'advice',
+  'body': 'Test',
+  'sortPosition': 999,
+  'tags': ['test'],
+  'parentScenarioId': '5f69bf51a27c1c3b84fe6448',
+  'id': '5f858e140532b82be4b0b8b2'
 }
 
 var parentScenarios = [
   {
-    "name":"Parent scenario 1",
-    "body":"body",
-    "sortPosition":1000,
-    "tags":["families"],
-    "id":"5f69bf51a27c1c3b84fe6447"
+    'name': 'Parent scenario 1',
+    'body': 'body',
+    'sortPosition': 1000,
+    'tags': ['families'],
+    'id': '5f69bf51a27c1c3b84fe6447'
   }
 ]
