@@ -82,17 +82,14 @@ function ServiceProviderDetails () {
       payload
     ).then(function (result) {
       if (result.statusCode === 200) {
+        self.serviceProvider().lastUpdateDate(new Date().toISOString())
+        self.initialServiceProvider(self.serviceProvider())
         window.alert('Updated')
-        self.updateTimestamp(result.data.documentModifiedDate)
         self.clearErrors()
       } else {
         self.handleError(result)
       }
     })
-  }
-
-  self.updateTimestamp = function (data) {
-    self.serviceProvider().lastUpdateDate(new Date(data).toLocaleString())
   }
 
   self.editContactDetails = function () {
@@ -172,6 +169,7 @@ function ServiceProviderDetails () {
     self.serviceProvider().twitter(self.initialServiceProvider().twitter())
     self.serviceProvider().donationUrl(self.initialServiceProvider().donationUrl())
     self.serviceProvider().donationDescription(self.initialServiceProvider().donationDescription())
+    self.serviceProvider().lastUpdateDate(self.initialServiceProvider().lastUpdateDate())
   }
 
   self.init()

@@ -82,10 +82,6 @@ describe('Edit Service Provider Admin Information', () => {
       var apiCalledWithExpectedArgs = stubbedPutApi.withArgs(endpoint, payload).calledOnce
       expect(apiCalledWithExpectedArgs).toBeTruthy()
     })
-
-    it('should update lastUpdateDate', () => {
-      expect(model.serviceProvider().lastUpdateDate()).toEqual(new Date('2021-09-16T13:45:49.3600000Z').toLocaleString())
-    })
   })
 })
 
