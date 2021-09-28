@@ -59,7 +59,6 @@ const Model = function () {
 
     // We generate this for retrieving the not cached item
     let syntaxSugar = new Date().getTime()
-    
     ajax
       .get(self.endpointBuilder.faqs(querystring.parameter('id')).build() + `?unique=${syntaxSugar}`)
       .then((result) => {

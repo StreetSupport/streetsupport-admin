@@ -37,12 +37,7 @@ const Model = function () {
     }
 
     const jsonPayload = JSON.stringify(payload)
-
-    self.formData.append('jsonPayload', new Blob([
-        jsonPayload
-    ], {
-        type: "application/json"
-    }))
+    self.formData.append('jsonPayload', new Blob([ jsonPayload ], { type: 'application/json' }))
 
     ajax
       .postFile(endpoints.contentPages, self.formData)
@@ -83,12 +78,12 @@ const Model = function () {
   self.handleImageUpload = (event) => {
     self.formData = new FormData()
     const files = event.target.files
-    
+
     for (var i = 0; i < files.length; i++) {
       self.formData.append('file' + i, files[i], files[i].name)
     }
   }
-  
+
   window.document.querySelector('#fileUpload').addEventListener('change', event => {
     self.handleImageUpload(event)
   })
