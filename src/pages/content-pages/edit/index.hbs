@@ -57,6 +57,7 @@ nosubnav: true
           <dd class="key-value-pair__value">
             <input data-bind="textInput: sortPosition" type="number" min="0" class="form__input" />
           </dd>
+          <!-- ko if: files && files().length-->
           <dt class="key-value-pair__key" id="files-title">Files</dt>
           <dd class="key-value-pair__value">
             <div data-bind="foreach: files">
@@ -68,6 +69,7 @@ nosubnav: true
               </article>
             </div>
           </dd>
+          <!-- /ko -->
           <dt class="key-value-pair__key">Please attach files</dt>
           <dd class="key-value-pair__value">
             <input type="file" id="fileUpload" class="form__input" multiple>
