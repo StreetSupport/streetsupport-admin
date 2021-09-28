@@ -5,6 +5,15 @@ var browser = require('./browser')
 import storage from './sessionStorage'
 import { storageKeys } from './models/auth0/webAuth'
 
+var postFile = function (url, data, isCustomErrorHandling) {
+  return makeRequest({
+    method: 'POST',
+    url: url,
+    data: data,
+    isCustomErrorHandling: isCustomErrorHandling
+  }, true).promise
+}
+
 var post = function (url, data, isCustomErrorHandling) {
   return makeRequest({
     method: 'POST',
@@ -12,6 +21,14 @@ var post = function (url, data, isCustomErrorHandling) {
     data: data,
     isCustomErrorHandling: isCustomErrorHandling
   }).promise
+}
+
+var putFile = function (url, data, isCustomErrorHandling) {
+  return makeRequest({
+    method: 'PUT',
+    url: url,
+    data: data
+  }, true).promise
 }
 
 var put = function (url, data) {
@@ -44,13 +61,16 @@ var _delete = function (url) {
   }).promise
 }
 
-var makeRequest = function (options) {
+var makeRequest = function (options, isMultipartFormData = false) {
   var deferred = Q.defer()
   var req = new XMLHttpRequest()
   req.open(options.method, options.url, true)
 
   req.setRequestHeader('Authorization', 'Bearer ' + storage.get(storageKeys.accessToken))
-  req.setRequestHeader('content-type', 'application/json')
+
+  if (!isMultipartFormData) {
+    req.setRequestHeader('content-type', 'application/json')
+  }
 
   var parseResponseText = function (response) {
     if (response.responseText.length) {
@@ -96,7 +116,9 @@ var makeRequest = function (options) {
     deferred.reject(new Error('Server responded with a status of ' + req.status))
   }
 
-  if (options.data !== undefined) {
+  if (isMultipartFormData && options.data !== undefined) {
+    req.send(options.data)
+  } else if (options.data !== undefined) {
     req.send(JSON.stringify(options.data))
   } else {
     req.send()
@@ -109,5 +131,7 @@ module.exports = {
   post: post,
   patch: patch,
   put: put,
-  delete: _delete
+  delete: _delete,
+  postFile: postFile,
+  putFile: putFile
 }
