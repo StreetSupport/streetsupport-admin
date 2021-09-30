@@ -1,0 +1,25 @@
+<h2>Admin Details</h2>
+  <!-- ko template: { name: 'admin-details-info' } --><!-- /ko -->
+  Please choose the administrator who will be responsible for making updates to your organisation, the will be contacted after 90 days of inactivity to check that the information is still correct.
+  <dl class="key-value-pair">
+    <dt class="key-value-pair__key">Administrator</dt>
+    <dd class="key-value-pair__value" data-claims="superadmin">
+      <select data-bind="
+          options: administrators,
+          value: selectedAdministrator,
+          optionsValue: function (item) { return item.email },
+          optionsText:  function (item) { return item.email },
+          event: { change: $parent.saveAdminDetails },
+          optionsCaption: 'None'"
+          class="form__input"></select>
+    </dd>
+    <dd class="key-value-pair__value">
+      <span data-bind="html: diffDays"></span>
+      number of days since last update.
+    </dd>
+  </dl>
+  <button data-bind="click: $parent.saveAdminDetails" class="btn btn--info"><span class="btn__text">Information up to date</span></button>
+  <!-- ko template: { name: 'admin-details-info' } --><!-- /ko -->
+
+  <script type="text/html" id="admin-details-info">
+  </script>

@@ -144,38 +144,7 @@ describe('PublishedServiceProviders', () => {
     })
   })
 
-    describe('Validate text fields of notes', () => {
-      let stubbedPutApi
-
-      beforeEach(() => {
-        let fakePostResolved = {
-          then: function (success, error) {
-            success({
-              'status': 200,
-              'data': {}
-            })
-          }
-        }
-        
-        dashboard.note().reason(null)
-        stubbedPutApi = sinon.stub(ajax, 'put').returns(fakePostResolved)
-        dashboard.toggleNotesInput(dashboard.items()[0])
-        dashboard.togglePublished()
-      })
-
-      afterEach(() => {
-        ajax.put.restore()
-      })
-
-
-      it('show error if required field is empty', () => {
-        expect(dashboard.errorMessage()).toEqual('Please fill all fields')
-      })
-  })
-
-  describe('Validated if notes were cleared', () => {
-    let stubbedDeleteApi
-
+  describe('Validate text fields of notes', () => {
     beforeEach(() => {
       let fakePostResolved = {
         then: function (success, error) {
@@ -185,9 +154,35 @@ describe('PublishedServiceProviders', () => {
           })
         }
       }
-      
+
+      dashboard.note().reason(null)
+      sinon.stub(ajax, 'put').returns(fakePostResolved)
+      dashboard.toggleNotesInput(dashboard.items()[0])
+      dashboard.togglePublished()
+    })
+
+    afterEach(() => {
+      ajax.put.restore()
+    })
+
+    it('show error if required field is empty', () => {
+      expect(dashboard.errorMessage()).toEqual('Please fill all fields')
+    })
+  })
+
+  describe('Validated if notes were cleared', () => {
+    beforeEach(() => {
+      let fakePostResolved = {
+        then: function (success, error) {
+          success({
+            'status': 200,
+            'data': {}
+          })
+        }
+      }
+
       dashboard.note().date(moment('2020-11-11'))
-      stubbedDeleteApi = sinon.stub(ajax, 'delete').returns(fakePostResolved)
+      sinon.stub(ajax, 'delete').returns(fakePostResolved)
       dashboard.toggleNotes(dashboard.items()[1])
       dashboard.clearNotes()
     })
@@ -197,7 +192,7 @@ describe('PublishedServiceProviders', () => {
     })
 
     it('should set empty notes', () => {
-      expect(dashboard.currentServiceProvider().notes().length).toEqual(0);
+      expect(dashboard.currentServiceProvider().notes().length).toEqual(0)
     })
   })
 })
