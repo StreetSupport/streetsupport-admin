@@ -57,6 +57,23 @@ nosubnav: true
           <dd class="key-value-pair__value">
             <input data-bind="textInput: sortPosition" type="number" min="0" class="form__input" />
           </dd>
+          <!-- ko if: files && files().length-->
+          <dt class="key-value-pair__key" id="files-title">Files</dt>
+          <dd class="key-value-pair__value">
+            <div data-bind="foreach: files">
+              <article class="key-value-pair location service-provider__item">
+                <h4 data-bind="html: fileName"></h4>
+                <p data-bind="click: $parent.deleteFile" title="delete file" class="btn btn--warning">
+                  <span class="btn__text">Delete</span>
+                </p>
+              </article>
+            </div>
+          </dd>
+          <!-- /ko -->
+          <dt class="key-value-pair__key">Please attach files</dt>
+          <dd class="key-value-pair__value">
+            <input type="file" id="fileUpload" class="form__input" multiple>
+          </dd>
         </dl>
         <button data-bind="click: save" class="btn btn--primary"><span class="btn__text">save</span></button>
       </article>

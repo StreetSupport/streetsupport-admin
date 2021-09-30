@@ -73,6 +73,25 @@ function ServiceProviderDetails () {
     }
   }
 
+  self.saveAdminDetails = function (event) {
+    const payload = {
+      'SelectedAdministratorEmail': event.selectedAdministrator()
+    }
+
+    ajax.put(self.endpointBuilder.serviceProviders(getUrlParameter.parameter('key')).adminDetails().build(),
+      payload
+    ).then(function (result) {
+      if (result.statusCode === 200) {
+        self.serviceProvider().lastUpdateDate(new Date().toISOString())
+        self.initialServiceProvider(self.serviceProvider())
+        window.alert('Updated')
+        self.clearErrors()
+      } else {
+        self.handleError(result)
+      }
+    })
+  }
+
   self.editContactDetails = function () {
     self.isEditingContactDetails(true)
   }
@@ -150,6 +169,7 @@ function ServiceProviderDetails () {
     self.serviceProvider().twitter(self.initialServiceProvider().twitter())
     self.serviceProvider().donationUrl(self.initialServiceProvider().donationUrl())
     self.serviceProvider().donationDescription(self.initialServiceProvider().donationDescription())
+    self.serviceProvider().lastUpdateDate(self.initialServiceProvider().lastUpdateDate())
   }
 
   self.init()

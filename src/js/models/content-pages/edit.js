@@ -7,6 +7,7 @@ const querystring = require('../../get-url-parameter')
 const endpoints = require('../../api-endpoints')
 
 const BaseViewModel = require('../BaseViewModel')
+const FormData = require('form-data')
 
 const Model = function () {
   const self = this
@@ -14,12 +15,18 @@ const Model = function () {
   self.itemCreated = ko.observable(false)
   self.title = ko.observable()
   self.body = ko.observable()
-  self.tags = ko.observable()
+  self.tags = ko.observable([])
   self.sortPosition = ko.observable()
   self.parentScenarios = ko.observableArray([])
   self.parentScenarioId = ko.observable()
   self.type = ko.observable()
   self.availableTypes = ko.observableArray(['advice', 'guides'])
+  self.formData = new FormData()
+  self.files = ko.observable([])
+
+  self.deleteFile = function (data) {
+    self.files(self.files().filter(file => file.fileId !== data.fileId))
+  }
 
   self.save = function () {
     browser.loading()
@@ -31,10 +38,15 @@ const Model = function () {
         ? self.tags().split(',').map((t) => t.trim())
         : [],
       sortPosition: self.sortPosition(),
-      parentScenarioId: self.parentScenarioId()
+      parentScenarioId: self.parentScenarioId(),
+      files: self.files()
     }
+
+    const jsonPayload = JSON.stringify(payload)
+    self.formData.append('jsonPayload', new Blob([ jsonPayload ], { type: 'application/json' }))
+
     ajax
-      .put(self.endpointBuilder.contentPages(querystring.parameter('id')).build(), payload)
+      .putFile(self.endpointBuilder.contentPages(querystring.parameter('id')).build(), self.formData)
       .then((result) => {
         if (result.statusCode === 200) {
           self.clearErrors()
@@ -62,6 +74,8 @@ const Model = function () {
         self.body(htmlencode.htmlDecode(result.data.body))
         self.tags(result.data.tags.join(', '))
         self.sortPosition(result.data.sortPosition)
+        self.files(result.data.files)
+
         if (result.data.parentScenarioId !== null) {
           self.parentScenarioId(result.data.parentScenarioId)
         } else {
@@ -89,6 +103,19 @@ const Model = function () {
         self.handleServerError()
       })
   }
+
+  self.handleImageUpload = (event) => {
+    self.formData = new FormData()
+    const files = event.target.files
+    
+    for (var i = 0; i < files.length; i++) {
+      self.formData.append('file' + i, files[i], files[i].name)
+    }
+  }
+
+  window.document.querySelector('#fileUpload').addEventListener('change', event => {
+    self.handleImageUpload(event)
+  })
 }
 
 Model.prototype = new BaseViewModel()

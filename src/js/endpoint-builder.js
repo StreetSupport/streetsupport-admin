@@ -183,6 +183,11 @@ function EndpointBuilder () {
     return self
   }
 
+  self.adminDetails = () => {
+    self.childResource = 'admin-details'
+    return self
+  }
+
   self.contactDetails = () => {
     self.childResource = 'contact-details'
     return self

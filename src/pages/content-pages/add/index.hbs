@@ -64,7 +64,11 @@ nosubnav: true
           <dd class="key-value-pair__value">
             <input data-bind="textInput: sortPosition" type="number" min="0" class="form__input" />
           </dd>
-        </dl>
+          <dd class="key-value-pair__value">
+            <dt class="key-value-pair__key">Please attach one or more files</dt>
+            <input type="file" id="fileUpload" class="form__input" multiple>
+          </dd>
+        </dl> 
         <button data-bind="click: save" class="btn btn--primary"><span class="btn__text">save</span></button>
       </article>
       <!-- /ko -->
