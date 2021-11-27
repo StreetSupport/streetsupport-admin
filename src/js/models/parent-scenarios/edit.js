@@ -2,10 +2,8 @@ const ko = require('knockout')
 const htmlencode = require('htmlencode')
 
 const ajax = require('../../ajax')
-const auth = require('../../auth')
 const browser = require('../../browser')
 const querystring = require('../../get-url-parameter')
-const endpoints = require('../../api-endpoints')
 
 const BaseViewModel = require('../BaseViewModel')
 
@@ -23,6 +21,7 @@ const Model = function () {
     const payload = {
       name: self.name(),
       body: self.body(),
+      sortPosition: self.sortPosition(),
       tags: self.tags().length
         ? self.tags().split(',').map((t) => t.trim())
         : []

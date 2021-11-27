@@ -11,8 +11,8 @@ const auth = require('../../../src/js/auth')
 const endpoints = require('../../../src/js/api-endpoints')
 const browser = require('../../../src/js/browser')
 
-describe('Advice QA - Add', () => {
-  var Model = require('../../../src/js/models/advice/add')
+describe('Content Page - Add', () => {
+  var Model = require('../../../src/js/models/parent-scenarios/add')
   var model
   let ajaxPostStub,
     browserLoadingStub,
@@ -52,31 +52,26 @@ describe('Advice QA - Add', () => {
 
   describe('- save', () => {
     beforeEach(() => {
-      model.title('title')
+      model.name('name')
       model.body('body')
-      model.locationKey('location')
       model.tags('tag-a , tag-b, tag-c ')
       model.sortPosition(123)
-      model.parentScenarioIds(['5f69bf51a27c1c3b84fe6001'])
-      model.parentScenarios([{ id: '5f69bf51a27c1c3b84fe6001', name: 'Parent scenario' }, { id: '5f69bf51a27c1c3b84fe6002', name: 'Parent scenario 2' }])
       model.save()
     })
 
-    it('should post to api faqs endpoint', () => {
+    it('should post to api parent-scenarios endpoint', () => {
       const endpoint = ajaxPostStub.getCalls()[0].args[0]
-      expect(endpoint).toEqual(endpoints.faqs)
+      expect(endpoint).toEqual(endpoints.parentScenarios)
       expect(ajaxPostStub.calledAfter(browserLoadingStub)).toBeTruthy()
     })
 
     it('should post payload', () => {
       const payload = ajaxPostStub.getCalls()[0].args[1]
       const expected = {
-        title: 'title',
+        name: 'name',
         body: 'body',
-        locationKey: 'location',
         tags: ['tag-a', 'tag-b', 'tag-c'],
-        sortPosition: 123,
-        parentScenarioIds: ['5f69bf51a27c1c3b84fe6001']
+        sortPosition: 123
       }
       expect(payload).toEqual(expected)
     })
