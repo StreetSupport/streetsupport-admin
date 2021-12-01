@@ -37,7 +37,7 @@ describe('Content Page - Add', () => {
     ajaxPostStub.returns(postResolution)
 
     global.window.document = { 'querySelector': () => {
-      return { 
+      return {
         'addEventListener': () => {}
       }
     }}

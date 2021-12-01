@@ -1,0 +1,57 @@
+---
+title: Add Parent Scenario - Street Support Admin
+description: Street Support - Making it easier to help homeless people
+layout: default.hbs
+permalink: false
+jsBundle: parent-scenario-add
+page: parent-scenario-page
+nosubnav: true
+---
+
+<div class="block block--highlight">
+  <div class="container block__inner">
+    <header>
+      <h1>Add Parent Scenario</h1>
+      <a class="btn btn--info" href="/parent-scenarios">
+        <span class="btn__text">Back to Listing</span>
+      </a>
+    </header>
+  </div>
+</div>
+<div class="block block--main-body">
+  <div class="container block__inner">
+    <div class="block__content form">
+      {{> form-feedback}}
+      <!-- ko if: itemCreated -->
+      <p>Item created</p>
+      <a href="/parent-scenarios" class="btn btn--info">
+        <span class="btn__text">Back to listing</span>
+      </a>
+      <!-- /ko -->
+      <!-- ko ifnot: itemCreated -->
+      <article>
+        <dl class="key-value-pair">
+          <dt class="key-value-pair__key">Name</dt>
+          <dd class="key-value-pair__value">
+            <input data-bind="textInput: name" type="text" class="form__input" />
+          </dd>
+          <dt class="key-value-pair__key">Body</dt>
+          <dd class="key-value-pair__value">
+            <textarea data-bind="textInput: body" class="form__input" rows="20"></textarea>
+          </dd>
+          <dt class="key-value-pair__key">Tags - comma separated keywords</dt>
+          <dd class="key-value-pair__value">
+            <input data-bind="textInput: tags" placeholder="eg: furniture, rent, landlord" type="text" class="form__input" />
+          </dd>
+          <dt class="key-value-pair__key">Sort Position - a higher value places this nearer the top of the listing</dt>
+          <dd class="key-value-pair__value">
+            <input data-bind="textInput: sortPosition" type="number" min="0" class="form__input" />
+          </dd>
+        </dl> 
+        <button data-bind="click: save" class="btn btn--primary"><span class="btn__text">save</span></button>
+      </article>
+      <!-- /ko -->
+      {{> loading-spinner }}
+    </div>
+  </div>
+</div>
