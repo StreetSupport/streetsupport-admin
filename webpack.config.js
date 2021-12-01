@@ -72,6 +72,9 @@ module.exports = {
     'content-page': path.join(__dirname, pageDirPath, 'content-pages/listing'),
     'content-page-add': path.join(__dirname, pageDirPath, 'content-pages/add'),
     'content-page-edit': path.join(__dirname, pageDirPath, 'content-pages/edit'),
+    'parent-scenario': path.join(__dirname, pageDirPath, 'parent-scenarios/listing'),
+    'parent-scenario-add': path.join(__dirname, pageDirPath, 'parent-scenarios/add'),
+    'parent-scenario-edit': path.join(__dirname, pageDirPath, 'parent-scenarios/edit'),
     dashboard: path.join(__dirname, pageDirPath, 'dashboard/')
   },
   output: {
