@@ -65,10 +65,10 @@ describe('Content Page - Edit', () => {
     ajaxPutStub.returns(putResolution)
 
     global.window.document = { 'querySelector': () => {
-        return { 
-          'addEventListener': () => {}
-        }
-      }}
+      return {
+        'addEventListener': () => {}
+      }
+    }}
 
     model = new Model()
   })

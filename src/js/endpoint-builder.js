@@ -25,6 +25,11 @@ function EndpointBuilder () {
     return self
   }
 
+  self.parentScenarios = (parentScenarioId) => {
+    self.updateBaseResource(endpoints.parentScenarios, parentScenarioId)
+    return self
+  }
+
   self.serviceProviderNeeds = (needId) => {
     self.updateBaseResource(endpoints.serviceProviderNeeds, needId)
     return self
