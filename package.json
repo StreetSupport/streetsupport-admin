@@ -74,7 +74,7 @@
     "hogan.js": "3.0.2",
     "holderjs": "2.9.3",
     "htmlencode": "0.0.4",
-    "jsonwebtoken": "^8.3.0",
+    "jsonwebtoken": "^9.0.0",
     "knockout": "3.5.0-rc",
     "knockout.validation": "2.0.3",
     "marked": "0.6.2",
