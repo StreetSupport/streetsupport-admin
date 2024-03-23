@@ -40,7 +40,6 @@ describe('SWEP Availabilty', () => {
   afterEach(() => {
     ajax.get.restore()
     auth.isCityAdmin.restore()
-    auth.isSuperAdmin.restore()
     browser.loading.restore()
     browser.loaded.restore()
     nav.disableForbiddenLinks.restore()
