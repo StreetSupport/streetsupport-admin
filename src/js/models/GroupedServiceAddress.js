@@ -79,19 +79,19 @@ function Address (data) {
   self.deleteAddress = function () {
     var endpoint = self.endpointBuilder.serviceProviders(getUrlParameter.parameter('key')).addresses(self.key()).build()
     ajax.delete(endpoint)
-    .then(function (result) {
-      self.listeners().forEach((listener) => listener.deleteAddress(self))
-    }, function (error) {
-      self.handleError(error)
-    })
+      .then(function (result) {
+        self.listeners().forEach((listener) => listener.deleteAddress(self))
+      }, function (error) {
+        self.handleError(error)
+      })
   }
 
   self.newOpeningTime = function () {
     var openingTimes = self.openingTimes()
     openingTimes.push(new OpeningTime({
-      'day': '',
-      'startTime': '',
-      'endTime': ''
+      day: '',
+      startTime: '',
+      endTime: ''
     }))
     self.openingTimes(openingTimes)
   }
@@ -110,20 +110,20 @@ function Address (data) {
   self.save = function () {
     var mapOpeningTime = function (openingTime) {
       return {
-        'startTime': openingTime.startTime(),
-        'endTime': openingTime.endTime(),
-        'day': openingTime.day()
+        startTime: openingTime.startTime(),
+        endTime: openingTime.endTime(),
+        day: openingTime.day()
       }
     }
 
     var model = {
-      'Street': self.street1(),
-      'Street1': self.street2(),
-      'Street2': self.street3(),
-      'Street3': self.street4(),
-      'City': self.city(),
-      'Postcode': self.postcode(),
-      'OpeningTimes': self.openingTimes().map((openingTime) => mapOpeningTime(openingTime))
+      Street: self.street1(),
+      Street1: self.street2(),
+      Street2: self.street3(),
+      Street3: self.street4(),
+      City: self.city(),
+      Postcode: self.postcode(),
+      OpeningTimes: self.openingTimes().map((openingTime) => mapOpeningTime(openingTime))
     }
 
     if (self.tempKey() !== undefined || self.key() === undefined) {
@@ -160,11 +160,11 @@ function Address (data) {
     self.postcode(self.savedPostcode())
     self.telephone(self.savedTelephone())
 
-    let buildOpeningTime = function (ot) {
+    const buildOpeningTime = function (ot) {
       return new OpeningTime({
-        'day': ot.day(),
-        'startTime': ot.startTime(),
-        'endTime': ot.endTime()
+        day: ot.day(),
+        startTime: ot.startTime(),
+        endTime: ot.endTime()
       })
     }
 

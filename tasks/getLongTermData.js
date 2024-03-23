@@ -6,7 +6,7 @@ import request from 'request'
 import source from 'vinyl-source-stream'
 import streamify from 'gulp-streamify'
 import replace from 'gulp-replace'
-import runSequence from 'run-sequence'
+import runSequence from 'gulp4-run-sequence'
 
 import { newFile } from './fileHelpers'
 
@@ -24,13 +24,13 @@ const outputs = {
 }
 
 /* calls API and generates static data */
-gulp.task('volunteer-categories', (callback) => {
+gulp.task('volunteer-categories', gulp.series((callback) => {
   return request(endpoints.volunteerCategories)
     .pipe(source(`${config.paths.generatedData}full-volunteer-categories.js`))
     .pipe(gulp.dest('./'))
-})
+}))
 
-gulp.task('parse-vol-categories', (callback) => {
+gulp.task('parse-vol-categories', gulp.series((callback) => {
   const cats = JSON.parse(fs.readFileSync(`${config.paths.generatedData}full-volunteer-categories.js`))
     .items
       .map(function (c) {
@@ -42,17 +42,17 @@ gulp.task('parse-vol-categories', (callback) => {
       .sortAsc('name')
   return newFile('volunteer-categories.js', `export const categories = ${JSON.stringify(cats)}`)
     .pipe(gulp.dest(`${config.paths.generatedData}`))
-})
+}))
 
-gulp.task('parse-vol-categories-task', (callback) => {
+gulp.task('parse-vol-categories-task', gulp.series((callback) => {
   runSequence(
     'volunteer-categories',
     'parse-vol-categories',
     callback
   )
-})
+}))
 
-gulp.task('need-categories', (callback) => {
+gulp.task('need-categories', gulp.series((callback) => {
     return request(endpoints.needCategories)
       .pipe(source(`${config.paths.generatedData}${outputs.needCategories}`))
       .pipe(streamify(jeditor(function (data) {
@@ -61,9 +61,9 @@ gulp.task('need-categories', (callback) => {
       })))
       .pipe(replace('[', 'export const categories = ['))
       .pipe(gulp.dest('./'))
-  })
+  }))
 
-gulp.task('service-categories', (callback) => {
+gulp.task('service-categories', gulp.series((callback) => {
   return request(endpoints.getServiceCategories)
     .pipe(source(`${config.paths.generatedData}${outputs.serviceCategories}`))
     .pipe(streamify(jeditor(function (cats) {
@@ -88,9 +88,9 @@ gulp.task('service-categories', (callback) => {
     })))
     .pipe(replace(/^\[/, 'export const categories = ['))
     .pipe(gulp.dest('./'))
-})
+}))
 
-gulp.task('accom-subcategories', (callback) => {
+gulp.task('accom-subcategories', gulp.series((callback) => {
   return request(endpoints.getServiceCategories)
     .pipe(source(`${config.paths.generatedData}${outputs.accomCategories}`))
     .pipe(streamify(jeditor(function (cats) {
@@ -100,9 +100,9 @@ gulp.task('accom-subcategories', (callback) => {
     })))
     .pipe(replace(/^\[/, 'export const categories = ['))
     .pipe(gulp.dest('./'))
-})
+}))
 
-gulp.task('support-types', (callback) => {
+gulp.task('support-types', gulp.series((callback) => {
   const body = `export const supportTypes = [
         { key: 'alcohol', name: 'Alcohol' },
         { key: 'domestic violence', name: 'Domestic Violence' },
@@ -118,9 +118,9 @@ gulp.task('support-types', (callback) => {
   })
 
   return callback()
-})
+}))
 
-gulp.task('supported-cities', (callback) => {
+gulp.task('supported-cities', gulp.series((callback) => {
   return request(endpoints.cities)
     .pipe(source(`${config.paths.generatedData}${outputs.supportedCities}`))
     .pipe(streamify(jeditor(function (cities) {
@@ -140,9 +140,9 @@ gulp.task('supported-cities', (callback) => {
     })))
     .pipe(replace('[', 'export const cities = ['))
     .pipe(gulp.dest('./'))
-})
+}))
 
-gulp.task('client-groups', (callback) => {
+gulp.task('client-groups', gulp.series((callback) => {
   return request(endpoints.clientGroups)
     .pipe(source(`${config.paths.generatedData}${outputs.clientGroups}`))
     .pipe(streamify(jeditor(function (data) {
@@ -151,9 +151,9 @@ gulp.task('client-groups', (callback) => {
     })))
     .pipe(replace('[', 'export const clientGroups = ['))
     .pipe(gulp.dest('./'))
-})
+}))
 
-gulp.task('getLongTermData', (callback) => {
+gulp.task('getLongTermData', gulp.series((callback) => {
   runSequence(
     'supported-cities',
     'service-categories',
@@ -164,4 +164,4 @@ gulp.task('getLongTermData', (callback) => {
     'parse-vol-categories-task',
     callback
   )
-})
+}))

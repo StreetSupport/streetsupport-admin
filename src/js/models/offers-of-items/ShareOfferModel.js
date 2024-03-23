@@ -56,7 +56,7 @@ var ShareOfferModel = function () {
     browser.loading()
     var endpoint = self.endpointBuilder.offersOfItems(getUrlParam.parameter('id')).build() + '/share'
     var payload = {
-      'OrgId': self.selectedOrgId().id
+      OrgId: self.selectedOrgId().id
     }
     ajax
       .post(endpoint, payload)
@@ -85,7 +85,7 @@ var ShareOfferModel = function () {
         .get(getOrgsEndpoint)
         .then((res) => {
           self.organisations(res.data.map((o) => ({
-            'id': o.key,
+            id: o.key,
             'name': htmlencode.htmlDecode(o.name)
           })))
 

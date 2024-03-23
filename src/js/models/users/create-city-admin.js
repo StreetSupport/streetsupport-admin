@@ -1,11 +1,10 @@
+import { cities } from '../../../data/generated/supported-cities'
+
 const ajax = require('../../ajax')
 const BaseViewModel = require('../../models/BaseViewModel')
 const browser = require('../../browser')
 const endpoints = require('../../api-endpoints')
 const validation = require('../../validation')
-
-import { cities } from '../../../data/generated/supported-cities'
-
 const ko = require('knockout')
 require('knockout.validation') // No variable here is deliberate!
 

@@ -50,9 +50,9 @@ function Service (data) {
 
     var restoredOpeningTimes = self.savedOpeningTimes().map((ot) => {
       return new OpeningTime({
-        'day': ot.day(),
-        'startTime': ot.startTime(),
-        'endTime': ot.endTime()
+        day: ot.day(),
+        startTime: ot.startTime(),
+        endTime: ot.endTime()
       })
     })
     self.openingTimes(restoredOpeningTimes)
@@ -63,9 +63,9 @@ function Service (data) {
   self.newOpeningTime = function () {
     var openingTimes = self.openingTimes()
     openingTimes.push(new OpeningTime({
-      'day': '',
-      'startTime': '',
-      'endTime': ''
+      day: '',
+      startTime: '',
+      endTime: ''
     }))
     self.openingTimes(openingTimes)
   }
@@ -87,23 +87,23 @@ function Service (data) {
     if (self.tags().length > 0) tags = self.tags().split(',').map((t) => t.trim())
 
     var model = {
-      'Info': self.info(),
-      'LocationDescription': self.locationDescription(),
-      'Tags': tags,
-      'OpeningTimes': self.openingTimes().map((openingTime) => {
+      Info: self.info(),
+      LocationDescription: self.locationDescription(),
+      Tags: tags,
+      OpeningTimes: self.openingTimes().map((openingTime) => {
         return {
-          'StartTime': openingTime.startTime(),
-          'EndTime': openingTime.endTime(),
-          'Day': openingTime.day()
+          StartTime: openingTime.startTime(),
+          EndTime: openingTime.endTime(),
+          Day: openingTime.day()
         }
       }),
       'Address': {
-        'Street1': self.address.street1(),
-        'Street2': self.address.street2(),
-        'Street3': self.address.street3(),
-        'Street4': self.address.street4(),
-        'City': self.address.city(),
-        'Postcode': self.address.postcode()
+        Street1: self.address.street1(),
+        Street2: self.address.street2(),
+        Street3: self.address.street3(),
+        Street4: self.address.street4(),
+        City: self.address.city(),
+        Postcode: self.address.postcode()
       }
     }
 
@@ -124,11 +124,11 @@ function Service (data) {
   self.deleteService = function () {
     var endpoint = self.endpointBuilder.serviceProviders(getUrlParameter.parameter('key')).services(self.id()).build()
     ajax.delete(endpoint)
-    .then(function (result) {
-      self.listeners().forEach((l) => l.deleteService(self))
-    }, function (error) {
-      self.handleError(error)
-    })
+      .then(function (result) {
+        self.listeners().forEach((l) => l.deleteService(self))
+      }, function (error) {
+        self.handleError(error)
+      })
   }
 
   self.addListener = function (listener) {

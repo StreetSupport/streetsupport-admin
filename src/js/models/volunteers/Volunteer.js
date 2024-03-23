@@ -11,7 +11,7 @@ const ko = require('knockout')
 require('knockout.validation') // No variable here is deliberate!
 
 const Volunteer = function (data, listener) {
-  let self = this
+  const self = this
   self.id = data.id
   self.listener = listener
   self.person = {
@@ -56,7 +56,7 @@ const Volunteer = function (data, listener) {
     ajax
       .get(endpoints.volunteers + '/' + self.id + '/contact-requests')
       .then((result) => {
-        let items = result.data.items
+        const items = result.data.items
         items.forEach((i) => {
           i.message = htmlEncode.htmlDecode(i.message)
           i.createdDate = moment(i.creationDate).format('hh:mm DD/MM/YY')

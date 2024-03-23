@@ -1,14 +1,13 @@
 import * as ko from 'knockout'
 import moment from 'moment'
 import htmlEncode from 'htmlencode'
+import { LatestVolunteers } from './Volunteers'
+import { LatestOffers } from './Offers'
 
 const adminUrls = require('../../admin-urls')
 const ajax = require('../../ajax')
 const auth = require('../../auth')
 const EndpointBuilder = require('../../endpoint-builder')
-
-import { LatestVolunteers } from './Volunteers'
-import { LatestOffers } from './Offers'
 
 class SearchResult {
   constructor (sp, index) {

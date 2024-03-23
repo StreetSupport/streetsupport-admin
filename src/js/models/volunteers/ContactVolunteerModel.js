@@ -33,8 +33,8 @@ var ContactVolunteerModel = function () {
       browser.loading()
       var endpoint = self.endpointBuilder.volunteers(getUrlParam.parameter('id')).build() + '/contact-requests'
       var payload = {
-        'Message': self.formModel().message(),
-        'ShouldSendEmail': !self.formModel().isNotAnEmail()
+        Message: self.formModel().message(),
+        ShouldSendEmail: !self.formModel().isNotAnEmail()
       }
       ajax
         .post(endpoint, payload)

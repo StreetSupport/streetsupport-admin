@@ -16,9 +16,7 @@
     "data": "src/data/",
     "generatedData": "src/data/generated/"
   },
-  "autoprefixer": {
-    "browsers": ["last 2 versions", "IE >= 10"]
-  },
+  "autoprefixer": {},
   "critical": {
     "dimensions": [{
       "width": "320",

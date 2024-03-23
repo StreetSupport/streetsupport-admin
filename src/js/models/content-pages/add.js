@@ -37,7 +37,7 @@ const Model = function () {
     }
 
     const jsonPayload = JSON.stringify(payload)
-    self.formData.append('jsonPayload', new Blob([ jsonPayload ], { type: 'application/json' }))
+    self.formData.append('jsonPayload', new Blob([jsonPayload], { type: 'application/json' }))
 
     ajax
       .postFile(endpoints.contentPages, self.formData)

@@ -58,7 +58,7 @@ const Model = function () {
     self.getParentScenarios()
 
     // We generate this for retrieving the not cached item
-    let syntaxSugar = new Date().getTime()
+    const syntaxSugar = new Date().getTime()
 
     ajax
       .get(self.endpointBuilder.faqs(querystring.parameter('id')).build() + `?unique=${syntaxSugar}`)

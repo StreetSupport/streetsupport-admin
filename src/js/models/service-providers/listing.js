@@ -90,15 +90,15 @@ function DashboardModel () {
   self.toggleVerified = function (serviceProvider, event) {
     ajax.put(self.endpointBuilder.serviceProviders(serviceProvider.key).build() + '/is-verified',
       {
-        'IsVerified': !serviceProvider.isVerified()
+        IsVerified: !serviceProvider.isVerified()
       }
     )
       .then(function (result) {
         self.updateServiceProvider(serviceProvider, self.invertVerification)
       },
-        function (error) {
-          self.handleError(error)
-        })
+      function (error) {
+        self.handleError(error)
+      })
   }
 
   self.invertVerification = function (oldSP, newSP) {
@@ -145,7 +145,7 @@ function DashboardModel () {
     if (!self.isOpenNotesInputModal()) {
       ajax.put(self.endpointBuilder.serviceProviders(self.currentServiceProvider().key).build() + '/is-published',
         {
-          'IsPublished': !self.currentServiceProvider().isPublished(),
+          IsPublished: !self.currentServiceProvider().isPublished(),
           'Note': {
             CreationDate: self.note().creationDate().toISOString(),
             // We must use new Date() for passing date without timezone. In the database this date should be saved in utc format (00 hours 00 minutes).
@@ -154,17 +154,17 @@ function DashboardModel () {
             Reason: self.note().reason()
           }
         })
-    .then(function (result) {
-      self.updateServiceProvider(self.currentServiceProvider(), self.invertPublished)
-      if (!self.currentServiceProvider().isPublished() && (self.currentServiceProvider().notes().length === 1 || moment(self.note().date()).isSame(moment().format(dateFormat)))) {
-        browser.refresh()
-      }
-      self.currentServiceProvider(null)
-      self.note(new Note())
-    },
-      function (error) {
-        self.handleError(error)
-      })
+        .then(function (result) {
+          self.updateServiceProvider(self.currentServiceProvider(), self.invertPublished)
+          if (!self.currentServiceProvider().isPublished() && (self.currentServiceProvider().notes().length === 1 || moment(self.note().date()).isSame(moment().format(dateFormat)))) {
+            browser.refresh()
+          }
+          self.currentServiceProvider(null)
+          self.note(new Note())
+        },
+        function (error) {
+          self.handleError(error)
+        })
     }
   }
 
@@ -174,11 +174,11 @@ function DashboardModel () {
 
   self.clearNotes = function () {
     ajax.delete(self.endpointBuilder.serviceProviders(self.currentServiceProvider().key).build() + '/clear-notes')
-    .then(function () {
-      self.isOpenClearNotesConfirmationDialog(false)
-      self.isOpenNotesModal(false)
-      self.currentServiceProvider().notes([])
-    },
+      .then(function () {
+        self.isOpenClearNotesConfirmationDialog(false)
+        self.isOpenNotesModal(false)
+        self.currentServiceProvider().notes([])
+      },
       function (error) {
         self.isOpenClearNotesConfirmationDialog(false)
         self.handleError(error)

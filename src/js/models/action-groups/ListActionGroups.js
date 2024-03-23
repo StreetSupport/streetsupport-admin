@@ -1,15 +1,15 @@
 'use strict'
 
-let ajax = require('../../ajax')
-let browser = require('../../browser')
-let querystring = require('../../get-url-parameter')
-let BaseViewModel = require('../BaseViewModel')
+const ajax = require('../../ajax')
+const browser = require('../../browser')
+const querystring = require('../../get-url-parameter')
+const BaseViewModel = require('../BaseViewModel')
 
-let ko = require('knockout')
-let moment = require('moment')
+const ko = require('knockout')
+const moment = require('moment')
 
 function Member (data) {
-  let self = this
+  const self = this
 
   self.firstName = data.firstName
   self.lastName = data.lastName
@@ -20,7 +20,7 @@ function Member (data) {
 }
 
 function ActionGroup (data, listener) {
-  let self = this
+  const self = this
 
   self.listener = listener
 
@@ -44,7 +44,7 @@ function ActionGroup (data, listener) {
 }
 
 function ListActionGroupsModel () {
-  let self = this
+  const self = this
 
   self.actionGroups = ko.observableArray()
   self.shouldShowList = ko.observable(true)
@@ -73,7 +73,7 @@ function ListActionGroupsModel () {
       .then((result) => {
         self.actionGroups(result.data.map((ag) => new ActionGroup(ag, self)))
 
-        let preselectedActionGroupId = querystring.parameter('id')
+        const preselectedActionGroupId = querystring.parameter('id')
         if (preselectedActionGroupId.length > 0) {
           self.actionGroupOpened(self.actionGroups().filter((ag) => ag.id === preselectedActionGroupId)[0])
         }
