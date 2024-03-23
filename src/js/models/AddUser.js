@@ -13,8 +13,8 @@ function AddUser () {
     browser.loading()
     var endpoint = self.endpointBuilder.unverifiedUsers().build()
     var payload = {
-      'Email': self.email(),
-      'ProviderId': getUrlParameter.parameter('key')
+      Email: self.email(),
+      ProviderId: getUrlParameter.parameter('key')
     }
     ajax
       .post(endpoint, payload)

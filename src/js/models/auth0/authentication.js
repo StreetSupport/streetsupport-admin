@@ -56,4 +56,3 @@ function storeAuthValues (decodedIdToken, accessToken, idToken) {
   storage.set(storageKeys.idToken, idToken)
   storage.set(storageKeys.roles, roles)
 }
-

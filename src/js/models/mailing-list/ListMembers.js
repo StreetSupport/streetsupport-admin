@@ -56,7 +56,7 @@ function ListMembers () {
           .map((m) => new Member(m))
           .sort((a, b) => {
             if (a.creationDateTime() < b.creationDateTime()) return 1
-            if (b.creationDateTime() > a.creationDateTime()) return -1
+            if (b.creationDateTime() < a.creationDateTime()) return -1
             return 0
           })
         self.allMembers(members)

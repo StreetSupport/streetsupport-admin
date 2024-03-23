@@ -52,30 +52,30 @@ function ServiceProviderDetails () {
       }
 
       const payload = {
-        'Name': sp.name(),
-        'Description': sp.description(),
-        'ShortDescription': sp.shortDescription(),
-        'Tags': tagsToCsv(),
-        'AssociatedLocationIds': typeof sp.city() === 'string' ? sp.city().split(',') : sp.city(),
-        'ClientGroupKeys': sp.clientGroups()
+        Name: sp.name(),
+        Description: sp.description(),
+        ShortDescription: sp.shortDescription(),
+        Tags: tagsToCsv(),
+        AssociatedLocationIds: typeof sp.city() === 'string' ? sp.city().split(',') : sp.city(),
+        ClientGroupKeys: sp.clientGroups()
       }
 
       ajax.put(self.endpointBuilder.serviceProviders(getUrlParameter.parameter('key')).generalInformation().build(),
         payload
-        ).then(function (result) {
-          if (result.statusCode === 200) {
-            self.isEditingGeneralDetails(false)
-            self.clearErrors()
-          } else {
-            self.handleError(result)
-          }
-        })
+      ).then(function (result) {
+        if (result.statusCode === 200) {
+          self.isEditingGeneralDetails(false)
+          self.clearErrors()
+        } else {
+          self.handleError(result)
+        }
+      })
     }
   }
 
   self.saveAdminDetails = function (event) {
     const payload = {
-      'SelectedAdministratorEmail': event.selectedAdministrator()
+      SelectedAdministratorEmail: event.selectedAdministrator()
     }
 
     ajax.put(self.endpointBuilder.serviceProviders(getUrlParameter.parameter('key')).adminDetails().build(),
@@ -105,22 +105,22 @@ function ServiceProviderDetails () {
     if (self.isEditingContactDetails()) {
       ajax.put(self.endpointBuilder.serviceProviders(getUrlParameter.parameter('key')).contactDetails().build(),
         {
-          'Telephone': self.serviceProvider().telephone(),
-          'Email': self.serviceProvider().email(),
-          'Website': self.serviceProvider().website(),
-          'Facebook': self.serviceProvider().facebook(),
-          'Twitter': self.serviceProvider().twitter()
+          Telephone: self.serviceProvider().telephone(),
+          Email: self.serviceProvider().email(),
+          Website: self.serviceProvider().website(),
+          Facebook: self.serviceProvider().facebook(),
+          Twitter: self.serviceProvider().twitter()
         }
-        ).then(function (result) {
-          if (result.statusCode === 200) {
-            self.isEditingContactDetails(false)
-            self.clearErrors()
-          } else {
-            self.handleError(result)
-          }
-        }, function (error) {
-          self.handleError(error)
-        })
+      ).then(function (result) {
+        if (result.statusCode === 200) {
+          self.isEditingContactDetails(false)
+          self.clearErrors()
+        } else {
+          self.handleError(result)
+        }
+      }, function (error) {
+        self.handleError(error)
+      })
     }
   }
 
@@ -138,22 +138,22 @@ function ServiceProviderDetails () {
       const sp = self.serviceProvider()
 
       const payload = {
-        'DonationUrl': sp.donationUrl(),
-        'DonationDescription': sp.donationDescription(),
-        'ItemsDonationUrl': sp.itemsDonationUrl(),
-        'ItemsDonationDescription': sp.itemsDonationDescription()
+        DonationUrl: sp.donationUrl(),
+        DonationDescription: sp.donationDescription(),
+        ItemsDonationUrl: sp.itemsDonationUrl(),
+        ItemsDonationDescription: sp.itemsDonationDescription()
       }
       const endpoint = self.endpointBuilder.serviceProviders(getUrlParameter.parameter('key')).donationInformation().build()
       ajax.put(endpoint,
         payload
-        ).then(function (result) {
-          if (result.statusCode === 200) {
-            self.isEditingDonationDetails(false)
-            self.clearErrors()
-          } else {
-            self.handleError(result)
-          }
-        })
+      ).then(function (result) {
+        if (result.statusCode === 200) {
+          self.isEditingDonationDetails(false)
+          self.clearErrors()
+        } else {
+          self.handleError(result)
+        }
+      })
     }
   }
 

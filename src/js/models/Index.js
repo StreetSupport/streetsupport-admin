@@ -1,12 +1,11 @@
 'use strict'
+import storage from '../sessionStorage'
+import { isAuthenticated, storageKeys } from '../models/auth0/webAuth'
 
 const adminUrls = require('../admin-urls')
 const browser = require('../browser')
 const querystring = require('../get-url-parameter')
 const BaseViewModel = require('./BaseViewModel')
-import storage from '../sessionStorage'
-
-import { isAuthenticated, storageKeys } from '../models/auth0/webAuth'
 
 function Index () {
   const self = this

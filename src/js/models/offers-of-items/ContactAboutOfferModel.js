@@ -52,16 +52,16 @@ var ContactAboutOfferModel = function () {
 
   self.sendEmail = function () {
     const payload = {
-      'Message': self.formModel().message(),
-      'ShouldSendEmail': true
+      Message: self.formModel().message(),
+      ShouldSendEmail: true
     }
     sendRequest(payload)
   }
 
   self.recordLog = function () {
     const payload = {
-      'Message': self.formModel().message(),
-      'ShouldSendEmail': false
+      Message: self.formModel().message(),
+      ShouldSendEmail: false
     }
     sendRequest(payload)
   }

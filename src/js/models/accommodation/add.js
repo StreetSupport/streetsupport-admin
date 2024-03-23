@@ -1,5 +1,7 @@
-const htmlEncode = require('htmlencode')
+import { categories } from '../../../data/generated/accommodation-categories'
+import { supportTypes } from '../../../data/generated/support-types'
 
+const htmlEncode = require('htmlencode')
 const ajax = require('../../ajax')
 const BaseViewModel = require('../../models/BaseViewModel')
 const auth = require('../../auth')
@@ -7,9 +9,6 @@ const browser = require('../../browser')
 const endpoints = require('../../api-endpoints')
 const validation = require('../../validation')
 const querystring = require('../../get-url-parameter')
-
-import { categories } from '../../../data/generated/accommodation-categories'
-import { supportTypes } from '../../../data/generated/support-types'
 
 require('../../arrayExtensions')
 
@@ -45,9 +44,9 @@ function Model () {
 
   self.supportTypes = ko.observableArray(supportTypes.map((t) => {
     return {
-      'key': t.key,
-      'name': t.name,
-      'isSelected': false
+      key: t.key,
+      name: t.name,
+      isSelected: false
     }
   }))
 
@@ -67,7 +66,7 @@ function Model () {
 
   self.formFields().serviceProviderId.subscribe((newValue) => {
     if (newValue && self.serviceProviders().length) {
-      let addresses = self.serviceProviders().filter((x) => x.key === newValue).map((y) => y.addresses)[0]
+      const addresses = self.serviceProviders().filter((x) => x.key === newValue).map((y) => y.addresses)[0]
       if (addresses) {
         self.addresses(addresses)
       } else {

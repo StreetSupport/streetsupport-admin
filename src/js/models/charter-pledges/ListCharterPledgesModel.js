@@ -1,4 +1,5 @@
 'use strict'
+import pledgeCats from '../../../data/examplePledges'
 
 const ajax = require('../../ajax')
 const browser = require('../../browser')
@@ -9,8 +10,6 @@ const ko = require('knockout')
 require('knockout.validation') // No variable here is deliberate!
 const moment = require('moment')
 const htmlEncode = require('htmlencode')
-
-import pledgeCats from '../../../data/examplePledges'
 
 function Pledge (data, listener) {
   validation.initialise(ko.validation)
@@ -93,11 +92,11 @@ function Pledge (data, listener) {
     self.formModel().description(htmlEncode.htmlDecode(self.description()))
   }
 
-  let submitForm = () => {
+  const submitForm = () => {
     browser.loading()
 
-    let endpoint = self.endpointBuilder.charterPledges(self.id).pledge().build()
-    let payload = {
+    const endpoint = self.endpointBuilder.charterPledges(self.id).pledge().build()
+    const payload = {
       pledge: htmlEncode.htmlDecode(self.formModel().description())
     }
 
@@ -122,7 +121,7 @@ function Pledge (data, listener) {
 
   self.deletePledge = () => {
     browser.loading()
-    let endpoint = self.endpointBuilder.charterPledges(self.id).deleted().build()
+    const endpoint = self.endpointBuilder.charterPledges(self.id).deleted().build()
     ajax
       .put(endpoint)
       .then((result) => {

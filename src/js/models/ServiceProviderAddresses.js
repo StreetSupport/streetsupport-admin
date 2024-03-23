@@ -21,8 +21,8 @@ function ServiceProvider (data) {
 
     var addresses = self.addresses()
     var newAddress = new Address({
-      'openingTimes': [],
-      'tempKey': tempKey
+      openingTimes: [],
+      tempKey: tempKey
     })
     newAddress.addListener(self)
     newAddress.edit()

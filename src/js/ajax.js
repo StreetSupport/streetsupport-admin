@@ -1,9 +1,9 @@
 /* global XMLHttpRequest */
+import storage from './sessionStorage'
+import { storageKeys } from './models/auth0/webAuth'
 
 var Q = require('q')
 var browser = require('./browser')
-import storage from './sessionStorage'
-import { storageKeys } from './models/auth0/webAuth'
 
 var postFile = function (url, data, isCustomErrorHandling) {
   return makeRequest({
@@ -84,20 +84,20 @@ var makeRequest = function (options, isMultipartFormData = false) {
     if (this.status === 201) {
       deferred.resolve({
         'status': 'created',
-        'statusCode': this.status,
-        'data': parseResponseText(this)
+        statusCode: this.status,
+        data: parseResponseText(this)
       })
     } else if (this.status === 200) {
       deferred.resolve({
         'status': 'ok',
-        'statusCode': this.status,
-        'data': parseResponseText(this)
+        statusCode: this.status,
+        data: parseResponseText(this)
       })
     } else if (this.status === 400) {
       deferred.resolve({
         'status': 'badrequest',
-        'statusCode': this.status,
-        'data': parseResponseText(this)
+        statusCode: this.status,
+        data: parseResponseText(this)
       })
     } else if (this.status === 401 && !options.isCustomErrorHandling) {
       browser.redirect(`/login?redirectUrl=${window.location}`)
@@ -106,8 +106,8 @@ var makeRequest = function (options, isMultipartFormData = false) {
     } else {
       deferred.resolve({
         'status': 'error',
-        'statusCode': this.status,
-        'data': parseResponseText(this)
+        statusCode: this.status,
+        data: parseResponseText(this)
       })
     }
   }

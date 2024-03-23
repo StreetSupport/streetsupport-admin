@@ -1,14 +1,14 @@
-let ko = require('knockout')
+const ko = require('knockout')
 require('knockout.validation') // No variable here is deliberate!
 
-let ajax = require('../../../ajax')
-let browser = require('../../../browser')
-let querystring = require('../../../get-url-parameter')
-let BaseViewModel = require('../../BaseViewModel')
-let Item = require('./Item')
+const ajax = require('../../../ajax')
+const browser = require('../../../browser')
+const querystring = require('../../../get-url-parameter')
+const BaseViewModel = require('../../BaseViewModel')
+const Item = require('./Item')
 
 function List () {
-  let self = this
+  const self = this
 
   self.itemDeleted = (item) => {
     self.message('Item removed')

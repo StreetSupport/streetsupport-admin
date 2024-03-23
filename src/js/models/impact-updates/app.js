@@ -1,12 +1,12 @@
-let ko = require('knockout')
-let ajax = require('../../ajax')
-let auth = require('../../auth')
-let browser = require('../../browser')
-let BaseViewModel = require('../BaseViewModel')
-let Update = require('./Update')
+const ko = require('knockout')
+const ajax = require('../../ajax')
+const auth = require('../../auth')
+const browser = require('../../browser')
+const BaseViewModel = require('../BaseViewModel')
+const Update = require('./Update')
 
 function ListImpactUpdates () {
-  let self = this
+  const self = this
   self.cities = ko.observableArray()
   self.impactUpdates = ko.observableArray()
   self.newUpdate = ko.observable(new Update(self, auth.cityAdminFor()))
