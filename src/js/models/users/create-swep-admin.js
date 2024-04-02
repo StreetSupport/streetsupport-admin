@@ -1,8 +1,7 @@
 const ajax = require('../../ajax')
-const BaseViewModel = require('../../models/BaseViewModel')
+const BaseViewModel = require('../BaseViewModel')
 const browser = require('../../browser')
 const endpoints = require('../../api-endpoints')
-const querystring = require('../../get-url-parameter')
 const validation = require('../../validation')
 
 const ko = require('knockout')
@@ -12,8 +11,7 @@ function Model () {
   const self = this
 
   self.formFields = ko.validatedObservable({
-    email: ko.observable().extend({ email: true, required: true }),
-    accommodationId: ko.observable(querystring.parameter('id'))
+    email: ko.observable().extend({ email: true, required: true })
   })
 
   self.formSubmitted = ko.observable(false)
@@ -27,7 +25,7 @@ function Model () {
 
   self.postData = () => {
     browser.loading()
-    const endpoint = endpoints.accomProviderAdmins
+    const endpoint = endpoints.swepAdmins
     const payload = validation.buildPayload(self.formFields())
     self.formSubmitted(true)
     self.formSubmissionNotSuccessful(false)

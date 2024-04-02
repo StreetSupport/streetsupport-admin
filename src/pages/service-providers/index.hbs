@@ -20,7 +20,7 @@ nosubnav: true
           <legend class="form__legend">Filter results</legend>
           <ul class="form__field-list">
             <!-- ko if: shouldShowLocationFilter -->
-            <li class="form__field-item form__field-item--full-width" data-claims="superadmin,cityadmin">
+            <li class="form__field-item form__field-item--full-width" data-claims="superadmin,cityadmin,volunteeradmin">
               <label for="filterOnLocation" class="form__label">Location:</label>
               <select class="form__input form__input--medium" name="filterOnLocation" data-bind="options: availableLocations,
                                 value: locationToFilterOn,
