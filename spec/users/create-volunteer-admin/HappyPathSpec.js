@@ -8,17 +8,12 @@ const sinon = require('sinon')
 
 const jsRoot = '../../../src/js/'
 const ajax = require(`${jsRoot}ajax`)
-const auth = require(`${jsRoot}auth`)
-const storage = require(`${jsRoot}sessionStorage`)
 const endpoints = require(`${jsRoot}api-endpoints`)
 const browser = require(`${jsRoot}browser`)
 const validation = require(`${jsRoot}validation`)
 
-import { categories } from '../../../src/data/generated/accommodation-categories'
-import { supportTypes } from '../../../src/data/generated/support-types'
-
-describe('Accommodation - Add as TempAccom Admin', () => {
-  const Model = require(`${jsRoot}models/accommodation/add`)
+describe('Users - Create Volunteer Admin', () => {
+  const Model = require(`${jsRoot}models/users/create-volunteer-admin`)
   let sut = null
   let browserLoadingStub = null
   let browserLoadedStub = null
@@ -26,28 +21,14 @@ describe('Accommodation - Add as TempAccom Admin', () => {
   beforeEach(() => {
     browserLoadingStub = sinon.stub(browser, 'loading')
     browserLoadedStub = sinon.stub(browser, 'loaded')
-    sinon.stub(auth, 'isSuperAdmin')
-    sinon.stub(storage, 'get')
-      .withArgs('roles')
-      .returns('volunteeradmin')
 
     sut = new Model()
     sut.init()
   })
 
   afterEach(() => {
-    auth.isSuperAdmin.restore()
     browser.loading.restore()
     browser.loaded.restore()
-    storage.get.restore()
-  })
-
-  it('- it should set list of accom types', () => {
-    expect(sut.accommodationTypes().length).toEqual(categories.length)
-  })
-
-  it('- should set a list of support types', () => {
-    expect(sut.supportTypes().length).toEqual(supportTypes.length)
   })
 
   describe('- submit', () => {
@@ -68,22 +49,7 @@ describe('Accommodation - Add as TempAccom Admin', () => {
           }
         })
 
-      sut.formFields().name('name')
-      sut.formFields().contactName('contact name')
-      sut.formFields().synopsis('synopsis')
-      sut.formFields().description('description')
-      sut.formFields().isOpenAccess(true)
-      sut.formFields().accommodationType('accommodation type')
-      sut.formFields().supportOffered(['support a', 'support b'])
-      sut.formFields().serviceProviderId('service-provider-id')
       sut.formFields().email('test@email.com')
-      sut.formFields().telephone('telephone')
-      sut.formFields().addressLine1('address line 1')
-      sut.formFields().addressLine2('address line 2')
-      sut.formFields().addressLine3('address line 3')
-      sut.formFields().city('manchester')
-      sut.formFields().locationId('manchester')
-      sut.formFields().postcode('postcode')
 
       sut.save()
     })
@@ -98,25 +64,9 @@ describe('Accommodation - Add as TempAccom Admin', () => {
     })
 
     it('- should post form data to api', () => {
-      const endpoint = endpoints.temporaryAccommodation
+      const endpoint = endpoints.volunteerAdmins
       const payload = {
-        'Name': 'name',
-        'ContactName': 'contact name',
-        'Synopsis': 'synopsis',
-        'Description': 'description',
-        'IsOpenAccess': true,
-        'AccommodationType': 'accommodation type',
-        'SupportOffered': ['support a', 'support b'],
-        'ServiceProviderId': 'service-provider-id',
-        'Email': 'test@email.com',
-        'Telephone': 'telephone',
-        'AddressLine1': 'address line 1',
-        'AddressLine2': 'address line 2',
-        'AddressLine3': 'address line 3',
-        'City': 'manchester',
-        'LocationId': 'manchester',
-        'Postcode': 'postcode',
-        'AddressIsPubliclyHidden': false
+        'Email': 'test@email.com'
       }
       const calledAsExpected = ajaxPostStub
         .withArgs(endpoint, payload)

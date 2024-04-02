@@ -13,6 +13,7 @@ describe('Listing as City Admin', () => {
 
   beforeEach(() => {
     sinon.stub(auth, 'isCityAdmin').returns(true)
+    sinon.stub(auth, 'isSuperAdmin').returns(false)
     sinon.stub(auth, 'locationsAdminFor').returns(['manchester', 'oldham'])
     sinon.stub(browser, 'loading')
     sinon.stub(browser, 'loaded')
@@ -38,6 +39,7 @@ describe('Listing as City Admin', () => {
   afterEach(() => {
     ajax.get.restore()
     auth.isCityAdmin.restore()
+    auth.isSuperAdmin.restore()
     auth.locationsAdminFor.restore()
     browser.loading.restore()
     browser.loaded.restore()

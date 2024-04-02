@@ -11,7 +11,6 @@ function Index () {
   const self = this
   self.init = function () {
     const adminForPrefix = 'adminfor:'
-    const individualAccomAdminForPrefix = 'individualaccomadminfor:'
 
     const roles = storage.get(storageKeys.roles)
     const authClaims = roles
@@ -21,13 +20,6 @@ function Index () {
     const orgAdminForClaim = roles && authClaims.find((a) => a.indexOf(adminForPrefix) === 0)
       ? authClaims.find((a) => a.indexOf(adminForPrefix) === 0)
       : ''
-
-    const getIndividualAccomNewLocation = function () {
-      const accomAdminForId = authClaims.find((a) => a.indexOf(individualAccomAdminForPrefix) === 0)
-      return accomAdminForId
-        ? `${adminUrls.temporaryAccommodation}/edit/?id=${accomAdminForId.substring(individualAccomAdminForPrefix.length)}`
-        : adminUrls.forbidden
-    }
 
     const redirectUrlIsOk = () => redirectUrl !== undefined &&
     redirectUrl.indexOf(browser.origin()) === 0 &&
@@ -39,9 +31,8 @@ function Index () {
       { getPredicate: () => orgAdminForClaim.length > 0, newLocation: adminUrls.dashboardv2 },
       { getPredicate: () => authClaims.includes('superadmin'), newLocation: adminUrls.dashboardv2 },
       { getPredicate: () => authClaims.includes('cityadmin'), newLocation: adminUrls.dashboardv2 },
-      { getPredicate: () => authClaims.includes('charteradmin'), newLocation: adminUrls.charter },
-      { getPredicate: () => authClaims.includes('tempaccomadmin'), newLocation: adminUrls.temporaryAccommodation },
-      { getPredicate: () => authClaims.includes('individualaccomadmin'), newLocation: getIndividualAccomNewLocation() },
+      { getPredicate: () => authClaims.includes('volunteeradmin'), newLocation: adminUrls.serviceProviders },
+      { getPredicate: () => authClaims.includes('swepadmin'), newLocation: adminUrls.cities },
       { getPredicate: () => { return true }, newLocation: adminUrls.forbidden }
     ]
 

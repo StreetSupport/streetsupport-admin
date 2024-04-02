@@ -41,9 +41,8 @@ function ListUsers () {
     { id: 'SuperAdmin' },
     { id: 'CityAdmin' },
     { id: 'OrgAdmin' },
-    { id: 'CharterAdmin' },
-    { id: 'TempAccomAdmin' },
-    { id: 'IndividualAccomAdmin' }
+    { id: 'SwepAdmin' },
+    { id: 'VolunteerAdmin' }
   ]
   self.availableLocations = auth.isCityAdmin()
     ? locations.filter((l) => auth.locationsAdminFor().includes(l.id))
