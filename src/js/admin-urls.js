@@ -36,5 +36,5 @@ module.exports = {
   serviceProviderNeedCategoriesEdit: s('/edit-service-provider-need-categories'),
   needResponses: '/needs/responses/',
   temporaryAccommodation: '/accommodation',
-  cities: '/cities'
+  cities: '/cities',
 }

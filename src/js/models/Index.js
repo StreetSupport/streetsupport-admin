@@ -31,7 +31,7 @@ function Index () {
       { getPredicate: () => orgAdminForClaim.length > 0, newLocation: adminUrls.dashboardv2 },
       { getPredicate: () => authClaims.includes('superadmin'), newLocation: adminUrls.dashboardv2 },
       { getPredicate: () => authClaims.includes('cityadmin'), newLocation: adminUrls.dashboardv2 },
-      { getPredicate: () => authClaims.includes('volunteeradmin'), newLocation: adminUrls.serviceProviders },
+      { getPredicate: () => authClaims.includes('volunteeradmin'), newLocation: adminUrls.dashboard },
       { getPredicate: () => authClaims.includes('swepadmin'), newLocation: adminUrls.cities },
       { getPredicate: () => { return true }, newLocation: adminUrls.forbidden }
     ]
