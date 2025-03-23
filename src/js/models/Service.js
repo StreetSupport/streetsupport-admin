@@ -97,7 +97,7 @@ function Service (data) {
           Day: openingTime.day()
         }
       }),
-      'Address': {
+      Address: {
         Street1: self.address.street1(),
         Street2: self.address.street2(),
         Street3: self.address.street3(),

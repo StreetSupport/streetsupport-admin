@@ -86,7 +86,7 @@ var ShareOfferModel = function () {
         .then((res) => {
           self.organisations(res.data.map((o) => ({
             id: o.key,
-            'name': htmlencode.htmlDecode(o.name)
+            name: htmlencode.htmlDecode(o.name)
           })))
 
           browser.loaded()

@@ -109,7 +109,9 @@ function ServiceProviderDetails () {
           Email: self.serviceProvider().email(),
           Website: self.serviceProvider().website(),
           Facebook: self.serviceProvider().facebook(),
-          Twitter: self.serviceProvider().twitter()
+          Twitter: self.serviceProvider().twitter(),
+          Bluesky: self.serviceProvider().bluesky(),
+          Instagram: self.serviceProvider().instagram()
         }
       ).then(function (result) {
         if (result.statusCode === 200) {
@@ -167,6 +169,8 @@ function ServiceProviderDetails () {
     self.serviceProvider().website(self.initialServiceProvider().website())
     self.serviceProvider().facebook(self.initialServiceProvider().facebook())
     self.serviceProvider().twitter(self.initialServiceProvider().twitter())
+    self.serviceProvider().bluesky(self.initialServiceProvider().bluesky())
+    self.serviceProvider().instagram(self.initialServiceProvider().instagram())
     self.serviceProvider().donationUrl(self.initialServiceProvider().donationUrl())
     self.serviceProvider().donationDescription(self.initialServiceProvider().donationDescription())
     self.serviceProvider().lastUpdateDate(self.initialServiceProvider().lastUpdateDate())

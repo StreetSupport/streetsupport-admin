@@ -83,19 +83,19 @@ var makeRequest = function (options, isMultipartFormData = false) {
   req.onload = function () {
     if (this.status === 201) {
       deferred.resolve({
-        'status': 'created',
+        status: 'created',
         statusCode: this.status,
         data: parseResponseText(this)
       })
     } else if (this.status === 200) {
       deferred.resolve({
-        'status': 'ok',
+        status: 'ok',
         statusCode: this.status,
         data: parseResponseText(this)
       })
     } else if (this.status === 400) {
       deferred.resolve({
-        'status': 'badrequest',
+        status: 'badrequest',
         statusCode: this.status,
         data: parseResponseText(this)
       })
@@ -105,7 +105,7 @@ var makeRequest = function (options, isMultipartFormData = false) {
       browser.redirect('/403.html')
     } else {
       deferred.resolve({
-        'status': 'error',
+        status: 'error',
         statusCode: this.status,
         data: parseResponseText(this)
       })

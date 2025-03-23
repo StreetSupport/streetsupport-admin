@@ -67,6 +67,8 @@ describe('Edit Service Provider Contact Information', () => {
       model.serviceProvider().website('new website')
       model.serviceProvider().facebook('new facebook')
       model.serviceProvider().twitter('new twitter')
+      model.serviceProvider().bluesky('new bluesky')
+      model.serviceProvider().instagram('new instagram')
 
       model.saveContactDetails()
     })
@@ -82,7 +84,9 @@ describe('Edit Service Provider Contact Information', () => {
         'Email': 'new email',
         'Website': 'new website',
         'Facebook': 'new facebook',
-        'Twitter': 'new twitter'
+        'Twitter': 'new twitter',
+        'Bluesky': 'new bluesky',
+        'Instagram': 'new instagram'
       }
       var apiCalledWithExpectedArgs = stubbedPutApi.withArgs(endpoint, payload).calledOnce
       expect(apiCalledWithExpectedArgs).toBeTruthy()
@@ -113,6 +117,8 @@ describe('Edit Service Provider Contact Information', () => {
       model.serviceProvider().website('new website')
       model.serviceProvider().facebook('new facebook')
       model.serviceProvider().twitter('new twitter')
+      model.serviceProvider().bluesky('new bluesky')
+      model.serviceProvider().instagram('new instagram')
 
       model.saveContactDetails()
     })
@@ -140,6 +146,8 @@ function coffee4Craig () {
     'telephone': '07973955003',
     'website': 'http://www.coffee4craig.com/',
     'facebook': 'https://www.facebook.com/Coffee4Craig/?fref=ts',
+    'bluesky': 'https://web-cdn.bsky.app/profile/streetsupport.ne',
+    'instagram': 'https://www.instagram.com/streetsupportnetwork',
     'twitter': '@Coffee4Craig',
     'addresses': [],
     'groupedServices': [],
