@@ -36,6 +36,8 @@ describe('Cancel Edit Service Provider Contact Details', () => {
     model.serviceProvider().website('new website')
     model.serviceProvider().facebook('new facebook')
     model.serviceProvider().twitter('new twitter')
+    model.serviceProvider().bluesky('new bluesky')
+    model.serviceProvider().instagram('new instagram')
 
     model.cancelEditContactDetails()
   })
@@ -57,6 +59,8 @@ describe('Cancel Edit Service Provider Contact Details', () => {
     expect(model.serviceProvider().website()).toEqual('initial website')
     expect(model.serviceProvider().facebook()).toEqual('initial facebook')
     expect(model.serviceProvider().twitter()).toEqual('initial twitter')
+    expect(model.serviceProvider().bluesky()).toEqual('initial bluesky')
+    expect(model.serviceProvider().instagram()).toEqual('initial instagram')
   })
 })
 
@@ -69,6 +73,8 @@ function coffee4Craig () {
     'website': 'initial website',
     'facebook': 'initial facebook',
     'twitter': 'initial twitter',
+    'bluesky': 'initial bluesky',
+    'instagram': 'initial instagram',
     'addresses': [],
     'groupedServices': [],
     'providedServices': []

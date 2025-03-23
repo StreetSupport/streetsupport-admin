@@ -1,7 +1,7 @@
 var env = require('./env')
 
 var local = 'http://localhost:55881' // eslint-disable-line
-var dev = 'https://ssn-api-dev.azurewebsites.net' // eslint-disable-line
+var dev = 'http://localhost:55881'//'https://ssn-api-dev.azurewebsites.net' // eslint-disable-line
 var staging = 'https://ssn-api-uat.azurewebsites.net' // eslint-disable-line
 var live = 'https://ssn-api-prod.azurewebsites.net' // eslint-disable-line
 

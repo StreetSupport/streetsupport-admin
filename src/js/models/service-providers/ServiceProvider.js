@@ -37,6 +37,8 @@ function ServiceProvider (data) {
   self.website = ko.observable(data.website)
   self.facebook = ko.observable(data.facebook)
   self.twitter = ko.observable(data.twitter)
+  self.bluesky = ko.observable(data.bluesky)
+  self.instagram = ko.observable(data.instagram)
   data.addresses.forEach((a) => { a.serviceProviderId = data.key })
   self.addresses = ko.observableArray(data.addresses.map((a) => new Address(a)))
   self.addresses().forEach((a) => a.addListener(self))

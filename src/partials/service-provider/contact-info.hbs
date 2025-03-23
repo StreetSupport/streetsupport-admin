@@ -52,6 +52,25 @@
     <input type="text" data-bind="textInput: twitter" class="form__input" />
     <!-- /ko -->
   </dd>
+  <dt class="key-value-pair__key">Bluesky</dt>
+  <dd class="key-value-pair__value">
+    <!-- ko ifnot: $parent.isEditingContactDetails -->
+    <span data-bind="text: bluesky"></span>
+    <!-- /ko -->
+    <!-- ko if: $parent.isEditingContactDetails -->
+    <input type="text" data-bind="textInput: bluesky" class="form__input" />
+    <!-- /ko -->
+  </dd>
+  <dt class="key-value-pair__key">Instagram</dt>
+  <dd class="key-value-pair__value">
+    <!-- ko ifnot: $parent.isEditingContactDetails -->
+    <span data-bind="text: instagram"></span>
+    <!-- /ko -->
+    <!-- ko if: $parent.isEditingContactDetails -->
+    <input type="text" data-bind="textInput: instagram" class="form__input" />
+    <!-- /ko -->
+  </dd>
+</dl>
 </dl>
 <!-- ko template: { name: 'contact-info-buttons' } --><!-- /ko -->
 

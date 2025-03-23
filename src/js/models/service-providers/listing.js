@@ -146,7 +146,7 @@ function DashboardModel () {
       ajax.put(self.endpointBuilder.serviceProviders(self.currentServiceProvider().key).build() + '/is-published',
         {
           IsPublished: !self.currentServiceProvider().isPublished(),
-          'Note': {
+          Note: {
             CreationDate: self.note().creationDate().toISOString(),
             // We must use new Date() for passing date without timezone. In the database this date should be saved in utc format (00 hours 00 minutes).
             Date: new Date(self.note().date()),
