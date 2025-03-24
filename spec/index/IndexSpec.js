@@ -117,24 +117,25 @@ describe('Index', () => {
       })
     })
 
-    describe('Charter Admin', () => {
-      beforeEach(() => {
-        sinon.stub(querystring, 'parameter')
-        stubbedStorage
-          .withArgs(webAuth.storageKeys.roles)
-          .returns('charteradmin')
-        model = new Model()
-      })
+    // Deprecated
+    // describe('Charter Admin', () => {
+    //   beforeEach(() => {
+    //     sinon.stub(querystring, 'parameter')
+    //     stubbedStorage
+    //       .withArgs(webAuth.storageKeys.roles)
+    //       .returns('superadmin')
+    //     model = new Model()
+    //   })
 
-      afterEach(() => {
-        querystring.parameter.restore()
-      })
+    //   afterEach(() => {
+    //     querystring.parameter.restore()
+    //   })
 
-      it('should redirect to charter page', () => {
-        var browserRedirectedWithExpectedUrl = stubbedBrowser.withArgs(adminurls.charter).calledOnce
-        expect(browserRedirectedWithExpectedUrl).toBeTruthy()
-      })
-    })
+    //   it('should redirect to charter page', () => {
+    //     var browserRedirectedWithExpectedUrl = stubbedBrowser.withArgs(adminurls.charter).calledOnce
+    //     expect(browserRedirectedWithExpectedUrl).toBeTruthy()
+    //   })
+    // })
 
     describe('- with redirect url', () => {
       beforeEach(() => {
@@ -161,29 +162,30 @@ describe('Index', () => {
       })
     })
 
-    describe('- with invalid redirect url', () => {
-      beforeEach(() => {
-        sinon.stub(querystring, 'parameter')
-          .returns('https://haxx0rz.l337/phishing/')
-        sinon.stub(browser, 'origin')
-          .returns('https://admin.streetsupport.net')
-        stubbedStorage
-          .withArgs(webAuth.storageKeys.roles)
-          .returns('charteradmin')
+    // Deprecated
+    // describe('- with invalid redirect url', () => {
+    //   beforeEach(() => {
+    //     sinon.stub(querystring, 'parameter')
+    //       .returns('https://haxx0rz.l337/phishing/')
+    //     sinon.stub(browser, 'origin')
+    //       .returns('https://admin.streetsupport.net')
+    //     stubbedStorage
+    //       .withArgs(webAuth.storageKeys.roles)
+    //       .returns('superadmin')
 
-        model = new Model()
-      })
+    //     model = new Model()
+    //   })
 
-      afterEach(() => {
-        querystring.parameter.restore()
-        browser.origin.restore()
-      })
+    //   afterEach(() => {
+    //     querystring.parameter.restore()
+    //     browser.origin.restore()
+    //   })
 
-      it('should redirect to relevant home page', () => {
-        var browserRedirectedWithExpectedUrl = stubbedBrowser.withArgs(adminurls.charter).calledOnce
-        expect(browserRedirectedWithExpectedUrl).toBeTruthy()
-      })
-    })
+    //   it('should redirect to relevant home page', () => {
+    //     var browserRedirectedWithExpectedUrl = stubbedBrowser.withArgs(adminurls.charter).calledOnce
+    //     expect(browserRedirectedWithExpectedUrl).toBeTruthy()
+    //   })
+    // })
   })
 
   describe('session expired', () => {

@@ -1,11 +1,11 @@
+import { cities } from '../../data/generated/supported-cities'
+
 const ko = require('knockout')
 const ajax = require('../ajax')
 const auth = require('../auth')
 const adminUrls = require('../admin-urls')
 const browser = require('../browser')
 const BaseViewModel = require('./BaseViewModel')
-
-import { cities } from '../../data/generated/supported-cities'
 
 function AddServiceProvider () {
   const self = this
@@ -15,13 +15,13 @@ function AddServiceProvider () {
 
   const buildPost = () => {
     const cityId = auth.isCityAdmin()
-    ? [ auth.cityAdminFor() ]
-    : self.cityId()
+      ? [auth.cityAdminFor()]
+      : self.cityId()
 
     const endpoint = self.endpointBuilder.serviceProvidersHAL().build()
     const payload = {
-      'Name': self.name(),
-      'AssociatedLocations': cityId
+      Name: self.name(),
+      AssociatedLocations: cityId
     }
     return {
       endpoint,

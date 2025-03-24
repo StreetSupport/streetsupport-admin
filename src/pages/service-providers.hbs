@@ -15,16 +15,16 @@ nosubnav: true
       <header>
         <h1>
           <span class="h1" data-bind="html: name"></span>
-          <span class="small" data-claims="superadmin,cityadmin">(
+          <span class="small" data-claims="superadmin,cityadmin,volunteeradmin">(
             <span data-bind="text: verifiedMessage"></span>,
             <span data-bind="text: publishedMessage"></span>
             )</span>
         </h1>
-        <a data-claims="superadmin,cityadmin" href="/service-providers/" class="btn btn--info">
+        <a data-claims="superadmin,cityadmin,volunteeradmin" href="/service-providers/" class="btn btn--info">
           <span class="btn__text">View all Providers</span>
         </a>
         <!-- ko ifnot: isPublished -->
-        <button data-claims="superadmin,cityadmin" class="btn btn--primary" data-bind="click: publishOrg" title="Publish this Service Provider, making it, and its services and needs, visible on the website.">
+        <button data-claims="superadmin,cityadmin,volunteeradmin" class="btn btn--primary" data-bind="click: publishOrg" title="Publish this Service Provider, making it, and its services and needs, visible on the website.">
           <span class="btn__text">Publish this Provider</span>
         </button>
         <!-- /ko -->

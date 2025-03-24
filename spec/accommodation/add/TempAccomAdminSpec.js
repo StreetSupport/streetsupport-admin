@@ -29,7 +29,7 @@ describe('Accommodation - Add as TempAccom Admin', () => {
     sinon.stub(auth, 'isSuperAdmin')
     sinon.stub(storage, 'get')
       .withArgs('roles')
-      .returns('tempaccomadmin')
+      .returns('volunteeradmin')
 
     sut = new Model()
     sut.init()

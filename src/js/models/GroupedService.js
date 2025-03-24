@@ -11,7 +11,7 @@ var Address = require('./GroupedServiceAddress')
 var BaseViewModel = require('./BaseViewModel')
 var adminUrls = require('../admin-urls')
 
-let buildTags = (tags) => {
+const buildTags = (tags) => {
   return tags !== null
     ? tags.join(', ')
     : ''
@@ -43,15 +43,15 @@ function Service (data) {
   self.newOpeningTime = function () {
     var openingTimes = self.openingTimes()
     openingTimes.push(new OpeningTime({
-      'day': '',
-      'startTime': '',
-      'endTime': ''
+      day: '',
+      startTime: '',
+      endTime: ''
     }))
     self.openingTimes(openingTimes)
   }
 
   self.duplicateOpeningTime = (source) => {
-    let orig = self.openingTimes()
+    const orig = self.openingTimes()
     orig.push(new OpeningTime({
       day: source.day(),
       startTime: source.startTime(),
@@ -78,28 +78,28 @@ function Service (data) {
     if (self.tags().length > 0) tags = self.tags().split(',').map((t) => t.trim())
 
     var model = {
-      'Info': self.info(),
-      'Tags': tags,
-      'OpeningTimes': self.openingTimes().map((openingTime) => {
+      Info: self.info(),
+      Tags: tags,
+      OpeningTimes: self.openingTimes().map((openingTime) => {
         return {
-          'StartTime': openingTime.startTime(),
-          'EndTime': openingTime.endTime(),
-          'Day': openingTime.day()
+          StartTime: openingTime.startTime(),
+          EndTime: openingTime.endTime(),
+          Day: openingTime.day()
         }
       }),
-      'LocationDescription': self.locationDescription(),
-      'Street1': self.address.street1(),
-      'Street2': self.address.street2(),
-      'Street3': self.address.street3(),
-      'Street4': self.address.street4(),
-      'City': self.address.city(),
-      'Postcode': self.address.postcode(),
-      'Telephone': self.address.telephone(),
-      'IsOpen247': self.isOpen247(),
-      'IsTelephoneService': self.isTelephoneService(),
-      'IsAppointmentOnly': self.isAppointmentOnly(),
-      'SubCategories': self.subCategories().filter((sc) => sc.isSelected()).map((sc) => sc.id()),
-      'ClientGroupKeys': self.clientGroups()
+      LocationDescription: self.locationDescription(),
+      Street1: self.address.street1(),
+      Street2: self.address.street2(),
+      Street3: self.address.street3(),
+      Street4: self.address.street4(),
+      City: self.address.city(),
+      Postcode: self.address.postcode(),
+      Telephone: self.address.telephone(),
+      IsOpen247: self.isOpen247(),
+      IsTelephoneService: self.isTelephoneService(),
+      IsAppointmentOnly: self.isAppointmentOnly(),
+      SubCategories: self.subCategories().filter((sc) => sc.isSelected()).map((sc) => sc.id()),
+      ClientGroupKeys: self.clientGroups()
     }
 
     ajax.put(endpoint,
@@ -118,11 +118,11 @@ function Service (data) {
   self.deleteService = function () {
     var endpoint = self.endpointBuilder.serviceProviders(getUrlParameter.parameter('key')).services(self.id()).build()
     ajax.delete(endpoint)
-    .then(function (result) {
-      self.listeners().forEach((l) => l.deleteGroupedService(self))
-    }, function (error) {
-      self.handleError(error)
-    })
+      .then(function (result) {
+        self.listeners().forEach((l) => l.deleteGroupedService(self))
+      }, function (error) {
+        self.handleError(error)
+      })
   }
 
   self.addListener = function (listener) {

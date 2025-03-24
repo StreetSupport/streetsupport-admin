@@ -1,9 +1,9 @@
+import BaseViewModel from '../../BaseViewModel'
 
 const adminUrls = require('../../../admin-urls')
 const ajax = require('../../../ajax')
 const browser = require('../../../browser')
 const querystring = require('../../../get-url-parameter')
-import BaseViewModel from '../../BaseViewModel'
 const ko = require('knockout')
 const moment = require('moment')
 

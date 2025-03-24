@@ -1,4 +1,5 @@
 'use strict'
+import { clientGroups } from '../../data/generated/client-groups'
 
 const ko = require('knockout')
 const moment = require('moment')
@@ -10,8 +11,6 @@ const browser = require('../browser')
 const Endpoints = require('../endpoint-builder')
 const htmlEncode = require('htmlencode')
 const dateFormat = 'YYYY-MM-DD'
-
-import { clientGroups } from '../../data/generated/client-groups'
 
 function Need (data) {
   const self = this
@@ -104,55 +103,55 @@ function Need (data) {
   self.deleteNeed = function () {
     var endpoint = `${self.endpointBuilder.serviceProviders(self.serviceProviderId).needs(self.id()).build()}`
     ajax.delete(endpoint)
-    .then(function (result) {
-      self.listeners().forEach((l) => l.deleteNeed(self))
-    }, function (error) {
-      self.handleError(error)
-    })
+      .then(function (result) {
+        self.listeners().forEach((l) => l.deleteNeed(self))
+      }, function (error) {
+        self.handleError(error)
+      })
   }
 
   self.resolveNeed = function () {
     var endpoint = `${self.endpointBuilder.serviceProviders(self.serviceProviderId).needs(self.id()).build()}/is-resolved`
     ajax.patch(endpoint, { IsResolved: true })
-    .then(function (result) {
-      self.listeners().forEach((l) => l.deleteNeed(self))
-    }, function (error) {
-      self.handleError(error)
-    })
+      .then(function (result) {
+        self.listeners().forEach((l) => l.deleteNeed(self))
+      }, function (error) {
+        self.handleError(error)
+      })
   }
 
   self.markAsPriority = function () {
     var endpoint = `${self.endpointBuilder.serviceProviders(self.serviceProviderId).needs(self.id()).build()}/is-priority`
     ajax.patch(endpoint, { IsPriority: !self.isPriority() })
-    .then(function (result) {
-      self.isPriority(!self.isPriority())
-    }, function (error) {
-      self.handleError(error)
-    })
+      .then(function (result) {
+        self.isPriority(!self.isPriority())
+      }, function (error) {
+        self.handleError(error)
+      })
   }
 
   self.save = function () {
     self.isProcessing(true)
-    let keywords = self.keywords() !== undefined
+    const keywords = self.keywords() !== undefined
       ? self.keywords().split(',').map((k) => k.trim())
       : []
     var model = {
-      'Description': self.description(),
-      'Type': self.type(),
-      'Reason': self.reason(),
-      'MoreInfoUrl': self.moreInfoUrl(),
-      'Postcode': self.postcode(),
-      'Instructions': self.instructions(),
-      'Email': self.email(),
-      'DonationAmountInPounds': self.donationAmountInPounds(),
-      'DonationUrl': self.donationUrl(),
-      'CustomMessage': self.customMessage(),
-      'Keywords': keywords,
-      'ClientGroupKeys': self.сlientGroupKeys(),
+      Description: self.description(),
+      Type: self.type(),
+      Reason: self.reason(),
+      MoreInfoUrl: self.moreInfoUrl(),
+      Postcode: self.postcode(),
+      Instructions: self.instructions(),
+      Email: self.email(),
+      DonationAmountInPounds: self.donationAmountInPounds(),
+      DonationUrl: self.donationUrl(),
+      CustomMessage: self.customMessage(),
+      Keywords: keywords,
+      ClientGroupKeys: self.сlientGroupKeys(),
       // We must use new Date(self.startDate()) or moment(self.startDate()).utcOffset(0, true) for passing date without timezone. In the database this date should be saved in utc format (00 hours 00 minutes).
-      'NeededDate': new Date(self.startDate()),
-       // We must use new Date(self.endDate()) or moment(self.endDate()).utcOffset(0, true) for passing date without timezone. In the database this date should be saved in utc format (00 hours 00 minutes).
-      'EndDate': new Date(self.endDate())
+      NeededDate: new Date(self.startDate()),
+      // We must use new Date(self.endDate()) or moment(self.endDate()).utcOffset(0, true) for passing date without timezone. In the database this date should be saved in utc format (00 hours 00 minutes).
+      EndDate: new Date(self.endDate())
     }
 
     if (self.id() === undefined) { // adding
@@ -171,7 +170,7 @@ function Need (data) {
         self.handleError(error)
       })
     } else { // editing
-      let endpoint = self.endpointBuilder.serviceProviders(self.serviceProviderId).needs(self.id()).build()
+      const endpoint = self.endpointBuilder.serviceProviders(self.serviceProviderId).needs(self.id()).build()
       ajax.put(endpoint,
         model
       ).then(function (result) {

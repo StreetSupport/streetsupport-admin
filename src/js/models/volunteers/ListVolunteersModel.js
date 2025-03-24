@@ -1,12 +1,11 @@
 'use strict'
+import { categories as volCategories } from '../../../data/generated/volunteer-categories.js'
 
 const auth = require('../../auth')
 const ListingBaseViewModel = require('../ListingBaseViewModel')
 const ko = require('knockout')
 const Volunteer = require('./Volunteer')
 const htmlencode = require('htmlencode')
-
-import { categories as volCategories } from '../../../data/generated/volunteer-categories.js'
 
 const ListVolunteersModel = function () {
   const self = this

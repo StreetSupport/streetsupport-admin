@@ -1,3 +1,6 @@
+import { categories } from '../../../data/generated/accommodation-categories'
+import { supportTypes } from '../../../data/generated/support-types'
+
 const ajax = require('../../ajax')
 const auth = require('../../auth')
 const BaseViewModel = require('../../models/BaseViewModel')
@@ -9,9 +12,6 @@ const htmlEncode = require('htmlencode')
 const ko = require('knockout')
 require('knockout.validation') // No variable here is deliberate!
 const marked = require('marked')
-
-import { categories } from '../../../data/generated/accommodation-categories'
-import { supportTypes } from '../../../data/generated/support-types'
 
 function Model () {
   const self = this
@@ -110,7 +110,7 @@ function Model () {
       patchEndpoint: endpoint,
       boolDiscFields: ['acceptsPets', 'acceptsCouples', 'hasDisabledAccess', 'hasSingleRooms', 'hasSharedRooms',
         'hasShowerBathroomFacilities', 'hasAccessToKitchen', 'hasFlexibleMealTimes', 'hasLounge', 'hasLaundryFacilities',
-        'providesCleanBedding', 'allowsVisitors' ],
+        'providesCleanBedding', 'allowsVisitors'],
       computedFields: [{
         sourceField: 'additionalFeatures',
         destField: 'additionalFeaturesReadOnly',

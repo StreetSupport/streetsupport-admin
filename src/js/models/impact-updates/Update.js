@@ -1,7 +1,7 @@
-let ko = require('knockout')
-let ajax = require('../../ajax')
-let BaseViewModel = require('../BaseViewModel')
-let browser = require('../../browser')
+const ko = require('knockout')
+const ajax = require('../../ajax')
+const BaseViewModel = require('../BaseViewModel')
+const browser = require('../../browser')
 var htmlencode = require('htmlencode')
 var marked = require('marked')
 

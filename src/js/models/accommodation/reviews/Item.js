@@ -1,7 +1,7 @@
-let ajax = require('../../../ajax')
-let BaseViewModel = require('../../BaseViewModel')
-let browser = require('../../../browser')
-let validation = require('../../../validation')
+const ajax = require('../../../ajax')
+const BaseViewModel = require('../../BaseViewModel')
+const browser = require('../../../browser')
+const validation = require('../../../validation')
 
 function Item (listener, formFields, endpoints) {
   var self = this

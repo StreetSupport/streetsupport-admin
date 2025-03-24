@@ -1,4 +1,5 @@
 'use strict'
+import { cities as locations } from '../../../data/generated/supported-cities'
 
 const ajax = require('../../ajax')
 const auth = require('../../auth')
@@ -6,7 +7,6 @@ const browser = require('../../browser')
 const BaseViewModel = require('../BaseViewModel')
 const ListingBaseViewModel = require('../ListingBaseViewModel')
 const ko = require('knockout')
-import { cities as locations } from '../../../data/generated/supported-cities'
 
 function User (data, listener) {
   const self = this
@@ -41,9 +41,8 @@ function ListUsers () {
     { id: 'SuperAdmin' },
     { id: 'CityAdmin' },
     { id: 'OrgAdmin' },
-    { id: 'CharterAdmin' },
-    { id: 'TempAccomAdmin' },
-    { id: 'IndividualAccomAdmin' }
+    { id: 'SwepAdmin' },
+    { id: 'VolunteerAdmin' }
   ]
   self.availableLocations = auth.isCityAdmin()
     ? locations.filter((l) => auth.locationsAdminFor().includes(l.id))

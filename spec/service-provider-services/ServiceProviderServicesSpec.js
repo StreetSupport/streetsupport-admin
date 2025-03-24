@@ -85,6 +85,8 @@ function coffee4Craig () {
     'website': 'http://www.coffee4craig.com/',
     'facebook': 'https://www.facebook.com/Coffee4Craig/?fref=ts',
     'twitter': '@Coffee4Craig',
+    'bluesky': 'https://web-cdn.bsky.app/profile/streetsupport.ne',
+    'instagram': 'https://www.instagram.com/streetsupportnetwork',
     'addresses': [{
       'street': '7-11 Lancaster Rd',
       'street1': null,

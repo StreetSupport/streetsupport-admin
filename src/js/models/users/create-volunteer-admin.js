@@ -1,5 +1,5 @@
 const ajax = require('../../ajax')
-const BaseViewModel = require('../../models/BaseViewModel')
+const BaseViewModel = require('../BaseViewModel')
 const browser = require('../../browser')
 const endpoints = require('../../api-endpoints')
 const validation = require('../../validation')
@@ -9,7 +9,7 @@ require('knockout.validation') // No variable here is deliberate!
 
 function Model () {
   const self = this
-
+  
   self.formFields = ko.validatedObservable({
     email: ko.observable().extend({ email: true, required: true })
   })
@@ -25,7 +25,7 @@ function Model () {
 
   self.postData = () => {
     browser.loading()
-    const endpoint = endpoints.accomReviewAdmins
+    const endpoint = endpoints.volunteerAdmins
     const payload = validation.buildPayload(self.formFields())
     self.formSubmitted(true)
     self.formSubmissionNotSuccessful(false)

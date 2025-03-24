@@ -1,9 +1,9 @@
-const ko = require('knockout')
+import ListingPagination from './ListingPagination'
 
+const ko = require('knockout')
 const ajax = require('../ajax')
 const browser = require('../browser')
 const BaseViewModel = require('./BaseViewModel')
-import ListingPagination from './ListingPagination'
 
 function ListingBaseViewModel () {
   const self = this
@@ -75,9 +75,9 @@ function ListingBaseViewModel () {
 
         browser.loaded()
       },
-        function (error) {
-          self.handleError(error)
-        })
+      function (error) {
+        self.handleError(error)
+      })
   }
 
   self.setFiltersFromQs = function () {
@@ -123,7 +123,7 @@ function ListingBaseViewModel () {
     browser.pushHistory({}, '', `?${getUrl.qs}`)
 
     // We generate this for retrieving the not cached item
-    let syntaxSugar = new Date().getTime()
+    const syntaxSugar = new Date().getTime()
     ajax
       .get(getUrl.fullUrl + `&unique=${syntaxSugar}`)
       .then(function (result) {
@@ -134,9 +134,9 @@ function ListingBaseViewModel () {
           self.csvItems(result.data.items.map((i) => self.vm.mapCsvItems(i)))
         }
       },
-        function (error) {
-          self.handleError(error)
-        })
+      function (error) {
+        self.handleError(error)
+      })
   }
 }
 
