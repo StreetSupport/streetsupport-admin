@@ -1,10 +1,10 @@
 'use strict'
+import { categories } from '../../../data/generated/need-categories'
 
 const ListingBaseViewModel = require('../ListingBaseViewModel')
 const ItemOfferer = require('./ItemOfferer')
 const ko = require('knockout')
 const auth = require('../../auth')
-import { categories } from '../../../data/generated/need-categories'
 
 const ListModel = function () {
   const self = this

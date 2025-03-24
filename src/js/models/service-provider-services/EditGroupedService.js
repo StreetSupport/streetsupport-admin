@@ -9,7 +9,7 @@ var browser = require('../../browser')
 var adminUrls = require('../../admin-urls')
 
 function Category (data, selectedSubCats) {
-  let isSelected = (subcatId) => {
+  const isSelected = (subcatId) => {
     return selectedSubCats.filter((sc) => sc.id === subcatId).length === 1
   }
 
@@ -38,12 +38,12 @@ function EditServiceProviderService () {
   self.init = function () {
     browser.loading()
 
-    let checkReady = () => {
+    const checkReady = () => {
       if (self.serviceData !== undefined && self.categoryData !== undefined) {
         self.service(new GroupedService(self.serviceData))
         self.service().addListener(self)
 
-        let category = self.categoryData.filter((c) => c.key === self.service().categoryId)[0]
+        const category = self.categoryData.filter((c) => c.key === self.service().categoryId)[0]
         self.service().subCategories(category.subCategories
           .sort((a, b) => {
             if (a.name < b.name) return -1
@@ -55,7 +55,7 @@ function EditServiceProviderService () {
       }
     }
 
-    let gotServices = (result) => {
+    const gotServices = (result) => {
       self.serviceData = result.data
       self.serviceProviderId = getUrlParameter.parameter('providerId')
       checkReady()
@@ -67,12 +67,12 @@ function EditServiceProviderService () {
       .build()
 
     ajax.get(serviceProviderEndpoint, {})
-    .then(gotServices,
-    function (error) {
-      self.handleError(error)
-    })
+      .then(gotServices,
+        function (error) {
+          self.handleError(error)
+        })
 
-    let gotCategories = (result) => {
+    const gotCategories = (result) => {
       self.categoryData = result.data
       checkReady()
     }
@@ -80,10 +80,10 @@ function EditServiceProviderService () {
     var categoryEndpoint = self.endpointBuilder.categories().build()
 
     ajax.get(categoryEndpoint, {})
-    .then(gotCategories,
-    function (error) {
-      self.handleError(error)
-    })
+      .then(gotCategories,
+        function (error) {
+          self.handleError(error)
+        })
   }
 
   self.serviceSaved = function () {

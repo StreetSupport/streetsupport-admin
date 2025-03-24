@@ -6,4 +6,3 @@ require.ensure(['knockout', '../models/accommodation/list'], (require) => {
   const model = new Model()
   ko.applyBindings(model)
 })
-

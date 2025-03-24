@@ -1,9 +1,18 @@
 /* global XMLHttpRequest */
+import storage from './sessionStorage'
+import { storageKeys } from './models/auth0/webAuth'
 
 var Q = require('q')
 var browser = require('./browser')
-import storage from './sessionStorage'
-import { storageKeys } from './models/auth0/webAuth'
+
+var postFile = function (url, data, isCustomErrorHandling) {
+  return makeRequest({
+    method: 'POST',
+    url: url,
+    data: data,
+    isCustomErrorHandling: isCustomErrorHandling
+  }, true).promise
+}
 
 var postFile = function (url, data, isCustomErrorHandling) {
   return makeRequest({
@@ -83,21 +92,21 @@ var makeRequest = function (options, isMultipartFormData = false) {
   req.onload = function () {
     if (this.status === 201) {
       deferred.resolve({
-        'status': 'created',
-        'statusCode': this.status,
-        'data': parseResponseText(this)
+        status: 'created',
+        statusCode: this.status,
+        data: parseResponseText(this)
       })
     } else if (this.status === 200) {
       deferred.resolve({
-        'status': 'ok',
-        'statusCode': this.status,
-        'data': parseResponseText(this)
+        status: 'ok',
+        statusCode: this.status,
+        data: parseResponseText(this)
       })
     } else if (this.status === 400) {
       deferred.resolve({
-        'status': 'badrequest',
-        'statusCode': this.status,
-        'data': parseResponseText(this)
+        status: 'badrequest',
+        statusCode: this.status,
+        data: parseResponseText(this)
       })
     } else if (this.status === 401 && !options.isCustomErrorHandling) {
       browser.redirect(`/login?redirectUrl=${window.location}`)
@@ -105,9 +114,9 @@ var makeRequest = function (options, isMultipartFormData = false) {
       browser.redirect('/403.html')
     } else {
       deferred.resolve({
-        'status': 'error',
-        'statusCode': this.status,
-        'data': parseResponseText(this)
+        status: 'error',
+        statusCode: this.status,
+        data: parseResponseText(this)
       })
     }
   }

@@ -4,10 +4,10 @@ global ga, history, window
 
 'use strict'
 
-let Spinner = require('spin.js')
-let adminUrls = require('./admin-urls')
+const Spinner = require('spin.js')
+const adminUrls = require('./admin-urls')
 
-let redirect = (url) => {
+const redirect = (url) => {
   if (url === adminUrls.login && window.location.pathname !== adminUrls.passwordReset + '/') {
     window.location.href = adminUrls.login + '?redirectUrl=' + window.location.href
   } else {
@@ -16,14 +16,14 @@ let redirect = (url) => {
 }
 
 let loaderAnim
-let getLoader = () => {
+const getLoader = () => {
   if (loaderAnim === undefined) {
     loaderAnim = new Spinner()
   }
   return loaderAnim
 }
 
-let getBody = () => {
+const getBody = () => {
   return document.getElementsByTagName('body')[0]
 }
 
@@ -37,26 +37,26 @@ var loaded = function () {
   getLoader().stop()
 }
 
-let trackEvent = (src, action, description) => {
+const trackEvent = (src, action, description) => {
   ga('send', 'event', src, action, description)
 }
 
-let pushHistory = (stateObject, title, url) => {
+const pushHistory = (stateObject, title, url) => {
   history.pushState(stateObject, title, url)
 }
 
-let popHistory = () => {
+const popHistory = () => {
   history.back()
 }
 
-let setOnHistoryPop = (onPopCallback) => {
+const setOnHistoryPop = (onPopCallback) => {
   window.onpopstate = () => {
     onPopCallback()
   }
 }
 
-let scrollTo = function (selector) {
-  let findPos = (obj) => {
+const scrollTo = function (selector) {
+  const findPos = (obj) => {
     var curtop = 0
     if (obj.offsetParent) {
       do {
@@ -65,11 +65,11 @@ let scrollTo = function (selector) {
       return [curtop]
     }
   }
-  let element = document.querySelector(selector)
+  const element = document.querySelector(selector)
   window.scroll(0, findPos(element))
 }
 
-let origin = () => {
+const origin = () => {
   return window.location.origin
 }
 
@@ -77,7 +77,7 @@ const search = () => {
   return window.location.search
 }
 
-let refresh = () => {
+const refresh = () => {
   window.location.reload()
 }
 

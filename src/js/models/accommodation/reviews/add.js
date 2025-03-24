@@ -1,16 +1,16 @@
-let ko = require('knockout')
-require('knockout.validation') // No variable here is deliberate!
-
-let ajax = require('../../../ajax')
-let browser = require('../../../browser')
-let querystring = require('../../../get-url-parameter')
-let BaseViewModel = require('../../BaseViewModel')
-let Item = require('./Item')
-
 import * as review from './review'
 
+const ko = require('knockout')
+require('knockout.validation') // No variable here is deliberate!
+
+const ajax = require('../../../ajax')
+const browser = require('../../../browser')
+const querystring = require('../../../get-url-parameter')
+const BaseViewModel = require('../../BaseViewModel')
+const Item = require('./Item')
+
 function Add () {
-  let self = this
+  const self = this
 
   self.buildFormFields = (data = review.createDefaultNewItem(querystring.parameter('id'))) => {
     return ko.validatedObservable(review.buildModel(data))

@@ -27,8 +27,8 @@ nosubnav: true
         <dl class="key-value-pair">
           {{> forms/textField fieldTitle="Name" dataFieldName="name" }}
           <!-- ko if: $parent.shouldShowLocations -->
-          <dt data-claims="superadmin,cityadmin" class="key-value-pair__key">Street Support Location</dt>
-          <dd data-claims="superadmin,cityadmin" class="key-value-pair__value form__field-item">
+          <dt data-claims="superadmin,cityadmin,volunteeradmin" class="key-value-pair__key">Street Support Location</dt>
+          <dd data-claims="superadmin,cityadmin,volunteeradmin" class="key-value-pair__value form__field-item">
             <select data-bind="options: $parent.locations,
                 optionsValue: function (item) { return item.id },
                 optionsText:  function (item) { return item.name },
@@ -36,12 +36,12 @@ nosubnav: true
                 optionsCaption: '-- please select --'" class="form__input"></select>
           </dd>
           <!-- /ko -->
-          <dt data-claims="superadmin,cityadmin" class="key-value-pair__key">Service Provider</dt>
+          <dt data-claims="superadmin,cityadmin,volunteeradmin" class="key-value-pair__key">Service Provider</dt>
           <!-- ko ifnot: $parent.hasLocationSelected -->
-          <dd data-claims="superadmin,cityadmin" class="key-value-pair__value form__field-item">Please select a Location first.</dd>
+          <dd data-claims="superadmin,cityadmin,volunteeradmin" class="key-value-pair__value form__field-item">Please select a Location first.</dd>
           <!-- /ko -->
           <!-- ko if: $parent.hasLocationSelected -->
-          <dd data-claims="superadmin,cityadmin" class="key-value-pair__value form__field-item">
+          <dd data-claims="superadmin,cityadmin,volunteeradmin" class="key-value-pair__value form__field-item">
             <select data-bind="options: $parent.serviceProviders,
                 optionsValue: function (item) { return item.key },
                 optionsText:  function (item) { return item.name },
@@ -51,7 +51,7 @@ nosubnav: true
           <!-- /ko -->
           {{> forms/textArea fieldTitle="Short Summary" dataFieldName="synopsis" }}
           {{> forms/textArea fieldTitle="Full Description" dataFieldName="description" }}
-          {{> forms/boolean fieldTitle="Open Access? (No referral required)" dataFieldName="isOpenAccess" claimsRequired="superadmin,orgadmin,cityadmin" }}
+          {{> forms/boolean fieldTitle="Open Access? (No referral required)" dataFieldName="isOpenAccess" claimsRequired="superadmin,orgadmin,cityadmin,volunteeradmin" }}
           <dt class="key-value-pair__key">Acommodation Type</dt>
           <dd class="key-value-pair__value form__field-item">
             <select data-bind="options: $parent.accommodationTypes,
@@ -100,7 +100,7 @@ nosubnav: true
           {{> forms/textField fieldTitle="Postcode" dataFieldName="postcode" }}
         </dl>
 
-        {{> forms/boolean fieldTitle="Hide address from public?" dataFieldName="addressIsPubliclyHidden" claimsRequired="superadmin,orgadmin,cityadmin" }}
+        {{> forms/boolean fieldTitle="Hide address from public?" dataFieldName="addressIsPubliclyHidden" claimsRequired="superadmin,orgadmin,cityadmin,volunteeradmin" }}
 
         <button data-bind="click: $parent.save" class="btn btn--primary"><span class="btn__text">Save</span></button>
       </article>

@@ -1,3 +1,6 @@
+import { cities } from '../../../data/generated/supported-cities'
+import { clientGroups } from '../../../data/generated/client-groups'
+
 const ko = require('knockout')
 const htmlEncode = require('htmlencode')
 const marked = require('marked')
@@ -5,9 +8,6 @@ const marked = require('marked')
 const adminUrls = require('../../admin-urls')
 const ajax = require('../../ajax')
 const browser = require('../../browser')
-
-import { cities } from '../../../data/generated/supported-cities'
-import { clientGroups } from '../../../data/generated/client-groups'
 
 const Address = require('../Address')
 const BaseViewModel = require('../BaseViewModel')
@@ -37,6 +37,8 @@ function ServiceProvider (data) {
   self.website = ko.observable(data.website)
   self.facebook = ko.observable(data.facebook)
   self.twitter = ko.observable(data.twitter)
+  self.bluesky = ko.observable(data.bluesky)
+  self.instagram = ko.observable(data.instagram)
   data.addresses.forEach((a) => { a.serviceProviderId = data.key })
   self.addresses = ko.observableArray(data.addresses.map((a) => new Address(a)))
   self.addresses().forEach((a) => a.addListener(self))

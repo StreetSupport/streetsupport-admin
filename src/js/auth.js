@@ -6,7 +6,8 @@ const roles = {
   superadmin: 'superadmin',
   cityadmin: 'cityadmin',
   orgadmin: 'orgadmin',
-  tempaccomadmin: 'tempaccomadmin'
+  swepadmin: 'swepadmin',
+  volunteeradmin: 'volunteeradmin'
 }
 
 const getUserClaims = function () {
@@ -34,14 +35,14 @@ const locationsAdminFor = function () {
 }
 
 const getLocationsForUser = function (additionalOptions = []) {
-  if (isSuperAdmin() || isAccomAdmin()) return [...additionalOptions, ...locations]
+  if (isSuperAdmin() || isVolunteerAdmin()) return [...additionalOptions, ...locations]
   if (isCityAdmin()) return locations.filter((l) => locationsAdminFor().includes(l.id))
   return additionalOptions
 }
 
 const canSeeReviews = function () {
   const claims = getUserClaims()
-  return claims.includes(roles.superadmin) || claims.includes(roles.tempaccomadmin)
+  return claims.includes(roles.superadmin) || claims.includes(roles.volunteeradmin)
 }
 
 const isSuperAdmin = function () {
@@ -52,8 +53,12 @@ const isCityAdmin = function () {
   return getUserClaims().includes(roles.cityadmin)
 }
 
-const isAccomAdmin = function () {
-  return getUserClaims().includes(roles.tempaccomadmin)
+const isSwepAdmin = function () {
+  return getUserClaims().includes(roles.superadmin)
+}
+
+const isVolunteerAdmin = function () {
+  return getUserClaims().includes(roles.volunteeradmin)
 }
 
 module.exports = {
@@ -64,5 +69,7 @@ module.exports = {
   isCityAdmin,
   cityAdminFor,
   locationsAdminFor,
-  getLocationsForUser
+  getLocationsForUser,
+  isSwepAdmin,
+  isVolunteerAdmin
 }

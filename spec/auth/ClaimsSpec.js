@@ -71,11 +71,11 @@ describe('Auth Claims - Admin for service provider', () => {
   })
 })
 
-describe('Auth Claims - can see reviews - if tempaccomadmin', () => {
+describe('Auth Claims - can see reviews - if volunteeradmin', () => {
   beforeEach(() => {
     sinon.stub(storage, 'get')
     .withArgs(storageKeys.roles)
-      .returns('TempAccomAdmin')
+      .returns('volunteeradmin')
   })
 
   afterEach(() => {
@@ -87,7 +87,7 @@ describe('Auth Claims - can see reviews - if tempaccomadmin', () => {
   })
 })
 
-describe('Auth Claims - can see reviews - if not tempaccomadmin', () => {
+describe('Auth Claims - can see reviews - if not volunteeradmin', () => {
   beforeEach(() => {
     sinon.stub(storage, 'get')
     .withArgs(storageKeys.roles)

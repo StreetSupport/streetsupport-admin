@@ -1,3 +1,5 @@
+import { categories } from '../../../data/generated/need-categories'
+
 var adminUrls = require('../../admin-urls')
 var ajax = require('../../ajax')
 const endpoints = require('../../api-endpoints')
@@ -6,9 +8,8 @@ const htmlEncode = require('htmlencode')
 var ko = require('knockout')
 var browser = require('../../browser')
 var BaseViewModel = require('../BaseViewModel')
-import { categories } from '../../../data/generated/need-categories'
 
-let ItemOfferer = function (data, listener) {
+const ItemOfferer = function (data, listener) {
   const truncate = (text, maxLength, suffix) => {
     if (text.length < maxLength) {
       return text
@@ -17,7 +18,7 @@ let ItemOfferer = function (data, listener) {
     return text.substring(0, maxLength) + suffix
   }
 
-  let self = this
+  const self = this
   self.listener = listener
   self.id = data.id
   self.person = {
@@ -68,7 +69,7 @@ let ItemOfferer = function (data, listener) {
         endpoints.offersOfItems + '/' + self.id + '/contact-requests',
         {})
       .then((result) => {
-        let items = result.data.items
+        const items = result.data.items
         items.forEach((i) => {
           i.message = htmlEncode.htmlDecode(i.message)
           i.createdDate = moment(i.createdDate).format('hh:mm DD/MM/YY')

@@ -1,7 +1,8 @@
 'use strict'
+import { categories } from '../../../data/generated/service-categories'
+import { clientGroups } from '../../../data/generated/client-groups'
 
 const ko = require('knockout')
-
 const Address = require('../Address')
 const BaseViewModel = require('../BaseViewModel')
 const OpeningTime = require('../OpeningTime')
@@ -10,9 +11,6 @@ const adminUrls = require('../../admin-urls')
 const ajax = require('../../ajax')
 const browser = require('../../browser')
 const getUrlParameter = require('../../get-url-parameter')
-
-import { categories } from '../../../data/generated/service-categories'
-import { clientGroups } from '../../../data/generated/client-groups'
 
 function SubCat (key, name) {
   var self = this
@@ -103,44 +101,44 @@ function AddServiceProviderService () {
       browser.scrollTo('.form-feedback')
     } else {
       var payload = {
-        'Info': self.info(),
-        'LocationDescription': self.locationDescription(),
-        'Tags': tags,
-        'Category': self.category().key,
-        'SubCategories': self.subCategories()
+        Info: self.info(),
+        LocationDescription: self.locationDescription(),
+        Tags: tags,
+        Category: self.category().key,
+        SubCategories: self.subCategories()
           .filter((sc) => sc.isSelected() === true)
           .map((sc) => sc.key),
-        'OpeningTimes': self.address().openingTimes().map((openingTime) => {
+        OpeningTimes: self.address().openingTimes().map((openingTime) => {
           return {
-            'StartTime': openingTime.startTime(),
-            'EndTime': openingTime.endTime(),
-            'Day': openingTime.day()
+            StartTime: openingTime.startTime(),
+            EndTime: openingTime.endTime(),
+            Day: openingTime.day()
           }
         }),
-        'Street1': self.address().street1(),
-        'Street2': self.address().street2(),
-        'Street3': self.address().street3(),
-        'Street4': self.address().street4(),
-        'City': self.address().city(),
-        'Postcode': self.address().postcode(),
-        'Telephone': self.address().telephone(),
-        'IsOpen247': self.address().isOpen247(),
-        'IsTelephoneService': self.isTelephoneService(),
-        'IsAppointmentOnly': self.isAppointmentOnly(),
-        'ClientGroupKeys': self.clientGroups()
+        Street1: self.address().street1(),
+        Street2: self.address().street2(),
+        Street3: self.address().street3(),
+        Street4: self.address().street4(),
+        City: self.address().city(),
+        Postcode: self.address().postcode(),
+        Telephone: self.address().telephone(),
+        IsOpen247: self.address().isOpen247(),
+        IsTelephoneService: self.isTelephoneService(),
+        IsAppointmentOnly: self.isAppointmentOnly(),
+        ClientGroupKeys: self.clientGroups()
       }
 
       ajax.post(endpoint, payload)
-      .then(function (result) {
-        if (result.statusCode === 201) {
-          browser.redirect(adminUrls.serviceProviders + '?key=' + getUrlParameter.parameter('providerId'))
-        } else {
-          self.handleError(result)
-        }
-      },
-      function (error) {
-        self.handleError(error)
-      })
+        .then(function (result) {
+          if (result.statusCode === 201) {
+            browser.redirect(adminUrls.serviceProviders + '?key=' + getUrlParameter.parameter('providerId'))
+          } else {
+            self.handleError(result)
+          }
+        },
+        function (error) {
+          self.handleError(error)
+        })
     }
   }
 
@@ -149,15 +147,15 @@ function AddServiceProviderService () {
 
     var serviceProviderEndpoint = self.endpointBuilder.serviceProviders(getUrlParameter.parameter('providerId')).build()
     ajax.get(serviceProviderEndpoint, {})
-    .then(function (result) {
-      let addresses = result.data.addresses
-        .map((a) => new Address(a))
-      self.addresses(addresses)
-      browser.loaded()
-    },
-    function (error) {
-      self.handleError(error)
-    })
+      .then(function (result) {
+        const addresses = result.data.addresses
+          .map((a) => new Address(a))
+        self.addresses(addresses)
+        browser.loaded()
+      },
+      function (error) {
+        self.handleError(error)
+      })
 
     self.categories(categories.filter((c) => c.key !== 'accom'))
   }

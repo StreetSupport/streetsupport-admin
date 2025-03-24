@@ -80,25 +80,25 @@ function Address (data) {
   self.deleteAddress = function () {
     var endpoint = self.endpointBuilder.serviceProviders(getUrlParameter.parameter('key')).addresses(self.key()).build()
     ajax.delete(endpoint)
-    .then(function (result) {
-      self.listeners().forEach((listener) => listener.deleteAddress(self))
-    }, function (error) {
-      self.handleError(error)
-    })
+      .then(function (result) {
+        self.listeners().forEach((listener) => listener.deleteAddress(self))
+      }, function (error) {
+        self.handleError(error)
+      })
   }
 
   self.newOpeningTime = function () {
     var openingTimes = self.openingTimes()
     openingTimes.push(new OpeningTime({
-      'day': '',
-      'startTime': '',
-      'endTime': ''
+      day: '',
+      startTime: '',
+      endTime: ''
     }))
     self.openingTimes(openingTimes)
   }
 
   self.duplicateOpeningTime = (source) => {
-    let orig = self.openingTimes()
+    const orig = self.openingTimes()
     orig.push(new OpeningTime({
       day: source.day(),
       startTime: source.startTime(),
@@ -117,7 +117,7 @@ function Address (data) {
     let hasAlreadyRemovedItem = false
 
     for (let i = 0; i < self.openingTimes().length; i++) {
-      let curr = self.openingTimes()[i]
+      const curr = self.openingTimes()[i]
       if (openingTimeDifferent(curr) || hasAlreadyRemovedItem) {
         remaining.push(curr)
       } else {
@@ -131,23 +131,23 @@ function Address (data) {
   self.save = function () {
     var mapOpeningTime = function (openingTime) {
       return {
-        'startTime': openingTime.startTime(),
-        'endTime': openingTime.endTime(),
-        'day': openingTime.day()
+        startTime: openingTime.startTime(),
+        endTime: openingTime.endTime(),
+        day: openingTime.day()
       }
     }
 
     var model = {
-      'Street': self.street1(),
-      'Street1': self.street2(),
-      'Street2': self.street3(),
-      'Street3': self.street4(),
-      'City': self.city(),
-      'Postcode': self.postcode(),
-      'OpeningTimes': self.openingTimes().map((openingTime) => mapOpeningTime(openingTime)),
-      'IsOpen247': self.isOpen247(),
-      'IsAppointmentOnly': self.isAppointmentOnly(),
-      'Telephone': self.telephone()
+      Street: self.street1(),
+      Street1: self.street2(),
+      Street2: self.street3(),
+      Street3: self.street4(),
+      City: self.city(),
+      Postcode: self.postcode(),
+      OpeningTimes: self.openingTimes().map((openingTime) => mapOpeningTime(openingTime)),
+      IsOpen247: self.isOpen247(),
+      IsAppointmentOnly: self.isAppointmentOnly(),
+      Telephone: self.telephone()
     }
 
     if (self.tempKey() !== undefined || self.key() === undefined) {
@@ -194,11 +194,11 @@ function Address (data) {
     self.isAppointmentOnly(self.savedIsAppointmentOnly())
     self.telephone(self.savedTelephone())
 
-    let buildOpeningTime = function (ot) {
+    const buildOpeningTime = function (ot) {
       return new OpeningTime({
-        'day': ot.day(),
-        'startTime': ot.startTime(),
-        'endTime': ot.endTime()
+        day: ot.day(),
+        startTime: ot.startTime(),
+        endTime: ot.endTime()
       })
     }
 
