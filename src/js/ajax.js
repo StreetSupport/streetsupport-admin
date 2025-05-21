@@ -14,6 +14,15 @@ var postFile = function (url, data, isCustomErrorHandling) {
   }, true).promise
 }
 
+var postFile = function (url, data, isCustomErrorHandling) {
+  return makeRequest({
+    method: 'POST',
+    url: url,
+    data: data,
+    isCustomErrorHandling: isCustomErrorHandling
+  }, true).promise
+}
+
 var post = function (url, data, isCustomErrorHandling) {
   return makeRequest({
     method: 'POST',
