@@ -141,15 +141,15 @@ nosubnav: true
               <dl class="key-value-pair" data-bind="with: formFields">
               <div class="form__field-item">
                 {{> forms/inline/boolean fieldTitle="Requires a Referral?" dataFieldName="referralIsRequired" }}
-                <p style="font-size: 0.9rem; color: #555; margin-top: 0.25rem;">
+                <div style="margin-top: 0.25rem; font-size: 0.9rem; color: #555; display: block;">
                   Only tick this if a referral from a third party is required. Leave unticked for self-referrals.
-                </p>
+                </div>
               </div>
               <div class="form__field-item">
               {{> forms/inline/textArea fieldTitle="Referral Notes" dataFieldName="referralNotes" readOnlyFieldName="referralNotesReadOnly" }}
-              <p style="font-size: 0.9rem; color: #555; margin-top: 0.25rem;">
+              <div style="margin-top: 0.25rem; font-size: 0.9rem; color: #555;">
                 Please describe how someone gets a referral – e.g. “ask your key worker” or “speak to the council’s housing team”.
-              </p>
+              </div>
               </div>
               {{> forms/inline/textField fieldTitle="Price (£ p/w)" dataFieldName="price" }}
               {{> forms/inline/booleanOrOther fieldTitle="Price includes food" dataFieldName="foodIsIncluded" thirdOptionLabel="Don't Know/Ask" }}
